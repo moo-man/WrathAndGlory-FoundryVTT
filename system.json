@@ -6,7 +6,7 @@
   "minimumCoreVersion": "0.7.7",
   "compatibleCoreVersion": "0.7.8",
   "templateVersion": 2,
-  "author": "Perfectro",
+  "author": "Moo Man, Perfectros",
   "scripts": [],
   "esmodules": [
     "scripts/common/hooks.js"
@@ -40,9 +40,9 @@
   "gridUnits": "m",
   "primaryTokenAttribute": null,
   "secondaryTokenAttribute": null,
-  "url": "https://github.com/Perfectro/wrath-and-glory-foundry-vtt",
+  "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/Perfectro/wrath-and-glory-foundry-vtt/master/system.json",
-  "download": "https://github.com/Perfectro/wrath-and-glory-foundry-vtt/archive/v1.11.zip",
+  "manifest": "https://raw.githubusercontent.com/moo-man/WrathAndGlory-FoundryVTT/master/system.json",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/archive/master.zip",
   "license": "LICENSE.txt"
 }
