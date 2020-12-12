@@ -1,0 +1,71 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="agent">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "BIO.NAME"}}</label>
+            <input name="name" type="text" value="{{actor.name}}" />
+          </div>
+          <div class="species">
+            <label>{{localize "BIO.SPECIES"}}</label>
+            <input name="data.bio.species" type="text" value="{{data.bio.species}}" />
+          </div>
+        </div>
+        <div class="wrapper-row">
+          <div class="faction">
+            <label>{{localize "BIO.FACTION"}}</label>
+            <input name="data.bio.faction" type="text" value="{{data.bio.faction}}" />
+          </div>
+          <div class="archetype">
+            <label>{{localize "BIO.ARCHETYPE"}}</label>
+            <input name="data.bio.archetype" type="text" value="{{data.bio.archetype}}" />
+          </div>
+        </div>
+        <div class="wrapper-row">
+          <div class="quote">
+            <label>{{localize "BIO.QUOTE"}}</label>
+            <input title="{{data.bio.quote}}" name="data.bio.quote" type="text" value="{{data.bio.quote}}" />
+          </div>
+          <div class="wrath">
+            <label>{{localize "RESOURCE.WRATH"}}</label>
+            <input name="data.resources.wrath" type="number" value="{{data.resources.wrath}}" data-dtype="Number" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+      <b class="item" data-tab="combat">{{localize "TAB.COMBAT"}}</b>
+      <b class="item" data-tab="talents">{{localize "TAB.TALENTS"}}</b>
+      <b class="item" data-tab="gear">{{localize "TAB.GEAR"}}</b>
+      <b class="item" data-tab="advances">{{localize "TAB.ADVANCES"}}</b>
+      <b class="item" data-tab="notes">{{localize "TAB.NOTES"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="stats">
+        {{> systems/wrath-and-glory/template/sheet/tab/stats.html}}
+      </div>
+      <div class="tab" data-group="primary" data-tab="combat">
+        {{> systems/wrath-and-glory/template/sheet/tab/combat.html}}
+      </div>
+      <div class="tab" data-group="primary" data-tab="talents">
+        {{> systems/wrath-and-glory/template/sheet/tab/talents.html}}
+      </div>
+      <div class="tab" data-group="primary" data-tab="gear">
+        {{> systems/wrath-and-glory/template/sheet/tab/gear.html}}
+      </div>
+      <div class="tab" data-group="primary" data-tab="advances">
+        {{> systems/wrath-and-glory/template/sheet/tab/advances.html}}
+      </div>
+      <div class="tab" data-group="primary" data-tab="notes">
+        {{> systems/wrath-and-glory/template/sheet/tab/notes.html}}
+      </div>
+    </div>
+  </div>
+</form>

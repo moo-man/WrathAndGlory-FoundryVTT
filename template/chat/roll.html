@@ -1,0 +1,58 @@
+<div class="wrath-and-glory chat roll">
+    <div class="wrapper">
+        <h3>{{name}}</h3>
+
+        <div style="text-align: center;">
+            {{#if result.isSuccess}}
+            <h4>{{localize "CHAT.DN"}} {{dn}}</h4>
+            {{else}}
+            <h4>{{localize "CHAT.DN"}} {{dn}}</h4>
+            {{/if}}
+            {{#each result.dice as |die|}}
+            <div class="die {{die.name}}"></div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="wrapper-input">
+        {{#if result.isSuccess}}
+        <div class="seal approved"></div>
+        {{else}}
+        <div class="seal heresy"></div>
+        {{/if}}
+        <p><strong>{{localize "CHAT.SUCCESS"}}: {{result.success}}</strong></p>
+        <p><strong>{{localize "CHAT.FAILURE"}}: {{result.failure}}</strong></p>
+        {{#if result.isSuccess}}
+        <p><strong>{{localize "CHAT.SHIFTING"}}: {{result.shifting}}</strong></p>
+        {{/if}}
+        {{#if result.isWrathCritical}}
+        {{#if wrath.isCommon}}
+        <p><strong style="color: var(--color-red)">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_CRITICAL_COMMON"}}</strong></p>
+        {{/if}}
+        {{#if wrath.isWeapon}}
+        <p><strong style="color: var(--color-red)">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_CRITICAL_WEAPON"}}</strong></p>
+        {{/if}}
+        {{#if wrath.isPsy}}
+        <p><strong style="color: var(--color-red)">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_CRITICAL_PSY"}}</strong></p>
+        {{/if}}
+        {{/if}}
+        {{#if result.isWrathComplication}}
+        {{#if wrath.isCommon}}
+        <p><strong style="color: var(--color-red)">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_COMPLICATION_COMMON"}}</strong></p>
+        {{/if}}
+        {{#if wrath.isWeapon}}
+        <p><strong style="color: var(--color-red)">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_COMPLICATION_WEAPON"}}</strong></p>
+        {{/if}}
+        {{#if wrath.isPsy}}
+        <p><strong style="color: var(--color-red)">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_COMPLICATION_PSY"}}</strong></p>
+        {{/if}}
+        {{/if}}
+    </div>
+</div>
+</div>

@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "Playfair Display";
+  src: url("../../asset/font/playfair-display-regular.ttf");
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("../../asset/font/playfair-display-bold.ttf");
+  font-weight: bold;
+}
+
+:root {
+  --color-red: #892e29;
+  --color-dark-grey: #4c4d4f;
+  --color-light-grey: #8b8d90;
+  --color-black: #000000;
+  --color-white: #e6e5e3;
+
+  --image-background: url(../../asset/image/background.jpg);
+  --image-border: url(../../asset/image/border.png);
+  --image-title-border: url(../../asset/image/title-border.png);
+  --image-input: url(../../asset/image/input.jpg);
+
+  --font-text: "Playfair Display";
+}

@@ -1,0 +1,60 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="ascension">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "ASCENSION.NAME"}}</label>
+            <input name="name" type="text" value="{{item.name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="description">
+        <div class="description">
+          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="stats">
+        <div class="wrapper">
+          <div class="requirements">
+            <label>{{localize "ASCENSION.REQUIREMENTS"}}</label>
+            <input name="data.requirements" type="text" value="{{data.requirements}}" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="cost">
+            <label>{{localize "ASCENSION.COST"}}</label>
+            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+          </div>
+          <div class="influence">
+            <label>{{localize "ASCENSION.INFLUENCE"}}</label>
+            <input name="data.influence" type="number" value="{{data.influence}}" data-dtype="Number" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="keywords">
+            <label>{{localize "ASCENSION.KEYWORDS"}}</label>
+            <input name="data.keywords" type="text" value="{{data.keywords}}" />
+          </div>
+        </div>
+        <div class="wrapper" style="flex-wrap: wrap; justify-content: center;">
+          <h1>{{localize "TITLE.BENEFITS"}}</h1>
+          <div class="benefits" style="flex-basis: 100%; margin-top: 8px">
+            {{editor content=data.benefits target="data.benefits" button=true owner=owner editable=editable}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

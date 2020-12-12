@@ -1,0 +1,141 @@
+.wrath-and-glory.sheet.actor .stats {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  justify-content: center;
+}
+
+/* ATTRIBUTES */
+
+.wrath-and-glory.sheet.actor .stats .wrapper .attributes {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin-top: 8px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .attributes .attribute {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 4px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .attributes .attribute label {
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .attributes .attribute input {
+  flex-basis: 100%;
+  border: 1px solid var(--color-black);
+  border-top: 0 none;
+}
+
+/* SKILLS */
+
+.wrath-and-glory.sheet.actor .stats .wrapper .skills {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin-top: 8px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .skills .left {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: calc(50% - 4px);
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .skills .right {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: calc(50% - 4px);
+  margin-left: 4px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .skills .skill {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin: 4px 0;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .skills .skill:last-child {
+  margin-bottom: 0;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .skills .skill label {
+  flex-basis: 70%;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .skills .skill input {
+  flex-basis: 30%;
+}
+
+/* KEYWORDS */
+
+.wrath-and-glory.sheet.actor .stats .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  margin-top: 8px;
+  overflow-y: scroll;
+  height: 49px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .keywords .keyword {
+  display: flex;
+  flex-direction: row;
+  margin: 1px;
+  height: 22px;
+  background-color: var(--color-dark-grey);
+  color: var(--color-white);
+  align-items: center;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .keywords .keyword .wrapper-hover {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 22px;
+  background-color: var(--color-dark-grey);
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .keywords .keyword .wrapper-hover:hover {
+  background-color: var(--color-red);
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .keywords .keyword .avatar {
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 22px;
+  width: 22px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .keywords .keyword .name {
+  margin: 0 4px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .keywords .keyword .button {
+  font-size: 8px;
+  padding: 0 4px;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .keywords .keyword .button:hover {
+  background-color: var(--color-red);
+}

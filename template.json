@@ -1,0 +1,474 @@
+{
+  "Actor": {
+    "types": [
+      "agent",
+      "threat"
+    ],
+    "templates": {
+      "attributes": {
+        "attributes": {
+          "strength": {
+            "label": "ATTRIBUTE.STRENGTH",
+            "rating": 1,
+            "cost": 0
+          },
+          "toughness": {
+            "label": "ATTRIBUTE.TOUGHNESS",
+            "rating": 1,
+            "cost": 0
+          },
+          "agility": {
+            "label": "ATTRIBUTE.AGILITY",
+            "rating": 1,
+            "cost": 0
+          },
+          "initiative": {
+            "label": "ATTRIBUTE.INITIATIVE",
+            "rating": 1,
+            "cost": 0
+          },
+          "willpower": {
+            "label": "ATTRIBUTE.WILLPOWER",
+            "rating": 1,
+            "cost": 0
+          },
+          "intellect": {
+            "label": "ATTRIBUTE.INTELLECT",
+            "rating": 1,
+            "cost": 0
+          },
+          "fellowship": {
+            "label": "ATTRIBUTE.FELLOWSHIP",
+            "rating": 1,
+            "cost": 0
+          }
+        }
+      },
+      "skills": {
+        "skills": {
+          "athletics": {
+            "label": "SKILL.ATHLETICS",
+            "attribute": "strength",
+            "rating": 0,
+            "cost": 0
+          },
+          "awareness": {
+            "label": "SKILL.AWARENESS",
+            "attribute": "intellect",
+            "rating": 0,
+            "cost": 0
+          },
+          "ballisticSkill": {
+            "label": "SKILL.BALLISTIC_SKILL",
+            "attribute": "agility",
+            "rating": 0,
+            "cost": 0
+          },
+          "cunning": {
+            "label": "SKILL.CUNNING",
+            "attribute": "fellowship",
+            "rating": 0,
+            "cost": 0
+          },
+          "deception": {
+            "label": "SKILL.DECEPTION",
+            "attribute": "fellowship",
+            "rating": 0,
+            "cost": 0
+          },
+          "insight": {
+            "label": "SKILL.INSIGHT",
+            "attribute": "fellowship",
+            "rating": 0,
+            "cost": 0
+          },
+          "intimidation": {
+            "label": "SKILL.INTIMIDATION",
+            "attribute": "willpower",
+            "rating": 0,
+            "cost": 0
+          },
+          "investigation": {
+            "label": "SKILL.INVESTIGATION",
+            "attribute": "intellect",
+            "rating": 0,
+            "cost": 0
+          },
+          "leadership": {
+            "label": "SKILL.LEADERSHIP",
+            "attribute": "willpower",
+            "rating": 0,
+            "cost": 0
+          },
+          "medicae": {
+            "label": "SKILL.MEDICAE",
+            "attribute": "intellect",
+            "rating": 0,
+            "cost": 0
+          },
+          "persusasion": {
+            "label": "SKILL.PERSUASION",
+            "attribute": "fellowship",
+            "rating": 0,
+            "cost": 0
+          },
+          "pilot": {
+            "label": "SKILL.PILOT",
+            "attribute": "agility",
+            "rating": 0,
+            "cost": 0
+          },
+          "psychicMastery": {
+            "label": "SKILL.PSYCHIC_MASTERY",
+            "attribute": "willpower",
+            "rating": 0,
+            "cost": 0
+          },
+          "scholar": {
+            "label": "SKILL.SCHOLAR",
+            "attribute": "intellect",
+            "rating": 0,
+            "cost": 0
+          },
+          "stealth": {
+            "label": "SKILL.STEALTH",
+            "attribute": "agility",
+            "rating": 0,
+            "cost": 0
+          },
+          "survival": {
+            "label": "SKILL.SURVIVAL",
+            "attribute": "willpower",
+            "rating": 0,
+            "cost": 0
+          },
+          "tech": {
+            "label": "SKILL.TECH",
+            "attribute": "intellect",
+            "rating": 0,
+            "cost": 0
+          },
+          "weaponSkill": {
+            "label": "SKILL.WEAPON_SKILL",
+            "attribute": "initiative",
+            "rating": 0,
+            "cost": 0
+          }
+        }
+      },
+      "combat": {
+        "combat": {
+          "defense": {
+            "bonus": 0,
+            "total": 0
+          },
+          "resilence": {
+            "bonus": 0,
+            "total": 0
+          },
+          "wounds": {
+            "value": 0,
+            "bonus": 0,
+            "max": 0
+          },
+          "determination": {
+            "bonus": 0,
+            "total": 0
+          },
+          "shock": {
+            "value": 0,
+            "bonus": 0,
+            "max": 0
+          },
+          "resolve": {
+            "bonus": 0,
+            "total": 0
+          },
+          "size": "average",
+          "speed": 6,
+          "passiveAwareness": {
+            "bonus": 0,
+            "total": 0
+          },
+          "stealth": 0
+        }
+      }
+    },
+    "agent": {
+      "templates": [
+        "attributes",
+        "skills",
+        "combat"
+      ],
+      "bio": {
+        "species": "",
+        "faction": "",
+        "archetype": "",
+        "quote": ""
+      },
+      "advances": {
+        "tier": 1,
+        "rank": 1,
+        "species": 0,
+        "experience": {
+          "current": 0
+        }
+      },
+      "resources": {
+        "wrath": 2,
+        "faith": {
+          "current": 0,
+          "total": 0
+        },
+        "wealth": 0,
+        "influence": 0
+      },
+      "corruption": {
+        "current": 0
+      },
+      "notes": ""
+    },
+    "threat": {
+      "templates": [
+        "attributes",
+        "skills",
+        "combat"
+      ],
+      "bio": {
+        "species": "",
+        "faction": "",
+        "archetype": "",
+        "threat": {
+          "first": "T",
+          "second": "T",
+          "third": "T",
+          "fourth": "T"
+        }
+      },
+      "resources": {
+        "ruin": 0
+      },
+      "corruption": {
+        "current": 0,
+        "current": 0
+      }
+    }
+  },
+  "Item": {
+    "types": [
+      "ability",
+      "ammo",
+      "armour",
+      "ascension",
+      "augmentic",
+      "gear",
+      "keyword",
+      "memorableInjury",
+      "mutation",
+      "psychicPower",
+      "talent",
+      "traumaticInjury",
+      "weapon",
+      "weaponUpgrade"
+    ],
+    "templates": {
+      "bonus": {
+        "bonus": {
+          "attributes": {
+            "strength": 0,
+            "toughness": 0,
+            "agility": 0,
+            "initiative": 0,
+            "willpower": 0,
+            "intellect": 0,
+            "fellowship": 0
+          },
+          "skills": {
+            "athletics": 0,
+            "awareness": 0,
+            "ballisticSkill": 0,
+            "cunning": 0,
+            "deception": 0,
+            "insight": 0,
+            "intimidation": 0,
+            "investigation": 0,
+            "leadership": 0,
+            "medicae": 0,
+            "persusasion": 0,
+            "pilot": 0,
+            "psychicMastery": 0,
+            "scholar": 0,
+            "stealth": 0,
+            "survival": 0,
+            "tech": 0,
+            "weaponSkill": 0
+          },
+          "combat": {
+            "defense": 0,
+            "resilence": 0,
+            "wounds": 0,
+            "determination": 0,
+            "shock": 0,
+            "resolve": 0,
+            "passiveAwareness": 0
+          }
+        }
+      }
+    },
+    "ability": {
+      "templates": ["bonus"],
+      "effect": "",
+      "cost": 0,
+      "requirements": "",
+      "description": "",
+      "display": true
+    },
+    "ammo": {
+      "description": "",
+      "effect": "",
+      "value": 0,
+      "rarity": "common",
+      "keywords": "",
+      "quantity": 0
+    },
+    "armour": {
+      "templates": ["bonus"],
+      "description": "",
+      "rating": 0,
+      "traits": "",
+      "value": 0,
+      "rarity": "common",
+      "keywords": ""
+    },
+    "ascension": {
+      "cost": 0,
+      "description": "",
+      "requirements": "",
+      "keywords": "",
+      "influence": 0,
+      "benefits": ""
+    },
+    "augmentic": {
+      "templates": ["bonus"],
+      "description": "",
+      "effect": "",
+      "value": 0,
+      "rarity": "common",
+      "keywords": ""
+    },
+    "gear": {
+      "templates": ["bonus"],
+      "description": "",
+      "effect": "",
+      "value": 0,
+      "rarity": "common",
+      "keywords": ""
+    },
+    "keyword": {
+      "description": ""
+    },
+    "memorableInjury": {
+      "templates": ["bonus"],
+      "description": ""
+    },
+    "mutation": {
+      "templates": ["bonus"],
+      "description": "",
+      "effect": ""
+    },
+    "psychicPower": {
+      "description": "",
+      "effect": "",
+      "cost": 0,
+      "dn": 0,
+      "activation": "action",
+      "duration": "",
+      "range": "",
+      "multiTarget": false,
+      "keywords": "",
+      "prerequisites": "",
+      "potency": "",
+      "damage": {
+        "base": 0,
+        "bonus": 0,
+        "rank": "none"
+      },
+      "ed": {
+        "base": 0,
+        "bonus": 0,
+        "die": {
+          "one": 0,
+          "two": 0,
+          "three": 0,
+          "four": 1,
+          "five": 1,
+          "six": 2
+        },
+        "rank": "none"
+      }
+    },
+    "talent": {
+      "templates": ["bonus"],
+      "effect": "",
+      "cost": 0,
+      "requirements": "",
+      "description": "",
+      "display": true
+    },
+    "traumaticInjury": {
+      "templates": ["bonus"],
+      "description": ""
+    },
+    "weapon": {
+      "templates": ["bonus"],
+      "description": "",
+      "attack": {
+        "base": 0,
+        "bonus": 0,
+        "rank": "none"
+      },
+      "damage": {
+        "base": 0,
+        "bonus": 0,
+        "rank": "none"
+      },
+      "ed": {
+        "base": 0,
+        "bonus": 0,
+        "die": {
+          "one": 0,
+          "two": 0,
+          "three": 0,
+          "four": 1,
+          "five": 1,
+          "six": 2
+        },
+        "rank": "none"
+      },
+      "ap": {
+        "base": 0,
+        "bonus": 0,
+        "rank": "none"
+      },
+      "category": "melee",
+      "range": {
+        "short": 0,
+        "medium": 0,
+        "long": 0
+      },
+      "salvo": 0,
+      "traits": "",
+      "value": 0,
+      "rarity": "common",
+      "keywords": "",
+      "upgrades": ""
+    },
+    "weaponUpgrade": {
+      "description": "",
+      "effect": "",
+      "value": 0,
+      "rarity": "common",
+      "keywords": ""
+    }
+  }
+}

@@ -1,0 +1,93 @@
+.wrath-and-glory.sheet.actor .settings {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+}
+
+/* BODY */
+
+.wrath-and-glory.sheet.actor .settings .wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-basis: calc((100% / 3) - 8px);
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .header {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper.attributes .header,
+.wrath-and-glory.sheet.actor .settings .wrapper.skills .header {
+  margin-left: -4px;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper.talents .header,
+.wrath-and-glory.sheet.actor .settings .wrapper.abilities .header,
+.wrath-and-glory.sheet.actor .settings .wrapper.psychic-power .header {
+  margin-left: -13px;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  overflow-y: scroll;
+  height: 200px;
+  margin-top: 4px;
+  align-content: baseline;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .items .item {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin: 2px 0;
+  text-align: center;
+  align-items: baseline;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .items .item:first-child {
+  margin-top: 0;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .header .name,
+.wrath-and-glory.sheet.actor .settings .wrapper .items .item .name {
+  flex-basis: 80%;
+  cursor: default;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .header .item-name {
+  margin-left: 3px;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .header .item-name,
+.wrath-and-glory.sheet.actor .settings .wrapper .items .item .item-name {
+  flex-basis: 93%;
+  text-align: center;
+  max-width: 206px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .header .rating,
+.wrath-and-glory.sheet.actor .settings .wrapper .items .item .rating {
+  flex-basis: 20%;
+  text-align: center;
+}
+
+.wrath-and-glory.sheet.actor .settings .wrapper .header .button,
+.wrath-and-glory.sheet.actor .settings .wrapper .items .item .button {
+  flex-basis: 7%;
+  text-align: center;
+}

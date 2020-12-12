@@ -1,0 +1,62 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="talent">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "TALENT.NAME"}}</label>
+            <input name="name" type="text" value="{{item.name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+      <b class="item" data-tab="bonus">{{localize "TAB.BONUS"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="description">
+        <div class="description">
+          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="stats">
+        <div class="wrapper">
+          <div class="effect">
+            <label>{{localize "TALENT.EFFECT"}}</label>
+            <input name="data.effect" type="text" value="{{data.effect}}" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="cost">
+            <label>{{localize "TALENT.COST"}}</label>
+            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+          </div>
+          <div class="requirements">
+            <label>{{localize "TALENT.REQUIREMENTS"}}</label>
+            <input name="data.requirements" type="text" value="{{data.requirements}}" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="display">
+            <label>{{localize "TALENT.DISPLAY"}}</label>
+            {{#if data.display}}
+            <input name="data.display" type="checkbox" value="active" checked/>
+            {{else}}
+            <input name="data.display" type="checkbox" value="active"/>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="bonus">
+        {{> systems/wrath-and-glory/template/sheet/tab/bonus.html}}
+      </div>
+    </div>
+  </div>
+</form>

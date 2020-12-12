@@ -1,0 +1,48 @@
+{
+  "name": "wrath-and-glory",
+  "title": "Wrath & Glory",
+  "description": "In the grim darkness of the far future, there is only war",
+  "version": "1.11.0",
+  "minimumCoreVersion": "0.7.7",
+  "compatibleCoreVersion": "0.7.8",
+  "templateVersion": 2,
+  "author": "Perfectro",
+  "scripts": [],
+  "esmodules": [
+    "scripts/common/hooks.js"
+  ],
+  "styles": [
+    "style/chat/chat.css",
+    "style/common/override.css",
+    "style/common/sheet.css",
+    "style/common/variable.css",
+    "style/dialog/dialog.css",
+    "style/sheet/agent.css",
+    "style/sheet/threat.css",
+    "style/sheet/tab/advances.css",
+    "style/sheet/tab/combat.css",
+    "style/sheet/tab/gear.css",
+    "style/sheet/tab/notes.css",
+    "style/sheet/tab/stats.css",
+    "style/sheet/tab/settings.css",
+    "style/sheet/tab/talents.css",
+    "style/sheet/item.css"
+  ],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 1,
+  "gridUnits": "m",
+  "primaryTokenAttribute": null,
+  "secondaryTokenAttribute": null,
+  "url": "https://github.com/Perfectro/wrath-and-glory-foundry-vtt",
+  "socket": true,
+  "manifest": "https://raw.githubusercontent.com/Perfectro/wrath-and-glory-foundry-vtt/master/system.json",
+  "download": "https://github.com/Perfectro/wrath-and-glory-foundry-vtt/archive/v1.11.zip",
+  "license": "LICENSE.txt"
+}

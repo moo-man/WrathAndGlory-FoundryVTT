@@ -1,0 +1,66 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="augmentic">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "GEAR.NAME"}}</label>
+            <input name="name" type="text" value="{{item.name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+      <b class="item" data-tab="bonus">{{localize "TAB.BONUS"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="description">
+        <div class="description">
+          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="stats">
+        <div class="wrapper">
+          <div class="effect">
+            <label>{{localize "AUGMENTIC.EFFECT"}}</label>
+            <input name="data.effect" type="text" value="{{data.effect}}" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="value">
+            <label>{{localize "AMMO.VALUE"}}</label>
+            <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+          </div>
+          <div class="rarity">
+            <label>{{localize "AMMO.RARITY"}}</label>
+            <select name="data.rarity" style="flex-grow: 1">
+              {{#select data.rarity}}
+              <option value="common">{{localize "RARITY.COMMON"}}</option>
+              <option value="uncommon">{{localize "RARITY.UNCOMMON"}}</option>
+              <option value="rare">{{localize "RARITY.RARE"}}</option>
+              <option value="very-rare">{{localize "RARITY.VERY_RARE"}}</option>
+              <option value="unique">{{localize "RARITY.UNIQUE"}}</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="keywords">
+            <label>{{localize "AUGMENTIC.KEYWORDS"}}</label>
+            <input name="data.keywords" type="text" value="{{data.keywords}}" />
+          </div>
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="bonus">
+        {{> systems/wrath-and-glory/template/sheet/tab/bonus.html}}
+      </div>
+    </div>
+  </div>
+</form>

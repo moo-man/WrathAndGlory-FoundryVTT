@@ -1,0 +1,107 @@
+<div class="wrath-and-glory dialog">
+    <div class="wrapper-left">
+        <h1>{{localize skillName}}</h1>
+        <div class="wrapper">
+            <b class="name"></b>
+            <b class="base">{{localize "DIALOG.BASE"}}</b>
+            <b class="rank">{{localize "DIALOG.RANK"}}</b>
+            <b class="bonus">{{localize "DIALOG.BONUS"}}</b>
+        </div>
+        <div class="wrapper">
+            <label class="name">{{localize "DIALOG.DN"}}</label>
+            <input id="difficulty-target" class="base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
+            <select id="difficulty-rank" class="rank">
+                {{#select weapon.ed.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="minus-single">{{localize "RANK.MINUS_SINGLE"}}</option>
+                <option value="minus-double">{{localize "RANK.MINUS_DOUBLE"}}</option>
+                {{/select}}
+            </select>
+            <input id="difficulty-penalty" class="bonus" type="number" value="{{difficulty.penalty}}" data-dtype="Number" />
+        </div>
+        <div class="wrapper">
+            <label class="name">{{localize "DIALOG.DICE_POOL"}}</label>
+            <input id="pool-size" class="base" type="number" value="{{pool.size}}" data-dtype="Number" />
+            <select id="pool-rank" class="rank">
+                {{#select pool.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+            </select>
+            <input id="pool-bonus" class="bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
+        </div>
+    </div>
+    <div class="wrapper-right">
+        <h1 style="margin-top: 8px;">{{name}}</h1>
+        <div class="wrapper">
+            <b class="name"></b>
+            <b class="base">{{localize "DIALOG.BASE"}}</b>
+            <b class="rank">{{localize "DIALOG.RANK"}}</b>
+            <b class="bonus">{{localize "DIALOG.BONUS"}}</b>
+        </div>
+        <div class="wrapper">
+            <label class="name">{{localize "WEAPON.DAMAGE"}}</label>
+            <input id="damage-base" class="base" type="number" value="{{weapon.damage.base}}" data-dtype="Number" />
+            <select id="damage-rank" class="rank">
+                {{#select weapon.damage.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+            </select>
+            <input id="damage-bonus" class="bonus" type="number" value="{{weapon.damage.bonus}}" data-dtype="Number" />
+        </div>
+        <div class="wrapper">
+            <label class="name">{{localize "WEAPON.ED"}}</label>
+            <input id="ed-base" class="base" type="number" value="{{weapon.ed.base}}" data-dtype="Number" />
+            <select id="ed-rank" class="rank">
+                {{#select weapon.ed.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+            </select>
+            <input id="ed-bonus" class="bonus" type="number" value="{{weapon.ed.bonus}}" data-dtype="Number" />
+        </div>
+        <div class="wrapper">
+            <label class="name">{{localize "WEAPON.AP"}}</label>
+            <input id="ap-base" class="base" type="number" value="{{weapon.ap.base}}" data-dtype="Number" />
+            <select id="ap-rank" class="rank">
+                {{#select weapon.ap.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+            </select>
+            <input id="ap-bonus" class="bonus" type="number" value="{{weapon.ap.bonus}}" data-dtype="Number" />
+        </div>
+        <div class="wrapper">
+            <label class="name">{{localize "WEAPON.TRAITS"}}</label>
+            <input id="traits" class="full" type="text" value="{{weapon.traits}}" />
+        </div>
+        <div class="wrapper">
+            <b class="name"></b>
+            <b class="die">1</b>
+            <b class="die">2</b>
+            <b class="die">3</b>
+            <b class="die">4</b>
+            <b class="die">5</b>
+            <b class="die">6</b>
+        </div>
+        <div class="wrapper">
+            <label class="name">{{localize "WEAPON.DIE_VALUE"}}</label>
+            <input id="die-one" class="die" type="number" value="{{weapon.ed.die.one}}" data-dtype="Number" />
+            <input id="die-two" class="die" type="number" value="{{weapon.ed.die.two}}" data-dtype="Number" />
+            <input id="die-three" class="die" type="number" value="{{weapon.ed.die.three}}" data-dtype="Number" />
+            <input id="die-four" class="die" type="number" value="{{weapon.ed.die.four}}" data-dtype="Number" />
+            <input id="die-five" class="die" type="number" value="{{weapon.ed.die.five}}" data-dtype="Number" />
+            <input id="die-six" class="die" type="number" value="{{weapon.ed.die.six}}" data-dtype="Number" />
+        </div>
+    </div>
+</div>
+<script>
+    $(".wrapper input").focusin(function () {
+        $(this).select();
+    });
+</script>

@@ -1,0 +1,56 @@
+<div class="stats">
+  <div class="wrapper">
+    <h1>{{localize "TITLE.ATTRIBUTES"}}</h1>
+    <div class="attributes">
+      {{#each data.attributes as |attribute key|}}
+      <div class="attribute">
+        <label class="roll-attribute hover" data-attribute="{{key}}">{{localize attribute.label}}</label>
+        <input type="number" value="{{attribute.total}}" data-dtype="Number" disabled />
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="wrapper" style="margin-top: 8px;">
+    <h1>{{localize "TITLE.SKILLS"}}</h1>
+    <div class="skills">
+      <div class="left">
+        {{#each data.skills as |skill key|}}
+        {{#if skill.isLeft}}
+        <div class="skill">
+          <label class="roll-skill hover" data-skill="{{key}}">{{localize skill.label}}</label>
+          <input type="number" value="{{skill.total}}" data-dtype="Number" disabled />
+        </div>
+        {{/if}}
+        {{/each}}
+      </div>
+      <div class="right">
+        {{#each data.skills as |skill key|}}
+        {{#if skill.isRight}}
+        <div class="skill">
+          <label class="roll-skill hover" data-skill="{{key}}">{{localize skill.label}}</label>
+          <input type="number" value="{{skill.total}}" data-dtype="Number" disabled />
+        </div>
+        {{/if}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="wrapper" style="margin-top: 8px;">
+    <h1>{{localize "TITLE.KEYWORDS"}}</h1>
+    <div class="keywords">
+      {{#each actor.items as |item|}}
+      {{#if item.isKeyword}}
+      <div class="keyword item" data-item-id="{{item._id}}">
+        <div class="wrapper-hover">
+          <div class="avatar" style="background-image: url('{{item.img}}')"></div>
+          <div class="name item-edit">{{item.name}}</div>
+        </div>
+        <div class="button">
+          <a class="item-control item-delete" title="Delete Keyword"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>

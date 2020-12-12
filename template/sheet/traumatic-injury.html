@@ -1,0 +1,34 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="traumatic-injury">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "TRAUMATIC_INJURY.NAME"}}</label>
+            <input name="name" type="text" value="{{item.name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+      <b class="item" data-tab="bonus">{{localize "TAB.BONUS"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="description">
+        <div class="description">
+          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="bonus">
+        {{> systems/wrath-and-glory/template/sheet/tab/bonus.html}}
+      </div>
+    </div>
+  </div>
+</form>

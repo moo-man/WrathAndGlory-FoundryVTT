@@ -1,0 +1,46 @@
+.wrath-and-glory.actor h1,
+.wrath-and-glory.item h1 {
+  margin: 0;
+  border-style: solid;
+  border-width: 0px 8px 8px 8px;
+  border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
+  color: var(--color-red);
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  padding: 0 30px;
+}
+
+.wrath-and-glory.actor label,
+.wrath-and-glory.item label  {
+  text-align: center;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 5px;
+  font-family: var(--font-text);
+  font-size: 14px;
+  border: 1px solid var(--color-black);
+  cursor: pointer;
+}
+
+.wrath-and-glory.actor .hover:hover {
+  background-color: var(--color-red);
+}
+
+.wrath-and-glory.actor input[type="text"],
+.wrath-and-glory.actor input[type="number"],
+.wrath-and-glory.item input[type="text"],
+.wrath-and-glory.item input[type="number"],
+.wrath-and-glory.actor select,
+.wrath-and-glory.item select {
+  background: var(--image-input) repeat;
+  border: 1px solid var(--color-black);
+  border-radius: 0;
+  border-left: 0;
+  box-shadow: inset 0 0 6px var(--color-dark-grey);
+  color: var(--color-black);
+  font-size: 14px;
+  font-family: var(--font-text);
+  text-align: center;
+  height: 31px;
+}

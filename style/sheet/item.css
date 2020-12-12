@@ -1,0 +1,641 @@
+.wrath-and-glory.sheet.item .ability,
+.wrath-and-glory.sheet.item .ammo,
+.wrath-and-glory.sheet.item .armour,
+.wrath-and-glory.sheet.item .ascension,
+.wrath-and-glory.sheet.item .augmentic,
+.wrath-and-glory.sheet.item .gear,
+.wrath-and-glory.sheet.item .keyword,
+.wrath-and-glory.sheet.item .memorable-injury,
+.wrath-and-glory.sheet.item .mutation,
+.wrath-and-glory.sheet.item .psychic-power,
+.wrath-and-glory.sheet.item .talent,
+.wrath-and-glory.sheet.item .traumatic-injury,
+.wrath-and-glory.sheet.item .weapon,
+.wrath-and-glory.sheet.item .weapon-upgrade {
+  width: 100%;
+  height: 100%;
+}
+
+/* HEADER */
+
+.wrath-and-glory.sheet.item .sheet-header {
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-template-rows: 100px;
+  column-gap: 8px;
+  row-gap: 0;
+  width: 100%;
+  height: 100px;
+}
+
+.wrath-and-glory.sheet.item .sheet-header .avatar {
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
+  border: 8px solid transparent;
+  border-image: var(--image-border) 8 8 8 8 repeat repeat;
+}
+
+.wrath-and-glory.sheet.item .sheet-header .avatar img {
+  border: 0 none;
+}
+
+.wrath-and-glory.sheet.item .sheet-header .bio {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.wrath-and-glory.sheet.item .sheet-header .bio .wrapper-row {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .sheet-header .bio label {
+  min-width: 100px;
+  max-width: 100px;
+  height: 31px;
+}
+
+.wrath-and-glory.sheet.item .sheet-header .bio input {
+  flex-grow: 1;
+}
+
+.wrath-and-glory.sheet.item .sheet-header .bio .name {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+/* TABS */
+
+.wrath-and-glory.sheet.item .sheet-tabs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex-basis: 100%;
+  font-size: 18px;
+  font-family: var(--font-text);
+  font-weight: bold;
+  margin: 8px 0;
+  border: 8px solid transparent;
+  border-image: var(--image-border) 8 8 8 8 repeat repeat;
+}
+
+.wrath-and-glory.sheet.item .sheet-tabs .item {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  cursor: pointer;
+  padding: 5px 0;
+}
+
+.wrath-and-glory.sheet.item .sheet-tabs .item:hover,
+.wrath-and-glory.sheet.item .sheet-tabs .item.active  {
+  background-color: var(--color-red);
+  text-shadow: none;
+}
+
+/* BODY */
+
+.wrath-and-glory.sheet.item .sheet-body {
+  width: 100%;
+}
+
+.wrath-and-glory.sheet.item .editor,
+.wrath-and-glory.sheet.item .editor-content {
+  font-family: var(--font-text);
+  font-size: 14px;
+  color: var(--color-text);
+  height: 100%;
+  width: 100%;
+  background: url(../../asset/image/input.jpg) repeat;
+  box-shadow: inset 0 0 6px var(--color-dark-grey);
+  font-weight: bold;
+}
+
+.wrath-and-glory.sheet.item .editor {
+  border: 1px solid var(--color-black);
+}
+
+.wrath-and-glory.sheet.item .editor-content {
+  padding: 8px;
+  color: var(--color-black);
+}
+
+.wrath-and-glory.sheet.sheet.item .wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin-top: 8px;
+}
+
+.wrath-and-glory.sheet.item .wrapper * label {
+  min-width: 100px;
+  max-width: 100px;
+  height: 31px;
+  cursor: default;
+}
+
+.wrath-and-glory.sheet.item .wrapper .header {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.wrath-and-glory.sheet.item .wrapper .header b.name {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.wrath-and-glory.sheet.item .wrapper .header b.rank {
+  width: 95px;
+}
+
+.wrath-and-glory.sheet.item .wrapper .header b.base,
+.wrath-and-glory.sheet.item .wrapper .header b.modifier {
+  flex-basis: 15%;
+  flex-grow: 1;
+}
+
+.wrath-and-glory.sheet.item .wrapper .header b.die {
+  flex-grow: calc((100% / 6) - 100px);
+  flex-grow: 1;
+}
+
+.wrath-and-glory.sheet.item .wrapper * input,
+.wrath-and-glory.sheet.item .wrapper * select {
+  height: 31px;
+  flex-grow: 1;
+}
+
+.wrath-and-glory.sheet.item .wrapper * input[type="checkbox"] {
+  margin: 0;
+}
+
+/* BONUS */
+
+.wrath-and-glory.sheet.item .bonus {
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.wrath-and-glory.sheet.item .bonus .wrapper-title {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wrath-and-glory.sheet.item .sheet-body .wrapper-title .wrapper {
+  flex-wrap: wrap;
+}
+
+.wrath-and-glory.sheet.item .sheet-body .wrapper-title .wrapper .stat {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+  margin-top: 4px;
+}
+
+.wrath-and-glory.sheet.item .sheet-body .wrapper-title .wrapper .stat:nth-child(even) {
+  margin-left: 4px;
+}
+
+.wrath-and-glory.sheet.item .sheet-body .wrapper-title .wrapper .stat:nth-child(odd) {
+  margin-right: 4px;
+}
+
+/* ABILITY */
+
+.wrath-and-glory.sheet.item .ability .description .editor,
+.wrath-and-glory.sheet.item .ability .bonus {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .ability .sheet-body .wrapper .effect {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .ability .sheet-body .wrapper .display {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 30%;
+}
+
+.wrath-and-glory.sheet.item .ability .sheet-body .wrapper .cost {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(30% - 4px);
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .ability .sheet-body .wrapper .requirements {
+  display: flex;
+  flex-direction: row;
+  margin-left: 4px;
+  flex-basis: calc(70% - 4px);
+}
+
+/* AMMO */
+
+.wrath-and-glory.sheet.item .ammo .description .editor {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .effect,
+.wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .quantity,
+.wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .value {
+  display: flex;
+  flex-direction: row;
+  margin-right: 8px;
+}
+
+.wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .rarity {
+  display: flex;
+  flex-direction: row;
+}
+
+/* ARMOUR */
+
+.wrath-and-glory.sheet.item .armour .description .editor,
+.wrath-and-glory.sheet.item .armour .bonus {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .armour .sheet-body .wrapper .traits,
+.wrath-and-glory.sheet.item .armour .sheet-body .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .armour .sheet-body .wrapper .rating,
+.wrath-and-glory.sheet.item .armour .sheet-body .wrapper .value {
+  display: flex;
+  flex-direction: row;
+  margin-right: 8px;
+}
+
+.wrath-and-glory.sheet.item .armour .sheet-body .wrapper .rarity {
+  display: flex;
+  flex-direction: row;
+}
+
+/* ASCENSION */
+
+.wrath-and-glory.sheet.item .ascension .description .editor {
+  height: 355px;
+}
+
+.wrath-and-glory.sheet.item .ascension .benefits .editor {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .ascension .sheet-body .wrapper .requirements,
+.wrath-and-glory.sheet.item .ascension .sheet-body .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .ascension .sheet-body .wrapper .cost,
+.wrath-and-glory.sheet.item .ascension .sheet-body .wrapper .influence {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+}
+
+.wrath-and-glory.sheet.item .ascension .sheet-body .wrapper .cost {
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .ascension .sheet-body .wrapper .influence {
+  margin-left: 4px;
+}
+
+/* AUGMENTIC */
+
+.wrath-and-glory.sheet.item .augmentic .description .editor,
+.wrath-and-glory.sheet.item .augmentic .bonus {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .augmentic .sheet-body .wrapper .effect,
+.wrath-and-glory.sheet.item .augmentic .sheet-body .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .augmentic .sheet-body .wrapper .value {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 50%;
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .augmentic .sheet-body .wrapper .rarity {
+  display: flex;
+  flex-direction: row;
+  margin-left: 4px;
+  flex-basis: 50%;
+}
+
+/* GEAR */
+
+.wrath-and-glory.sheet.item .gear .description .editor,
+.wrath-and-glory.sheet.item .gear .bonus {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .gear .sheet-body .wrapper .effect,
+.wrath-and-glory.sheet.item .gear .sheet-body .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .gear .sheet-body .wrapper .value {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 50%;
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .gear .sheet-body .wrapper .rarity {
+  display: flex;
+  flex-direction: row;
+  margin-left: 4px;
+  flex-basis: 50%;
+}
+
+/* KEYWORD */
+
+.wrath-and-glory.sheet.item .keyword .description .editor {
+  height: 200px;
+}
+
+/* MEMORABLE INJURY */
+
+.wrath-and-glory.sheet.item .memorable-injury .description .editor,
+.wrath-and-glory.sheet.item .memorable-injury .bonus {
+  height: 200px;
+}
+
+/* MUTATION */
+
+.wrath-and-glory.sheet.item .mutation .description .editor,
+.wrath-and-glory.sheet.item .mutation .bonus {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .mutation .sheet-body .wrapper .effect {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+/* PSYCHIC POWER */
+
+.wrath-and-glory.sheet.item .psychic-power .description .editor {
+  height: 522px;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .potency .editor {
+  height: 122px;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .effect,
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .cost {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 30%;
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .prerequisites {
+  display: flex;
+  flex-direction: row;
+  margin-left: 4px;
+  flex-basis: 70%;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .duration {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .activation {
+  display: flex;
+  flex-direction: row;
+  margin-left: 4px;
+  flex-basis: 50%;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .dn,
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .range {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(35% - 8px);
+  margin-right: 8px;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .multi-target {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 30%;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .damage,
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .ed,
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .die-value {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .damage .rank,
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .ed .rank {
+  width: 95px;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .damage .base,
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .ed .base {
+  flex-basis: 15%;
+}
+
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .damage .modifier,
+.wrath-and-glory.sheet.item .psychic-power .sheet-body .wrapper .ed .modifier {
+  flex-basis: 15%;
+}
+
+/* TALENT */
+
+.wrath-and-glory.sheet.item .talent .description .editor,
+.wrath-and-glory.sheet.item .talent .bonus {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .talent .sheet-body .wrapper .effect {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .talent .sheet-body .wrapper .display {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 30%;
+}
+
+.wrath-and-glory.sheet.item .talent .sheet-body .wrapper .cost {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(30% - 4px);
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .talent .sheet-body .wrapper .requirements {
+  display: flex;
+  flex-direction: row;
+  margin-left: 4px;
+  flex-basis: calc(70% - 4px);
+}
+
+/* TRAUMATIC INJURY */
+
+.wrath-and-glory.sheet.item .traumatic-injury .description .editor,
+.wrath-and-glory.sheet.item .traumatic-injury .bonus {
+  height: 200px;
+}
+
+/* WEAPON */
+
+.wrath-and-glory.sheet.item .weapon .description .editor,
+.wrath-and-glory.sheet.item .weapon .bonus {
+  height: 578px;
+}
+
+.wrath-and-glory.sheet.item .weapon .upgrades .editor {
+  height: 100px;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .traits,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .category {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .salvo {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .range {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+  margin-left: 4px;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .attack,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .damage,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .ed,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .ap,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .die-value {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .attack .rank,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .damage .rank,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .ed .rank,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .ap .rank {
+  width: 95px;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .attack .base,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .damage .base,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .ed .base,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .ap .base {
+  flex-basis: 15%;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .attack .modifier,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .damage .modifier,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .ed .modifier,
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .ap .modifier {
+  flex-basis: 15%;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .value {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .rarity {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+  margin-left: 4px;
+}
+
+/* WEAPON UPGRADE */
+
+.wrath-and-glory.sheet.item .weapon-upgrade .description .editor {
+  height: 200px;
+}
+
+.wrath-and-glory.sheet.item .weapon-upgrade .sheet-body .wrapper .effect,
+.wrath-and-glory.sheet.item .weapon-upgrade .sheet-body .wrapper .keywords {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+
+.wrath-and-glory.sheet.item .weapon-upgrade .sheet-body .wrapper .value {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+  margin-right: 4px;
+}
+
+.wrath-and-glory.sheet.item .weapon-upgrade .sheet-body .wrapper .rarity {
+  display: flex;
+  flex-direction: row;
+  flex-basis: calc(50% - 4px);
+  margin-left: 4px;
+}

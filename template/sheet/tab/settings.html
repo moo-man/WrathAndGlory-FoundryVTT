@@ -1,0 +1,97 @@
+<div class="settings">
+  <div class="attributes wrapper">
+    <h1>{{localize "TITLE.ATTRIBUTES"}}</h1>
+    <div class="header">
+      <b class="name">{{localize "HEADER.NAME"}}</b>
+      <b class="rating">{{localize "HEADER.RATING"}}</b>
+    </div>
+    <div class="items">
+      {{#each data.attributes as |attribute key|}}
+      <div class="item">
+        <label class="name">{{localize attribute.label}}</label>
+        <input class="rating" name="data.attributes.{{key}}.rating" type="number" value="{{attribute.rating}}"
+          data-dtype="Number" />
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="skills wrapper">
+    <h1>{{localize "TITLE.SKILLS"}}</h1>
+    <div class="header">
+      <b class="name">{{localize "HEADER.NAME"}}</b>
+      <b class="rating">{{localize "HEADER.RATING"}}</b>
+    </div>
+    <div class="items">
+      {{#each data.skills as |skill key|}}
+      <div class="item">
+        <label class="name">{{localize skill.label}}</label>
+        <input class="rating" name="data.skills.{{key}}.rating" type="number" value="{{skill.rating}}"
+          data-dtype="Number" />
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="talents wrapper">
+    <h1>{{localize "TITLE.TALENTS"}}</h1>
+    <div class="header">
+      <b class="item-name">{{localize "HEADER.NAME"}}</b>
+      <div class="button">
+        <a class="item-create" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="items">
+      {{#each actor.items as |item|}}
+      {{#if item.isTalent}}
+      <div class="item" data-item-id="{{item._id}}">
+        <label class="item-name item-edit hover">{{item.name}}</label>
+        <div class="button">
+          <a class="item-control item-delete" title="Delete Talent"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="abilities wrapper">
+    <h1>{{localize "TITLE.ABILITIES"}}</h1>
+    <div class="header">
+      <b class="item-name">{{localize "HEADER.NAME"}}</b>
+      <div class="button">
+        <a class="item-create" title="Add Ability" data-type="ability"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="items">
+      {{#each actor.items as |item|}}
+      {{#if item.isAbility}}
+      <div class="item" data-item-id="{{item._id}}">
+        <label class="item-name item-edit hover">{{item.name}}</label>
+        <div class="button">
+          <a class="item-control item-delete" title="Delete ability"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="psychic-power wrapper">
+    <h1 style="padding: 0 28px;">{{localize "TITLE.PSYCHIC_POWERS"}}</h1>
+    <div class="header">
+      <b class="item-name">{{localize "HEADER.NAME"}}</b>
+      <div class="button">
+        <a class="item-create" title="Add Psychic Power" data-type="psychicPower"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="items">
+      {{#each actor.items as |item|}}
+      {{#if item.isPsychicPower}}
+      <div class="item" data-item-id="{{item._id}}">
+        <label class="item-name item-edit hover">{{item.name}}</label>
+        <div class="button">
+          <a class="item-control item-delete" title="Delete Psychic Power"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>

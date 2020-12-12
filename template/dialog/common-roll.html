@@ -1,0 +1,38 @@
+<div class="wrath-and-glory dialog">
+    <h1>{{localize name}}</h1>
+    <div class="wrapper">
+        <b class="name"></b>
+        <b class="base">{{localize "DIALOG.BASE"}}</b>
+        <b class="rank">{{localize "DIALOG.RANK"}}</b>
+        <b class="bonus">{{localize "DIALOG.BONUS"}}</b>
+    </div>
+    <div class="wrapper">
+        <label class="name">{{localize "DIALOG.DN"}}</label>
+        <input id="difficulty-target" class="base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
+        <select id="difficulty-rank" class="rank">
+            {{#select weapon.ed.rank}}
+            <option value="none">{{localize "RANK.NONE"}}</option>
+            <option value="minus-single">{{localize "RANK.MINUS_SINGLE"}}</option>
+            <option value="minus-double">{{localize "RANK.MINUS_DOUBLE"}}</option>
+            {{/select}}
+        </select>
+        <input id="difficulty-penalty" class="bonus" type="number" value="{{difficulty.penalty}}" data-dtype="Number" />
+    </div>
+    <div class="wrapper">
+        <label class="name">{{localize "DIALOG.DICE_POOL"}}</label>
+        <input id="pool-size" class="base" type="number" value="{{pool.size}}" data-dtype="Number" />
+        <select id="pool-rank" class="rank">
+            {{#select pool.rank}}
+            <option value="none">{{localize "RANK.NONE"}}</option>
+            <option value="single">{{localize "RANK.SINGLE"}}</option>
+            <option value="double">{{localize "RANK.DOUBLE"}}</option>
+            {{/select}}
+        </select>
+        <input id="pool-bonus" class="bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
+    </div>
+</div>
+<script>
+    $(".wrapper input").focusin(function () {
+        $(this).select();
+    });
+</script>

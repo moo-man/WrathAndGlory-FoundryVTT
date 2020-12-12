@@ -1,0 +1,101 @@
+.wrath-and-glory.dialog h1 {
+  margin: 0;
+  border-style: solid;
+  border-width: 0px 8px 8px 8px;
+  border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
+  color: var(--color-red);
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  padding: 0 30px;
+}
+
+.wrath-and-glory.dialog label  {
+  text-align: center;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 5px;
+  font-family: var(--font-text);
+  font-size: 14px;
+  border: 1px solid var(--color-black);
+  height: 31px;
+}
+
+.wrath-and-glory.dialog .hover:hover {
+  background-color: var(--color-red);
+}
+
+.wrath-and-glory.dialog input[type="text"],
+.wrath-and-glory.dialog input[type="number"],
+.wrath-and-glory.dialog select {
+  background: var(--image-input) repeat;
+  border: 1px solid var(--color-black);
+  border-radius: 0;
+  border-left: 0;
+  box-shadow: inset 0 0 6px var(--color-dark-grey);
+  color: var(--color-black);
+  font-size: 14px;
+  font-family: var(--font-text);
+  text-align: center;
+  height: 31px;
+}
+
+.wrath-and-glory.dialog {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.wrath-and-glory.dialog .wrapper-left {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: calc(50% - 4px);
+  margin-right: 4px;
+  justify-content: center;
+  align-self: baseline;
+}
+
+.wrath-and-glory.dialog .wrapper-right {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: calc(50% - 4px);
+  margin-left: 4px;
+  justify-content: center;
+  align-self: baseline;
+}
+
+.wrath-and-glory.dialog .wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.wrath-and-glory.dialog .wrapper .name {
+  flex-basis: 30%;
+}
+
+.wrath-and-glory.dialog .wrapper .rank {
+  width: 95px;
+}
+
+.wrath-and-glory.dialog .wrapper .base {
+  flex-basis: 15%;
+}
+
+.wrath-and-glory.dialog .wrapper .bonus {
+  flex-basis: 15%;
+}
+
+.wrath-and-glory.dialog .wrapper .full {
+  flex-basis: 70%;
+}
+
+.wrath-and-glory.dialog .wrapper .die {
+  flex-basis: calc(70% / 6);
+}

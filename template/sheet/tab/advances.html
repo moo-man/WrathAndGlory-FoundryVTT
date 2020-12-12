@@ -1,0 +1,164 @@
+<div class="advances">
+  <div class="metadata">
+    <div class="tier">
+      <label class="name">{{localize "ADVANCE.TIER"}}</label>
+      <input class="current" name="data.advances.tier" type="number" value="{{data.advances.tier}}"
+        data-dtype="Number" />
+
+    </div>
+    <div class="rank">
+      <label class="name">{{localize "ADVANCE.RANK"}}</label>
+      <input class="current" name="data.advances.rank" type="number" value="{{data.advances.rank}}"
+        data-dtype="Number" />
+    </div>
+    <div class="species">
+      <label class="name">{{localize "BIO.SPECIES"}}</label>
+      <input class="cost" name="data.advances.species" type="number" value="{{data.advances.species}}"
+        data-dtype="Number" />
+    </div>
+    <div class="experience">
+      <div class="header">
+        <b class="name"></b>
+        <b class="current">{{localize "HEADER.CURRENT"}}</b>
+        <b class="spent">{{localize "HEADER.SPENT"}}</b>
+        <b class="total">{{localize "HEADER.TOTAL"}}</b>
+      </div>
+      <div class="data">
+        <label class="name">{{localize "RESOURCE.EXPERIENCE"}}</label>
+        <input class="current" name="data.advances.experience.current" type="number"
+          value="{{data.advances.experience.current}}" data-dtype="Number" />
+        <input class="spent" type="number" value="{{data.advances.experience.spent}}" data-dtype="Number" disabled />
+        <input class="total" type="number" value="{{data.advances.experience.total}}" data-dtype="Number" disabled />
+      </div>
+    </div>
+  </div>
+  <div class="attributes wrapper">
+    <h1>{{localize "TITLE.ATTRIBUTES"}}</h1>
+    <div class="header">
+      <b class="name">{{localize "HEADER.NAME"}}</b>
+      <b class="rating">{{localize "HEADER.RATING"}}</b>
+      <b class="cost">{{localize "HEADER.COST"}}</b>
+    </div>
+    <div class="items">
+      {{#each data.attributes as |attribute key|}}
+      <div class="item">
+        <label class="name">{{localize attribute.label}}</label>
+        <input class="rating" name="data.attributes.{{key}}.rating" type="number" value="{{attribute.rating}}"
+          data-dtype="Number" />
+        <input class="cost" name="data.attributes.{{key}}.cost" type="number" value="{{attribute.cost}}"
+          data-dtype="Number" />
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="skills wrapper">
+    <h1>{{localize "TITLE.SKILLS"}}</h1>
+    <div class="header">
+      <b class="name">{{localize "HEADER.NAME"}}</b>
+      <b class="rating">{{localize "HEADER.RATING"}}</b>
+      <b class="cost">{{localize "HEADER.COST"}}</b>
+    </div>
+    <div class="items">
+      {{#each data.skills as |skill key|}}
+      <div class="item">
+        <label class="name">{{localize skill.label}}</label>
+        <input class="rating" name="data.skills.{{key}}.rating" type="number" value="{{skill.rating}}"
+          data-dtype="Number" />
+        <input class="cost" name="data.skills.{{key}}.cost" type="number" value="{{skill.cost}}" data-dtype="Number" />
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="talents wrapper">
+    <h1>{{localize "TITLE.TALENTS"}}</h1>
+    <div class="header">
+      <b class="item-name">{{localize "HEADER.NAME"}}</b>
+      <b class="cost">{{localize "HEADER.COST"}}</b>
+      <div class="button">
+        <a class="item-create" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="items">
+      {{#each actor.items as |item|}}
+      {{#if item.isTalent}}
+      <div class="item" data-item-id="{{item._id}}">
+        <label class="item-name item-edit hover">{{item.name}}</label>
+        <input class="cost item-cost" type="number" value="{{item.data.cost}}" data-dtype="Number" />
+        <div class="button">
+          <a class="item-control item-delete" title="Delete Talent"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="abilities wrapper">
+    <h1>{{localize "TITLE.ABILITIES"}}</h1>
+    <div class="header">
+      <b class="item-name">{{localize "HEADER.NAME"}}</b>
+      <b class="cost">{{localize "HEADER.COST"}}</b>
+      <div class="button">
+        <a class="item-create" title="Add Ability" data-type="ability"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="items">
+      {{#each actor.items as |item|}}
+      {{#if item.isAbility}}
+      <div class="item" data-item-id="{{item._id}}">
+        <label class="item-name item-edit hover">{{item.name}}</label>
+        <input class="cost item-cost" type="number" value="{{item.data.cost}}" data-dtype="Number" />
+        <div class="button">
+          <a class="item-control item-delete" title="Delete ability"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="psychic-power wrapper">
+    <h1 style="padding: 0 28px;">{{localize "TITLE.PSYCHIC_POWERS"}}</h1>
+    <div class="header">
+      <b class="item-name">{{localize "HEADER.NAME"}}</b>
+      <b class="cost">{{localize "HEADER.COST"}}</b>
+      <div class="button">
+        <a class="item-create" title="Add Psychic Power" data-type="psychicPower"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="items">
+      {{#each actor.items as |item|}}
+      {{#if item.isPsychicPower}}
+      <div class="item" data-item-id="{{item._id}}">
+        <label class="item-name item-edit hover">{{item.name}}</label>
+        <input class="cost item-cost" type="number" value="{{item.data.cost}}" data-dtype="Number" />
+        <div class="button">
+          <a class="item-control item-delete" title="Delete Psychic Power"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="ascension wrapper">
+    <h1 style="padding: 0 28px;">{{localize "TITLE.ASCENCION"}}</h1>
+    <div class="header">
+      <b class="item-name">{{localize "HEADER.NAME"}}</b>
+      <b class="cost">{{localize "HEADER.COST"}}</b>
+      <div class="button">
+        <a class="item-create" title="Add Ascension" data-type="ascension"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="items">
+      {{#each actor.items as |item|}}
+      {{#if item.isAscension}}
+      <div class="item" data-item-id="{{item._id}}">
+        <label class="item-name item-edit hover">{{item.name}}</label>
+        <input class="cost item-cost" type="number" value="{{item.data.cost}}" data-dtype="Number" />
+        <div class="button">
+          <a class="item-control item-delete" title="Delete Ascension"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>
