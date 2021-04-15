@@ -2,9 +2,9 @@
   "name": "wrath-and-glory",
   "title": "Wrath & Glory",
   "description": "In the grim darkness of the far future, there is only war",
-  "version": "1.11.1",
-  "minimumCoreVersion": "0.7.7",
-  "compatibleCoreVersion": "0.7.8",
+  "version": "2.0.0",
+  "minimumCoreVersion": "0.8.1",
+  "compatibleCoreVersion": "0.8.2",
   "templateVersion": 2,
   "author": "Moo Man, Perfectros",
   "scripts": [],
@@ -42,7 +42,8 @@
   "secondaryTokenAttribute": null,
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/moo-man/WrathAndGlory-FoundryVTT/master/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/archive/master.zip",
+  "manifest": "https://raw.githubusercontent.com/moo-man/WrathAndGlory-FoundryVTT/0.8-support/system.json",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/archive/refs/heads/0.8-support.zip",
   "license": "LICENSE.txt"
 }
+

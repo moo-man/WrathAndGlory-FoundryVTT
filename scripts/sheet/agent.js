@@ -32,7 +32,7 @@ export class AgentSheet extends WrathAndGloryActorSheet {
 
     _getHeaderButtons() {
         let buttons = super._getHeaderButtons();
-        if (this.actor.owner) {
+        if (this.actor.isOwner) {
             buttons = [
             ].concat(buttons);
         }
@@ -42,10 +42,10 @@ export class AgentSheet extends WrathAndGloryActorSheet {
     async _onItemCostFocusOut(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        let item = this.actor.getOwnedItem(div.data("itemId"));
+        let item = this.actor.getEmbeddedDocument("Item", div.data("itemId"))
         const value = parseInt($(event.currentTarget)[0].value, 10);
         let data = { _id: item._id, "data.cost": value };
-        await this.actor.updateOwnedItem(data);
+        await this.actor.updateEmbeddedDocument("Item", data);
         this._render(true);
     }
 }

@@ -2,29 +2,30 @@ export class WrathAndGloryActor extends Actor {
     prepareData() {
         super.prepareData();
         if (this.data.type === "agent") {
-            this._initializeAgent(this.data);
+            this._initializeAgent();
         } else if (this.data.type === "threat") {
-            this._initializeThreat(this.data);
+            this._initializeThreat();
         }
     }
 
-    _initializeAgent(data) {
-        this._initializeBonus(data);
-        this._computeItems(data);
-        this._computeAttributes(data);
-        this._computeSkills(data);
-        this._computeCombat(data);
-        this._computeExperience(data);
+    _initializeAgent() {
+        this._initializeBonus();
+        this._computeItems();
+        this._computeAttributes();
+        this._computeSkills();
+        this._computeCombat();
+        this._computeExperience();
     }
 
     _initializeThreat(data) {
-        this._initializeBonus(data);
-        this._computeItems(data);
-        this._computeAttributes(data);
-        this._computeSkills(data);
+        this._initializeBonus();
+        this._computeItems();
+        this._computeAttributes();
+        this._computeSkills();
     }
 
-    _initializeBonus(data) {
+    _initializeBonus() {
+        let data = this.data
         if (data.data.hasOwnProperty("advances")) {
             data.data.advances.experience.spent = 0;
             data.data.advances.experience.total = 0;
@@ -37,29 +38,16 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    _computeItems(data) {
+    _computeItems() {
+        let data = this.data
         data.data.combat.resilence.armor = 0;
-        for (let item of Object.values(data.items)) {
-            item.isKeyword = item.type === "keyword";
-            item.isTalent = item.type === "talent";
-            item.isAbility = item.type === "ability";
-            item.isTalentOrAbility = item.isTalent || item.isAbility;
-            item.isPsychicPower = item.type === "psychicPower";
-            item.isArmour = item.type === "armour";
-            item.isWeapon = item.type === "weapon";
-            item.isWeaponUpgrade = item.type === "weaponUpgrade";
-            item.isGear = item.type === "gear";
-            item.isTraumaticInjury = item.type === "traumaticInjury";
-            item.isMemorableInjury = item.type === "memorableInjury";
-            item.isAscension = item.type === "ascension";
-            item.isMutation = item.type === "mutation";
-            item.isAmmo = item.type === "ammo";
-            item.isAugmentic = item.type === "augmentic";
+        for (let item of this.items) {
+
             if (item.isArmour) {
-                this._computeArmour(data, item);
+                this._computeArmour(item);
             }
             if (item.data.hasOwnProperty("bonus")) {
-                this._computeBonus(data, item.data.bonus);
+                this._computeBonus(item);
             }
             if (data.data.hasOwnProperty("advances") && item.data.hasOwnProperty("cost")) {
                 data.data.advances.experience.spent = data.data.advances.experience.spent + item.data.cost;
@@ -67,13 +55,14 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    _computeArmour(data, item) {
-        if (data.data.combat.resilence.armor < item.data.rating) {
-            data.data.combat.resilence.armor = item.data.rating;
+    _computeArmour(item) {
+        if (this.data.data.combat.resilence.armor < item.data.data.rating) {
+            this.data.data.combat.resilence.armor = item.data.data.rating;
         }
     }
 
-    _computeAttributes(data) {
+    _computeAttributes() {
+        let data = this.data
         for (let attribute of Object.values(data.data.attributes)) {
             attribute.total = attribute.rating + attribute.bonus;
             if (data.data.hasOwnProperty("advances")) {
@@ -82,7 +71,9 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    _computeBonus(data, bonus) {
+    _computeBonus(item) {
+        let data = this.data
+        let bonus = item.data.data.bonus
         for (let [key, value] of Object.entries(data.data.attributes)) {
             value.bonus = value.bonus + bonus.attributes[key];
         }
@@ -96,7 +87,8 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    _computeSkills(data) {
+    _computeSkills(item) {
+        let data = this.data
         let middle = Object.values(data.data.skills).length / 2;
         let i = 0;
         for (let skill of Object.values(data.data.skills)) {
@@ -110,7 +102,8 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    _computeCombat(data) {
+    _computeCombat() {
+        let data = this.data
         data.data.combat.passiveAwareness.total = this._setDefault(Math.ceil(data.data.skills.awareness.total / 2) + data.data.combat.passiveAwareness.bonus, 1);
         data.data.combat.defense.total = this._setDefault(data.data.attributes.initiative.total - 1 + data.data.combat.defense.bonus, 1);
         data.data.combat.resolve.total = this._setDefault(data.data.attributes.willpower.total - 1 + data.data.combat.resolve.bonus, 1);
@@ -125,7 +118,8 @@ export class WrathAndGloryActor extends Actor {
         return (value < fallback ? fallback : value);
     }
 
-    _computeExperience(data) {
+    _computeExperience() {
+        let data = this.data
         data.data.advances.experience.spent = data.data.advances.experience.spent + data.data.advances.species;
         data.data.advances.experience.total = data.data.advances.experience.current + data.data.advances.experience.spent;
     }

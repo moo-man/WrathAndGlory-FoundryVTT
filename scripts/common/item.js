@@ -4,24 +4,11 @@ export class WrathAndGloryItem extends Item {
     }
 
     async sendToChat() {
-        const item = duplicate(this.data);
-        if (item.img.includes("/unknown")) {
-            item.img = null;
+        const item = new CONFIG.Item.documentClass(this.data._source)
+        if (item.data.img.includes("/unknown")) {
+            item.data.img = null;
         }
-        item.isKeyword = item.type === "keyword";
-        item.isTalent = item.type === "talent";
-        item.isAbility = item.type === "ability";
-        item.isPsychicPower = item.type === "psychicPower";
-        item.isArmour = item.type === "armour";
-        item.isWeapon = item.type === "weapon";
-        item.isWeaponUpgrade = item.type === "weaponUpgrade";
-        item.isGear = item.type === "gear";
-        item.isTraumaticInjury = item.type === "traumaticInjury";
-        item.isMemorableInjury = item.type === "memorableInjury";
-        item.isAscension = item.type === "ascension";
-        item.isMutation = item.type === "mutation";
-        item.isAmmo = item.type === "ammo";
-        item.isAugmentic = item.type === "augmentic";
+
         const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.html", item);
         const chatData = {
             user: game.user._id,
@@ -35,4 +22,36 @@ export class WrathAndGloryItem extends Item {
         }
         ChatMessage.create(chatData);
     }
+
+
+    get isKeyword() {return this.type === "keyword"}
+
+    get isTalent() {return this.type === "talent"}
+
+    get isAbility() {return this.type === "ability"}
+
+    get isTalentOrAbility() {return this.isTalent || this.isAbility}
+
+    get isPsychicPower() {return this.type === "psychicPower"}
+
+    get isArmour() {return this.type === "armour"}
+
+    get isWeapon() {return this.type === "weapon"}
+
+    get isWeaponUpgrade() {return this.type === "weaponUpgrade"}
+
+    get isGear() {return this.type === "gear"}
+
+    get isTraumaticInjury() {return this.type === "traumaticInjury"}
+
+    get isMemorableInjury() {return this.type === "memorableInjury"}
+
+    get isAscension() {return this.type === "ascension"}
+
+    get isMutation() {return this.type === "mutation"}
+
+    get isAmmo() {return this.type === "ammo"}
+
+    get isAugmentic() {return this.type === "augmentic"}
+
 }

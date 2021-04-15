@@ -17,6 +17,13 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     return buttons;
   }
 
+  getData() {
+    const data = super.getData();
+    data.data = data.data.data // project system data so that handlebars has the same name and value paths
+    return data;
+}
+
+
   _onFocusIn(event) {
     $(event.currentTarget).select();
   }

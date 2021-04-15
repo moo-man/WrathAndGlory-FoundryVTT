@@ -22,8 +22,8 @@ import { prepareCommonRoll, prepareWeaponRoll, prepareDamageRoll, preparePsychic
 import { commonRoll, weaponRoll, damageRoll, psychicRoll } from "./roll.js";
 
 Hooks.once("init", () => {
-  CONFIG.Actor.entityClass = WrathAndGloryActor;
-  CONFIG.Item.entityClass = WrathAndGloryItem;
+  CONFIG.Actor.documentClass = WrathAndGloryActor;
+  CONFIG.Item.documentClass = WrathAndGloryItem;
   game.wag = {
     prepareCommonRoll,
     prepareWeaponRoll,

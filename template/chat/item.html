@@ -1,29 +1,29 @@
 <div class="wrath-and-glory chat item">
     <div class="wrapper">
         {{#if img}}
-        <img src="{{img}}" title="{{name}}" />
+        <img src="{{img}}" title="{{item.name}}" />
         {{/if}}
 
-        <h3>{{name}}</h3>
+        <h3>{{item.name}}</h3>
 
         <div class="wrapper-input">
-            {{#if isKeyword}}
-            <p><strong>{{localize "KEYWORD.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            {{#if item.isKeyword}}
+            <p><strong>{{localize "KEYWORD.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isTalent}}
+            {{#if item.isTalent}}
             <p><strong>{{localize "TALENT.REQUIREMENTS"}}:</strong> {{data.requirements}}</p>
             <p><strong>{{localize "TALENT.COST"}}:</strong> {{data.cost}}</p>
-            <p><strong>{{localize "TALENT.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "TALENT.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isAbility}}
+            {{#if item.isAbility}}
             <p><strong>{{localize "ABILITY.REQUIREMENTS"}}:</strong> {{data.requirements}}</p>
             <p><strong>{{localize "ABILITY.COST"}}:</strong> {{data.cost}}</p>
-            <p><strong>{{localize "ABILITY.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "ABILITY.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isPsychicPower}}
+            {{#if item.isPsychicPower}}
             <p><strong>{{localize "PSYCHIC_POWER.PREREQUISITES"}}:</strong> {{data.prerequisites}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.COST"}}:</strong> {{data.cost}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.DN"}}:</strong> {{data.dn}}</p>
@@ -32,20 +32,20 @@
             <p><strong>{{localize "PSYCHIC_POWER.RANGE"}}:</strong> {{data.range}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.MULTI_TARGET"}}:</strong> {{multiTarget data.multiTarget}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.KEYWORDS"}}:</strong> {{data.keywords}}</p>
-            <p><strong>{{localize "PSYCHIC_POWER.POTENCY"}}:</strong> {{removeMarkup data.potency}}</p>
-            <p><strong>{{localize "PSYCHIC_POWER.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "PSYCHIC_POWER.POTENCY"}}:</strong> {{{data.potency}}}</p>
+            <p><strong>{{localize "PSYCHIC_POWER.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isArmour}}
+            {{#if item.isArmour}}
             <p><strong>{{localize "ARMOUR.RATING"}}:</strong> {{data.rating}}</p>
             <p><strong>{{localize "ARMOUR.TRAITS"}}:</strong> {{data.traits}}</p>
             <p><strong>{{localize "ARMOUR.VALUE"}}:</strong> {{data.value}}</p>
             <p><strong>{{localize "ARMOUR.RARITY"}}:</strong> {{rarity data.rarity}}</p>
             <p><strong>{{localize "ARMOUR.KEYWORDS"}}:</strong> {{data.keywords}}</p>
-            <p><strong>{{localize "ARMOUR.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "ARMOUR.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isWeapon}}
+            {{#if item.isWeapon}}
             <p><strong>{{localize "WEAPON.CATEGORY"}}:</strong> {{category data.category}}</p>
             <p><strong>{{localize "WEAPON.DAMAGE"}}:</strong> {{damage data.damage}}</p>
             <p><strong>{{localize "WEAPON.AP"}}:</strong> {{ap data.ap}}</p>
@@ -55,56 +55,56 @@
             <p><strong>{{localize "WEAPON.VALUE"}}:</strong> {{data.value}}</p>
             <p><strong>{{localize "WEAPON.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
             <p><strong>{{localize "WEAPON.KEYWORDS"}}:</strong> {{data.keywords}}</p>
-            <p><strong>{{localize "WEAPON.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "WEAPON.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isWeaponUpgrade}}
+            {{#if item.isWeaponUpgrade}}
             <p><strong>{{localize "WEAPON_UPGRADE.VALUE"}}:</strong> {{data.value}}</p>
             <p><strong>{{localize "WEAPON_UPGRADE.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
             <p><strong>{{localize "WEAPON_UPGRADE.KEYWORDS"}}:</strong> {{data.keywords}}</p>
-            <p><strong>{{localize "WEAPON_UPGRADE.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "WEAPON_UPGRADE.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isGear}}
+            {{#if item.isGear}}
             <p><strong>{{localize "GEAR.VALUE"}}:</strong> {{data.value}}</p>
             <p><strong>{{localize "GEAR.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
             <p><strong>{{localize "GEAR.KEYWORDS"}}:</strong> {{data.keywords}}</p>
-            <p><strong>{{localize "GEAR.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "GEAR.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isTraumaticInjury}}
-            <p><strong>{{localize "TRAUMATIC_INJURY.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            {{#if item.isTraumaticInjury}}
+            <p><strong>{{localize "TRAUMATIC_INJURY.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isMemorableInjury}}
-            <p><strong>{{localize "MEMORABLE_INJURY.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            {{#if item.isMemorableInjury}}
+            <p><strong>{{localize "MEMORABLE_INJURY.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isAscension}}
+            {{#if item.isAscension}}
             <p><strong>{{localize "ASCENSION.REQUIREMENTS"}}:</strong> {{data.requirements}}</p>
             <p><strong>{{localize "ASCENSION.INFLUENCE"}}:</strong> {{data.influence}}</p1>
             <p><strong>{{localize "ASCENSION.KEYWORDS"}}:</strong> {{data.keywords}}</p>
-            <p><strong>{{localize "ASCENSION.BENEFITS"}}:</strong> {{removeMarkup data.benefits}}</p>
-            <p><strong>{{localize "ASCENSION.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "ASCENSION.BENEFITS"}}:</strong> {{{data.benefits}}}</p>
+            <p><strong>{{localize "ASCENSION.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isMutation}}
-            <p><strong>{{localize "MUTATION.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            {{#if item.isMutation}}
+            <p><strong>{{localize "MUTATION.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isAmmo}}
+            {{#if item.isAmmo}}
             <p><strong>{{localize "AMMO.QUANTITY"}}:</strong> {{data.quantity}}</p>
             <p><strong>{{localize "AMMO.VALUE"}}:</strong> {{data.value}}</p>
             <p><strong>{{localize "AMMO.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
             <p><strong>{{localize "AMMO.KEYWORDS"}}:</strong> {{data.keywords}}</p>
-            <p><strong>{{localize "AMMO.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "AMMO.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
-            {{#if isAugmentic}}
+            {{#if item.isAugmentic}}
             <p><strong>{{localize "AUGMENTIC.VALUE"}}:</strong> {{data.value}}</p>
             <p><strong>{{localize "AUGMENTIC.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
             <p><strong>{{localize "AUGMENTIC.KEYWORDS"}}:</strong> {{data.keywords}}</p>
-            <p><strong>{{localize "AUGMENTIC.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+            <p><strong>{{localize "AUGMENTIC.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
         </div>
     </div>
