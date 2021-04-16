@@ -3,7 +3,7 @@
         {{#if img}}
         <img src="{{img}}" title="{{item.name}}" />
         {{/if}}
-
+        {{log this}}
         <h3>{{item.name}}</h3>
 
         <div class="wrapper-input">
@@ -40,34 +40,34 @@
             <p><strong>{{localize "ARMOUR.RATING"}}:</strong> {{data.rating}}</p>
             <p><strong>{{localize "ARMOUR.TRAITS"}}:</strong> {{data.traits}}</p>
             <p><strong>{{localize "ARMOUR.VALUE"}}:</strong> {{data.value}}</p>
-            <p><strong>{{localize "ARMOUR.RARITY"}}:</strong> {{rarity data.rarity}}</p>
+            <p><strong>{{localize "ARMOUR.RARITY"}}:</strong> {{item.rarity}}</p>
             <p><strong>{{localize "ARMOUR.KEYWORDS"}}:</strong> {{data.keywords}}</p>
             <p><strong>{{localize "ARMOUR.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
             {{#if item.isWeapon}}
-            <p><strong>{{localize "WEAPON.CATEGORY"}}:</strong> {{category data.category}}</p>
-            <p><strong>{{localize "WEAPON.DAMAGE"}}:</strong> {{damage data.damage}}</p>
-            <p><strong>{{localize "WEAPON.AP"}}:</strong> {{ap data.ap}}</p>
-            <p><strong>{{localize "WEAPON.ED"}}:</strong> {{ed data.ed}}</p>
-            <p><strong>{{localize "WEAPON.RANGE"}}:</strong> {{range data}}</p>
+            <p><strong>{{localize "WEAPON.CATEGORY"}}:</strong> {{item.category}}</p>
+            <p><strong>{{localize "WEAPON.DAMAGE"}}:</strong> {{item.damage}}</p>
+            <p><strong>{{localize "WEAPON.AP"}}:</strong> {{item.ap}}</p>
+            <p><strong>{{localize "WEAPON.ED"}}:</strong> {{item.ed}}</p>
+            <p><strong>{{localize "WEAPON.RANGE"}}:</strong> {{item.range}}</p>
             <p><strong>{{localize "WEAPON.TRAITS"}}:</strong> {{data.traits}}</p>
             <p><strong>{{localize "WEAPON.VALUE"}}:</strong> {{data.value}}</p>
-            <p><strong>{{localize "WEAPON.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
+            <p><strong>{{localize "WEAPON.RARITY"}}:</strong> {{item.rarity}}</p1>
             <p><strong>{{localize "WEAPON.KEYWORDS"}}:</strong> {{data.keywords}}</p>
             <p><strong>{{localize "WEAPON.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
             {{#if item.isWeaponUpgrade}}
             <p><strong>{{localize "WEAPON_UPGRADE.VALUE"}}:</strong> {{data.value}}</p>
-            <p><strong>{{localize "WEAPON_UPGRADE.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
+            <p><strong>{{localize "WEAPON_UPGRADE.RARITY"}}:</strong> {{item.rarity}}</p1>
             <p><strong>{{localize "WEAPON_UPGRADE.KEYWORDS"}}:</strong> {{data.keywords}}</p>
             <p><strong>{{localize "WEAPON_UPGRADE.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
             {{#if item.isGear}}
             <p><strong>{{localize "GEAR.VALUE"}}:</strong> {{data.value}}</p>
-            <p><strong>{{localize "GEAR.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
+            <p><strong>{{localize "GEAR.RARITY"}}:</strong> {{item.rarity}}</p1>
             <p><strong>{{localize "GEAR.KEYWORDS"}}:</strong> {{data.keywords}}</p>
             <p><strong>{{localize "GEAR.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
@@ -95,14 +95,14 @@
             {{#if item.isAmmo}}
             <p><strong>{{localize "AMMO.QUANTITY"}}:</strong> {{data.quantity}}</p>
             <p><strong>{{localize "AMMO.VALUE"}}:</strong> {{data.value}}</p>
-            <p><strong>{{localize "AMMO.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
+            <p><strong>{{localize "AMMO.RARITY"}}:</strong> {{item.rarity}}</p1>
             <p><strong>{{localize "AMMO.KEYWORDS"}}:</strong> {{data.keywords}}</p>
             <p><strong>{{localize "AMMO.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}
 
             {{#if item.isAugmentic}}
             <p><strong>{{localize "AUGMENTIC.VALUE"}}:</strong> {{data.value}}</p>
-            <p><strong>{{localize "AUGMENTIC.RARITY"}}:</strong> {{rarity data.rarity}}</p1>
+            <p><strong>{{localize "AUGMENTIC.RARITY"}}:</strong> {{item.rarity}}</p1>
             <p><strong>{{localize "AUGMENTIC.KEYWORDS"}}:</strong> {{data.keywords}}</p>
             <p><strong>{{localize "AUGMENTIC.DESCRIPTION"}}:</strong> {{{data.description}}}</p>
             {{/if}}

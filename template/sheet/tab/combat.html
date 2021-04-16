@@ -64,7 +64,7 @@
       <div class="scrollable">
         {{#each actor.items as |item|}}
         {{#if item.isTraumaticInjury}}
-        <div class="traumatic item" data-item-id="{{item._id}}">
+        <div class="traumatic item" data-item-id="{{item.id}}">
           <div class="wrapper-hover">
             <div class="avatar" style="background-image: url('{{item.img}}')"></div>
             <div class="name item-edit">{{item.name}}</div>
@@ -88,7 +88,7 @@
       <div class="scrollable">
         {{#each actor.items as |item|}}
         {{#if item.isMemorableInjury}}
-        <div class="memorable item" data-item-id="{{item._id}}">
+        <div class="memorable item" data-item-id="{{item.id}}">
           <div class="wrapper-hover">
             <div class="avatar" style="background-image: url('{{item.img}}')"></div>
             <div class="name item-edit">{{item.name}}</div>
@@ -127,7 +127,7 @@
       <div class="scrollable">
         {{#each actor.items as |item|}}
         {{#if item.isMutation}}
-        <div class="mutation item" data-item-id="{{item._id}}">
+        <div class="mutation item" data-item-id="{{item.id}}">
           <div class="wrapper-hover">
             <div class="avatar" style="background-image: url('{{item.img}}')"></div>
             <div class="name item-edit">{{item.name}}</div>
@@ -161,13 +161,13 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isWeapon}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name roll-weapon">{{item.name}}</div>
-          <div class="damage">{{damage item.data.damage}}</div>
-          <div class="ed">{{ed item.data.ed}}</div>
-          <div class="ap">{{ap item.data.ap}}</div>
-          <div class="range">{{range item.data}}</div>
+          <div class="damage">{{item.damage}}</div>
+          <div class="ed">{{item.ed}}</div>
+          <div class="ap">{{item.ap}}</div>
+          <div class="range">{{item.range}}</div>
           <div class="traits">{{item.data.traits}}</div>
         </div>
         {{/if}}
@@ -182,7 +182,7 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isArmour}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
           <div class="rating">{{item.data.rating}}</div>
@@ -203,7 +203,7 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isPsychicPower}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name roll-psychic-power">{{item.name}}</div>
           <div class="dn">{{item.data.dn}}</div>
@@ -224,7 +224,7 @@
         {{#each actor.items as |item|}}
         {{#if item.isTalentOrAbility}}
         {{#if item.data.display}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
           <div class="effect">{{item.data.effect}}</div>

@@ -42,33 +42,7 @@ function preloadHandlebarsTemplates() {
 }
 
 function registerHandlebarsHelpers() {
-  Handlebars.registerHelper("removeMarkup", function (text) {
-    const markup = /<(.*?)>/gi;
-    return text.replace(markup, "");
-  });
-  Handlebars.registerHelper("range", function (data) {
-    const short = data.range.short < 1 ? "-" : data.range.short;
-    const medium = data.range.medium < 1 ? "-" : data.range.medium;
-    const long = data.range.long < 1 ? "-" : data.range.long;
-    const salvo = data.salvo < 1 ? "-" : data.salvo;
-    return `${salvo} | ${short} / ${medium} / ${long}`;
-  });
-  Handlebars.registerHelper("activation", function (activation) {
-    switch (activation) {
-      case "free":
-        return game.i18n.localize("ACTIVATION.FREE");
-      case "action":
-        return game.i18n.localize("ACTIVATION.ACTION");
-      case "simple":
-        return game.i18n.localize("ACTIVATION.SIMPLE");
-      case "full":
-        return game.i18n.localize("ACTIVATION.FULL");
-      case "movement":
-        return game.i18n.localize("ACTIVATION.MOVEMENT");
-      default:
-        return game.i18n.localize("ACTIVATION.ACTION");
-    }
-  });
+
   Handlebars.registerHelper("multiTarget", function (isMultiTarget) {
     if (isMultiTarget) {
         return game.i18n.localize("DIALOG.YES");
@@ -76,32 +50,7 @@ function registerHandlebarsHelpers() {
       return game.i18n.localize("DIALOG.NO")
     }
   });
-  Handlebars.registerHelper("rarity", function (rarity) {
-    switch (rarity) {
-      case "common":
-        return game.i18n.localize("RARITY.COMMON");
-      case "uncommon":
-        return game.i18n.localize("RARITY.UNCOMMON");
-      case "rare":
-        return game.i18n.localize("RARITY.RARE");
-      case "very-rare":
-        return game.i18n.localize("RARITY.VERY_RARE");
-      case "unique":
-        return game.i18n.localize("RARITY.UNIQUE");
-      default:
-        return game.i18n.localize("RARITY.COMMON");
-    }
-  });
-  Handlebars.registerHelper("category", function (category) {
-    switch (category) {
-      case "melee":
-        return game.i18n.localize("CATEGORY.MELEE");
-      case "ranged":
-        return game.i18n.localize("CATEGORY.RANGED");
-      default:
-        return game.i18n.localize("CATEGORY.MELEE");
-    }
-  });
+
   Handlebars.registerHelper("size", function (size) {
     switch (size) {
       case "tiny":
@@ -120,24 +69,4 @@ function registerHandlebarsHelpers() {
         return game.i18n.localize("SIZE.AVERAGE");
     }
   });
-  Handlebars.registerHelper("damage", function (data) {
-    return _dataWithRank(data);
-  });
-  Handlebars.registerHelper("ed", function (data) {
-    return _dataWithRank(data);
-  });
-  Handlebars.registerHelper("ap", function (data) {
-    return _dataWithRank(data);
-  });
-}
-
-function _dataWithRank(data) {
-  let damage = data.base + data.bonus;
-    let rank = "";
-    if (data.rank === "single") {
-      rank = " + R";
-    } else if (data.rank === "double") {
-      rank = " + DR";
-    }
-    return `${damage}${rank}`;
 }

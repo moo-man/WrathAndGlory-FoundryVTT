@@ -262,7 +262,7 @@ function _hasDamage(rollData) {
 async function _sendToChat(rollData) {
   const html = await renderTemplate("systems/wrath-and-glory/template/chat/roll.html", rollData);
   let chatData = {
-    user: game.user._id,
+    user: game.user.id,
     rollMode: game.settings.get("core", "rollMode"),
     content: html
   };
@@ -277,7 +277,7 @@ async function _sendToChat(rollData) {
 async function _sendDamageToChat(rollData) {
   const html = await renderTemplate("systems/wrath-and-glory/template/chat/damage.html", rollData);
   let chatData = {
-    user: game.user._id,
+    user: game.user.id,
     rollMode: game.settings.get("core", "rollMode"),
     content: html
   };

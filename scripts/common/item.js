@@ -9,9 +9,9 @@ export class WrathAndGloryItem extends Item {
             item.data.img = null;
         }
 
-        const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.html", item);
+        const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.html", {item, data: item.data.data});
         const chatData = {
-            user: game.user._id,
+            user: game.user,
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
         };
@@ -23,35 +23,108 @@ export class WrathAndGloryItem extends Item {
         ChatMessage.create(chatData);
     }
 
+    _dataWithRank(type) {
+        let data = this.data.data[type]
+        let damage = data.base + data.bonus;
+        let rank = "";
+        if (data.rank === "single") {
+            rank = " + R";
+        } else if (data.rank === "double") {
+            rank = " + DR";
+        }
+        return `${damage}${rank}`;
+    }
 
-    get isKeyword() {return this.type === "keyword"}
+    get range() {
+        let data = this.data.data
+        const short = data.range.short < 1 ? "-" : data.range.short;
+        const medium = data.range.medium < 1 ? "-" : data.range.medium;
+        const long = data.range.long < 1 ? "-" : data.range.long;
+        const salvo = data.salvo < 1 ? "-" : data.salvo;
+        return `${salvo} | ${short} / ${medium} / ${long}`;
+    }
 
-    get isTalent() {return this.type === "talent"}
+    get damage() {
+        return this._dataWithRank("damage");
+    }
+    get ed() {
+        return this._dataWithRank("ed");
+    }
+    get ap() {
+        return this._dataWithRank("ap");
+    }
 
-    get isAbility() {return this.type === "ability"}
+    get activation() {
+        switch (this.data.data.activation) {
+            case "free":
+                return game.i18n.localize("ACTIVATION.FREE");
+            case "action":
+                return game.i18n.localize("ACTIVATION.ACTION");
+            case "simple":
+                return game.i18n.localize("ACTIVATION.SIMPLE");
+            case "full":
+                return game.i18n.localize("ACTIVATION.FULL");
+            case "movement":
+                return game.i18n.localize("ACTIVATION.MOVEMENT");
+            default:
+                return game.i18n.localize("ACTIVATION.ACTION");
+        }
+    }
+    get rarity() {
+        switch (this.data.data.rarity) {
+            case "common":
+                return game.i18n.localize("RARITY.COMMON");
+            case "uncommon":
+                return game.i18n.localize("RARITY.UNCOMMON");
+            case "rare":
+                return game.i18n.localize("RARITY.RARE");
+            case "very-rare":
+                return game.i18n.localize("RARITY.VERY_RARE");
+            case "unique":
+                return game.i18n.localize("RARITY.UNIQUE");
+            default:
+                return game.i18n.localize("RARITY.COMMON");
+        }
+    }
+    get category() {
+        switch (this.data.data.category) {
+            case "melee":
+                return game.i18n.localize("CATEGORY.MELEE");
+            case "ranged":
+                return game.i18n.localize("CATEGORY.RANGED");
+            default:
+                return game.i18n.localize("CATEGORY.MELEE");
+        }
+    }
 
-    get isTalentOrAbility() {return this.isTalent || this.isAbility}
+    get isKeyword() { return this.type === "keyword" }
 
-    get isPsychicPower() {return this.type === "psychicPower"}
+    get isTalent() { return this.type === "talent" }
 
-    get isArmour() {return this.type === "armour"}
+    get isAbility() { return this.type === "ability" }
 
-    get isWeapon() {return this.type === "weapon"}
+    get isTalentOrAbility() { return this.isTalent || this.isAbility }
 
-    get isWeaponUpgrade() {return this.type === "weaponUpgrade"}
+    get isPsychicPower() { return this.type === "psychicPower" }
 
-    get isGear() {return this.type === "gear"}
+    get isArmour() { return this.type === "armour" }
 
-    get isTraumaticInjury() {return this.type === "traumaticInjury"}
+    get isWeapon() { return this.type === "weapon" }
 
-    get isMemorableInjury() {return this.type === "memorableInjury"}
+    get isWeaponUpgrade() { return this.type === "weaponUpgrade" }
 
-    get isAscension() {return this.type === "ascension"}
+    get isGear() { return this.type === "gear" }
 
-    get isMutation() {return this.type === "mutation"}
+    get isTraumaticInjury() { return this.type === "traumaticInjury" }
 
-    get isAmmo() {return this.type === "ammo"}
+    get isMemorableInjury() { return this.type === "memorableInjury" }
 
-    get isAugmentic() {return this.type === "augmentic"}
+    get isAscension() { return this.type === "ascension" }
+
+    get isMutation() { return this.type === "mutation" }
+
+    get isAmmo() { return this.type === "ammo" }
+
+    get isAugmentic() { return this.type === "augmentic" }
 
 }

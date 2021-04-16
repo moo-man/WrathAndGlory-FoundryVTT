@@ -1,4 +1,20 @@
 export class WrathAndGloryActor extends Actor {
+
+    async _preCreate(data, options, user) {
+        mergeObject(data, {
+            "token.bar1": { "attribute": "combat.wounds" },
+            "token.bar2": { "attribute": "combat.shock" },
+            "token.displayName": CONST.TOKEN_DISPLAY_MODES.HOVER,
+            "token.displayBars": CONST.TOKEN_DISPLAY_MODES.ALWAYS,
+            "token.disposition": CONST.TOKEN_DISPOSITIONS.NEUTRAL,
+            "token.name": data.name
+          });
+          if (data.type === "agent") {
+            data.token.vision = true;
+            data.token.actorLink = true;
+          }
+    }
+
     prepareData() {
         super.prepareData();
         if (this.data.type === "agent") {

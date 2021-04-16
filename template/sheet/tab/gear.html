@@ -25,13 +25,13 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isWeapon}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
-          <div class="damage">{{damage item.data.damage}}</div>
-          <div class="ed">{{ed item.data.ed}}</div>
-          <div class="ap">{{ap item.data.ap}}</div>
-          <div class="range">{{range item.data}}</div>
+          <div class="damage">{{item.damage}}</div>
+          <div class="ed">{{item.ed}}</div>
+          <div class="ap">{{item.ap}}</div>
+          <div class="range">{{item.range}}</div>
           <div class="traits">{{item.data.traits}}</div>
           <div class="button">
             <a class="item-control item-delete" title="Delete Weapon"><i class="fas fa-times"></i></a>
@@ -52,7 +52,7 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isArmour}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
           <div class="rating">{{item.data.rating}}</div>
@@ -75,7 +75,7 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isGear}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
           <div class="effect">{{item.data.effect}}</div>
@@ -97,7 +97,7 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isWeaponUpgrade}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
           <div class="effect">{{item.data.effect}}</div>
@@ -119,7 +119,7 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isAmmo}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
           <div class="effect">{{item.data.effect}}</div>
@@ -141,7 +141,7 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isAugmentic}}
-        <div class="item" data-item-id="{{item._id}}">
+        <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
           <div class="effect">{{item.data.effect}}</div>

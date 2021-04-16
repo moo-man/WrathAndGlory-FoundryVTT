@@ -42,7 +42,7 @@
     <div class="items">
       {{#each actor.items as |item|}}
       {{#if item.isTalent}}
-      <div class="item" data-item-id="{{item._id}}">
+      <div class="item" data-item-id="{{item.id}}">
         <label class="item-name item-edit hover">{{item.name}}</label>
         <div class="button">
           <a class="item-control item-delete" title="Delete Talent"><i class="fas fa-times"></i></a>
@@ -63,7 +63,7 @@
     <div class="items">
       {{#each actor.items as |item|}}
       {{#if item.isAbility}}
-      <div class="item" data-item-id="{{item._id}}">
+      <div class="item" data-item-id="{{item.id}}">
         <label class="item-name item-edit hover">{{item.name}}</label>
         <div class="button">
           <a class="item-control item-delete" title="Delete ability"><i class="fas fa-times"></i></a>
@@ -84,7 +84,7 @@
     <div class="items">
       {{#each actor.items as |item|}}
       {{#if item.isPsychicPower}}
-      <div class="item" data-item-id="{{item._id}}">
+      <div class="item" data-item-id="{{item.id}}">
         <label class="item-name item-edit hover">{{item.name}}</label>
         <div class="button">
           <a class="item-control item-delete" title="Delete Psychic Power"><i class="fas fa-times"></i></a>

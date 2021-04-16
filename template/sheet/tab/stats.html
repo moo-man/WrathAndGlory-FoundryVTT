@@ -40,7 +40,7 @@
     <div class="keywords">
       {{#each actor.items as |item|}}
       {{#if item.isKeyword}}
-      <div class="keyword item" data-item-id="{{item._id}}">
+      <div class="keyword item" data-item-id="{{item.id}}">
         <div class="wrapper-hover">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
