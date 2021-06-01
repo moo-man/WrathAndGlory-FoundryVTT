@@ -1,8 +1,4 @@
 export class WrathAndGloryItem extends Item {
-    static async create(data, options) {
-        super.create(data, options);
-    }
-
     async sendToChat() {
         const item = new CONFIG.Item.documentClass(this.data._source)
         if (item.data.img.includes("/unknown")) {
@@ -24,7 +20,7 @@ export class WrathAndGloryItem extends Item {
     }
 
     _dataWithRank(type) {
-        let data = this.data.data[type]
+        let data = this[type]
         let damage = data.base + data.bonus;
         let rank = "";
         if (data.rank === "single") {
@@ -35,27 +31,27 @@ export class WrathAndGloryItem extends Item {
         return `${damage}${rank}`;
     }
 
-    get range() {
-        let data = this.data.data
-        const short = data.range.short < 1 ? "-" : data.range.short;
-        const medium = data.range.medium < 1 ? "-" : data.range.medium;
-        const long = data.range.long < 1 ? "-" : data.range.long;
-        const salvo = data.salvo < 1 ? "-" : data.salvo;
+    // @@@@@@ FORMATTED GETTERs @@@@@@
+    get Range() {
+        const short = this.range.short < 1 ? "-" : this.range.short;
+        const medium = this.range.medium < 1 ? "-" : this.range.medium;
+        const long = this.range.long < 1 ? "-" : this.range.long;
+        const salvo = this.salvo < 1 ? "-" : this.salvo;
         return `${salvo} | ${short} / ${medium} / ${long}`;
     }
 
-    get damage() {
+    get Damage() {
         return this._dataWithRank("damage");
     }
-    get ed() {
+    get ED() {
         return this._dataWithRank("ed");
     }
-    get ap() {
+    get AP() {
         return this._dataWithRank("ap");
     }
 
-    get activation() {
-        switch (this.data.data.activation) {
+    get Activation() {
+        switch (this.activation) {
             case "free":
                 return game.i18n.localize("ACTIVATION.FREE");
             case "action":
@@ -70,8 +66,8 @@ export class WrathAndGloryItem extends Item {
                 return game.i18n.localize("ACTIVATION.ACTION");
         }
     }
-    get rarity() {
-        switch (this.data.data.rarity) {
+    get Rarity() {
+        switch (this.rarity) {
             case "common":
                 return game.i18n.localize("RARITY.COMMON");
             case "uncommon":
@@ -86,8 +82,8 @@ export class WrathAndGloryItem extends Item {
                 return game.i18n.localize("RARITY.COMMON");
         }
     }
-    get category() {
-        switch (this.data.data.category) {
+    get Category() {
+        switch (this.category) {
             case "melee":
                 return game.i18n.localize("CATEGORY.MELEE");
             case "ranged":
@@ -97,34 +93,56 @@ export class WrathAndGloryItem extends Item {
         }
     }
 
+    get MultiTarget() {
+        return this.multiTarget ? game.i18n.localize("Yes") : game.i18n.localize("No")
+    }
+
+
+    // @@@@@@ TYPE GETTERS @@@@@@
     get isKeyword() { return this.type === "keyword" }
-
     get isTalent() { return this.type === "talent" }
-
     get isAbility() { return this.type === "ability" }
-
     get isTalentOrAbility() { return this.isTalent || this.isAbility }
-
     get isPsychicPower() { return this.type === "psychicPower" }
-
     get isArmour() { return this.type === "armour" }
-
     get isWeapon() { return this.type === "weapon" }
-
     get isWeaponUpgrade() { return this.type === "weaponUpgrade" }
-
     get isGear() { return this.type === "gear" }
-
     get isTraumaticInjury() { return this.type === "traumaticInjury" }
-
     get isMemorableInjury() { return this.type === "memorableInjury" }
-
     get isAscension() { return this.type === "ascension" }
-
     get isMutation() { return this.type === "mutation" }
-
     get isAmmo() { return this.type === "ammo" }
-
     get isAugmentic() { return this.type === "augmentic" }
+
+    // @@@@@@ DATA GETTERS @@@@@@
+    get bonus() { return this.data.data.bonus }
+    get effect() { return this.data.data.effect }
+    get cost() { return this.data.data.cost }
+    get requirements() { return this.data.data.requirements }
+    get description() { return this.data.data.description }
+    get display() { return this.data.data.display }
+    get value() { return this.data.data.value }
+    get rarity() { return this.data.data.rarity }
+    get keywords() { return this.data.data.keywords }
+    get quantity() { return this.data.data.quantity }
+    get rating() { return this.data.data.rating }
+    get traits() { return this.data.data.traits }
+    get influence() { return this.data.data.influence }
+    get benefits() { return this.data.data.benefits }
+    get dn() { return this.data.data.dn }
+    get activation() { return this.data.data.activation }
+    get duration() { return this.data.data.duration }
+    get range() { return this.data.data.range }
+    get multiTarget() { return this.data.data.multiTarget }
+    get prerequisites() { return this.data.data.prerequisites }
+    get potency() { return this.data.data.potency }
+    get damage() { return this.data.data.damage }
+    get ed() { return this.data.data.ed }
+    get attack() { return this.data.data.attack }
+    get ap() { return this.data.data.ap }
+    get category() { return this.data.data.category }
+    get salvo() { return this.data.data.salvo }
+    get upgrades() { return this.data.data.upgrades }
 
 }

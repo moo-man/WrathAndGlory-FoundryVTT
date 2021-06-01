@@ -168,7 +168,7 @@ function _getTargetDefense(combat) {
   if (target === undefined) {
     return 3;
   } else {
-    return target.actor.data.data.combat.defense.total;
+    return target.actor.combat.defense.total;
   }
 }
 

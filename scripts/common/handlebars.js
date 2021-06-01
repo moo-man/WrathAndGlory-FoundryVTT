@@ -51,22 +51,4 @@ function registerHandlebarsHelpers() {
     }
   });
 
-  Handlebars.registerHelper("size", function (size) {
-    switch (size) {
-      case "tiny":
-        return game.i18n.localize("SIZE.TINY");
-      case "small":
-        return game.i18n.localize("SIZE.SMALL");
-      case "average":
-        return game.i18n.localize("SIZE.AVERAGE");
-      case "large":
-        return game.i18n.localize("SIZE.LARGE");
-      case "huge":
-        return game.i18n.localize("SIZE.HUGE");
-      case "gargantuan":
-        return game.i18n.localize("SIZE.GARGANTUAN");
-      default:
-        return game.i18n.localize("SIZE.AVERAGE");
-    }
-  });
 }

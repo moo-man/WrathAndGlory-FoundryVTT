@@ -1,25 +1,26 @@
 export class WrathAndGloryActor extends Actor {
 
     async _preCreate(data, options, user) {
-        mergeObject(data, {
+        let initData = {
             "token.bar1": { "attribute": "combat.wounds" },
             "token.bar2": { "attribute": "combat.shock" },
-            "token.displayName": CONST.TOKEN_DISPLAY_MODES.HOVER,
-            "token.displayBars": CONST.TOKEN_DISPLAY_MODES.ALWAYS,
+            "token.displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+            "token.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
             "token.disposition": CONST.TOKEN_DISPOSITIONS.NEUTRAL,
             "token.name": data.name
-          });
-          if (data.type === "agent") {
-            data.token.vision = true;
-            data.token.actorLink = true;
           }
+          if (data.type === "agent") {
+            initData["token.vision"] =  true;
+            initData["token.actorLink"] = true;
+          }
+          this.data.update(initData)
     }
 
     prepareData() {
         super.prepareData();
-        if (this.data.type === "agent") {
+        if (this.type === "agent") {
             this._initializeAgent();
-        } else if (this.data.type === "threat") {
+        } else if (this.type === "threat") {
             this._initializeThreat();
         }
     }
@@ -33,7 +34,7 @@ export class WrathAndGloryActor extends Actor {
         this._computeExperience();
     }
 
-    _initializeThreat(data) {
+    _initializeThreat() {
         this._initializeBonus();
         this._computeItems();
         this._computeAttributes();
@@ -41,76 +42,71 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _initializeBonus() {
-        let data = this.data
-        if (data.data.hasOwnProperty("advances")) {
-            data.data.advances.experience.spent = 0;
-            data.data.advances.experience.total = 0;
+        if (this.advances) {
+            this.advances.experience.spent = 0;
+            this.advances.experience.total = 0;
         }
-        for (let attribute of Object.values(data.data.attributes)) {
+        for (let attribute of Object.values(this.attributes)) {
             attribute.bonus = 0;
         }
-        for (let skill of Object.values(data.data.skills)) {
+        for (let skill of Object.values(this.skills)) {
             skill.bonus = 0;
         }
     }
 
     _computeItems() {
-        let data = this.data
-        data.data.combat.resilence.armor = 0;
+        this.combat.resilence.armor = 0;
         for (let item of this.items) {
-
+    
             if (item.isArmour) {
                 this._computeArmour(item);
             }
-            if (item.data.hasOwnProperty("bonus")) {
+            if (item.bonus) {
                 this._computeBonus(item);
             }
-            if (data.data.hasOwnProperty("advances") && item.data.hasOwnProperty("cost")) {
-                data.data.advances.experience.spent = data.data.advances.experience.spent + item.data.cost;
+            if (this.advances && item.cost) {
+                this.advances.experience.spent = this.advances.experience.spent + item.cost;
             }
         }
     }
 
     _computeArmour(item) {
-        if (this.data.data.combat.resilence.armor < item.data.data.rating) {
-            this.data.data.combat.resilence.armor = item.data.data.rating;
+        if (this.combat.resilence.armor < item.rating) {
+            this.combat.resilence.armor = item.rating;
         }
     }
 
     _computeAttributes() {
-        let data = this.data
-        for (let attribute of Object.values(data.data.attributes)) {
+        for (let attribute of Object.values(this.attributes)) {
             attribute.total = attribute.rating + attribute.bonus;
-            if (data.data.hasOwnProperty("advances")) {
-                data.data.advances.experience.spent = data.data.advances.experience.spent + attribute.cost;
+            if (this.advances) {
+                this.advances.experience.spent = this.advances.experience.spent + attribute.cost;
             }
         }
     }
 
     _computeBonus(item) {
-        let data = this.data
-        let bonus = item.data.data.bonus
-        for (let [key, value] of Object.entries(data.data.attributes)) {
+        let bonus = item.bonus
+        for (let [key, value] of Object.entries(this.attributes)) {
             value.bonus = value.bonus + bonus.attributes[key];
         }
-        for (let [key, value] of Object.entries(data.data.skills)) {
+        for (let [key, value] of Object.entries(this.skills)) {
             value.bonus = value.bonus + bonus.skills[key];
         }
-        for (let [key, value] of Object.entries(data.data.combat)) {
-            if (value.hasOwnProperty("bonus")) {
+        for (let [key, value] of Object.entries(this.combat)) {
+            if (value.bonus) {
                 value.bonus = value.bonus + bonus.combat[key];
             }
         }
     }
 
-    _computeSkills(item) {
-        let data = this.data
-        let middle = Object.values(data.data.skills).length / 2;
+    _computeSkills() {
+        let middle = Object.values(this.skills).length / 2;
         let i = 0;
-        for (let skill of Object.values(data.data.skills)) {
-            skill.total = data.data.attributes[skill.attribute].total + skill.rating + skill.bonus;
-            if (data.data.hasOwnProperty("advances")) {
-                data.data.advances.experience.spent = data.data.advances.experience.spent + skill.cost;
+        for (let skill of Object.values(this.skills)) {
+            skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus;
+            if (this.advances) {
+                this.advances.experience.spent = this.advances.experience.spent + skill.cost;
             }
             skill.isLeft = i < middle;
             skill.isRight = i >= middle;
@@ -119,15 +115,14 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeCombat() {
-        let data = this.data
-        data.data.combat.passiveAwareness.total = this._setDefault(Math.ceil(data.data.skills.awareness.total / 2) + data.data.combat.passiveAwareness.bonus, 1);
-        data.data.combat.defense.total = this._setDefault(data.data.attributes.initiative.total - 1 + data.data.combat.defense.bonus, 1);
-        data.data.combat.resolve.total = this._setDefault(data.data.attributes.willpower.total - 1 + data.data.combat.resolve.bonus, 1);
-        data.data.corruption.conviction = this._setDefault(data.data.attributes.willpower.total, 1);
-        data.data.combat.resilence.total = this._setDefault(data.data.attributes.toughness.rating + 1 + data.data.combat.resilence.bonus + data.data.combat.resilence.armor, 1);
-        data.data.combat.wounds.max = this._setDefault((data.data.advances.tier * 2) + data.data.attributes.toughness.rating + data.data.combat.wounds.bonus, 1);
-        data.data.combat.determination.total = this._setDefault(data.data.attributes.toughness.rating + data.data.combat.determination.bonus, 1);
-        data.data.combat.shock.max = this._setDefault(data.data.attributes.willpower.rating + data.data.advances.tier + data.data.combat.shock.bonus, 1);
+        this.combat.passiveAwareness.total = this._setDefault(Math.ceil(this.skills.awareness.total / 2) + this.combat.passiveAwareness.bonus, 1);
+        this.combat.defense.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defense.bonus, 1);
+        this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1 + this.combat.resolve.bonus, 1);
+        this.corruption.conviction = this._setDefault(this.attributes.willpower.total, 1);
+        this.combat.resilence.total = this._setDefault(this.attributes.toughness.rating + 1 + this.combat.resilence.bonus + this.combat.resilence.armor, 1);
+        this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.rating + this.combat.wounds.bonus, 1);
+        this.combat.determination.total = this._setDefault(this.attributes.toughness.rating + this.combat.determination.bonus, 1);
+        this.combat.shock.max = this._setDefault(this.attributes.willpower.rating + this.advances.tier + this.combat.shock.bonus, 1);
     }
 
     _setDefault(value, fallback) {
@@ -139,4 +134,33 @@ export class WrathAndGloryActor extends Actor {
         data.data.advances.experience.spent = data.data.advances.experience.spent + data.data.advances.species;
         data.data.advances.experience.total = data.data.advances.experience.current + data.data.advances.experience.spent;
     }
+
+    get Size() {
+        switch(this.combat.size)
+        {
+          case "tiny":
+            return game.i18n.localize("SIZE.TINY");
+          case "small":
+            return game.i18n.localize("SIZE.SMALL");
+          case "average":
+            return game.i18n.localize("SIZE.AVERAGE");
+          case "large":
+            return game.i18n.localize("SIZE.LARGE");
+          case "huge":
+            return game.i18n.localize("SIZE.HUGE");
+          case "gargantuan":
+            return game.i18n.localize("SIZE.GARGANTUAN");
+          default:
+            return game.i18n.localize("SIZE.AVERAGE");
+        }
+    }
+
+    get attributes() {return this.data.data.attributes}
+    get skills() {return this.data.data.skills}
+    get combat() {return this.data.data.combat}
+    get bio() {return this.data.data.bio}
+    get advances() {return this.data.data.advances}
+    get resources() {return this.data.data.resources}
+    get corruption() {return this.data.data.corruption}
+    get notes() {return this.data.data.notes}
 }

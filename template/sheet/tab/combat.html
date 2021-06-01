@@ -164,10 +164,10 @@
         <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name roll-weapon">{{item.name}}</div>
-          <div class="damage">{{item.damage}}</div>
-          <div class="ed">{{item.ed}}</div>
-          <div class="ap">{{item.ap}}</div>
-          <div class="range">{{item.range}}</div>
+          <div class="damage">{{item.Damage}}</div>
+          <div class="ed">{{item.ED}}</div>
+          <div class="ap">{{item.AP}}</div>
+          <div class="range">{{item.Range}}</div>
           <div class="traits">{{item.data.traits}}</div>
         </div>
         {{/if}}
@@ -207,10 +207,10 @@
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name roll-psychic-power">{{item.name}}</div>
           <div class="dn">{{item.data.dn}}</div>
-          <div class="activation">{{activation item.data.activation}}</div>
+          <div class="activation">{{item.Activation}}</div>
           <div class="duration">{{item.data.duration}}</div>
           <div class="range-psychic">{{item.data.range}}</div>
-          <div class="multi-target">{{multiTarget item.data.multiTarget}}</div>
+          <div class="multi-target">{{item.MultiTarget}}</div>
         </div>
         {{/if}}
         {{/each}}

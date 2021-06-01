@@ -115,7 +115,7 @@ function _computeChat(rollData) {
 
 function _computeDamageChat(rollData) {
   rollData.result.damage.dice.sort((a, b) => { return b.weight - a.weight });
-  if (rollData.weapon.hasOwnProperty("ap")) {
+  if (rollData.weapon.ap) {
     rollData.weapon.ap.total = rollData.weapon.ap.base + rollData.weapon.ap.bonus;
   }
 }

@@ -1,4 +1,22 @@
 {
+  "ACTOR.TypeAgent" : "Agent",
+  "ACTOR.TypeThreat" : "Threat",
+
+  "ITEM.TypeAbility" : "Ability",
+  "ITEM.TypeAmmo" : "Ammo",
+  "ITEM.TypeArmour" : "Armour",
+  "ITEM.TypeAscension" : "Ascension",
+  "ITEM.TypeAugmentic" : "Augmentic",
+  "ITEM.TypeGear" : "Gear",
+  "ITEM.TypeKeyword" : "Keyword",
+  "ITEM.TypeMemorableinjury" : "Memorable Injury",
+  "ITEM.TypeMutation" : "Mutation",
+  "ITEM.TypePsychicpower" : "Psychic Power",
+  "ITEM.TypeTalent" : "Talent",
+  "ITEM.TypeTraumaticinjury" : "Traumatic Injury",
+  "ITEM.TypeWeapon" : "Weapon",
+  "ITEM.TypeWeaponupgrade" : "Weapon Upgrade",
+  
   "ABILITY.NAME": "Name",
   "ABILITY.EFFECT": "Effect",
   "ABILITY.COST": "Cost",

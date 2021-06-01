@@ -4,7 +4,7 @@
 
         <div style="text-align: center;">
             {{#each result.damage.dice as |die|}}
-            <div class="die {{die.name}}"></div>
+            <div class="die {{die.name}}">{{die.score}}</div>
             {{/each}}
         </div>
     </div>

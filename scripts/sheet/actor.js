@@ -58,9 +58,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     _onItemCreate(event) {
         event.preventDefault();
-        let header = event.currentTarget;
-        let data = foundry.utils.deepClone(header.dataset);
-        data["name"] = `New ${data.type.capitalize()}`;
+        let header = event.currentTarget.dataset
+        
+        let data = {
+             name : `New ${game.i18n.localize("ITEM.Type" + header.type.toLowerCase().capitalize())}`,
+             type : header.type
+        };
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
     }
 
@@ -127,7 +130,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         const attributeName = $(event.currentTarget).data("attribute");
-        const attribute = this.actor.data.data.attributes[attributeName];
+        const attribute = this.actor.attributes[attributeName];
         this.rollData.name = attribute.label;
         this.rollData.pool.size = attribute.total;
         await prepareCommonRoll(this.rollData);
@@ -137,7 +140,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         const skillName = $(event.currentTarget).data("skill");
-        const skill = this.actor.data.data.skills[skillName];
+        const skill = this.actor.skills[skillName];
         this.rollData.name = skill.label;
         this.rollData.pool.size = skill.total;
         await prepareCommonRoll(this.rollData);
@@ -146,7 +149,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     async _prepareRollStealthScore(event) {
         event.preventDefault();
         this._resetRollData();
-        const skill = this.actor.data.data.skills.stealth;
+        const skill = this.actor.skills.stealth;
         this.rollData.name = skill.label;
         this.rollData.difficulty.target = 0;
         this.rollData.pool.size = skill.total;
@@ -157,7 +160,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.DETERMINATION";
-        this.rollData.pool.size = this.actor.data.data.combat.determination.total;
+        this.rollData.pool.size = this.actor.combat.determination.total;
         await prepareCommonRoll(this.rollData);
     }
 
@@ -165,7 +168,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.CONVICTION";
-        this.rollData.pool.size = this.actor.data.data.corruption.conviction;
+        this.rollData.pool.size = this.actor.corruption.conviction;
         this.rollData.difficulty.penalty = this._getConvictionPenalty();
         await prepareCommonRoll(this.rollData);
     }
@@ -174,7 +177,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.RESOLVE";
-        this.rollData.pool.size = this.actor.data.data.combat.resolve.total;
+        this.rollData.pool.size = this.actor.combat.resolve.total;
         await prepareCommonRoll(this.rollData);
     }
 
@@ -182,7 +185,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.INFLUENCE";
-        this.rollData.pool.size = this.actor.data.data.resources.influence;
+        this.rollData.pool.size = this.actor.resources.influence;
         await prepareCommonRoll(this.rollData);
     }
 
@@ -212,11 +215,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             traits: weapon.data.data.traits
         };
         if (weapon.data.data.category === "melee") {
-            skill = this.actor.data.data.skills.weaponSkill;
-            let strength = this.actor.data.data.attributes.strength;
+            skill = this.actor.skills.weaponSkill;
+            let strength = this.actor.attributes.strength;
             this.rollData.weapon.damage.bonus = strength.total;
         } else {
-            skill = this.actor.data.data.skills.ballisticSkill;
+            skill = this.actor.skills.ballisticSkill;
         }
         this.rollData.wrath.isWeapon = true;
         this.rollData.wrath.isCommon = false;
@@ -233,7 +236,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this._resetRollData();
         const div = $(event.currentTarget).parents(".item");
         const psychicPower = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
-        const skill = this.actor.data.data.skills.psychicMastery;
+        const skill = this.actor.skills.psychicMastery;
         this.rollData.difficulty.target = psychicPower.data.data.dn;
         this.rollData.name = psychicPower.data.name;
         this.rollData.weapon = {
@@ -260,8 +263,8 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     _resetRollData() {
         let rank = 0;
-        if (this.actor.data.data.hasOwnProperty("advances")) {
-            rank = this.actor.data.data.advances.rank;
+        if (this.actor.advances) {
+            rank = this.actor.advances.rank;
         }
         this.rollData = {
             name: "DIALOG.CUSTOM_ROLL",
@@ -297,7 +300,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
     _getConvictionPenalty() {
-        let corruption = this.actor.data.data.corruption.current;
+        let corruption = this.actor.corruption.current;
         if (corruption > 20) {
             return 4;
         } else if (corruption > 15) {
