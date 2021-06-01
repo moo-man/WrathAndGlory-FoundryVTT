@@ -223,7 +223,7 @@
         </div>
         {{#each actor.items as |item|}}
         {{#if item.isTalentOrAbility}}
-        {{#if item.data.display}}
+        {{#if item.display}}
         <div class="item" data-item-id="{{item.id}}">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
