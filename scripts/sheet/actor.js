@@ -70,7 +70,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _onItemEdit(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const item = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
+        const item = this.actor.items.get(div.data("itemId"));
         item.sheet.render(true);
     }
 
@@ -193,28 +193,28 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         const div = $(event.currentTarget).parents(".item");
-        const weapon = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
+        const weapon = this.actor.items.get(div.data("itemId"));
         let skill;
         this.rollData.weapon = {
             damage: {
-                base: weapon.data.data.damage.base,
-                rank: weapon.data.data.damage.rank,
-                bonus: weapon.data.data.damage.bonus
+                base: weapon.damage.base,
+                rank: weapon.damage.rank,
+                bonus: weapon.damage.bonus
             },
             ed: {
-                base: weapon.data.data.ed.base,
-                rank: weapon.data.data.ed.rank,
-                bonus: weapon.data.data.ed.bonus,
-                die: weapon.data.data.ed.die
+                base: weapon.ed.base,
+                rank: weapon.ed.rank,
+                bonus: weapon.ed.bonus,
+                die: weapon.ed.die
             },
             ap: {
-                base: weapon.data.data.ap.base,
-                rank: weapon.data.data.ap.rank,
-                bonus: weapon.data.data.ap.bonus
+                base: weapon.ap.base,
+                rank: weapon.ap.rank,
+                bonus: weapon.ap.bonus
             },
-            traits: weapon.data.data.traits
+            traits: weapon.traits
         };
-        if (weapon.data.data.category === "melee") {
+        if (weapon.category === "melee") {
             skill = this.actor.skills.weaponSkill;
             let strength = this.actor.attributes.strength;
             this.rollData.weapon.damage.bonus = strength.total;
@@ -226,8 +226,8 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.rollData.skillName = skill.label;
         this.rollData.name = weapon.data.name;
         this.rollData.pool.size = skill.total;
-        this.rollData.pool.bonus = weapon.data.data.attack.base + weapon.data.data.attack.bonus;
-        this.rollData.pool.rank = weapon.data.data.attack.rank;
+        this.rollData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
+        this.rollData.pool.rank = weapon.attack.rank;
         await prepareWeaponRoll(this.rollData);
     }
 
@@ -235,23 +235,23 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         const div = $(event.currentTarget).parents(".item");
-        const psychicPower = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
+        const psychicPower = this.actor.items.get(div.data("itemId"));
         const skill = this.actor.skills.psychicMastery;
-        this.rollData.difficulty.target = psychicPower.data.data.dn;
+        this.rollData.difficulty.target = psychicPower.dn;
         this.rollData.name = psychicPower.data.name;
         this.rollData.weapon = {
             damage: {
-                base: psychicPower.data.data.damage.base,
-                rank: psychicPower.data.data.damage.rank,
-                bonus: psychicPower.data.data.damage.bonus
+                base: psychicPower.damage.base,
+                rank: psychicPower.damage.rank,
+                bonus: psychicPower.damage.bonus
             },
             ed: {
-                base: psychicPower.data.data.ed.base,
-                rank: psychicPower.data.data.ed.rank,
-                bonus: psychicPower.data.data.ed.bonus,
-                die: psychicPower.data.data.ed.die
+                base: psychicPower.ed.base,
+                rank: psychicPower.ed.rank,
+                bonus: psychicPower.ed.bonus,
+                die: psychicPower.ed.die
             },
-            potency: psychicPower.data.data.potency
+            potency: psychicPower.potency
         };
         this.rollData.wrath.isPsy = true;
         this.rollData.wrath.isCommon = false;

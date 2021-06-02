@@ -130,9 +130,8 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeExperience() {
-        let data = this.data
-        data.data.advances.experience.spent = data.data.advances.experience.spent + data.data.advances.species;
-        data.data.advances.experience.total = data.data.advances.experience.current + data.data.advances.experience.spent;
+        this.advances.experience.spent = this.advances.experience.spent + this.advances.species;
+        this.advances.experience.total = this.advances.experience.current + this.advances.experience.spent;
     }
 
     get Size() {
