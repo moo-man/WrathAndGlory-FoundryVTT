@@ -94,7 +94,7 @@ export class WrathAndGloryActor extends Actor {
             value.bonus = value.bonus + bonus.skills[key];
         }
         for (let [key, value] of Object.entries(this.combat)) {
-            if (value.bonus) {
+            if (value.hasOwnProperty("bonus")) {
                 value.bonus = value.bonus + bonus.combat[key];
             }
         }
