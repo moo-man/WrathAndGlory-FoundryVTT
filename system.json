@@ -42,8 +42,8 @@
   "secondaryTokenAttribute": null,
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/moo-man/WrathAndGlory-FoundryVTT/0.8-support/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/archive/refs/heads/0.8-support.zip",
+  "manifest": "https://raw.githubusercontent.com/moo-man/WrathAndGlory-FoundryVTT/master/system.json",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/2.0.0/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 
