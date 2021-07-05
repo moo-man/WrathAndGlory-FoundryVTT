@@ -259,9 +259,17 @@ function _hasDamage(rollData) {
   return (damage > 0 || ed > 0);
 }
 
+function _getRoll(rolls)
+{
+  const pool = PoolTerm.fromRolls(rolls);
+  return Roll.fromTerms([pool]);
+}
+
 async function _sendToChat(rollData) {
   const html = await renderTemplate("systems/wrath-and-glory/template/chat/roll.html", rollData);
   let chatData = {
+    type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+    roll: _getRoll(rollData.rolls.hit),
     user: game.user.id,
     rollMode: game.settings.get("core", "rollMode"),
     content: html
@@ -277,6 +285,8 @@ async function _sendToChat(rollData) {
 async function _sendDamageToChat(rollData) {
   const html = await renderTemplate("systems/wrath-and-glory/template/chat/damage.html", rollData);
   let chatData = {
+    type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+    roll: _getRoll(rollData.rolls.damage),
     user: game.user.id,
     rollMode: game.settings.get("core", "rollMode"),
     content: html
