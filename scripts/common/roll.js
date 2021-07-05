@@ -40,6 +40,9 @@ export async function reroll(rollData) {
     if (die.rerollable) {
       let r = new Roll("1d6", {}).evaluate();
       rollData.rolls.hit.push(r);
+      if (game.modules.get("dice-so-nice")?.active){
+        game.dice3d.showForRoll(r);
+      }
       if (die.isWrath) {
         return _computeWrath(r.total);
       } else {
@@ -79,6 +82,9 @@ function _rollDice(rollData, formula, isWrath) {
       });
     }
   });
+  if (game.modules.get("dice-so-nice")?.active){
+    game.dice3d.showForRoll(r);
+  }
   rollData.rolls.hit.push(r);
 }
 
@@ -100,6 +106,9 @@ function _rollDamage(rollData) {
       });
     }
   });
+  if (game.modules.get("dice-so-nice")?.active){
+    game.dice3d.showForRoll(r);
+  }
   rollData.rolls.damage.push(r);
 }
 
