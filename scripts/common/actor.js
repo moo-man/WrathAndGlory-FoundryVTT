@@ -57,7 +57,7 @@ export class WrathAndGloryActor extends Actor {
     _computeItems() {
         this.combat.resilence.armor = 0;
         for (let item of this.items) {
-    
+
             if (item.isArmour) {
                 this._computeArmour(item);
             }
@@ -79,6 +79,7 @@ export class WrathAndGloryActor extends Actor {
     _computeAttributes() {
         for (let attribute of Object.values(this.attributes)) {
             attribute.total = attribute.rating + attribute.bonus;
+            attribute.cost = this.getAttributeCosts(attribute.rating);
             if (this.advances) {
                 this.advances.experience.spent = this.advances.experience.spent + attribute.cost;
             }
@@ -104,6 +105,7 @@ export class WrathAndGloryActor extends Actor {
         let middle = Object.values(this.skills).length / 2;
         let i = 0;
         for (let skill of Object.values(this.skills)) {
+            skill.cost = this.getSkillsCosts(skill.rating);
             skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus;
             if (this.advances) {
                 this.advances.experience.spent = this.advances.experience.spent + skill.cost;
@@ -130,7 +132,7 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeExperience() {
-        this.advances.experience.spent = this.advances.experience.spent + this.advances.species;
+        this.advances.experience.spent += this.advances.species;
         this.advances.experience.total = this.advances.experience.current + this.advances.experience.spent;
     }
 
@@ -162,4 +164,58 @@ export class WrathAndGloryActor extends Actor {
     get resources() {return this.data.data.resources}
     get corruption() {return this.data.data.corruption}
     get notes() {return this.data.data.notes}
+
+    getAttributeCosts(rating) {
+        switch (rating) {
+            case 1:
+                return 0;
+            case 2:
+                return 4;
+            case 3:
+                return 10;
+            case 4:
+                return 20;
+            case 5:
+                return 35;
+            case 6:
+                return 55;
+            case 7:
+                return 80;
+            case 8:
+                return 110;
+            case 9:
+                return 145;
+            case 10:
+                return 185;
+            case 11:
+                return 230;
+            case 12:
+                return 280;
+            default:
+                return 0;
+        }
+    }
+
+    getSkillsCosts(rating) {
+        switch (rating) {
+            case 1:
+                return 2;
+            case 2:
+                return 6;
+            case 3:
+                return 12;
+            case 4:
+                return 20;
+            case 5:
+                return 30;
+            case 6:
+                return 42;
+            case 7:
+                return 56;
+            case 8:
+                return 72;
+            default:
+                return 0;
+        }
+    }
 }
