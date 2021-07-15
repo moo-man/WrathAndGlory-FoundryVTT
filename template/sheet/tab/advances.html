@@ -3,17 +3,22 @@
     <div class="tier">
       <label class="name">{{localize "ADVANCE.TIER"}}</label>
       <input class="current" name="data.advances.tier" type="number" value="{{data.advances.tier}}"
+             min="1"
+             max="5"
         data-dtype="Number" />
 
     </div>
     <div class="rank">
       <label class="name">{{localize "ADVANCE.RANK"}}</label>
       <input class="current" name="data.advances.rank" type="number" value="{{data.advances.rank}}"
+             min="1"
+             max="4"
         data-dtype="Number" />
     </div>
     <div class="species">
       <label class="name">{{localize "BIO.SPECIES"}}</label>
       <input class="cost" name="data.advances.species" type="number" value="{{data.advances.species}}"
+             min="0"
         data-dtype="Number" />
     </div>
     <div class="experience">
@@ -44,9 +49,11 @@
       <div class="item">
         <label class="name">{{localize attribute.label}}</label>
         <input class="rating" name="data.attributes.{{key}}.rating" type="number" value="{{attribute.rating}}"
+          min="1" max="12"
           data-dtype="Number" />
         <input class="cost" name="data.attributes.{{key}}.cost" type="number" value="{{attribute.cost}}"
-          data-dtype="Number" />
+          min="0" max="280"
+          data-dtype="Number" readonly/>
       </div>
       {{/each}}
     </div>
@@ -63,8 +70,10 @@
       <div class="item">
         <label class="name">{{localize skill.label}}</label>
         <input class="rating" name="data.skills.{{key}}.rating" type="number" value="{{skill.rating}}"
+               min="0" max="8"
           data-dtype="Number" />
-        <input class="cost" name="data.skills.{{key}}.cost" type="number" value="{{skill.cost}}" data-dtype="Number" />
+        <input class="cost" name="data.skills.{{key}}.cost" type="number" value="{{skill.cost}}" data-dtype="Number"
+        min="0" max="72" readonly />
       </div>
       {{/each}}
     </div>
