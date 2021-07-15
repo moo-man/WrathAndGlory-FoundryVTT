@@ -9,7 +9,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         data.data = data.data.data // project system data so that handlebars has the same name and value paths
         return data;
     }
-    
+
 
     activateListeners(html) {
         super.activateListeners(html);
@@ -59,7 +59,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _onItemCreate(event) {
         event.preventDefault();
         let header = event.currentTarget.dataset
-        
+
         let data = {
              name : `New ${game.i18n.localize("ITEM.Type" + header.type.toLowerCase().capitalize())}`,
              type : header.type
@@ -168,7 +168,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.CONVICTION";
-        this.rollData.pool.size = this.actor.corruption.conviction;
+        this.rollData.pool.size = this.actor.combat.conviction.total;
         this.rollData.difficulty.penalty = this._getConvictionPenalty();
         await prepareCommonRoll(this.rollData);
     }

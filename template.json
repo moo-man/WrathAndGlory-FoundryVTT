@@ -184,6 +184,10 @@
             "bonus": 0,
             "total": 0
           },
+          "conviction":{
+            "bonus": 0,
+            "total": 0
+          },
           "size": "average",
           "speed": 6,
           "passiveAwareness": {
@@ -249,7 +253,6 @@
         "ruin": 0
       },
       "corruption": {
-        "current": 0,
         "current": 0
       }
     }
@@ -310,7 +313,8 @@
             "determination": 0,
             "shock": 0,
             "resolve": 0,
-            "passiveAwareness": 0
+            "passiveAwareness": 0,
+            "conviction": 0
           }
         }
       }

@@ -88,6 +88,7 @@ export class WrathAndGloryActor extends Actor {
 
     _computeBonus(item) {
         let bonus = item.bonus
+
         for (let [key, value] of Object.entries(this.attributes)) {
             value.bonus = value.bonus + bonus.attributes[key];
         }
@@ -99,6 +100,7 @@ export class WrathAndGloryActor extends Actor {
                 value.bonus = value.bonus + bonus.combat[key];
             }
         }
+
     }
 
     _computeSkills() {
@@ -120,7 +122,7 @@ export class WrathAndGloryActor extends Actor {
         this.combat.passiveAwareness.total = this._setDefault(Math.ceil(this.skills.awareness.total / 2) + this.combat.passiveAwareness.bonus, 1);
         this.combat.defense.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defense.bonus, 1);
         this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1 + this.combat.resolve.bonus, 1);
-        this.corruption.conviction = this._setDefault(this.attributes.willpower.total, 1);
+        this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
         this.combat.resilence.total = this._setDefault(this.attributes.toughness.rating + 1 + this.combat.resilence.bonus + this.combat.resilence.armor, 1);
         this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.rating + this.combat.wounds.bonus, 1);
         this.combat.determination.total = this._setDefault(this.attributes.toughness.rating + this.combat.determination.bonus, 1);
