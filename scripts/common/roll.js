@@ -113,12 +113,12 @@ function _dealDamageToTarget(rollData) {
 
   let target = game.user.targets.values().next().value.actor;
 
-  let armour = _computeArmour(target) - rollData.weapon.ap.total;
-  if (0 > armour) {
-    armour = 0;
+  let resilence = (target.combat.resilence.total + _computeArmour(target)) - rollData.weapon.ap.total;
+  if (0 >= resilence) {
+    resilence = 1;
   }
 
-  let dmgTaken = rollData.result.damage.total - (target.combat.resilence.total + (armour));
+  let dmgTaken = rollData.result.damage.total - resilence;
   if (0 === dmgTaken) {
     target.update({
       "data.combat.shock.value" : target.combat.shock.value + 1,
