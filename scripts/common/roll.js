@@ -12,6 +12,7 @@ export async function weaponRoll(rollData) {
   if (rollData.result.isSuccess) {
     _rollDamage(rollData);
     _computeDamageChat(rollData);
+    _dealDamageToTarget(rollData);
     await _sendDamageToChat(rollData);
   }
 }
@@ -24,6 +25,7 @@ export async function psychicRoll(rollData) {
   if (rollData.result.isSuccess && _hasDamage(rollData)) {
     _rollDamage(rollData);
     _computeDamageChat(rollData);
+    _dealDamageToTarget(rollData);
     await _sendDamageToChat(rollData);
   }
 }
@@ -31,6 +33,7 @@ export async function psychicRoll(rollData) {
 export async function damageRoll(rollData) {
   _rollDamage(rollData);
   _computeDamageChat(rollData);
+  _dealDamageToTarget(rollData);
   await _sendDamageToChat(rollData);
 }
 
@@ -101,6 +104,40 @@ function _rollDamage(rollData) {
     }
   });
   rollData.rolls.damage.push(r);
+}
+
+function _dealDamageToTarget(rollData) {
+  if (0 === game.user.targets.size) {
+    return;
+  }
+
+  let target = game.user.targets.values().next().value.actor;
+
+  let dmgTaken = rollData.result.damage.total - (target.combat.resilence.total + (_computeArmour(target) - rollData.weapon.ap.total));
+  if (0 === dmgTaken) {
+    target.update({
+      "data.combat.shock.value" : target.combat.shock.value + 1,
+    });
+  }
+
+  if (0 > dmgTaken) {
+    return;
+  }
+
+  if (0 < dmgTaken) {
+    target.update({
+      "data.combat.wounds.value" : target.combat.wounds.value + dmgTaken
+    });
+  }
+}
+
+function _computeArmour(actor) {
+  let foundItems = actor.data.items.filter(a => a.data.type === "armour");
+  let armourRating = 0;
+  for (let armour of foundItems) {
+    armourRating += armour.rating;
+  }
+  return armourRating;
 }
 
 function _computeChat(rollData) {
