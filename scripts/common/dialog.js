@@ -163,13 +163,13 @@ export async function prepareDamageRoll(rollData) {
   dialog.render(true);
 }
 
-function _getTargetDefense(combat) {
-  const target = game.user.targets.values().next().value;
-  if (target === undefined) {
+function _getTargetDefense() {
+  const targets = game.user.targets.size;
+  if (0 >= targets) {
     return 3;
-  } else {
-    return target.actor.combat.defense.total;
   }
+
+  return game.user.targets.values().next().value.actor.combat.defense.total;
 }
 
 function getRank(rollData, rank) {
@@ -180,7 +180,7 @@ function getRank(rollData, rank) {
       return rollData.rank;
     case "double":
       return (rollData.rank * 2);
-      case "minus-single":
+    case "minus-single":
       return rollData.rank;
     case "minus-double":
       return (rollData.rank * 2);
