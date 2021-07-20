@@ -270,6 +270,7 @@ async function _sendToChat(rollData) {
   let chatData = {
     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
     roll: _getRoll(rollData.rolls.hit),
+    flags: {rolldata: rollData},
     user: game.user.id,
     rollMode: game.settings.get("core", "rollMode"),
     content: html
@@ -287,6 +288,7 @@ async function _sendDamageToChat(rollData) {
   let chatData = {
     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
     roll: _getRoll(rollData.rolls.damage),
+    flags: {rolldata: rollData},
     user: game.user.id,
     rollMode: game.settings.get("core", "rollMode"),
     content: html

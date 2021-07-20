@@ -16,6 +16,7 @@ import { MemorableInjurySheet } from "../sheet/memorable-injury.js";
 import { MutationSheet } from "../sheet/mutation.js";
 import { AmmoSheet } from "../sheet/ammo.js";
 import { AugmenticSheet } from "../sheet/augmentic.js";
+import * as contextHooks from "../hooks/entryContext.js"
 import { initializeHandlebars } from "./handlebars.js";
 import { migrateWorld } from "./migration.js";
 import { prepareCommonRoll, prepareWeaponRoll, prepareDamageRoll, preparePsychicRoll } from "./dialog.js";
@@ -63,6 +64,8 @@ Hooks.once("init", () => {
     default: 0,
     type: Number,
   });
+
+  contextHooks.default();
 });
 
 Hooks.once("ready", () => {
