@@ -85,6 +85,10 @@
   "BUTTON.CANCEL": "Cancel",
   "BUTTON.DAMAGE": "Damage",
 
+  "BUTTON.ApplyDamage" : "Apply Damage",
+  "BUTTON.ApplyDamageInvuln" : "Apply Damage (Invulnerable armour)",
+  "BUTTON.ApplyDamageArmourAP" : "Apply Damage (AP only on Armour)",
+
   "CATEGORY.MELEE": "Melee",
   "CATEGORY.RANGED": "Ranged",
 

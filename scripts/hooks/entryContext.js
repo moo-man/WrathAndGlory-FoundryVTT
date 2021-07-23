@@ -1,32 +1,32 @@
 export default function() {
     Hooks.on("getChatLogEntryContext", (html, options) => {
-        let canApply = li => li.find(".damageRoll").length && game.user.targets.size > 0;
-        options.push(
+        let canApply = li => li.find(".damageRoll").length && canvas.tokens.controlled.length > 0;
+        options.unshift(
             {
-                name: "Apply Damage",
+                name: "BUTTON.ApplyDamage",
                 icon: '<i class="fas fa-user-minus"></i>',
                 condition: canApply,
                 callback: li => {
                     let rollData = game.messages.get(li.attr("data-message-id")).data.flags.rolldata;
-                    game.user.targets.forEach(t => _dealDamageToTarget(rollData, t.actor));
+                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(rollData, t.actor));
                 }
             },
             {
-                name: "Apply Damage (Invulnerable armour)",
+                name: "BUTTON.ApplyDamageInvuln",
                 icon: '<i class="fas fa-user"></i>',
                 condition: canApply,
                 callback: li => {
                     let rollData = game.messages.get(li.attr("data-message-id")).data.flags.rolldata;
-                    game.user.targets.forEach(t => _dealDamageToTarget(rollData, t.actor, false));
+                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(rollData, t.actor, false));
                 }
             },
             {
-                name: "Apply Damage (AP only on Armour)",
+                name: "BUTTON.ApplyDamageArmourAP",
                 icon: '<i class="fas fa-user-times"></i>',
                 condition: canApply,
                 callback: li => {
                     let rollData = game.messages.get(li.attr("data-message-id")).data.flags.rolldata;
-                    game.user.targets.forEach(t => _dealDamageToTarget(rollData, t.actor, true, true));
+                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(rollData, t.actor, true, true));
                 }
             }
 
