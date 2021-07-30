@@ -14,17 +14,15 @@
 }
 
 .wrath-and-glory.sheet.actor .gear .wrapper .influence {
-  position: absolute;
-  top: 203px;
-  left: 30px;
+  position: relative;
+  left: -135px;
   display: flex;
   flex-direction: row;
 }
 
 .wrath-and-glory.sheet.actor .gear .wrapper .wealth {
-  position: absolute;
-  top: 203px;
-  right: 30px;
+  position: relative;
+  right: -130px;
   display: flex;
   flex-direction: row;
 }

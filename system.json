@@ -6,7 +6,7 @@
   "minimumCoreVersion": "0.8.4",
   "compatibleCoreVersion": "0.8.8",
   "templateVersion": 2,
-  "author": "Moo Man, Perfectro",
+  "author": "Moo Man, Vivi Aurora, Perfectro",
   "scripts": [],
   "esmodules": [
     "scripts/common/hooks.js"
