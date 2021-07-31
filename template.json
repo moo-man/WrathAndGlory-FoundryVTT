@@ -162,7 +162,7 @@
             "bonus": 0,
             "total": 0
           },
-          "resilence": {
+          "resilience": {
             "bonus": 0,
             "total": 0
           },
@@ -308,7 +308,7 @@
           },
           "combat": {
             "defense": 0,
-            "resilence": 0,
+            "resilience": 0,
             "wounds": 0,
             "determination": 0,
             "shock": 0,
