@@ -55,7 +55,7 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeItems() {
-        this.combat.resilence.armor = 0;
+        this.combat.resilience.armor = 0;
         for (let item of this.items) {
 
             if (item.isArmour) {
@@ -71,8 +71,8 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeArmour(item) {
-        if (this.combat.resilence.armor < item.rating) {
-            this.combat.resilence.armor = item.rating;
+        if (this.combat.resilience.armor < item.rating) {
+            this.combat.resilience.armor = item.rating;
         }
     }
 
@@ -123,7 +123,7 @@ export class WrathAndGloryActor extends Actor {
         this.combat.defense.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defense.bonus, 1);
         this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1 + this.combat.resolve.bonus, 1);
         this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
-        this.combat.resilence.total = this._setDefault(this.attributes.toughness.rating + 1 + this.combat.resilence.bonus + this.combat.resilence.armor, 1);
+        this.combat.resilience.total = this._setDefault(this.attributes.toughness.rating + 1 + this.combat.resilience.bonus + this.combat.resilience.armor, 1);
         this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.rating + this.combat.wounds.bonus, 1);
         this.combat.determination.total = this._setDefault(this.attributes.toughness.rating + this.combat.determination.bonus, 1);
         this.combat.shock.max = this._setDefault(this.attributes.willpower.rating + this.advances.tier + this.combat.shock.bonus, 1);
