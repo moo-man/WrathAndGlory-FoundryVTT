@@ -1,14 +1,16 @@
 <div class="gear">
-  <div class="wrapper">
-    <div class="influence">
+  <div class="wrapper influence-wealth">
+    <div class="wrapper-item influence">
       <label class="roll-influence hover">{{localize "RESOURCE.INFLUENCE"}}</label>
       <input name="data.resources.influence" type="number" value="{{data.resources.influence}}" data-dtype="Number" />
     </div>
-    <h1>{{localize "TITLE.WARGEAR"}}</h1>
-    <div class="wealth">
+    <div class="wrapper-item wealth">
       <label>{{localize "RESOURCE.WEALTH"}}</label>
       <input name="data.resources.wealth" type="number" value="{{data.resources.wealth}}" data-dtype="Number" />
     </div>
+  </div>
+  <div class="wrapper gear-list">
+    <h1>{{localize "TITLE.WARGEAR"}}</h1>
     <div class="scrollable">
       <div class="items">
         <div class="header">

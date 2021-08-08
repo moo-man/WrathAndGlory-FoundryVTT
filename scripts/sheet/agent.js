@@ -8,7 +8,7 @@ export class AgentSheet extends WrathAndGloryActorSheet {
             template: "systems/wrath-and-glory/template/sheet/agent.html",
             width: 720,
             height: 800,
-            resizable: false,
+            resizable: true,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",

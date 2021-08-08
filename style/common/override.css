@@ -1,3 +1,4 @@
 .window-app .window-content {
   background: var(--image-background) repeat;
+  overflow: hidden;
 }

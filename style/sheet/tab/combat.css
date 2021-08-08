@@ -23,23 +23,13 @@
 .wrath-and-glory.sheet.actor .combat .wrapper.wargear {
   flex-basis: 100%;
   margin-top: 8px;
+  pointer-events:none;
 }
 
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .faith {
-  position: absolute;
-  top: 477px;
-  right: 30px;
+.wrath-and-glory.sheet.actor .combat .wrapper-item.faith {
   display: flex;
   flex-direction: row;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .faith label {
-  width: 70px;
-  cursor: default;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .faith input {
-  width: 50px;
+  margin-bottom: -33px;
 }
 
 .wrath-and-glory.sheet.actor .combat .wrapper .wrapper-item {
@@ -251,9 +241,10 @@
 
 .wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable {
   flex-basis: 100%;
-  height: 278px;
   overflow-y: scroll;
   margin-top: 8px;
+  pointer-events: all;
+  overflow: hidden
 }
 
 .wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items {

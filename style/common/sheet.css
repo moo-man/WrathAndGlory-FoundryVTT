@@ -1,3 +1,13 @@
+.wrath-and-glory.actor form {
+  height : 100%
+}
+
+.wrath-and-glory.sheet.actor .sheet-body {
+  width: 100%;
+  height: calc(100% - 165px);
+  overflow-y: auto
+}
+
 .wrath-and-glory.actor h1,
 .wrath-and-glory.item h1 {
   margin: 0;
