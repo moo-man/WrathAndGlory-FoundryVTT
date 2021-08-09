@@ -144,5 +144,5 @@ export class WrathAndGloryItem extends Item {
     get category() { return this.data.data.category }
     get salvo() { return this.data.data.salvo }
     get upgrades() { return this.data.data.upgrades }
-
+    get equipped() { return this.data.data.equipped }
 }

@@ -54,3 +54,40 @@
   text-align: center;
   height: 31px;
 }
+
+
+
+
+.wrath-and-glory .items {
+  display: flex;
+  flex-direction: column
+}
+
+.wrath-and-glory .item .item-content {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.wrath-and-glory .items .item-controls,
+  .wrath-and-glory .items .item-property{
+    display: flex;
+  flex: 0 0 50px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.wrath-and-glory .items .item-property.item-name{
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  flex: 1
+}
+
+.wrath-and-glory .items .item-property.item-image{
+  height: 22px;
+  width: 22px;
+  padding: 2px;
+  flex: unset;
+  border: 0px;
+}

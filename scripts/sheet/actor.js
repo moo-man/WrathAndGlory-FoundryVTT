@@ -5,27 +5,102 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     rollData = {};
 
     getData() {
-        const data = super.getData();
-        data.data = data.data.data // project system data so that handlebars has the same name and value paths
-        return data;
+        const sheetData = super.getData();
+        sheetData.data = sheetData.data.data // project system data so that handlebars has the same name and value paths
+        this.constructItemLists(sheetData)
+        return sheetData;
+    }
+
+
+    constructItemLists(sheetData) 
+    {
+        let items = {}
+
+        items.abilities = this.actor.getItemTypes("ability")
+        items.ammo = this.actor.getItemTypes("ammo")
+        items.armour = this.actor.getItemTypes("armour")
+        items.ascensions = this.actor.getItemTypes("ascension")
+        items.augmentics = this.actor.getItemTypes("augmentic")
+        items.gear = this.actor.getItemTypes("gear")
+        items.keywords = this.actor.getItemTypes("keyword")
+        items.memorableInjuries = this.actor.getItemTypes("memorableInjury")
+        items.mutations = this.actor.getItemTypes("mutation")
+        items.psychicPowers = this.actor.getItemTypes("psychicPower")
+        items.talents = this.actor.getItemTypes("talent")
+        items.traumaticInjuries = this.actor.getItemTypes("traumaticInjury")
+        items.weapons = this.actor.getItemTypes("weapon")
+        items.weaponUpgrades = this.actor.getItemTypes("weaponUpgrade")
+
+        sheetData.items = items;
+
+        this.constructInventory(sheetData)
+    }
+
+    constructInventory(sheetData)
+    {
+        sheetData.inventory = {
+            weapons : {
+                header : "HEADER.WEAPON",
+                items : this.actor.getItemTypes("weapon"),
+                equippable : true,
+                quantity : false,
+                type : "weapon"
+            },
+            armour : {
+                header : "HEADER.ARMOUR",
+                items : this.actor.getItemTypes("armour"),
+                equippable : true,
+                quantity : false,
+                type : "armour"
+            },
+            gear : {
+                header : "HEADER.GEAR",
+                items : this.actor.getItemTypes("gear"),
+                equippable : true,
+                quantity : false,
+                type : "gear"
+            },
+            weaponUpgrades : {
+                header : "HEADER.WEAPON_UPGRADE",
+                items : this.actor.getItemTypes("weaponUpgrade"),
+                equippable : false,
+                quantity : false,
+                type : "weaponUpgrade"
+            },
+            ammo : {
+                header : "HEADER.AMMO",
+                items : this.actor.getItemTypes("ammo"),
+                equippable : false,
+                quantity : true,
+                type : "ammo"
+            },
+            augmentics : {
+                header : "HEADER.AUGMENTIC",
+                items : this.actor.getItemTypes("augmentic"),
+                equippable : false,
+                quantity : false,
+                type : "augmentic"
+            }
+        }
     }
 
 
     activateListeners(html) {
         super.activateListeners(html);
-        html.find(".item-create").click(ev => this._onItemCreate(ev));
-        html.find(".item-edit").click(ev => this._onItemEdit(ev));
-        html.find(".item-delete").click(ev => this._onItemDelete(ev));
-        html.find("input").focusin(ev => this._onFocusIn(ev));
-        html.find(".roll-attribute").click(async ev => await this._prepareRollAttribute(ev));
-        html.find(".roll-skill").click(async ev => await this._prepareRollSkill(ev));
-        html.find(".roll-stealth").click(async ev => await this._prepareRollStealthScore(ev));
-        html.find(".roll-determination").click(async ev => await this._prepareRollDetermination(ev));
-        html.find(".roll-conviction").click(async ev => await this._prepareRollConviction(ev));
-        html.find(".roll-resolve").click(async ev => await this._prepareRollResolve(ev));
-        html.find(".roll-influence").click(async ev => await this._prepareRollInfluence(ev));
-        html.find(".roll-weapon").click(async ev => await this._prepareRollWeapon(ev));
-        html.find(".roll-psychic-power").click(async ev => await this._prepareRollPsychicPower(ev));
+        html.find(".item-create").click(this._onItemCreate.bind(this));
+        html.find(".item-edit").click(this._onItemEdit.bind(this));
+        html.find(".item-delete").click(this._onItemDelete.bind(this));
+        html.find("input").focusin(this._onFocusIn.bind(this));
+        html.find(".roll-attribute").click(this._prepareRollAttribute.bind(this));
+        html.find(".roll-skill").click(this._prepareRollSkill.bind(this));
+        html.find(".roll-stealth").click(this._prepareRollStealthScore.bind(this));
+        html.find(".roll-determination").click(this._prepareRollDetermination.bind(this));
+        html.find(".roll-conviction").click(this._prepareRollConviction.bind(this));
+        html.find(".roll-resolve").click(this._prepareRollResolve.bind(this));
+        html.find(".roll-influence").click(this._prepareRollInfluence.bind(this));
+        html.find(".roll-weapon").click(this._prepareRollWeapon.bind(this));
+        html.find(".roll-psychic-power").click(this._prepareRollPsychicPower.bind(this));
+        html.find(".checkbox").click(this._onCheckboxClick.bind(this))
 
     }
 
@@ -34,22 +109,22 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         if (this.actor.isOwner) {
             buttons = [
                 {
-                    label: game.i18n.localize("BUTTON.ROLL"),
+                    label: "BUTTON.ROLL",
                     class: "custom-roll",
                     icon: "fas fa-dice",
-                    onclick: async (ev) => await this._prepareCustomRoll()
+                    onclick: (ev) => this._prepareCustomRoll()
                 },
                 {
-                    label: game.i18n.localize("BUTTON.REROLL"),
+                    label: "BUTTON.REROLL",
                     class: "reroll",
                     icon: "fas fa-redo",
-                    onclick: async (ev) => await this._prepareReroll()
+                    onclick: (ev) => this._prepareReroll()
                 },
                 {
-                    label: game.i18n.localize("BUTTON.DAMAGE"),
+                    label: "BUTTON.DAMAGE",
                     class: "damage",
                     icon: "fas fa-tint",
-                    onclick: async (ev) => await this._prepareDamageRoll()
+                    onclick: (ev) => this._prepareDamageRoll()
                 }
             ].concat(buttons);
         }
@@ -85,16 +160,16 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         $(event.currentTarget).select();
     }
 
-    async _prepareCustomRoll() {
+    _prepareCustomRoll() {
         this._resetRollData();
-        await prepareCommonRoll(this.rollData);
+        return prepareCommonRoll(this.rollData);
     }
 
-    async _prepareReroll() {
-        await reroll(this.rollData);
+    _prepareReroll() {
+        return reroll(this.rollData);
     }
 
-    async _prepareDamageRoll() {
+    _prepareDamageRoll() {
         this._resetRollData();
         this.rollData.weapon = {
             damage: {
@@ -123,73 +198,73 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             traits: ""
         }
         this.rollData.name = "ROLL.DAMAGE";
-        await prepareDamageRoll(this.rollData);
+        return prepareDamageRoll(this.rollData);
     }
 
-    async _prepareRollAttribute(event) {
+    _prepareRollAttribute(event) {
         event.preventDefault();
         this._resetRollData();
         const attributeName = $(event.currentTarget).data("attribute");
         const attribute = this.actor.attributes[attributeName];
         this.rollData.name = attribute.label;
         this.rollData.pool.size = attribute.total;
-        await prepareCommonRoll(this.rollData);
+        return prepareCommonRoll(this.rollData);
     }
 
-    async _prepareRollSkill(event) {
+    _prepareRollSkill(event) {
         event.preventDefault();
         this._resetRollData();
         const skillName = $(event.currentTarget).data("skill");
         const skill = this.actor.skills[skillName];
         this.rollData.name = skill.label;
         this.rollData.pool.size = skill.total;
-        await prepareCommonRoll(this.rollData);
+        return prepareCommonRoll(this.rollData);
     }
 
-    async _prepareRollStealthScore(event) {
+    _prepareRollStealthScore(event) {
         event.preventDefault();
         this._resetRollData();
         const skill = this.actor.skills.stealth;
         this.rollData.name = skill.label;
         this.rollData.difficulty.target = 0;
         this.rollData.pool.size = skill.total;
-        await prepareCommonRoll(this.rollData);
+        return prepareCommonRoll(this.rollData);
     }
 
-    async _prepareRollDetermination(event) {
+    _prepareRollDetermination(event) {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.DETERMINATION";
         this.rollData.pool.size = this.actor.combat.determination.total;
-        await prepareCommonRoll(this.rollData);
+        return prepareCommonRoll(this.rollData);
     }
 
-    async _prepareRollConviction(event) {
+    _prepareRollConviction(event) {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.CONVICTION";
         this.rollData.pool.size = this.actor.combat.conviction.total;
         this.rollData.difficulty.penalty = this._getConvictionPenalty();
-        await prepareCommonRoll(this.rollData);
+        return prepareCommonRoll(this.rollData);
     }
 
-    async _prepareRollResolve(event) {
+    _prepareRollResolve(event) {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.RESOLVE";
         this.rollData.pool.size = this.actor.combat.resolve.total;
-        await prepareCommonRoll(this.rollData);
+        return prepareCommonRoll(this.rollData);
     }
 
-    async _prepareRollInfluence(event) {
+    _prepareRollInfluence(event) {
         event.preventDefault();
         this._resetRollData();
         this.rollData.name = "ROLL.INFLUENCE";
         this.rollData.pool.size = this.actor.resources.influence;
-        await prepareCommonRoll(this.rollData);
+        return prepareCommonRoll(this.rollData);
     }
 
-    async _prepareRollWeapon(event) {
+    _prepareRollWeapon(event) {
         event.preventDefault();
         this._resetRollData();
         const div = $(event.currentTarget).parents(".item");
@@ -228,10 +303,10 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.rollData.pool.size = skill.total;
         this.rollData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
         this.rollData.pool.rank = weapon.attack.rank;
-        await prepareWeaponRoll(this.rollData);
+        return prepareWeaponRoll(this.rollData);
     }
 
-    async _prepareRollPsychicPower(event) {
+    _prepareRollPsychicPower(event) {
         event.preventDefault();
         this._resetRollData();
         const div = $(event.currentTarget).parents(".item");
@@ -258,7 +333,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.rollData.pool.size = skill.total;
         this.rollData.skillName = skill.label;
         this.rollData.name = psychicPower.data.name;
-        await preparePsychicRoll(this.rollData);
+        return preparePsychicRoll(this.rollData);
     }
 
     _resetRollData() {
@@ -312,5 +387,16 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         } else {
             return 0;
         }
+    }
+
+    _onCheckboxClick(event) {
+        let target = $(event.currentTarget).attr("data-target")
+        if (target == "item") {
+            target = $(event.currentTarget).attr("data-item-target")
+            let item = this.actor.items.get($(event.currentTarget).parents(".item").attr("data-item-id"))
+            return item.update({ [`${target}`]: !getProperty(item.data, target) })
+        }
+        if (target)
+            return this.actor.update({[`${target}`] : !getProperty(this.actor.data, target)});
     }
 }

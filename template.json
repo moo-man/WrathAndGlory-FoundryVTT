@@ -317,6 +317,9 @@
             "conviction": 0
           }
         }
+      },
+      "equipped" : {
+        "equipped" : false
       }
     },
     "ability": {
@@ -424,7 +427,7 @@
       "description": ""
     },
     "weapon": {
-      "templates": ["bonus"],
+      "templates": ["bonus", "equipped"],
       "description": "",
       "attack": {
         "base": 0,

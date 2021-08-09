@@ -18,6 +18,7 @@ export class WrathAndGloryActor extends Actor {
 
     prepareData() {
         super.prepareData();
+        this.itemCategories = this.itemTypes
         if (this.type === "agent") {
             this._initializeAgent();
         } else if (this.type === "threat") {
@@ -166,6 +167,10 @@ export class WrathAndGloryActor extends Actor {
     get resources() {return this.data.data.resources}
     get corruption() {return this.data.data.corruption}
     get notes() {return this.data.data.notes}
+
+    getItemTypes(type) {
+        return (this.itemCategories || this.itemTypes)[type]
+    }
 
     getAttributeCosts(rating) {
         switch (rating) {

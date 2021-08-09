@@ -288,6 +288,9 @@
   "WEAPON.DIE_VALUE": "Die Value",
   "WEAPON.ATTACK": "Attack",
 
+  "ITEM.EQP": "Eqp.",
+  "ITEM.QTY": "Qty.",
+
   "WEAPON_UPGRADE.NAME": "Name",
   "WEAPON_UPGRADE.DESCRIPTION": "Description",
   "WEAPON_UPGRADE.EFFECT": "Effect",
