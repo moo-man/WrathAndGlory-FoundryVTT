@@ -160,21 +160,19 @@
           <span class="item-property small">{{localize "WEAPON.ED"}}</span>
           <span class="item-property small">{{localize "WEAPON.AP"}}</span>
           <span class="item-property">{{localize "WEAPON.RANGE"}}</span>
-          <span class="item-property">{{localize "HEADER.AMMO"}}</span>
-          <span class="item-property flex large">{{localize "WEAPON.TRAITS"}}</span>
+          <span class="item-property flex">{{localize "HEADER.AMMO"}}</span>
         </div>
         {{#each items.equipped.weapons as |item|}}
         <div class="item" data-item-id="{{item.id}}">
           <div class="item-content roll-weapon">
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
-
               
               <div class="item-property">{{item.Damage}}</div>
               <div class="item-property small">{{item.ED}}</div>
               <div class="item-property small">{{item.AP}}</div>
               <div class="item-property">{{item.Range}}</div>
-              <div class="item-property">
+              <div class="item-property flex">
                 {{#if item.isRanged}}
                 <select class="property-edit" data-target="data.ammo">
                   {{#select item.ammo}}
@@ -186,9 +184,12 @@
                 </select>
                 {{/if}}
               </div>
-
-              <div class="item-property flex large">{{item.traits}}</div>
           </div>
+          {{#if item.traits}}
+          <div class="item-content-extra">
+            <span class="item-traits"><b>Traits:</b> {{item.traits}}</span>
+          </div>
+          {{/if}}
         </div>
         {{/each}}
       </div>

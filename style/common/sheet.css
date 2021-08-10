@@ -64,11 +64,11 @@
 
 .wrath-and-glory.sheet.actor .items .item {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  height: 22px;
   color: var(--color-white);
   align-items: center;
+  flex: 1
 }
 
 .wrath-and-glory.actor .items .header{
@@ -88,7 +88,17 @@
   flex: 1;
   align-items: center;
   cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
+
+.wrath-and-glory .item .item-content-extra {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 2px 5px 2px 5px
+}
+
 
 .wrath-and-glory.actor .items .item-controls,
 .wrath-and-glory.actor .items .item-property {
@@ -146,6 +156,7 @@
   font-family: "Signika";
   border-left: 1px solid black;
   border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .wrath-and-glory.actor .items .item-property select:hover{
@@ -177,7 +188,7 @@
 }
 
 
-.wrath-and-glory.sheet.actor .items .item:hover * {
+.wrath-and-glory.sheet.actor .items .item .item-content:hover {
   background-color: var(--color-red);
 }
 
