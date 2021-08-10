@@ -55,15 +55,31 @@
   height: 31px;
 }
 
-
-
-
-.wrath-and-glory .items {
+.wrath-and-glory.actor .items {
   display: flex;
-  flex-direction: column
+  flex-direction: column;
+  width: 100%;
+  margin-top: 8px
 }
 
-.wrath-and-glory .items .header .item-property {
+.wrath-and-glory.sheet.actor .items .item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 22px;
+  color: var(--color-white);
+  align-items: center;
+}
+
+.wrath-and-glory.actor .items .header{
+  display: flex;
+  flex-direction: row;
+  height: 22px;
+  align-items: center;
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+  .wrath-and-glory.actor .items .header .item-property {
   font-weight: bold;
 }
 
@@ -73,42 +89,42 @@
   align-items: center;
 }
 
-.wrath-and-glory .items .item-controls,
-.wrath-and-glory .items .item-property {
+.wrath-and-glory.actor .items .item-controls,
+.wrath-and-glory.actor .items .item-property {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.wrath-and-glory .items .item-property {
+.wrath-and-glory.actor .items .item-property {
   flex: 0 0 100px;
 }
 
-.wrath-and-glory .items .item-controls,
-.wrath-and-glory .items .item-property.small{
+.wrath-and-glory.actor .items .item-controls,
+.wrath-and-glory.actor .items .item-property.small{
   flex: 0 0 50px;
 }
 
-.wrath-and-glory .items .item-property.large {
+.wrath-and-glory.actor .items .item-property.large {
   flex: 0 0 200px;
 }
 
-.wrath-and-glory .items .item-property.flex {
+.wrath-and-glory.actor .items .item-property.flex {
   flex: 1;
 }
 
-.wrath-and-glory .items .item-property.flex.large {
+.wrath-and-glory.actor .items .item-property.flex.large {
   flex: 2;
 }
 
-.wrath-and-glory .items .item-property.item-name{
+.wrath-and-glory.actor .items .item-property.item-name{
   justify-content: flex-start;
   display: flex;
   align-items: center;
   flex: 1
 }
 
-.wrath-and-glory .items .item-property.item-image{
+.wrath-and-glory.actor .items .item-property.item-image{
   height: 22px;
   width: 22px;
   padding: 2px;
@@ -118,4 +134,25 @@
 
 .wrath-and-glory.sheet.actor .wrapper .scrollable .items:not(:first-of-type) {
   margin-top: 8px;
+}
+
+
+.wrath-and-glory.sheet.actor .items .item:hover * {
+  background-color: var(--color-red);
+}
+
+.wrath-and-glory.sheet.actor .items .item:nth-child(even) {
+  background-color: var(--color-dark-grey);
+}
+
+.wrath-and-glory.sheet.actor .items .item:nth-child(odd) {
+  background-color: var(--color-light-grey);
+}
+
+
+.wrath-and-glory.sheet.actor  .wrapper .pointer-enable {
+  display: flex;
+  flex-direction: column;
+  pointer-events: all;
+  width: 100%;
 }

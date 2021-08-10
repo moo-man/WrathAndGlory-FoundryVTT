@@ -1,75 +1,71 @@
 <div class="talents">
-  <div class="wrapper">
+  <div class="wrapper talents-abilities">
     <h1>{{localize "TITLE.TALENTS_ABILITIES"}}</h1>
-    <div class="scrollable">
-      <div class="items">
-        <div class="header">
-          <div class="item-property item-image"></div>
-          <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
-          <div class="item-controls">
-            <a class="item-create" title="Create Item" data-type="talent"><i class="fas fa-plus"></i></a>
-          </div>
+    <div class="items">
+      <div class="header">
+        <div class="item-property item-image"></div>
+        <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
+        <div class="item-controls">
+          <a class="item-create" title="Create Item" data-type="talent"><i class="fas fa-plus"></i></a>
         </div>
-        {{#each items.talents as |item|}}
-        <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content">
-              <img class="item-property item-image" src="{{item.img}}"></img>
-              <div class="item-property item-name item-edit">{{item.name}}</div>
-              <div class="item-controls">
-                <a class="item-control item-post" title="Post Item"><i class="fas fa-comment"></i></a>
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
-              </div>
-          </div>
-        </div>
-        {{/each}}
       </div>
-      <div class="items">
-        <div class="header">
-          <div class="item-property item-image"></div>
-          <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
+      {{#each items.talents as |item|}}
+      <div class="item" data-item-id="{{item.id}}">
+        <div class="item-content">
+          <img class="item-property item-image" src="{{item.img}}"></img>
+          <div class="item-property item-name item-edit">{{item.name}}</div>
           <div class="item-controls">
-            <a class="item-create" title="Create Item" data-type="ability"><i class="fas fa-plus"></i></a>
+            <a class="item-control item-post" title="Post Item"><i class="fas fa-comment"></i></a>
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
           </div>
         </div>
-        {{#each items.abilities as |item|}}
-        <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content">
-              <img class="item-property item-image" src="{{item.img}}"></img>
-              <div class="item-property item-name item-edit">{{item.name}}</div>
-              <div class="item-controls">
-                <a class="item-control item-post" title="Post Item"><i class="fas fa-comment"></i></a>
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
-              </div>
-          </div>
-        </div>
-        {{/each}}
       </div>
+      {{/each}}
+    </div>
+    <div class="items">
+      <div class="header">
+        <div class="item-property item-image"></div>
+        <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
+        <div class="item-controls">
+          <a class="item-create" title="Create Item" data-type="ability"><i class="fas fa-plus"></i></a>
+        </div>
+      </div>
+      {{#each items.abilities as |item|}}
+      <div class="item" data-item-id="{{item.id}}">
+        <div class="item-content">
+          <img class="item-property item-image" src="{{item.img}}"></img>
+          <div class="item-property item-name item-edit">{{item.name}}</div>
+          <div class="item-controls">
+            <a class="item-control item-post" title="Post Item"><i class="fas fa-comment"></i></a>
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
     </div>
   </div>
-  <div class="wrapper" style="margin-top: 8px;">
+  <div class="wrapper powers">
     <h1>{{localize "TITLE.PSYCHIC_POWERS"}}</h1>
-    <div class="scrollable" style="height: 229px;">
-      <div class="items">
-        <div class="header">
-          <div class="item-property item-image"></div>
-          <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
-          <div class="item-controls">
-            <a class="item-create" title="Create Item" data-type="psychicPower"><i class="fas fa-plus"></i></a>
-          </div>
+    <div class="items">
+      <div class="header">
+        <div class="item-property item-image"></div>
+        <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
+        <div class="item-controls">
+          <a class="item-create" title="Create Item" data-type="psychicPower"><i class="fas fa-plus"></i></a>
         </div>
-        {{#each items.psychicPowers as |item|}}
-        <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content">
-              <img class="item-property item-image" src="{{item.img}}"></img>
-              <div class="item-property item-name item-edit">{{item.name}}</div>
-              <div class="item-controls">
-                <a class="item-control item-post" title="Post Item"><i class="fas fa-comment"></i></a>
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
-              </div>
-          </div>
-        </div>
-        {{/each}}
       </div>
+      {{#each items.psychicPowers as |item|}}
+      <div class="item" data-item-id="{{item.id}}">
+        <div class="item-content">
+          <img class="item-property item-image" src="{{item.img}}"></img>
+          <div class="item-property item-name item-edit">{{item.name}}</div>
+          <div class="item-controls">
+            <a class="item-control item-post" title="Post Item"><i class="fas fa-comment"></i></a>
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
     </div>
   </div>
 </div>
