@@ -9,7 +9,7 @@
   "author": "Moo Man, Vivi Aurora, Perfectro",
   "scripts": [],
   "esmodules": [
-    "scripts/common/hooks.js"
+    "wrath-and-glory.js"
   ],
   "styles": [
     "style/chat/chat.css",
