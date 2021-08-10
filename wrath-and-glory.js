@@ -20,6 +20,7 @@ import { initializeHandlebars } from "./scripts/common/handlebars.js";
 import { prepareCommonRoll, prepareWeaponRoll, prepareDamageRoll, preparePsychicRoll } from "./scripts/common/dialog.js";
 import { commonRoll, weaponRoll, damageRoll, psychicRoll } from "./scripts/common/roll.js";
 import hooks from "./scripts/common/hooks.js"
+import RuinGloryCounter from "./scripts/apps/counter.js"
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
@@ -32,7 +33,8 @@ Hooks.once("init", () => {
     commonRoll,
     weaponRoll,
     psychicRoll,
-    damageRoll
+    damageRoll,
+    RuinGloryCounter
   };
   CONFIG.Combat.initiative = { formula: "(@attributes.initiative.total)d6", decimals: 0 };
   Actors.unregisterSheet("core", ActorSheet);

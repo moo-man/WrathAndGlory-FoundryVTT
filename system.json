@@ -26,7 +26,8 @@
     "style/sheet/tab/stats.css",
     "style/sheet/tab/settings.css",
     "style/sheet/tab/talents.css",
-    "style/sheet/item.css"
+    "style/sheet/item.css",
+    "style/common/counter.css"
   ],
   "packs": [],
   "languages": [

@@ -18,13 +18,24 @@ function preloadHandlebarsTemplates() {
 }
 
 function registerHandlebarsHelpers() {
-
-  Handlebars.registerHelper("multiTarget", function (isMultiTarget) {
-    if (isMultiTarget) {
-        return game.i18n.localize("DIALOG.YES");
-    } else {
-      return game.i18n.localize("DIALOG.NO")
-    }
+  Handlebars.registerHelper("removeMarkup", function (text) {
+      const markup = /<(.*?)>/gi;
+      return text.replace(markup, "");
   });
 
+  Handlebars.registerHelper("ifIsGM", function (options) {
+      return game.user.isGM ? options.fn(this) : options.inverse(this)
+  })
+
+  Handlebars.registerHelper("isGM", function (options) {
+      return game.user.isGM
+  })
+
+  Handlebars.registerHelper("config", function (key) {
+      return game.aos.config[key]
+  })
+
+  Handlebars.registerHelper("configLookup", function (obj, key) {
+      return game.aos.config[obj][key]
+  })
 }

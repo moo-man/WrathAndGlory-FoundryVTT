@@ -1,0 +1,24 @@
+<div class="counter-app"> 
+
+    <div class="counter">
+      <h3>{{localize "RESOURCE.GLORY"}}</h3>
+      <div class="input-controls">
+        {{#if canEdit}} <a class="decr">-</a> {{/if}} 
+        <input type="number" data-type="glory" value="{{glory}}" 
+        {{#unless canEdit}}disabled{{/unless}}> 
+        {{#if canEdit}} <a class="incr">+</a>{{/if}}
+      </div>
+    </div>
+
+
+    <div class="counter">
+      <h3>{{localize "RESOURCE.RUIN"}}</h3>
+      <div class="input-controls">
+        {{#if (isGM)}} <a class="decr">-</a> {{/if}} 
+        <input type="number" data-type="ruin" value="{{ruin}}" 
+        {{#unless (isGM)}}disabled{{/unless}}> 
+        {{#if (isGM)}}<a class="incr">+</a>{{/if}}
+      </div>
+    </div>
+
+  </div>
