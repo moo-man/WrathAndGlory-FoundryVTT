@@ -2,29 +2,6 @@ import { WrathAndGloryActorSheet } from "./actor.js";
 
 export class AgentSheet extends WrathAndGloryActorSheet {
 
-    static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            classes: ["wrath-and-glory", "sheet", "actor"],
-            template: "systems/wrath-and-glory/template/actor/agent.html",
-            width: 720,
-            height: 800,
-            resizable: true,
-            tabs: [
-                {
-                    navSelector: ".sheet-tabs",
-                    contentSelector: ".sheet-body",
-                    initial: "main",
-                },
-            ]
-        });
-    }
-
-    getData() {
-        const data = super.getData();
-        return data;
-    }
-
-
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-cost").focusout(async (ev) => { await this._onItemCostFocusOut(ev); });

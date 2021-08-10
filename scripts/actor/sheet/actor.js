@@ -4,6 +4,27 @@ import { reroll } from "../../common/roll.js";
 export class WrathAndGloryActorSheet extends ActorSheet {
     rollData = {};
 
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            classes: ["wrath-and-glory", "sheet", "actor"],
+            width: 720,
+            height: 800,
+            resizable: true,
+            tabs: [
+                {
+                    navSelector: ".sheet-tabs",
+                    contentSelector: ".sheet-body",
+                    initial: "main",
+                },
+            ],
+            scrollY: [".sheet-body"]
+        });
+    }
+
+    get template() {
+        return `systems/wrath-and-glory/template/actor/${this.actor.type}.html`
+    }
+
     getData() {
         const sheetData = super.getData();
         sheetData.data = sheetData.data.data // project system data so that handlebars has the same name and value paths
