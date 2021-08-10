@@ -10,7 +10,6 @@ function preloadHandlebarsTemplates() {
     "systems/wrath-and-glory/template/sheet/tab/advances.html",
     "systems/wrath-and-glory/template/sheet/tab/bonus.html",
     "systems/wrath-and-glory/template/sheet/tab/combat.html",
-    "systems/wrath-and-glory/template/sheet/tab/combat-threat.html",
     "systems/wrath-and-glory/template/sheet/tab/gear.html",
     "systems/wrath-and-glory/template/sheet/tab/notes.html",
     "systems/wrath-and-glory/template/sheet/tab/settings.html",

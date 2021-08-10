@@ -140,97 +140,103 @@
         {{/each}}
       </div>
     </div>
+    {{#if (eq actor.type "agent")}}
       <div class="faith wrapper-item">
         <label>{{localize "RESOURCE.FAITH"}}</label>
         <input name="data.resources.faith.current" type="number" value="{{data.resources.faith.current}}" data-dtype="Number" />
         <input name="data.resources.faith.total" type="number" value="{{data.resources.faith.total}}" data-dtype="Number" />
       </div>
+    {{/if}}
   </div>
   <div class="wargear wrapper">
     <h1>{{localize "TITLE.WARGEAR"}}</h1>
     <div class="scrollable">
       <div class="items">
         <div class="header">
-          <b class="avatar"></b>
-          <b class="name">{{localize "HEADER.WEAPON"}}</b>
-          <b class="damage">{{localize "WEAPON.DAMAGE"}}</b>
-          <b class="ed">{{localize "WEAPON.ED"}}</b>
-          <b class="ap">{{localize "WEAPON.AP"}}</b>
-          <b class="range">{{localize "WEAPON.RANGE"}}</b>
-          <b class="traits">{{localize "WEAPON.TRAITS"}}</b>
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.WEAPON"}}</span>
+          <span class="item-property">{{localize "WEAPON.DAMAGE"}}</span>
+          <span class="item-property small">{{localize "WEAPON.ED"}}</span>
+          <span class="item-property small">{{localize "WEAPON.AP"}}</span>
+          <span class="item-property">{{localize "WEAPON.RANGE"}}</span>
+          <span class="item-property flex large">{{localize "WEAPON.TRAITS"}}</span>
         </div>
-        {{#each actor.items as |item|}}
-        {{#if item.isWeapon}}
+        {{#each items.equipped.weapons as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="avatar" style="background-image: url('{{item.img}}')"></div>
-          <div class="name roll-weapon">{{item.name}}</div>
-          <div class="damage">{{item.Damage}}</div>
-          <div class="ed">{{item.ED}}</div>
-          <div class="ap">{{item.AP}}</div>
-          <div class="range">{{item.Range}}</div>
-          <div class="traits">{{item.traits}}</div>
+          <div class="item-content roll-weapon">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+
+              <div class="item-property">{{item.Damage}}</div>
+              <div class="item-property small">{{item.ED}}</div>
+              <div class="item-property small">{{item.AP}}</div>
+              <div class="item-property">{{item.Range}}</div>
+              <div class="item-property flex large">{{item.traits}}</div>
+
+          </div>
         </div>
-        {{/if}}
         {{/each}}
       </div>
-      <div class="items" style="margin-top: 8px;">
+
+
+
+      <div class="items">
         <div class="header">
-          <b class="avatar"></b>
-          <b class="name">{{localize "HEADER.ARMOUR"}}</b>
-          <b class="rating">{{localize "ARMOUR.RATING"}}</b>
-          <b class="traits-armour">{{localize "ARMOUR.TRAITS"}}</b>
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.ARMOUR"}}</span>
+          <span class="item-property">{{localize "ARMOUR.RATING"}}</span>
+          <span class="item-property flex large">{{localize "ARMOUR.TRAITS"}}</span>
         </div>
-        {{#each actor.items as |item|}}
-        {{#if item.isArmour}}
+        {{#each items.equipped.armour as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="avatar" style="background-image: url('{{item.img}}')"></div>
-          <div class="name item-edit">{{item.name}}</div>
-          <div class="rating">{{item.rating}}</div>
-          <div class="traits-armour">{{item.traits}}</div>
+          <div class="item-content item-edit">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+              <div class="item-property">{{item.rating}}</div>
+              <div class="item-property flex large">{{item.traits}}</div>
+          </div>
         </div>
-        {{/if}}
         {{/each}}
       </div>
-      <div class="items" style="margin-top: 8px;">
+
+      <div class="items">
         <div class="header">
-          <b class="avatar"></b>
-          <b class="name">{{localize "HEADER.PSYCHIC_POWER"}}</b>
-          <b class="dn">{{localize "PSYCHIC_POWER.DN"}}</b>
-          <b class="activation">{{localize "PSYCHIC_POWER.ACTIVATION"}}</b>
-          <b class="duration">{{localize "PSYCHIC_POWER.DURATION"}}</b>
-          <b class="range-psychic">{{localize "PSYCHIC_POWER.RANGE"}}</b>
-          <b class="multi-target">{{localize "PSYCHIC_POWER.MULTI_TARGET"}}</b>
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.PSYCHIC_POWER"}}</span>
+          <span class="item-property small">{{localize "PSYCHIC_POWER.DN"}}</span>
+          <span class="item-property">{{localize "PSYCHIC_POWER.ACTIVATION"}}</span>
+          <span class="item-property">{{localize "PSYCHIC_POWER.DURATION"}}</span>
+          <span class="item-property">{{localize "PSYCHIC_POWER.RANGE"}}</span>
+          <span class="item-property">{{localize "PSYCHIC_POWER.MULTI_TARGET"}}</span>
         </div>
-        {{#each actor.items as |item|}}
-        {{#if item.isPsychicPower}}
+        {{#each items.psychicPowers as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="avatar" style="background-image: url('{{item.img}}')"></div>
-          <div class="name roll-psychic-power">{{item.name}}</div>
-          <div class="dn">{{item.dn}}</div>
-          <div class="activation">{{item.Activation}}</div>
-          <div class="duration">{{item.duration}}</div>
-          <div class="range-psychic">{{item.range}}</div>
-          <div class="multi-target">{{item.MultiTarget}}</div>
+          <div class="item-content roll-psychic-power">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+              <div class="item-property small">{{item.dn}}</div>
+              <div class="item-property">{{item.Activation}}</div>
+              <div class="item-property">{{item.duration}}</div>
+              <div class="item-property">{{item.range}}</div>
+              <div class="item-property">{{item.MultiTarget}}</div>
+          </div>
         </div>
-        {{/if}}
         {{/each}}
       </div>
-      <div class="items" style="margin-top: 8px;">
+
+
+      <div class="items">
         <div class="header">
-          <b class="avatar"></b>
-          <b class="name">{{localize "HEADER.ABILITY"}}</b>
-          <b class="effect">{{localize "HEADER.EFFECT"}}</b>
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
         </div>
-        {{#each actor.items as |item|}}
-        {{#if item.isTalentOrAbility}}
-        {{#if item.display}}
+        {{#each items.abilitiesAndTalents as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="avatar" style="background-image: url('{{item.img}}')"></div>
-          <div class="name item-edit">{{item.name}}</div>
-          <div class="effect">{{item.effect}}</div>
+          <div class="item-content item-edit">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+          </div>
         </div>
-        {{/if}}
-        {{/if}}
         {{/each}}
       </div>
     </div>

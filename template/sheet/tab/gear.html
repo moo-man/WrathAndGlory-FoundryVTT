@@ -20,10 +20,10 @@
           <div class="item-property item-image"></div>
           <span class="item-property item-name">{{localize section.header}}</span>
           {{#if section.quantity}}
-          <span class="item-property">{{localize "ITEM.QTY"}}</span>
+          <span class="item-property small">{{localize "ITEM.QTY"}}</span>
           {{/if}}
           {{#if section.equippable}}
-          <span class="item-property">{{localize "ITEM.EQP"}}</span>
+          <span class="item-property small">{{localize "ITEM.EQP"}}</span>
           {{/if}}
           <div class="item-controls">
             <a class="item-create" title="Create Item" data-type="{{section.type}}"><i class="fas fa-plus"></i></a>
@@ -36,10 +36,10 @@
               <div class="item-property item-name item-edit">{{item.name}}</div>
 
             {{#if ../quantity}}
-            <span class="item-property">{{item.quantity}}</span>
+            <span class="item-property small">{{item.quantity}}</span>
             {{/if}}
             {{#if ../equippable}}
-            <div class="item-property">
+            <div class="item-property small">
               {{#if item.equipped}}
               <a class="checkbox" data-target="item" data-item-target="data.equipped"><i class="far fa-check-circle"></i></a>
               {{else}}

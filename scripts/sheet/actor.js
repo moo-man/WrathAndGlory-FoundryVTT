@@ -15,8 +15,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     constructItemLists(sheetData) 
     {
         let items = {}
+        items.equipped = {}
 
         items.abilities = this.actor.getItemTypes("ability")
+        items.talents = this.actor.getItemTypes("talent")
+        items.abilitiesAndTalents = items.abilities.concat(items.talents)
         items.ammo = this.actor.getItemTypes("ammo")
         items.armour = this.actor.getItemTypes("armour")
         items.ascensions = this.actor.getItemTypes("ascension")
@@ -26,10 +29,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         items.memorableInjuries = this.actor.getItemTypes("memorableInjury")
         items.mutations = this.actor.getItemTypes("mutation")
         items.psychicPowers = this.actor.getItemTypes("psychicPower")
-        items.talents = this.actor.getItemTypes("talent")
         items.traumaticInjuries = this.actor.getItemTypes("traumaticInjury")
-        items.weapons = this.actor.getItemTypes("weapon")
         items.weaponUpgrades = this.actor.getItemTypes("weaponUpgrade")
+
+        items.equipped.weapons = this.actor.getItemTypes("weapon").filter(i => i.equipped)
+        items.equipped.armour = this.actor.getItemTypes("armour").filter(i => i.equipped)
 
         sheetData.items = items;
 
@@ -56,7 +60,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             gear : {
                 header : "HEADER.GEAR",
                 items : this.actor.getItemTypes("gear"),
-                equippable : true,
+                equippable : false,
                 quantity : false,
                 type : "gear"
             },

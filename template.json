@@ -463,6 +463,7 @@
         "medium": 0,
         "long": 0
       },
+      "ammo" : "",
       "salvo": 0,
       "traits": "",
       "value": 0,
