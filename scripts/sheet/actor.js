@@ -34,6 +34,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
         items.equipped.weapons = this.actor.getItemTypes("weapon").filter(i => i.equipped)
         items.equipped.armour = this.actor.getItemTypes("armour").filter(i => i.equipped)
+        items.equipped.ammo = items.equipped.weapons.map(i => this.actor.items.get(i.ammo)).filter(i => !!i)
 
         sheetData.items = items;
 
@@ -91,6 +92,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     activateListeners(html) {
         super.activateListeners(html);
+        html.find("select").click(ev => ev.stopPropagation())
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
@@ -105,6 +107,8 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".roll-weapon").click(this._prepareRollWeapon.bind(this));
         html.find(".roll-psychic-power").click(this._prepareRollPsychicPower.bind(this));
         html.find(".checkbox").click(this._onCheckboxClick.bind(this))
+        html.find(".property-edit").change(this._onSelectChange.bind(this))
+        html.find(".qty-click").click(this._onQuantityClick.bind(this))
 
     }
 
@@ -402,5 +406,29 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         }
         if (target)
             return this.actor.update({[`${target}`] : !getProperty(this.actor.data, target)});
+    }
+
+    _onSelectChange(event)
+    {
+        let target = $(event.currentTarget).attr("data-target")
+        let id = $(event.currentTarget).parents(".item").attr("data-item-id")
+        let item = this.actor.items.get(id)
+        return item.update({[target] : event.target.value})    
+    }
+
+    _onQuantityClick(event) {
+        event.stopPropagation()
+        let id = $(event.currentTarget).parents(".item").attr("data-item-id")
+        let item = this.actor.items.get(id)
+        let multiplier
+        if (event.currentTarget.dataset.type == "increment")
+            multiplier = 1
+        else if (event.currentTarget.dataset.type == "decrement")
+            multiplier = -1
+        else
+            multiplier = event.button == 0 ? 1 : -1
+
+        multiplier = event.ctrlKey ? multiplier * 10 : multiplier  
+        item.update({"data.quantity" : item.quantity + 1 * multiplier})
     }
 }

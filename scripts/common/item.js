@@ -1,4 +1,13 @@
 export class WrathAndGloryItem extends Item {
+
+
+    _preUpdate(updateData, options, user)
+    {
+        if (hasProperty(updateData, "data.quantity") && updateData.data.quantity < 0)
+            updateData.data.quantity = 0;
+    }
+
+
     async sendToChat() {
         const item = new CONFIG.Item.documentClass(this.data._source)
         if (item.data.img.includes("/unknown")) {
@@ -97,6 +106,14 @@ export class WrathAndGloryItem extends Item {
         return this.multiTarget ? game.i18n.localize("Yes") : game.i18n.localize("No")
     }
 
+    get isMelee() {
+        return this.category == "melee"
+    }
+
+    get isRanged() {
+        return this.category == "ranged"
+    }
+
 
     // @@@@@@ TYPE GETTERS @@@@@@
     get isKeyword() { return this.type === "keyword" }
@@ -116,6 +133,7 @@ export class WrathAndGloryItem extends Item {
     get isAugmentic() { return this.type === "augmentic" }
 
     // @@@@@@ DATA GETTERS @@@@@@
+    get ammo() { return this.data.data.ammo }
     get bonus() { return this.data.data.bonus }
     get effect() { return this.data.data.effect }
     get cost() { return this.data.data.cost }
