@@ -48,21 +48,21 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 header : "HEADER.WEAPON",
                 items : this.actor.getItemTypes("weapon"),
                 equippable : true,
-                quantity : false,
+                quantity : true,
                 type : "weapon"
             },
             armour : {
                 header : "HEADER.ARMOUR",
                 items : this.actor.getItemTypes("armour"),
                 equippable : true,
-                quantity : false,
+                quantity : true,
                 type : "armour"
             },
             gear : {
                 header : "HEADER.GEAR",
                 items : this.actor.getItemTypes("gear"),
                 equippable : false,
-                quantity : false,
+                quantity : true,
                 type : "gear"
             },
             weaponUpgrades : {

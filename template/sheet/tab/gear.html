@@ -20,11 +20,11 @@
         <div class="header">
           <div class="item-property item-image"></div>
           <span class="item-property item-name">{{localize section.header}}</span>
-          {{#if section.quantity}}
-          <span class="item-property small">{{localize "ITEM.QTY"}}</span>
-          {{/if}}
           {{#if section.equippable}}
           <span class="item-property small">{{localize "ITEM.EQP"}}</span>
+          {{/if}}
+          {{#if section.quantity}}
+          <span class="item-property">{{localize "ITEM.QTY"}}</span>
           {{/if}}
           <div class="item-controls">
             <a class="item-create" title="Create Item" data-type="{{section.type}}"><i class="fas fa-plus"></i></a>
@@ -35,10 +35,6 @@
           <div class="item-content">
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name item-edit">{{item.name}}</div>
-
-            {{#if ../quantity}}
-            <span class="item-property small">{{item.quantity}}</span>
-            {{/if}}
             {{#if ../equippable}}
             <div class="item-property small">
               {{#if item.equipped}}
@@ -46,6 +42,15 @@
               {{else}}
               <a class="checkbox" data-target="item" data-item-target="data.equipped"><i class="far fa-circle"></i></a>
               {{/if}}
+            </div>
+            {{/if}}
+
+            
+            {{#if ../quantity}}
+            <div class="item-property qty-click">
+              <button class="qty-click" data-type="decrement">-</button>
+              {{item.quantity}}
+              <button class="qty-click" data-type="increment">+</button>
             </div>
             {{/if}}
             <div class="item-controls">

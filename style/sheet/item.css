@@ -256,12 +256,21 @@
   flex-basis: 100%;
 }
 
-.wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .quantity,
+.wrath-and-glory.sheet.item .sheet-body .wrapper .quantity {
+  margin-left: 8px
+}
+
+.wrath-and-glory.sheet.item .sheet-body .wrapper .quantity,
 .wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .value {
   display: flex;
   flex-direction: row;
   margin-right: 8px;
 }
+
+.wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .quantity {
+  margin-left: 0px;
+}
+
 
 .wrath-and-glory.sheet.item .ammo .sheet-body .wrapper .rarity {
   display: flex;
