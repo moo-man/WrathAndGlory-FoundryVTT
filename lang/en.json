@@ -163,6 +163,11 @@
   "HEADER.WEAPON_UPGRADE": "Weapon Upgrade",
   "HEADER.AMMO": "Ammo",
   "HEADER.AUGMENTIC": "Augmentic",
+  "HEADER.SOURCE": "Source",
+  "HEADER.TEMPORARY_EFFECTS" : "Temporary Effects",
+  "HEADER.PASSIVE_EFFECTS" : "Passive Effects",
+  "HEADER.DISABLED_EFFECTS" : "Disabled Effects",
+  "HEADER.DESCRIPTION" : "Description",
 
   "KEYWORD.NAME": "Name",
   "KEYWORD.DESCRIPTION": "Description",

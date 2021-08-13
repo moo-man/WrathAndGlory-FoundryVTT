@@ -22,7 +22,7 @@
 
 }
 
-.wrath-and-glory.sheet.actor  .notes .wrapper.notes {
+.wrath-and-glory.sheet.actor.agent  .notes .wrapper.notes {
   height: calc(100% - 310px);
   flex: none;
 }

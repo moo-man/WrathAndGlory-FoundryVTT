@@ -1,3 +1,80 @@
 <div class="effects">
+
+  <div class="items">
+    <div class="header">
+      <div class="item-property item-image"></div>
+      <span class="item-property item-name">{{localize "HEADER.TEMPORARY_EFFECTS"}}</span>
+      <span class="item-property flex">{{localize "HEADER.SOURCE"}}</span>
+      <div class="item-controls">
+        <a class="effect-create" title="Create Effect" data-type="temporary"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    {{#each effects.temporary as |effect|}}
+    <div class="item" data-item-id="{{effect.id}}">
+      <div class="item-content">
+          <img class="item-property item-image" src="{{effect.icon}}"></img>
+          <div class="item-property item-name">{{effect.label}}</div>
+          
+          <div class="item-property flex"></div>
+          <div class="item-controls">
+            <a class="item-control effect-enable" title="Disable Effect"><i class="fas fa-circle-check"></i></a>
+            <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>
+          </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="items">
+    <div class="header">
+      <div class="item-property item-image"></div>
+      <span class="item-property item-name">{{localize "HEADER.PASSIVE_EFFECTS"}}</span>
+      <span class="item-property flex">{{localize "HEADER.SOURCE"}}</span>
+      <div class="item-controls">
+        <a class="effect-create" title="Create Effect" data-type="passive"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    {{#each effects.passive as |effect|}}
+    <div class="item" data-item-id="{{effect.id}}">
+      <div class="item-content">
+          <img class="item-property item-image" src="{{effect.icon}}"></img>
+          <div class="item-property item-name">{{effect.label}}</div>
+          
+          <div class="item-property flex"></div>
+          <div class="item-controls">
+            <a class="item-control effect-enable" title="Disable Effect"><i class="fas fa-circle-check"></i></a>
+            <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>
+          </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
   
+
+  <div class="items">
+    <div class="header">
+      <div class="item-property item-image"></div>
+      <span class="item-property item-name">{{localize "HEADER.DISABLED_EFFECTS"}}</span>
+      <span class="item-property flex">{{localize "HEADER.SOURCE"}}</span>
+      <div class="item-controls">
+        <a class="effect-create" title="Create Effect" data-type="disabled"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    {{#each effects.disabled as |effect|}}
+    <div class="item" data-item-id="{{effect.id}}">
+      <div class="item-content" style="opacity : 0.5">
+          <img class="item-property item-image" src="{{effect.icon}}"></img>
+          <div class="item-property item-name">{{effect.label}}</div>
+          
+          <div class="item-property flex"></div>
+          <div class="item-controls">
+            <a class="item-control effect-enable" title="Enable Effect"><i class="fas fa-circle"></i></a>
+            <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>
+          </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  
+
 </div>

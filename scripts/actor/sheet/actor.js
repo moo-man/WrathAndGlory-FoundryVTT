@@ -86,19 +86,19 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 quantity : true,
                 type : "gear"
             },
-            weaponUpgrades : {
-                header : "HEADER.WEAPON_UPGRADE",
-                items : this.actor.getItemTypes("weaponUpgrade"),
-                equippable : false,
-                quantity : false,
-                type : "weaponUpgrade"
-            },
             ammo : {
                 header : "HEADER.AMMO",
                 items : this.actor.getItemTypes("ammo"),
                 equippable : false,
                 quantity : true,
                 type : "ammo"
+            },
+            weaponUpgrades : {
+                header : "HEADER.WEAPON_UPGRADE",
+                items : this.actor.getItemTypes("weaponUpgrade"),
+                equippable : false,
+                quantity : false,
+                type : "weaponUpgrade"
             },
             augmentics : {
                 header : "HEADER.AUGMENTIC",
@@ -114,9 +114,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     activateListeners(html) {
         super.activateListeners(html);
         html.find("select").click(ev => ev.stopPropagation())
-        html.find(".item-create").click(this._onItemCreate.bind(this));
-        html.find(".item-edit").click(this._onItemEdit.bind(this));
-        html.find(".item-delete").click(this._onItemDelete.bind(this));
+        html.find(".item-dropdown").mousedown(this._dropdownLeftClick.bind(this))
+        html.find(".item-dropdown-right").mousedown(this._dropdownRightClick.bind(this))
+        html.find(".item-create").mousedown(this._onItemCreate.bind(this));
+        html.find(".item-edit").mousedown(this._onItemEdit.bind(this));
+        html.find(".item-delete").mousedown(this._onItemDelete.bind(this));
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".roll-attribute").click(this._prepareRollAttribute.bind(this));
         html.find(".roll-skill").click(this._prepareRollSkill.bind(this));
@@ -161,7 +163,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
     _onItemCreate(event) {
-        event.preventDefault();
+        event.stopPropagation();
         let header = event.currentTarget.dataset
 
         let data = {
@@ -172,14 +174,14 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
     _onItemEdit(event) {
-        event.preventDefault();
+        event.stopPropagation();
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
         item.sheet.render(true);
     }
 
     _onItemDelete(event) {
-        event.preventDefault();
+        event.stopPropagation();
         const div = $(event.currentTarget).parents(".item");
         this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
         div.slideUp(200, () => this.render(false));
@@ -451,5 +453,54 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
         multiplier = event.ctrlKey ? multiplier * 10 : multiplier  
         item.update({"data.quantity" : item.quantity + 1 * multiplier})
+    }
+
+    _dropdownRightClick(event) {
+        let id = $(event.currentTarget).parents(".item").attr("data-item-id")
+        let item = this.actor.items.get(id)
+        if (event.button == 2)
+            this._createDropdown(event, item._dropdownData())
+    }
+
+    _dropdownLeftClick(event) {
+        let id = $(event.currentTarget).parents(".item").attr("data-item-id")
+        let item = this.actor.items.get(id)
+        if (item && event.button == 0)
+            this._createDropdown(event, item._dropdownData())
+        else if (item)
+            item.sheet.render(true)
+    }
+
+    
+    _createDropdown(event, dropdownData) {
+        let dropdownHTML = ""
+        event.preventDefault()
+        let li = $(event.currentTarget).parents(".item")
+        // Toggle expansion for an item
+        if (li.hasClass("expanded")) // If expansion already shown - remove
+        {
+            let summary = li.children(".item-summary");
+            summary.slideUp(200, () => summary.remove());
+        } else {
+            // Add a div with the item summary belowe the item
+            let div
+            if (!dropdownData) {
+                return
+            } else {
+                dropdownHTML = `<div class="item-summary">${TextEditor.enrichHTML(dropdownData.text)}`;
+            }
+            if (dropdownData.tags) {
+                let tags = `<div class='tags'>`
+                dropdownData.tags.forEach(tag => {
+                    tags = tags.concat(`<span class='tag'>${tag}</span>`)
+                })
+                dropdownHTML = dropdownHTML.concat(tags)
+            }
+            dropdownHTML += "</div>"
+            div = $(dropdownHTML)
+            li.append(div.hide());
+            div.slideDown(200);
+        }
+        li.toggleClass("expanded");
     }
 }

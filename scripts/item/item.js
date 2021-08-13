@@ -40,6 +40,11 @@ export class WrathAndGloryItem extends Item {
         return `${damage}${rank}`;
     }
 
+
+    _dropdownData(){
+        return {text : this.description}
+    }
+
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get Range() {
         const short = this.range.short < 1 ? "-" : this.range.short;

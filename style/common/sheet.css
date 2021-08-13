@@ -128,6 +128,15 @@
   flex: 2;
 }
 
+.wrath-and-glory.actor .items .item-property.long-text {
+  white-space: nowrap;
+  overflow: hidden;
+  justify-content: flex-start;
+}
+.wrath-and-glory.actor .items .item-property.long-text p{
+  margin: 0px;
+}
+
 .wrath-and-glory.actor .items .item-property.item-name{
   justify-content: flex-start;
   display: flex;
@@ -219,4 +228,10 @@
   display: flex;
   flex:1;
   margin: 0px 10px;
+}
+
+.wrath-and-glory.sheet.actor  .items .item-summary {
+  padding: 5px;
+  width: 100%;
+  border: 1px solid var(--color-red)
 }

@@ -164,7 +164,7 @@
         </div>
         {{#each items.equipped.weapons as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content roll-weapon">
+          <div class="item-content roll-weapon item-dropdown-right">
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
               
@@ -204,9 +204,9 @@
         </div>
         {{#each items.equipped.ammo as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content item-edit">
+          <div class="item-content">
               <img class="item-property item-image" src="{{item.img}}"></img>
-              <div class="item-property item-name">{{item.name}}</div>         
+              <div class="item-property item-name item-dropdown">{{item.name}}</div>         
               <div class="item-property qty-click">
                 <button class="qty-click" data-type="decrement">-</button>
                 {{item.quantity}}
@@ -229,7 +229,7 @@
         </div>
         {{#each items.equipped.armour as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content item-edit">
+          <div class="item-content item-dropdown">
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
               <div class="item-property">{{item.rating}}</div>
@@ -253,7 +253,7 @@
         </div>
         {{#each items.psychicPowers as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content roll-psychic-power">
+          <div class="item-content roll-psychic-power item-dropdown-right">
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
               <div class="item-property small">{{item.dn}}</div>
@@ -272,13 +272,15 @@
         <div class="header">
           <div class="item-property item-image"></div>
           <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
-        </div>
+          <span class="item-property flex large">{{localize "HEADER.DESCRIPTION"}}</span>
+      </div>
         {{#each items.abilitiesAndTalents as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content item-edit">
+          <div class="item-content item-dropdown">
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
-          </div>
+          <span class="item-property flex large long-text">{{{item.description}}}</span>
+        </div>
         </div>
         {{/each}}
       </div>
