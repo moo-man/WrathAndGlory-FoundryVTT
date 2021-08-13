@@ -37,6 +37,7 @@
   background-color: var(--color-red);
 }
 
+.wrath-and-glory.actor .fake-input,
 .wrath-and-glory.actor input[type="text"],
 .wrath-and-glory.actor input[type="number"],
 .wrath-and-glory.item input[type="text"],

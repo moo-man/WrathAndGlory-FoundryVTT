@@ -29,9 +29,20 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         const sheetData = super.getData();
         sheetData.data = sheetData.data.data // project system data so that handlebars has the same name and value paths
         this.constructItemLists(sheetData)
+        this._organizeSkills(sheetData)
         return sheetData;
     }
 
+    
+    _organizeSkills(sheetData) {
+        let middle = Object.values(sheetData.data.skills).length / 2;
+        let i = 0;
+        for (let skill of Object.values(sheetData.data.skills)) {
+            skill.isLeft = i < middle;
+            skill.isRight = i >= middle;
+            i++;
+        }
+    }
 
     constructItemLists(sheetData) 
     {
@@ -132,7 +143,9 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".checkbox").click(this._onCheckboxClick.bind(this))
         html.find(".property-edit").change(this._onSelectChange.bind(this))
         html.find(".qty-click").click(this._onQuantityClick.bind(this))
-
+        html.find(".show-adv").mouseenter(this._onAdvHover.bind(this))
+        html.find(".show-adv").mouseleave(this._onAdvLeave.bind(this))
+        html.find(".adv-buttons button").click(this._onAdvButtonClick.bind(this))
     }
 
     _getHeaderButtons() {
@@ -502,5 +515,28 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             div.slideDown(200);
         }
         li.toggleClass("expanded");
+    }
+
+    _onAdvHover(event)
+    {
+        $(event.currentTarget).children(".adv-buttons")[0].style="display: flex"
+    }
+
+    _onAdvLeave(event)
+    {
+        $(event.currentTarget).children(".adv-buttons")[0].style="display: none"
+    }
+
+    _onAdvButtonClick(event) 
+    {
+        let amt
+        if (event.currentTarget.classList.contains("incr")) amt = 1
+        else if (event.currentTarget.classList.contains("decr")) amt = -1
+
+        let type = $(event.currentTarget).parents(".adv-buttons").attr("data-type").split("-")
+        let target = `data.${type[0]}s.${type[1]}` // Only slightly disgusting
+
+        this.actor.update({[`${target}.rating`] : getProperty(this.actor.data, target).rating + amt})
+        
     }
 }

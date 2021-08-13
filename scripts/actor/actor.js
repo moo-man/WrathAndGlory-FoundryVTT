@@ -105,17 +105,12 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeSkills() {
-        let middle = Object.values(this.skills).length / 2;
-        let i = 0;
         for (let skill of Object.values(this.skills)) {
             skill.cost = this.getSkillsCosts(skill.rating);
             skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus;
             if (this.advances) {
                 this.advances.experience.spent = this.advances.experience.spent + skill.cost;
             }
-            skill.isLeft = i < middle;
-            skill.isRight = i >= middle;
-            i++;
         }
     }
 

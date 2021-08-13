@@ -5,7 +5,12 @@
       {{#each data.attributes as |attribute key|}}
       <div class="attribute">
         <label class="roll-attribute hover" data-attribute="{{key}}">{{localize attribute.label}}</label>
-        <input type="number" value="{{attribute.total}}" data-dtype="Number" disabled />
+        <div class="fake-input show-adv">{{attribute.total}}
+          <div class="adv-buttons" data-type="attribute-{{key}}" style="display:none;">
+            <button class="decr rm-left-border">-</button>
+            <button class="incr rm-right-border">+</button>
+          </div>
+        </div>
       </div>
       {{/each}}
     </div>
@@ -18,7 +23,12 @@
         {{#if skill.isLeft}}
         <div class="skill">
           <label class="roll-skill hover" data-skill="{{key}}">{{localize skill.label}}</label>
-          <input type="number" value="{{skill.total}}" data-dtype="Number" disabled />
+          <div class="fake-input show-adv">{{skill.total}}
+            <div class="adv-buttons" data-type="skill-{{key}}" style="display:none;">
+              <button class="decr rm-left-border rm-bottom-border">-</button>
+              <button class="incr rm-right-border rm-bottom-border">+</button>
+            </div>
+          </div>
         </div>
         {{/if}}
         {{/each}}
@@ -28,7 +38,12 @@
         {{#if skill.isRight}}
         <div class="skill">
           <label class="roll-skill hover" data-skill="{{key}}">{{localize skill.label}}</label>
-          <input type="number" value="{{skill.total}}" data-dtype="Number" disabled />
+          <div class="fake-input show-adv">{{skill.total}}
+            <div class="adv-buttons" data-type="skill-{{key}}" style="display:none;">
+              <button class="decr rm-left-border rm-bottom-border">-</button>
+              <button class="incr rm-right-border rm-bottom-border">+</button>
+            </div>
+          </div>
         </div>
         {{/if}}
         {{/each}}
