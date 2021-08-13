@@ -78,6 +78,14 @@
   "BIO.NAME": "Name",
   "BIO.SPECIES": "Species",
   "BIO.THREAT": "Threat",
+  "BIO.EYE_COLOUR": "Eye Colour",
+  "BIO.HAIR_COLOUR": "Hair Colour",
+  "BIO.HEIGHT": "Height",
+
+  "BIO.ORIGIN" : "Origin",
+  "BIO.ACCOMPLISHMENT" : "Accomplishment",
+  "BIO.GOAL" : "Goal",
+  "BIO.OBJECTIVE" : "Objective",
 
   "BUTTON.POST_ITEM": "Post Item",
   "BUTTON.ROLL": "Roll",
@@ -235,7 +243,7 @@
   "SKILL.TECH": "Tech",
   "SKILL.WEAPON_SKILL": "Weapon Skill",
 
-  "TAB.ADVANCES": "ADVANCES",
+  "TAB.EFFECTS": "EFFECTS",
   "TAB.COMBAT": "COMBAT",
   "TAB.GEAR": "GEAR",
   "TAB.NOTES": "NOTES",
@@ -270,6 +278,8 @@
   "TITLE.BENEFITS": "BENEFITS",
   "TITLE.POTENCY": "POTENCY",
   "TITLE.UPGRADES": "UPGRADES",
+  "TITLE.ADVANCES": "ADVANCES",
+  "TITLE.DETAILS": "DETAILS",
 
   "TRAUMATIC_INJURY.NAME": "Name",
   "TRAUMATIC_INJURY.DESCRIPTION": "Description",

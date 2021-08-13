@@ -208,7 +208,23 @@
         "species": "",
         "faction": "",
         "archetype": "",
-        "quote": ""
+        "quote": "",
+        "height" : "",
+        "eye" : "",
+        "hair" : "",
+        "origin" : {
+          "value" : "",
+          "bonus" : ""
+        },
+        "accomplishment" : {
+          "value" : "",
+          "bonus" : ""
+        },
+        "goal" : {
+          "value" : "",
+          "bonus" : ""
+        },
+        "objective" : "",
       },
       "advances": {
         "tier": 1,

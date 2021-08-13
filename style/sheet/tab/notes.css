@@ -1,27 +1,30 @@
 
 .wrath-and-glory.sheet.actor .tab[data-tab="notes"] {
-  height: 100%
+  height: 100%;
+  overflow: hidden;
 }
+
+.wrath-and-glory.sheet.actor .notes h1{
+  width: 150px;
+}
+
 .wrath-and-glory.sheet.actor .notes {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-basis: 100%;
-  margin: 0;
-  height: 100%
+  flex-direction: column;
+  height: calc(100% - 10px)
 }
 
 .wrath-and-glory.sheet.actor .notes .wrapper {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-basis: 100%;
-  justify-content: center;
-  height: 100%
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+
 }
 
-.wrath-and-glory.sheet.actor  .notes .wrapper {
-  height: 100%;
+.wrath-and-glory.sheet.actor  .notes .wrapper.notes {
+  height: calc(100% - 310px);
+  flex: none;
 }
 
 .wrath-and-glory.sheet.actor .notes .wrapper .editor,
@@ -36,11 +39,103 @@
   font-weight: bold;
 }
 
-.wrath-and-glory.sheet.actor .notes .wrapper .editor {
-  height: calc(100% - 34px)
-}
-
 .wrath-and-glory.sheet.actor .notes .wrapper .editor-content {
   padding: 8px;
   color: var(--color-black);
 }
+
+
+.wrath-and-glory.sheet.actor .notes .wrapper.advances {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0px
+}
+
+
+
+
+.wrath-and-glory.sheet.actor .advances-fields {
+  display: flex;
+  align-items: center;
+  line-height: normal;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.wrath-and-glory.sheet.actor .advances-fields .tier,
+.wrath-and-glory.sheet.actor .advances-fields .rank,
+.wrath-and-glory.sheet.actor .advances-fields .species {
+  display: flex;
+  flex-direction: row;
+  width: 110px;
+  text-align: center;
+  justify-content: space-evenly;
+}
+
+.wrath-and-glory.sheet.actor .advances-fields .tier label,
+.wrath-and-glory.sheet.actor .advances-fields .rank label,
+.wrath-and-glory.sheet.actor .advances-fields .species label {
+  flex-basis: 57%;
+  cursor: default;
+}
+
+.wrath-and-glory.sheet.actor .advances-fields .tier .current,
+.wrath-and-glory.sheet.actor .advances-fields .rank .current,
+.wrath-and-glory.sheet.actor .advances-fields .species .cost {
+  flex-basis: 43%;
+}
+
+.wrath-and-glory.sheet.actor .advances-fields .experience {
+  display: flex;
+  flex-direction: column;
+  flex: 0.7;
+  text-align: center;
+  margin-top: -20px;
+}
+
+.wrath-and-glory.sheet.actor .advances-fields .experience .header,
+.wrath-and-glory.sheet.actor .advances-fields .experience .data {
+  display: flex;
+}
+
+.wrath-and-glory.sheet.actor .advances-fields .experience .data {
+  margin-top: 4px;
+}
+
+.wrath-and-glory.sheet.actor .advances-fields .experience .header label,
+.wrath-and-glory.sheet.actor .advances-fields .experience .data label {
+  flex: 1;
+  cursor: default;
+}
+.wrath-and-glory.sheet.actor .advances-fields .experience .header 
+{
+  justify-content: flex-end;
+}
+
+.wrath-and-glory.sheet.actor .advances-fields .experience .header > * 
+{
+  flex: 0.2;
+}
+
+
+.wrath-and-glory.sheet.actor .advances-fields .experience .data .current,
+.wrath-and-glory.sheet.actor .advances-fields .experience .data .spent,
+.wrath-and-glory.sheet.actor .advances-fields .experience .data .total {
+  flex: 0.5
+}
+
+.wrath-and-glory.sheet.actor .details .cosmetic label
+{
+ width: 150px;
+}
+
+.wrath-and-glory.sheet.actor .details .background label
+{
+ width: 200px;
+}
+
+.wrath-and-glory.sheet.actor .details input.bg-bonus
+{
+ width: 200px;
+}
+

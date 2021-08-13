@@ -5,7 +5,7 @@ export const initializeHandlebars = () => {
 
 function preloadHandlebarsTemplates() {
   const templatePaths = [
-    "systems/wrath-and-glory/template/actor/tab/advances.html",
+    "systems/wrath-and-glory/template/actor/tab/effects.html",
     "systems/wrath-and-glory/template/item/tab/bonus.html",
     "systems/wrath-and-glory/template/actor/tab/combat.html",
     "systems/wrath-and-glory/template/actor/tab/gear.html",

@@ -207,3 +207,16 @@
   pointer-events: all;
   width: 100%;
 }
+
+
+.wrath-and-glory.sheet.actor  .form-row {
+  display: flex;
+  width: 100%;
+  margin: 3px 0px;
+}
+
+.wrath-and-glory.sheet.actor  .form-field {
+  display: flex;
+  flex:1;
+  margin: 0px 10px;
+}
