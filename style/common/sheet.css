@@ -56,14 +56,14 @@
   height: 31px;
 }
 
-.wrath-and-glory.actor .items {
+.wrath-and-glory .items {
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 8px
 }
 
-.wrath-and-glory.sheet.actor .items .item {
+.wrath-and-glory .items .item {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -72,7 +72,7 @@
   flex: 1
 }
 
-.wrath-and-glory.actor .items .header{
+.wrath-and-glory .items .header{
   display: flex;
   flex-direction: row;
   height: 22px;
@@ -80,7 +80,7 @@
   background-color: var(--color-black);
   color: var(--color-white);
 }
-  .wrath-and-glory.actor .items .header .item-property {
+  .wrath-and-glory .items .header .item-property {
   font-weight: bold;
 }
 
@@ -101,44 +101,44 @@
 }
 
 
-.wrath-and-glory.actor .items .item-controls,
-.wrath-and-glory.actor .items .item-property {
+.wrath-and-glory .items .item-controls,
+.wrath-and-glory .items .item-property {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.wrath-and-glory.actor .items .item-property {
+.wrath-and-glory .items .item-property {
   flex: 0 0 100px;
 }
 
-.wrath-and-glory.actor .items .item-controls,
-.wrath-and-glory.actor .items .item-property.small{
+.wrath-and-glory .items .item-controls,
+.wrath-and-glory .items .item-property.small{
   flex: 0 0 50px;
 }
 
-.wrath-and-glory.actor .items .item-property.large {
+.wrath-and-glory .items .item-property.large {
   flex: 0 0 200px;
 }
 
-.wrath-and-glory.actor .items .item-property.flex {
+.wrath-and-glory .items .item-property.flex {
   flex: 1;
 }
 
-.wrath-and-glory.actor .items .item-property.flex.large {
+.wrath-and-glory .items .item-property.flex.large {
   flex: 2;
 }
 
-.wrath-and-glory.actor .items .item-property.long-text {
+.wrath-and-glory .items .item-property.long-text {
   white-space: nowrap;
   overflow: hidden;
   justify-content: flex-start;
 }
-.wrath-and-glory.actor .items .item-property.long-text p{
+.wrath-and-glory .items .item-property.long-text p{
   margin: 0px;
 }
 
-.wrath-and-glory.actor .items .item-property.item-name{
+.wrath-and-glory .items .item-property.item-name{
   justify-content: flex-start;
   display: flex;
   align-items: center;
@@ -147,7 +147,7 @@
   overflow: hidden;
 }
 
-.wrath-and-glory.actor .items .item-property.item-image{
+.wrath-and-glory .items .item-property.item-image{
   height: 22px;
   width: 22px;
   padding: 2px;
@@ -155,7 +155,7 @@
   border: 0px;
 }
 
-.wrath-and-glory.actor .items .item-property select{
+.wrath-and-glory .items .item-property select{
   background: none;
   height: 22px;
   width: 100%;
@@ -169,12 +169,12 @@
   border-bottom: 1px solid black;
 }
 
-.wrath-and-glory.actor .items .item-property select:hover{
+.wrath-and-glory .items .item-property select:hover{
   box-shadow: none;
   border: none
 }
 
-.wrath-and-glory.actor .items .item-property button{
+.wrath-and-glory .items .item-property button{
     height: 22px;
     width: 22px;
     border: none;
@@ -198,15 +198,15 @@
 }
 
 
-.wrath-and-glory.sheet.actor .items .item .item-content:hover {
+.wrath-and-glory .items .item .item-content:hover {
   background-color: var(--color-red);
 }
 
-.wrath-and-glory.sheet.actor .items .item:nth-child(even) {
+.wrath-and-glory .items .item:nth-child(even) {
   background-color: var(--color-dark-grey);
 }
 
-.wrath-and-glory.sheet.actor .items .item:nth-child(odd) {
+.wrath-and-glory .items .item:nth-child(odd) {
   background-color: var(--color-light-grey);
 }
 

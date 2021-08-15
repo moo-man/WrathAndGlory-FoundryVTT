@@ -56,5 +56,19 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       new ItemTraits(this.item).render(true)
     })
 
+    html.find(".effect-create").click(ev => {
+      this.object.createEmbeddedDocuments("ActiveEffect", [{label : "New Effect", icon: "icons/svg/aura.svg"}])
+    })
+
+    html.find(".effect-edit").click(ev => {
+      let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+      this.object.effects.get(id).sheet.render(true)
+    })
+
+    html.find(".effect-delete").click(ev => {
+      let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+      this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
+    })
+
   }
 }

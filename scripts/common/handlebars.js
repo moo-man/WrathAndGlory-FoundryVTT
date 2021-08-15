@@ -7,6 +7,7 @@ function preloadHandlebarsTemplates() {
   const templatePaths = [
     "systems/wrath-and-glory/template/actor/tab/effects.html",
     "systems/wrath-and-glory/template/item/tab/bonus.html",
+    "systems/wrath-and-glory/template/item/tab/effects.html",
     "systems/wrath-and-glory/template/actor/tab/combat.html",
     "systems/wrath-and-glory/template/actor/tab/gear.html",
     "systems/wrath-and-glory/template/actor/tab/notes.html",

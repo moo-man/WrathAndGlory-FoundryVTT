@@ -1,0 +1,24 @@
+<div class="effects">
+  <div class="items">
+    <div class="header">
+      <div class="item-property item-image"></div>
+      <span class="item-property item-name">{{localize "HEADER.EFFECTS"}}</span>
+      <div class="item-controls">
+        <a class="effect-create" title="Create Effect"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    {{#each item.effects as |effect|}}
+    <div class="item" data-item-id="{{effect.id}}">
+      <div class="item-content">
+          <img class="item-property item-image" src="{{effect.data.icon}}"></img>
+          <div class="item-property item-name effect-edit">{{effect.data.label}}</div>
+          
+          <div class="item-property flex"></div>
+          <div class="item-controls">
+            <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>
+          </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

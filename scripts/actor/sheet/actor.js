@@ -29,6 +29,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         const sheetData = super.getData();
         sheetData.data = sheetData.data.data // project system data so that handlebars has the same name and value paths
         this.constructItemLists(sheetData)
+        this.constructEffectLists(sheetData)
         this._organizeSkills(sheetData)
         return sheetData;
     }
@@ -121,6 +122,16 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         }
     }
 
+    constructEffectLists(sheetData) 
+    {
+        let effects = {}
+
+        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled)
+        effects.disabled = sheetData.actor.effects.filter(i => i.data.disabled)
+        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled)
+
+        sheetData.effects = effects;
+    }
 
     activateListeners(html) {
         super.activateListeners(html);
@@ -131,6 +142,10 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".item-edit").mousedown(this._onItemEdit.bind(this));
         html.find(".item-delete").mousedown(this._onItemDelete.bind(this));
         html.find(".item-post").mousedown(this._onItemPost.bind(this));
+        html.find(".effect-create").click(this._onEffectCreate.bind(this));  
+        html.find(".effect-edit").click(this._onEffectEdit.bind(this));  
+        html.find(".effect-delete").click(this._onEffectDelete.bind(this));  
+        html.find(".effect-toggle").click(this._onEffectToggle.bind(this));  
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".roll-attribute").click(this._prepareRollAttribute.bind(this));
         html.find(".roll-skill").click(this._prepareRollSkill.bind(this));
@@ -207,6 +222,36 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let item = this.actor.items.get(id);
         if (item)
             item.sendToChat()
+    }
+
+    
+    _onEffectCreate(ev) {
+        let type = ev.currentTarget.attributes["data-type"].value
+        let effectData = { label: "New Effect" , icon: "icons/svg/aura.svg"}
+        if (type == "temporary") {
+          effectData["duration.rounds"] = 1;
+        }
+        this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
+      }
+
+    _onEffectEdit(ev)
+    {
+        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        this.object.effects.get(id).sheet.render(true)
+    }
+
+    _onEffectDelete(ev)
+    {
+        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
+    }
+
+    _onEffectToggle(ev)
+    {
+        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        let effect = this.object.effects.get(id)
+
+        effect.update({"disabled" : !effect.data.disabled})
     }
 
     _onFocusIn(event) {
@@ -543,9 +588,10 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         else if (event.currentTarget.classList.contains("decr")) amt = -1
 
         let type = $(event.currentTarget).parents(".adv-buttons").attr("data-type").split("-")
-        let target = `data.${type[0]}s.${type[1]}` // Only slightly disgusting
+        let target = `data.${type[0]}s.${type[1]}.rating` // Only slightly disgusting
 
-        this.actor.update({[`${target}.rating`] : getProperty(this.actor.data, target).rating + amt})
-        
+        this.actor.update({[`${target}`] : getProperty(this.actor.data._source, target) + amt})
     }
+
+  
 }

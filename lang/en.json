@@ -138,6 +138,7 @@
   "HEADER.ARMOUR": "Armour",
   "HEADER.GEAR": "Gear",
   "HEADER.EFFECT": "Effect",
+  "HEADER.EFFECTS": "Effects",
   "HEADER.NAME": "Name",
   "HEADER.RATING": "Rating",
   "HEADER.COST": "Cost",
