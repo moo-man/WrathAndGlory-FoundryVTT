@@ -1,4 +1,20 @@
+import ItemTraits from "../../apps/item-traits.js";
+
 export class WrathAndGloryItemSheet extends ItemSheet {
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+        classes: ["wrath-and-glory", "sheet", "item"],
+        resizable: true,
+        tabs: [
+            {
+                navSelector: ".sheet-tabs",
+                contentSelector: ".sheet-body",
+                initial: "description",
+            },
+        ]
+    });
+}
+
   activateListeners(html) {
     super.activateListeners(html);
     html.find("input").focusin(ev => this._onFocusIn(ev));
@@ -30,5 +46,15 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
   _onFocusIn(event) {
     $(event.currentTarget).select();
+  }
+
+  activateListeners(html)
+  {
+    super.activateListeners(html)
+
+    html.find(".item-traits").click(ev => {
+      new ItemTraits(this.item).render(true)
+    })
+
   }
 }

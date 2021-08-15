@@ -1,3 +1,16 @@
+.wrath-and-glory.sheet.item form {
+  height: 100%
+}
+
+
+.wrath-and-glory.sheet.item .tab[data-tab="description"] {
+  height: 100%
+}
+
+.wrath-and-glory.sheet.item .description {
+  height: 100%
+}
+
 .wrath-and-glory.sheet.item .ability,
 .wrath-and-glory.sheet.item .ammo,
 .wrath-and-glory.sheet.item .armour,
@@ -101,6 +114,8 @@
 
 .wrath-and-glory.sheet.item .sheet-body {
   width: 100%;
+  height: calc(100% - 165px);
+  overflow: auto;
 }
 
 .wrath-and-glory.sheet.item .editor,
@@ -284,7 +299,22 @@
   height: 200px;
 }
 
-.wrath-and-glory.sheet.item .armour .sheet-body .wrapper .traits,
+.wrath-and-glory.sheet.item .sheet-body .wrapper .traits {
+  display: flex;
+  flex-direction: column;
+  flex: 1
+}
+
+.wrath-and-glory.sheet.item .sheet-body .wrapper .traits label{
+  max-width: unset;
+  width: 100%;
+  flex: 1
+}
+
+.wrath-and-glory.sheet.item .sheet-body .wrapper .traits .item-traits{
+  margin-left: 10px;
+}
+
 .wrath-and-glory.sheet.item .armour .sheet-body .wrapper .keywords {
   display: flex;
   flex-direction: row;
@@ -541,7 +571,6 @@
 
 /* WEAPON */
 
-.wrath-and-glory.sheet.item .weapon .description .editor,
 .wrath-and-glory.sheet.item .weapon .bonus {
   height: 578px;
 }
@@ -550,7 +579,6 @@
   height: 100px;
 }
 
-.wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .traits,
 .wrath-and-glory.sheet.item .weapon .sheet-body .wrapper .keywords {
   display: flex;
   flex-direction: row;

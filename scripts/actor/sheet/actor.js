@@ -130,6 +130,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".item-create").mousedown(this._onItemCreate.bind(this));
         html.find(".item-edit").mousedown(this._onItemEdit.bind(this));
         html.find(".item-delete").mousedown(this._onItemDelete.bind(this));
+        html.find(".item-post").mousedown(this._onItemPost.bind(this));
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".roll-attribute").click(this._prepareRollAttribute.bind(this));
         html.find(".roll-skill").click(this._prepareRollSkill.bind(this));
@@ -198,6 +199,14 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
         div.slideUp(200, () => this.render(false));
+    }
+
+    _onItemPost(event) {
+        event.stopPropagation();
+        const id = $(event.currentTarget).parents(".item").attr("data-item-id");
+        let item = this.actor.items.get(id);
+        if (item)
+            item.sendToChat()
     }
 
     _onFocusIn(event) {

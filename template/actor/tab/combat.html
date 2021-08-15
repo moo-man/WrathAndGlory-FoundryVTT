@@ -62,8 +62,7 @@
         </div>
       </div>
       <div class="scrollable">
-        {{#each actor.items as |item|}}
-        {{#if item.isTraumaticInjury}}
+        {{#each items.traumaticInjuries as |item|}}
         <div class="traumatic item" data-item-id="{{item.id}}">
           <div class="wrapper-hover">
             <div class="avatar" style="background-image: url('{{item.img}}')"></div>
@@ -73,7 +72,6 @@
             <a class="item-control item-delete" title="Delete Traumatic Injury"><i class="fas fa-times"></i></a>
           </div>
         </div>
-        {{/if}}
         {{/each}}
       </div>
     </div>
@@ -86,8 +84,7 @@
         </div>
       </div>
       <div class="scrollable">
-        {{#each actor.items as |item|}}
-        {{#if item.isMemorableInjury}}
+        {{#each items.memorableInjuries as |item|}}
         <div class="memorable item" data-item-id="{{item.id}}">
           <div class="wrapper-hover">
             <div class="avatar" style="background-image: url('{{item.img}}')"></div>
@@ -97,7 +94,6 @@
             <a class="item-control item-delete" title="Delete Memorable Injury"><i class="fas fa-times"></i></a>
           </div>
         </div>
-        {{/if}}
         {{/each}}
       </div>
     </div>
@@ -125,8 +121,7 @@
         </div>
       </div>
       <div class="scrollable">
-        {{#each actor.items as |item|}}
-        {{#if item.isMutation}}
+        {{#each items.mutations as |item|}}
         <div class="mutation item" data-item-id="{{item.id}}">
           <div class="wrapper-hover">
             <div class="avatar" style="background-image: url('{{item.img}}')"></div>
@@ -136,7 +131,6 @@
             <a class="item-control item-delete" title="Delete Mutation"><i class="fas fa-times"></i></a>
           </div>
         </div>
-        {{/if}}
         {{/each}}
       </div>
     </div>

@@ -47,67 +47,37 @@ const migrateActorData = (actor, worldSchemaVersion) => {
         if (actor.type === "agent" || actor.type === "threat") {
             update["data.combat.resilience"] = actor.data.combat.resilence
         }
+        update.items = actor.items.map(i => migrateItemData(i.data, worldSchemaVersion))
     }
     return update;
 };
 
 const migrateItemData = (item, worldSchemaVersion) => {
-    // const update = {};
-    // if (worldSchemaVersion < 1) {
-    //     if (item.type === "weapon") {
-    //         update["data.attack"] = {
-    //             base: 0,
-    //             bonus: 0,
-    //             rank: "none"
-    //         };
-    //         update["data.damage"] = {
-    //             base: item.data.damage,
-    //             bonus: 0,
-    //             rank: "none"
-    //         };
-    //         update["data.ed"] = {
-    //             base: item.data.ed,
-    //             bonus: 0,
-    //             rank: "none",
-    //             die: {
-    //                 one: 0,
-    //                 two: 0,
-    //                 three: 0,
-    //                 four: 1,
-    //                 five: 1,
-    //                 six: 2,
-    //             }
-    //         };
-    //         update["data.ap"] = {
-    //             base: item.data.ap,
-    //             bonus: 0,
-    //             rank: "none"
-    //         };
-    //     } else if (item.type === "psychicPower") {
-    //         update["data.damage"] = {
-    //             base: 0,
-    //             bonus: 0,
-    //             rank: "none",
-    //             die: {
-    //                 one: 0,
-    //                 two: 0,
-    //                 three: 0,
-    //                 four: 1,
-    //                 five: 1,
-    //                 six: 2,
-    //             }
-    //         };
-    //         update["data.ed"] = {
-    //             base: 0,
-    //             bonus: 0,
-    //             rank: "none"
-    //         };
-    //     }
-    // }
-    // if (!isObjectEmpty(update)) {
-    //     update._id = item._id;
-    // }
-    // return update;
+    const update = {};
+    if (worldSchemaVersion < 2) {
+        if (item.type === "weapon" || item.type == "armour") {
+            update["data.traits"] = item.data.traits.split(",").map(i => {
+                let trait = i.trim()
+                let traitObj = {}
+                if (trait.includes("("))
+                {
+                    let nameAndRating = trait.split("(")
+
+                    traitObj.name = nameAndRating[0].trim()
+                    traitObj.rating = nameAndRating[1].split(")")[0]
+                }
+                else // No Rating 
+                {
+                    traitObj.name = game.wng.utility.findKey(trait, game.wng.config[`${item.type}Traits`])
+                }
+                return traitObj
+            })
+        }
+    }
+    if (!isObjectEmpty(update)) {
+        update._id = item._id;
+    }
+    return update;
 };
 
 const migrateSceneData = (scene, worldSchemaVersion) => {

@@ -360,7 +360,7 @@
     "armour": {
       "templates": ["bonus", "physical", "equipped"],
       "rating": 0,
-      "traits": ""
+      "traits": []
     },
     "ascension": {
       "cost": 0,
@@ -471,7 +471,7 @@
       },
       "ammo" : "",
       "salvo": 0,
-      "traits": "",
+      "traits": [],
       "upgrades": ""
     },
     "weaponUpgrade": {

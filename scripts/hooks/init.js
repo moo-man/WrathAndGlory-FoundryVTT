@@ -1,7 +1,7 @@
 export default function () {
   Hooks.on("init", () => {
 
-    game.counter = new game.wag.RuinGloryCounter()
+    game.counter = new game.wng.RuinGloryCounter()
 
     game.socket.on("system.wrath-and-glory", async data => {
       if (data.type == "updateCounter") {

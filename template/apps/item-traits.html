@@ -1,0 +1,19 @@
+<form>
+
+  <h1>ITEM TRAITS</h1>
+  <div>
+    {{#each traits as |trait t|}}
+
+      <div class="form-group wrapper">
+        <label>{{trait.display}}</label>
+        {{#if trait.hasRating}}
+        <input type="text" name="{{trait.key}}-rating" value="{{trait.existingTrait.rating}}">
+        {{/if}}
+        <input type="checkbox" name="{{trait.key}}" {{checked trait.existingTrait}}>
+      </div>
+
+    {{/each}}
+
+  </div>
+  <button type="submit">Update</button>
+</form>

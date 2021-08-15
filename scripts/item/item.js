@@ -119,6 +119,25 @@ export class WrathAndGloryItem extends Item {
         return this.category == "ranged"
     }
 
+    get Traits () {
+        return Object.values(this.traitList).map(i => i.display)
+    }
+
+    get traitList () {
+        let traits = {}
+        this.data.data.traits.forEach(i => {
+            traits[i.name] = {
+                name : i.name,
+                display : `${game.wng.config[`${this.type}Traits`][i.name]}`
+            }
+            if (game.wng.config.traitHasRating[i.name])
+            {
+                traits[i.name].rating = i.rating;
+                traits[i.name].display += ` (${i.rating})`
+            }
+        })
+        return traits
+    }
 
     // @@@@@@ TYPE GETTERS @@@@@@
     get isKeyword() { return this.type === "keyword" }
