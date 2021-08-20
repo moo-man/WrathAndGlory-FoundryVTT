@@ -26,7 +26,7 @@ Hooks.once("init", () => {
     damageRoll,
     ItemTraits,
     RuinGloryCounter,
-    utilit : WNGUtility
+    utility : WNGUtility
   };
   game.wng.config = WNG
   CONFIG.Combat.initiative = { formula: "(@attributes.initiative.total)d6", decimals: 0 };

@@ -11,7 +11,6 @@
 .wrath-and-glory.sheet.actor .notes {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 10px)
 }
 
 .wrath-and-glory.sheet.actor .notes .wrapper {
@@ -22,8 +21,14 @@
 
 }
 
-.wrath-and-glory.sheet.actor.agent  .notes .wrapper.notes {
-  height: calc(100% - 310px);
+.wrath-and-glory.sheet.actor.agent .notes {
+  height: calc(100% - 160px);
+  flex: none
+}
+
+
+.wrath-and-glory.sheet.actor.threat .notes {
+  height: calc(100% - 10px);
   flex: none;
 }
 

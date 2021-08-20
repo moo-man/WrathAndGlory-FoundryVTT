@@ -2,6 +2,12 @@ import { WrathAndGloryActorSheet } from "./actor.js";
 
 export class ThreatSheet extends WrathAndGloryActorSheet {
 
+    static get defaultOptions() {
+        let options = super.defaultOptions
+        options.classes.push("threat")
+        return options
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-cost").focusout(async (ev) => { await this._onItemCostFocusOut(ev); });
