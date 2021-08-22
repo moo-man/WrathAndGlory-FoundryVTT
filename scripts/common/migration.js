@@ -77,6 +77,8 @@ function migrateItemData(item, worldSchemaVersion) {
                 return traitObj
             }).filter( i => !!i)
         }
+        if (item.data.effect)
+            update["data.traits.description"] = item.data.description += "<br>" + item.data.effect 
     }
     if (!isObjectEmpty(update)) {
         update._id = item._id;
