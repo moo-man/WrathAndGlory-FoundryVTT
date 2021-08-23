@@ -147,8 +147,8 @@ export async function prepareDamageRoll(rollData) {
           rollData.weapon.damage.bonus = parseInt(html.find("#damage-bonus")[0].value, 10);
           rollData.weapon.damage.bonus += getRank(rollData, html.find("#damage-rank")[0].value);
           rollData.weapon.ed.base = parseInt(html.find("#ed-base")[0].value, 10);
-          rollData.weapon.ed.bonus = parseInt(html.find("#damage-bonus")[0].value, 10);
-          rollData.weapon.ed.bonus += getRank(rollData, html.find("#damage-rank")[0].value);
+          rollData.weapon.ed.bonus = parseInt(html.find("#ed-bonus")[0].value, 10);
+          rollData.weapon.ed.bonus += getRank(rollData, html.find("#ed-rank")[0].value);
           rollData.weapon.ap.base = parseInt(html.find("#ap-base")[0].value, 10);
           rollData.weapon.ap.bonus = parseInt(html.find("#ap-bonus")[0].value, 10);
           rollData.weapon.ap.bonus += getRank(rollData, html.find("#ap-rank")[0].value);

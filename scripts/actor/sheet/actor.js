@@ -385,7 +385,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 rank: weapon.ap.rank,
                 bonus: weapon.ap.bonus
             },
-            traits: weapon.traits
+            traits: weapon.Traits
         };
         if (weapon.category === "melee") {
             skill = this.actor.skills.weaponSkill;
