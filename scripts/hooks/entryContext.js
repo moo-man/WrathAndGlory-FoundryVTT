@@ -35,13 +35,13 @@ export default function() {
 }
 
 function _dealDamageToTarget(rollData, target, useAP = true, optionalRule = false) {
-    let resilence = 1;
+    let resilience = 1;
     if (!useAP) {
-        resilence = target.combat.resilence.total + _computeArmour(target);
+        resilience = target.combat.resilience.total + _computeArmour(target);
     }
 
     if (useAP && !optionalRule) {
-        resilence = (target.combat.resilence.total + _computeArmour(target)) - rollData.weapon.ap.total;
+        resilience = (target.combat.resilience.total + _computeArmour(target)) - rollData.weapon.ap.total;
     }
 
     if (useAP && optionalRule) {
@@ -49,14 +49,14 @@ function _dealDamageToTarget(rollData, target, useAP = true, optionalRule = fals
         if (0 > armour) {
             armour = 0;
         }
-        resilence = (target.combat.resilence.total + armour);
+        resilience = (target.combat.resilience.total + armour);
     }
 
-    if (0 >= resilence) {
-        resilence = 1;
+    if (0 >= resilience) {
+        resilience = 1;
     }
 
-    let dmgTaken = rollData.result.damage.total - resilence;
+    let dmgTaken = rollData.result.damage.total - resilience;
     if (0 > dmgTaken) {
         return;
     }

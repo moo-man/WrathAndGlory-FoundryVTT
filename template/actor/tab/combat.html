@@ -1,0 +1,284 @@
+<div class="combat">
+  <div class="general wrapper">
+    <h1>{{localize "TITLE.GENERAL"}}</h1>
+    <div class="wrapper-item">
+      <label style="cursor: default;">{{localize "HEADER.DEFENSE"}}</label>
+      <input type="number" value="{{data.combat.defense.total}}" data-dtype="Number" disabled />
+    </div>
+    <div class="wrapper-item">
+      <label style="cursor: default;">{{localize "HEADER.RESILIENCE"}}</label>
+      <input type="number" value="{{data.combat.resilience.total}}" data-dtype="Number" disabled />
+    </div>
+    <div class="wrapper-item">
+      <label style="cursor: default;">{{localize "HEADER.SHOCK"}}</label>
+      <input style="flex-basis: 20%;" name="data.combat.shock.value" type="number" value="{{data.combat.shock.value}}"
+        data-dtype="Number" />
+      <input style="flex-basis: 20%;" type="number" value="{{data.combat.shock.max}}" data-dtype="Number" disabled />
+    </div>
+    <div class="wrapper-item">
+      <label style="cursor: default;">{{localize "HEADER.AWARENESS"}}</label>
+      <input type="number" value="{{data.combat.passiveAwareness.total}}" data-dtype="Number" disabled />
+    </div>
+    <div class="wrapper-item">
+      <label class="roll-stealth hover">{{localize "HEADER.STEALTH_SCORE"}}</label>
+      <input name="data.combat.stealth" type="number" value="{{data.combat.stealth}}" data-dtype="Number" />
+    </div>
+    <div class="wrapper-item">
+      <label style="cursor: default;">{{localize "HEADER.SIZE"}}</label>
+      <select name="data.combat.size" style="max-width: 91px;">
+        {{#select data.combat.size}}
+        <option value="tiny">{{localize "SIZE.TINY"}}</option>
+        <option value="small">{{localize "SIZE.SMALL"}}</option>
+        <option value="average">{{localize "SIZE.AVERAGE"}}</option>
+        <option value="large">{{localize "SIZE.LARGE"}}</option>
+        <option value="huge">{{localize "SIZE.HUGE"}}</option>
+        <option value="gargantuan">{{localize "SIZE.GARGANTUAN"}}</option>
+        {{/select}}
+      </select>
+    </div>
+    <div class="wrapper-item">
+      <label style="cursor: default;">{{localize "HEADER.SPEED"}}</label>
+      <input name="data.combat.speed" type="number" value="{{data.combat.speed}}" data-dtype="Number" />
+    </div>
+  </div>
+  <div class="injuries wrapper">
+    <h1>{{localize "TITLE.INJURIES"}}</h1>
+    <div class="wrapper-item">
+      <label class="roll-determination hover">{{localize "HEADER.DETERMINATION"}}</label>
+      <input type="number" value="{{data.combat.determination.total}}" data-dtype="Number" disabled />
+    </div>
+    <div class="wrapper-item">
+      <label style="cursor: default;">{{localize "HEADER.WOUNDS"}}</label>
+      <input style="flex-basis: 20%;" name="data.combat.wounds.value" type="number" value="{{data.combat.wounds.value}}"
+        data-dtype="Number" />
+      <input style="flex-basis: 20%;" type="number" value="{{data.combat.wounds.max}}" data-dtype="Number" disabled />
+    </div>
+    <div class="traumatics">
+      <div class="header">
+        <b class="name">{{localize "HEADER.TRAUMATIC"}}</b>
+        <div class="button">
+          <a class="item-create" title="Add Traumatic Injury" data-type="traumaticInjury"><i
+              class="fas fa-plus"></i></a>
+        </div>
+      </div>
+      <div class="scrollable">
+        {{#each items.traumaticInjuries as |item|}}
+        <div class="traumatic item" data-item-id="{{item.id}}">
+          <div class="wrapper-hover">
+            <div class="avatar" style="background-image: url('{{item.img}}')"></div>
+            <div class="name item-edit">{{item.name}}</div>
+          </div>
+          <div class="button">
+            <a class="item-control item-delete" title="Delete Traumatic Injury"><i class="fas fa-times"></i></a>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="memorables">
+      <div class="header">
+        <b class="name">{{localize "HEADER.MEMORABLE"}}</b>
+        <div class="button">
+          <a class="item-create" title="Add Memorable Injury" data-type="memorableInjury"><i
+              class="fas fa-plus"></i></a>
+        </div>
+      </div>
+      <div class="scrollable">
+        {{#each items.memorableInjuries as |item|}}
+        <div class="memorable item" data-item-id="{{item.id}}">
+          <div class="wrapper-hover">
+            <div class="avatar" style="background-image: url('{{item.img}}')"></div>
+            <div class="name item-edit">{{item.name}}</div>
+          </div>
+          <div class="button">
+            <a class="item-control item-delete" title="Delete Memorable Injury"><i class="fas fa-times"></i></a>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="mutation wrapper">
+    <h1>{{localize "TITLE.MUTATIONS"}}</h1>
+    <div class="wrapper-item">
+      <label class="roll-conviction hover">{{localize "HEADER.CONVICTION"}}</label>
+      <input type="number" value="{{data.combat.conviction.total}}" data-dtype="Number" disabled />
+    </div>
+    <div class="wrapper-item">
+      <label class="roll-resolve hover">{{localize "HEADER.RESOLVE"}}</label>
+      <input type="number" value="{{data.combat.resolve.total}}" data-dtype="Number" disabled/>
+    </div>
+    <div class="wrapper-item">
+      <label style="cursor: default;">{{localize "HEADER.CORRUPTION"}}</label>
+      <input name="data.corruption.current" type="number" value="{{data.corruption.current}}" data-dtype="Number" />
+    </div>
+    <div class="mutations">
+      <div class="header">
+        <b class="name">{{localize "HEADER.MUTATION"}}</b>
+        <div class="button">
+          <a class="item-create" title="Add Mutation" data-type="mutation"><i
+              class="fas fa-plus"></i></a>
+        </div>
+      </div>
+      <div class="scrollable">
+        {{#each items.mutations as |item|}}
+        <div class="mutation item" data-item-id="{{item.id}}">
+          <div class="wrapper-hover">
+            <div class="avatar" style="background-image: url('{{item.img}}')"></div>
+            <div class="name item-edit">{{item.name}}</div>
+          </div>
+          <div class="button">
+            <a class="item-control item-delete" title="Delete Mutation"><i class="fas fa-times"></i></a>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{#if (eq actor.type "agent")}}
+      <div class="faith wrapper-item">
+        <label>{{localize "RESOURCE.FAITH"}}</label>
+        <input name="data.resources.faith.current" type="number" value="{{data.resources.faith.current}}" data-dtype="Number" />
+        <input name="data.resources.faith.total" type="number" value="{{data.resources.faith.total}}" data-dtype="Number" />
+      </div>
+    {{/if}}
+  </div>
+  <div class="wargear wrapper">
+    <h1>{{localize "TITLE.WARGEAR"}}</h1>
+    <div class="pointer-enable wrapper">
+        {{#if items.equipped.weapons.length}}
+        <div class="items">
+        <div class="header">
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.WEAPON"}}</span>
+          <span class="item-property">{{localize "WEAPON.DAMAGE"}}</span>
+          <span class="item-property small">{{localize "WEAPON.ED"}}</span>
+          <span class="item-property small">{{localize "WEAPON.AP"}}</span>
+          <span class="item-property">{{localize "WEAPON.RANGE"}}</span>
+          <span class="item-property flex">{{localize "HEADER.AMMO"}}</span>
+        </div>
+        {{#each items.equipped.weapons as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content roll-weapon item-dropdown-right">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+              
+              <div class="item-property">{{item.Damage}}</div>
+              <div class="item-property small">{{item.ED}}</div>
+              <div class="item-property small">{{item.AP}}</div>
+              <div class="item-property">{{item.Range}}</div>
+              <div class="item-property flex">
+                {{#if item.isRanged}}
+                <select class="property-edit" data-target="data.ammo">
+                  {{#select item.ammo}}
+                  <option value="">-</option>
+                  {{#each ../items.ammo as |item|}}
+                  <option value="{{item.id}}">{{item.name}} ({{item.quantity}})</option>
+                  {{/each}}
+                  {{/select}}
+                </select>
+                {{/if}}
+              </div>
+          </div>
+          {{#if item.traits.length}}
+          <div class="item-content-extra">
+            <span class="item-traits"><b>Traits:</b> {{item.Traits}}</span>
+          </div>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{#if items.equipped.ammo.length}}
+      <div class="items">
+        <div class="header">
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.AMMO"}}</span>
+          <span class="item-property">{{localize "ITEM.QTY"}}</span>
+        </div>
+        {{#each items.equipped.ammo as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name item-dropdown">{{item.name}}</div>         
+              <div class="item-property qty-click">
+                <button class="qty-click" data-type="decrement">-</button>
+                {{item.quantity}}
+                <button class="qty-click" data-type="increment">+</button>
+              </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+
+      {{#if items.equipped.armour.length}}
+      <div class="items">
+        <div class="header">
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.ARMOUR"}}</span>
+          <span class="item-property">{{localize "ARMOUR.RATING"}}</span>
+          <span class="item-property flex large">{{localize "ARMOUR.TRAITS"}}</span>
+        </div>
+        {{#each items.equipped.armour as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content item-dropdown">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+              <div class="item-property">{{item.rating}}</div>
+              <div class="item-property flex large">{{item.Traits}}</div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{#if items.psychicPowers.length}}
+      <div class="items">
+        <div class="header">
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.PSYCHIC_POWER"}}</span>
+          <span class="item-property small">{{localize "PSYCHIC_POWER.DN"}}</span>
+          <span class="item-property">{{localize "PSYCHIC_POWER.ACTIVATION"}}</span>
+          <span class="item-property">{{localize "PSYCHIC_POWER.DURATION"}}</span>
+          <span class="item-property">{{localize "PSYCHIC_POWER.RANGE"}}</span>
+          <span class="item-property">{{localize "PSYCHIC_POWER.MULTI_TARGET"}}</span>
+        </div>
+        {{#each items.psychicPowers as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content roll-psychic-power item-dropdown-right">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+              <div class="item-property small">{{item.dn}}</div>
+              <div class="item-property">{{item.Activation}}</div>
+              <div class="item-property">{{item.duration}}</div>
+              <div class="item-property">{{item.range}}</div>
+              <div class="item-property">{{item.MultiTarget}}</div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{#if items.abilitiesAndTalents.length}}
+      <div class="items">
+        <div class="header">
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
+          <span class="item-property flex large">{{localize "HEADER.DESCRIPTION"}}</span>
+      </div>
+        {{#each items.abilitiesAndTalents as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content item-dropdown">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+          <span class="item-property flex large long-text">{{{item.description}}}</span>
+        </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

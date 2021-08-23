@@ -1,3 +1,8 @@
+.wrath-and-glory.sheet.actor .tab[data-tab="combat"] h1 {
+  width: 150px;
+}
+
+
 .wrath-and-glory.sheet.actor .combat {
   display: flex;
   flex-direction: row;
@@ -23,23 +28,13 @@
 .wrath-and-glory.sheet.actor .combat .wrapper.wargear {
   flex-basis: 100%;
   margin-top: 8px;
+  pointer-events:none;
 }
 
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .faith {
-  position: absolute;
-  top: 477px;
-  right: 30px;
+.wrath-and-glory.sheet.actor .combat .wrapper-item.faith {
   display: flex;
   flex-direction: row;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .faith label {
-  width: 70px;
-  cursor: default;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .faith input {
-  width: 50px;
+  margin-bottom: -33px;
 }
 
 .wrath-and-glory.sheet.actor .combat .wrapper .wrapper-item {
@@ -247,163 +242,10 @@
   background-color: var(--color-red);
 }
 
-/* WARGEAR */
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable {
-  flex-basis: 100%;
-  height: 278px;
-  overflow-y: scroll;
-  margin-top: 8px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items {
+.wrath-and-glory.sheet.actor .combat .wrapper.wargear {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-basis: 100%;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header {
-  display: flex;
-  flex-direction: row;
-  flex-basis: 100%;
-  height: 22px;
+  flex-direction: column;
+  pointer-events: none;
+  width: 100%;
   align-items: center;
-  background-color: var(--color-black);
-  color: var(--color-white);
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .avatar {
-  height: 22px;
-  width: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .name {
-  flex-basis: calc(30% - 22px);
-  text-align: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .damage,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .ed,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .ap,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .dn,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .rating {
-  flex-basis: 7%;
-  text-align: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .range {
-  flex-basis: 15%;
-  text-align: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .range-psychic,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .activation,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .duration {
-  flex-basis: 15%;
-  text-align: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .multi-target {
-  flex-basis: 18%;
-  text-align: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .traits {
-  flex-basis: 34%;
-  text-align: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .traits-armour {
-  flex-basis: 63%;
-  text-align: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .header .effect {
-  flex-basis: 70%;
-  text-align: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item {
-  display: flex;
-  flex-direction: row;
-  flex-basis: 100%;
-  height: 22px;
-  color: var(--color-white);
-  align-items: center;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item:hover * {
-  background-color: var(--color-red);
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item:nth-child(even) {
-  background-color: var(--color-dark-grey);
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item:nth-child(odd) {
-  background-color: var(--color-light-grey);
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .avatar {
-  background-size: 18px;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 22px;
-  width: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .name {
-  flex-basis: calc(30% - 22px);
-  text-align: center;
-  cursor: pointer;
-  height: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .damage,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .ed,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .ap,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .rating,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .dn {
-  flex-basis: 7%;
-  text-align: center;
-  height: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .range {
-  flex-basis: 15%;
-  text-align: center;
-  height: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .range-psychic,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .activation,
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .duration {
-  flex-basis: 15%;
-  text-align: center;
-  height: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .multi-target {
-  flex-basis: 18%;
-  text-align: center;
-  height: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .traits {
-  flex-basis: 34%;
-  text-align: center;
-  height: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .traits-armour {
-  flex-basis: 63%;
-  text-align: center;
-  height: 22px;
-}
-
-.wrath-and-glory.sheet.actor .combat .wrapper.wargear .scrollable .items .item .effect {
-  flex-basis: 70%;
-  text-align: center;
-  height: 22px;
 }

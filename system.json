@@ -2,14 +2,14 @@
   "name": "wrath-and-glory",
   "title": "Wrath & Glory",
   "description": "In the grim darkness of the far future, there is only war",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "minimumCoreVersion": "0.8.4",
-  "compatibleCoreVersion": "0.8.8",
+  "compatibleCoreVersion": "0.8.9",
   "templateVersion": 2,
-  "author": "Moo Man, Perfectro",
+  "author": "Moo Man, Vivi Aurora, Perfectro",
   "scripts": [],
   "esmodules": [
-    "scripts/common/hooks.js"
+    "wrath-and-glory.js"
   ],
   "styles": [
     "style/chat/chat.css",
@@ -19,14 +19,15 @@
     "style/dialog/dialog.css",
     "style/sheet/agent.css",
     "style/sheet/threat.css",
-    "style/sheet/tab/advances.css",
     "style/sheet/tab/combat.css",
     "style/sheet/tab/gear.css",
     "style/sheet/tab/notes.css",
     "style/sheet/tab/stats.css",
     "style/sheet/tab/settings.css",
     "style/sheet/tab/talents.css",
-    "style/sheet/item.css"
+    "style/sheet/item.css",
+    "style/common/counter.css",
+    "style/common/apps.css"
   ],
   "packs": [],
   "languages": [
@@ -43,7 +44,7 @@
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/moo-man/WrathAndGlory-FoundryVTT/master/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/2.2.0/wrath-and-glory.zip",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/2.3.0/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 

@@ -162,7 +162,7 @@
             "bonus": 0,
             "total": 0
           },
-          "resilence": {
+          "resilience": {
             "bonus": 0,
             "total": 0
           },
@@ -208,7 +208,23 @@
         "species": "",
         "faction": "",
         "archetype": "",
-        "quote": ""
+        "quote": "",
+        "height" : "",
+        "eye" : "",
+        "hair" : "",
+        "origin" : {
+          "value" : "",
+          "bonus" : ""
+        },
+        "accomplishment" : {
+          "value" : "",
+          "bonus" : ""
+        },
+        "goal" : {
+          "value" : "",
+          "bonus" : ""
+        },
+        "objective" : ""
       },
       "advances": {
         "tier": 1,
@@ -308,7 +324,7 @@
           },
           "combat": {
             "defense": 0,
-            "resilence": 0,
+            "resilience": 0,
             "wounds": 0,
             "determination": 0,
             "shock": 0,
@@ -317,6 +333,16 @@
             "conviction": 0
           }
         }
+      },
+      "equipped" : {
+        "equipped" : false
+      },
+      "physical" : {
+        "quantity" : 1,
+        "rarity" : "common",
+        "description" : "",
+        "value" : 0,
+        "keywords" : ""
       }
     },
     "ability": {
@@ -328,21 +354,13 @@
       "display": true
     },
     "ammo": {
-      "description": "",
-      "effect": "",
-      "value": 0,
-      "rarity": "common",
-      "keywords": "",
-      "quantity": 0
+      "templates" : ["physical"],
+      "effect": ""
     },
     "armour": {
-      "templates": ["bonus"],
-      "description": "",
+      "templates": ["bonus", "physical", "equipped"],
       "rating": 0,
-      "traits": "",
-      "value": 0,
-      "rarity": "common",
-      "keywords": ""
+      "traits": []
     },
     "ascension": {
       "cost": 0,
@@ -353,20 +371,12 @@
       "benefits": ""
     },
     "augmentic": {
-      "templates": ["bonus"],
-      "description": "",
-      "effect": "",
-      "value": 0,
-      "rarity": "common",
-      "keywords": ""
+      "templates": ["bonus", "physical"],
+      "effect": ""
     },
     "gear": {
-      "templates": ["bonus"],
-      "description": "",
-      "effect": "",
-      "value": 0,
-      "rarity": "common",
-      "keywords": ""
+      "templates": ["bonus", "physical"],
+      "effect": ""
     },
     "keyword": {
       "description": ""
@@ -424,8 +434,7 @@
       "description": ""
     },
     "weapon": {
-      "templates": ["bonus"],
-      "description": "",
+      "templates": ["bonus", "physical", "equipped"],
       "attack": {
         "base": 0,
         "bonus": 0,
@@ -460,11 +469,9 @@
         "medium": 0,
         "long": 0
       },
+      "ammo" : "",
       "salvo": 0,
-      "traits": "",
-      "value": 0,
-      "rarity": "common",
-      "keywords": "",
+      "traits": [],
       "upgrades": ""
     },
     "weaponUpgrade": {

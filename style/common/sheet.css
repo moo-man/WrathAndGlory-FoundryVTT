@@ -1,3 +1,13 @@
+.wrath-and-glory.actor form {
+  height : 100%
+}
+
+.wrath-and-glory.sheet.actor .sheet-body {
+  width: 100%;
+  height: calc(100% - 165px);
+  overflow-y: auto
+}
+
 .wrath-and-glory.actor h1,
 .wrath-and-glory.item h1 {
   margin: 0;
@@ -27,6 +37,7 @@
   background-color: var(--color-red);
 }
 
+.wrath-and-glory.actor .fake-input,
 .wrath-and-glory.actor input[type="text"],
 .wrath-and-glory.actor input[type="number"],
 .wrath-and-glory.item input[type="text"],
@@ -43,4 +54,189 @@
   font-family: var(--font-text);
   text-align: center;
   height: 31px;
+}
+
+.wrath-and-glory .items {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 8px
+}
+
+.wrath-and-glory .items .item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-white);
+  align-items: center;
+  flex: 1
+}
+
+.wrath-and-glory .items .header{
+  display: flex;
+  flex-direction: row;
+  height: 22px;
+  align-items: center;
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+  .wrath-and-glory .items .header .item-property {
+  font-weight: bold;
+}
+
+  .wrath-and-glory .item .item-content {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.wrath-and-glory .item .item-content-extra {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 2px 5px 2px 5px
+}
+
+
+.wrath-and-glory .items .item-controls,
+.wrath-and-glory .items .item-property {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.wrath-and-glory .items .item-property {
+  flex: 0 0 100px;
+}
+
+.wrath-and-glory .items .item-controls,
+.wrath-and-glory .items .item-property.small{
+  flex: 0 0 50px;
+}
+
+.wrath-and-glory .items .item-property.large {
+  flex: 0 0 200px;
+}
+
+.wrath-and-glory .items .item-property.flex {
+  flex: 1;
+}
+
+.wrath-and-glory .items .item-property.flex.large {
+  flex: 2;
+}
+
+.wrath-and-glory .items .item-property.long-text {
+  white-space: nowrap;
+  overflow: hidden;
+  justify-content: flex-start;
+}
+.wrath-and-glory .items .item-property.long-text p{
+  margin: 0px;
+}
+
+.wrath-and-glory .items .item-property.long-text li{
+display: none
+}
+
+.wrath-and-glory .items .item-property.item-name{
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.wrath-and-glory .items .item-property.item-image{
+  height: 22px;
+  width: 22px;
+  padding: 2px;
+  flex: unset;
+  border: 0px;
+}
+
+.wrath-and-glory .items .item-property select{
+  background: none;
+  height: 22px;
+  width: 100%;
+  box-shadow: none;
+  border: none;
+  background: var(--color-red);
+  color: var(--color-white);
+  font-family: "Signika";
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.wrath-and-glory .items .item-property select:hover{
+  box-shadow: none;
+  border: none
+}
+
+.wrath-and-glory .items .item-property button{
+    height: 22px;
+    width: 22px;
+    border: none;
+    box-shadow: none;
+    background-color: var(--color-red);
+    display: flex;
+    align-items: center;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+
+.wrath-and-glory.sheet.actor .wrapper .scrollable .items:not(:first-of-type) {
+  margin-top: 8px;
+}
+
+
+.wrath-and-glory .items .item .item-content:hover {
+  background-color: var(--color-red);
+}
+
+.wrath-and-glory .items .item:nth-child(even) {
+  background-color: var(--color-dark-grey);
+}
+
+.wrath-and-glory .items .item:nth-child(odd) {
+  background-color: var(--color-light-grey);
+}
+
+
+.wrath-and-glory.sheet.actor  .wrapper .pointer-enable {
+  display: flex;
+  flex-direction: column;
+  pointer-events: all;
+  width: 100%;
+}
+
+
+.wrath-and-glory.sheet.actor  .form-row {
+  display: flex;
+  width: 100%;
+  margin: 3px 0px;
+}
+
+.wrath-and-glory.sheet.actor  .form-field {
+  display: flex;
+  flex:1;
+  margin: 0px 10px;
+}
+
+.wrath-and-glory.sheet.actor  .items .item-summary {
+  padding: 5px;
+  width: 100%;
+  border: 1px solid var(--color-red)
 }

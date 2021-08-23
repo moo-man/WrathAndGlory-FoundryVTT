@@ -1,0 +1,154 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="psychic-power">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "PSYCHIC_POWER.NAME"}}</label>
+            <input name="name" type="text" value="{{item.name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+      <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="description">
+        <div class="description">
+          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="stats">
+
+        <div class="wrapper">
+          <div class="cost">
+            <label>{{localize "PSYCHIC_POWER.COST"}}</label>
+            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+          </div>
+          <div class="prerequisites">
+            <label>{{localize "PSYCHIC_POWER.PREREQUISITES"}}</label>
+            <input name="data.prerequisites" type="text" value="{{data.prerequisites}}" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="duration">
+            <label>{{localize "PSYCHIC_POWER.DURATION"}}</label>
+            <input name="data.duration" type="text" value="{{data.duration}}" />
+          </div>
+          <div class="activation">
+            <label>{{localize "PSYCHIC_POWER.ACTIVATION"}}</label>
+            <select name="data.activation">
+              {{#select data.activation}}
+                <option value="free">{{localize "ACTIVATION.FREE"}}</option>
+                <option value="action">{{localize "ACTIVATION.ACTION"}}</option>
+                <option value="simple">{{localize "ACTIVATION.SIMPLE"}}</option>
+                <option value="full">{{localize "ACTIVATION.FULL"}}</option>
+                <option value="movement">{{localize "ACTIVATION.MOVEMENT"}}</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="dn">
+            <label>{{localize "PSYCHIC_POWER.DN"}}</label>
+            <input name="data.dn" type="number" value="{{data.dn}}" data-dtype="Number" />
+          </div>
+          <div class="range">
+            <label>{{localize "PSYCHIC_POWER.RANGE"}}</label>
+            <input name="data.range" type="text" value="{{data.range}}" />
+          </div>
+          <div class="multi-target">
+            <label>{{localize "PSYCHIC_POWER.MULTI_TARGET"}}</label>
+            {{#if data.multiTarget}}
+            <input name="data.multiTarget" type="checkbox" value="active" checked/>
+            {{else}}
+            <input name="data.multiTarget" type="checkbox" value="active"/>
+            {{/if}}
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="header">
+            <b class="name"></b>
+            <b class="base">{{localize "DIALOG.BASE"}}</b>
+            <b class="rank">{{localize "DIALOG.RANK"}}</b>
+            <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="damage">
+            <label>{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
+            <input name="data.damage.base" class="base" type="number" value="{{data.damage.base}}"
+              data-dtype="Number" />
+            <select name="data.damage.rank" class="rank">
+              {{#select data.damage.rank}}
+              <option value="none">{{localize "RANK.NONE"}}</option>
+              <option value="single">{{localize "RANK.SINGLE"}}</option>
+              <option value="double">{{localize "RANK.DOUBLE"}}</option>
+              {{/select}}
+            </select>
+            <input name="data.damage.bonus" class="modifier" type="number" value="{{data.damage.bonus}}" data-dtype="Number" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="ed">
+            <label>{{localize "PSYCHIC_POWER.ED"}}</label>
+            <input name="data.ed.base" class="base" type="number" value="{{data.ed.base}}" data-dtype="Number" />
+            <select name="data.ed.rank" class="rank">
+              {{#select data.ed.rank}}
+              <option value="none">{{localize "RANK.NONE"}}</option>
+              <option value="single">{{localize "RANK.SINGLE"}}</option>
+              <option value="double">{{localize "RANK.DOUBLE"}}</option>
+              {{/select}}
+            </select>
+            <input name="data.ed.bonus" class="modifier" type="number" value="{{data.ed.bonus}}" data-dtype="Number" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="header">
+            <b class="name"></b>
+            <b class="die">1</b>
+            <b class="die">2</b>
+            <b class="die">3</b>
+            <b class="die">4</b>
+            <b class="die">5</b>
+            <b class="die">6</b>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="die-value">
+            <label class="name">{{localize "PSYCHIC_POWER.DIE_VALUE"}}</label>
+            <input name="data.ed.die.one" type="number" value="{{data.ed.die.one}}" data-dtype="Number" />
+            <input name="data.ed.die.two" type="number" value="{{data.ed.die.two}}" data-dtype="Number" />
+            <input name="data.ed.die.three" type="number" value="{{data.ed.die.three}}" data-dtype="Number" />
+            <input name="data.ed.die.four" type="number" value="{{data.ed.die.four}}" data-dtype="Number" />
+            <input name="data.ed.die.five" type="number" value="{{data.ed.die.five}}" data-dtype="Number" />
+            <input name="data.ed.die.six" type="number" value="{{data.ed.die.six}}" data-dtype="Number" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="keywords">
+            <label>{{localize "PSYCHIC_POWER.KEYWORDS"}}</label>
+            <input name="data.keywords" type="text" value="{{data.keywords}}" />
+          </div>
+        </div>
+        <div class="wrapper" style="flex-wrap: wrap; justify-content: center;">
+          <h1>{{localize "TITLE.POTENCY"}}</h1>
+          <div class="potency" style="flex-basis: 100%; margin-top: 8px">
+            {{editor content=data.potency target="data.potency" button=true owner=owner editable=editable}}
+          </div>
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="effects">
+        {{> systems/wrath-and-glory/template/item/tab/effects.html}}
+      </div>
+    </div>
+  </div>
+</form>
