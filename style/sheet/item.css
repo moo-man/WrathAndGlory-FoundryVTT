@@ -29,6 +29,12 @@
   height: 100%;
 }
 
+
+.wrath-and-glory.sheet.item .description .editor {
+  min-height: 200px;
+}
+
+
 /* HEADER */
 
 .wrath-and-glory.sheet.item .sheet-header {
@@ -190,21 +196,6 @@
   margin: 0;
 }
 
-/* BONUS */
-
-.wrath-and-glory.sheet.item .bonus {
-  width: 100%;
-  overflow-y: scroll;
-}
-
-.wrath-and-glory.sheet.item .bonus .wrapper-title {
-  display: flex;
-  flex-direction: row;
-  flex-basis: 100%;
-  margin-top: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 
 .wrath-and-glory.sheet.item .sheet-body .wrapper-title .wrapper {
   flex-wrap: wrap;
@@ -225,18 +216,6 @@
   margin-right: 4px;
 }
 
-/* ABILITY */
-
-.wrath-and-glory.sheet.item .ability .description .editor,
-.wrath-and-glory.sheet.item .ability .bonus {
-  height: 200px;
-}
-
-.wrath-and-glory.sheet.item .ability .sheet-body .wrapper .effect {
-  display: flex;
-  flex-direction: row;
-  flex-basis: 100%;
-}
 
 .wrath-and-glory.sheet.item .ability .sheet-body .wrapper .display {
   display: flex;
@@ -294,11 +273,6 @@
 
 /* ARMOUR */
 
-.wrath-and-glory.sheet.item .armour .description .editor,
-.wrath-and-glory.sheet.item .armour .bonus {
-  height: 200px;
-}
-
 .wrath-and-glory.sheet.item .sheet-body .wrapper .traits {
   display: flex;
   flex-direction: column;
@@ -334,11 +308,6 @@
 }
 
 /* ASCENSION */
-
-.wrath-and-glory.sheet.item .ascension .description .editor {
-  height: 355px;
-}
-
 .wrath-and-glory.sheet.item .ascension .benefits .editor {
   height: 200px;
 }
@@ -367,11 +336,6 @@
 
 /* AUGMENTIC */
 
-.wrath-and-glory.sheet.item .augmentic .description .editor,
-.wrath-and-glory.sheet.item .augmentic .bonus {
-  height: 200px;
-}
-
 .wrath-and-glory.sheet.item .augmentic .sheet-body .wrapper .effect,
 .wrath-and-glory.sheet.item .augmentic .sheet-body .wrapper .keywords {
   display: flex;
@@ -393,13 +357,6 @@
   flex-basis: 50%;
 }
 
-/* GEAR */
-
-.wrath-and-glory.sheet.item .gear .description .editor,
-.wrath-and-glory.sheet.item .gear .bonus {
-  height: 200px;
-}
-
 .wrath-and-glory.sheet.item .gear .sheet-body .wrapper .effect,
 .wrath-and-glory.sheet.item .gear .sheet-body .wrapper .keywords {
   display: flex;
@@ -419,26 +376,6 @@
   flex-direction: row;
   margin-left: 4px;
   flex-basis: 50%;
-}
-
-/* KEYWORD */
-
-.wrath-and-glory.sheet.item .keyword .description .editor {
-  height: 200px;
-}
-
-/* MEMORABLE INJURY */
-
-.wrath-and-glory.sheet.item .memorable-injury .description .editor,
-.wrath-and-glory.sheet.item .memorable-injury .bonus {
-  height: 200px;
-}
-
-/* MUTATION */
-
-.wrath-and-glory.sheet.item .mutation .description .editor,
-.wrath-and-glory.sheet.item .mutation .bonus {
-  height: 200px;
 }
 
 .wrath-and-glory.sheet.item .mutation .sheet-body .wrapper .effect {
@@ -531,11 +468,6 @@
 
 /* TALENT */
 
-.wrath-and-glory.sheet.item .talent .description .editor,
-.wrath-and-glory.sheet.item .talent .bonus {
-  height: 200px;
-}
-
 .wrath-and-glory.sheet.item .talent .sheet-body .wrapper .effect {
   display: flex;
   flex-direction: row;
@@ -562,18 +494,6 @@
   flex-basis: calc(70% - 4px);
 }
 
-/* TRAUMATIC INJURY */
-
-.wrath-and-glory.sheet.item .traumatic-injury .description .editor,
-.wrath-and-glory.sheet.item .traumatic-injury .bonus {
-  height: 200px;
-}
-
-/* WEAPON */
-
-.wrath-and-glory.sheet.item .weapon .bonus {
-  height: 578px;
-}
 
 .wrath-and-glory.sheet.item .weapon .upgrades .editor {
   height: 100px;

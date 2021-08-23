@@ -16,8 +16,6 @@
 
     <div class="sheet-tabs tabs" data-group="primary">
       <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
-      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
-
       <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
     </div>
 
@@ -25,16 +23,6 @@
       <div class="tab" data-group="primary" data-tab="description">
         <div class="description">
           {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
-        </div>
-      </div>
-      <div class="tab" data-group="primary" data-tab="stats">
-        <div class="stats">
-          <div class="wrapper">
-            <div class="effect">
-              <label>{{localize "ITEM.EFFECT"}}</label>
-              <input name="data.effect" type="text" value="{{data.effect}}" />
-            </div>
-          </div>
         </div>
       </div>
 
