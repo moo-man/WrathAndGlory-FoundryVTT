@@ -138,6 +138,10 @@
   margin: 0px;
 }
 
+.wrath-and-glory .items .item-property.long-text li{
+display: none
+}
+
 .wrath-and-glory .items .item-property.item-name{
   justify-content: flex-start;
   display: flex;

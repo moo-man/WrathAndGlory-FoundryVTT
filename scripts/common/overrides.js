@@ -2,12 +2,8 @@ export default function() {
 
 
 
-      /**
-   * Draw a single resource bar, given provided data
-   * @param {number} number       The Bar number
-   * @param {PIXI.Graphics} bar   The Bar container
-   * @param {Object} data         Resource data for this bar
-   * @protected
+  /**
+   * @override Draw token bars in reverse
    */
   Token.prototype._drawBar = function(number, bar, data) {
     const val = Number(data.value);
