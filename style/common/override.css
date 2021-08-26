@@ -1,4 +1,7 @@
 .window-app .window-content {
   background: var(--image-background) repeat;
+}
+
+.wrath-and-glory .window-content { 
   overflow: hidden;
 }
