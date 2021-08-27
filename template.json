@@ -10,36 +10,43 @@
           "strength": {
             "label": "ATTRIBUTE.STRENGTH",
             "rating": 1,
+            "bonus" : 0,
             "cost": 0
           },
           "toughness": {
             "label": "ATTRIBUTE.TOUGHNESS",
             "rating": 1,
+            "bonus" : 0,
             "cost": 0
           },
           "agility": {
             "label": "ATTRIBUTE.AGILITY",
             "rating": 1,
+            "bonus" : 0,
             "cost": 0
           },
           "initiative": {
             "label": "ATTRIBUTE.INITIATIVE",
             "rating": 1,
+            "bonus" : 0,
             "cost": 0
           },
           "willpower": {
             "label": "ATTRIBUTE.WILLPOWER",
             "rating": 1,
+            "bonus" : 0,
             "cost": 0
           },
           "intellect": {
             "label": "ATTRIBUTE.INTELLECT",
             "rating": 1,
+            "bonus" : 0,
             "cost": 0
           },
           "fellowship": {
             "label": "ATTRIBUTE.FELLOWSHIP",
             "rating": 1,
+            "bonus" : 0,
             "cost": 0
           }
         }
@@ -50,108 +57,126 @@
             "label": "SKILL.ATHLETICS",
             "attribute": "strength",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "awareness": {
             "label": "SKILL.AWARENESS",
             "attribute": "intellect",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "ballisticSkill": {
             "label": "SKILL.BALLISTIC_SKILL",
             "attribute": "agility",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "cunning": {
             "label": "SKILL.CUNNING",
             "attribute": "fellowship",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "deception": {
             "label": "SKILL.DECEPTION",
             "attribute": "fellowship",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "insight": {
             "label": "SKILL.INSIGHT",
             "attribute": "fellowship",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "intimidation": {
             "label": "SKILL.INTIMIDATION",
             "attribute": "willpower",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "investigation": {
             "label": "SKILL.INVESTIGATION",
             "attribute": "intellect",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "leadership": {
             "label": "SKILL.LEADERSHIP",
             "attribute": "willpower",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "medicae": {
             "label": "SKILL.MEDICAE",
             "attribute": "intellect",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "persusasion": {
             "label": "SKILL.PERSUASION",
             "attribute": "fellowship",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "pilot": {
             "label": "SKILL.PILOT",
             "attribute": "agility",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "psychicMastery": {
             "label": "SKILL.PSYCHIC_MASTERY",
             "attribute": "willpower",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "scholar": {
             "label": "SKILL.SCHOLAR",
             "attribute": "intellect",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "stealth": {
             "label": "SKILL.STEALTH",
             "attribute": "agility",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "survival": {
             "label": "SKILL.SURVIVAL",
             "attribute": "willpower",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "tech": {
             "label": "SKILL.TECH",
             "attribute": "intellect",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           },
           "weaponSkill": {
             "label": "SKILL.WEAPON_SKILL",
             "attribute": "initiative",
             "rating": 0,
+            "bonus" : 0,
             "cost": 0
           }
         }

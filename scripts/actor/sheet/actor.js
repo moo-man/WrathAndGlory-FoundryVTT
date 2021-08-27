@@ -29,6 +29,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         const sheetData = super.getData();
         sheetData.data = sheetData.data.data // project system data so that handlebars has the same name and value paths
         this.constructItemLists(sheetData)
+        this._attributeAndSkillTooltips(sheetData)
         this.constructEffectLists(sheetData)
         this._organizeSkills(sheetData)
         return sheetData;
@@ -42,6 +43,17 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             skill.isLeft = i < middle;
             skill.isRight = i >= middle;
             i++;
+        }
+    }
+
+    _attributeAndSkillTooltips(sheetData) {
+
+        for (let attribute of Object.values(sheetData.data.attributes)) {
+            attribute.tooltip = `Rating: ${attribute.rating} | Advance Cost: ${this.actor.getAttributeCosts(attribute.rating + 1)} | Current XP: ${this.actor.advances.experience.current}`
+        }
+
+        for (let skill of Object.values(sheetData.data.skills)) {
+            skill.tooltip = `Rating: ${skill.rating} | Advance Cost: ${this.actor.getSkillsCosts(skill.rating + 1)} | Current XP: ${this.actor.advances.experience.current}`
         }
     }
 

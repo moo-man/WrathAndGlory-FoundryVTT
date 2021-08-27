@@ -47,12 +47,6 @@ export class WrathAndGloryActor extends Actor {
             this.advances.experience.spent = 0;
             this.advances.experience.total = 0;
         }
-        for (let attribute of Object.values(this.attributes)) {
-            attribute.bonus = 0;
-        }
-        for (let skill of Object.values(this.skills)) {
-            skill.bonus = 0;
-        }
     }
 
     _computeItems() {
@@ -61,9 +55,6 @@ export class WrathAndGloryActor extends Actor {
 
             if (item.isArmour) {
                 this._computeArmour(item);
-            }
-            if (item.bonus) {
-                this._computeBonus(item);
             }
             if (this.advances && item.cost) {
                 this.advances.experience.spent = this.advances.experience.spent + item.cost;
@@ -85,23 +76,6 @@ export class WrathAndGloryActor extends Actor {
                 this.advances.experience.spent = this.advances.experience.spent + attribute.cost;
             }
         }
-    }
-
-    _computeBonus(item) {
-        let bonus = item.bonus
-
-        for (let [key, value] of Object.entries(this.attributes)) {
-            value.bonus = value.bonus + bonus.attributes[key];
-        }
-        for (let [key, value] of Object.entries(this.skills)) {
-            value.bonus = value.bonus + bonus.skills[key];
-        }
-        for (let [key, value] of Object.entries(this.combat)) {
-            if (value.hasOwnProperty("bonus")) {
-                value.bonus = value.bonus + bonus.combat[key];
-            }
-        }
-
     }
 
     _computeSkills() {
