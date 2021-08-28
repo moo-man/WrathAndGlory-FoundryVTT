@@ -29,7 +29,6 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         const sheetData = super.getData();
         sheetData.data = sheetData.data.data // project system data so that handlebars has the same name and value paths
         this.constructItemLists(sheetData)
-        this._attributeAndSkillTooltips(sheetData)
         this.constructEffectLists(sheetData)
         this._organizeSkills(sheetData)
         return sheetData;

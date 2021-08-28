@@ -9,6 +9,12 @@ export class AgentSheet extends WrathAndGloryActorSheet {
         return options
     }
 
+    getData() {
+        let sheetData = super.getData()
+        this._attributeAndSkillTooltips(sheetData)
+        return sheetData
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-cost").focusout(async (ev) => { await this._onItemCostFocusOut(ev); });
