@@ -89,8 +89,8 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeCombat() {
-        let autoCalc = this.getFlag("wrath-and-glory", "autoCalc")
-        
+        let autoCalc = this.getFlag("wrath-and-glory", "autoCalc") || {}
+
         if (autoCalc.awareness)
             this.combat.passiveAwareness.total = this._setDefault(Math.ceil(this.skills.awareness.total / 2) + this.combat.passiveAwareness.bonus, 1);
         if (autoCalc.defense)
@@ -101,11 +101,11 @@ export class WrathAndGloryActor extends Actor {
             this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
         if (autoCalc.resilience)
             this.combat.resilience.total = this._setDefault(this.attributes.toughness.total + 1 + this.combat.resilience.bonus + this.combat.resilience.armor, 1);
-        if (autoCalc.wounds)
+        if (autoCalc.wounds && this.type=="agent")
             this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.total + this.combat.wounds.bonus, 1);
         if (autoCalc.determination)
             this.combat.determination.total = this._setDefault(this.attributes.toughness.rating + this.combat.determination.bonus, 1);
-        if (autoCalc.shock)
+        if (autoCalc.shock && this.type=="agent")
             this.combat.shock.max = this._setDefault(this.attributes.willpower.rating + this.advances.tier + this.combat.shock.bonus, 1);
     }
 

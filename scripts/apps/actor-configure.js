@@ -9,6 +9,12 @@ export default class ActorConfigure extends FormApplication
         })
     }
 
+    getData() {
+        let data = super.getData();
+        data.isAgent = this.object.type == "agent"
+        return data
+    }
+
     
     async _updateObject(event, formData) {
         this.object.update(formData)

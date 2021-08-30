@@ -9,10 +9,12 @@
         <input type="checkbox" name="flags.wrath-and-glory.autoCalc.resilience" {{checked object.data.flags.wrath-and-glory.autoCalc.resilience}}>            
     </div>
 
+    {{#if isAgent}}
     <div class="form-group">
         <label>{{localize "AUTOCALC.SHOCK"}}</label>
         <input type="checkbox" name="flags.wrath-and-glory.autoCalc.shock" {{checked object.data.flags.wrath-and-glory.autoCalc.shock}}>            
     </div>
+    {{/if}}
 
     <div class="form-group">
         <label>{{localize "AUTOCALC.AWARENESS"}}</label>
@@ -25,10 +27,12 @@
         <input type="checkbox" name="flags.wrath-and-glory.autoCalc.determination" {{checked object.data.flags.wrath-and-glory.autoCalc.determination}}>            
     </div>
 
+    {{#if isAgent}}
     <div class="form-group">
         <label>{{localize "AUTOCALC.WOUNDS"}}</label>
         <input type="checkbox" name="flags.wrath-and-glory.autoCalc.wounds" {{checked object.data.flags.wrath-and-glory.autoCalc.wounds}}>            
     </div>
+    {{/if}}
 
     <div class="form-group">
         <label>{{localize "AUTOCALC.CONVICTION"}}</label>
