@@ -92,6 +92,7 @@
   "BUTTON.REROLL": "Reroll",
   "BUTTON.CANCEL": "Cancel",
   "BUTTON.DAMAGE": "Damage",
+  "BUTTON.CONFIGURE": "Configure",
 
   "BUTTON.ApplyDamage" : "Apply Damage",
   "BUTTON.ApplyDamageInvuln" : "Apply Damage (Invulnerable armour)",
@@ -313,5 +314,17 @@
   "WEAPON_UPGRADE.EFFECT": "Effect",
   "WEAPON_UPGRADE.VALUE": "Value",
   "WEAPON_UPGRADE.RARITY": "Rarity",
-  "WEAPON_UPGRADE.KEYWORDS": "Keywords"
+  "WEAPON_UPGRADE.KEYWORDS": "Keywords",
+
+
+
+
+  "AUTOCALC.DEFENSE" : "Auto Calculate Defense",
+  "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",
+  "AUTOCALC.SHOCK" : "Auto Calculate Max Shock",
+  "AUTOCALC.AWARENESS" : "Auto Calculate Awareness",
+  "AUTOCALC.DETERMINATION" : "Auto Calculate Determination",
+  "AUTOCALC.WOUNDS" : "Auto Calculate Max Wounds",
+  "AUTOCALC.CONVICTION" : "Auto Calculate Conviction"
+
 }

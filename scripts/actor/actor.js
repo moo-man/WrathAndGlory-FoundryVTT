@@ -7,7 +7,14 @@ export class WrathAndGloryActor extends Actor {
             "token.displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
             "token.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
             "token.disposition": CONST.TOKEN_DISPOSITIONS.NEUTRAL,
-            "token.name": data.name
+            "token.name": data.name,
+            "flags.wrath-and-glory.autoCalc.defense" : true,
+            "flags.wrath-and-glory.autoCalc.resilience" : true,
+            "flags.wrath-and-glory.autoCalc.shock" : true,
+            "flags.wrath-and-glory.autoCalc.awareness" : true,
+            "flags.wrath-and-glory.autoCalc.determination" : true,
+            "flags.wrath-and-glory.autoCalc.wounds" : true,
+            "flags.wrath-and-glory.autoCalc.conviction" : true
           }
           if (data.type === "agent") {
             initData["token.vision"] =  true;
@@ -19,34 +26,27 @@ export class WrathAndGloryActor extends Actor {
     prepareData() {
         super.prepareData();
         this.itemCategories = this.itemTypes
-        if (this.type === "agent") {
-            this._initializeAgent();
-        } else if (this.type === "threat") {
-            this._initializeThreat();
-        }
-    }
-
-    _initializeAgent() {
-        this._initializeBonus();
         this._computeItems();
         this._computeAttributes();
         this._computeSkills();
         this._computeCombat();
+        if (this.type === "agent") {
+            this.prepareAgent();
+        } else if (this.type === "threat") {
+            this.prepareThreat();
+        }
+    }
+
+
+
+    prepareAgent() {
+        this.advances.experience.spent = 0;
+        this.advances.experience.total = 0;
         this._computeExperience();
     }
 
-    _initializeThreat() {
-        this._initializeBonus();
-        this._computeItems();
-        this._computeAttributes();
-        this._computeSkills();
-    }
+    prepareThreat() {
 
-    _initializeBonus() {
-        if (this.advances) {
-            this.advances.experience.spent = 0;
-            this.advances.experience.total = 0;
-        }
     }
 
     _computeItems() {
@@ -89,14 +89,24 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeCombat() {
-        this.combat.passiveAwareness.total = this._setDefault(Math.ceil(this.skills.awareness.total / 2) + this.combat.passiveAwareness.bonus, 1);
-        this.combat.defense.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defense.bonus, 1);
-        this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1 + this.combat.resolve.bonus, 1);
-        this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
-        this.combat.resilience.total = this._setDefault(this.attributes.toughness.total + 1 + this.combat.resilience.bonus + this.combat.resilience.armor, 1);
-        this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.total + this.combat.wounds.bonus, 1);
-        this.combat.determination.total = this._setDefault(this.attributes.toughness.rating + this.combat.determination.bonus, 1);
-        this.combat.shock.max = this._setDefault(this.attributes.willpower.rating + this.advances.tier + this.combat.shock.bonus, 1);
+        let autoCalc = this.getFlag("wrath-and-glory", "autoCalc")
+        
+        if (autoCalc.awareness)
+            this.combat.passiveAwareness.total = this._setDefault(Math.ceil(this.skills.awareness.total / 2) + this.combat.passiveAwareness.bonus, 1);
+        if (autoCalc.defense)
+            this.combat.defense.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defense.bonus, 1);
+        if (autoCalc.resolve)
+            this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1 + this.combat.resolve.bonus, 1);
+        if (autoCalc.conviction)
+            this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
+        if (autoCalc.resilience)
+            this.combat.resilience.total = this._setDefault(this.attributes.toughness.total + 1 + this.combat.resilience.bonus + this.combat.resilience.armor, 1);
+        if (autoCalc.wounds)
+            this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.total + this.combat.wounds.bonus, 1);
+        if (autoCalc.determination)
+            this.combat.determination.total = this._setDefault(this.attributes.toughness.rating + this.combat.determination.bonus, 1);
+        if (autoCalc.shock)
+            this.combat.shock.max = this._setDefault(this.attributes.willpower.rating + this.advances.tier + this.combat.shock.bonus, 1);
     }
 
     _setDefault(value, fallback) {

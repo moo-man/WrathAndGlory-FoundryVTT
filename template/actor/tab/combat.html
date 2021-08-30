@@ -3,21 +3,21 @@
     <h1>{{localize "TITLE.GENERAL"}}</h1>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.DEFENSE"}}</label>
-      <input type="number" value="{{data.combat.defense.total}}" data-dtype="Number" disabled />
+      <input type="number" name="data.combat.defense.total" value="{{data.combat.defense.total}}" data-dtype="Number" {{#if autoCalc.defense}}disabled{{/if}} />
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.RESILIENCE"}}</label>
-      <input type="number" value="{{data.combat.resilience.total}}" data-dtype="Number" disabled />
+      <input type="number" name="data.combat.resilience.total" value="{{data.combat.resilience.total}}" data-dtype="Number" {{#if autoCalc.resilience}}disabled{{/if}} />
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.SHOCK"}}</label>
       <input style="flex-basis: 20%;" name="data.combat.shock.value" type="number" value="{{data.combat.shock.value}}"
         data-dtype="Number" />
-      <input style="flex-basis: 20%;" type="number" value="{{data.combat.shock.max}}" data-dtype="Number" disabled />
+      <input style="flex-basis: 20%;" type="number" name="data.combat.shock.max" value="{{data.combat.shock.max}}" data-dtype="Number" {{#if autoCalc.shock}}disabled{{/if}} />
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.AWARENESS"}}</label>
-      <input type="number" value="{{data.combat.passiveAwareness.total}}" data-dtype="Number" disabled />
+      <input type="number" name="data.combat.passiveAwareness.total" value="{{data.combat.passiveAwareness.total}}" data-dtype="Number" {{#if autoCalc.passiveAwareness}}disabled{{/if}} />
     </div>
     <div class="wrapper-item">
       <label class="roll-stealth hover">{{localize "HEADER.STEALTH_SCORE"}}</label>
@@ -45,13 +45,13 @@
     <h1>{{localize "TITLE.INJURIES"}}</h1>
     <div class="wrapper-item">
       <label class="roll-determination hover">{{localize "HEADER.DETERMINATION"}}</label>
-      <input type="number" value="{{data.combat.determination.total}}" data-dtype="Number" disabled />
+      <input type="number" name="data.combat.determination.total" value="{{data.combat.determination.total}}" data-dtype="Number" {{#if autoCalc.determination}}disabled{{/if}} />
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.WOUNDS"}}</label>
       <input style="flex-basis: 20%;" name="data.combat.wounds.value" type="number" value="{{data.combat.wounds.value}}"
         data-dtype="Number" />
-      <input style="flex-basis: 20%;" type="number" value="{{data.combat.wounds.max}}" data-dtype="Number" disabled />
+      <input style="flex-basis: 20%;" type="number" name="data.combat.wounds.max" value="{{data.combat.wounds.max}}" data-dtype="Number" {{#if autoCalc.wounds}}disabled{{/if}} />
     </div>
     <div class="traumatics">
       <div class="header">
@@ -102,11 +102,11 @@
     <h1>{{localize "TITLE.MUTATIONS"}}</h1>
     <div class="wrapper-item">
       <label class="roll-conviction hover">{{localize "HEADER.CONVICTION"}}</label>
-      <input type="number" value="{{data.combat.conviction.total}}" data-dtype="Number" disabled />
+      <input type="number" name="data.combat.conviction.total" value="{{data.combat.conviction.total}}" data-dtype="Number" {{#if autoCalc.conviction}}disabled{{/if}} />
     </div>
     <div class="wrapper-item">
       <label class="roll-resolve hover">{{localize "HEADER.RESOLVE"}}</label>
-      <input type="number" value="{{data.combat.resolve.total}}" data-dtype="Number" disabled/>
+      <input type="number" name="data.combat.resolve.total" value="{{data.combat.resolve.total}}" data-dtype="Number" {{#if autoCalc.resolve}}disabled{{/if}}/>
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.CORRUPTION"}}</label>

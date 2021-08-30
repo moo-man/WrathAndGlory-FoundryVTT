@@ -1,5 +1,6 @@
 import { prepareCommonRoll, prepareWeaponRoll, prepareDamageRoll, preparePsychicRoll } from "../../common/dialog.js";
 import { reroll } from "../../common/roll.js";
+import ActorConfigure from "../../apps/actor-configure.js";
 
 export class WrathAndGloryActorSheet extends ActorSheet {
     rollData = {};
@@ -31,6 +32,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.constructItemLists(sheetData)
         this.constructEffectLists(sheetData)
         this._organizeSkills(sheetData)
+        sheetData.autCalc = this.actor.getFlag("wrath-and-glory", "autoCalc")
         return sheetData;
     }
 
@@ -179,6 +181,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let buttons = super._getHeaderButtons();
         if (this.actor.isOwner) {
             buttons = [
+                {
+                    label : "BUTTON.CONFIGURE",
+                    class : "actor-configure",
+                    icon : "fas fa-wrench",
+                    onclick: (ev) => new ActorConfigure(this.actor).render(true)
+                },
                 {
                     label: "BUTTON.ROLL",
                     class: "custom-roll",
