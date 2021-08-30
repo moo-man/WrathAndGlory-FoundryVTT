@@ -22,4 +22,32 @@ export default class WNGUtility {
       }
     }
   }
+
+
+  static getAttributeCostTotal(rating) {
+    let total = 0
+
+    for (let i = 0; i <= rating; i++)
+      total += this.getAttributeCostIncrement(rating)
+    return total
+  }
+
+  static getSkillCostTotal(rating) {
+    let total = 0
+
+    for (let i = 0; i <= rating; i++)
+      total += this.getSkillCostIncrement(rating)
+    return total
+  }
+
+  static getAttributeCostIncrement(rating) {
+    let costs = game.wng.config.attributeCosts
+    if (rating >= costs.length)
+      return 50
+    else return costs[rating]
+  }
+
+  static getSkillCostIncrement(rating) {
+    return rating * 2
+  }
 }

@@ -30,12 +30,12 @@ WNG.weaponTraits = {
 }
 
 WNG.armourTraits = {
-    "bulk" : "Bulk (X)",
-    "cumbersome" : "Cumbersome",
-    "ereWeGo" : "'Ere We Go!",
-    "powerField" : "Power Field",
-    "powered" : "Powered (X)",
-    "shield" : "Shield"
+    "bulk": "Bulk (X)",
+    "cumbersome": "Cumbersome",
+    "ereWeGo": "'Ere We Go!",
+    "powerField": "Power Field",
+    "powered": "Powered (X)",
+    "shield": "Shield"
 }
 
 
@@ -64,12 +64,17 @@ WNG.traitHasRating = {
     "unwieldy": true,
     "waaagh!": false,
     "warpWeapons": true,
-    "bulk" : true,
-    "cumbersome" : false,
-    "ereWeGo" : false,
-    "powerField" : false,
-    "powered" : true,
-    "shield" : false
+    "bulk": true,
+    "cumbersome": false,
+    "ereWeGo": false,
+    "powerField": false,
+    "powered": true,
+    "shield": false
 }
+
+
+WNG.attributeCosts = [0, 0, 4, 6, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+
+WNG.skillCosts = [0, 2, 4, 6, 8, 10, 12, 14, 16]
 
 export default WNG

@@ -32,7 +32,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.constructItemLists(sheetData)
         this.constructEffectLists(sheetData)
         this._organizeSkills(sheetData)
-        sheetData.autCalc = this.actor.getFlag("wrath-and-glory", "autoCalc")
+        sheetData.autoCalc = this.actor.getFlag("wrath-and-glory", "autoCalc") || {}
+        if (this.actor.type == "threat")
+        {
+            sheetData.autoCalc.wounds = false;
+            sheetData.autoCalc.shock = false;
+        }
         return sheetData;
     }
 
@@ -50,11 +55,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _attributeAndSkillTooltips(sheetData) {
 
         for (let attribute of Object.values(sheetData.data.attributes)) {
-            attribute.tooltip = `Rating: ${attribute.rating} | Advance Cost: ${this.actor.getAttributeCosts(attribute.rating + 1)} | Current XP: ${this.actor.advances.experience.current}`
+            attribute.tooltip = `Rating: ${attribute.rating} | Advance Cost: ${game.wng.utility.getAttributeCostIncrement(attribute.rating + 1)} | Current XP: ${this.actor.advances.experience.current}`
         }
 
         for (let skill of Object.values(sheetData.data.skills)) {
-            skill.tooltip = `Rating: ${skill.rating} | Advance Cost: ${this.actor.getSkillsCosts(skill.rating + 1)} | Current XP: ${this.actor.advances.experience.current}`
+            skill.tooltip = `Rating: ${skill.rating} | Advance Cost: ${game.wng.utility.getSkillCostIncrement(skill.rating + 1)} | Current XP: ${this.actor.advances.experience.current}`
         }
     }
 
