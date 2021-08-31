@@ -3,7 +3,6 @@ export async function migrateWorld() {
     const worldSchemaVersion = Number(game.settings.get("wrath-and-glory", "worldSchemaVersion"));
     if (worldSchemaVersion !== schemaVersion && game.user.isGM) {
         ui.notifications.info("Upgrading the world, please wait...");
-        if (worldSchemaVersion < 2) {
             for (let actor of game.actors.contents) {
                 try {
                     const update = migrateActorData(actor.data, worldSchemaVersion);
@@ -15,8 +14,28 @@ export async function migrateWorld() {
                     console.error(e);
                 }
             }
-        }
-        if (worldSchemaVersion < 2) {
+            for (let actor of game.actors.contents) {
+                try {
+                    const update = migrateActorExperience(actor, worldSchemaVersion)
+                    if (!isObjectEmpty(update)) {
+                        console.log(`Migrating Experience ${actor.name}`)
+                        await actor.update(update);
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            for (let actor of game.actors.contents) {
+                try {
+                    const update = migrateActorData(actor.data, worldSchemaVersion);
+                    if (!isObjectEmpty(update)) {
+                        console.log(`Migrating ${actor.name}`)
+                        await actor.update(update);
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }
             for (let item of game.items.contents) {
                 try {
                     console.log(`Migrating ${item.name}`)
@@ -29,7 +48,6 @@ export async function migrateWorld() {
                     console.error(e);
                 }
             }
-        }
         for (let pack of game.packs) {
             try {
                 if (pack.metadata.package == "world") {
@@ -46,23 +64,45 @@ export async function migrateWorld() {
 };
 
 function migrateActorData(actor, worldSchemaVersion) {
+
+    let migrate = worldSchemaVersion == undefined || worldSchemaVersion < 3
     let update = {};
-    update = {
-        "flags.wrath-and-glory.autoCalc.defense": true,
-        "flags.wrath-and-glory.autoCalc.resilience": true,
-        "flags.wrath-and-glory.autoCalc.shock": true,
-        "flags.wrath-and-glory.autoCalc.awareness": true,
-        "flags.wrath-and-glory.autoCalc.determination": true,
-        "flags.wrath-and-glory.autoCalc.wounds": true,
-        "flags.wrath-and-glory.autoCalc.conviction": true
+
+    if (migrate) {
+        update = {
+            "flags.wrath-and-glory.autoCalc.defense": true,
+            "flags.wrath-and-glory.autoCalc.resilience": true,
+            "flags.wrath-and-glory.autoCalc.shock": true,
+            "flags.wrath-and-glory.autoCalc.awareness": true,
+            "flags.wrath-and-glory.autoCalc.determination": true,
+            "flags.wrath-and-glory.autoCalc.wounds": true,
+            "flags.wrath-and-glory.autoCalc.conviction": true
+        }
+        if (worldSchemaVersion == undefined || worldSchemaVersion < 2) {
+            if (actor.type === "agent" || actor.type === "threat") {
+                update["data.combat.resilience"] = actor.data.combat.resilence
+            }
+            update.items = actor.items.map(i => migrateItemData(i.data, worldSchemaVersion)).filter(i => !isObjectEmpty(i))
+            update.effects = actor.items.map(i => getEffectsFromItem(i.data)).filter(i => !isObjectEmpty(i))
+        }
+        return update;
     }
-    if (actor.type === "agent" || actor.type === "threat") {
-        update["data.combat.resilience"] = actor.data.combat.resilence
+}
+
+function migrateActorExperience(actor, worldSchemaVersion)
+{
+    let migrate = worldSchemaVersion == undefined || worldSchemaVersion < 3
+    let update = {}
+
+    if (migrate)
+    {
+        if (actor.type == "agent")
+        {
+            update["data.experience.total"] = actor.advances.experience.current + actor.experience.spent
+        }
+        return update
     }
-    update.items = actor.items.map(i => migrateItemData(i.data, worldSchemaVersion)).filter(i => !isObjectEmpty(i))
-    update.effects = actor.items.map(i => getEffectsFromItem(i.data)).filter(i => !isObjectEmpty(i))
-    return update;
-};
+}
 
 function migrateItemData(item, worldSchemaVersion) {
     const update = {};
@@ -147,13 +187,13 @@ async function migrateCompendium(pack, worldSchemaVersion) {
     for (let ent of content) {
         let updateData = {};
         if (entity === "Actor") {
-            updateData = migrateActorData(ent.data, worldSchemaVersion);
+            updateData = migrateActorData(ent.data);
         }
         else if (entity === "Item") {
-            updateData = migrateItemData(ent.data, worldSchemaVersion);
+            updateData = migrateItemData(ent.data);
         }
         if (!isObjectEmpty(updateData)) {
-            console.log(`Updating ${ent.name}`, updateData)
+            console.log(`Migrating ${ent.name} in ${pack.metadata.label}`)
             await ent.update(updateData);
         }
     }

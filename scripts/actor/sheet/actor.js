@@ -55,11 +55,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _attributeAndSkillTooltips(sheetData) {
 
         for (let attribute of Object.values(sheetData.data.attributes)) {
-            attribute.tooltip = `Rating: ${attribute.rating} | Advance Cost: ${game.wng.utility.getAttributeCostIncrement(attribute.rating + 1)} | Current XP: ${this.actor.advances.experience.current}`
+            attribute.tooltip = `Rating: ${attribute.rating} | Advance Cost: ${game.wng.utility.getAttributeCostIncrement(attribute.rating + 1)} | Current XP: ${this.actor.experience.current}`
         }
 
         for (let skill of Object.values(sheetData.data.skills)) {
-            skill.tooltip = `Rating: ${skill.rating} | Advance Cost: ${game.wng.utility.getSkillCostIncrement(skill.rating + 1)} | Current XP: ${this.actor.advances.experience.current}`
+            skill.tooltip = `Rating: ${skill.rating} | Advance Cost: ${game.wng.utility.getSkillCostIncrement(skill.rating + 1)} | Current XP: ${this.actor.experience.current}`
         }
     }
 

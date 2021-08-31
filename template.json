@@ -256,8 +256,15 @@
         "rank": 1,
         "species": 0,
         "experience": {
-          "current": 0
+          "current": 0,
+          "spent": 0,
+          "total": 0
         }
+      },
+      "experience": {
+        "current": 0,
+        "spent": 0,
+        "total": 0
       },
       "resources": {
         "wrath": 2,

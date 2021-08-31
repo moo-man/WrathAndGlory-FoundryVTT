@@ -28,7 +28,7 @@ export default class WNGUtility {
     let total = 0
 
     for (let i = 0; i <= rating; i++)
-      total += this.getAttributeCostIncrement(rating)
+      total += this.getAttributeCostIncrement(i)
     return total
   }
 
@@ -36,7 +36,7 @@ export default class WNGUtility {
     let total = 0
 
     for (let i = 0; i <= rating; i++)
-      total += this.getSkillCostIncrement(rating)
+      total += this.getSkillCostIncrement(i)
     return total
   }
 

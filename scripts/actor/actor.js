@@ -38,10 +38,7 @@ export class WrathAndGloryActor extends Actor {
     }
 
 
-
     prepareAgent() {
-        this.advances.experience.spent = 0;
-        this.advances.experience.total = 0;
         this._computeExperience();
     }
 
@@ -57,7 +54,7 @@ export class WrathAndGloryActor extends Actor {
                 this._computeArmour(item);
             }
             if (this.advances && item.cost) {
-                this.advances.experience.spent = this.advances.experience.spent + item.cost;
+                this.experience.spent = this.experience.spent + item.cost;
             }
         }
     }
@@ -73,7 +70,7 @@ export class WrathAndGloryActor extends Actor {
             attribute.total = attribute.rating + attribute.bonus;
             attribute.cost = game.wng.utility.getAttributeCostTotal(attribute.rating);
             if (this.advances) {
-                this.advances.experience.spent = this.advances.experience.spent + attribute.cost;
+                this.experience.spent = this.experience.spent + attribute.cost;
             }
         }
     }
@@ -83,7 +80,7 @@ export class WrathAndGloryActor extends Actor {
             skill.cost = game.wng.utility.getSkillCostTotal(skill.rating);
             skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus;
             if (this.advances) {
-                this.advances.experience.spent = this.advances.experience.spent + skill.cost;
+                this.experience.spent = this.experience.spent + skill.cost;
             }
         }
     }
@@ -114,8 +111,8 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeExperience() {
-        this.advances.experience.spent += this.advances.species;
-        this.advances.experience.total = this.advances.experience.current + this.advances.experience.spent;
+        this.experience.spent += this.advances.species;
+        this.experience.current = this.experience.total - this.experience.spent;
     }
 
     get Size() {
@@ -143,6 +140,7 @@ export class WrathAndGloryActor extends Actor {
     get combat() {return this.data.data.combat}
     get bio() {return this.data.data.bio}
     get advances() {return this.data.data.advances}
+    get experience() {return this.data.data.experience}
     get resources() {return this.data.data.resources}
     get corruption() {return this.data.data.corruption}
     get notes() {return this.data.data.notes}
