@@ -77,6 +77,13 @@
 
 .wrath-and-glory.sheet.actor .stats .wrapper .skills .skill label {
   flex-basis: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrath-and-glory.sheet.actor .stats .wrapper .skills .skill label > span {
+  opacity : 0.5;
+  flex: 0 0 40px;
 }
 
 .wrath-and-glory.sheet.actor .stats .wrapper .skills .skill .fake-input,

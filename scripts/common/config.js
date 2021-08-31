@@ -2,6 +2,49 @@
 
 const WNG = {}
 
+
+WNG.attributes = {
+    "strength" : "ATTRIBUTE.STRENGTH",
+    "toughness" : "ATTRIBUTE.TOUGHNESS",
+    "agility" : "ATTRIBUTE.AGILITY",
+    "initiative" : "ATTRIBUTE.INITIATIVE",
+    "willpower" : "ATTRIBUTE.WILLPOWER",
+    "intellect" : "ATTRIBUTE.INTELLECT",
+    "fellowship" : "ATTRIBUTE.FELLOWSHIP",
+}
+
+WNG.skills = {
+    "athletics" : "SKILL.ATHLETICS",
+    "awareness" : "SKILL.AWARENESS",
+    "ballisticSkill" : "SKILL.BALLISTIC_SKILL",
+    "cunning" : "SKILL.CUNNING",
+    "deception" : "SKILL.DECEPTION",
+    "insight" : "SKILL.INSIGHT",
+    "intimidation" : "SKILL.INTIMIDATION",
+    "investigation" : "SKILL.INVESTIGATION",
+    "leadership" : "SKILL.LEADERSHIP",
+    "medicae" : "SKILL.MEDICAE",
+    "persusasion" : "SKILL.PERSUASION",
+    "pilot" : "SKILL.PILOT",
+    "psychicMastery" : "SKILL.PSYCHIC_MASTERY",
+    "scholar" : "SKILL.SCHOLAR",
+    "stealth" : "SKILL.STEALTH",
+    "survival" : "SKILL.SURVIVAL",
+    "tech" : "SKILL.TECH",
+    "weaponSkill" : "SKILL.WEAPON_SKILL"
+}
+
+WNG.attributeAbbrev = {
+    "strength" : "ATTRIBUTE.STRENGTH_ABREV",
+    "toughness" : "ATTRIBUTE.TOUGHNESS_ABREV",
+    "agility" : "ATTRIBUTE.AGILITY_ABREV",
+    "initiative" : "ATTRIBUTE.INITIATIVE_ABREV",
+    "willpower" : "ATTRIBUTE.WILLPOWER_ABREV",
+    "intellect" : "ATTRIBUTE.INTELLECT_ABREV",
+    "fellowship" : "ATTRIBUTE.FELLOWSHIP_ABREV",
+}
+
+
 WNG.weaponTraits = {
     "agonising": "Agonising",
     "arc": "Arc",

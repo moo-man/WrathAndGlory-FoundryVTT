@@ -23,7 +23,7 @@
         {{#each data.skills as |skill key|}}
         {{#if skill.isLeft}}
         <div class="skill">
-          <label class="roll-skill hover" data-skill="{{key}}">{{localize skill.label}}</label>
+          <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{localize skill.label}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
           <div class="fake-input show-adv">{{skill.total}}
             <div class="adv-buttons" title="{{skill.tooltip}}" data-type="skill-{{key}}" style="display:none;">
               <button class="decr rm-left-border rm-bottom-border">-</button>
@@ -38,7 +38,7 @@
         {{#each data.skills as |skill key|}}
         {{#if skill.isRight}}
         <div class="skill">
-          <label class="roll-skill hover" data-skill="{{key}}">{{localize skill.label}}</label>
+          <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{localize skill.label}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
           <div class="fake-input show-adv">{{skill.total}}
             <div class="adv-buttons" title="{{skill.tooltip}}" data-type="skill-{{key}}" style="display:none;">
               <button class="decr rm-left-border rm-bottom-border">-</button>

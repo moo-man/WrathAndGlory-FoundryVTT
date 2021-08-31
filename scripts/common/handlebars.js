@@ -34,10 +34,10 @@ function registerHandlebarsHelpers() {
   })
 
   Handlebars.registerHelper("config", function (key) {
-      return game.aos.config[key]
+      return game.wng.config[key]
   })
 
   Handlebars.registerHelper("configLookup", function (obj, key) {
-      return game.aos.config[obj][key]
+      return game.wng.config[obj][key]
   })
 }
