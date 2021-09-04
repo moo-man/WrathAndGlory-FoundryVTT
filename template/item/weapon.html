@@ -35,6 +35,8 @@
               {{#select data.category}}
               <option value="melee">{{localize "CATEGORY.MELEE"}}</option>
               <option value="ranged">{{localize "CATEGORY.RANGED"}}</option>
+              <option value="grenade-missile">{{localize "CATEGORY.GRENADE_MISSILE"}}</option>
+              <option value="launcher">{{localize "CATEGORY.LAUNCHER"}}</option>
               {{/select}}
             </select>
           </div>
@@ -43,6 +45,7 @@
             <input name="data.quantity" type="number" value="{{data.quantity}}" data-dtype="Number" />
           </div>
         </div>
+        {{#if (eq rangeType "multi")}}
         <div class="wrapper">
           <div class="salvo">
             <label>{{localize "WEAPON.SALVO"}}</label>
@@ -55,6 +58,19 @@
             <input name="data.range.long" type="number" value="{{data.range.long}}" data-dtype="Number" />
           </div>
         </div>
+        {{else}}
+        <div class="wrapper">
+          <div class="range">
+            <label>{{localize "WEAPON.RANGE"}}</label>
+            <input name="data.range.melee" type="number" value="{{data.range.melee}}" data-dtype="Number" />
+          </div>
+          <div class="thrown">
+            <label>{{localize "WEAPON.THROWN"}} S x </label>
+            <input name="data.range.thrown" type="number" value="{{data.range.thrown}}" data-dtype="Number" />
+          </div>
+        </div>
+        {{/if}}
+
         <div class="wrapper">
           <div class="header">
             <b class="name"></b>
@@ -158,11 +174,10 @@
             <label>{{localize "WEAPON.RARITY"}}</label>
             <select name="data.rarity">
               {{#select data.rarity}}
-              <option value="common">{{localize "RARITY.COMMON"}}</option>
-              <option value="uncommon">{{localize "RARITY.UNCOMMON"}}</option>
-              <option value="rare">{{localize "RARITY.RARE"}}</option>
-              <option value="very-rare">{{localize "RARITY.VERY_RARE"}}</option>
-              <option value="unique">{{localize "RARITY.UNIQUE"}}</option>
+              <option value=""> - </option>
+              {{#each (config "rarity") as |rarity r|}}
+              <option value="{{r}}">{{rarity}}</option>
+              {{/each}}
               {{/select}}
             </select>
           </div>
@@ -173,11 +188,26 @@
             <input name="data.keywords" type="text" value="{{data.keywords}}" />
           </div>
         </div>
-        <div class="wrapper" style="flex-wrap: wrap; justify-content: center;">
-          <h1>{{localize "TITLE.UPGRADES"}}</h1>
-          <div class="upgrades" style="flex-basis: 100%; margin-top: 8px">
-            {{editor content=data.upgrades target="data.upgrades" button=true owner=owner editable=editable}}
+        <div class="items">
+          <div class="header">
+            <div class="item-property item-image"></div>
+            <span class="item-property item-name">{{localize "HEADER.UPGRADES"}}</span>
+            <div class="item-controls">
+            </div>
           </div>
+          {{#each item.upgrades as |upgrade u|}}
+          <div class="item" data-index="{{u}}">
+            <div class="item-content">
+                <img class="item-property item-image" src="{{upgrade.img}}"></img>
+                <div class="item-property item-name upgrade-name">{{upgrade.name}}</div>
+                
+                <div class="item-property flex"></div>
+                <div class="item-controls">
+                  <a class="item-control upgrade-delete" title="Delete Upgrade"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+          </div>
+          {{/each}}
         </div>
       </div>
 

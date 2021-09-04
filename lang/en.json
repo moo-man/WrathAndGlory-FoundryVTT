@@ -48,6 +48,7 @@
   "ARMOUR.VALUE": "Value",
   "ARMOUR.RARITY": "Rarity",
   "ARMOUR.KEYWORDS": "Keywords",
+  "ARMOUR.INVULNERABLE": "Invulnerable",
 
   "ASCENSION.NAME": "Name",
   "ASCENSION.COST": "Cost",
@@ -107,6 +108,8 @@
 
   "CATEGORY.MELEE": "Melee",
   "CATEGORY.RANGED": "Ranged",
+  "CATEGORY.GRENADE_MISSILE": "Grenade or Missile",
+  "CATEGORY.LAUNCHER": "Launcher",
 
   "CHAT.SUCCESS": "Success",
   "CHAT.FAILURE": "Failure",
@@ -177,6 +180,7 @@
   "HEADER.PASSIVE_EFFECTS" : "Passive Effects",
   "HEADER.DISABLED_EFFECTS" : "Disabled Effects",
   "HEADER.DESCRIPTION" : "Description",
+  "HEADER.UPGRADES" : "Upgrades",
 
   "KEYWORD.NAME": "Name",
   "KEYWORD.DESCRIPTION": "Description",
@@ -306,12 +310,15 @@
   "WEAPON.CATEGORY": "Category",
   "WEAPON.RANGE": "Range",
   "WEAPON.SALVO": "Salvo",
+  "WEAPON.THROWN": "Thrown",
   "WEAPON.TRAITS": "Traits",
   "WEAPON.VALUE": "Value",
   "WEAPON.RARITY": "Rarity",
   "WEAPON.KEYWORDS": "Keywords",
   "WEAPON.DIE_VALUE": "Die Value",
   "WEAPON.ATTACK": "Attack",
+  "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
+  "WEAPON_UPGRADE.TRAITS_REMOVE" : "Traits Removed",
 
   "ITEM.EQP": "Eqp.",
   "ITEM.QTY": "Qty.",

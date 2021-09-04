@@ -7,6 +7,11 @@ export class WrathAndGloryItem extends Item {
             updateData.data.quantity = 0;
     }
 
+    prepareData() {
+        super.prepareData()
+        if (this.type == "weapon")
+            this.applyUpgrades();
+    }
 
     async sendToChat() {
         const item = new CONFIG.Item.documentClass(this.data._source)
@@ -43,6 +48,69 @@ export class WrathAndGloryItem extends Item {
 
     _dropdownData(){
         return {text : this.description}
+    }
+
+
+    applyUpgrades() {
+        const overrides = {};
+        let effects = this.Upgrades.reduce((effects, upgrade) => {
+            return effects.concat(Array.from(upgrade.effects))
+        }, [])
+        // Organize non-disabled effects by their application priority
+        const changes = effects.reduce((changes, e) => {
+          if ( e.data.disabled ) return changes;
+          return changes.concat(e.data.changes.map(c => {
+            c = foundry.utils.duplicate(c);
+            c.effect = e;
+            c.priority = c.priority ?? (c.mode * 10);
+            return c;
+          }));
+        }, []);
+        changes.sort((a, b) => a.priority - b.priority);
+    
+        // Apply all changes
+        for ( let change of changes ) {
+          const result = change.effect.apply(this, change);
+          if ( result !== null ) overrides[change.key] = result;
+        }    
+
+        this._applyUpgradeTraits() 
+      }
+
+    _applyUpgradeTraits()
+    {
+        let traits = this.Upgrades.reduce((traits, upgrade) => {
+            return traits.concat(upgrade.traits)
+        }, [])
+        let add = traits.filter(i => i.type == "add")
+        let remove = traits.filter(i => i.type == "remove")
+
+        add.forEach(trait => {
+            let existing = this.data.data.traits.find(i => i.name == trait.name)
+            if (!existing)
+                this.data.data.traits.push(trait)
+            else if (existing && Number.isNumeric(trait.rating))
+                existing.rating = parseInt(existing.rating) + parseInt(trait.rating)
+        })
+
+        remove.forEach(trait => {
+            let existing = this.data.data.traits.find(i => i.name == trait.name)
+            let existingIndex = this.data.data.traits.findIndex(i => i.name == trait.name)
+            if (existing)
+            {
+                if (trait.rating && Number.isNumeric(trait.rating))
+                {
+                    existing.rating = parseInt(existing.rating) - parseInt(trait.rating)
+                    if (existing.rating <= 0)
+                        this.data.data.traits.splice(existingIndex, 1)
+                }
+                else 
+                {
+                        this.data.data.traits.splice(existingIndex, 1)
+                }
+            }
+        })
+
     }
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
@@ -116,11 +184,20 @@ export class WrathAndGloryItem extends Item {
     }
 
     get isRanged() {
-        return this.category == "ranged"
+        return this.category == "ranged" || this.category == "launcher" || this.category == "grenade-missile"
     }
 
     get Traits () {
         return Object.values(this.traitList).map(i => i.display)
+    }
+
+    get TraitsAdd () {
+        return Object.values(this.traitList).filter(i => i.type=="add").map(i => i.display)
+    }
+
+    
+    get TraitsRemove () {
+        return Object.values(this.traitList).filter(i => i.type=="remove").map(i => i.display)
     }
 
     get traitList () {
@@ -128,7 +205,8 @@ export class WrathAndGloryItem extends Item {
         this.data.data.traits.forEach(i => {
             traits[i.name] = {
                 name : i.name,
-                display : `${game.wng.config[`${this.type}Traits`][i.name]}`
+                display : this.traitsAvailable[i.name],
+                type : i.type
             }
             if (game.wng.config.traitHasRating[i.name])
             {
@@ -137,6 +215,17 @@ export class WrathAndGloryItem extends Item {
             }
         })
         return traits
+    }
+    
+    get Upgrades() {
+        return this.upgrades.map(i => new CONFIG.Item.documentClass(i))
+    }
+
+    get traitsAvailable() {
+        if (this.type == "weapon" || this.type == "weaponUpgrade")
+            return game.wng.config.weaponTraits
+        else if (this.type == "armour")
+            return game.wng.config.armourTraits
     }
 
     // @@@@@@ TYPE GETTERS @@@@@@

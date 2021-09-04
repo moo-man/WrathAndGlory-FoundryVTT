@@ -13,10 +13,12 @@ export default class ItemTraits extends FormApplication
 
     getData() {
         let data = super.getData();
-        data.traits = Object.keys(game.wng.config[`${this.object.type}Traits`]).map(i => {
-            let existing = this.object.traits.find(t => t.name == i)
+        data.traits = Object.keys(this.object.traitsAvailable).map(i => {
+            let existing = this.object.data._source.data.traits.find(t => t.name == i)
+            if (this.object.type == "weaponUpgrade")
+                existing = this.object.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
             return  {
-                display : game.wng.config[`${this.object.type}Traits`][i],
+                display : this.object.traitsAvailable[i],
                 key : i,
                 existingTrait : existing,
                 hasRating : game.wng.config.traitHasRating[i],
@@ -26,17 +28,24 @@ export default class ItemTraits extends FormApplication
         return data;
     }
 
-
     _updateObject(event, formData)
     {
         let newTraits = []
+        if (this.object.type == "weaponUpgrade")
+        {
+            newTraits = this.object.traits.filter(i => i.type != this.options.type) // Retain traits from the other type
+        }
         for (let key in formData)
         {
             if (formData[key] && !key.includes("rating"))
             {
                 let traitObj = { name : key}
-                if (formData[`${key}-rating`])
-                    traitObj.rating = formData[`${key}-rating`]
+                let rating = formData[`${key}-rating`]
+                if (rating)
+                    traitObj.rating = Number.isNumeric(rating) ? parseInt(rating) : rating
+
+                if (this.options.type)
+                    traitObj.type = this.options.type
                 newTraits.push(traitObj)
             }
         }

@@ -38,11 +38,10 @@
             <label>{{localize "GEAR.RARITY"}}</label>
             <select name="data.rarity">
               {{#select data.rarity}}
-              <option value="common">{{localize "RARITY.COMMON"}}</option>
-              <option value="uncommon">{{localize "RARITY.UNCOMMON"}}</option>
-              <option value="rare">{{localize "RARITY.RARE"}}</option>
-              <option value="very-rare">{{localize "RARITY.VERY_RARE"}}</option>
-              <option value="unique">{{localize "RARITY.UNIQUE"}}</option>
+              <option value=""> - </option>
+              {{#each (config "rarity") as |rarity r|}}
+              <option value="{{r}}">{{rarity}}</option>
+              {{/each}}
               {{/select}}
             </select>
           </div>

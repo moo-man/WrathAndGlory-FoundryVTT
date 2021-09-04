@@ -383,7 +383,8 @@
       "cost": 0,
       "requirements": "",
       "description": "",
-      "display": true
+      "display": true,
+      "abilityType" : ""
     },
     "ammo": {
       "templates" : ["physical"],
@@ -392,7 +393,8 @@
     "armour": {
       "templates": ["bonus", "physical", "equipped"],
       "rating": 0,
-      "traits": []
+      "traits": [],
+      "invelnerable" : false
     },
     "ascension": {
       "cost": 0,
@@ -499,19 +501,22 @@
       "range": {
         "short": 0,
         "medium": 0,
-        "long": 0
+        "long": 0,
+        "melee" : 1,
+        "thrown" : null
       },
       "ammo" : "",
       "salvo": 0,
       "traits": [],
-      "upgrades": ""
+      "upgrades": []
     },
     "weaponUpgrade": {
       "description": "",
       "effect": "",
       "value": 0,
       "rarity": "common",
-      "keywords": ""
+      "keywords": "",
+      "traits" : []
     }
   }
 }

@@ -44,6 +44,27 @@ WNG.attributeAbbrev = {
     "fellowship" : "ATTRIBUTE.FELLOWSHIP_ABREV",
 }
 
+WNG.skillAttribute = {
+    "athletics" : "strength",
+    "awareness" : "intellect",
+    "ballisticSkill" : "agility",
+    "cunning" : "fellowship",
+    "deception" : "fellowship",
+    "insight" : "fellowship",
+    "intimidation" : "willpower",
+    "investigation" : "intellect",
+    "leadership" : "willpower",
+    "medicae" : "intellect",
+    "persusasion" : "fellowship",
+    "pilot" : "agility",
+    "psychicMastery" : "willpower",
+    "scholar" : "intellect",
+    "stealth" : "agility",
+    "survival" : "willpower",
+    "tech" : "intellect",
+    "weaponSkill" : "initiative"
+}
+
 
 WNG.weaponTraits = {
     "agonising": "Agonising",
@@ -69,15 +90,15 @@ WNG.weaponTraits = {
     "supercharge": "Supercharge",
     "unwieldy": "Unwieldy",
     "waaagh!": "Waaagh!",
-    "warpWeapons": "Warp Weapons"
+    "warpWeapons": "Warp Weapon"
 }
 
 WNG.armourTraits = {
-    "bulk": "Bulk (X)",
+    "bulk": "Bulk",
     "cumbersome": "Cumbersome",
     "ereWeGo": "'Ere We Go!",
     "powerField": "Power Field",
-    "powered": "Powered (X)",
+    "powered": "Powered",
     "shield": "Shield"
 }
 
@@ -106,13 +127,32 @@ WNG.traitHasRating = {
     "supercharge": false,
     "unwieldy": true,
     "waaagh!": false,
-    "warpWeapons": true,
+    "warpWeapons": false,
     "bulk": true,
     "cumbersome": false,
     "ereWeGo": false,
     "powerField": false,
     "powered": true,
     "shield": false
+}
+
+WNG.rarity = {
+  "common": "Common",
+  "uncommon": "Uncommon",
+  "rare": "Rare",
+  "very-rare": "Very Rare",
+  "unique": "Unique",
+}
+
+WNG.abilityTypes = {
+    battlecry : "BATTLECRY",
+    action : "ACTION",
+    ruin : "RUIN",
+    wrath : "WRATH",
+    complication : "COMPLICATION",
+    reaction : "REACTION",
+    determination : "DETERMINATION",
+    annihilation : "ANNIHILATION"
 }
 
 

@@ -27,7 +27,6 @@
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
-
         <div class="wrapper">
           <div class="value">
             <label>{{localize "WEAPON_UPGRADE.VALUE"}}</label>
@@ -37,13 +36,24 @@
             <label>{{localize "WEAPON_UPGRADE.RARITY"}}</label>
             <select name="data.rarity">
               {{#select data.rarity}}
-              <option value="common">{{localize "RARITY.COMMON"}}</option>
-              <option value="uncommon">{{localize "RARITY.UNCOMMON"}}</option>
-              <option value="rare">{{localize "RARITY.RARE"}}</option>
-              <option value="very-rare">{{localize "RARITY.VERY_RARE"}}</option>
-              <option value="unique">{{localize "RARITY.UNIQUE"}}</option>
+              <option value=""> - </option>
+              {{#each (config "rarity") as |rarity r|}}
+              <option value="{{r}}">{{rarity}}</option>
+              {{/each}}
               {{/select}}
             </select>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="traits">
+            <label>{{localize "WEAPON_UPGRADE.TRAITS_ADD"}}<a class="item-traits add"><i class="fas fa-cog"></i></a></label>
+            <input disabled type="text" value="{{item.TraitsAdd}}" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="traits">
+            <label>{{localize "WEAPON_UPGRADE.TRAITS_REMOVE"}}<a class="item-traits remove"><i class="fas fa-cog"></i></a></label>
+            <input disabled type="text" value="{{item.TraitsRemove}}" />
           </div>
         </div>
         <div class="wrapper">
@@ -52,10 +62,11 @@
             <input name="data.keywords" type="text" value="{{data.keywords}}" />
           </div>
         </div>
+      </div>
         <div class="tab" data-group="primary" data-tab="effects">
+          <span class="note">Note: These effects will be applied to the weapon.</span>
           {{> systems/wrath-and-glory/template/item/tab/effects.html}}
         </div>
-      </div>
     </div>
   </div>
 </form>
