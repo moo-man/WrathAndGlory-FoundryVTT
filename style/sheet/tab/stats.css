@@ -29,10 +29,6 @@
   flex: 1
 }
 
-.wrath-and-glory.sheet.actor .stats .wrapper .attributes .attribute label {
-  flex-basis: 100%;
-}
-
 .wrath-and-glory.sheet.actor .stats .wrapper .attributes .attribute .fake-input,
 .wrath-and-glory.sheet.actor .stats .wrapper .attributes .attribute input {
   border: 1px solid var(--color-black);
