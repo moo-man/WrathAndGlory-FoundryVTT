@@ -85,7 +85,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
         items.equipped.weapons = this.actor.getItemTypes("weapon").filter(i => i.equipped)
         items.equipped.armour = this.actor.getItemTypes("armour").filter(i => i.equipped)
-        items.equipped.ammo = items.equipped.weapons.map(i => this.actor.items.get(i.ammo)).filter(i => !!i)
+        items.equipped.ammo = items.equipped.weapons.map(i => this.actor.items.get(i.ammo)).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
 
         sheetData.items = items;
 
