@@ -1,6 +1,5 @@
-import { prepareCommonRoll, prepareWeaponRoll, prepareDamageRoll, preparePsychicRoll } from "../../common/dialog.js";
-import { reroll } from "../../common/roll.js";
 import ActorConfigure from "../../apps/actor-configure.js";
+import { WNGTest } from "../../common/test.js";
 
 export class WrathAndGloryActorSheet extends ActorSheet {
     rollData = {};
@@ -165,13 +164,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".effect-delete").click(this._onEffectDelete.bind(this));  
         html.find(".effect-toggle").click(this._onEffectToggle.bind(this));  
         html.find("input").focusin(this._onFocusIn.bind(this));
-        html.find(".roll-attribute").click(this._prepareRollAttribute.bind(this));
-        html.find(".roll-skill").click(this._prepareRollSkill.bind(this));
-        html.find(".roll-stealth").click(this._prepareRollStealthScore.bind(this));
-        html.find(".roll-determination").click(this._prepareRollDetermination.bind(this));
-        html.find(".roll-conviction").click(this._prepareRollConviction.bind(this));
-        html.find(".roll-resolve").click(this._prepareRollResolve.bind(this));
-        html.find(".roll-influence").click(this._prepareRollInfluence.bind(this));
+        html.find(".roll-attribute").click(this._onAttributeClick.bind(this));
+        html.find(".roll-skill").click(this._onSkillClick.bind(this));
+        html.find(".roll-determination").click(this._onDeterminationClick.bind(this));
+        html.find(".roll-conviction").click(this._onConvictionClick.bind(this));
+        html.find(".roll-resolve").click(this._onResolveClick.bind(this));
+        html.find(".roll-influence").click(this._onInfluenceClick.bind(this));
         html.find(".roll-weapon").click(this._prepareRollWeapon.bind(this));
         html.find(".roll-psychic-power").click(this._prepareRollPsychicPower.bind(this));
         html.find(".checkbox").click(this._onCheckboxClick.bind(this))
@@ -282,16 +280,16 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         $(event.currentTarget).select();
     }
 
-    _prepareCustomRoll() {
+    async _prepareCustomRoll() {
         this._resetRollData();
         return prepareCommonRoll(this.rollData);
     }
 
-    _prepareReroll() {
+    async _prepareReroll() {
         return reroll(this.rollData);
     }
 
-    _prepareDamageRoll() {
+    async _prepareDamageRoll() {
         this._resetRollData();
         this.rollData.weapon = {
             damage: {
@@ -323,112 +321,68 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         return prepareDamageRoll(this.rollData);
     }
 
-    _prepareRollAttribute(event) {
+    async _onAttributeClick(event) {
         event.preventDefault();
-        this._resetRollData();
-        const attributeName = $(event.currentTarget).data("attribute");
-        const attribute = this.actor.attributes[attributeName];
-        this.rollData.name = attribute.label;
-        this.rollData.pool.size = attribute.total;
-        return prepareCommonRoll(this.rollData);
+        const attribute = $(event.currentTarget).data("attribute");
+        let test = await  this.actor.setupAttributeTest(attribute)
+        await test.rollTest();
+        test.sendToChat()
     }
 
-    _prepareRollSkill(event) {
+    async _onSkillClick(event) {
         event.preventDefault();
-        this._resetRollData();
-        const skillName = $(event.currentTarget).data("skill");
-        const skill = this.actor.skills[skillName];
-        this.rollData.name = skill.label;
-        this.rollData.pool.size = skill.total;
-        return prepareCommonRoll(this.rollData);
+        const skill = $(event.currentTarget).data("skill");
+        let test = await this.actor.setupSkillTest(skill)
+        await test.rollTest();
+        test.sendToChat()
     }
 
-    _prepareRollStealthScore(event) {
+    async _onDeterminationClick(event) {
         event.preventDefault();
-        this._resetRollData();
-        const skill = this.actor.skills.stealth;
-        this.rollData.name = skill.label;
-        this.rollData.difficulty.target = 0;
-        this.rollData.pool.size = skill.total;
-        return prepareCommonRoll(this.rollData);
+        const data = duplicate(this.actor.combat.determination)
+        data.title = `ROLL.DETERMINATION`
+        let test = await this.actor.setupGenericTest(data, "determination")
+        await test.rollTest();
+        test.sendToChat()
     }
 
-    _prepareRollDetermination(event) {
+    async _onConvictionClick(event) {
         event.preventDefault();
         this._resetRollData();
-        this.rollData.name = "ROLL.DETERMINATION";
-        this.rollData.pool.size = this.actor.combat.determination.total;
-        return prepareCommonRoll(this.rollData);
+        const data = duplicate(this.actor.combat.conviction)
+        data.title = `ROLL.CONVICTION`
+        let test = await this.actor.setupGenericTest(data, "conviction")
+        await test.rollTest();
+        test.sendToChat()
     }
 
-    _prepareRollConviction(event) {
+    async _onResolveClick(event) {
         event.preventDefault();
-        this._resetRollData();
-        this.rollData.name = "ROLL.CONVICTION";
-        this.rollData.pool.size = this.actor.combat.conviction.total;
-        this.rollData.difficulty.penalty = this._getConvictionPenalty();
-        return prepareCommonRoll(this.rollData);
+        const data = duplicate(this.actor.combat.resolve)
+        data.title = `ROLL.RESOLVE`
+        let test = await this.actor.setupGenericTest(data, "resolve")
+        await test.rollTest();
+        test.sendToChat()
     }
 
-    _prepareRollResolve(event) {
+    async _onInfluenceClick(event) {
         event.preventDefault();
-        this._resetRollData();
-        this.rollData.name = "ROLL.RESOLVE";
-        this.rollData.pool.size = this.actor.combat.resolve.total;
-        return prepareCommonRoll(this.rollData);
+        const data = duplicate({total : this.actor.resources.influence, title : "ROLL.INFLUENCE"})
+        let test = await this.actor.setupGenericTest(data, "influence")
+        await test.rollTest();
+        test.sendToChat()
     }
 
-    _prepareRollInfluence(event) {
-        event.preventDefault();
-        this._resetRollData();
-        this.rollData.name = "ROLL.INFLUENCE";
-        this.rollData.pool.size = this.actor.resources.influence;
-        return prepareCommonRoll(this.rollData);
-    }
-
-    _prepareRollWeapon(event) {
+    async _prepareRollWeapon(event) {
         event.preventDefault();
         this._resetRollData();
         const div = $(event.currentTarget).parents(".item");
-        const weapon = this.actor.items.get(div.data("itemId"));
-        let skill;
-        this.rollData.weapon = {
-            damage: {
-                base: weapon.damage.base,
-                rank: weapon.damage.rank,
-                bonus: weapon.damage.bonus
-            },
-            ed: {
-                base: weapon.ed.base,
-                rank: weapon.ed.rank,
-                bonus: weapon.ed.bonus,
-                die: weapon.ed.die
-            },
-            ap: {
-                base: weapon.ap.base,
-                rank: weapon.ap.rank,
-                bonus: weapon.ap.bonus
-            },
-            traits: weapon.Traits
-        };
-        if (weapon.category === "melee") {
-            skill = this.actor.skills.weaponSkill;
-            let strength = this.actor.attributes.strength;
-            this.rollData.weapon.damage.bonus = strength.total;
-        } else {
-            skill = this.actor.skills.ballisticSkill;
-        }
-        this.rollData.wrath.isWeapon = true;
-        this.rollData.wrath.isCommon = false;
-        this.rollData.skillName = skill.label;
-        this.rollData.name = weapon.data.name;
-        this.rollData.pool.size = skill.total;
-        this.rollData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
-        this.rollData.pool.rank = weapon.attack.rank;
-        return prepareWeaponRoll(this.rollData);
+        let test = await this.actor.setupWeaponTest(div.data("itemId"))
+        await test.rollTest();
+        test.sendToChat()
     }
 
-    _prepareRollPsychicPower(event) {
+    async _prepareRollPsychicPower(event) {
         event.preventDefault();
         this._resetRollData();
         const div = $(event.currentTarget).parents(".item");

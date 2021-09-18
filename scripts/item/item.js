@@ -228,6 +228,24 @@ export class WrathAndGloryItem extends Item {
             return game.wng.config.armourTraits
     }
 
+
+    get skill() {
+        if (this.isOwned)
+        {
+            if (this.isMelee)
+                return this.actor.skills.weaponSkill
+            else 
+                return this.actor.skills.ballisticSkill
+        }
+        else 
+        {
+            if (this.isMelee)
+                return "weaponSkill"
+            else 
+                return "ballisticSkill"
+        }
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     get isKeyword() { return this.type === "keyword" }
     get isTalent() { return this.type === "talent" }

@@ -1,3 +1,6 @@
+import { RollDialog, WeaponDialog } from "../common/dialog.js";
+import { WNGTest } from "../common/test.js";
+
 export class WrathAndGloryActor extends Actor {
 
     async _preCreate(data, options, user) {
@@ -8,19 +11,19 @@ export class WrathAndGloryActor extends Actor {
             "token.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
             "token.disposition": CONST.TOKEN_DISPOSITIONS.NEUTRAL,
             "token.name": data.name,
-            "flags.wrath-and-glory.autoCalc.defense" : true,
-            "flags.wrath-and-glory.autoCalc.resilience" : true,
-            "flags.wrath-and-glory.autoCalc.shock" : true,
-            "flags.wrath-and-glory.autoCalc.awareness" : true,
-            "flags.wrath-and-glory.autoCalc.determination" : true,
-            "flags.wrath-and-glory.autoCalc.wounds" : true,
-            "flags.wrath-and-glory.autoCalc.conviction" : true
-          }
-          if (data.type === "agent") {
-            initData["token.vision"] =  true;
+            "flags.wrath-and-glory.autoCalc.defense": true,
+            "flags.wrath-and-glory.autoCalc.resilience": true,
+            "flags.wrath-and-glory.autoCalc.shock": true,
+            "flags.wrath-and-glory.autoCalc.awareness": true,
+            "flags.wrath-and-glory.autoCalc.determination": true,
+            "flags.wrath-and-glory.autoCalc.wounds": true,
+            "flags.wrath-and-glory.autoCalc.conviction": true
+        }
+        if (data.type === "agent") {
+            initData["token.vision"] = true;
             initData["token.actorLink"] = true;
-          }
-          this.data.update(initData)
+        }
+        this.data.update(initData)
     }
 
     prepareData() {
@@ -98,11 +101,11 @@ export class WrathAndGloryActor extends Actor {
             this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
         if (autoCalc.resilience)
             this.combat.resilience.total = this._setDefault(this.attributes.toughness.total + 1 + this.combat.resilience.bonus + this.combat.resilience.armor, 1);
-        if (autoCalc.wounds && this.type=="agent")
+        if (autoCalc.wounds && this.type == "agent")
             this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.total + this.combat.wounds.bonus, 1);
         if (autoCalc.determination)
             this.combat.determination.total = this._setDefault(this.attributes.toughness.rating + this.combat.determination.bonus, 1);
-        if (autoCalc.shock && this.type=="agent")
+        if (autoCalc.shock && this.type == "agent")
             this.combat.shock.max = this._setDefault(this.attributes.willpower.rating + this.advances.tier + this.combat.shock.bonus, 1);
     }
 
@@ -115,35 +118,136 @@ export class WrathAndGloryActor extends Actor {
         this.experience.current = this.experience.total - this.experience.spent;
     }
 
+
+    //#region Rolling
+    async setupAttributeTest(attribute) {
+        let attributeObject = this.attributes[attribute]
+
+        let dialogData = this._baseDialogData();
+        dialogData.title = `${game.i18n.localize(attributeObject.label)} Test`
+        dialogData.pool.size = attributeObject.total
+        let testData = await RollDialog.create(dialogData)
+        testData.title = dialogData.title
+        testData.speaker = this.speakerData();
+        testData.type = "attribute"
+        testData.attribute = attribute;
+        return new WNGTest(testData)
+    }
+
+    async setupSkillTest(skill) {
+        let skillObject = this.skills[skill]
+
+        let dialogData = this._baseDialogData();
+        dialogData.title = `${game.i18n.localize(skillObject.label)} Test`
+        dialogData.pool.size = skillObject.total
+        let testData = await RollDialog.create(dialogData)
+        testData.title = dialogData.title
+        testData.speaker = this.speakerData();
+        testData.skill = skill
+        testData.type = "skill"
+        testData.attribute = skillObject.attribute
+        return new WNGTest(testData)
+    }
+
+    async setupGenericTest(data, type)
+    {
+        let dialogData = this._baseDialogData();
+        dialogData.title = `${game.i18n.localize(data.title)} Test`
+        dialogData.pool.size = data.total
+        let testData = await RollDialog.create(dialogData)
+        testData.title = dialogData.title
+        testData.speaker = this.speakerData();
+        testData.type = type
+        return new WNGTest(testData)
+    }
+
+    async setupWeaponTest(weapon) {
+        if (typeof weapon == "string")
+            weapon = this.items.get(weapon)
+
+        let dialogData = this._weaponDialogData(weapon);
+        dialogData.title = `${weapon.nam} Test`
+
+        let testData = await WeaponDialog.create(dialogData)
+        testData.title = dialogData.title
+        testData.speaker = this.speakerData();
+        testData.type = "weapon"
+        testData.itemId = weapon.id
+        testData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
+        testData.attribute = weapon.skill.attribute
+        return new WNGTest(testData)
+    }
+
+    _baseDialogData() {
+        return {
+            difficulty: {
+                target: 3,
+                penalty: 0,
+                rank: "none"
+            },
+            pool: {
+                size: 1,
+                bonus: 0,
+                rank: "none"
+            },
+            wrath: {
+                base: 1
+            }
+        };
+    }
+
+    _weaponDialogData(weapon) {
+        let testData = this._baseDialogData()
+        testData.weapon = weapon
+        testData.pool.size = weapon.skill.total;
+        testData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
+        testData.pool.rank = weapon.attack.rank;
+        return testData
+    }
+
+    speakerData() {
+        if (this.isToken) {
+            return {
+                token: this.token.id,
+                scene: this.token.parent.id
+            }
+        }
+        else {
+            return {
+                actor: this.id
+            }
+        }
+    }
+    //#endregion
+
     get Size() {
-        switch(this.combat.size)
-        {
-          case "tiny":
-            return game.i18n.localize("SIZE.TINY");
-          case "small":
-            return game.i18n.localize("SIZE.SMALL");
-          case "average":
-            return game.i18n.localize("SIZE.AVERAGE");
-          case "large":
-            return game.i18n.localize("SIZE.LARGE");
-          case "huge":
-            return game.i18n.localize("SIZE.HUGE");
-          case "gargantuan":
-            return game.i18n.localize("SIZE.GARGANTUAN");
-          default:
-            return game.i18n.localize("SIZE.AVERAGE");
+        switch (this.combat.size) {
+            case "tiny":
+                return game.i18n.localize("SIZE.TINY");
+            case "small":
+                return game.i18n.localize("SIZE.SMALL");
+            case "average":
+                return game.i18n.localize("SIZE.AVERAGE");
+            case "large":
+                return game.i18n.localize("SIZE.LARGE");
+            case "huge":
+                return game.i18n.localize("SIZE.HUGE");
+            case "gargantuan":
+                return game.i18n.localize("SIZE.GARGANTUAN");
+            default:
+                return game.i18n.localize("SIZE.AVERAGE");
         }
     }
 
-    get attributes() {return this.data.data.attributes}
-    get skills() {return this.data.data.skills}
-    get combat() {return this.data.data.combat}
-    get bio() {return this.data.data.bio}
-    get advances() {return this.data.data.advances}
-    get experience() {return this.data.data.experience}
-    get resources() {return this.data.data.resources}
-    get corruption() {return this.data.data.corruption}
-    get notes() {return this.data.data.notes}
+    get attributes() { return this.data.data.attributes }
+    get skills() { return this.data.data.skills }
+    get combat() { return this.data.data.combat }
+    get bio() { return this.data.data.bio }
+    get advances() { return this.data.data.advances }
+    get experience() { return this.data.data.experience }
+    get resources() { return this.data.data.resources }
+    get corruption() { return this.data.data.corruption }
+    get notes() { return this.data.data.notes }
 
     getItemTypes(type) {
         return (this.itemCategories || this.itemTypes)[type]

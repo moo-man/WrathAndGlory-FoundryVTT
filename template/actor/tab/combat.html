@@ -20,8 +20,8 @@
       <input type="number" name="data.combat.passiveAwareness.total" value="{{data.combat.passiveAwareness.total}}" data-dtype="Number" {{#if autoCalc.passiveAwareness}}disabled{{/if}} />
     </div>
     <div class="wrapper-item">
-      <label class="roll-stealth hover">{{localize "HEADER.STEALTH_SCORE"}}</label>
-      <input name="data.combat.stealth" type="number" value="{{data.combat.stealth}}" data-dtype="Number" />
+      <label class="roll-skill hover" data-skill="stealth">{{localize "HEADER.STEALTH_SCORE"}}</label>
+      <input disabled type="number" value="{{data.skills.stealth.total}}" data-dtype="Number" />
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.SIZE"}}</label>

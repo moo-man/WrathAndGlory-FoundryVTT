@@ -7,6 +7,11 @@ export default function() {
         game.counter.render(true)
     });
 
+    CONFIG.ChatMessage.documentClass.prototype.getTest = function () {
+        if (hasProperty(this, "data.flags.data.testData"))
+          return game.wfrp4e.rolls.TestWFRP.recreate(this.data.flags.data.testData)
+      }
+
     FoundryOverrides();
 
 }
