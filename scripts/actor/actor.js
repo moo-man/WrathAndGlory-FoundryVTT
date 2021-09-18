@@ -1,5 +1,7 @@
-import { RollDialog, WeaponDialog } from "../common/dialog.js";
+import { RollDialog, WeaponDialog, PowerDialog } from "../common/dialog.js";
 import { WNGTest } from "../common/test.js";
+import WeaponTest from "../common/weapon-test.js";
+import PowerTest from "../common/power-test.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -166,7 +168,7 @@ export class WrathAndGloryActor extends Actor {
             weapon = this.items.get(weapon)
 
         let dialogData = this._weaponDialogData(weapon);
-        dialogData.title = `${weapon.nam} Test`
+        dialogData.title = `${weapon.name} Test`
 
         let testData = await WeaponDialog.create(dialogData)
         testData.title = dialogData.title
@@ -175,7 +177,24 @@ export class WrathAndGloryActor extends Actor {
         testData.itemId = weapon.id
         testData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
         testData.attribute = weapon.skill.attribute
-        return new WNGTest(testData)
+        return new WeaponTest(testData)
+    }
+
+    async setupPowerTest(power) {
+        if (typeof power == "string")
+            power = this.items.get(power)
+
+        let dialogData = this._powerDialogData(power);
+        dialogData.title = `${power.name}`
+
+        let testData = await PowerDialog.create(dialogData)
+        testData.title = dialogData.title
+        testData.speaker = this.speakerData();
+        testData.type = "power"
+        testData.itemId = power.id
+        testData.skill = "psychicMastery"
+        testData.attribute = power.skill.attribute
+        return new PowerTest(testData)
     }
 
     _baseDialogData() {
@@ -197,13 +216,22 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _weaponDialogData(weapon) {
-        let testData = this._baseDialogData()
-        testData.weapon = weapon
-        testData.pool.size = weapon.skill.total;
-        testData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
-        testData.pool.rank = weapon.attack.rank;
-        return testData
+        let dialogData = this._baseDialogData()
+        dialogData.weapon = weapon
+        dialogData.pool.size = weapon.skill.total;
+        dialogData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
+        dialogData.pool.rank = weapon.attack.rank;
+        return dialogData
     }
+
+    _powerDialogData(power) {
+        let dialogData = this._baseDialogData()
+        dialogData.power = power
+        dialogData.difficulty.target = power.dn
+        dialogData.pool.size = power.skill.total;
+        return dialogData
+    }
+
 
     speakerData() {
         if (this.isToken) {

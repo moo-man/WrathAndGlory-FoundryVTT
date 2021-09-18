@@ -11,7 +11,7 @@
             <label class="name">{{localize "DIALOG.DN"}}</label>
             <input id="difficulty-target" class="base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
             <select id="difficulty-rank" class="rank">
-                {{#select weapon.ed.rank}}
+                {{#select power.ed.rank}}
                 <option value="none">{{localize "RANK.NONE"}}</option>
                 <option value="minus-single">{{localize "RANK.MINUS_SINGLE"}}</option>
                 <option value="minus-double">{{localize "RANK.MINUS_DOUBLE"}}</option>
@@ -46,31 +46,31 @@
         </div>
         <div class="wrapper">
             <label class="name">{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
-            <input id="damage-base" class="base" type="number" value="{{weapon.damage.base}}" data-dtype="Number" />
+            <input id="damage-base" class="base" type="number" value="{{power.damage.base}}" data-dtype="Number" />
             <select id="damage-rank" class="rank">
-                {{#select weapon.damage.rank}}
+                {{#select power.damage.rank}}
                 <option value="none">{{localize "RANK.NONE"}}</option>
                 <option value="single">{{localize "RANK.SINGLE"}}</option>
                 <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
             </select>
-            <input id="damage-bonus" class="bonus" type="number" value="{{weapon.damage.bonus}}" data-dtype="Number" />
+            <input id="damage-bonus" class="bonus" type="number" value="{{power.damage.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "PSYCHIC_POWER.ED"}}</label>
-            <input id="ed-base" class="base" type="number" value="{{weapon.ed.base}}" data-dtype="Number" />
+            <input id="ed-base" class="base" type="number" value="{{power.ed.base}}" data-dtype="Number" />
             <select id="ed-rank" class="rank">
-                {{#select weapon.ed.rank}}
+                {{#select power.ed.rank}}
                 <option value="none">{{localize "RANK.NONE"}}</option>
                 <option value="single">{{localize "RANK.SINGLE"}}</option>
                 <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
             </select>
-            <input id="ed-bonus" class="bonus" type="number" value="{{weapon.ed.bonus}}" data-dtype="Number" />
+            <input id="ed-bonus" class="bonus" type="number" value="{{power.ed.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "PSYCHIC_POWER.POTENCY"}}</label>
-            <input id="potency" class="full" type="text" value="{{{weapon.potency}}}" />
+            <input id="potency" class="full" type="text" value="{{{power.potency}}}" />
         </div>
         <div class="wrapper">
             <b class="name"></b>
@@ -83,12 +83,12 @@
         </div>
         <div class="wrapper">
             <label class="name">{{localize "PSYCHIC_POWER.DIE_VALUE"}}</label>
-            <input id="die-one" class="die" type="number" value="{{weapon.ed.die.one}}" data-dtype="Number" />
-            <input id="die-two" class="die" type="number" value="{{weapon.ed.die.two}}" data-dtype="Number" />
-            <input id="die-three" class="die" type="number" value="{{weapon.ed.die.three}}" data-dtype="Number" />
-            <input id="die-four" class="die" type="number" value="{{weapon.ed.die.four}}" data-dtype="Number" />
-            <input id="die-five" class="die" type="number" value="{{weapon.ed.die.five}}" data-dtype="Number" />
-            <input id="die-six" class="die" type="number" value="{{weapon.ed.die.six}}" data-dtype="Number" />
+            <input id="die-one" class="die" type="number" value="{{power.ed.die.one}}" data-dtype="Number" />
+            <input id="die-two" class="die" type="number" value="{{power.ed.die.two}}" data-dtype="Number" />
+            <input id="die-three" class="die" type="number" value="{{power.ed.die.three}}" data-dtype="Number" />
+            <input id="die-four" class="die" type="number" value="{{power.ed.die.four}}" data-dtype="Number" />
+            <input id="die-five" class="die" type="number" value="{{power.ed.die.five}}" data-dtype="Number" />
+            <input id="die-six" class="die" type="number" value="{{power.ed.die.six}}" data-dtype="Number" />
         </div>
     </div>
 </div>

@@ -8,8 +8,8 @@ export default function() {
     });
 
     CONFIG.ChatMessage.documentClass.prototype.getTest = function () {
-        if (hasProperty(this, "data.flags.data.testData"))
-          return game.wfrp4e.rolls.TestWFRP.recreate(this.data.flags.data.testData)
+        if (hasProperty(this, "data.flags.wrath-and-glory.testData"))
+          return game.wng.rollClasses.WNGTest.recreate(this.getFlag("wrath-and-glory", "testData"))
       }
 
     FoundryOverrides();

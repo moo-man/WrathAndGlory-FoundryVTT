@@ -170,8 +170,8 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".roll-conviction").click(this._onConvictionClick.bind(this));
         html.find(".roll-resolve").click(this._onResolveClick.bind(this));
         html.find(".roll-influence").click(this._onInfluenceClick.bind(this));
-        html.find(".roll-weapon").click(this._prepareRollWeapon.bind(this));
-        html.find(".roll-psychic-power").click(this._prepareRollPsychicPower.bind(this));
+        html.find(".roll-weapon").click(this._onWeaponClick.bind(this));
+        html.find(".roll-psychic-power").click(this._onPowerClick.bind(this));
         html.find(".checkbox").click(this._onCheckboxClick.bind(this))
         html.find(".property-edit").change(this._onSelectChange.bind(this))
         html.find(".qty-click").click(this._onQuantityClick.bind(this))
@@ -373,11 +373,18 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         test.sendToChat()
     }
 
-    async _prepareRollWeapon(event) {
+    async _onWeaponClick(event) {
         event.preventDefault();
-        this._resetRollData();
         const div = $(event.currentTarget).parents(".item");
         let test = await this.actor.setupWeaponTest(div.data("itemId"))
+        await test.rollTest();
+        test.sendToChat()
+    }
+
+    async _onPowerClick(event) {
+        event.preventDefault();
+        const div = $(event.currentTarget).parents(".item");
+        let test = await this.actor.setupPowerTest(div.data("itemId"))
         await test.rollTest();
         test.sendToChat()
     }

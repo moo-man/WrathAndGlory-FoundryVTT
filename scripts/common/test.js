@@ -1,5 +1,5 @@
 export class WNGTest {
-  constructor(data)
+  constructor(data = {})
   {
     this.data = {
       testData: {
@@ -23,13 +23,14 @@ export class WNGTest {
   static recreate(data) {
     let test = new game.wng.rollClasses[data.context.rollClass]()
     test.data = data;
-    test.roll = Roll.fromJSON(test.result.roll)
+    test.roll = Roll.fromData(test.result.roll)
+    return test
   }
 
   async rollTest() {
     this.result.wrathSize = this.testData.wrath.base > 0 ? this.testData.wrath.base : 1;
-    this.result.poolSize = this.testData.pool.size + this.testData.pool.bonus - 1;
-    this.result.dn = this.testData.difficulty.target + this.testData.difficulty.penalty;
+    this.result.poolSize = this.testData.pool.size + this.testData.pool.bonus - 1 + this.getRankNum(this.testData.pool.rank);
+    this.result.dn = this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank);
     await this._rollDice()
     this._computeResult();
   }
@@ -51,9 +52,9 @@ export class WNGTest {
     this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0)
     this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0)
     this.result.shifting = this._countShifting();
-    this.result.isSuccess = this.result.success >= this.testData.dn;
-    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result.value == 6)
-    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result.value == 1)
+    this.result.isSuccess = this.result.success >= this.result.dn;
+    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result == 6)
+    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result == 1)
   }
 
   async reroll() {
@@ -81,7 +82,7 @@ export class WNGTest {
 
   _countShifting() {
     let shifting = 0;
-    let surplus = this.result.success - this.testData.dn;
+    let surplus = this.result.success - this.result.dn;
     for (let i = 0; i < this.result.dice.length; i++) {
       if (this.result.dice[i].value === 2 && surplus >= 2) {
         shifting++;
@@ -91,12 +92,95 @@ export class WNGTest {
     return shifting;
   }
 
+  getRankNum(rank) {
+    switch (rank) {
+      case "none":
+        return 0;
+      case "single":
+        return this.actor.advances.rank;
+      case "double":
+        return (this.actor.advances.rank * 2);
+      case "minus-single":
+        return this.actor.advances.rank;
+      case "minus-double":
+        return (this.actor.advances.rank * 2);
+      default:
+        return 0;
+   }
+  }
+
+  async rollDamage() {
+    let ed = this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank);
+    let formula = `${ed}d6`;
+    let r = new Roll(formula, {});
+    r.evaluate({async: true});
+    this.result.damage = {
+      total: this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
+      ap :  this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank),
+      dice : []
+    };
+    r.terms.forEach((term) => {
+      if (typeof term === 'object' && term !== null) {
+        term.results.forEach(result => {
+          let die = this._computeExtraDice(result.result, this.testData.ed.die);
+          this.result.damage.total += die.value;
+          this.result.damage.dice.push(die);
+        });
+      }
+    });
+    this.damageRoll = r;
+    this.result.damage.roll = r.toJSON()
+  }
+  
+    
+  _computeExtraDice(dieValue, die) {
+    let propertyName = Object.keys(die)[dieValue - 1];
+    let value = die[propertyName];
+    let name = "failed";
+    let weight = 1;
+    if (value >= 2) {
+      name = "icon";
+      weight = 3;
+    } else if (value === 1) {
+      name = "success";
+      weight = 2;
+    }
+    return {
+      name : name,
+      value : value,
+      result: dieValue,
+      isWrath: false,
+      rerollable: false,
+      weight: weight
+    };
+  }
+
+  async _sendDamageToChat() {
+    const html = await renderTemplate("systems/wrath-and-glory/template/chat/damage.html", this);
+    let chatData = {
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      roll: this.damageRoll,
+      flags: {"wrath-and-glory.testData" : this.data},
+      user: game.user.id,
+      rollMode: game.settings.get("core", "rollMode"),
+      content: html
+    };
+    if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
+      chatData.whisper = ChatMessage.getWhisperRecipients("GM");
+    } else if (chatData.rollMode === "selfroll") {
+      chatData.whisper = [game.user];
+    }
+    ChatMessage.create(chatData);
+  }
+
+
   get testData() { return this.data.testData; }
   get context() { return this.data.context; }
   get result() { return this.data.result; }
   get attribute() { return this.actor.attributes[this.data.testData.attribute]}
   get skill() { return this.actor.skills[this.data.testData.skill]}
 
+  get item() {return this.actor.items.get(this.testData.itemId)}
   get actor() { return game.wng.utility.getSpeaker(this.context.speaker)}
 
 
