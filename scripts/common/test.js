@@ -24,6 +24,8 @@ export class WNGTest {
     let test = new game.wng.rollClasses[data.context.rollClass]()
     test.data = data;
     test.roll = Roll.fromData(test.result.roll)
+    if (test.result.damage)
+      test.damageRoll = Roll.fromData(test.result.damage.roll)
     return test
   }
 
@@ -77,7 +79,7 @@ export class WNGTest {
     } else if (chatData.rollMode === "selfroll") {
       chatData.whisper = [game.user];
     }
-    ChatMessage.create(chatData);
+    return ChatMessage.create(chatData);
   }
 
   _countShifting() {
@@ -155,7 +157,7 @@ export class WNGTest {
     };
   }
 
-  async _sendDamageToChat() {
+  async sendDamageToChat() {
     const html = await renderTemplate("systems/wrath-and-glory/template/chat/damage.html", this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
@@ -170,7 +172,7 @@ export class WNGTest {
     } else if (chatData.rollMode === "selfroll") {
       chatData.whisper = [game.user];
     }
-    ChatMessage.create(chatData);
+    return ChatMessage.create(chatData);
   }
 
 

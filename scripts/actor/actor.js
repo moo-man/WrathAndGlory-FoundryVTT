@@ -54,7 +54,7 @@ export class WrathAndGloryActor extends Actor {
     _computeItems() {
         this.combat.resilience.armor = 0;
         for (let item of this.items) {
-
+            item.prepareOwnedData()
             if (item.isArmour) {
                 this._computeArmour(item);
             }

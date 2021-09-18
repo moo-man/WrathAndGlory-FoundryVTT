@@ -171,7 +171,7 @@
                 <select class="property-edit" data-target="data.ammo">
                   {{#select item.ammo}}
                   <option value="">-</option>
-                  {{#each ../items.ammo as |item|}}
+                  {{#each item.ammoList as |item|}}
                   <option value="{{item.id}}">{{item.name}} ({{item.quantity}})</option>
                   {{/each}}
                   {{/select}}

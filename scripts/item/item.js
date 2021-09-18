@@ -13,6 +13,23 @@ export class WrathAndGloryItem extends Item {
             this.applyUpgrades();
     }
 
+    prepareOwnedData() {
+        let functionName = `prepareOwned${this.type[0].toUpperCase() + this.type.slice(1)}`
+
+        if (this[functionName])
+            this[functionName]()
+    }
+
+
+    prepareOwnedWeapon() {
+        if (this.isRanged && this.category == "launcher" && this.Ammo)
+        {
+            this.data.data.damage = this.Ammo.damage
+            this.data.data.ap = this.Ammo.ap
+            this.data.data.ed = this.Ammo.ed
+        }
+    }
+
     async sendToChat() {
         const item = new CONFIG.Item.documentClass(this.data._source)
         if (item.data.img.includes("/unknown")) {
@@ -248,6 +265,21 @@ export class WrathAndGloryItem extends Item {
             else 
                 return "ballisticSkill"
         }
+    }
+
+    get ammoList() {
+        if (!this.isOwned)
+            return
+        if (this.category == "ranged")
+            return this.actor.getItemTypes("ammo")
+        else if (this.category == "launcher")
+            return this.actor.getItemTypes("weapon").filter(i => i.category == "grenade-missile")
+
+    }
+
+    get Ammo() {
+        if (this.isOwned)
+            return this.actor.items.get(this.ammo)
     }
 
     // @@@@@@ TYPE GETTERS @@@@@@
