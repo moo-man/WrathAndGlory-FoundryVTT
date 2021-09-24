@@ -167,9 +167,98 @@ WNG.difficultyRankTypes = {
     "minus-double" :  "RANK.MINUS_DOUBLE"
 }
 
-
 WNG.attributeCosts = [0, 0, 4, 6, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 
 WNG.skillCosts = [0, 2, 4, 6, 8, 10, 12, 14, 16]
+
+
+
+CONFIG.statusEffects = [
+    {
+        id : "bleeding",
+        label : "Bleeding",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/bleeding.svg",
+    },
+    {
+        id : "blinded",
+        label : "Blinded",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
+        changes : [
+            {key: "difficulty.base", mode : 0, value : 4}],
+        flags : { "wrath-and-glory.description" : "Increase DN for any sight-related task (including alal combat Tests), replacing lesser penalties."}
+    },
+    {
+        id : "exhausted",
+        label : "Exhausted",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/exhausted.svg"
+    },
+    {
+        id : "fear",
+        label : "Fear",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
+        changes : [{key: "difficulty.base", mode : 0, value : 2}],
+        flags : { "wrath-and-glory.description" : "+2DN to all Tests"}
+    },
+    {
+        id : "frenzied",
+        label : "Frenzied",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/frenzied.svg",
+        changes : [{key: "data.attributes.strength.bonus", mode : 2, value : 1}]
+    },
+    {
+        id : "hindered",
+        label : "Hindered",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
+        changes : [{key: "difficulty.base", mode : 0, value : 1}],
+        flags : { "wrath-and-glory.description" : "+DN to all Tests"}
+    },
+    {
+        id : "onfire",
+        label : "On Fire",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/onfire.svg"
+    },
+    {
+        id : "pinned",
+        label : "Pinned",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
+        changes : [{key: "difficulty.base", mode : 0, value : 2}],
+        flags : { "wrath-and-glory.description" : "Penalty to Ballistic Skill Tests when targeting an enemy using a Pinning Attacks against you"}
+    },
+    {
+        id : "poisoned",
+        label : "Poisoned",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
+        changes : [{key: "difficulty.base", mode : 0, value : 2}],
+        flags : { "wrath-and-glory.description" : "+DN to all Tests"}
+    },
+    {
+        id : "prone",
+        label : "Prone",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/prone.svg"
+    },
+    {
+        id : "restrained",
+        label : "Restrained",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
+        changes : [{key: "data.combat.defense.bonus", mode : 2, value : -2},{key: "data.combat.speed", mode : 5, value : "0"} ]
+    },
+    {
+        id : "staggered",
+        label : "Staggered",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/staggered.svg",
+        changes : [{key: "data.combat.speed", mode : 1, value : 0.5} ]
+    },
+    {
+        id : "terror",
+        label : "Terror",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/terror.svg"
+    },
+    {
+        id : "vulnerable",
+        label : "Vulnerable",
+        icon : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
+        changes : [{key: "data.combat.defense.bonus", mode : 2, value : -1}]
+    }
+]
 
 export default WNG
