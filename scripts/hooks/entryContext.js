@@ -1,7 +1,19 @@
 export default function() {
     Hooks.on("getChatLogEntryContext", (html, options) => {
         let canApply = li => li.find(".damageRoll").length && canvas.tokens.controlled.length > 0;
+        let canReroll = li => li.find(".wrath-and-glory.roll").length
         options.unshift(
+            {
+                name: "BUTTON.REROLL",
+                icon: '<i class="fas fa-redo"></i>',
+                condition: canReroll,
+                callback: li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    test.reroll()
+                    test.sendToChat(message)
+                }
+            },
             {
                 name: "BUTTON.ApplyDamage",
                 icon: '<i class="fas fa-user-minus"></i>',

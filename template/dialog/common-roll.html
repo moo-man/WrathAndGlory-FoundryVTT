@@ -8,31 +8,36 @@
     </div>
     <div class="wrapper">
         <label class="name">{{localize "DIALOG.DN"}}</label>
-        <input id="difficulty-target" class="base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
-        <select id="difficulty-rank" class="rank">
+        <input id="difficulty-target" class="difficulty base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
+        <select id="difficulty-rank" class="difficulty rank">
             {{#select weapon.ed.rank}}
-            <option value="none">{{localize "RANK.NONE"}}</option>
-            <option value="minus-single">{{localize "RANK.MINUS_SINGLE"}}</option>
-            <option value="minus-double">{{localize "RANK.MINUS_DOUBLE"}}</option>
+            {{#each (config "difficultyRankTypes" )as |rank r|}}
+            <option value="{{r}}">{{rank}}</option>
+            {{/each}}
             {{/select}}
         </select>
-        <input id="difficulty-penalty" class="bonus" type="number" value="{{difficulty.penalty}}" data-dtype="Number" />
+        <input id="difficulty-penalty" class="difficulty bonus" type="number" value="{{difficulty.penalty}}" data-dtype="Number" />
     </div>
     <div class="wrapper">
         <label class="name">{{localize "DIALOG.DICE_POOL"}}</label>
-        <input id="pool-size" class="base" type="number" value="{{pool.size}}" data-dtype="Number" />
-        <select id="pool-rank" class="rank">
+        <input id="pool-size" class="pool base" type="number" value="{{pool.size}}" data-dtype="Number" />
+        <select id="pool-rank" class="pool rank">
             {{#select pool.rank}}
-            <option value="none">{{localize "RANK.NONE"}}</option>
-            <option value="single">{{localize "RANK.SINGLE"}}</option>
-            <option value="double">{{localize "RANK.DOUBLE"}}</option>
+            {{#each (config "rankTypes") as |rank r|}}
+            <option value="{{r}}">{{rank}}</option>
+            {{/each}}
             {{/select}}
         </select>
-        <input id="pool-bonus" class="bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
+        <input id="pool-bonus" class="pool bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
     </div>
 </div>
-<script>
-    $(".wrapper input").focusin(function () {
-        $(this).select();
-    });
-</script>
+<div class="dialog-effects">
+    <div class="wrapper">
+        <h1>{{localize "HEADER.EFFECTS"}}</h1>
+            <select class="effect-select" multiple>
+                {{#each effects as |effect e|}}
+                <option title="{{effect.data.flags.wrath-and-glory.description}}" value="{{e}}">{{effect.label}}</option>
+                {{/each}}
+            </select>
+    </div>
+</div>

@@ -155,6 +155,18 @@ WNG.abilityTypes = {
     annihilation : "ANNIHILATION"
 }
 
+WNG.rankTypes = {
+    "none" : "RANK.NONE",
+    "single" : "RANK.SINGLE",
+    "double" : "RANK.DOUBLE"
+}
+
+WNG.difficultyRankTypes = {
+    "none" :  "RANK.NONE",
+    "minus-single" :  "RANK.MINUS_SINGLE",
+    "minus-double" :  "RANK.MINUS_DOUBLE"
+}
+
 
 WNG.attributeCosts = [0, 0, 4, 6, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 

@@ -1,4 +1,5 @@
-.wrath-and-glory.dialog h1 {
+.roll-dialog h1,
+  .wrath-and-glory.dialog h1 {
   margin: 0;
   border-style: solid;
   border-width: 0px 8px 8px 8px;
@@ -42,10 +43,38 @@
 
 .wrath-and-glory.dialog {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   margin-bottom: 8px;
+  flex: 1
 }
+
+.dialog .dialog-buttons{
+  flex: 0 0 35px;
+
+}
+
+.roll-dialog .dialog-content {
+  display: flex;
+}
+
+.roll-dialog .dialog-effects {
+  flex: 0.4
+}
+  .roll-dialog .dialog-effects .wrapper{
+  height: 100%
+}
+
+.roll-dialog .effect-select {
+  margin: 10px;
+  width: calc(100% - 15px);
+  height: calc(100% - 50px)
+}
+
+/* .wrath-and-glory.dialog.power-dialog,
+  .wrath-and-glory.dialog.weapon-dialog {
+  flex-direction: column;
+} */
 
 .wrath-and-glory.dialog .wrapper-left {
   display: flex;

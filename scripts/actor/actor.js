@@ -211,7 +211,8 @@ export class WrathAndGloryActor extends Actor {
             },
             wrath: {
                 base: 1
-            }
+            },
+            effects : this.effects.filter(i => i.hasRollEffect)
         };
     }
 

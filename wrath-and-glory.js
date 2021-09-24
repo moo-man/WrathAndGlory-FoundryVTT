@@ -13,10 +13,14 @@ import { WrathAndGloryItemSheet } from "./scripts/item/sheet/item-sheet.js";
 import WNGUtility from "./scripts/common/utility.js"
 import { WNGTest, WrathDie, PoolDie } from "./scripts/common/test.js";
 import WeaponTest from "./scripts/common/weapon-test.js";
+import WrathAndGloryEffect from "./scripts/common/effect.js";
+import WrathAndGloryEffectSheet from "./scripts/apps/active-effect-config.js";
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
   CONFIG.Item.documentClass = WrathAndGloryItem;
+  CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
+  CONFIG.ActiveEffect.sheetClass = WrathAndGloryEffectSheet;
   game.wng = {
     rollClasses : {
       WNGTest,

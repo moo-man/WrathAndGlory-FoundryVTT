@@ -1,4 +1,4 @@
-<div class="wrath-and-glory dialog">
+<div class="wrath-and-glory dialog power-dialog">
     <div class="wrapper-left">
         <h1>{{localize skillName}}</h1>
         <div class="wrapper">
@@ -9,27 +9,27 @@
         </div>
         <div class="wrapper">
             <label class="name">{{localize "DIALOG.DN"}}</label>
-            <input id="difficulty-target" class="base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
-            <select id="difficulty-rank" class="rank">
-                {{#select power.ed.rank}}
-                <option value="none">{{localize "RANK.NONE"}}</option>
-                <option value="minus-single">{{localize "RANK.MINUS_SINGLE"}}</option>
-                <option value="minus-double">{{localize "RANK.MINUS_DOUBLE"}}</option>
+            <input id="difficulty-target" class="difficulty base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
+            <select id="difficulty-rank" class="difficulty rank">
+                {{#select weapon.ed.rank}}
+                {{#each (config "difficultyRankTypes" )as |rank r|}}
+                <option value="{{r}}">{{rank}}</option>
+                {{/each}}
                 {{/select}}
             </select>
-            <input id="difficulty-penalty" class="bonus" type="number" value="{{difficulty.penalty}}" data-dtype="Number" />
+            <input id="difficulty-penalty" class="difficulty bonus" type="number" value="{{difficulty.penalty}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "DIALOG.DICE_POOL"}}</label>
-            <input id="pool-size" class="base" type="number" value="{{pool.size}}" data-dtype="Number" />
-            <select id="pool-rank" class="rank">
+            <input id="pool-size" class="pool base" type="number" value="{{pool.size}}" data-dtype="Number" />
+            <select id="pool-rank" class="pool rank">
                 {{#select pool.rank}}
-                <option value="none">{{localize "RANK.NONE"}}</option>
-                <option value="single">{{localize "RANK.SINGLE"}}</option>
-                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{#each (config "rankTypes") as |rank r|}}
+                <option value="{{r}}">{{rank}}</option>
+                {{/each}}
                 {{/select}}
             </select>
-            <input id="pool-bonus" class="bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
+            <input id="pool-bonus" class="pool bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "DIALOG.WRATH"}}</label>
@@ -46,27 +46,27 @@
         </div>
         <div class="wrapper">
             <label class="name">{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
-            <input id="damage-base" class="base" type="number" value="{{power.damage.base}}" data-dtype="Number" />
-            <select id="damage-rank" class="rank">
+            <input id="damage-base" class="damage base" type="number" value="{{power.damage.base}}" data-dtype="Number" />
+            <select id="damage-rank" class="damage rank">
                 {{#select power.damage.rank}}
                 <option value="none">{{localize "RANK.NONE"}}</option>
                 <option value="single">{{localize "RANK.SINGLE"}}</option>
                 <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
             </select>
-            <input id="damage-bonus" class="bonus" type="number" value="{{power.damage.bonus}}" data-dtype="Number" />
+            <input id="damage-bonus" class="damage bonus" type="number" value="{{power.damage.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "PSYCHIC_POWER.ED"}}</label>
-            <input id="ed-base" class="base" type="number" value="{{power.ed.base}}" data-dtype="Number" />
-            <select id="ed-rank" class="rank">
+            <input id="ed-base" class="ed base" type="number" value="{{power.ed.base}}" data-dtype="Number" />
+            <select id="ed-rank" class="ed rank">
                 {{#select power.ed.rank}}
                 <option value="none">{{localize "RANK.NONE"}}</option>
                 <option value="single">{{localize "RANK.SINGLE"}}</option>
                 <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
             </select>
-            <input id="ed-bonus" class="bonus" type="number" value="{{power.ed.bonus}}" data-dtype="Number" />
+            <input id="ed-bonus" class="ed bonus" type="number" value="{{power.ed.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "PSYCHIC_POWER.POTENCY"}}</label>
@@ -92,8 +92,13 @@
         </div>
     </div>
 </div>
-<script>
-    $(".wrapper input").focusin(function () {
-        $(this).select();
-    });
-</script>
+<div class="dialog-effects">
+    <div class="wrapper">
+        <h1>{{localize "HEADER.EFFECTS"}}</h1>
+            <select class="effect-select" multiple>
+                {{#each effects as |effect e|}}
+                <option title="{{effect.data.flags.wrath-and-glory.description}}" value="{{e}}">{{effect.label}}</option>
+                {{/each}}
+            </select>
+    </div>
+</div>

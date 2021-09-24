@@ -1,10 +1,22 @@
+import WrathAndGloryEffect from "./effect.js";
+
 export class RollDialog extends Dialog {
+
+  static get defaultOptions() {
+    let options = super.defaultOptions
+    options.classes.push("roll-dialog")
+    options.resizable = true;
+    return options
+  }
+
+
   static async create(data) {
     const html = await renderTemplate("systems/wrath-and-glory/template/dialog/common-roll.html", data);
     return new Promise((resolve) => {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
+        effects: data.effects,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
@@ -16,16 +28,16 @@ export class RollDialog extends Dialog {
           }
         },
         default: "roll"
-      }).render(true)
+      }, { width: 430 }).render(true)
     })
   }
 
   static dialogCallback(html) {
     let testData = this._baseTestData()
-    testData.difficulty.target = parseInt(html.find("#difficulty-target")[0].value);
-    testData.difficulty.penalty = parseInt(html.find("#difficulty-penalty")[0].value);
+    testData.difficulty.base = parseInt(html.find("#difficulty-target")[0].value);
+    testData.difficulty.bonus = parseInt(html.find("#difficulty-penalty")[0].value);
     testData.difficulty.rank = html.find("#difficulty-rank")[0].value;
-    testData.pool.size = parseInt(html.find("#pool-size")[0].value);
+    testData.pool.base = parseInt(html.find("#pool-size")[0].value);
     testData.pool.bonus = parseInt(html.find("#pool-bonus")[0].value);
     testData.pool.rank = html.find("#pool-rank")[0].value;
     return testData
@@ -49,7 +61,81 @@ export class RollDialog extends Dialog {
       }
     };
   }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+    // Reset effect values
+    this.effectValues = {
+      "pool.base": null,
+      "pool.rank": null,
+      "pool.bonus": null,
+      "difficulty.base": null,
+      "difficulty.rank": null,
+      "difficulty.bonus": null
+    }
+
+
+    this.inputs = {}
+
+    html.find("input").focusin(ev => {
+      ev.target.select();
+    })
+
+    html.find('.difficulty,.pool').change(ev => {
+      let type = ev.currentTarget.classList[0]
+      let input = ev.currentTarget.classList[1]
+      this.userEntry[`${type}.${input}`] = parseInt(ev.target.value)
+      this.applyEffects()
+    }).each((i, input) => {
+      this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input
+    })
+
+    this.userEntry = {
+      "pool.base": parseInt(this.inputs["pool.base"].value),
+      "pool.rank": this.inputs["pool.rank"].value,
+      "pool.bonus": parseInt(this.inputs["pool.bonus"].value),
+      "difficulty.base": parseInt(this.inputs["difficulty.base"].value),
+      "difficulty.rank": this.inputs["difficulty.rank"].value,
+      "difficulty.bonus": parseInt(this.inputs["difficulty.bonus"].value),
+    }
+
+    html.find(".effect-select").change(this._onEffectSelect.bind(this))
+  }
+
+  _onEffectSelect(ev) {
+    // Reset effect values
+    for (let key in this.effectValues)
+      this.effectValues[key] = null
+
+    let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)])
+    let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), []).filter(i => i.mode == 0)
+    for (let c of changes) {
+      if (WrathAndGloryEffect.numericTypes.includes(c.key))
+        this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)
+      else if (Object.keys(game.wng.config.rankTypes).concat(Object.keys(game.wng.config.difficultyRankTypes)).includes(c.value))
+        this.effectValues[c.key] = c.value
+    }
+    this.applyEffects()
+  }
+
+  applyEffects() {
+    for (let input in this.inputs) {
+      if (!this.inputs[input])
+        continue
+      if (this.effectValues[input] != null) {
+        if (Number.isNumeric(this.effectValues[input]))
+          this.inputs[input].value = this.userEntry[input] + this.effectValues[input]
+        else
+          this.inputs[input].value = this.effectValues[input]
+      }
+      else // if not part of effect values, use user entry only
+      {
+        this.inputs[input].value = this.userEntry[input]
+      }
+    }
+  }
 }
+
 
 export class WeaponDialog extends RollDialog {
 
@@ -59,6 +145,7 @@ export class WeaponDialog extends RollDialog {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
+        effects: data.effects,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
@@ -70,7 +157,7 @@ export class WeaponDialog extends RollDialog {
           }
         },
         default: "roll"
-      }, {width : 550}).render(true)
+      }, { width: 550 }).render(true)
     })
   }
 
@@ -122,6 +209,44 @@ export class WeaponDialog extends RollDialog {
     }, super._baseTestData())
   }
 
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Reset effect values
+    this.effectValues = flattenObject(mergeObject(this.effectValues, {
+      "damage.base": null,
+      "damage.rank": null,
+      "damage.bonus": null,
+      "ed.base": null,
+      "ed.rank": null,
+      "ed.bonus": null,
+      "ap.base": null,
+      "ap.rank": null,
+      "ap.bonus": null,
+    }))
+
+
+    html.find('.damage,.ed,.ap').change(ev => {
+      let type = ev.currentTarget.classList[0]
+      let input = ev.currentTarget.classList[1]
+      this.userEntry[`${type}.${input}`] = parseInt(ev.target.value)
+      this.applyEffects()
+    }).each((i, input) => {
+      this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input
+    })
+
+    this.userEntry = flattenObject(mergeObject(this.userEntry, {
+      "damage.base": parseInt(this.inputs["damage.base"].value),
+      "damage.rank": this.inputs["damage.rank"].value,
+      "damage.bonus": parseInt(this.inputs["damage.bonus"].value),
+      "ed.base": parseInt(this.inputs["ed.base"].value),
+      "ed.rank": this.inputs["ed.rank"].value,
+      "ed.bonus": parseInt(this.inputs["ed.bonus"].value),
+      "ap.base": parseInt(this.inputs["ap.base"].value),
+      "ap.rank": this.inputs["ap.rank"].value,
+      "ap.bonus": parseInt(this.inputs["ap.bonus"].value),
+    }))
+  }
 }
 
 export class PowerDialog extends RollDialog {
@@ -132,6 +257,7 @@ export class PowerDialog extends RollDialog {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
+        effects: data.effects,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
@@ -143,7 +269,7 @@ export class PowerDialog extends RollDialog {
           }
         },
         default: "roll"
-      }, {width : 550}).render(true)
+      }, { width: 550 }).render(true)
     })
   }
 
@@ -188,6 +314,47 @@ export class PowerDialog extends RollDialog {
       },
       potency: 0
     }, super._baseTestData())
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Reset effect values
+    this.effectValues = flattenObject(mergeObject(this.effectValues, {
+      "damage.base": null,
+      "damage.rank": null,
+      "damage.bonus": null,
+      "ed.base": null,
+      "ed.rank": null,
+      "ed.bonus": null,
+      "wrath" : null
+    }))
+
+
+    html.find('.damage,.ed').change(ev => {
+      let type = ev.currentTarget.classList[0]
+      let input = ev.currentTarget.classList[1]
+      this.userEntry[`${type}.${input}`] = parseInt(ev.target.value)
+      this.applyEffects()
+    }).each((i, input) => {
+      this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input
+    })
+
+    this.inputs.wrath = html.find("#wrath-base").change(ev => {
+      this.userEntry["wrath"] = parseInt(ev.target.value)
+      this.applyEffects();
+    })[0]
+
+
+    this.userEntry = flattenObject(mergeObject(this.userEntry, {
+      "damage.base": parseInt(this.inputs["damage.base"].value),
+      "damage.rank": this.inputs["damage.rank"].value,
+      "damage.bonus": parseInt(this.inputs["damage.bonus"].value),
+      "ed.base": parseInt(this.inputs["ed.base"].value),
+      "ed.rank": this.inputs["ed.rank"].value,
+      "ed.bonus": parseInt(this.inputs["ed.bonus"].value),
+      "wrath": parseInt(this.inputs["wrath"].value)
+    }))
   }
 
 }

@@ -60,15 +60,15 @@ export class WNGTest {
   }
 
   async reroll() {
-    await this.result.roll.reroll()
-    _computeResult();
+    await this.roll.reroll()
+    this._computeResult();
   }
 
-  async sendToChat() {
+  async sendToChat(rerenderMessage) {
     const html = await renderTemplate("systems/wrath-and-glory/template/chat/roll.html", this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      roll: this.result.roll,
+      roll: this.roll,
       flags: {"wrath-and-glory.testData" : this.data},
       user: game.user.id,
       rollMode: game.settings.get("core", "rollMode"),
@@ -79,7 +79,10 @@ export class WNGTest {
     } else if (chatData.rollMode === "selfroll") {
       chatData.whisper = [game.user];
     }
-    return ChatMessage.create(chatData);
+    if (!rerenderMessage)
+      return ChatMessage.create(chatData);
+    else
+      return rerenderMessage.update(chatData)
   }
 
   _countShifting() {
