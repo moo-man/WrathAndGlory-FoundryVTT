@@ -34,10 +34,10 @@ export class RollDialog extends Dialog {
 
   static dialogCallback(html) {
     let testData = this._baseTestData()
-    testData.difficulty.base = parseInt(html.find("#difficulty-target")[0].value);
-    testData.difficulty.bonus = parseInt(html.find("#difficulty-penalty")[0].value);
+    testData.difficulty.target = parseInt(html.find("#difficulty-target")[0].value);
+    testData.difficulty.penalty = parseInt(html.find("#difficulty-penalty")[0].value);
     testData.difficulty.rank = html.find("#difficulty-rank")[0].value;
-    testData.pool.base = parseInt(html.find("#pool-size")[0].value);
+    testData.pool.size = parseInt(html.find("#pool-size")[0].value);
     testData.pool.bonus = parseInt(html.find("#pool-bonus")[0].value);
     testData.pool.rank = html.find("#pool-rank")[0].value;
     return testData
@@ -84,7 +84,7 @@ export class RollDialog extends Dialog {
     html.find('.difficulty,.pool').change(ev => {
       let type = ev.currentTarget.classList[0]
       let input = ev.currentTarget.classList[1]
-      this.userEntry[`${type}.${input}`] = parseInt(ev.target.value)
+      this.userEntry[`${type}.${input}`] = Number.isNumeric(ev.target.value) ? parseInt(ev.target.value) : ev.target.value
       this.applyEffects()
     }).each((i, input) => {
       this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input
@@ -229,7 +229,7 @@ export class WeaponDialog extends RollDialog {
     html.find('.damage,.ed,.ap').change(ev => {
       let type = ev.currentTarget.classList[0]
       let input = ev.currentTarget.classList[1]
-      this.userEntry[`${type}.${input}`] = parseInt(ev.target.value)
+      this.userEntry[`${type}.${input}`] = Number.isNumeric(ev.target.value) ? parseInt(ev.target.value) : ev.target.value
       this.applyEffects()
     }).each((i, input) => {
       this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input
@@ -334,7 +334,7 @@ export class PowerDialog extends RollDialog {
     html.find('.damage,.ed').change(ev => {
       let type = ev.currentTarget.classList[0]
       let input = ev.currentTarget.classList[1]
-      this.userEntry[`${type}.${input}`] = parseInt(ev.target.value)
+      this.userEntry[`${type}.${input}`] = Number.isNumeric(ev.target.value) ? parseInt(ev.target.value) : ev.target.value
       this.applyEffects()
     }).each((i, input) => {
       this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input

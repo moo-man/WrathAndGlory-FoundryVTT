@@ -1,3 +1,7 @@
+.dialog .quick-effect > * {
+  margin: 5px;display: flex; align-items: center; justify-content: space-between;
+}
+
 .roll-dialog h1,
   .wrath-and-glory.dialog h1 {
   margin: 0;

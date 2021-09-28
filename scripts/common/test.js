@@ -68,7 +68,7 @@ export class WNGTest {
     const html = await renderTemplate("systems/wrath-and-glory/template/chat/roll.html", this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      roll: this.roll,
+      roll: this.roll.toJSON(),
       flags: {"wrath-and-glory.testData" : this.data},
       user: game.user.id,
       rollMode: game.settings.get("core", "rollMode"),
@@ -323,7 +323,7 @@ export class WNGTest {
 export class PoolDie extends Die {
   get isWrath() {return false}
 
-  // static DENOMINATION = "p"
+   static DENOMINATION = "p"
 
     /**@overide */
     roll(...args)
@@ -382,7 +382,7 @@ export class PoolDie extends Die {
 export class WrathDie extends Die {
     get isWrath() {return true}
 
-    // static DENOMINATION = "w"
+     static DENOMINATION = "w"
 
     /**@overide */
     roll(...args)

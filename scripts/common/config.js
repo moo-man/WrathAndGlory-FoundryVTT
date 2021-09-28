@@ -137,22 +137,22 @@ WNG.traitHasRating = {
 }
 
 WNG.rarity = {
-  "common": "Common",
-  "uncommon": "Uncommon",
-  "rare": "Rare",
-  "very-rare": "Very Rare",
-  "unique": "Unique",
+  "common": "RARITY.COMMON",
+  "uncommon": "RARITY.UNCOMMON",
+  "rare": "RARITY.RARE",
+  "very-rare": "RARITY.VERY_RARE",
+  "unique": "RARITY.UNIQUE",
 }
 
 WNG.abilityTypes = {
-    battlecry : "BATTLECRY",
-    action : "ACTION",
-    ruin : "RUIN",
-    wrath : "WRATH",
-    complication : "COMPLICATION",
-    reaction : "REACTION",
-    determination : "DETERMINATION",
-    annihilation : "ANNIHILATION"
+    battlecry : "ABILITY_TYPE.BATTLECRY",
+    action : "ABILITY_TYPE.ACTION",
+    ruin : "ABILITY_TYPE.RUIN",
+    wrath : "ABILITY_TYPE.WRATH",
+    complication : "ABILITY_TYPE.COMPLICATION",
+    reaction : "ABILITY_TYPE.REACTION",
+    determination : "ABILITY_TYPE.DETERMINATION",
+    annihilation : "ABILITY_TYPE.ANNIHILATION"
 }
 
 WNG.rankTypes = {
@@ -185,7 +185,7 @@ CONFIG.statusEffects = [
         icon : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
         changes : [
             {key: "difficulty.base", mode : 0, value : 4}],
-        flags : { "wrath-and-glory.description" : "Increase DN for any sight-related task (including alal combat Tests), replacing lesser penalties."}
+        flags : { "wrath-and-glory.description" : "Increase DN for any sight-related task (including all combat Tests), replacing lesser penalties."}
     },
     {
         id : "exhausted",

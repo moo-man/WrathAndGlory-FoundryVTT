@@ -49,6 +49,17 @@
             {{/if}}
           </div>
         </div>
+        <div class="ability-type">
+          <label>{{localize "ABILITY.TYPE"}}</label>
+          <select name="data.abilityType">
+            {{#select data.abilityType}}
+            <option value=""> - </option>
+            {{#each (config "abilityTypes") as |type t|}}
+            <option value="{{t}}">{{type}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       <div class="tab" data-group="primary" data-tab="effects">
