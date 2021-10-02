@@ -269,6 +269,7 @@
           <span class="item-property flex large">{{localize "HEADER.DESCRIPTION"}}</span>
       </div>
         {{#each items.abilitiesAndTalents as |item|}}
+        {{#if item.display}}
         <div class="item" data-item-id="{{item.id}}">
           <div class="item-content item-dropdown">
               <img class="item-property item-image" src="{{item.img}}"></img>
@@ -276,6 +277,7 @@
           <span class="item-property flex large long-text">{{{item.description}}}</span>
         </div>
         </div>
+        {{/if}}
         {{/each}}
       </div>
       {{/if}}

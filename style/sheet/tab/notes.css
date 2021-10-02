@@ -34,14 +34,10 @@
 
 .wrath-and-glory.sheet.actor .notes .wrapper .editor,
 .wrath-and-glory.sheet.actor .notes .wrapper .editor-content {
-  font-family: var(--font-text);
-  font-size: 14px;
-  color: var(--color-text);
   height: 100%;
   width: 100%;
   background: url(../../../asset/image/input.jpg) repeat;
   box-shadow: inset 0 0 6px var(--color-dark-grey);
-  font-weight: bold;
 }
 
 .wrath-and-glory.sheet.actor .notes .wrapper .editor-content {

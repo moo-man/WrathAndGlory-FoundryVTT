@@ -9,17 +9,55 @@
   font-weight: bold;
 }
 
+@font-face {
+  font-family: "Caxton Std Book";
+  src: url("../../asset/font/CaxtonStd-Book.otf");
+}
+
+@font-face {
+  font-family: "Caxton Std Book";
+  src: url("../../asset/font/Caxton Std Bold.otf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Caxton Std Book";
+  src: url("../../asset/font/Caxton Std Book Italic.otf");
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Intruder";
+  src: url("../../asset/font/Intruder.ttf");
+}
+
+@font-face {
+  font-family: "MinionPro";
+  src: url("../../asset/font/MinionPro-Regular.otf");
+}
+
+@font-face {
+  font-family: "Priori";
+  src: url("../../asset/font/PrioriSerifOT-Bold.otf");
+}
+
+
+
 :root {
   --color-red: #892e29;
   --color-dark-grey: #4c4d4f;
   --color-light-grey: #8b8d90;
   --color-black: #000000;
+  --color-subheader: #181e1f;
   --color-white: #e6e5e3;
+  --color-header: #8a2e2a;
 
-  --image-background: url(../../asset/image/background.jpg);
+  --image-background: url(../../asset/image/background.png);
   --image-border: url(../../asset/image/border.png);
   --image-title-border: url(../../asset/image/title-border.png);
   --image-input: url(../../asset/image/input.jpg);
 
-  --font-text: "Playfair Display";
+  --font-text: "Caxton Std Book";
+
+  --font-header: 
 }

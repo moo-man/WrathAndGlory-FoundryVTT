@@ -1,7 +1,99 @@
 .window-app .window-content {
-  background: var(--image-background) repeat;
+  background: var(--image-background) 0 100% repeat, 
+              var(--image-background) 50px 100% repeat;
+  border: 30px solid transparent;
+  border-bottom: 0px;
+  border-top: 0px;
+  border-image: url(../../asset/image/journal-border.png) 0 80 0 repeat;
 }
 
 .wrath-and-glory .window-content { 
   overflow: hidden;
+}
+
+.editor,
+.editor-content {
+  font-family: var(--font-text);
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.editor h1,
+.editor-content h1 { 
+  font-family: var(--font-header);
+  font-size : 26px;
+  text-align: center;
+}
+
+.editor h2,
+.editor-content h2 { 
+  font-family: var(--font-header);
+  text-transform: uppercase;
+  font-size: 24px;
+  color: var(--color-header);
+  width: fit-content;
+  border-bottom: 8px solid transparent;
+  border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
+  font-weight: bold;
+}
+
+.editor h2::after,
+.editor-content h2::after { 
+  display: inline-block;
+  margin-bottom: -14px;
+  margin-right: -45px;
+  content: "";
+  height: 11px;
+  width: 51px;
+  background: url(../../asset/image/wingtip.png);
+  background-size: contain;
+}
+
+.editor h3,
+.editor-content h3 { 
+  font-family: var(--font-header);
+  font-size : 22px;
+  text-transform: uppercase;
+  border-bottom: 3px solid var(--color-header);
+  color: var(--color-header);
+  font-weight: bold;
+}
+
+.editor .sidebar h3,
+.editor-content .sidebar h3 { 
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  font-weight: bold;
+  color: var(--color-subheader)
+}
+
+.editor  h4,
+.editor-content  h4 { 
+  border: none;
+  font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-subheader)
+}
+
+.editor  h5,
+.editor-content  h5 { 
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-subheader);
+  margin: 0 0 0.5rem
+}
+
+.editor .sidebar,
+.editor-content .sidebar {
+  background: url(../../asset/image/sidebar-background.png) 0px 100% repeat;
+  border: 10px solid transparent;
+  border-left: 0px;
+  border-right: 0px;
+  border-image: url(../../asset/image/sidebar-border.png) 20 0 repeat;
+  box-shadow: inset 0px 0px 5px black;
+  padding:10px;
 }
