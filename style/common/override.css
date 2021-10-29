@@ -1,10 +1,73 @@
+
 .window-app .window-content {
-  background: var(--image-background) 0 100% repeat, 
-              var(--image-background) 50px 100% repeat;
-  border: 30px solid transparent;
-  border-bottom: 0px;
-  border-top: 0px;
-  border-image: url(../../asset/image/journal-border.png) 0 80 0 repeat;
+    background: var(--image-background) 0 100% repeat;/*, var(--image-background) 50px 100% repeat;*/
+    border: 30px solid transparent;
+    border-bottom: 20px solid transparent;
+    font-family: var(--font-text);
+    border-top: 0px;
+    border-image: url(../../asset/image/journal-border.png) 0 80 60 repeat;
+}
+
+.window-app .window-header {
+  border-image: url(../../asset/image/header.jpg) repeat;
+  border-image-slice: 8 8 7 7 fill;
+  border-image-width: 0px 0px 2px 2px;
+  font-family: var(--font-text);
+
+}
+
+.dialog.window-app .window-content {
+  background: url(../../asset/image/background.png) repeat;
+  border: 8px solid transparent;
+  border-image: var(--image-border) 8 8 8 8 repeat repeat;
+  border-image-outset: 0px;
+}
+
+/* #sidebar {
+  background: url(../../asset/image/sidebar.jpg) repeat;
+  background-size: 100%;
+  border-radius: 0px;
+  width: 310px;
+  padding-left: 10px;
+} */
+
+/* #sidebar-tabs {
+  background: url(../../asset/image/sidebar-header.jpg) repeat;
+  background-size: 100%;
+  border-bottom: none;
+  position: relative;
+   left: -5px;
+  width: 304px;
+  padding-top: 2px; 
+} */
+
+#sidebar-tabs > .item.active{
+  border : 1px solid var(--color-imperium);
+  box-shadow: 0 0 6px inset var(--color-imperium)
+}
+
+.tabs .item.active {
+  text-shadow: 0 0 10px var(--color-imperium)
+}
+
+.tabs .item:hover {
+  text-shadow: 0 0 10px var(--color-imperium)
+}
+
+#chat-form textarea {
+  background: var(--image-input);
+  content: url(../../asset/image/corner-skull.png)
+}
+
+textarea:focus {
+  box-shadow: 0 0 6px var(--color-imperium);
+}
+
+
+
+
+#chat-controls > * {
+  color : var(--color-imperium)
 }
 
 .wrath-and-glory .window-content { 
@@ -21,7 +84,7 @@
 .editor h1,
 .editor-content h1 { 
   font-family: var(--font-header);
-  font-size : 26px;
+  font-size : 40px;
   text-align: center;
 }
 
@@ -29,7 +92,7 @@
 .editor-content h2 { 
   font-family: var(--font-header);
   text-transform: uppercase;
-  font-size: 24px;
+  font-size: 36px;
   color: var(--color-header);
   width: fit-content;
   border-bottom: 8px solid transparent;
@@ -40,7 +103,7 @@
 .editor h2::after,
 .editor-content h2::after { 
   display: inline-block;
-  margin-bottom: -14px;
+  margin-bottom: -17px;
   margin-right: -45px;
   content: "";
   height: 11px;
@@ -52,7 +115,7 @@
 .editor h3,
 .editor-content h3 { 
   font-family: var(--font-header);
-  font-size : 22px;
+  font-size : 30px;
   text-transform: uppercase;
   border-bottom: 3px solid var(--color-header);
   color: var(--color-header);
@@ -61,6 +124,7 @@
 
 .editor .sidebar h3,
 .editor-content .sidebar h3 { 
+  font-family: var(--font-text);
   text-align: center;
   text-transform: uppercase;
   border: none;
@@ -70,18 +134,20 @@
 
 .editor  h4,
 .editor-content  h4 { 
+  font-family: var(--font-header);
   border: none;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 28px;
   font-weight: bold;
   color: var(--color-subheader)
 }
 
 .editor  h5,
 .editor-content  h5 { 
+  font-family: var(--font-header);
   border: none;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: bold;
   color: var(--color-subheader);
   margin: 0 0 0.5rem
@@ -89,11 +155,228 @@
 
 .editor .sidebar,
 .editor-content .sidebar {
-  background: url(../../asset/image/sidebar-background.png) 0px 100% repeat;
+  margin-right: 20px;
+  background: url(../../asset/image/journal-sidebar.png) 0px 100% repeat;
   border: 10px solid transparent;
   border-left: 0px;
   border-right: 0px;
-  border-image: url(../../asset/image/sidebar-border.png) 20 0 repeat;
+  border-image: url(../../asset/image/sidebar-journal-border.png) 30 0 repeat;
   box-shadow: inset 0px 0px 5px black;
   padding:10px;
+}
+
+.editor table .table-header,
+.editor-content table .table-header {
+  text-align: center; 
+  background-color: #752322; 
+  /*text-transform: uppercase;*/
+  color: #ddd;
+  font-size: 16px;
+  /* border-style: solid;
+  border-width: 8px 8px 8px 8px;
+  border-image: url(../../asset/image/border.png) 8 8 8 8 repeat repeat; */
+}
+
+.editor table .table-header.aeldari,
+.editor-content table .table-header.aeldari {
+  background-color: var(--color-aeldari); 
+}
+
+.editor table .table-header.ork,
+.editor-content table .table-header.ork {
+  background-color: var(--color-ork); 
+}
+
+.editor table .table-header.chaos,
+.editor-content table .table-header.chaos {
+  background-color: var(--color-chaos); 
+}
+
+.editor table .table-col-header,
+.editor-content table .table-col-header {
+  background-color: #484746; 
+  color: #ddd;
+}
+
+.chat-message { 
+  background: url(../../asset/image/journal-sidebar.png) repeat;
+  border: 8px solid transparent;
+  border-image: var(--image-border) 8 8 8 8 repeat repeat;
+  border-image-outset: 0px;
+}
+
+ .editor-content table,
+.editor table {
+/* border: 0;
+border-color: transparent;
+border-style: solid;
+border-width: 25px;
+-webkit-border-image: url(../../asset/image/border.png) 7 repeat;
+  border-image: url(../../asset/image/border.png) 8 8 8 8 repeat repeat;  */
+} 
+
+
+
+/* 
+#sidebar {
+  background: url(../../asset/image/sidebar.png)
+} */
+
+
+
+
+
+
+
+
+
+#controls .control-tool,
+    #controls .scene-control {
+    background: url(../../asset/image/dataslate.jpg) repeat;
+    background-size: 50%;
+    border: 1px solid var(--color-imperium)
+}
+
+#controls .control-tool.active,
+#controls .scene-control.active {
+    border: 1px solid black;
+    background: var(--color-imperium);
+    box-shadow: 0 0 10px var(--color-imperium)
+}
+
+#controls .control-tool:hover,
+#controls .scene-control:hover {
+    border: 1px solid var(--color-imperium);
+    color: var(--color-imperium);
+    box-shadow: 0 0 10px var(--color-imperium);
+}
+
+#controls .control-tool.active:hover,
+#controls .scene-control.active:hover {
+  color: white;
+  border: 1px solid black;
+}
+
+
+#navigation #scene-list .scene.view {
+    color: white;
+    border: 1px solid black;
+    background: var(--color-imperium);
+    box-shadow: 0 0 10px var(--color-imperium);
+}
+
+#navigation #scene-list .scene {
+    color: #CCC;
+    font-family: var(--font-sidebar);
+    border: 1px solid var(--color-imperium);
+    background: url(../../asset/image/dataslate.jpg) repeat;
+}
+
+#navigation #scene-list .scene.context {
+    border: 1px solid var(--color-imperium);
+}
+
+#navigation #nav-toggle {
+    background: url(../../asset/image/dataslate.jpg) repeat;
+    background-size: 50%;
+    border: 1px solid var(--color-imperium)
+}
+
+#players {
+    background: url(../../asset/image/dataslate.jpg) repeat;
+    border: 1px solid var(--color-imperium)
+}
+
+#players h3 {
+    border-bottom: 2px groove var(--color-imperium)
+
+}
+
+#hotbar #hotbar-directory-controls,
+#hotbar #hotbar-page-controls,
+    #macro-list {
+    font-family: var(--font-sidebar);
+    color: white;
+    background: url(../../asset/image/dataslate.jpg) repeat;
+    background-size : 100%;
+}
+
+#hotbar .macro {
+    border: 1px solid var(--color-imperium)
+}
+
+#hotbar .macro:hover {
+    box-shadow: 0 0 10px var(--color-imperium) inset
+}
+
+#hotbar .macro.active:hover {
+    border: 1px solid var(--color-imperium);
+}
+
+#hotbar #hotbar-directory-controls,
+#hotbar #hotbar-page-controls {
+    border: 2px solid var(--color-imperium)
+}
+
+textarea:focus {
+    box-shadow: 0 0 6px var(--color-imperium)
+}
+
+.journal-image img{
+  border: none
+} 
+
+.journal-image {
+  display: flex;
+  width:100%;
+
+}
+
+.journal-image.centered {
+  justify-content: center;
+}
+
+.window-app.image-popout .window-content {
+  background: url(../../asset/image/background.png) repeat;
+}
+
+.directory-item .folder-header h3,
+    .directory-item .entity-name{
+    font-family: var(--font-header);
+    font-size: 20px;
+}
+
+button {
+  width: 100%;
+  margin: 0 1px;
+  border: 1px solid black;
+  background: url(../../asset/image/button.jpg) repeat;
+  color: #CCC;
+  font-family: var(--font-header);
+  font-size: 16px;
+}
+
+form button {
+  background: url(../../asset/image/button.jpg) repeat;
+  border: 1px solid black;
+}
+
+.dialog .dialog-buttons button {
+  background: url(../../asset/image/button.jpg) repeat;
+  border: 1px solid black;
+}
+
+.dialog .dialog-buttons button.default {
+  box-shadow: 0 0 10px inset var(--color-imperium);
+  background: url(../../asset/image/button.jpg) repeat;
+  border: 1px solid black;
+}
+
+button:hover {
+  box-shadow: 0 0 10px var(--color-imperium);
+}
+
+button:disabled {
+  color: white;
+  opacity : 0.5;
 }

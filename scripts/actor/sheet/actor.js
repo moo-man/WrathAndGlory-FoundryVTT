@@ -189,24 +189,6 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                     class : "actor-configure",
                     icon : "fas fa-wrench",
                     onclick: (ev) => new ActorConfigure(this.actor).render(true)
-                },
-                {
-                    label: "BUTTON.ROLL",
-                    class: "custom-roll",
-                    icon: "fas fa-dice",
-                    onclick: (ev) => this._prepareCustomRoll()
-                },
-                {
-                    label: "BUTTON.REROLL",
-                    class: "reroll",
-                    icon: "fas fa-redo",
-                    onclick: (ev) => this._prepareReroll()
-                },
-                {
-                    label: "BUTTON.DAMAGE",
-                    class: "damage",
-                    icon: "fas fa-tint",
-                    onclick: (ev) => this._prepareDamageRoll()
                 }
             ].concat(buttons);
         }

@@ -51,6 +51,11 @@
   --color-subheader: #181e1f;
   --color-white: #e6e5e3;
   --color-header: #8a2e2a;
+  --color-imperium: #8a2e2a;
+  --color-aeldari: #232737;
+  --color-ork: #3f5028;
+  --color-chaos: #361f3c;
+  --color-green: #32a852;
 
   --image-background: url(../../asset/image/background.png);
   --image-border: url(../../asset/image/border.png);
@@ -59,5 +64,5 @@
 
   --font-text: "Caxton Std Book";
 
-  --font-header: 
+  --font-header: "Priori";
 }
