@@ -1,5 +1,20 @@
 export default class WrathAndGloryEffect extends ActiveEffect {
 
+    /** @override 
+     * Adds support for referencing actor data
+     * */ 
+    apply(actor, change) {
+    if (change.value.includes("@"))
+        actor.derivedEffects.push((change))
+    else 
+        super.apply(actor, change)
+    }
+
+    fillDerivedData(actor, change)
+    {
+        change.value = eval(Roll.replaceFormulaData(change.value, actor.getRollData()))
+    }
+
     get label() {
         return this.data.label
     }

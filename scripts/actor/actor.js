@@ -28,18 +28,27 @@ export class WrathAndGloryActor extends Actor {
         this.data.update(initData)
     }
 
-    prepareData() {
-        super.prepareData();
-        this.itemCategories = this.itemTypes
-        this._computeItems();
+
+    prepareBaseData() {
+    }
+
+    prepareDerivedData() {
+        this._applyDerivedEffects()
         this._computeAttributes();
         this._computeSkills();
+        this._computeItems();
         this._computeCombat();
-        if (this.type === "agent") {
+
+    }
+
+    prepareData() {
+        this.itemCategories = this.itemTypes
+        this.derivedEffects = []
+        super.prepareData();
+        if (this.type === "agent") 
             this.prepareAgent();
-        } else if (this.type === "threat") {
+        else if (this.type === "threat")
             this.prepareThreat();
-        }
     }
 
 
@@ -120,6 +129,25 @@ export class WrathAndGloryActor extends Actor {
         this.experience.current = this.experience.total - this.experience.spent;
     }
 
+    _applyDerivedEffects() {
+        this.derivedEffects.forEach(change => {
+            change.effect.fillDerivedData(this, change)
+            const modes = CONST.ACTIVE_EFFECT_MODES;
+            switch ( change.mode ) {
+                case modes.CUSTOM:
+                return change.effect._applyCustom(this, change);
+                case modes.ADD:
+                return change.effect._applyAdd(this, change);
+                case modes.MULTIPLY:
+                return change.effect._applyMultiply(this, change);
+                case modes.OVERRIDE:
+                return change.effect._applyOverride(this, change);
+                case modes.UPGRADE:
+                case modes.DOWNGRADE:
+                return change.effect._applyUpgrade(this, change);
+            }
+        })
+    }
 
     //#region Rolling
     async setupAttributeTest(attribute) {
