@@ -84,19 +84,22 @@ export class WNGTest {
     this.context.rerolled = true;
     this.rerolledTest = await this.roll.reroll()
     this._computeResult();
-    // if (game.dice3d) {
-    //   let rerollShow = this.rerolledTest.toJSON()
-    //   rerollShow.terms = this.rerolledTest.dice.map((term, t) => {
-    //     term.results = term.results.map((die, i) => {
-    //       if (this.roll.dice[t].results[i].rerollable)
-    //         return die
-    //     }).filter(i => i)
-    //     return term
-    //   })
+    if (game.dice3d) {
+      let rerollShow = duplicate(this.rerolledTest)
+      rerollShow.terms = rerollShow.terms.map((term, t) => {
+        if (term.results)
+        {
+          term.results = term.results.map((die, i) => {
+            if (this.roll.terms[t].results[i].rerollable)
+              return die
+          }).filter(i => i)
+        }
+        return term
+      })
 
-    //   await game.dice3d.showForRoll(Roll.fromData(rerollShow))
+      await game.dice3d.showForRoll(Roll.fromData(rerollShow))
 
-    // }
+    }
   }
 
   async sendToChat(rerenderMessage) {
