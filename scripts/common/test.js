@@ -150,7 +150,7 @@ export class WNGTest {
 
   async rollDamage() {
     let ed = this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank);
-    let formula = `${ed}d6`;
+    let formula = `${ed}dp`;
     let r = new Roll(formula, {});
     r.evaluate({ async: true });
     this.result.damage = {

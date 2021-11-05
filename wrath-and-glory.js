@@ -15,6 +15,7 @@ import { WNGTest, WrathDie, PoolDie } from "./scripts/common/test.js";
 import WeaponTest from "./scripts/common/weapon-test.js";
 import WrathAndGloryEffect from "./scripts/common/effect.js";
 import WrathAndGloryEffectSheet from "./scripts/apps/active-effect-config.js";
+import PowerTest from "./scripts/common/power-test.js";
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
@@ -24,7 +25,8 @@ Hooks.once("init", () => {
   game.wng = {
     rollClasses : {
       WNGTest,
-      WeaponTest
+      WeaponTest,
+      PowerTest
     },
     dice : {
       WrathDie,

@@ -54,5 +54,36 @@
         <button type="button" class="roll-damage">Roll Damage</button>
     </div>
     {{/if}}
+    {{#if result.isWrathCritical}}
+        {{#if weapon}}
+        <div class="wrapper">
+                <button type="button" class="roll-damage">Roll Critical Hit</button>
+        </div>
+        {{/if}}
+    {{/if}}
+    {{#if result.isWrathComplication}}
+        {{#if weapon}}
+        <div class="wrapper">
+                <button type="button" class="roll-wrath">Roll Complication</button>
+        </div>
+        {{else if power}}
+        <div class="wrapper">
+                <button type="button" class="roll-wrath">Perils of the Warp</button>
+        </div>
+        {{else}}
+        <div class="wrapper">
+                <button type="button" class="roll-wrath">Roll Complication</button>
+        </div>
+        {{/if}}
+    {{/if}}
+
+        {{#if result.isWrathCritical}}
+                {{#if weapon}}
+                <div class="wrapper">
+                        <button type="button" class="roll-wrath">Roll Critical Hit</button>
+                </div>
+                {{/if}}
+        {{/if}}
+
 </div>
 </div>
