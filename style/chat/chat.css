@@ -93,3 +93,8 @@
   margin: 3px;
   margin-right: 7px
 }
+
+
+.wrath-and-glory.chat .die.selected {
+  box-shadow: 0 0 10px var(--color-imperium)
+}

@@ -6,6 +6,15 @@ export default function() {
             if (test)
                 return !test.context.rerolled
         }
+
+        let canShift = li => {
+            return li.find(".selected").length && !li.find(".shifted").length
+        }
+        let canUnshift = li => {
+            return li.find(".shifted").length
+        }
+
+
         options.unshift(
             {
                 name: "BUTTON.REROLL",
@@ -15,6 +24,59 @@ export default function() {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
                     await test.reroll()
+                    test.sendToChat(message)
+                }
+            },
+            {
+                name: "BUTTON.SHIFT",
+                icon: '<i class="fas fa-angle-double-right"></i>',
+                condition: canShift,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
+                    test.testData.shifted.other = test.testData.shifted.other.concat(shifted)
+                    test._computeResult()
+                    test.sendToChat(message)
+                }
+            },
+            {
+                name: "BUTTON.SHIFT_DAMAGE",
+                icon: '<i class="fas fa-angle-double-right"></i>',
+                condition: canShift,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
+                    test.testData.shifted.damage = test.testData.shifted.damage.concat(shifted)
+                    test._computeResult()
+                    test.sendToChat(message)
+                }
+            },
+            {
+                name: "BUTTON.SHIFT_GLORY",
+                icon: '<i class="fas fa-angle-double-right"></i>',
+                condition: canShift,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
+                    test.testData.shifted.glory = test.testData.shifted.glory.concat(shifted)
+                    test._computeResult()
+                    test.sendToChat(message)
+                }
+            },
+            {
+                name: "BUTTON.UNSHIFT",
+                icon: '<i class="fas fa-angle-double-left"></i>',
+                condition: canUnshift,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    test.testData.shifted.other = []
+                    test.testData.shifted.damage = []
+                    test.testData.shifted.glory = []
+                    test._computeResult()
                     test.sendToChat(message)
                 }
             },
