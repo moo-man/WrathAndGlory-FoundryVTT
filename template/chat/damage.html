@@ -2,9 +2,9 @@
     <div class="wrapper">
         <h3>{{context.title}} - Damage</h3>
 
-        <div style="text-align: center;">
+        <div class="dice-container">
             {{#each result.damage.dice as |die|}}
-            <div class="die {{die.name}}">{{die.result}}</div>
+            <span class="die {{die.name}} data-index="{{die.index}}"><img src="{{die.img}}.png"/></span>
             {{/each}}
         </div>
     </div>

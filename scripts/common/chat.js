@@ -11,6 +11,7 @@ export default class WNGChat {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let message = game.messages.get(id)
     let test = message.getTest();
+    test.rollDamage()
     test.sendDamageToChat();
   }
 

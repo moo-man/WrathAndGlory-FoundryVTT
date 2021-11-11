@@ -225,7 +225,7 @@ export class WNGTest {
   }
 
   async rollDamage() {
-    let ed = this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank);
+    let ed = this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length;
     let formula = `${ed}dp`;
     let r = new Roll(formula, {});
     r.evaluate({ async: true });
@@ -236,8 +236,7 @@ export class WNGTest {
     };
     r.terms.forEach((term) => {
       if (typeof term === 'object' && term !== null) {
-        term.results.forEach(result => {
-          let die = this._computeExtraDice(result.result, this.testData.ed.die);
+        term.results.forEach(die => {
           this.result.damage.total += die.value;
           this.result.damage.dice.push(die);
         });
@@ -247,28 +246,6 @@ export class WNGTest {
     this.result.damage.roll = r.toJSON()
   }
 
-
-  _computeExtraDice(dieValue, die) {
-    let propertyName = Object.keys(die)[dieValue - 1];
-    let value = die[propertyName];
-    let name = "failed";
-    let weight = 1;
-    if (value >= 2) {
-      name = "icon";
-      weight = 3;
-    } else if (value === 1) {
-      name = "success";
-      weight = 2;
-    }
-    return {
-      name: name,
-      value: value,
-      result: dieValue,
-      isWrath: false,
-      rerollable: false,
-      weight: weight
-    };
-  }
 
   async sendDamageToChat() {
     const html = await renderTemplate("systems/wrath-and-glory/template/chat/damage.html", this);
@@ -298,133 +275,6 @@ export class WNGTest {
   get item() { return this.actor.items.get(this.testData.itemId) }
   get actor() { return game.wng.utility.getSpeaker(this.context.speaker) }
   get message() { return game.messages.get(this.context.messageId)}
-
-
-
-
-
-
-
-
-  /*
-  
-    async  weaponRoll(this.testData) {
-      let weaponName = this.testData.name;
-      this.testData.name = game.i18n.localize(this.testData.skillName);
-      await commonRoll(this.testData);
-      this.testData.name = weaponName;
-      if (this.result.isSuccess) {
-        _rollDamage(this.testData);
-        _computeDamageChat(this.testData);
-        await _sendDamageToChat(this.testData);
-      }
-    }
-    
-    async  psychicRoll(this.testData) {
-      let psychicName = this.testData.name;
-      this.testData.name = game.i18n.localize(this.testData.skillName);
-      await commonRoll(this.testData);
-      this.testData.name = psychicName;
-      if (this.result.isSuccess && _hasDamage(this.testData)) {
-        _rollDamage(this.testData);
-        _computeDamageChat(this.testData);
-        await _sendDamageToChat(this.testData);
-      }
-    }
-    
-    async  damageRoll(this.testData) {
-      _rollDamage(this.testData);
-      _computeDamageChat(this.testData);
-      await _sendDamageToChat(this.testData);
-    }
-    
-  
-    _rollDamage(this.testData) {
-      let ed = this.testData.weapon.ed.base + this.testData.weapon.ed.bonus;
-      let formula = `${ed}d6`;
-      let r = new Roll(formula, {});
-      r.evaluate();
-      this.result.damage = {
-        dice: [],
-        total: this.testData.weapon.damage.base + this.testData.weapon.damage.bonus
-      };
-      r.terms.forEach((term) => {
-        if (typeof term === 'object' && term !== null) {
-          term.results.forEach(result => {
-            let die = _computeExtraDice(result.result, this.testData.weapon.ed.die);
-            this.result.damage.total += die.value;
-            this.result.damage.dice.push(die);
-          });
-        }
-      });
-      this.testData.rolls.damage.push(r);
-    }
-    
-  
-    
-    _computeDamageChat(this.testData) {
-      this.result.damage.dice.sort((a, b) => { return b.weight - a.weight });
-      if (this.testData.weapon.ap) {
-        this.testData.weapon.ap.total = this.testData.weapon.ap.base + this.testData.weapon.ap.bonus;
-      }
-    }
-    
-    
-    
-    _computeExtraDice(dieValue, die) {
-      let propertyName = Object.keys(die)[dieValue - 1];
-      let value = die[propertyName];
-      let name = "failed";
-      let weight = 1;
-      if (value >= 2) {
-        name = "icon";
-        weight = 3;
-      } else if (value === 1) {
-        name = "success";
-        weight = 2;
-      }
-      return {
-        name = name,
-        value =  value,
-        score: dieValue =
-        isWrath: fat =e,
-        rerollable: false,
-        weight: weight
-      };
-    }
-    
-    
-    _hasDamage(this.testData) {
-      let damage = this.testData.weapon.damage.base + this.testData.weapon.damage.bonus;
-      let ed = this.testData.weapon.ed.base + this.testData.weapon.ed.bonus;
-      return (damage > 0 || ed > 0);
-    }
-    
-    _getRoll(rolls)
-    {
-      const pool = PoolTerm.fromRolls(rolls);
-      return Roll.fromTerms([pool]);
-    }
-    
-    async _sendDamageToChat(this.testData) {
-      const html = await renderTemplate("systems/wrath-and-glory/template/chat/damage.html", this.testData);
-      let chatData = {
-        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-        roll: _getRoll(this.testData.rolls.damage),
-        flags: {this.testData: this.testData},
-        user: game.user.id,
-        rollMode: game.settings.get("core", "rollMode"),
-        content: html
-      };
-      if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
-        chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-      } else if (chatData.rollMode === "selfroll") {
-        chatData.whisper = [game.user];
-      }
-      ChatMessage.create(chatData);
-    }
-    
-  */
 
 }
 
