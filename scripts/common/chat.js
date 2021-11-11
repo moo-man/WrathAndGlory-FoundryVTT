@@ -45,7 +45,7 @@ export default class WNGChat {
     let test = message.getTest();
     let index = parseInt(ev.currentTarget.dataset.index);
     
-    if (test.result.dice[index].canShift && test.result.shiftsPossible > 0)
+    if (test.result.allDice[index].canShift && test.result.shiftsPossible > 0 && !ev.currentTarget.classList.contains("shifted"))
       ev.currentTarget.classList.add("selected")
 
   }

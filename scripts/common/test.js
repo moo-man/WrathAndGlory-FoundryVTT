@@ -77,10 +77,22 @@ export class WNGTest {
       }, [])
     }
 
+    this.result.dice.forEach((die, index) => die.index = index)
     this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result == 6)
     this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result == 1)
-    this.result.shifted = this.result.dice.filter((die, index) => this.isShifted(index))
-    this.result.dice = this.result.dice.filter((die, index) => !this.isShifted(index))
+
+    this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index))
+    this.result.shifted.forEach(die => {
+      if(this.testData.shifted.damage.includes(die.index))
+        die.shift = "damage";
+      else if(this.testData.shifted.glory.includes(die.index))
+        die.shift = "glory";
+      else
+        die.shift = "other"
+    })
+
+    this.result.allDice = duplicate(this.result.dice)
+    this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index))
     this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0)
     this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0)
     this.result.shiftsPossible = this._countShifting();
@@ -91,6 +103,13 @@ export class WNGTest {
     this.context.rerolled = true;
     this.rerolledTest = await this.roll.reroll()
     this._computeResult();
+    
+    if(this.result.isWrathCritical && !this.context.gloryAdded)
+    {
+      this.context.gloryAdded = true
+      game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
+    }
+
     if (game.dice3d) {
       let rerollShow = duplicate(this.rerolledTest)
       rerollShow.terms = rerollShow.terms.map((term, t) => {
@@ -105,11 +124,33 @@ export class WNGTest {
       })
 
       await game.dice3d.showForRoll(Roll.fromData(rerollShow))
-
+      this.sendToChat()
     }
   }
 
-  async sendToChat(rerenderMessage) {
+  shift(shift, type) {
+
+    this.testData.shifted[type] = this.testData.shifted[type].concat(shift)
+    this._computeResult()
+    this.sendToChat()
+  }
+
+  unshift()
+  {
+    let glorySubtract = -this.testData.shifted.glory.length
+    game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
+        game.counter.render(true)
+        ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : glorySubtract}))
+    })
+    //this.result.allDice.filter(die => die.shift).forEach(die => die.shift = "")
+    this.testData.shifted.other = []
+    this.testData.shifted.damage = []
+    this.testData.shifted.glory = []
+    this._computeResult()
+    this.sendToChat()
+  }
+
+  async sendToChat({newMessage = null}={}) {
     const html = await renderTemplate("systems/wrath-and-glory/template/chat/roll.html", this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
@@ -124,12 +165,16 @@ export class WNGTest {
     } else if (chatData.rollMode === "selfroll") {
       chatData.whisper = [game.user];
     }
-    if (!rerenderMessage)
-      return ChatMessage.create(chatData);
+    if (newMessage || !this.message)
+    {
+      return ChatMessage.create(chatData).then(msg => {
+        msg.update({"flags.wrath-and-glory.testData.context.messageId" : msg.id})
+      });
+    }
     else
     {
       delete chatData.roll
-      return rerenderMessage.update(chatData)
+      return this.message.update(chatData)
     }
   }
 
@@ -143,6 +188,11 @@ export class WNGTest {
       }
     }
     return shifting;
+  }
+
+  dieIndex(index)
+  {
+    return this.roll.dice.reduce((prev, current) => prev.concat(current.results), [])[index]
   }
 
   isShifted(dieIndex)
@@ -247,7 +297,7 @@ export class WNGTest {
 
   get item() { return this.actor.items.get(this.testData.itemId) }
   get actor() { return game.wng.utility.getSpeaker(this.context.speaker) }
-
+  get message() { return game.messages.get(this.context.messageId)}
 
 
 

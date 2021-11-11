@@ -4,16 +4,31 @@
 
         <h4>{{localize "CHAT.DN"}} {{result.dn}}</h4>
         <div class="dice-container">
-            {{#each result.dice as |die index|}}
-            <a class="die {{die.name}} unshifted" data-index="{{index}}"><img src="{{die.img}}.png"/></a>
+            {{#each result.dice as |die|}}
+            <a class="die {{die.name}} unshifted" data-index="{{die.index}}"><img src="{{die.img}}.png"/>
+                {{#if die.rerolled}}
+                        <span class="reroll die-icon"><i class="fas fa-redo"></i></span>
+                {{/if}}    
+            </a>
             {{/each}}
         </div>
         {{#if result.shifted.length}}
         <hr>
         <h4>Shifted</h4>
         <div class="dice-container">
-                {{#each result.shifted as |die index|}}
-                <a class="die {{die.name}} shifted" data-index="{{index}}"><img src="{{die.img}}.png"/></a>
+                {{#each result.shifted as |die|}}
+                <a class="die {{die.name}} shifted" data-index="{{die.index}}"><img src="{{die.img}}.png"/>
+                        {{log die}}
+                        {{#if (eq die.shift "glory")}}
+                        <span class="glory die-icon">G</span>
+                        {{/if}}
+                        {{#if (eq die.shift "damage")}} 
+                        <span class="damage die-icon">D</span>
+                        {{/if}}
+                        {{#if die.rerolled}}
+                        <span class="reroll die-icon"><i class="fas fa-redo"></i></span>
+                        {{/if}}   
+                </a>
                 {{/each}}
         </div>
         {{/if}}

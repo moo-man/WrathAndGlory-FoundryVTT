@@ -8,7 +8,7 @@ export default function() {
         }
 
         let canShift = li => {
-            return li.find(".selected").length && !li.find(".shifted").length
+            return li.find(".selected").length// && !li.find(".shifted").length
         }
         let canUnshift = li => {
             return li.find(".shifted").length
@@ -23,8 +23,7 @@ export default function() {
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
-                    await test.reroll()
-                    test.sendToChat(message)
+                    test.reroll()
                 }
             },
             {
@@ -35,9 +34,7 @@ export default function() {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
-                    test.testData.shifted.other = test.testData.shifted.other.concat(shifted)
-                    test._computeResult()
-                    test.sendToChat(message)
+                    test.shift(shifted, "other")        
                 }
             },
             {
@@ -48,9 +45,7 @@ export default function() {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
-                    test.testData.shifted.damage = test.testData.shifted.damage.concat(shifted)
-                    test._computeResult()
-                    test.sendToChat(message)
+                    test.shift(shifted, "damage")
                 }
             },
             {
@@ -61,14 +56,13 @@ export default function() {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
-                    test.testData.shifted.glory = test.testData.shifted.glory.concat(shifted)
+                    test.shift(shifted, "glory")
+
                     game.wng.RuinGloryCounter.changeCounter(shifted.length,  "glory").then(() => {
                         game.counter.render(true)
                         ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : shifted.length}))
                     })
                     game.counter.render(true)
-                    test._computeResult()
-                    test.sendToChat(message)
                 }
             },
             {
@@ -78,16 +72,7 @@ export default function() {
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
-                    let glorySubtract = -test.testData.shifted.glory.length
-                    game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
-                        game.counter.render(true)
-                        ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : glorySubtract}))
-                    })
-                    test.testData.shifted.other = []
-                    test.testData.shifted.damage = []
-                    test.testData.shifted.glory = []
-                    test._computeResult()
-                    test.sendToChat(message)
+                    test.unshift()
                 }
             },
             {

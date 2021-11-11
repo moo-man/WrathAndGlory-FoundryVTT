@@ -91,10 +91,43 @@
   width: 60px;
   height: 60px;
   margin: 3px;
-  margin-right: 7px
+  margin-right: 7px;
+  position: relative;
 }
-
 
 .wrath-and-glory.chat .die.selected {
   box-shadow: 0 0 10px var(--color-imperium)
+}
+
+.wrath-and-glory.chat .die .die-icon {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid var(--color-imperium);
+  color: var(--color-imperium);
+  z-index: 1;
+  right: -5px;
+  top: -5px;
+  padding-top: 2px;
+  padding-top: 3px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.wrath-and-glory.chat .die:hover {
+  text-shadow: none;
+}
+
+  .wrath-and-glory.chat .die .die-icon.reroll{
+  right: -5px;
+  top: -5px;
+}
+
+
+.wrath-and-glory.chat .die.shifted .die-icon.damage,
+  .wrath-and-glory.chat .die.shifted .die-icon.glory{
+  left: -5px;
 }
