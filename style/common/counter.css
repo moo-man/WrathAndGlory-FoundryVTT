@@ -1,6 +1,19 @@
+#counter .window-header{
+    display: none
+}
+
+#counter .window-content,
+#counter.window-app {
+    background: none;
+    border-image: none;
+    box-shadow: none;
+    width: 240px;
+    height: 85px;
+    border: none
+}
+
 .counter-app {
-    display: flex;
-    justify-content: space-around;
+
     position: absolute;
     width: 240px;
     height: 85px;
@@ -8,13 +21,28 @@
     border: 8px solid transparent;
     border-image: var(--image-border) 8 8 8 8 repeat repeat;
     border-image-outset: 5px;
-    bottom: 74px;
-    left: 251px;
     border-radius: 5px;
 }
 
 .counter-app > * {
     opacity: 1
+}
+
+
+.counter-app .counter-controls {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.counter-app .counter-controls .handle:hover {
+    text-shadow: none;
+}
+
+.counter-app .counters {
+    display: flex;
+    justify-content: space-around;
 }
 
 

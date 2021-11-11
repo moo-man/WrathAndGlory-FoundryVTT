@@ -34,6 +34,15 @@ export default function() {
       default: 0,
       type: Number,
     });
+
+    game.settings.register('wrath-and-glory', 'counterPosition', {
+      name: 'Counter Position',
+      scope: 'client',
+      config: false,
+      default: {},
+      type: Object,
+    });
+
   })
 
 }

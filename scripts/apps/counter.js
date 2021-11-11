@@ -3,9 +3,6 @@ export default class RuinGloryCounter extends Application {
       const options = super.defaultOptions;
       options.id = 'counter';
       options.template = 'systems/wrath-and-glory/template/apps/counter.html';
-      options.width = 'auto';
-      options.height = 300;
-      options.popOut = false;
       return options;
     }
     /* -------------------------------------------- */
@@ -22,9 +19,28 @@ export default class RuinGloryCounter extends Application {
   
       return data;
     }
+
+    render(force=false, options={})
+    {
+      let userPosition = game.settings.get("wrath-and-glory", "counterPosition")
+      options.top = userPosition.top || window.innerHeight - 200
+      options.left = userPosition.left || 250
+      super.render(force, options)
+    }
+
+    setPosition(...args) {
+      super.setPosition(...args);
+      game.settings.set("wrath-and-glory", "counterPosition", this.position)
+    }
+
+    close(){
+      return
+    }
   
     activateListeners(html) {
       super.activateListeners(html);
+
+      new Draggable(this, html, html.find(".handle")[0], false)
   
       html.find('input').focusin(ev => {
         ev.target.select()
