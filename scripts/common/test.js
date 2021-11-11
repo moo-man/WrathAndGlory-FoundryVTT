@@ -38,6 +38,13 @@ export class WNGTest {
     this.result.dn = this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank);
     await this._rollDice()
     this._computeResult();
+
+    if(this.result.isWrathCritical && !this.context.gloryAdded)
+    {
+      this.context.gloryAdded = true
+      game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
+    }
+
   }
 
   async _rollDice() {

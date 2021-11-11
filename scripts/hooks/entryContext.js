@@ -62,6 +62,11 @@ export default function() {
                     let test = message.getTest();
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.testData.shifted.glory = test.testData.shifted.glory.concat(shifted)
+                    game.wng.RuinGloryCounter.changeCounter(shifted.length,  "glory").then(() => {
+                        game.counter.render(true)
+                        ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : shifted.length}))
+                    })
+                    game.counter.render(true)
                     test._computeResult()
                     test.sendToChat(message)
                 }
@@ -73,6 +78,11 @@ export default function() {
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
+                    let glorySubtract = -test.testData.shifted.glory.length
+                    game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
+                        game.counter.render(true)
+                        ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : glorySubtract}))
+                    })
                     test.testData.shifted.other = []
                     test.testData.shifted.damage = []
                     test.testData.shifted.glory = []

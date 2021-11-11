@@ -130,7 +130,7 @@
   "CHAT.DN": "DN",
   "CHAT.SHIFTING": "Shifts Possible",
   "CHAT.WRATH_CRITICAL_TITLE": "Wrath Critical",
-  "CHAT.WRATH_CRITICAL_COMMON": "add 1 point of Glory to the group's pool!",
+  "CHAT.WRATH_CRITICAL_COMMON": "1 point of Glory added to the group's pool!",
   "CHAT.WRATH_CRITICAL_PSY": "shift any Exalted Icons to enhance the power's effect!",
   "CHAT.WRATH_CRITICAL_WEAPON": "roll on the Critical Hit table!",
   "CHAT.WRATH_COMPLICATION_TITLE": "Wrath Complication",
@@ -345,8 +345,7 @@
   "WEAPON_UPGRADE.RARITY": "Rarity",
   "WEAPON_UPGRADE.KEYWORDS": "Keywords",
 
-
-
+  "COUNTER.GLORY_CHANGED" : "Glory changed by {change}",
 
   "AUTOCALC.DEFENSE" : "Auto Calculate Defense",
   "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",
