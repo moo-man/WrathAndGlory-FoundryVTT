@@ -42,6 +42,10 @@ export default class WrathAndGloryEffect extends ActiveEffect {
         }
     }
 
+    get isCondition() {
+        return CONFIG.statusEffects.map(i => i.id).includes(this.getFlag("core", "statusId"))
+    }
+
     static get numericTypes() {
         return [
             "pool.base",

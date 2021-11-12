@@ -14,7 +14,8 @@ function preloadHandlebarsTemplates() {
     "systems/wrath-and-glory/template/actor/tab/notes-threat.html",
     "systems/wrath-and-glory/template/actor/tab/settings.html",
     "systems/wrath-and-glory/template/actor/tab/stats.html",
-    "systems/wrath-and-glory/template/actor/tab/talents.html",
+    "systems/wrath-and-glory/template/actor/tab/talents.html"
+    //"systems/wrath-and-glory/template/partials/damage.html",
   ];
   return loadTemplates(templatePaths);
 }

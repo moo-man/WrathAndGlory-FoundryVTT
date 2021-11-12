@@ -130,6 +130,48 @@ export class WrathAndGloryItem extends Item {
 
     }
 
+    async addCondition(effect) {
+        if (typeof (effect) === "string")
+          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+        if (!effect)
+          return "No Effect Found"
+    
+        if (!effect.id)
+          return "Conditions require an id field"
+    
+    
+        let existing = this.hasCondition(effect.id)
+    
+        if (!existing) {
+          effect.label = game.i18n.localize(effect.label)
+          effect["flags.core.statusId"] = effect.id;
+          delete effect.id
+          return this.createEmbeddedDocuments("ActiveEffect", [effect])
+        }
+      }
+    
+      async removeCondition(effect, value = 1) {
+        if (typeof (effect) === "string")
+          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+        if (!effect)
+          return "No Effect Found"
+    
+        if (!effect.id)
+          return "Conditions require an id field"
+    
+        let existing = this.hasCondition(effect.id)
+    
+        if (existing) {
+          return existing.delete()
+        }
+      }
+    
+    
+      hasCondition(conditionKey) {
+        let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
+        return existing
+      }
+
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get Range() {
         const short = this.range.short < 1 ? "-" : this.range.short;

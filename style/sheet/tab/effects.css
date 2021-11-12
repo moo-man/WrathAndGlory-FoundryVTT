@@ -1,0 +1,19 @@
+.wrath-and-glory.sheet .condition-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.wrath-and-glory.sheet .condition-list .condition {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrath-and-glory.sheet .condition-list .condition img{
+  width: 50px;
+  height: 50px;
+  border: none
+}

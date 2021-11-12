@@ -42,6 +42,15 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     const data = super.getData();
     data.data = data.data.data // project system data so that handlebars has the same name and value paths
 
+    data.conditions = CONFIG.statusEffects.map(i => {
+      return {
+          label : i.label,
+          key : i.id,
+          img : i.icon,
+          existing : this.item.hasCondition(i.id)
+      }
+    })  
+
     data.rangeType = (this.item.isMelee || this.item.category == "grenade-missile") ? "single" : "multi"
     return data;
   }
@@ -114,7 +123,17 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       let index = parseInt($(ev.currentTarget).parents(".item").attr("data-index"))
       this.item.Upgrades[index].sheet.render(true)
       ui.notifications.warn("Changes made to an upgrade will not be saved")
+    }) 
+
+
+    html.find(".condition-toggle").click(event => {
+      let key = $(event.currentTarget).parents(".condition").attr("data-key")
+      if (this.item.hasCondition(key))
+          this.item.removeCondition(key)
+      else
+          this.item.addCondition(key)
     })
+
 
   }
 }

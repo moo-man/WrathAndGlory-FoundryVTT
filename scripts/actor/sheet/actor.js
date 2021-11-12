@@ -142,10 +142,18 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     constructEffectLists(sheetData) 
     {
         let effects = {}
-
-        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled)
-        effects.disabled = sheetData.actor.effects.filter(i => i.data.disabled)
-        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled)
+        
+        effects.conditions = CONFIG.statusEffects.map(i => {
+            return {
+                label : i.label,
+                key : i.id,
+                img : i.icon,
+                existing : this.actor.hasCondition(i.id)
+            }
+        })  
+        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled && !i.isCondition)
+        effects.disabled = sheetData.actor.effects.filter(i => i.data.disabled && !i.isCondition)
+        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled && !i.isCondition)
 
         sheetData.effects = effects;
     }
@@ -178,6 +186,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".show-adv").mouseenter(this._onAdvHover.bind(this))
         html.find(".show-adv").mouseleave(this._onAdvLeave.bind(this))
         html.find(".adv-buttons button").click(this._onAdvButtonClick.bind(this))
+        html.find(".condition-toggle").click(this._onConditionToggle.bind(this))
     }
 
     _getHeaderButtons() {
@@ -396,6 +405,14 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let test = await this.actor.setupPowerTest(div.data("itemId"))
         await test.rollTest();
         test.sendToChat()
+    }
+
+    _onConditionToggle(event) {
+        let key = $(event.currentTarget).parents(".condition").attr("data-key")
+        if (this.actor.hasCondition(key))
+            this.actor.removeCondition(key)
+        else
+            this.actor.addCondition(key)
     }
 
     async _prepareRollPsychicPower(event) {
