@@ -112,6 +112,40 @@
           </div>
         </div>
         <div class="wrapper">
+          <div class="test">
+            <label>{{localize "PSYCHIC_POWER.TEST"}}</label>
+            <input name="data.test.dn" class="dn" type="number" value="{{data.test.dn}}" data-dtype="Number" />
+            <select name="data.test.type" class="type">
+              {{#select data.test.type}}
+                <option value="">-</option>
+                {{#each (config "testTypes") as |type k|}}
+                <option value="{{k}}">{{type}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+            {{#if (eq data.test.type "attribute")}}
+              <select name="data.test.specification" class="attribute">
+              {{#select data.test.specification}}
+                <option value="">-</option>
+                {{#each (config "attributes") as |attribute k|}}
+                <option value="{{k}}">{{attribute}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+            {{/if}}
+            {{#if (eq data.test.type "skill")}}
+            <select name="data.test.specification" class="skill">
+              {{#select data.test.specification}}
+                <option value="">-</option>
+                {{#each (config "skills") as |skill k|}}
+                <option value="{{k}}">{{skill}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+            {{/if}}
+          </div>
+        </div>
+        <div class="wrapper">
           <div class="keywords">
             <label>{{localize "PSYCHIC_POWER.KEYWORDS"}}</label>
             <input name="data.keywords" type="text" value="{{data.keywords}}" />

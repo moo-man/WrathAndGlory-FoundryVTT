@@ -11,11 +11,13 @@ import ItemTraits from "./scripts/apps/item-traits.js"
 import WNG from "./scripts/common/config.js"
 import { WrathAndGloryItemSheet } from "./scripts/item/sheet/item-sheet.js";
 import WNGUtility from "./scripts/common/utility.js"
-import { WNGTest, WrathDie, PoolDie } from "./scripts/common/test.js";
-import WeaponTest from "./scripts/common/weapon-test.js";
+import { WNGTest, WrathDie, PoolDie } from "./scripts/common/tests/test.js";
+import WeaponTest from "./scripts/common/tests/weapon-test.js";
 import WrathAndGloryEffect from "./scripts/common/effect.js";
 import WrathAndGloryEffectSheet from "./scripts/apps/active-effect-config.js";
-import PowerTest from "./scripts/common/power-test.js";
+import PowerTest from "./scripts/common/tests/power-test.js";
+import CorruptionTest from "./scripts/common/tests/corruption-test.js";
+import MutationTest from "./scripts/common/tests/mutation-test.js";
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
@@ -26,7 +28,9 @@ Hooks.once("init", () => {
     rollClasses : {
       WNGTest,
       WeaponTest,
-      PowerTest
+      PowerTest,
+      CorruptionTest : CorruptionTest,
+      MutationTest : MutationTest
     },
     dice : {
       WrathDie,

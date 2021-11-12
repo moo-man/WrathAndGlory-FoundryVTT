@@ -23,6 +23,18 @@ export default function() {
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
+                    let actor = test.actor;
+                    if (actor.type == "agent")
+                    {
+                      if (actor.resources.wrath <= 0)
+                        return ui.notifications.error(game.i18n.localize("ERROR.NoMoreWrath"))
+                      else 
+                      {
+                        actor.update({"data.resources.wrath" : actor.resources.wrath - 1})
+                        ui.notifications.notify(game.i18n.localize("NOTE.WrathSubtracted"))
+                      }
+                    }
+
                     test.reroll()
                 }
             },

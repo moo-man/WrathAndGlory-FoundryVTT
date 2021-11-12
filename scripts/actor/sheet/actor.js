@@ -1,5 +1,4 @@
 import ActorConfigure from "../../apps/actor-configure.js";
-import { WNGTest } from "../../common/test.js";
 
 export class WrathAndGloryActorSheet extends ActorSheet {
     rollData = {};
@@ -357,9 +356,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     async _onDeterminationClick(event) {
         event.preventDefault();
-        const data = duplicate(this.actor.combat.determination)
-        data.title = `ROLL.DETERMINATION`
-        let test = await this.actor.setupGenericTest(data, "determination")
+        let test = await this.actor.setupGenericTest("determination")
         await test.rollTest();
         test.sendToChat()
     }
@@ -367,26 +364,41 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     async _onConvictionClick(event) {
         event.preventDefault();
         this._resetRollData();
-        const data = duplicate(this.actor.combat.conviction)
-        data.title = `ROLL.CONVICTION`
-        let test = await this.actor.setupGenericTest(data, "conviction")
-        await test.rollTest();
-        test.sendToChat()
+
+        new Dialog({
+            title : "Conviction Roll",
+            buttons : {
+                "corruption" : {
+                    label : "Corruption",
+                    callback : async () => {
+                        let test = await this.actor.setupGenericTest("corruption")
+                        await test.rollTest();
+                        test.sendToChat()
+
+                    }
+                },
+                "mutation" : {
+                    label : "Mutation",
+                    callback : async () => {
+                        let test = await this.actor.setupGenericTest("mutation")
+                        await test.rollTest();
+                        test.sendToChat()
+                    }
+                }
+            }
+        }).render(true)
     }
 
     async _onResolveClick(event) {
         event.preventDefault();
-        const data = duplicate(this.actor.combat.resolve)
-        data.title = `ROLL.RESOLVE`
-        let test = await this.actor.setupGenericTest(data, "resolve")
+        let test = await this.actor.setupGenericTest("resolve")
         await test.rollTest();
         test.sendToChat()
     }
 
     async _onInfluenceClick(event) {
         event.preventDefault();
-        const data = duplicate({total : this.actor.resources.influence, title : "ROLL.INFLUENCE"})
-        let test = await this.actor.setupGenericTest(data, "influence")
+        let test = await this.actor.setupGenericTest("influence")
         await test.rollTest();
         test.sendToChat()
     }

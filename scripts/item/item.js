@@ -372,4 +372,5 @@ export class WrathAndGloryItem extends Item {
     get salvo() { return this.data.data.salvo }
     get upgrades() { return this.data.data.upgrades }
     get equipped() { return this.data.data.equipped }
+    get test() {return this.data.data.test}
 }

@@ -4,6 +4,8 @@ export default class WNGChat {
     html.on("click", ".roll-wrath", this._onWrathClick.bind(this))
     html.on("click", "a.die", this._onDieClick.bind(this))
     html.on("click", ".test-effect", this._onEffectClick.bind(this))
+    html.on("click", ".invoke-test", this._onTestClick.bind(this))
+    html.on("click", ".roll-mutation", this._onMutationClick.bind(this))
   }
 
   static _onDamageClick(ev) {
@@ -95,5 +97,71 @@ export default class WNGChat {
           return ui.notifications.warn(game.i18n.localize("WARN.NoActorsToApply"))
 
  
+  }
+
+  static async _onTestClick(ev)
+  {
+    let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+    let msg = game.messages.get(id)
+    let msgTest = msg.getTest();
+    let itemTest = msgTest.item.test;
+
+    if (canvas.tokens.controlled.length)
+    {
+      for (let token of canvas.tokens.controlled)
+      {
+        let testFunction;
+        if (itemTest.type == "attribute")
+          testFunction = token.actor.setupAttributeTest.bind(token.actor)
+        else if (itemTest.type == "skill")
+          testFunction = token.actor.setupSkillTest.bind(token.actor)
+        else
+        {
+          testFunction = token.actor.setupGenericTest.bind(token.actor)
+          itemTest = duplicate(itemTest)
+          itemTest.specification = itemTest.type
+        }
+
+        await testFunction(itemTest.specification, {dn: itemTest.dn}).then(async test => {
+          await test.rollTest();
+          test.sendToChat()
+        })
+      }
+
+    }
+    else if (game.user.character)
+    { 
+      let testFunction;
+      if (itemTest.type == "attribute")
+        testFunction = game.user.character.setupAttributeTest.bind(game.user.character)
+      else if (itemTest.type == "skill")
+        testFunction = game.user.character.setupSkillTest.bind(game.user.character)
+      else
+      {
+        testFunction = game.user.character.setupGenericTest.bind(game.user.character)
+        itemTest = duplicate(itemTest)
+        itemTest.specification = itemTest.type
+      }
+
+      await testFunction(itemTest.specification, {dn: itemTest.dn}).then(async test => {
+        await test.rollTest();
+        test.sendToChat()
+      })
+    }
+    else 
+      return ui.notifications.error("WARN.NoActorsToTest")
+  }
+  
+  static async _onMutationClick(ev)
+  {
+    let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+    let msg = game.messages.get(id)
+    let test = msg.getTest();
+
+    let table = game.tables.getName("Mutation Severity")
+    let roll = new Roll(table.data.formula)
+    let result = await table.roll({ roll })
+    ChatMessage.create({ content: result.results[0].getChatText() + ` (${result.roll.total})`, roll : result.roll, type: CONST.CHAT_MESSAGE_TYPES.ROLL, flavor: `Mutation`, speaker : test.context.speaker })
+   
   }
 }

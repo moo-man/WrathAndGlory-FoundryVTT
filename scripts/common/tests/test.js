@@ -35,7 +35,6 @@ export class WNGTest {
   async rollTest() {
     this.result.wrathSize = this.testData.wrath.base > 0 ? this.testData.wrath.base : 1;
     this.result.poolSize = this.testData.pool.size + this.testData.pool.bonus - 1 + this.getRankNum(this.testData.pool.rank);
-    this.result.dn = this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank);
     await this._rollDice()
     this._computeResult();
 
@@ -59,6 +58,7 @@ export class WNGTest {
   }
 
   _computeResult() {
+    this.result.dn = this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank);
     this.result.roll = this.roll.toJSON()
     this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), [])
     if (this.context.rerolled) {
@@ -101,6 +101,7 @@ export class WNGTest {
 
   async reroll() {
     this.context.rerolled = true;
+
     this.rerolledTest = await this.roll.reroll()
     this._computeResult();
     
@@ -140,7 +141,8 @@ export class WNGTest {
     let glorySubtract = -this.testData.shifted.glory.length
     game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
         game.counter.render(true)
-        ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : glorySubtract}))
+        if (glorySubtract)
+          ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : glorySubtract}))
     })
     //this.result.allDice.filter(die => die.shift).forEach(die => die.shift = "")
     this.testData.shifted.other = []
@@ -161,6 +163,7 @@ export class WNGTest {
       content: html,
       speaker : this.context.speaker
     };
+    chatData.speaker.alias = this.actor.name
     if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients("GM");
     } else if (chatData.rollMode === "selfroll") {
@@ -177,6 +180,11 @@ export class WNGTest {
       delete chatData.roll
       return this.message.update(chatData)
     }
+  }
+
+  // Update message data without rerendering the message content
+  updateMessageFlags(){
+    return this.message.update({"flags.wrath-and-glory.testData" : this.data})
   }
 
   _countShifting() {
@@ -271,6 +279,22 @@ export class WNGTest {
 
   get showEffects() {
     return this.testEffects.length && this.result.isSuccess
+  }
+
+  get showTest() {
+    return this.result.isSuccess && this.item?.test && this.item.test.dn && this.item.test.type 
+  }
+
+  get testDisplay() {
+    if (this.showTest)
+    {
+      if (this.item.test.type == "attribute")
+        return `DN ${this.item.test.dn} ${game.wng.config.attributes[this.item.test.specification]} Test`
+      if (this.item.test.type == "skill")
+        return `DN ${this.item.test.dn} ${game.wng.config.skills[this.item.test.specification]} (${game.wng.config.attributeAbbrev[game.wng.config.skillAttribute[this.item.test.specification]]}) Test`
+      if (this.item.test.type == "resolve" || this.item.test.type == "corruption")
+        return `DN ${this.item.test.dn} ${game.wng.config.testTypes[this.item.test.type]} Test`
+    }
   }
 
   get testData() { return this.data.testData; }

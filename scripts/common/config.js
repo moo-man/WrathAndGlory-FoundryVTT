@@ -155,6 +155,14 @@ WNG.abilityTypes = {
     annihilation : "ABILITY_TYPE.ANNIHILATION"
 }
 
+WNG.testTypes = {
+    "attribute" : "Attribute",
+    "skill" : "Skill",
+    "resolve" : "Resolve",
+    "corruption" : "Corruption"
+}
+
+
 WNG.rankTypes = {
     "none" : "RANK.NONE",
     "single" : "RANK.SINGLE",
@@ -165,6 +173,15 @@ WNG.difficultyRankTypes = {
     "none" :  "RANK.NONE",
     "minus-single" :  "RANK.MINUS_SINGLE",
     "minus-double" :  "RANK.MINUS_DOUBLE"
+}
+
+WNG.corruptionLevels = {
+    0 : {level : "Pure", range : [0, 5], dn : 0},
+    1 : {level : "Tarnished", range : [6, 11], dn : 1},
+    2 : {level : "Contaminated", range : [11, 15], dn : 2},
+    3 : {level : "Tainted", range : [16, 20], dn : 3},
+    4 : {level : "Defiled", range : [21, 25], dn : 4},
+    5 : {level : "Chaos Spawn", range : [26, 100], dn : 0}
 }
 
 WNG.attributeCosts = [0, 0, 4, 6, 10, 15, 20, 25, 30, 35, 40, 45, 50]

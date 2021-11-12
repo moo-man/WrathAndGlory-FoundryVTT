@@ -1,7 +1,9 @@
 import { RollDialog, WeaponDialog, PowerDialog } from "../common/dialog.js";
-import { WNGTest } from "../common/test.js";
-import WeaponTest from "../common/weapon-test.js";
-import PowerTest from "../common/power-test.js";
+import { WNGTest } from "../common/tests/test.js";
+import WeaponTest from "../common/tests/weapon-test.js";
+import PowerTest from "../common/tests/power-test.js";
+import CorruptionTest from "../common/tests/corruption-test.js";
+import MutationTest from "../common/tests/mutation-test.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -150,12 +152,13 @@ export class WrathAndGloryActor extends Actor {
     }
 
     //#region Rolling
-    async setupAttributeTest(attribute) {
+    async setupAttributeTest(attribute, options={}) {
         let attributeObject = this.attributes[attribute]
 
         let dialogData = this._baseDialogData();
         dialogData.title = `${game.i18n.localize(attributeObject.label)} Test`
         dialogData.pool.size = attributeObject.total
+        this._addOptions(dialogData, options)
         let testData = await RollDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
@@ -164,12 +167,13 @@ export class WrathAndGloryActor extends Actor {
         return new WNGTest(testData)
     }
 
-    async setupSkillTest(skill) {
+    async setupSkillTest(skill, options={}) {
         let skillObject = this.skills[skill]
 
         let dialogData = this._baseDialogData();
         dialogData.title = `${game.i18n.localize(skillObject.label)} Test`
         dialogData.pool.size = skillObject.total
+        this._addOptions(dialogData, options)
         let testData = await RollDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
@@ -179,25 +183,57 @@ export class WrathAndGloryActor extends Actor {
         return new WNGTest(testData)
     }
 
-    async setupGenericTest(data, type)
-    {
+    async setupGenericTest(type, options={}) {
         let dialogData = this._baseDialogData();
-        dialogData.title = `${game.i18n.localize(data.title)} Test`
-        dialogData.pool.size = data.total
+        let testClass = WNGTest
+        switch(type)
+        {
+            case "determination": 
+            dialogData.pool.size = this.combat.determination.total
+            dialogData.title =  game.i18n.localize(`ROLL.DETERMINATION`)
+            break;
+            case "conviction": 
+            dialogData.pool.size = this.combat.conviction.total
+            dialogData.title =  game.i18n.localize(`ROLL.CONVICTION`)
+            break;
+            case "corruption": 
+            dialogData.pool.size = this.combat.conviction.total
+            dialogData.title =  game.i18n.localize(`ROLL.CORRUPTION`)
+            this._addCorruptionData(dialogData)
+            testClass = CorruptionTest;
+            break;
+            case "mutation": 
+            dialogData.pool.size = this.combat.conviction.total
+            dialogData.title =  game.i18n.localize(`ROLL.MUTATION`)
+            dialogData.difficulty.target = 3
+            testClass = MutationTest;
+            break;
+            case "resolve": 
+            dialogData.pool.size = this.combat.resolve.total
+            dialogData.title =  game.i18n.localize(`ROLL.RESOLVE`)
+            break;
+            case "influence": 
+            dialogData.pool.size = this.resources.influence
+            dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
+            break;
+            
+        }
+
+        this._addOptions(dialogData, options)
         let testData = await RollDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.type = type
-        return new WNGTest(testData)
+        return new testClass(testData)
     }
 
-    async setupWeaponTest(weapon) {
+    async setupWeaponTest(weapon, options={}) {
         if (typeof weapon == "string")
             weapon = this.items.get(weapon)
 
         let dialogData = this._weaponDialogData(weapon);
         dialogData.title = `${weapon.name} Test`
-
+        this._addOptions(dialogData, options)
         let testData = await WeaponDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
@@ -208,13 +244,13 @@ export class WrathAndGloryActor extends Actor {
         return new WeaponTest(testData)
     }
 
-    async setupPowerTest(power) {
+    async setupPowerTest(power, options={}) {
         if (typeof power == "string")
             power = this.items.get(power)
 
         let dialogData = this._powerDialogData(power);
         dialogData.title = `${power.name}`
-
+        this._addOptions(dialogData, options)
         let testData = await PowerDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
@@ -261,6 +297,18 @@ export class WrathAndGloryActor extends Actor {
         return dialogData
     }
 
+    _addOptions(dialogData, options)
+    {
+        dialogData.difficulty.target = options.dn || dialogData.difficulty.target
+        dialogData.pool.size = options.pool || dialogData.pool.size
+        dialogData.title = options.title || dialogData.title
+    }
+
+    _addCorruptionData(dialogData)
+    {
+        let level = game.wng.config.corruptionLevels[this.corruptionLevel]
+        dialogData.difficulty.penalty += level.dn
+    }
 
     speakerData() {
         if (this.isToken) {
@@ -294,6 +342,11 @@ export class WrathAndGloryActor extends Actor {
             default:
                 return game.i18n.localize("SIZE.AVERAGE");
         }
+    }
+
+    get corruptionLevel() {
+        let levels = Object.values(game.wng.config.corruptionLevels)
+        return levels.findIndex(i => this.corruption.current >= i.range[0] && this.corruption.current <= i.range[1])
     }
 
     

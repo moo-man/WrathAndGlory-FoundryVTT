@@ -138,6 +138,7 @@
 }
 
 
+.wrath-and-glory.chat .die.shifted .die-icon.other,
 .wrath-and-glory.chat .die.shifted .die-icon.damage,
   .wrath-and-glory.chat .die.shifted .die-icon.glory{
   left: -5px;

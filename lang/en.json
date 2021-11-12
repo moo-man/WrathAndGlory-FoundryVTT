@@ -107,7 +107,7 @@
 
   "BUTTON.POST_ITEM": "Post Item",
   "BUTTON.ROLL": "Roll",
-  "BUTTON.REROLL": "Reroll",
+  "BUTTON.REROLL": "Reroll (-1 Wrath)",
   "BUTTON.SHIFT": "Shift",
   "BUTTON.SHIFT_DAMAGE": "Shift (+Damage)",
   "BUTTON.SHIFT_GLORY": "Shift (+Glory)",
@@ -133,10 +133,13 @@
   "CHAT.WRATH_CRITICAL_COMMON": "1 point of Glory added to the group's pool!",
   "CHAT.WRATH_CRITICAL_PSY": "shift any Exalted Icons to enhance the power's effect!",
   "CHAT.WRATH_CRITICAL_WEAPON": "roll on the Critical Hit table!",
+  "CHAT.WRATH_CRITICAL_CORRUPTION": "DN Reduced by 2!",
   "CHAT.WRATH_COMPLICATION_TITLE": "Wrath Complication",
   "CHAT.WRATH_COMPLICATION_COMMON": "something unexpected happened!",
   "CHAT.WRATH_COMPLICATION_PSY": "roll on the Perils of the Warp table!",
   "CHAT.WRATH_COMPLICATION_WEAPON": "something unexpected happened!",
+  "CHAT.WRATH_COMPLICATION_CORRUPTION": "Double Corruption points!",
+  "CHAT.FAIL_CORRUPTION" : "Gain {corruption} Corruption, 1 Ruin added",
 
   "DIALOG.YES": "Yes",
   "DIALOG.NO": "No",
@@ -222,6 +225,7 @@
   "PSYCHIC_POWER.DAMAGE": "Damage",
   "PSYCHIC_POWER.ED": "ED",
   "PSYCHIC_POWER.DIE_VALUE": "Die Value",
+  "PSYCHIC_POWER.TEST": "Test",
 
   "RANK.NONE": "None",
   "RANK.SINGLE": "+Rank",
@@ -248,6 +252,11 @@
   "ROLL.RESOLVE": "Resolve",
   "ROLL.DAMAGE": "Damage",
   "ROLL.INFLUENCE": "Influence",
+  "ROLL.CORRUPTION": "Corruption",
+  "ROLL.CORRUPTION_ADDED" : "{corruption} Corruption added to {name}",
+  "ROLL.CORRUPTION_REVERTED" : "Corruption Reverted",
+  "ROLL.NewCorruptionLevel" : "Corruption Level Increased - Roll a Mutation Test",
+  "ROLL.MUTATION" : "Mutation",
 
   "SIZE.TINY": "Tiny",
   "SIZE.SMALL": "Small",
@@ -346,8 +355,12 @@
   "WEAPON_UPGRADE.KEYWORDS": "Keywords",
 
   "COUNTER.GLORY_CHANGED" : "Glory changed by {change}",
+  "COUNTER.RUIN_CHANGED" : "Ruin changed by {change}",
 
   "WARN.NoActorsToApply" : "Tokens must be selected or a character must be assigned to apply an Effect.",
+  "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
+  "ERROR.NoMoreWrath" : "No more Wrath",
+  "NOTE.WrathSubtracted" : "Wrath Subtracted",
 
   "AUTOCALC.DEFENSE" : "Auto Calculate Defense",
   "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",

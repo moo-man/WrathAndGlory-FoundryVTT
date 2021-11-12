@@ -375,6 +375,11 @@
         "description" : "",
         "value" : 0,
         "keywords" : ""
+      },
+      "test" : {
+        "dn" : 0,
+        "type" : "",
+        "specification" : ""
       }
     },
     "ability": {
