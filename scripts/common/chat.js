@@ -15,24 +15,54 @@ export default class WNGChat {
     test.sendDamageToChat();
   }
 
-  static _onWrathClick(ev)
+  static async _onWrathClick(ev)
   {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let message = game.messages.get(id)
     let test = message.getTest();
+    let chatData = {}
+    let table
+    let roll
+    let result
     if(test.result.isWrathCritical)
     {
       if(test.weapon)
-        game.tables.getName("Critical Hit Table").draw()
+      {
+        table = game.tables.getName("Critical Hit Table")
+        roll = new Roll(table.data.formula)
+        result = await table.roll({roll})
+        chatData = {content : result.results[0].data.text + ` (${result.roll.total})`, flavor : `Critical Hit`}
+      }
     }
     if (test.result.isWrathComplication)
     {
       if (test.weapon)
-        game.tables.getName("Combat Complications").draw()
+      {
+        table = game.tables.getName("Combat Complications")
+        roll = new Roll(table.data.formula)
+        result = await table.roll({roll})
+        chatData = {content : result.results[0].data.text + ` (${result.roll.total})`, flavor : `Combat Complication`}
+      }
       else if (test.power)
-        game.tables.getName("Perils of the Warp").draw()
+      {
+        table = game.tables.getName("Perils of the Warp")
+        let modifier = (test.result.allDice.filter(die => die.name == "wrath-complication").length - 1) * 10
+        roll = new Roll(table.data.formula + " + " + modifier)
+        result = await table.roll({roll})
+        chatData = {content : result.results[0].data.text + ` (${result.roll.total})`, flavor : `Perils of the Warp ${modifier ? "(+" + modifier + ")" : ""}`}
+      }
       else 
-        game.tables.getName("Complication Consequences").draw()
+      {
+        table = game.tables.getName("Complication Consequences")
+        roll = new Roll(table.data.formula)
+        result = await table.roll({roll})
+        chatData = {content : result.results[0].data.text + ` (${result.roll.total})`, flavor : `Complication Consequence`}
+      }
+      chatData.speaker = test.context.speaker
+      chatData.roll = result.roll
+      chatData.type = CONST.CHAT_MESSAGE_TYPES.ROLL
+
+      return ChatMessage.create(chatData)
     }
   }
 

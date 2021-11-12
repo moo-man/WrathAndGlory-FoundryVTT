@@ -158,7 +158,8 @@ export class WNGTest {
       flags: { "wrath-and-glory.testData": this.data },
       user: game.user.id,
       rollMode: game.settings.get("core", "rollMode"),
-      content: html
+      content: html,
+      speaker : this.context.speaker
     };
     if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients("GM");
@@ -255,7 +256,8 @@ export class WNGTest {
       flags: { "wrath-and-glory.testData": this.data },
       user: game.user.id,
       rollMode: game.settings.get("core", "rollMode"),
-      content: html
+      content: html,
+      speaker : this.context.speaker
     };
     if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients("GM");
