@@ -1,13 +1,12 @@
 export default class WNGChat {
-  static chatListeners(html)
-  {
+  static chatListeners(html) {
     html.on("click", ".roll-damage", this._onDamageClick.bind(this))
     html.on("click", ".roll-wrath", this._onWrathClick.bind(this))
     html.on("click", "a.die", this._onDieClick.bind(this))
+    html.on("click", ".test-effect", this._onEffectClick.bind(this))
   }
 
-  static _onDamageClick(ev)
-  {
+  static _onDamageClick(ev) {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let message = game.messages.get(id)
     let test = message.getTest();
@@ -15,8 +14,7 @@ export default class WNGChat {
     test.sendDamageToChat();
   }
 
-  static async _onWrathClick(ev)
-  {
+  static async _onWrathClick(ev) {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let message = game.messages.get(id)
     let test = message.getTest();
@@ -24,39 +22,33 @@ export default class WNGChat {
     let table
     let roll
     let result
-    if(test.result.isWrathCritical)
-    {
-      if(test.weapon)
-      {
+    if (test.result.isWrathCritical) {
+      if (test.weapon) {
         table = game.tables.getName("Critical Hit Table")
         roll = new Roll(table.data.formula)
-        result = await table.roll({roll})
-        chatData = {content : result.results[0].data.text + ` (${result.roll.total})`, flavor : `Critical Hit`}
+        result = await table.roll({ roll })
+        chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Critical Hit` }
       }
     }
-    if (test.result.isWrathComplication)
-    {
-      if (test.weapon)
-      {
+    if (test.result.isWrathComplication) {
+      if (test.weapon) {
         table = game.tables.getName("Combat Complications")
         roll = new Roll(table.data.formula)
-        result = await table.roll({roll})
-        chatData = {content : result.results[0].data.text + ` (${result.roll.total})`, flavor : `Combat Complication`}
+        result = await table.roll({ roll })
+        chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Combat Complication` }
       }
-      else if (test.power)
-      {
+      else if (test.power) {
         table = game.tables.getName("Perils of the Warp")
         let modifier = (test.result.allDice.filter(die => die.name == "wrath-complication").length - 1) * 10
         roll = new Roll(table.data.formula + " + " + modifier)
-        result = await table.roll({roll})
-        chatData = {content : result.results[0].data.text + ` (${result.roll.total})`, flavor : `Perils of the Warp ${modifier ? "(+" + modifier + ")" : ""}`}
+        result = await table.roll({ roll })
+        chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Perils of the Warp ${modifier ? "(+" + modifier + ")" : ""}` }
       }
-      else 
-      {
+      else {
         table = game.tables.getName("Complication Consequences")
         roll = new Roll(table.data.formula)
-        result = await table.roll({roll})
-        chatData = {content : result.results[0].data.text + ` (${result.roll.total})`, flavor : `Complication Consequence`}
+        result = await table.roll({ roll })
+        chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Complication Consequence` }
       }
       chatData.speaker = test.context.speaker
       chatData.roll = result.roll
@@ -66,8 +58,7 @@ export default class WNGChat {
     }
   }
 
-  static _onDieClick(ev)
-  {
+  static _onDieClick(ev) {
     if (ev.currentTarget.classList.contains("selected"))
       return ev.currentTarget.classList.remove("selected")
 
@@ -75,9 +66,34 @@ export default class WNGChat {
     let message = game.messages.get(id)
     let test = message.getTest();
     let index = parseInt(ev.currentTarget.dataset.index);
-    
+
     if (test.result.allDice[index].canShift && test.result.shiftsPossible > 0 && !ev.currentTarget.classList.contains("shifted"))
       ev.currentTarget.classList.add("selected")
 
+  }
+
+  static async _onEffectClick(ev)
+  {
+      let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+      let effectId = $(ev.currentTarget).attr("data-id")
+      let msg = game.messages.get(id)
+      let test = msg.getTest();
+      let item = test.item
+      let effect = item.effects.get(effectId).toObject()
+      effect.origin = test.actor.uuid
+      setProperty(effect, "flags.core.statusId", getProperty(effect, "flags.core.statusId") || effect.label.slugify())
+      
+      if (canvas.tokens.controlled.length)
+      {
+          for (let t of canvas.tokens.controlled)
+              t.actor.createEmbeddedDocuments("ActiveEffect", [effect])
+      }
+      else if (game.user.character)
+          game.user.character.createEmbeddedDocuments("ActiveEffect", [effect])
+
+      else
+          return ui.notifications.warn(game.i18n.localize("WARN.NoActorsToApply"))
+
+ 
   }
 }

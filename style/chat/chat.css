@@ -18,6 +18,17 @@
   position: relative;
 }
 
+.wrath-and-glory.chat .wrapper button {
+  margin: 5px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrath-and-glory.chat .wrapper button img {
+  margin: 0px 5px;
+}
+
+
 .wrath-and-glory.chat strong {
   font-family: var(--font-text);
   font-weight: bold;

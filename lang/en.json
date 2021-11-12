@@ -347,6 +347,8 @@
 
   "COUNTER.GLORY_CHANGED" : "Glory changed by {change}",
 
+  "WARN.NoActorsToApply" : "Tokens must be selected or a character must be assigned to apply an Effect.",
+
   "AUTOCALC.DEFENSE" : "Auto Calculate Defense",
   "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",
   "AUTOCALC.SHOCK" : "Auto Calculate Max Shock",

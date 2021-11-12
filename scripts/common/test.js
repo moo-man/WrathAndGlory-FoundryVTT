@@ -191,11 +191,6 @@ export class WNGTest {
     return shifting;
   }
 
-  dieIndex(index)
-  {
-    return this.roll.dice.reduce((prev, current) => prev.concat(current.results), [])[index]
-  }
-
   isShifted(dieIndex)
   {
     if(this.testData.shifted.damage.includes(dieIndex))
@@ -267,6 +262,16 @@ export class WNGTest {
     return ChatMessage.create(chatData);
   }
 
+  get testEffects() {
+    if(this.item)
+      return this.item.effects.filter(e => !e.data.transfer)
+    else 
+      return []
+  }
+
+  get showEffects() {
+    return this.testEffects.length && this.result.isSuccess
+  }
 
   get testData() { return this.data.testData; }
   get context() { return this.data.context; }

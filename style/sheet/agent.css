@@ -26,6 +26,7 @@
   border: 0 none;
   height: 100%;
   width: 100%;
+  object-fit: contain;
 }
 
 .wrath-and-glory.sheet.actor .agent .sheet-header .bio {
