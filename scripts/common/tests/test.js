@@ -292,8 +292,10 @@ export class WNGTest {
         return `DN ${this.item.test.dn} ${game.wng.config.attributes[this.item.test.specification]} Test`
       if (this.item.test.type == "skill")
         return `DN ${this.item.test.dn} ${game.wng.config.skills[this.item.test.specification]} (${game.wng.config.attributeAbbrev[game.wng.config.skillAttribute[this.item.test.specification]]}) Test`
-      if (this.item.test.type == "resolve" || this.item.test.type == "corruption")
-        return `DN ${this.item.test.dn} ${game.wng.config.testTypes[this.item.test.type]} Test`
+      if (this.item.test.type == "resolve")
+        return `DN ${this.item.test.dn} ${game.wng.config.resolveTests[this.item.test.specification]} Test`
+        if (this.item.test.type == "conviction")
+        return `DN ${this.item.test.dn} ${game.wng.config.convictionTests[this.item.test.specification]} Test`
     }
   }
 

@@ -391,9 +391,28 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     async _onResolveClick(event) {
         event.preventDefault();
-        let test = await this.actor.setupGenericTest("resolve")
-        await test.rollTest();
-        test.sendToChat()
+        new Dialog({
+            title : "Resolve Roll",
+            buttons : {
+                "corruption" : {
+                    label : "Fear",
+                    callback : async () => {
+                        let test = await this.actor.setupGenericTest("fear")
+                        await test.rollTest();
+                        test.sendToChat()
+
+                    }
+                },
+                "mutation" : {
+                    label : "Terror",
+                    callback : async () => {
+                        let test = await this.actor.setupGenericTest("terror")
+                        await test.rollTest();
+                        test.sendToChat()
+                    }
+                }
+            }
+        }).render(true)
     }
 
     async _onInfluenceClick(event) {

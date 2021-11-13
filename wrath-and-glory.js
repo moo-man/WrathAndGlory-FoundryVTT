@@ -18,6 +18,7 @@ import WrathAndGloryEffectSheet from "./scripts/apps/active-effect-config.js";
 import PowerTest from "./scripts/common/tests/power-test.js";
 import CorruptionTest from "./scripts/common/tests/corruption-test.js";
 import MutationTest from "./scripts/common/tests/mutation-test.js";
+import ResolveTest from "./scripts/common/tests/resolve-test.js";
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
@@ -29,8 +30,9 @@ Hooks.once("init", () => {
       WNGTest,
       WeaponTest,
       PowerTest,
-      CorruptionTest : CorruptionTest,
-      MutationTest : MutationTest
+      CorruptionTest,
+      MutationTest,
+      ResolveTest
     },
     dice : {
       WrathDie,

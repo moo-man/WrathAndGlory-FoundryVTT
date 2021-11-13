@@ -4,6 +4,7 @@ import WeaponTest from "../common/tests/weapon-test.js";
 import PowerTest from "../common/tests/power-test.js";
 import CorruptionTest from "../common/tests/corruption-test.js";
 import MutationTest from "../common/tests/mutation-test.js";
+import ResolveTest from "../common/tests/resolve-test.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -208,9 +209,17 @@ export class WrathAndGloryActor extends Actor {
             dialogData.difficulty.target = 3
             testClass = MutationTest;
             break;
-            case "resolve": 
+            case "fear": 
             dialogData.pool.size = this.combat.resolve.total
-            dialogData.title =  game.i18n.localize(`ROLL.RESOLVE`)
+            dialogData.title =  game.i18n.localize(`ROLL.FEAR`)
+            dialogData.type == "fear"
+            testClass = ResolveTest
+            break;
+            case "terror": 
+            dialogData.pool.size = this.combat.resolve.total
+            dialogData.title =  game.i18n.localize(`ROLL.TERROR`)
+            dialogData.type == "terror"
+            testClass = ResolveTest
             break;
             case "influence": 
             dialogData.pool.size = this.resources.influence

@@ -143,6 +143,26 @@
               {{/select}}
             </select>
             {{/if}}
+            {{#if (eq data.test.type "resolve")}}
+            <select name="data.test.specification" class="resolve">
+              {{#select data.test.specification}}
+                <option value="">-</option>
+                {{#each (config "resolveTests") as |test k|}}
+                <option value="{{k}}">{{test}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+            {{/if}}
+            {{#if (eq data.test.type "conviction")}}
+            <select name="data.test.specification" class="conviction">
+              {{#select data.test.specification}}
+                <option value="">-</option>
+                {{#each (config "convictionTests") as |test k|}}
+                <option value="{{k}}">{{test}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+            {{/if}}
           </div>
         </div>
         <div class="wrapper">

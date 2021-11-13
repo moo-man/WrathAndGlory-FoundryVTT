@@ -162,6 +162,16 @@ WNG.testTypes = {
     "corruption" : "Corruption"
 }
 
+WNG.resolveTests = {
+    "fear" : "Fear",
+    "terror" : "Terror"
+}
+
+WNG.convictionTests = {
+    "corruption" : "Corruption",
+    "mutation" : "Mutation"
+}
+
 
 WNG.rankTypes = {
     "none" : "RANK.NONE",
@@ -268,7 +278,9 @@ CONFIG.statusEffects = [
     {
         id : "terror",
         label : "Terror",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/terror.svg"
+        icon : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
+        changes : [{key: "difficulty.base", mode : 0, value : 2}],
+        flags : { "wrath-and-glory.description" : "+2DN to all Tests"}
     },
     {
         id : "vulnerable",

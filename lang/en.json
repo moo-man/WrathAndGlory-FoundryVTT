@@ -257,6 +257,8 @@
   "ROLL.CORRUPTION_REVERTED" : "Corruption Reverted",
   "ROLL.NewCorruptionLevel" : "Corruption Level Increased - Roll a Mutation Test",
   "ROLL.MUTATION" : "Mutation",
+  "ROLL.FEAR" : "Fear",
+  "ROLL.TERROR" : "Terror",
 
   "SIZE.TINY": "Tiny",
   "SIZE.SMALL": "Small",
