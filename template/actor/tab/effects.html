@@ -4,7 +4,7 @@
   <div class="condition-list">
     {{#each effects.conditions as |effect e|}}
     <div class="condition" title={{effect.label}} data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
-        <img src="{{effect.img}}"/>
+        <a class="condition-click"><img src="{{effect.img}}"/></a>
         <a class="condition-toggle">
           {{#if effect.existing}}
           <i class="far fa-check-square"></i>
@@ -17,7 +17,7 @@
   </div>
 
 
-  <div class="items">
+  <div class="item-list">
     <div class="header">
       <div class="item-property item-image"></div>
       <span class="item-property item-name">{{localize "HEADER.TEMPORARY_EFFECTS"}}</span>
@@ -44,7 +44,7 @@
   
   <hr>
 
-  <div class="items">
+  <div class="item-list">
     <div class="header">
       <div class="item-property item-image"></div>
       <span class="item-property item-name">{{localize "HEADER.PASSIVE_EFFECTS"}}</span>
@@ -71,7 +71,7 @@
   
   <hr>
 
-  <div class="items">
+  <div class="item-list">
     <div class="header">
       <div class="item-property item-image"></div>
       <span class="item-property item-name">{{localize "HEADER.DISABLED_EFFECTS"}}</span>

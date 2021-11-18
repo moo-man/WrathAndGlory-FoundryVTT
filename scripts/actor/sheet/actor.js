@@ -186,6 +186,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".show-adv").mouseleave(this._onAdvLeave.bind(this))
         html.find(".adv-buttons button").click(this._onAdvButtonClick.bind(this))
         html.find(".condition-toggle").click(this._onConditionToggle.bind(this))
+        html.find(".condition-click").click(this._onConditionClick.bind(this));
+
+        html.find(".items .item").each((i, e) => {
+            e.draggable = true;
+        })
     }
 
     _getHeaderButtons() {
@@ -633,6 +638,18 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let target = `data.${type[0]}s.${type[1]}.rating` // Only slightly disgusting
 
         this.actor.update({[`${target}`] : getProperty(this.actor.data._source, target) + amt})
+    }
+
+    _onConditionClick(ev)
+    {
+        let key = $(ev.currentTarget).parents(".condition").data("key")
+        let effect = CONFIG.statusEffects.find(i => i.id == key)
+        if (effect)
+        {
+            let journal = game.journal.getName(effect.label)
+            if (journal)
+                journal.sheet.render(true)
+        }
     }
 
   

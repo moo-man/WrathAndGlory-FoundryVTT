@@ -370,6 +370,21 @@
   "AUTOCALC.AWARENESS" : "Auto Calculate Awareness",
   "AUTOCALC.DETERMINATION" : "Auto Calculate Determination",
   "AUTOCALC.WOUNDS" : "Auto Calculate Max Wounds",
-  "AUTOCALC.CONVICTION" : "Auto Calculate Conviction"
+  "AUTOCALC.CONVICTION" : "Auto Calculate Conviction",
+
+  "CONDITION.Bleeding" : "Bleeding",
+  "CONDITION.Blinded" : "Blinded",
+  "CONDITION.Exhausted" : "Exhausted",
+  "CONDITION.Fear" : "Fear",
+  "CONDITION.Frenzied" : "Frenzied",
+  "CONDITION.Hindered" : "Hindered",
+  "CONDITION.OnFire" : "On Fire",
+  "CONDITION.Pinned" : "Pinned",
+  "CONDITION.Poisoned" : "Poisoned",
+  "CONDITION.Prone" : "Prone",
+  "CONDITION.Restrained" : "Restrained",
+  "CONDITION.Staggered" : "Staggered",
+  "CONDITION.Terror" : "Terror",
+  "CONDITION.Vulnerable" : "Vulnerable"
 
 }

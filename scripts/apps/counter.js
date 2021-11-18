@@ -28,6 +28,12 @@ export default class RuinGloryCounter extends Application {
       super.render(force, options)
     }
 
+    async _render(...args)
+    {
+      await super._render(...args)
+      delete ui.windows[this.appId]
+    }
+
     setPosition(...args) {
       super.setPosition(...args);
       game.settings.set("wrath-and-glory", "counterPosition", this.position)

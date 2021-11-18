@@ -203,12 +203,12 @@ WNG.skillCosts = [0, 2, 4, 6, 8, 10, 12, 14, 16]
 CONFIG.statusEffects = [
     {
         id : "bleeding",
-        label : "Bleeding",
+        label : "CONDITION.Bleeding",
         icon : "systems/wrath-and-glory/asset/icons/conditions/bleeding.svg",
     },
     {
         id : "blinded",
-        label : "Blinded",
+        label : "CONDITION.Blinded",
         icon : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
         changes : [
             {key: "difficulty.base", mode : 0, value : 4}],
@@ -216,75 +216,75 @@ CONFIG.statusEffects = [
     },
     {
         id : "exhausted",
-        label : "Exhausted",
+        label : "CONDITION.Exhausted",
         icon : "systems/wrath-and-glory/asset/icons/conditions/exhausted.svg"
     },
     {
         id : "fear",
-        label : "Fear",
+        label : "CONDITION.Fear",
         icon : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
         changes : [{key: "difficulty.base", mode : 0, value : 2}],
         flags : { "wrath-and-glory.description" : "+2DN to all Tests"}
     },
     {
         id : "frenzied",
-        label : "Frenzied",
+        label : "CONDITION.Frenzied",
         icon : "systems/wrath-and-glory/asset/icons/conditions/frenzied.svg",
         changes : [{key: "data.attributes.strength.bonus", mode : 2, value : 1}]
     },
     {
         id : "hindered",
-        label : "Hindered",
+        label : "CONDITION.Hindered",
         icon : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
         changes : [{key: "difficulty.base", mode : 0, value : 1}],
         flags : { "wrath-and-glory.description" : "+DN to all Tests"}
     },
     {
         id : "onfire",
-        label : "On Fire",
+        label : "CONDITION.OnFire",
         icon : "systems/wrath-and-glory/asset/icons/conditions/onfire.svg"
     },
     {
         id : "pinned",
-        label : "Pinned",
+        label : "CONDITION.Pinned",
         icon : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
         changes : [{key: "difficulty.base", mode : 0, value : 2}],
         flags : { "wrath-and-glory.description" : "Penalty to Ballistic Skill Tests when targeting an enemy using a Pinning Attacks against you"}
     },
     {
         id : "poisoned",
-        label : "Poisoned",
+        label : "CONDITION.Poisoned",
         icon : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
         changes : [{key: "difficulty.base", mode : 0, value : 2}],
         flags : { "wrath-and-glory.description" : "+DN to all Tests"}
     },
     {
         id : "prone",
-        label : "Prone",
+        label : "CONDITION.Prone",
         icon : "systems/wrath-and-glory/asset/icons/conditions/prone.svg"
     },
     {
         id : "restrained",
-        label : "Restrained",
+        label : "CONDITION.Restrained",
         icon : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
         changes : [{key: "data.combat.defense.bonus", mode : 2, value : -2},{key: "data.combat.speed", mode : 5, value : "0"} ]
     },
     {
         id : "staggered",
-        label : "Staggered",
+        label : "CONDITION.Staggered",
         icon : "systems/wrath-and-glory/asset/icons/conditions/staggered.svg",
         changes : [{key: "data.combat.speed", mode : 1, value : 0.5} ]
     },
     {
         id : "terror",
-        label : "Terror",
+        label : "CONDITION.Terror",
         icon : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
         changes : [{key: "difficulty.base", mode : 0, value : 2}],
         flags : { "wrath-and-glory.description" : "+2DN to all Tests"}
     },
     {
         id : "vulnerable",
-        label : "Vulnerable",
+        label : "CONDITION.Vulnerable",
         icon : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
         changes : [{key: "data.combat.defense.bonus", mode : 2, value : -1}]
     }
