@@ -15,9 +15,9 @@ export default class PowerTest extends WNGTest {
   }
 
 
-  async rollTest()
+  _computeResult()
   {
-    await super.rollTest()
+    super._computeResult()
     if (this.result.isSuccess)
       this.rollDamage() 
   }

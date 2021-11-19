@@ -54,22 +54,20 @@
   <div class="wrapper" style="margin-top: 8px;">
     <h1>{{localize "TITLE.KEYWORDS"}}</h1>
     <div class="keywords">
-      {{#each actor.items as |item|}}
-      {{#if item.isKeyword}}
+      <div class="button">
+        <button class="item-create" title="Add Keyword" data-type="keyword">+</a>
+      </div>
+      {{#each items.keywords as |item|}}
       <div class="keyword item" data-item-id="{{item.id}}">
         <div class="wrapper-hover">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
         </div>
-        <div class="button">
-          <a class="item-control item-delete" title="Delete Keyword"><i class="fas fa-times"></i></a>
+        <div class="button item-control item-delete" title="Delete Keyword">
+          <a><i class="fas fa-times"></i></a>
         </div>
       </div>
-      {{/if}}
       {{/each}}
-      <div class="button">
-        <a class="item-create" title="Add Keyword" data-type="keyword"><i class="fas fa-plus"></i></a>
-      </div>
     </div>
   </div>
 </div>
