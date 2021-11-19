@@ -11,9 +11,10 @@
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.SHOCK"}}</label>
-      <input style="flex-basis: 20%;" name="data.combat.shock.value" type="number" value="{{data.combat.shock.value}}"
-        data-dtype="Number" />
-      <input style="flex-basis: 20%;" type="number" name="data.combat.shock.max" value="{{data.combat.shock.max}}" data-dtype="Number" {{#if autoCalc.shock}}disabled{{/if}} />
+      <div class="input-group">
+        <input style="flex-basis: 20%;" name="data.combat.shock.value" type="number" value="{{data.combat.shock.value}}" data-dtype="Number" />
+        <input style="flex-basis: 20%;" type="number" name="data.combat.shock.max" value="{{data.combat.shock.max}}" data-dtype="Number" {{#if autoCalc.shock}}disabled{{/if}} />
+      </div>
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.AWARENESS"}}</label>
@@ -25,7 +26,7 @@
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.SIZE"}}</label>
-      <select name="data.combat.size" style="max-width: 91px;">
+      <select name="data.combat.size">
         {{#select data.combat.size}}
         <option value="tiny">{{localize "SIZE.TINY"}}</option>
         <option value="small">{{localize "SIZE.SMALL"}}</option>
@@ -49,54 +50,49 @@
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.WOUNDS"}}</label>
-      <input style="flex-basis: 20%;" name="data.combat.wounds.value" type="number" value="{{data.combat.wounds.value}}"
-        data-dtype="Number" />
-      <input style="flex-basis: 20%;" type="number" name="data.combat.wounds.max" value="{{data.combat.wounds.max}}" data-dtype="Number" {{#if autoCalc.wounds}}disabled{{/if}} />
-    </div>
-    <div class="traumatics">
-      <div class="header">
-        <b class="name">{{localize "HEADER.TRAUMATIC"}}</b>
-        <div class="button">
-          <a class="item-create" title="Add Traumatic Injury" data-type="traumaticInjury"><i
-              class="fas fa-plus"></i></a>
-        </div>
+      <div class="input-group">
+        <input style="flex-basis: 20%;" name="data.combat.wounds.value" type="number" value="{{data.combat.wounds.value}}" data-dtype="Number" />
+        <input style="flex-basis: 20%;" type="number" name="data.combat.wounds.max" value="{{data.combat.wounds.max}}" data-dtype="Number" {{#if autoCalc.wounds}}disabled{{/if}} />
       </div>
-      <div class="scrollable">
+    </div>
+    <div class="injury-lists">
+      <div class="item-list condensed">
+        <div class="header">
+          <span class="item-property item-name">{{localize "HEADER.TRAUMATIC"}}</span>
+          <div class="item-controls">
+            <a class="item-create" title="Create Item" data-type="traumaticInjury"><i class="fas fa-plus"></i></a>
+          </div>
+        </div>
         {{#each items.traumaticInjuries as |item|}}
-        <div class="traumatic item" data-item-id="{{item.id}}">
-          <div class="wrapper-hover">
-            <div class="avatar" style="background-image: url('{{item.img}}')"></div>
-            <div class="name item-edit">{{item.name}}</div>
-          </div>
-          <div class="button">
-            <a class="item-control item-delete" title="Delete Traumatic Injury"><i class="fas fa-times"></i></a>
-          </div>
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content item-edit ">
+              <div class="item-property item-name">{{item.name}}</div>
+              <div class="item-controls">
+                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
+              </div>
+        </div>
         </div>
         {{/each}}
       </div>
-    </div>
-    <div class="memorables">
-      <div class="header">
-        <b class="name">{{localize "HEADER.MEMORABLE"}}</b>
-        <div class="button">
-          <a class="item-create" title="Add Memorable Injury" data-type="memorableInjury"><i
-              class="fas fa-plus"></i></a>
-        </div>
-      </div>
-      <div class="scrollable">
-        {{#each items.memorableInjuries as |item|}}
-        <div class="memorable item" data-item-id="{{item.id}}">
-          <div class="wrapper-hover">
-            <div class="avatar" style="background-image: url('{{item.img}}')"></div>
-            <div class="name item-edit">{{item.name}}</div>
+        <div class="item-list condensed">
+          <div class="header">
+            <span class="item-property item-name">{{localize "HEADER.MEMORABLE"}}</span>
+            <div class="item-controls">
+              <a class="item-create" title="Create Item" data-type="memorableInjury"><i class="fas fa-plus"></i></a>
+            </div>
           </div>
-          <div class="button">
-            <a class="item-control item-delete" title="Delete Memorable Injury"><i class="fas fa-times"></i></a>
+          {{#each items.memorableInjuries as |item|}}
+          <div class="item" data-item-id="{{item.id}}">
+            <div class="item-content item-edit">
+                <div class="item-property item-name">{{item.name}}</div>
+                <div class="item-controls">
+                  <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
+                </div>
           </div>
-        </div>
-        {{/each}}
+          </div>
+          {{/each}}
       </div>
-    </div>
+  </div>
   </div>
   <div class="mutation wrapper">
     <h1>{{localize "TITLE.MUTATIONS"}}</h1>
@@ -113,23 +109,21 @@
       <input name="data.corruption.current" type="number" value="{{data.corruption.current}}" data-dtype="Number" />
     </div>
     <div class="mutations">
-      <div class="header">
-        <b class="name">{{localize "HEADER.MUTATION"}}</b>
-        <div class="button">
-          <a class="item-create" title="Add Mutation" data-type="mutation"><i
-              class="fas fa-plus"></i></a>
+      <div class="item-list condensed">
+        <div class="header">
+          <span class="item-property item-name">{{localize "HEADER.MUTATION"}}</span>
+          <div class="item-controls">
+            <a class="item-create" title="Create Item" data-type="mutation"><i class="fas fa-plus"></i></a>
+          </div>
         </div>
-      </div>
-      <div class="scrollable">
         {{#each items.mutations as |item|}}
-        <div class="mutation item" data-item-id="{{item.id}}">
-          <div class="wrapper-hover">
-            <div class="avatar" style="background-image: url('{{item.img}}')"></div>
-            <div class="name item-edit">{{item.name}}</div>
-          </div>
-          <div class="button">
-            <a class="item-control item-delete" title="Delete Mutation"><i class="fas fa-times"></i></a>
-          </div>
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content item-edit">
+              <div class="item-property item-name">{{item.name}}</div>
+              <div class="item-controls">
+                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
+              </div>
+        </div>
         </div>
         {{/each}}
       </div>

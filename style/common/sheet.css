@@ -100,6 +100,15 @@
   padding: 2px 5px 2px 5px
 }
 
+  .wrath-and-glory.sheet.actor .item-list.condensed .item-name {
+  margin-left: 4px;
+}
+
+.wrath-and-glory.sheet.actor .item-list.condensed .item {
+  height: 22px;
+}
+
+
 
 .wrath-and-glory .item-list .item-controls,
 .wrath-and-glory .item-list .item-property {
