@@ -28,32 +28,38 @@
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
         <div class="wrapper">
-          <div class="requirements">
+          <div class="item-form-group">
             <label>{{localize "ASCENSION.REQUIREMENTS"}}</label>
-            <input name="data.requirements" type="text" value="{{data.requirements}}" />
+            <div class="item-form-inputs">
+              <input name="data.requirements" type="text" value="{{data.requirements}}" />
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="cost">
+          <div class="item-form-group static">
             <label>{{localize "ASCENSION.COST"}}</label>
-            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+            <div class="item-form-inputs small">
+              <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+            </div>
           </div>
-          <div class="influence">
+          <div class="item-form-group static">
             <label>{{localize "ASCENSION.INFLUENCE"}}</label>
-            <input name="data.influence" type="number" value="{{data.influence}}" data-dtype="Number" />
+            <div class="item-form-inputs small">
+              <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="keywords">
+          <div class="item-form-group">
             <label>{{localize "ASCENSION.KEYWORDS"}}</label>
-            <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            <div class="item-form-inputs">
+              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            </div>
           </div>
         </div>
-        <div class="wrapper" style="flex-wrap: wrap; justify-content: center;">
+        <div class="wrapper benefits">
           <h1>{{localize "TITLE.BENEFITS"}}</h1>
-          <div class="benefits" style="flex-basis: 100%; margin-top: 8px">
-            {{editor content=data.benefits target="data.benefits" button=true owner=owner editable=editable}}
-          </div>
+          {{editor content=data.benefits target="data.benefits" button=true owner=owner editable=editable}}
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="effects">

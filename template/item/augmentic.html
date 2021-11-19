@@ -17,7 +17,6 @@
     <div class="sheet-tabs tabs" data-group="primary">
       <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
       <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
-
       <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
     </div>
 
@@ -30,26 +29,32 @@
       <div class="tab" data-group="primary" data-tab="stats">
 
         <div class="wrapper">
-          <div class="value">
-            <label>{{localize "AMMO.VALUE"}}</label>
-            <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+          <div class="item-form-group static">
+            <label>{{localize "AUGMETIC.VALUE"}}</label>
+            <div class="item-form-inputs small">
+              <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+            </div>
           </div>
-          <div class="rarity">
-            <label>{{localize "AMMO.RARITY"}}</label>
-            <select name="data.rarity" style="flex-grow: 1">
-              {{#select data.rarity}}
-              <option value=""> - </option>
-              {{#each (config "rarity") as |rarity r|}}
-              <option value="{{r}}">{{rarity}}</option>
-              {{/each}}
-              {{/select}}
-            </select>
+          <div class="item-form-group static">
+            <label>{{localize "AUGMETIC.RARITY"}}</label>
+            <div class="item-form-inputs">
+              <select name="data.rarity">
+                {{#select data.rarity}}
+                <option value=""> - </option>
+                {{#each (config "rarity") as |rarity r|}}
+                <option value="{{r}}">{{rarity}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="keywords">
-            <label>{{localize "AUGMENTIC.KEYWORDS"}}</label>
-            <input name="data.keywords" type="text" value="{{data.keywords}}" />
+          <div class="item-form-group">
+            <label>{{localize "AUGMETIC.KEYWORDS"}}</label>
+            <div class="item-form-inputs">
+              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            </div>
           </div>
         </div>
       </div>

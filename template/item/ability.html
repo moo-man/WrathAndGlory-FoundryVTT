@@ -30,38 +30,43 @@
       <div class="tab" data-group="primary" data-tab="stats">
 
         <div class="wrapper">
-          <div class="cost">
+          <div class="item-form-group static">
             <label>{{localize "ABILITY.COST"}}</label>
-            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+            <div class="item-form-inputs small">
+              <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+            </div>
           </div>
-          <div class="requirements">
+          <div class="item-form-group">
             <label>{{localize "ABILITY.REQUIREMENTS"}}</label>
-            <input name="data.requirements" type="text" value="{{data.requirements}}" />
+            <div class="item-form-inputs">
+              <input name="data.requirements" type="text" value="{{data.requirements}}" />
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="display">
+          <div class="item-form-group static">
             <label>{{localize "ABILITY.DISPLAY"}}</label>
-            {{#if data.display}}
-            <input name="data.display" type="checkbox" value="active" checked/>
-            {{else}}
-            <input name="data.display" type="checkbox" value="active"/>
-            {{/if}}
+            <div class="item-form-inputs">
+              <div class="item-checkbox {{#if data.display}}checked{{else}}unchecked{{/if}}" data-target="data.display">
+              {{#if data.display}}
+                <i class="fas fa-check"></i>
+              {{/if}}
+              </div>
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "ABILITY.TYPE"}}</label>
+            <select name="data.abilityType">
+              {{#select data.abilityType}}
+              <option value=""> - </option>
+              {{#each (config "abilityTypes") as |type t|}}
+              <option value="{{t}}">{{type}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
           </div>
         </div>
-        <div class="ability-type">
-          <label>{{localize "ABILITY.TYPE"}}</label>
-          <select name="data.abilityType">
-            {{#select data.abilityType}}
-            <option value=""> - </option>
-            {{#each (config "abilityTypes") as |type t|}}
-            <option value="{{t}}">{{type}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
-        </div>
       </div>
-
       <div class="tab" data-group="primary" data-tab="effects">
         {{> systems/wrath-and-glory/template/item/tab/effects.html}}
       </div>

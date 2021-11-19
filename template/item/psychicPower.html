@@ -29,153 +29,172 @@
       <div class="tab" data-group="primary" data-tab="stats">
 
         <div class="wrapper">
-          <div class="cost">
+          <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.COST"}}</label>
-            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+            <div class="item-form-inputs small">
+              <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+            </div>
           </div>
-          <div class="prerequisites">
+          <div class="item-form-group">
             <label>{{localize "PSYCHIC_POWER.PREREQUISITES"}}</label>
-            <input name="data.prerequisites" type="text" value="{{data.prerequisites}}" />
+            <div class="item-form-inputs">
+              <input name="data.prerequisites" type="text" value="{{data.prerequisites}}" />
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="duration">
-            <label>{{localize "PSYCHIC_POWER.DURATION"}}</label>
-            <input name="data.duration" type="text" value="{{data.duration}}" />
-          </div>
-          <div class="activation">
+          <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.ACTIVATION"}}</label>
             <select name="data.activation">
               {{#select data.activation}}
-                <option value="free">{{localize "ACTIVATION.FREE"}}</option>
-                <option value="action">{{localize "ACTIVATION.ACTION"}}</option>
-                <option value="simple">{{localize "ACTIVATION.SIMPLE"}}</option>
-                <option value="full">{{localize "ACTIVATION.FULL"}}</option>
-                <option value="movement">{{localize "ACTIVATION.MOVEMENT"}}</option>
+              <option value=""> - </option>
+              {{#each (config "powerActivations") as |type t|}}
+              <option value="{{t}}">{{type}}</option>
+              {{/each}}
               {{/select}}
             </select>
           </div>
+          <div class="item-form-group">
+            <label>{{localize "PSYCHIC_POWER.DURATION"}}</label>
+            <div class="item-form-inputs">
+              <input name="data.duration" type="text" value="{{data.duration}}" />
+            </div>
+          </div>
         </div>
         <div class="wrapper">
-          <div class="dn">
+          <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.DN"}}</label>
-            <input name="data.dn" type="number" value="{{data.dn}}" data-dtype="Number" />
+            <div class="item-form-inputs small">
+              <input name="data.dn" type="number" value="{{data.dn}}" data-dtype="Number" />
+            </div>
           </div>
-          <div class="range">
+          <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.RANGE"}}</label>
-            <input name="data.range" type="text" value="{{data.range}}" />
+            <div class="item-form-inputs medium">
+              <input name="data.range" type="text" value="{{data.range}}" />
+            </div>
           </div>
-          <div class="multi-target">
+          <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.MULTI_TARGET"}}</label>
-            {{#if data.multiTarget}}
-            <input name="data.multiTarget" type="checkbox" value="active" checked/>
-            {{else}}
-            <input name="data.multiTarget" type="checkbox" value="active"/>
-            {{/if}}
+            <div class="item-form-inputs">
+              <div class="item-checkbox {{#if data.multiTarget}}checked{{else}}unchecked{{/if}}" data-target="data.multiTarget">
+              {{#if data.multiTarget}}
+                <i class="fas fa-check"></i>
+              {{/if}}
+              </div>
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="header">
-            <b class="name"></b>
+          <div class="item-form-group">
+            <label>{{localize "PSYCHIC_POWER.TEST"}}</label>
+            <div class="item-form-inputs small">
+              <input name="data.test.dn" class="dn" placeholder="DN" type="number" value="{{data.test.dn}}" data-dtype="Number" />
+            </div>
+            <div class="item-form-inputs">
+              <select name="data.test.type" class="type">
+                {{#select data.test.type}}
+                  <option value="">-</option>
+                  {{#each (config "testTypes") as |type k|}}
+                  <option value="{{k}}">{{type}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{#if (eq data.test.type "attribute")}}
+                <select name="data.test.specification" class="attribute">
+                {{#select data.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "attributes") as |attribute k|}}
+                  <option value="{{k}}">{{attribute}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq data.test.type "skill")}}
+              <select name="data.test.specification" class="skill">
+                {{#select data.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "skills") as |skill k|}}
+                  <option value="{{k}}">{{skill}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq data.test.type "resolve")}}
+              <select name="data.test.specification" class="resolve">
+                {{#select data.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "resolveTests") as |test k|}}
+                  <option value="{{k}}">{{test}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq data.test.type "conviction")}}
+              <select name="data.test.specification" class="conviction">
+                {{#select data.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "convictionTests") as |test k|}}
+                  <option value="{{k}}">{{test}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="damage-header">
+            <b class="spacer"></b>
             <b class="base">{{localize "DIALOG.BASE"}}</b>
             <b class="rank">{{localize "DIALOG.RANK"}}</b>
             <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
           </div>
-        </div>
-        <div class="wrapper">
-          <div class="damage">
+          <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
-            <input name="data.damage.base" class="base" type="number" value="{{data.damage.base}}"
+            <div class="item-form-inputs">
+              <input name="data.damage.base" class="base" type="number" value="{{data.damage.base}}"
               data-dtype="Number" />
-            <select name="data.damage.rank" class="rank">
-              {{#select data.damage.rank}}
-              <option value="none">{{localize "RANK.NONE"}}</option>
-              <option value="single">{{localize "RANK.SINGLE"}}</option>
-              <option value="double">{{localize "RANK.DOUBLE"}}</option>
-              {{/select}}
-            </select>
-            <input name="data.damage.bonus" class="modifier" type="number" value="{{data.damage.bonus}}" data-dtype="Number" />
+              <select name="data.damage.rank" class="rank">
+                {{#select data.damage.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="data.damage.bonus" class="modifier" type="number" value="{{data.damage.bonus}}" data-dtype="Number" />
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="ed">
+          <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.ED"}}</label>
-            <input name="data.ed.base" class="base" type="number" value="{{data.ed.base}}" data-dtype="Number" />
-            <select name="data.ed.rank" class="rank">
-              {{#select data.ed.rank}}
-              <option value="none">{{localize "RANK.NONE"}}</option>
-              <option value="single">{{localize "RANK.SINGLE"}}</option>
-              <option value="double">{{localize "RANK.DOUBLE"}}</option>
-              {{/select}}
-            </select>
-            <input name="data.ed.bonus" class="modifier" type="number" value="{{data.ed.bonus}}" data-dtype="Number" />
+            <div class="item-form-inputs">
+              <input name="data.ed.base" class="base" type="number" value="{{data.ed.base}}" data-dtype="Number" />
+              <select name="data.ed.rank" class="rank">
+                {{#select data.ed.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="data.ed.bonus" class="modifier" type="number" value="{{data.ed.bonus}}" data-dtype="Number" />
+            </div>
           </div>
         </div>
+      
         <div class="wrapper">
-          <div class="test">
-            <label>{{localize "PSYCHIC_POWER.TEST"}}</label>
-            <input name="data.test.dn" class="dn" type="number" value="{{data.test.dn}}" data-dtype="Number" />
-            <select name="data.test.type" class="type">
-              {{#select data.test.type}}
-                <option value="">-</option>
-                {{#each (config "testTypes") as |type k|}}
-                <option value="{{k}}">{{type}}</option>
-                {{/each}}
-              {{/select}}
-            </select>
-            {{#if (eq data.test.type "attribute")}}
-              <select name="data.test.specification" class="attribute">
-              {{#select data.test.specification}}
-                <option value="">-</option>
-                {{#each (config "attributes") as |attribute k|}}
-                <option value="{{k}}">{{attribute}}</option>
-                {{/each}}
-              {{/select}}
-            </select>
-            {{/if}}
-            {{#if (eq data.test.type "skill")}}
-            <select name="data.test.specification" class="skill">
-              {{#select data.test.specification}}
-                <option value="">-</option>
-                {{#each (config "skills") as |skill k|}}
-                <option value="{{k}}">{{skill}}</option>
-                {{/each}}
-              {{/select}}
-            </select>
-            {{/if}}
-            {{#if (eq data.test.type "resolve")}}
-            <select name="data.test.specification" class="resolve">
-              {{#select data.test.specification}}
-                <option value="">-</option>
-                {{#each (config "resolveTests") as |test k|}}
-                <option value="{{k}}">{{test}}</option>
-                {{/each}}
-              {{/select}}
-            </select>
-            {{/if}}
-            {{#if (eq data.test.type "conviction")}}
-            <select name="data.test.specification" class="conviction">
-              {{#select data.test.specification}}
-                <option value="">-</option>
-                {{#each (config "convictionTests") as |test k|}}
-                <option value="{{k}}">{{test}}</option>
-                {{/each}}
-              {{/select}}
-            </select>
-            {{/if}}
+          <div class="item-form-group">
+            <label>{{localize "GEAR.KEYWORDS"}}</label>
+            <div class="item-form-inputs">
+              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            </div>
           </div>
         </div>
-        <div class="wrapper">
-          <div class="keywords">
-            <label>{{localize "PSYCHIC_POWER.KEYWORDS"}}</label>
-            <input name="data.keywords" type="text" value="{{data.keywords}}" />
-          </div>
-        </div>
-        <div class="wrapper" style="flex-wrap: wrap; justify-content: center;">
+
+        <div class="wrapper potency">
           <h1>{{localize "TITLE.POTENCY"}}</h1>
-          <div class="potency" style="flex-basis: 100%; margin-top: 8px">
             {{editor content=data.potency target="data.potency" button=true owner=owner editable=editable}}
-          </div>
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="effects">

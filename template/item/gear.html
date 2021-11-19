@@ -30,30 +30,39 @@
       <div class="tab" data-group="primary" data-tab="stats">
 
         <div class="wrapper">
-          <div class="value">
-            <label>{{localize "GEAR.VALUE"}}</label>
-            <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
-          </div>
-          <div class="rarity">
-            <label>{{localize "GEAR.RARITY"}}</label>
-            <select name="data.rarity">
-              {{#select data.rarity}}
-              <option value=""> - </option>
-              {{#each (config "rarity") as |rarity r|}}
-              <option value="{{r}}">{{rarity}}</option>
-              {{/each}}
-              {{/select}}
-            </select>
-          </div>
-            <div class="quantity">
-              <label>{{localize "AMMO.QUANTITY"}}</label>
+          <div class="item-form-group static">
+            <label>{{localize "GEAR.QUANTITY"}}</label>
+            <div class="item-form-inputs small">
               <input name="data.quantity" type="number" value="{{data.quantity}}" data-dtype="Number" />
             </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "GEAR.VALUE"}}</label>
+            <div class="item-form-inputs small">
+              <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "GEAR.RARITY"}}</label>
+            <div class="item-form-inputs">
+              <select name="data.rarity">
+                {{#select data.rarity}}
+                <option value=""> - </option>
+                {{#each (config "rarity") as |rarity r|}}
+                <option value="{{r}}">{{rarity}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
+          </div>
         </div>
+
         <div class="wrapper">
-          <div class="keywords">
+          <div class="item-form-group">
             <label>{{localize "GEAR.KEYWORDS"}}</label>
-            <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            <div class="item-form-inputs">
+              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            </div>
           </div>
         </div>
       </div>

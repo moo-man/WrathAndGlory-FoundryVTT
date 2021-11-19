@@ -144,6 +144,14 @@ WNG.rarity = {
   "unique": "RARITY.UNIQUE",
 }
 
+WNG.powerActivations = {
+    free : "ACTIVATION.FREE",
+    action : "ACTIVATION.ACTION",
+    simple : "ACTIVATION.SIMPLE",
+    full : "ACTIVATION.FULL",
+    movement : "ACTIVATION.MOVEMENT"
+}
+
 WNG.abilityTypes = {
     battlecry : "ABILITY_TYPE.BATTLECRY",
     action : "ABILITY_TYPE.ACTION",

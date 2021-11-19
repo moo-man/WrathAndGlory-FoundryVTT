@@ -30,25 +30,31 @@
       <div class="tab" data-group="primary" data-tab="stats">
 
         <div class="wrapper">
-          <div class="cost">
-            <label>{{localize "TALENT.COST"}}</label>
-            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
-          </div>
-          <div class="requirements">
+          <div class="item-form-group">
             <label>{{localize "TALENT.REQUIREMENTS"}}</label>
-            <input name="data.requirements" type="text" value="{{data.requirements}}" />
+            <div class="item-form-inputs">
+              <input name="data.requirements" type="text" value="{{data.requirements}}" />
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="display">
-            <label>{{localize "TALENT.DISPLAY"}}</label>
-            {{#if data.display}}
-            <input name="data.display" type="checkbox" value="active" checked/>
-            {{else}}
-            <input name="data.display" type="checkbox" value="active"/>
-            {{/if}}
+          <div class="item-form-group static">
+            <label>{{localize "TALENT.COST"}}</label>
+            <div class="item-form-inputs small">
+              <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+            </div>
           </div>
-        </div>
+          <div class="item-form-group static">
+            <label>{{localize "TALENT.DISPLAY"}}</label>
+            <div class="item-form-inputs">
+              <div class="item-checkbox {{#if data.display}}checked{{else}}unchecked{{/if}}" data-target="data.display">
+              {{#if data.display}}
+                <i class="fas fa-check"></i>
+              {{/if}}
+              </div>
+            </div>
+          </div>    
+      </div>
       </div>
 
       <div class="tab" data-group="primary" data-tab="effects">

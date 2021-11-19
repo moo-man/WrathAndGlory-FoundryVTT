@@ -28,49 +28,69 @@
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
+
         <div class="wrapper">
-          <div class="traits">
-            <label>{{localize "ARMOUR.TRAITS"}}<a class="item-traits"><i class="fas fa-cog"></i></a></label>
-            <input disabled type="text" value="{{item.Traits}}" />
+          <div class="item-form-group static">
+            <label>{{localize "ARMOUR.QUANTITY"}}</label>
+            <div class="item-form-inputs small">
+              <input name="data.quantity" type="number" value="{{data.quantity}}" data-dtype="Number" />
+            </div>
           </div>
-        </div>
-        <div class="wrapper">
-          <div class="rating">
-            <label>{{localize "ARMOUR.RATING"}}</label>
-            <input name="data.rating" type="number" value="{{data.rating}}" data-dtype="Number" />
-          </div>
-          <div class="value">
+          <div class="item-form-group static">
             <label>{{localize "ARMOUR.VALUE"}}</label>
-            <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+            <div class="item-form-inputs small">
+              <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+            </div>
           </div>
-          <div class="rarity">
+          <div class="item-form-group static">
             <label>{{localize "ARMOUR.RARITY"}}</label>
-            <select name="data.rarity">
-              {{#select data.rarity}}
-              <option value=""> - </option>
-              {{#each (config "rarity") as |rarity r|}}
-              <option value="{{r}}">{{rarity}}</option>
-              {{/each}}
-              {{/select}}
-            </select>
+            <div class="item-form-inputs">
+              <select name="data.rarity">
+                {{#select data.rarity}}
+                <option value=""> - </option>
+                {{#each (config "rarity") as |rarity r|}}
+                <option value="{{r}}">{{rarity}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
           </div>
         </div>
+
         <div class="wrapper">
-          <div class="display">
+          <div class="item-form-group static">
+            <label>{{localize "ARMOUR.RATING"}}</label>
+            <div class="item-form-inputs small">
+              <input name="data.quantity" type="number" value="{{data.quantity}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group static">
             <label>{{localize "ARMOUR.INVULNERABLE"}}</label>
-            <input name="data.invulnerable" type="checkbox" {{checked data.invulnerable}}/>
+            <div class="item-form-inputs">
+              <div class="item-checkbox {{#if data.invulnerable}}checked{{else}}unchecked{{/if}}" data-target="data.invulnerable">
+              {{#if data.invulnerable}}
+                <i class="fas fa-check"></i>
+              {{/if}}
+              </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="wrapper">
+          <div class="item-form-group stacked">
+            <label>{{localize "ARMOUR.TRAITS"}}<a class="item-traits"><i class="fas fa-cog"></i></a></label>            
+            <div class="item-form-inputs">
+              <input disabled type="text" value="{{item.Traits}}" />
+            </div>
           </div>
         </div>
+
         <div class="wrapper">
-          <div class="quantity">
-            <label>{{localize "AMMO.QUANTITY"}}</label>
-            <input name="data.quantity" type="number" value="{{data.quantity}}" data-dtype="Number" />
-          </div>
-        </div>
-        <div class="wrapper">
-          <div class="keywords">
+          <div class="item-form-group">
             <label>{{localize "ARMOUR.KEYWORDS"}}</label>
-            <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            <div class="item-form-inputs">
+              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            </div>
           </div>
         </div>
       </div>
