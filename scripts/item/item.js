@@ -324,6 +324,10 @@ export class WrathAndGloryItem extends Item {
             return this.actor.items.get(this.ammo)
     }
 
+    get AbilityType() {
+        return game.wng.config.abilityTypes[this.abilityType]
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     get isKeyword() { return this.type === "keyword" }
     get isTalent() { return this.type === "talent" }
@@ -373,4 +377,5 @@ export class WrathAndGloryItem extends Item {
     get upgrades() { return this.data.data.upgrades }
     get equipped() { return this.data.data.equipped }
     get test() {return this.data.data.test}
+    get abilityType() {return this.data.data.abilityType}
 }

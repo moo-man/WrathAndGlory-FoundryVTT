@@ -205,6 +205,16 @@ display: none
 
 }
 
+.wrath-and-glory .item-list .item .ability-type {
+  background-color: var(--color-imperium);
+  color: white;
+  height: 100%;
+  text-align: center;
+  width: 30px;
+  padding-top: 3px;
+}
+
+
 
 .wrath-and-glory.sheet.actor .wrapper .scrollable .item-list:not(:first-of-type) {
   margin-top: 8px;
@@ -244,8 +254,13 @@ display: none
   margin: 0px 10px;
 }
 
+.wrath-and-glory .item-list .item .item-trait {
+  margin-left: 3px;
+}
+
 .wrath-and-glory.sheet.actor  .item-list .item-summary {
   padding: 5px;
   width: 100%;
   border: 1px solid var(--color-red)
 }
+

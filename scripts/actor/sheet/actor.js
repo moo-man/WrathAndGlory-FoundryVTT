@@ -187,6 +187,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".adv-buttons button").click(this._onAdvButtonClick.bind(this))
         html.find(".condition-toggle").click(this._onConditionToggle.bind(this))
         html.find(".condition-click").click(this._onConditionClick.bind(this));
+        html.find(".item-trait").mousedown(this._onItemTraitClick.bind(this))
 
         html.find(".items .item").each((i, e) => {
             e.draggable = true;
@@ -650,6 +651,22 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             if (journal)
                 journal.sheet.render(true)
         }
+    }
+
+    _onItemTraitClick(ev) {
+        ev.preventDefault()
+        ev.stopPropagation();
+        let id = $(event.currentTarget).parents(".item").attr("data-item-id")
+        let item = this.actor.items.get(id)
+        let traits = Object.values(item.traitList)
+        let textClicked = ev.currentTarget.text
+
+        let traitClicked = traits.find(i => i.display == textClicked.trim())
+
+        let description = game.wng.config.traitDescriptions[traitClicked.name];
+
+        return this._createDropdown(ev, {text : description})
+
     }
 
   

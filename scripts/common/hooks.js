@@ -6,6 +6,7 @@ import settings from "../hooks/settings.js"
 import init from "../hooks/init.js";
 import effects from "../hooks/effects.js"
 import chat from "../hooks/chat.js";
+import combat from "../hooks/combat.js";
 
 export default function() {
     entryContextHooks();
@@ -14,4 +15,5 @@ export default function() {
     init();
     effects();
     chat();
+    combat();
 }

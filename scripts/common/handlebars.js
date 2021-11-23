@@ -41,4 +41,11 @@ function registerHandlebarsHelpers() {
   Handlebars.registerHelper("configLookup", function (obj, key) {
       return game.wng.config[obj][key]
   })
+
+  Handlebars.registerHelper("array", function (array, cls) {
+    if (typeof cls == "string")
+        return array.map(i => `<a class="${cls}">${i}</a>`).join(`,`)
+    else
+        return array.join(", ")
+})
 }

@@ -175,7 +175,7 @@
           </div>
           {{#if item.traits.length}}
           <div class="item-content-extra">
-            <span class="item-traits"><b>Traits:</b> {{item.Traits}}</span>
+            <span class="item-traits"><b>Traits:</b> {{{array item.Traits "item-trait"}}}</span>
           </div>
           {{/if}}
         </div>
@@ -221,7 +221,7 @@
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
               <div class="item-property">{{item.rating}}</div>
-              <div class="item-property flex large">{{item.Traits}}</div>
+              <div class="item-property flex large">{{{array item.Traits "item-trait"}}}</div>
           </div>
         </div>
         {{/each}}
@@ -266,6 +266,9 @@
         {{#if item.display}}
         <div class="item" data-item-id="{{item.id}}">
           <div class="item-content item-dropdown">
+              {{#if item.abilityType}}
+              <div class="ability-type" title="{{configLookup 'abilityTypes' item.abilityType}}">{{configLookup "abilityTypeAbbrev" item.abilityType}}</div>
+              {{/if}}
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
           <span class="item-property flex large long-text">{{{item.description}}}</span>
