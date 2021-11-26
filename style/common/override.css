@@ -386,3 +386,21 @@ button:disabled {
   color: white;
   opacity : 0.5;
 }
+
+
+a.entity-link, a.inline-roll {
+    background: none;
+    font-weight: bold;
+    color: var(--color-imperium);
+    border: none
+}
+
+a.entity-link:hover, a.inline-roll:hover {
+  text-shadow: 0 0 8px var(--color-imperium)
+}
+
+
+
+a.entity-link i, a.inline-roll i {
+    color: var(--color-imperium);
+}
