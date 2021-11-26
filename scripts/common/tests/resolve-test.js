@@ -22,12 +22,19 @@ export default class ResolveTest  extends WNGTest {
         this.actor.addCondition("terror")
       if (this.fear)
         this.actor.addCondition("fear")
-
     }
+    if (!this.result.isSuccess && !this.context.pointsAdded)
+    {
+      this.context.pointsAdded = true;
+      game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {
+        game.counter.render(true)
+      })
+    }
+
   }
 
-  async reroll() {
-    await super.reroll() 
+  async reroll(...args) {
+    await super.reroll(...args) 
 
     if (this.result.isSuccess && this.context.effectApplied)
     {
@@ -38,6 +45,13 @@ export default class ResolveTest  extends WNGTest {
       if (this.fear)
         this.actor.removeCondition("fear")
       this.updateMessageFlags();
+    }
+    if (this.result.isSuccess && this.context.pointsAdded)
+    {
+      this.context.pointsAdded = true;
+      game.wng.RuinGloryCounter.changeCounter(-1,  "ruin").then(() => {
+        game.counter.render(true)
+      })
     }
   }
 

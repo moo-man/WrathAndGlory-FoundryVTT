@@ -1,11 +1,17 @@
 
 .window-app .window-content {
     background: var(--image-background) 0 100% repeat;/*, var(--image-background) 50px 100% repeat;*/
-    border: 30px solid transparent;
-    border-bottom: 20px solid transparent;
     font-family: var(--font-text);
-    border-top: 0px;
-    border-image: url(../../asset/image/journal-border.png) 0 80 60 repeat;
+
+}
+
+.window-app.item .window-content,
+.window-app.journal-sheet .window-content,
+  .window-app.actor .window-content {
+  border: 30px solid transparent;
+  border-top: 0px;
+  border-image: url(../../asset/image/journal-border.png) 0 80 60 repeat;
+  border-bottom: 20px solid transparent;
 }
 
 .window-app .window-header {

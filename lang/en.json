@@ -108,7 +108,9 @@
 
   "BUTTON.POST_ITEM": "Post Item",
   "BUTTON.ROLL": "Roll",
-  "BUTTON.REROLL": "Reroll (-1 Wrath)",
+  "BUTTON.REROLL_FAILED": "Reroll Failed (-1 Glory/Ruin)",
+  "BUTTON.REROLL_SELECTED": "Reroll Selected",
+  "BUTTON.CLEAR_REROLLS": "Clear Rerolls",
   "BUTTON.SHIFT": "Shift",
   "BUTTON.SHIFT_DAMAGE": "Shift (+Damage)",
   "BUTTON.SHIFT_GLORY": "Shift (+Glory)",
@@ -131,7 +133,8 @@
   "CHAT.DN": "DN",
   "CHAT.SHIFTING": "Shifts Possible",
   "CHAT.WRATH_CRITICAL_TITLE": "Wrath Critical",
-  "CHAT.WRATH_CRITICAL_COMMON": "1 point of Glory added to the group's pool!",
+  "CHAT.WRATH_CRITICAL_COMMON_GLORY": "1 point of Glory added to the group's pool!",
+  "CHAT.WRATH_CRITICAL_COMMON_RUIN": "1 point of Ruin added to the pool!",
   "CHAT.WRATH_CRITICAL_PSY": "shift any Exalted Icons to enhance the power's effect!",
   "CHAT.WRATH_CRITICAL_WEAPON": "roll on the Critical Hit table!",
   "CHAT.WRATH_CRITICAL_CORRUPTION": "DN Reduced by 2!",
@@ -141,6 +144,7 @@
   "CHAT.WRATH_COMPLICATION_WEAPON": "something unexpected happened!",
   "CHAT.WRATH_COMPLICATION_CORRUPTION": "Double Corruption points!",
   "CHAT.FAIL_CORRUPTION" : "Gain {corruption} Corruption, 1 Ruin added",
+  "CHAT.FAIL_FEAR" : "Gains the @JournalEntry[Fear] Condition, 1 Ruin added",
 
   "DIALOG.YES": "Yes",
   "DIALOG.NO": "No",
@@ -366,6 +370,8 @@
   "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
   "ERROR.NoMoreWrath" : "No more Wrath",
   "NOTE.WrathSubtracted" : "Wrath Subtracted",
+  "ERROR.NoMoreRuin" : "No more Ruin",
+  "NOTE.RuinSubtracted" : "Ruin Subtracted",
 
   "AUTOCALC.DEFENSE" : "Auto Calculate Defense",
   "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",

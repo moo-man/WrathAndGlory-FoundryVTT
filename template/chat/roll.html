@@ -48,6 +48,7 @@
         {{#if result.isSuccess}}
         <p><strong>{{localize "CHAT.SHIFTING"}}: {{result.shiftsPossible}}</strong></p>
         {{/if}}
+
         {{#if result.isWrathCritical}}
         {{#if weapon}}
         <p><strong style="color: var(--color-red)">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
@@ -60,7 +61,13 @@
                 {{localize "CHAT.WRATH_CRITICAL_CORRUPTION"}}</strong></p>
         {{else}}
         <p><strong style="color: var(--color-red)">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
-                {{localize "CHAT.WRATH_CRITICAL_COMMON"}}</strong></p>
+                {{#if (eq actor.type "agent")}}
+                {{localize "CHAT.WRATH_CRITICAL_COMMON_GLORY"}}
+                {{else if (eq actor.type "threat")}}
+                {{localize "CHAT.WRATH_CRITICAL_COMMON_RUIN"}}
+                {{/if}}
+        
+        </strong></p>
        
         {{/if}}
         {{/if}}
@@ -80,6 +87,16 @@
 
         {{/if}}
         {{/if}}
+
+        
+        {{#if result.isSuccess}}
+        
+        {{else}}
+            {{#if fear}}
+            <p><strong>{{localize "CHAT.FAIL_FEAR"}}</strong></p>
+            {{/if}}
+        {{/if}}
+
     </div>
     {{#if result.damage}}
     <div class="wrapper">

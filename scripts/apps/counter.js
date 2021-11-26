@@ -108,5 +108,21 @@ export default class RuinGloryCounter extends Application {
       let value = game.settings.get('wrath-and-glory', type);
       return await RuinGloryCounter.setCounter(value + diff, type)
     }
+
+
+    static getValue(type)
+    {
+        return game.settings.get('wrath-and-glory', type);
+    }
+
+    get glory()
+    {
+      return RuinGloryCounter.getValue("glory")
+    }
+
+    get ruin()
+    {
+      return RuinGloryCounter.getValue("ruin")
+    }
   
   }

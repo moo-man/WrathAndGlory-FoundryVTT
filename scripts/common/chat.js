@@ -61,17 +61,7 @@ export default class WNGChat {
   }
 
   static _onDieClick(ev) {
-    if (ev.currentTarget.classList.contains("selected"))
-      return ev.currentTarget.classList.remove("selected")
-
-    let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
-    let message = game.messages.get(id)
-    let test = message.getTest();
-    let index = parseInt(ev.currentTarget.dataset.index);
-
-    if (test.result.allDice[index].canShift && test.result.shiftsPossible > 0 && !ev.currentTarget.classList.contains("shifted"))
-      ev.currentTarget.classList.add("selected")
-
+    ev.currentTarget.classList.toggle("selected")
   }
 
   static async _onEffectClick(ev)

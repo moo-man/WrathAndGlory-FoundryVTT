@@ -56,8 +56,8 @@ export default class CorruptionTest  extends WNGTest {
     }
   }
 
-  async reroll() {
-    await super.reroll();
+  async reroll(...args) {
+    await super.reroll(...args) 
     if (this.result.isSuccess && this.context.pointsAdded)
     {
       this.revertPoints()

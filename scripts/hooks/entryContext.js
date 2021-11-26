@@ -1,15 +1,31 @@
 export default function() {
     Hooks.on("getChatLogEntryContext", (html, options) => {
         let canApply = li => li.find(".damageRoll").length && canvas.tokens.controlled.length > 0;
-        let canReroll = li => {
+        let canRerollFailed = li => {
             let test = game.messages.get(li.attr("data-message-id")).getTest()
             if (test)
-                return !test.context.rerolled
+                return !test.context.rerollFailed
+        }
+
+        let canRerollSelected = li => {
+            return li.find(".selected").length// && !li.find(".shifted").length
         }
 
         let canShift = li => {
-            return li.find(".selected").length// && !li.find(".shifted").length
+            let selected = Array.from(li.find(".selected")).map(i => Number(i.dataset.index))
+            let test = game.messages.get(li.attr("data-message-id")).getTest()
+
+            // If all selected dice are shiftable and number of selected <= shifts possible
+            return selected.length && test.result.dice.filter(i => selected.includes(i.index)).every(i => i.canShift) && selected.length <= test.result.shiftsPossible
         }
+
+        let canClearReroll = li => {
+            let test = game.messages.get(li.attr("data-message-id")).getTest()
+            return game.user.isGM && test.testData.rerolls.length
+            
+
+        }
+
         let canUnshift = li => {
             return li.find(".shifted").length
         }
@@ -17,9 +33,9 @@ export default function() {
 
         options.unshift(
             {
-                name: "BUTTON.REROLL",
+                name: "BUTTON.REROLL_FAILED",
                 icon: '<i class="fas fa-redo"></i>',
-                condition: canReroll,
+                condition: canRerollFailed,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
@@ -34,8 +50,39 @@ export default function() {
                         ui.notifications.notify(game.i18n.localize("NOTE.WrathSubtracted"))
                       }
                     }
+                    if (actor.type == "threat")
+                    {
+                        if (game.counter.ruin <= 0)
+                            return ui.notifications.error(game.i18n.localize("ERROR.NoMoreRuin"))
+                        else 
+                        {
+                            game.wng.RuinGloryCounter.changeCounter(-1,  "ruin").then(() => {game.counter.render(true)})
+                            ui.notifications.notify(game.i18n.localize("NOTE.RuinSubtracted"))
+                        }
+                    }
 
-                    test.reroll()
+                    test.rerollFailed()
+                }
+            },
+            {
+                name: "BUTTON.REROLL_SELECTED",
+                icon: '<i class="fas fa-redo"></i>',
+                condition: canRerollSelected,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    let selected = Array.from(li.find(".selected")).map(i => Number(i.dataset.index))
+                    test.reroll(selected)
+                }
+            },
+            {
+                name: "BUTTON.CLEAR_REROLLS",
+                icon: '<i class="fas fa-redo"></i>',
+                condition: canClearReroll,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    test.clearRerolls()
                 }
             },
             {
