@@ -66,6 +66,106 @@
             </select>
           </div>
         </div>
+
+        {{#unless (eq data.abilityType "determination")}}
+        <div class="wrapper">
+          <div class="item-form-group">
+            <label>{{localize "PSYCHIC_POWER.TEST"}}</label>
+            <div class="item-form-inputs small">
+              <input name="data.test.dn" class="dn" placeholder="DN" type="number" value="{{data.test.dn}}" data-dtype="Number" />
+            </div>
+            <div class="item-form-inputs">
+              <select name="data.test.type" class="type">
+                {{#select data.test.type}}
+                  <option value="">-</option>
+                  {{#each (config "testTypes") as |type k|}}
+                  <option value="{{k}}">{{type}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{#if (eq data.test.type "attribute")}}
+                <select name="data.test.specification" class="attribute">
+                {{#select data.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "attributes") as |attribute k|}}
+                  <option value="{{k}}">{{attribute}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq data.test.type "skill")}}
+              <select name="data.test.specification" class="skill">
+                {{#select data.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "skills") as |skill k|}}
+                  <option value="{{k}}">{{skill}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq data.test.type "resolve")}}
+              <select name="data.test.specification" class="resolve">
+                {{#select data.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "resolveTests") as |test k|}}
+                  <option value="{{k}}">{{test}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq data.test.type "conviction")}}
+              <select name="data.test.specification" class="conviction">
+                {{#select data.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "convictionTests") as |test k|}}
+                  <option value="{{k}}">{{test}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="damage-header">
+            <b class="spacer"></b>
+            <b class="base">{{localize "DIALOG.BASE"}}</b>
+            <b class="rank">{{localize "DIALOG.RANK"}}</b>
+            <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
+          </div>
+          <div class="item-form-group fixed">
+            <label>{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
+            <div class="item-form-inputs">
+              <input name="data.damage.base" class="base" type="number" value="{{data.damage.base}}"
+              data-dtype="Number" />
+              <select name="data.damage.rank" class="rank">
+                {{#select data.damage.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="data.damage.bonus" class="modifier" type="number" value="{{data.damage.bonus}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="item-form-group fixed">
+            <label>{{localize "PSYCHIC_POWER.ED"}}</label>
+            <div class="item-form-inputs">
+              <input name="data.ed.base" class="base" type="number" value="{{data.ed.base}}" data-dtype="Number" />
+              <select name="data.ed.rank" class="rank">
+                {{#select data.ed.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="data.ed.bonus" class="modifier" type="number" value="{{data.ed.bonus}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+        {{/unless}}
       </div>
       <div class="tab" data-group="primary" data-tab="effects">
         {{> systems/wrath-and-glory/template/item/tab/effects.html}}

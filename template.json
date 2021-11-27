@@ -323,49 +323,6 @@
       "weaponUpgrade"
     ],
     "templates": {
-      "bonus": {
-        "bonus": {
-          "attributes": {
-            "strength": 0,
-            "toughness": 0,
-            "agility": 0,
-            "initiative": 0,
-            "willpower": 0,
-            "intellect": 0,
-            "fellowship": 0
-          },
-          "skills": {
-            "athletics": 0,
-            "awareness": 0,
-            "ballisticSkill": 0,
-            "cunning": 0,
-            "deception": 0,
-            "insight": 0,
-            "intimidation": 0,
-            "investigation": 0,
-            "leadership": 0,
-            "medicae": 0,
-            "persusasion": 0,
-            "pilot": 0,
-            "psychicMastery": 0,
-            "scholar": 0,
-            "stealth": 0,
-            "survival": 0,
-            "tech": 0,
-            "weaponSkill": 0
-          },
-          "combat": {
-            "defense": 0,
-            "resilience": 0,
-            "wounds": 0,
-            "determination": 0,
-            "shock": 0,
-            "resolve": 0,
-            "passiveAwareness": 0,
-            "conviction": 0
-          }
-        }
-      },
       "equipped" : {
         "equipped" : false
       },
@@ -383,20 +340,30 @@
       }
     },
     "ability": {
-      "templates": ["bonus"],
+      "templates": ["test"],
       "effect": "",
       "cost": 0,
       "requirements": "",
       "description": "",
       "display": true,
-      "abilityType" : ""
+      "abilityType" : "",
+      "damage": {
+        "base": 0,
+        "bonus": 0,
+        "rank": "none"
+      },
+      "ed": {
+        "base": 0,
+        "bonus": 0,
+        "rank": "none"
+      }
     },
     "ammo": {
       "templates" : ["physical"],
       "effect": ""
     },
     "armour": {
-      "templates": ["bonus", "physical", "equipped"],
+      "templates": ["physical", "equipped"],
       "rating": 0,
       "traits": [],
       "invelnerable" : false
@@ -410,26 +377,27 @@
       "benefits": ""
     },
     "augmentic": {
-      "templates": ["bonus", "physical"],
+      "templates": ["physical"],
       "effect": ""
     },
     "gear": {
-      "templates": ["bonus", "physical"],
+      "templates": ["physical"],
       "effect": ""
     },
     "keyword": {
       "description": ""
     },
     "memorableInjury": {
-      "templates": ["bonus"],
+      "templates": [],
       "description": ""
     },
     "mutation": {
-      "templates": ["bonus"],
+      "templates": [],
       "description": "",
       "effect": ""
     },
     "psychicPower": {
+      "templates" : ["test"],
       "description": "",
       "effect": "",
       "cost": 0,
@@ -449,19 +417,11 @@
       "ed": {
         "base": 0,
         "bonus": 0,
-        "die": {
-          "one": 0,
-          "two": 0,
-          "three": 0,
-          "four": 1,
-          "five": 1,
-          "six": 2
-        },
         "rank": "none"
       }
     },
     "talent": {
-      "templates": ["bonus"],
+      "templates": [],
       "effect": "",
       "cost": 0,
       "requirements": "",
@@ -469,11 +429,11 @@
       "display": true
     },
     "traumaticInjury": {
-      "templates": ["bonus"],
+      "templates": [],
       "description": ""
     },
     "weapon": {
-      "templates": ["bonus", "physical", "equipped"],
+      "templates": ["physical", "equipped"],
       "attack": {
         "base": 0,
         "bonus": 0,
@@ -487,14 +447,6 @@
       "ed": {
         "base": 0,
         "bonus": 0,
-        "die": {
-          "one": 0,
-          "two": 0,
-          "three": 0,
-          "four": 1,
-          "five": 1,
-          "six": 2
-        },
         "rank": "none"
       },
       "ap": {

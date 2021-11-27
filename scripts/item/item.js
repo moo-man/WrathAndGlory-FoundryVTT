@@ -328,6 +328,24 @@ export class WrathAndGloryItem extends Item {
         return game.wng.config.abilityTypes[this.abilityType]
     }
 
+    get rollable() {
+        if (this.type == "ability")
+        {
+            if (this.abilityType == "determination") return true
+            if (this.hasDamage) return true
+            if (this.hastTest) return true
+        }
+
+    }
+
+    get hasDamage() {
+        return (this.damage && (this.damage.base || this.damage.bonus || this.damage.rank != "none")) || (this.ed && (this.ed.base || this.ed.bonus || this.ed.rank != "none"))
+    }
+
+    get hasTest() {
+        return this.test && this.test.dn && this.test.type
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     get isKeyword() { return this.type === "keyword" }
     get isTalent() { return this.type === "talent" }

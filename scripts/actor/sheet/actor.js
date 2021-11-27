@@ -161,6 +161,8 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         super.activateListeners(html);
         html.find("select").click(ev => ev.stopPropagation())
         html.find(".item-dropdown").mousedown(this._dropdownLeftClick.bind(this))
+        html.find(".rollable").mouseenter(this._toggleDice.bind(this))
+        html.find(".rollable").mouseleave(this._toggleDice.bind(this))
         html.find(".item-dropdown-right").mousedown(this._dropdownRightClick.bind(this))
         html.find(".item-create").mousedown(this._onItemCreate.bind(this));
         html.find(".item-edit").mousedown(this._onItemEdit.bind(this));
@@ -301,6 +303,24 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     _onFocusIn(event) {
         $(event.currentTarget).select();
+    }
+
+
+    _toggleDice(ev) {
+        let li = $(ev.currentTarget).parents(".item")
+
+        let img = li.find("img")[0]
+
+        if (img.style.display == "none")
+        {
+            img.style.display = "flex";
+            Array.from(li.find(".dice")).forEach(d => d.remove())
+        }
+        else
+        {
+            $(img).after("<div class='dice'><i class='fas fa-dice'></i></div>")
+            img.style.display = "none"
+        }
     }
 
     async _prepareCustomRoll() {

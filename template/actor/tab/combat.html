@@ -265,13 +265,13 @@
         {{#each items.abilitiesAndTalents as |item|}}
         {{#if item.display}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content item-dropdown">
+          <div class="item-content">
               {{#if item.abilityType}}
-              <div class="ability-type" title="{{configLookup 'abilityTypes' item.abilityType}}">{{configLookup "abilityTypeAbbrev" item.abilityType}}</div>
+              <div class="ability-type" title="{{configLookup 'abilityTypeDescriptions' item.abilityType}}">{{configLookup "abilityTypeAbbrev" item.abilityType}}</div>
               {{/if}}
               <img class="item-property item-image" src="{{item.img}}"></img>
-              <div class="item-property item-name">{{item.name}}</div>
-          <span class="item-property flex large long-text">{{{item.description}}}</span>
+              <div class="item-property item-name {{#if item.rollable}}rollable{{else}}item-dropdown{{/if}}">{{item.name}}</div>
+          <span class="item-property item-dropdown flex large long-text">{{{item.description}}}</span>
         </div>
         </div>
         {{/if}}

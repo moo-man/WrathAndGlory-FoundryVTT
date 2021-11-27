@@ -320,7 +320,7 @@ export class WNGTest {
   }
 
   get showTest() {
-    return this.result.isSuccess && this.item?.test && this.item.test.dn && this.item.test.type 
+    return this.result.isSuccess && this.item && this.item.hasTest 
   }
 
   get testDisplay() {

@@ -160,6 +160,10 @@ display: none
   overflow: hidden;
 }
 
+.wrath-and-glory .item-list .item-property.item-name .fas{
+  color: var(--color-imperium)
+}
+
 .wrath-and-glory .item-list .item-property.item-image{
   height: 22px;
   width: 22px;
@@ -205,13 +209,22 @@ display: none
 
 }
 
-.wrath-and-glory .item-list .item .ability-type {
+  .wrath-and-glory .item-list .item .ability-type {
   background-color: var(--color-imperium);
   color: white;
   height: 100%;
   text-align: center;
   width: 30px;
   padding-top: 3px;
+}
+
+.wrath-and-glory .item-list .item .dice
+{
+  color:  white;
+  height: 22px;
+  text-align: center;
+  width: 22px;
+  padding: 2px;
 }
 
 
@@ -223,6 +236,7 @@ display: none
 
 .wrath-and-glory .item-list .item .item-content:hover {
   background-color: var(--color-red);
+  cursor: pointer;
 }
 
 .wrath-and-glory .item-list .item:nth-child(even) {
