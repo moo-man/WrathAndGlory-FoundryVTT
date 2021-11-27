@@ -298,6 +298,7 @@ export class WrathAndGloryActor extends Actor {
         dialogData.pool.size = weapon.skill.total;
         dialogData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
         dialogData.pool.rank = weapon.attack.rank;
+        dialogData.damageValues = weapon.damageValues
         return dialogData
     }
 

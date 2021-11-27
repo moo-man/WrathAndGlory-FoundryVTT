@@ -174,12 +174,12 @@ export class WeaponDialog extends RollDialog {
     testData.ap.base = parseInt(html.find("#ap-base")[0].value);
     testData.ap.bonus = parseInt(html.find("#ap-bonus")[0].value);
     testData.ap.rank = html.find("#ap-rank")[0].value;
-    testData.ed.die.one = parseInt(html.find("#die-one")[0].value);
-    testData.ed.die.two = parseInt(html.find("#die-two")[0].value);
-    testData.ed.die.three = parseInt(html.find("#die-three")[0].value);
-    testData.ed.die.four = parseInt(html.find("#die-four")[0].value);
-    testData.ed.die.five = parseInt(html.find("#die-five")[0].value);
-    testData.ed.die.six = parseInt(html.find("#die-six")[0].value);
+    testData.ed.damageValues[1] = parseInt(html.find("#die-one")[0].value);
+    testData.ed.damageValues[2] = parseInt(html.find("#die-two")[0].value);
+    testData.ed.damageValues[3] = parseInt(html.find("#die-three")[0].value);
+    testData.ed.damageValues[4] = parseInt(html.find("#die-four")[0].value);
+    testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
+    testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
     return testData
   }
 
@@ -194,13 +194,13 @@ export class WeaponDialog extends RollDialog {
         base: 0,
         rank: "none",
         bonus: 0,
-        die: {
-          one: 0,
-          two: 0,
-          three: 0,
-          four: 1,
-          five: 1,
-          six: 2
+        damageValues: {
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 1,
+          5: 1,
+          6: 2
         }
       },
       ap: {
@@ -283,12 +283,12 @@ export class PowerDialog extends RollDialog {
     testData.ed.base = parseInt(html.find("#ed-base")[0].value);
     testData.ed.bonus = parseInt(html.find("#ed-bonus")[0].value);
     testData.ed.rank = html.find("#ed-rank")[0].value;
-    testData.ed.die.one = parseInt(html.find("#die-one")[0].value);
-    testData.ed.die.two = parseInt(html.find("#die-two")[0].value);
-    testData.ed.die.three = parseInt(html.find("#die-three")[0].value);
-    testData.ed.die.four = parseInt(html.find("#die-four")[0].value);
-    testData.ed.die.five = parseInt(html.find("#die-five")[0].value);
-    testData.ed.die.six = parseInt(html.find("#die-six")[0].value);
+    testData.ed.damageValues[1] = parseInt(html.find("#die-one")[0].value);
+    testData.ed.damageValues[2] = parseInt(html.find("#die-two")[0].value);
+    testData.ed.damageValues[3] = parseInt(html.find("#die-three")[0].value);
+    testData.ed.damageValues[4] = parseInt(html.find("#die-four")[0].value);
+    testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
+    testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
     testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
     testData.potency = html.find("#potency")[0].value;
     return testData
@@ -305,13 +305,13 @@ export class PowerDialog extends RollDialog {
         base: 0,
         rank: "none",
         bonus: 0,
-        die: {
-          one: 0,
-          two: 0,
-          three: 0,
-          four: 1,
-          five: 1,
-          six: 2
+        damageValues: {
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 1,
+          5: 1,
+          6: 2
         }
       },
       potency: 0

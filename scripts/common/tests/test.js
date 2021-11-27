@@ -277,8 +277,12 @@ export class WNGTest {
 
   async rollDamage() {
     let ed = this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length;
-    let formula = `${ed}dp`;
-    let r = new Roll(formula, {});
+    let values = this.testData.ed.damageValues
+
+    let r = Roll.fromTerms([
+      new PoolDie({ number: ed, faces: 6, options : {values} }),
+    ])
+
     r.evaluate({ async: true });
     this.result.damage = {
       total: this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
@@ -367,6 +371,8 @@ export class WNGTest {
 export class PoolDie extends Die {
   constructor(termData) {
     termData.faces = 6;
+    if (!termData.options || !termData.options.values)
+      setProperty(termData, "options.values", {1 : 0,2 : 0,3 : 0,4 : 1,5 : 1,6 : 2})
     super(termData);
   }
 
@@ -377,22 +383,20 @@ export class PoolDie extends Die {
   /**@overide */
   roll(...args) {
     let roll = super.roll(...args)
+    roll.value = this.options.values[roll.result]
     if (roll.result === 6) {
       roll.name = "icon",
         roll.canShift = true,
-        roll.value = 2,
         roll.rerollable = false,
         roll.weight = 3
     }
     else if (roll.result > 3) {
       roll.name = "success",
-        roll.value = 1,
         roll.rerollable = false,
         roll.weight = 2
     }
     else {
       roll.name = "failed",
-        roll.value = 0,
         roll.rerollable = true,
         roll.weight = 1
     }

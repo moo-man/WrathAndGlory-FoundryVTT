@@ -91,12 +91,12 @@
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.DIE_VALUE"}}</label>
-            <input id="die-one" class="die" type="number" value="{{weapon.ed.die.one}}" data-dtype="Number" />
-            <input id="die-two" class="die" type="number" value="{{weapon.ed.die.two}}" data-dtype="Number" />
-            <input id="die-three" class="die" type="number" value="{{weapon.ed.die.three}}" data-dtype="Number" />
-            <input id="die-four" class="die" type="number" value="{{weapon.ed.die.four}}" data-dtype="Number" />
-            <input id="die-five" class="die" type="number" value="{{weapon.ed.die.five}}" data-dtype="Number" />
-            <input id="die-six" class="die" type="number" value="{{weapon.ed.die.six}}" data-dtype="Number" />
+            <input id="die-one" class="die" type="number" value="{{lookup damageValues '1'}}" data-dtype="Number" />
+            <input id="die-two" class="die" type="number" value="{{lookup damageValues '2'}}" data-dtype="Number" />
+            <input id="die-three" class="die" type="number" value="{{lookup damageValues '3'}}" data-dtype="Number" />
+            <input id="die-four" class="die" type="number" value="{{lookup damageValues '4'}}" data-dtype="Number" />
+            <input id="die-five" class="die" type="number" value="{{lookup damageValues '5'}}" data-dtype="Number" />
+            <input id="die-six" class="die" type="number" value="{{lookup damageValues '6'}}" data-dtype="Number" />
         </div>
     </div>
 </div>

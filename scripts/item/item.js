@@ -342,6 +342,27 @@ export class WrathAndGloryItem extends Item {
         return (this.damage && (this.damage.base || this.damage.bonus || this.damage.rank != "none")) || (this.ed && (this.ed.base || this.ed.bonus || this.ed.rank != "none"))
     }
 
+    get damageValues() {
+        if (this.traitList.brutal)
+            return {
+                1 : 0,
+                2 : 0,
+                3 : 1,
+                4 : 1,
+                5 : 2,
+                6 : 2
+            }
+        else   
+        return {
+            1 : 0,
+            2 : 0,
+            3 : 0,
+            4 : 1,
+            5 : 1,
+            6 : 2
+        }
+    }
+
     get hasTest() {
         return this.test && this.test.dn && this.test.type
     }
