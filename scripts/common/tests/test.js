@@ -21,6 +21,10 @@ export class WNGTest {
     }
   }
 
+  get template() {
+    return "systems/wrath-and-glory/template/chat/roll/common/common-roll.html"
+  }
+
 
   static recreate(data) {
     let test = new game.wng.rollClasses[data.context.rollClass]()
@@ -190,8 +194,13 @@ export class WNGTest {
     this.sendToChat()
   }
 
+  // Is this test shiftable?
+  isShiftable() {
+    return true
+  }
+
   async sendToChat({newMessage = null}={}) {
-    const html = await renderTemplate("systems/wrath-and-glory/template/chat/roll.html", this);
+    const html = await renderTemplate(this.template, this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       roll: this.roll,
@@ -290,7 +299,7 @@ export class WNGTest {
 
 
   async sendDamageToChat() {
-    const html = await renderTemplate("systems/wrath-and-glory/template/chat/damage.html", this);
+    const html = await renderTemplate("systems/wrath-and-glory/template/chat/roll/damage/damage-roll.html", this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       roll: this.damageRoll,
@@ -306,6 +315,10 @@ export class WNGTest {
       chatData.whisper = [game.user];
     }
     return ChatMessage.create(chatData);
+  }
+
+  get doesDamage() {
+    return this.result.damage
   }
 
   get testEffects() {

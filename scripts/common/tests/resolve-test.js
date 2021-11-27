@@ -10,6 +10,11 @@ export default class ResolveTest  extends WNGTest {
       this.testData.type = data.type
   }
 
+  get template() {
+    return "systems/wrath-and-glory/template/chat/roll/resolve/resolve-roll.html"
+  }
+
+
 
   async rollTest()
   {
@@ -62,6 +67,7 @@ export default class ResolveTest  extends WNGTest {
   get fear() {
     return this.testData.type == "fear"
   }
+
 
 } 
 

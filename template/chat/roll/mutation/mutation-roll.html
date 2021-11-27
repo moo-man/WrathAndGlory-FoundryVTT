@@ -1,0 +1,12 @@
+<div class="wrath-and-glory chat roll">
+        {{> systems/wrath-and-glory/template/chat/roll/base/base-roll.html}}
+        <div class="wrapper-input">
+                {{> systems/wrath-and-glory/template/chat/roll/mutation/mutation-result.html}}
+        </div>
+        
+        {{#if result.mutation}}
+        <div class="wrapper">
+                <button type="button" class="roll-mutation">Roll Mutation</button>
+        </div>
+        {{/if}}
+</div>

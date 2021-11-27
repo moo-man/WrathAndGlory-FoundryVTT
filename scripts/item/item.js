@@ -281,7 +281,7 @@ export class WrathAndGloryItem extends Item {
     }
 
     get traitsAvailable() {
-        if (this.type == "weapon" || this.type == "weaponUpgrade")
+        if (this.type == "weapon" || this.type == "weaponUpgrade" || this.type == "ability")
             return game.wng.config.weaponTraits
         else if (this.type == "armour")
             return game.wng.config.armourTraits

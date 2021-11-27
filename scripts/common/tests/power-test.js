@@ -14,6 +14,11 @@ export default class PowerTest extends WNGTest {
     this.testData.itemId = data.itemId
   }
 
+  get template() {
+    return "systems/wrath-and-glory/template/chat/roll/power/power-roll.html"
+  }
+
+
 
   _computeResult()
   {

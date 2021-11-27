@@ -145,6 +145,8 @@
   "CHAT.WRATH_COMPLICATION_CORRUPTION": "Double Corruption points!",
   "CHAT.FAIL_CORRUPTION" : "Gain {corruption} Corruption, 1 Ruin added",
   "CHAT.FAIL_FEAR" : "Gains the @JournalEntry[Fear] Condition, 1 Ruin added",
+  "CHAT.DETERMINATION" : "Determination",
+  "CHAT.DETERMINATION_RESULT" : "{wounds} Wounds, {shock} Shock",
 
   "DIALOG.YES": "Yes",
   "DIALOG.NO": "No",
@@ -156,6 +158,7 @@
   "DIALOG.RANK": "Rank",
   "DIALOG.BASE": "Base",
   "DIALOG.WRATH": "Wrath",
+  "DIALOG.WOUNDS": "Wounds",
 
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",

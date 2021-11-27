@@ -16,7 +16,12 @@ export default function() {
             let test = game.messages.get(li.attr("data-message-id")).getTest()
 
             // If all selected dice are shiftable and number of selected <= shifts possible
-            return selected.length && test.result.dice.filter(i => selected.includes(i.index)).every(i => i.canShift) && selected.length <= test.result.shiftsPossible
+            return selected.length && test.isShiftable && test.result.dice.filter(i => selected.includes(i.index)).every(i => i.canShift) && selected.length <= test.result.shiftsPossible
+        }
+
+        let canShiftDamage = li => {
+            let test = game.messages.get(li.attr("data-message-id")).getTest()
+            return canShift(li) && test.doesDamage
         }
 
         let canClearReroll = li => {
@@ -99,7 +104,7 @@ export default function() {
             {
                 name: "BUTTON.SHIFT_DAMAGE",
                 icon: '<i class="fas fa-angle-double-right"></i>',
-                condition: canShift,
+                condition: canShiftDamage,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();

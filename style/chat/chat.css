@@ -6,9 +6,6 @@
   padding: 5px;
 }
 
-.wrath-and-glory.chat .wrapper {
-  padding: 10px;
-}
 
 .wrath-and-glory.chat .wrapper-input {
   background: url(../../asset/image/input.jpg) repeat;
@@ -16,6 +13,10 @@
   border: 1px solid var(--color-black);
   box-shadow: inset 0 0 6px var(--color-dark-grey);
   position: relative;
+}
+
+.wrath-and-glory.chat .wrapper-input .red {
+  color: var(--color-red)
 }
 
 .wrath-and-glory.chat .wrapper button {

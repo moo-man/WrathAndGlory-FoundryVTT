@@ -40,6 +40,8 @@ export class RollDialog extends Dialog {
     testData.pool.size = parseInt(html.find("#pool-size")[0].value);
     testData.pool.bonus = parseInt(html.find("#pool-bonus")[0].value);
     testData.pool.rank = html.find("#pool-rank")[0].value;
+    testData.wounds = html.find("#wounds")[0]?.value
+
     return testData
   }
 

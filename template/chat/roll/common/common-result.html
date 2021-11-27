@@ -1,0 +1,15 @@
+        {{> systems/wrath-and-glory/template/chat/roll/base/base-result.html}}
+        {{#if result.isWrathCritical}}
+        <p><strong class="red">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
+                {{#if (eq actor.type "agent")}}
+                {{localize "CHAT.WRATH_CRITICAL_COMMON_GLORY"}}
+                {{else if (eq actor.type "threat")}}
+                {{localize "CHAT.WRATH_CRITICAL_COMMON_RUIN"}}
+                {{/if}}
+        </strong></p>
+        {{/if}}
+
+        {{#if result.isWrathComplication}}
+        <p><strong class="red">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_COMPLICATION_COMMON"}}</strong></p>
+        {{/if}}

@@ -19,6 +19,7 @@ import PowerTest from "./scripts/common/tests/power-test.js";
 import CorruptionTest from "./scripts/common/tests/corruption-test.js";
 import MutationTest from "./scripts/common/tests/mutation-test.js";
 import ResolveTest from "./scripts/common/tests/resolve-test.js";
+import DeterminationRoll from "./scripts/common/tests/determination.js";
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
@@ -32,7 +33,8 @@ Hooks.once("init", () => {
       PowerTest,
       CorruptionTest,
       MutationTest,
-      ResolveTest
+      ResolveTest,
+      DeterminationRoll
     },
     dice : {
       WrathDie,

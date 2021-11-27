@@ -30,6 +30,14 @@
         </select>
         <input id="pool-bonus" class="pool bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
     </div>
+
+    {{#if determination}}
+    <div class="wrapper">
+        <label class="name">{{localize "DIALOG.WOUNDS"}}</label>
+        <input id="wounds" class="wounds" type="number" value="0" data-dtype="Number" />
+    </div>
+    {{/if}}
+
 </div>
 <div class="dialog-effects">
     <div class="wrapper">

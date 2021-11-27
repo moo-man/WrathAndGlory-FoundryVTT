@@ -5,6 +5,7 @@ import PowerTest from "../common/tests/power-test.js";
 import CorruptionTest from "../common/tests/corruption-test.js";
 import MutationTest from "../common/tests/mutation-test.js";
 import ResolveTest from "../common/tests/resolve-test.js";
+import DeterminationRoll from "../common/tests/determination.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -192,6 +193,8 @@ export class WrathAndGloryActor extends Actor {
             case "determination": 
             dialogData.pool.size = this.combat.determination.total
             dialogData.title =  game.i18n.localize(`ROLL.DETERMINATION`)
+            dialogData.determination = true;
+            testClass = DeterminationRoll;
             break;
             case "conviction": 
             dialogData.pool.size = this.combat.conviction.total

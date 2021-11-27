@@ -1,0 +1,32 @@
+<div class="dice-container">
+        {{#each result.dice as |die|}}
+        <a class="die {{die.name}} unshifted" data-index="{{die.index}}"><img src="{{die.img}}.png"/>
+            {{#if die.rerolled}}
+                    <span class="reroll die-icon"><i class="fas fa-redo"></i></span>
+            {{/if}}    
+        </a>
+        {{/each}}
+    </div>
+    {{#if result.shifted.length}}
+    <hr>
+    <h4>Shifted</h4>
+    <div class="dice-container">
+            {{#each result.shifted as |die|}}
+            <a class="die {{die.name}} shifted" data-index="{{die.index}}"><img src="{{die.img}}.png"/>
+                    {{log die}}
+                    {{#if (eq die.shift "glory")}}
+                    <span class="glory die-icon">G</span>
+                    {{/if}}
+                    {{#if (eq die.shift "damage")}} 
+                    <span class="damage die-icon">D</span>
+                    {{/if}}
+                    {{#if (eq die.shift "other")}} 
+                    <span class="other die-icon">?</span>
+                    {{/if}}
+                    {{#if die.rerolled}}
+                    <span class="reroll die-icon"><i class="fas fa-redo"></i></span>
+                    {{/if}}   
+            </a>
+            {{/each}}
+    </div>
+    {{/if}}

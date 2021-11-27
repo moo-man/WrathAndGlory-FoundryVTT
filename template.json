@@ -347,6 +347,7 @@
       "description": "",
       "display": true,
       "abilityType" : "",
+      "traits": [],
       "damage": {
         "base": 0,
         "bonus": 0,

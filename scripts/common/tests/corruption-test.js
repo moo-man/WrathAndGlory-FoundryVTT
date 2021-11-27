@@ -6,6 +6,10 @@ export default class CorruptionTest  extends WNGTest {
     super(data)
   }
 
+  get template() {
+    return "systems/wrath-and-glory/template/chat/roll/corruption/corruption-roll.html"
+  }
+
 
   async rollTest()
   {
@@ -82,6 +86,8 @@ export default class CorruptionTest  extends WNGTest {
   get corruption() {
     return true;
   }
+
+
 
 }
 

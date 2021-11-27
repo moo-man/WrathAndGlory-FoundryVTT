@@ -6,6 +6,11 @@ export default class MutationTest  extends WNGTest {
     super(data)
   }
 
+  get template() {
+    return "systems/wrath-and-glory/template/chat/roll/mutation/mutation-roll.html"
+  }
+
+
 
   async rollTest()
   {
@@ -17,6 +22,8 @@ export default class MutationTest  extends WNGTest {
   get mutation() {
     return true;
   }
+
+
 
 } 
 

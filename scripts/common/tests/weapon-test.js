@@ -14,6 +14,9 @@ export default class WeaponTest extends WNGTest {
     this.testData.itemId = data.itemId
   }
 
+  get template() {
+    return "systems/wrath-and-glory/template/chat/roll/weapon/weapon-roll.html"
+  }
 
   _computeResult()
   {
