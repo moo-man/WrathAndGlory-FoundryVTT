@@ -163,10 +163,10 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".item-dropdown").mousedown(this._dropdownLeftClick.bind(this))
         html.find(".rollable").mouseenter(this._toggleDice.bind(this))
         html.find(".rollable").mouseleave(this._toggleDice.bind(this))
-        html.find(".rollable").click(this._onRollableAbilityClick.bind(this))
+        html.find(".rollable").mousedown(this._onRollableAbilityClick.bind(this))
         html.find(".item-dropdown-right").mousedown(this._dropdownRightClick.bind(this))
         html.find(".item-create").mousedown(this._onItemCreate.bind(this));
-        html.find(".item-edit").mousedown(this._onItemEdit.bind(this));
+        html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").mousedown(this._onItemDelete.bind(this));
         html.find(".item-post").mousedown(this._onItemPost.bind(this));
         html.find(".effect-create").click(this._onEffectCreate.bind(this));  
@@ -310,14 +310,19 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
         
-        let test
-        if (item.abilityType == "determination")
+        if (ev.button == 0)
+        {
+            let test
+            if (item.abilityType == "determination")
             test = await this.actor.setupGenericTest("determination")
-        else 
+            else 
             test = await this.actor.setupAbilityRoll(item)
-
-        await test.rollTest();
-        test.sendToChat()
+            
+            await test.rollTest();
+            test.sendToChat()
+        }
+        else 
+            this._dropdownRightClick(ev)   
     }
 
     _toggleDice(ev) {
@@ -614,10 +619,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _dropdownLeftClick(event) {
         let id = $(event.currentTarget).parents(".item").attr("data-item-id")
         let item = this.actor.items.get(id)
-        if (item && event.button == 0)
-            this._createDropdown(event, item._dropdownData())
-        else if (item)
-            item.sheet.render(true)
+        this._createDropdown(event, item._dropdownData())
     }
 
     

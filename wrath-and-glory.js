@@ -20,7 +20,7 @@ import CorruptionTest from "./scripts/common/tests/corruption-test.js";
 import MutationTest from "./scripts/common/tests/mutation-test.js";
 import ResolveTest from "./scripts/common/tests/resolve-test.js";
 import DeterminationRoll from "./scripts/common/tests/determination.js";
-import AbilityRoll from "./scripts/common/tests/damage-roll.js";
+import AbilityRoll from "./scripts/common/tests/ability-roll.js";
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;

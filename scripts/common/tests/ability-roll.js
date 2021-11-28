@@ -16,9 +16,12 @@ export default class AbilityRoll extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/damage-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.html"
   }
 
+  get damageTemplate() {
+    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.html"
+  }
 
   async rollTest() {
     this._computeResult();

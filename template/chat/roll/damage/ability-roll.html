@@ -1,6 +1,6 @@
 <div class="wrath-and-glory chat roll damageRoll">
     <div class="wrapper">
-        <h3>{{context.title}} - Damage</h3>
+        <h3>{{context.title}}</h3>
 
         <div class="dice-container">
             {{#each result.damage.dice as |die|}}
@@ -9,19 +9,15 @@
         </div>
     </div>
 
+    {{#if result.damage.total}}
     <div class="wrapper-input">
         <p><strong>{{localize "WEAPON.DAMAGE"}}: {{result.damage.total}}</strong></p>
-        {{#if result.damage.ap}}
-        <p><strong>{{localize "WEAPON.AP"}}: {{result.damage.ap}}</strong></p>
-        {{/if}}
-
+        
         {{#if item.traits}}
         <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.Traits}}</strong></p>
         {{/if}}
-        {{#if item.potency}}
-        <p><strong>{{localize "PSYCHIC_POWER.POTENCY"}}: {{item.potency}}</strong></p>
-        {{/if}}
     </div>
+    {{/if}}
     {{#if showEffects}}
     <hr>
     <div class="wrapper">

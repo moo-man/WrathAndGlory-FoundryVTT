@@ -25,6 +25,9 @@ export class WNGTest {
     return "systems/wrath-and-glory/template/chat/roll/common/common-roll.html"
   }
 
+  get damageTemplate() {
+    return "systems/wrath-and-glory/template/chat/roll/damage/damage-roll.html"
+  }
 
   static recreate(data) {
     let test = new game.wng.rollClasses[data.context.rollClass]()
@@ -304,7 +307,7 @@ export class WNGTest {
 
 
   async sendDamageToChat() {
-    const html = await renderTemplate("systems/wrath-and-glory/template/chat/roll/damage/damage-roll.html", this);
+    const html = await renderTemplate(this.damageTemplate, this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       roll: this.damageRoll,

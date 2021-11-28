@@ -6,7 +6,7 @@ import CorruptionTest from "../common/tests/corruption-test.js";
 import MutationTest from "../common/tests/mutation-test.js";
 import ResolveTest from "../common/tests/resolve-test.js";
 import DeterminationRoll from "../common/tests/determination.js";
-import AbilityRoll from "../common/tests/damage-roll.js";
+import AbilityRoll from "../common/tests/ability-roll.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -237,6 +237,7 @@ export class WrathAndGloryActor extends Actor {
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.type = type
+        ui.sidebar.activateTab("chat")
         return new testClass(testData)
     }
 
@@ -254,6 +255,7 @@ export class WrathAndGloryActor extends Actor {
         testData.itemId = weapon.id
         testData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
         testData.attribute = weapon.skill.attribute
+        ui.sidebar.activateTab("chat")
         return new WeaponTest(testData)
     }
 
@@ -271,6 +273,7 @@ export class WrathAndGloryActor extends Actor {
         testData.itemId = power.id
         testData.skill = "psychicMastery"
         testData.attribute = power.skill.attribute
+        ui.sidebar.activateTab("chat")
         return new PowerTest(testData)
     }
 
@@ -292,6 +295,7 @@ export class WrathAndGloryActor extends Actor {
             testData.ed.bonus = ability.ed.bonus
             testData.ed.rank = ability.ed.rank
         }
+        ui.sidebar.activateTab("chat")
         return new AbilityRoll(testData)
     }
 
