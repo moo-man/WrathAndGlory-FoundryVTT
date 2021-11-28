@@ -29,7 +29,8 @@ export class WNGTest {
   static recreate(data) {
     let test = new game.wng.rollClasses[data.context.rollClass]()
     test.data = data;
-    test.roll = Roll.fromData(test.result.roll)
+    if (test.result.roll)
+      test.roll = Roll.fromData(test.result.roll)
     if (test.testData.rerolls.length)
       test.rerolledTests = test.result.rerolls.map(r => Roll.fromData(r))
     if (test.result.damage)
@@ -286,7 +287,7 @@ export class WNGTest {
     r.evaluate({ async: true });
     this.result.damage = {
       total: this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
-      ap: this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank),
+      ap: (this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank)) || 0,
       dice: []
     };
     r.terms.forEach((term) => {
@@ -322,7 +323,7 @@ export class WNGTest {
   }
 
   get doesDamage() {
-    return this.result.damage
+        return (this.testData.damage && (this.testData.damage.base || this.testData.damage.bonus || this.testData.damage.rank != "none")) || (this.testData.ed && (this.testData.ed.base || this.testData.ed.bonus || this.testData.ed.rank != "none"))
   }
 
   get testEffects() {

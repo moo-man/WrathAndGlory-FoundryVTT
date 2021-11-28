@@ -6,11 +6,12 @@
         <b class="rank">{{localize "DIALOG.RANK"}}</b>
         <b class="bonus">{{localize "DIALOG.BONUS"}}</b>
     </div>
-    <div class="wrapper">
+    
+    <div class="wrapper" {{#if determination}}style="display: none"{{/if}}>
         <label class="name">{{localize "DIALOG.DN"}}</label>
         <input id="difficulty-target" class="difficulty base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
         <select id="difficulty-rank" class="difficulty rank">
-            {{#select weapon.ed.rank}}
+            {{#select difficulty.rank}}
             {{#each (config "difficultyRankTypes" )as |rank r|}}
             <option value="{{r}}">{{rank}}</option>
             {{/each}}

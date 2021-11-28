@@ -333,7 +333,7 @@ export class WrathAndGloryItem extends Item {
         {
             if (this.abilityType == "determination") return true
             if (this.hasDamage) return true
-            if (this.hastTest) return true
+            if (this.hasTest) return true
         }
 
     }

@@ -6,6 +6,7 @@ import CorruptionTest from "../common/tests/corruption-test.js";
 import MutationTest from "../common/tests/mutation-test.js";
 import ResolveTest from "../common/tests/resolve-test.js";
 import DeterminationRoll from "../common/tests/determination.js";
+import AbilityRoll from "../common/tests/damage-roll.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -271,6 +272,27 @@ export class WrathAndGloryActor extends Actor {
         testData.skill = "psychicMastery"
         testData.attribute = power.skill.attribute
         return new PowerTest(testData)
+    }
+
+    async setupAbilityRoll(ability, options={})
+    {
+        let testData = {
+            title : ability.name,
+            speaker : this.speakerData(),
+            itemId : ability.id,
+            damage : {},
+            ed : {}
+        }
+        if (ability.hasDamage)
+        {
+            testData.damage.base = ability.damage.base
+            testData.damage.bonus = ability.damage.bonus
+            testData.damage.rank = ability.damage.rank
+            testData.ed.base = ability.ed.base
+            testData.ed.bonus = ability.ed.bonus
+            testData.ed.rank = ability.ed.rank
+        }
+        return new AbilityRoll(testData)
     }
 
     _baseDialogData() {

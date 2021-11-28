@@ -129,7 +129,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 type : "weaponUpgrade"
             },
             augmentics : {
-                header : "HEADER.AUGMENTIC",
+                header : "HEADER.AUGMETIC",
                 items : this.actor.getItemTypes("augmentic"),
                 equippable : false,
                 quantity : false,
@@ -163,6 +163,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".item-dropdown").mousedown(this._dropdownLeftClick.bind(this))
         html.find(".rollable").mouseenter(this._toggleDice.bind(this))
         html.find(".rollable").mouseleave(this._toggleDice.bind(this))
+        html.find(".rollable").click(this._onRollableAbilityClick.bind(this))
         html.find(".item-dropdown-right").mousedown(this._dropdownRightClick.bind(this))
         html.find(".item-create").mousedown(this._onItemCreate.bind(this));
         html.find(".item-edit").mousedown(this._onItemEdit.bind(this));
@@ -305,6 +306,19 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         $(event.currentTarget).select();
     }
 
+    async _onRollableAbilityClick(ev) {
+        const div = $(event.currentTarget).parents(".item");
+        const item = this.actor.items.get(div.data("itemId"));
+        
+        let test
+        if (item.abilityType == "determination")
+            test = await this.actor.setupGenericTest("determination")
+        else 
+            test = await this.actor.setupAbilityRoll(item)
+
+        await test.rollTest();
+        test.sendToChat()
+    }
 
     _toggleDice(ev) {
         let li = $(ev.currentTarget).parents(".item")

@@ -97,6 +97,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 10px;
 }
 
 .wrath-and-glory.chat .die {

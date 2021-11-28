@@ -64,6 +64,17 @@ export class RollDialog extends Dialog {
     };
   }
 
+  submit(button) {
+    let html = this.options.jQuery ? this.element : this.element[0]
+    let target = parseInt(html.find("#difficulty-target")[0].value);
+    let penalty = parseInt(html.find("#difficulty-penalty")[0].value);
+    let rank = html.find("#difficulty-rank")[0].value;
+    if (!target && !penalty && rank == "none")
+      return ui.notifications.error(game.i18n.localize("DIALOG.NO_DIFFICULTY"))
+    else 
+      return super.submit(button)
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
     // Reset effect values

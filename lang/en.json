@@ -159,6 +159,7 @@
   "DIALOG.BASE": "Base",
   "DIALOG.WRATH": "Wrath",
   "DIALOG.WOUNDS": "Wounds",
+  "DIALOG.NO_DIFFICULTY" : "Please enter a Difficulty Number",
 
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",
@@ -375,6 +376,7 @@
   "NOTE.WrathSubtracted" : "Wrath Subtracted",
   "ERROR.NoMoreRuin" : "No more Ruin",
   "NOTE.RuinSubtracted" : "Ruin Subtracted",
+  "NOTE.APPLY_DAMAGE" : "{damage} Damage applied to {name}",
 
   "AUTOCALC.DEFENSE" : "Auto Calculate Defense",
   "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",

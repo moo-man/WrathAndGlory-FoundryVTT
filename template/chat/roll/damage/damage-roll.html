@@ -14,11 +14,26 @@
         {{#if result.damage.ap}}
         <p><strong>{{localize "WEAPON.AP"}}: {{result.damage.ap}}</strong></p>
         {{/if}}
-        {{#if weapon.traits}}
-        <p><strong>{{localize "WEAPON.TRAITS"}}: {{weapon.Traits}}</strong></p>
+        {{#if item.traits}}
+        <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.Traits}}</strong></p>
         {{/if}}
-        {{#if weapon.potency}}
-        <p><strong>{{localize "PSYCHIC_POWER.POTENCY"}}: {{weapon.potency}}</strong></p>
+        {{#if item.potency}}
+        <p><strong>{{localize "PSYCHIC_POWER.POTENCY"}}: {{item.potency}}</strong></p>
         {{/if}}
     </div>
+    {{#if showEffects}}
+    <hr>
+    <div class="wrapper">
+            {{#each testEffects as |effect e|}}
+            <button type="button" data-id="{{effect.id}}" class="test-effect"><img height="20" width="20" src="{{effect.data.icon}}"> Apply {{effect.label}}</button>
+            {{/each}}
+    </div>
+    {{/if}}
+
+    {{#if showTest}}
+    <hr>
+    <div class="wrapper">
+            <button type="button" class="invoke-test">{{testDisplay}}</button>
+    </div>
+    {{/if}}
 </div>

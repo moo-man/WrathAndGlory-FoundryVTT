@@ -144,8 +144,8 @@ export default function() {
                 icon: '<i class="fas fa-user-minus"></i>',
                 condition: canApply,
                 callback: li => {
-                    let rollData = game.messages.get(li.attr("data-message-id")).data.flags.rolldata;
-                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(rollData, t.actor));
+                    let test = game.messages.get(li.attr("data-message-id")).getTest();
+                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor));
                 }
             },
             {
@@ -153,8 +153,8 @@ export default function() {
                 icon: '<i class="fas fa-user"></i>',
                 condition: canApply,
                 callback: li => {
-                    let rollData = game.messages.get(li.attr("data-message-id")).data.flags.rolldata;
-                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(rollData, t.actor, false));
+                    let test = game.messages.get(li.attr("data-message-id")).getTest();
+                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor, false));
                 }
             },
             {
@@ -162,8 +162,8 @@ export default function() {
                 icon: '<i class="fas fa-user-times"></i>',
                 condition: canApply,
                 callback: li => {
-                    let rollData = game.messages.get(li.attr("data-message-id")).data.flags.rolldata;
-                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(rollData, t.actor, true, true));
+                    let test = game.messages.get(li.attr("data-message-id")).getTest();
+                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor, true, true));
                 }
             }
 
@@ -171,18 +171,18 @@ export default function() {
     });
 }
 
-function _dealDamageToTarget(rollData, target, useAP = true, optionalRule = false) {
+function _dealDamageToTarget(test, target, useAP = true, optionalRule = false) {
     let resilience = 1;
     if (!useAP) {
         resilience = target.combat.resilience.total + _computeArmour(target);
     }
 
     if (useAP && !optionalRule) {
-        resilience = (target.combat.resilience.total + _computeArmour(target)) - rollData.weapon.ap.total;
+        resilience = (target.combat.resilience.total + _computeArmour(target)) - test.result.damage.ap;
     }
 
     if (useAP && optionalRule) {
-        let armour = _computeArmour(target) - rollData.weapon.ap.total;
+        let armour = _computeArmour(target) - test.result.damage.ap;
         if (0 > armour) {
             armour = 0;
         }
@@ -193,26 +193,24 @@ function _dealDamageToTarget(rollData, target, useAP = true, optionalRule = fals
         resilience = 1;
     }
 
-    let dmgTaken = rollData.result.damage.total - resilience;
+    let dmgTaken = test.result.damage.total - resilience;
     if (0 > dmgTaken) {
         return;
     }
 
-    if (0 === dmgTaken) {
-        target.update({
-            "data.combat.shock.value" : target.combat.shock.value + 1,
-        });
-    }
+    if (dmgTaken == 0)
+        dmgTaken = 1
 
-    if (0 < dmgTaken) {
-        target.update({
-            "data.combat.wounds.value" : target.combat.wounds.value + dmgTaken
-        });
-    }
+    target.update({
+        "data.combat.wounds.value" : target.combat.wounds.value + dmgTaken
+    });
+
+    let note = game.i18n.format("NOTE.APPLY_DAMAGE", {damage : dmgTaken, name : target.data.token.name});
+    ui.notifications.notify(note);
 }
 
 function _computeArmour(actor) {
-    let foundItems = actor.data.items.filter(a => a.data.type === "armour");
+    let foundItems = actor.getItemTypes("armour")
     let armourRating = 0;
     for (let armour of foundItems) {
         armourRating += armour.rating;

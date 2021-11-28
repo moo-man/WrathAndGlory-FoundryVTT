@@ -109,7 +109,6 @@ export default class WNGChat {
         {
           testFunction = token.actor.setupGenericTest.bind(token.actor)
           itemTest = duplicate(itemTest)
-          itemTest.specification = itemTest.type
         }
 
         await testFunction(itemTest.specification, {dn: itemTest.dn}).then(async test => {
@@ -130,7 +129,6 @@ export default class WNGChat {
       {
         testFunction = game.user.character.setupGenericTest.bind(game.user.character)
         itemTest = duplicate(itemTest)
-        itemTest.specification = itemTest.type
       }
 
       await testFunction(itemTest.specification, {dn: itemTest.dn}).then(async test => {
@@ -139,7 +137,7 @@ export default class WNGChat {
       })
     }
     else 
-      return ui.notifications.error("WARN.NoActorsToTest")
+      return ui.notifications.error(game.i18n.localize("WARN.NoActorsToTest"))
   }
   
   static async _onMutationClick(ev)
