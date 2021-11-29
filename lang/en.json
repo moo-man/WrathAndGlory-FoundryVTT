@@ -385,6 +385,7 @@
   "AUTOCALC.DETERMINATION" : "Auto Calculate Determination",
   "AUTOCALC.WOUNDS" : "Auto Calculate Max Wounds",
   "AUTOCALC.CONVICTION" : "Auto Calculate Conviction",
+  "AUTOCALC.AUTO_WOUNDED" : "Automatic Wounded",
 
   "CONDITION.Bleeding" : "Bleeding",
   "CONDITION.Blinded" : "Blinded",
@@ -399,6 +400,8 @@
   "CONDITION.Restrained" : "Restrained",
   "CONDITION.Staggered" : "Staggered",
   "CONDITION.Terror" : "Terror",
-  "CONDITION.Vulnerable" : "Vulnerable"
+  "CONDITION.Vulnerable" : "Vulnerable",
+
+  "EFFECT.Wounded" : "Wounded"
 
 }

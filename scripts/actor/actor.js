@@ -24,7 +24,8 @@ export class WrathAndGloryActor extends Actor {
             "flags.wrath-and-glory.autoCalc.awareness": true,
             "flags.wrath-and-glory.autoCalc.determination": true,
             "flags.wrath-and-glory.autoCalc.wounds": true,
-            "flags.wrath-and-glory.autoCalc.conviction": true
+            "flags.wrath-and-glory.autoCalc.conviction": true,
+            "flags.wrath-and-glory.autoWounded" : true
         }
         if (data.type === "agent") {
             initData["token.vision"] = true;
@@ -390,7 +391,7 @@ export class WrathAndGloryActor extends Actor {
     
     async addCondition(effect) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+          effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
         if (!effect)
           return "No Effect Found"
     
@@ -410,7 +411,7 @@ export class WrathAndGloryActor extends Actor {
     
       async removeCondition(effect, value = 1) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+          effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
         if (!effect)
           return "No Effect Found"
     

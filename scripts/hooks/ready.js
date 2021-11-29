@@ -16,6 +16,11 @@ export default function() {
         for (let effect of CONFIG.statusEffects) {
             effect.label = game.i18n.localize(effect.label)
         }
+
+        for (let e in game.wng.config.systemEffects) {
+            let effect = game.wng.config.systemEffects[e]
+            effect.label = game.i18n.localize(effect.label)
+        }
     });
 
     CONFIG.ChatMessage.documentClass.prototype.getTest = function () {
