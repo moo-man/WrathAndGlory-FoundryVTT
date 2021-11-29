@@ -71,7 +71,7 @@ export default class WNGChat {
       let msg = game.messages.get(id)
       let test = msg.getTest();
       let item = test.item
-      let effect = item.effects.get(effectId).toObject()
+      let effect = test.getEffect(effectId).toObject()
       effect.origin = test.actor.uuid
       setProperty(effect, "flags.core.statusId", getProperty(effect, "flags.core.statusId") || effect.label.slugify())
       

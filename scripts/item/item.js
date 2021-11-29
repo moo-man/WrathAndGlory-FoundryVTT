@@ -28,6 +28,10 @@ export class WrathAndGloryItem extends Item {
             this.data.data.ap = this.Ammo.ap
             this.data.data.ed = this.Ammo.ed
         }
+        if (this.isRanged && this.Ammo)
+        {
+            this.applyAmmo()
+        }
     }
 
     async sendToChat() {
@@ -38,9 +42,10 @@ export class WrathAndGloryItem extends Item {
 
         const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.html", {item, data: item.data.data});
         const chatData = {
-            user: game.user,
+            user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
+            "flags.wrath-and-glory.itemData" : this.toObject()
         };
         if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
             chatData.whisper = ChatMessage.getWhisperRecipients("GM");
@@ -69,36 +74,47 @@ export class WrathAndGloryItem extends Item {
 
 
     applyUpgrades() {
-        const overrides = {};
-        let effects = this.Upgrades.reduce((effects, upgrade) => {
+        this._applyEffects(this.Upgrades.reduce((effects, upgrade) => {
             return effects.concat(Array.from(upgrade.effects))
-        }, [])
-        // Organize non-disabled effects by their application priority
-        const changes = effects.reduce((changes, e) => {
-          if ( e.data.disabled ) return changes;
-          return changes.concat(e.data.changes.map(c => {
-            c = foundry.utils.duplicate(c);
-            c.effect = e;
-            c.priority = c.priority ?? (c.mode * 10);
-            return c;
-          }));
-        }, []);
-        changes.sort((a, b) => a.priority - b.priority);
-    
-        // Apply all changes
-        for ( let change of changes ) {
-          const result = change.effect.apply(this, change);
-          if ( result !== null ) overrides[change.key] = result;
-        }    
-
-        this._applyUpgradeTraits() 
+        }, []))
+       
+        this._addTraits(this.Upgrades.reduce((traits, upgrade) => {
+            return traits.concat(upgrade.traits)
+        }, [])) 
       }
 
-    _applyUpgradeTraits()
+      applyAmmo() {
+        this._applyEffects(this.Ammo.effects)
+        this._addTraits(this.Ammo.traits)
+      }
+
+
+    _applyEffects(effects)
     {
-        let traits = this.Upgrades.reduce((traits, upgrade) => {
-            return traits.concat(upgrade.traits)
-        }, [])
+        let overrides = {}
+         // Organize non-disabled effects by their application priority
+         const changes = effects.reduce((changes, e) => {
+            if ( e.data.disabled ) return changes;
+            return changes.concat(e.data.changes.map(c => {
+              c = foundry.utils.duplicate(c);
+              c.effect = e;
+              c.priority = c.priority ?? (c.mode * 10);
+              return c;
+            }));
+          }, []);
+          changes.sort((a, b) => a.priority - b.priority);
+      
+          // Apply all changes
+          for ( let change of changes ) {
+            const result = change.effect.apply(this, change);
+            if ( result !== null ) overrides[change.key] = result;
+          }    
+  
+    }
+
+
+    _addTraits(traits)
+    {
         let add = traits.filter(i => i.type == "add")
         let remove = traits.filter(i => i.type == "remove")
 
@@ -123,7 +139,7 @@ export class WrathAndGloryItem extends Item {
                 }
                 else 
                 {
-                        this.data.data.traits.splice(existingIndex, 1)
+                    this.data.data.traits.splice(existingIndex, 1)
                 }
             }
         })
@@ -174,15 +190,25 @@ export class WrathAndGloryItem extends Item {
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get Range() {
-        const short = this.range.short < 1 ? "-" : this.range.short;
-        const medium = this.range.medium < 1 ? "-" : this.range.medium;
-        const long = this.range.long < 1 ? "-" : this.range.long;
-        const salvo = this.salvo < 1 ? "-" : this.salvo;
-        return `${salvo} | ${short} / ${medium} / ${long}`;
+        if (this.isRanged)
+        {
+            const short = this.range.short < 1 ? "-" : this.range.short;
+            const medium = this.range.medium < 1 ? "-" : this.range.medium;
+            const long = this.range.long < 1 ? "-" : this.range.long;
+            const salvo = this.salvo < 1 ? "-" : this.salvo;
+            return `${salvo} | ${short} / ${medium} / ${long}`;
+        }
+        else if (this.isMelee)
+        {
+            return this.range.melee
+        }
     }
 
     get Damage() {
-        return this._dataWithRank("damage");
+        let damage = Number(this._dataWithRank("damage"));
+        if (this.isMelee && this.isOwned)
+            damage += this.actor.attributes.strength.total
+        return damage
     }
     get ED() {
         return this._dataWithRank("ed");
@@ -322,6 +348,23 @@ export class WrathAndGloryItem extends Item {
     get Ammo() {
         if (this.isOwned)
             return this.actor.items.get(this.ammo)
+    }
+
+    // effects that exist on ammo type items that do not apply to the weapon
+    get ammoEffects() {
+        if (this.type == "ammo") {
+            let effects = this.effects.filter(e => {
+                if (e.data.disabled) return false;
+                if (!e.data.changes.length)
+                    return true
+                return e.data.changes.some(c => {
+                    return !hasProperty({data: game.system.model.Item.weapon}, c.key) // Any effect that references a property that doesn't exist on the item
+                })
+            })
+            return effects
+        }
+        else
+            return []
     }
 
     get AbilityType() {

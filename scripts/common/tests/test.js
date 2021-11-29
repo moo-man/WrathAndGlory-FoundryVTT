@@ -325,14 +325,25 @@ export class WNGTest {
     return ChatMessage.create(chatData);
   }
 
+
+  // Need a specialized function to account for both item and ammo effects
+  getEffect(effectId)
+  {
+    return this.testEffects.find(e => e.id == effectId)
+  }
+
   get doesDamage() {
         return (this.testData.damage && (this.testData.damage.base || this.testData.damage.bonus || this.testData.damage.rank != "none")) || (this.testData.ed && (this.testData.ed.base || this.testData.ed.bonus || this.testData.ed.rank != "none"))
   }
 
   get testEffects() {
-    if(this.item)
-      return this.item.effects.filter(e => !e.data.transfer)
-    else 
+    if (this.item) {
+      let effects = this.item.effects.filter(e => !e.data.transfer)
+      if (this.item.isRanged && this.item.Ammo)
+        effects = effects.concat(this.item.Ammo.ammoEffects)
+      return effects
+    }
+    else
       return []
   }
 

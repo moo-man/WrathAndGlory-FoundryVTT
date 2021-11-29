@@ -361,7 +361,8 @@
     },
     "ammo": {
       "templates" : ["physical"],
-      "effect": ""
+      "effect": "",
+      "traits" : []
     },
     "armour": {
       "templates": ["physical", "equipped"],

@@ -43,7 +43,6 @@ export class WrathAndGloryActor extends Actor {
         this._computeSkills();
         this._computeItems();
         this._computeCombat();
-
     }
 
     prepareData() {

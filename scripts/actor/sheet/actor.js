@@ -157,6 +157,20 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         sheetData.effects = effects;
     }
 
+
+    _onDrop(ev)
+    {
+        let data = ev.dataTransfer.getData("text/plain")
+        if (data)
+        {
+            data = JSON.parse(data)
+            if (data.type == "itemDrop")
+                this.actor.createEmbeddedDocuments("Item", [data.payload])
+            else
+                super._onDrop(ev)
+        }
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find("select").click(ev => ev.stopPropagation())

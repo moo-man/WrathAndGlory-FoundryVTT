@@ -28,13 +28,16 @@
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
         <div class="wrapper">
-          <div class="value">
+          <div class="item-form-group static">
             <label>{{localize "WEAPON_UPGRADE.VALUE"}}</label>
-            <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+            <div class="item-form-inputs small">
+              <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+            </div>
           </div>
-          <div class="rarity">
+          <div class="item-form-group static">
             <label>{{localize "WEAPON_UPGRADE.RARITY"}}</label>
-            <select name="data.rarity">
+            <div class="item-form-inputs">
+              <select name="data.rarity">
               {{#select data.rarity}}
               <option value=""> - </option>
               {{#each (config "rarity") as |rarity r|}}
@@ -42,24 +45,31 @@
               {{/each}}
               {{/select}}
             </select>
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="traits">
+          <div class="item-form-group stacked">
             <label>{{localize "WEAPON_UPGRADE.TRAITS_ADD"}}<a class="item-traits add"><i class="fas fa-cog"></i></a></label>
-            <input disabled type="text" value="{{item.TraitsAdd}}" />
+            <div class="item-form-inputs">
+              <input disabled type="text" value="{{item.TraitsAdd}}" />
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="traits">
+          <div class="item-form-group stacked">
             <label>{{localize "WEAPON_UPGRADE.TRAITS_REMOVE"}}<a class="item-traits remove"><i class="fas fa-cog"></i></a></label>
-            <input disabled type="text" value="{{item.TraitsRemove}}" />
+            <div class="item-form-inputs">
+              <input disabled type="text" value="{{item.TraitsRemove}}" />
+            </div>
           </div>
         </div>
         <div class="wrapper">
-          <div class="keywords">
+          <div class="item-form-group">
             <label>{{localize "WEAPON_UPGRADE.KEYWORDS"}}</label>
-            <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            <div class="item-form-inputs">
+              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+            </div>
           </div>
         </div>
       </div>

@@ -99,7 +99,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       if (this.item.isOwned)
         ui.notifications.error("Effects can only be added to world items or actors directly")
 
-      this.object.createEmbeddedDocuments("ActiveEffect", [{ label: "New Effect", icon: "icons/svg/aura.svg" }])
+      this.object.createEmbeddedDocuments("ActiveEffect", [{ label: this.item.name, icon: this.item.data.img }])
     })
 
     html.find(".effect-edit").click(ev => {

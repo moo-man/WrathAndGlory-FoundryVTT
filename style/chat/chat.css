@@ -64,6 +64,12 @@
   border-image: var(--image-border) 8 8 8 8 repeat repeat;
 }
 
+.wrath-and-glory.chat.item:hover {
+  outline: 1px dotted black;
+  cursor: pointer
+}
+
+
 .wrath-and-glory.chat.roll img {
   border: none;
   border-radius: 0;
