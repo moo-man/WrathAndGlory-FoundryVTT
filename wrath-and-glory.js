@@ -59,6 +59,10 @@ Hooks.once("init", () => {
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
   initializeHandlebars();
+
+  CONFIG.fontFamilies.push("Priori");
+  CONFIG.defaultFontFamily = "Priori"
+  CONFIG.canvasTextStyle._fontFamily = "Priori"
 });
 
 

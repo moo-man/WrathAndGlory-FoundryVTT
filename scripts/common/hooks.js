@@ -8,6 +8,8 @@ import effects from "../hooks/effects.js"
 import chat from "../hooks/chat.js";
 import combat from "../hooks/combat.js";
 import actor from "../hooks/actor.js";
+import token from "../hooks/token.js";
+import canvas from "../hooks/canvas.js";
 
 export default function() {
     entryContextHooks();
@@ -18,4 +20,6 @@ export default function() {
     chat();
     combat();
     actor();
+    token();
+    canvas();
 }

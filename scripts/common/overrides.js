@@ -31,4 +31,27 @@ export default function() {
     bar.position.set(0, posY);
   }
 
+
+  Token.prototype.drawMobNumber = function() {
+    let actor = this.document?.actor
+    if (actor && actor.type == "threat" && actor.isMob)
+    {
+      if (this.mobNumber) 
+        this.mobNumber.destroy()
+      this.mobNumber =  new PIXI.Container()
+      let style = this._getTextStyle()
+      style._fontSize = (this.h/this.w * this.h) * 0.25 
+      this.mobNumber.addChild(new PreciseText(actor.mob, style))
+      //this.mobNumber.zIndex = 10
+      this.mobNumber.position.set(this.w-(this.w * 0.3), this.h-(this.h * 0.3))
+      this.addChild(this.mobNumber)
+    }
+    else if (this.mobNumber)
+    {
+      this.mobNumber.destroy() 
+    }
+  }
+
+
+
 }

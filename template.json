@@ -302,7 +302,8 @@
       },
       "corruption": {
         "current": 0
-      }
+      },
+      "mob" : null
     }
   },
   "Item": {

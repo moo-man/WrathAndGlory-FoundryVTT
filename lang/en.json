@@ -402,6 +402,7 @@
   "CONDITION.Terror" : "Terror",
   "CONDITION.Vulnerable" : "Vulnerable",
 
-  "EFFECT.Wounded" : "Wounded"
+  "EFFECT.Wounded" : "Wounded",
+  "THREAT.MOB" : "Mob"
 
 }

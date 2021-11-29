@@ -79,7 +79,8 @@
   flex-basis: 20%;
 }
 
-.wrath-and-glory.sheet.actor .threat .sheet-header .bio .ruin {
+.wrath-and-glory.sheet.actor .threat .sheet-header .bio .mob,
+  .wrath-and-glory.sheet.actor .threat .sheet-header .bio .ruin {
   display: flex;
   flex-direction: row;
   flex-basis: calc(20% - 1px);
@@ -87,9 +88,15 @@
 }
 
 .wrath-and-glory.sheet.actor .threat .sheet-header .bio .ruin label {
-  min-width: 70px;
-  max-width: 70px;
+  min-width: 50px;
+  max-width: 50px;
 }
+
+.wrath-and-glory.sheet.actor .threat .sheet-header .bio .mob label {
+  min-width: 50px;
+  max-width: 50px;
+}
+
 
 /* TABS */
 

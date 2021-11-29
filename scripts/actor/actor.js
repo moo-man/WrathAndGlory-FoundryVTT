@@ -323,6 +323,8 @@ export class WrathAndGloryActor extends Actor {
         dialogData.weapon = weapon
         dialogData.pool.size = weapon.skill.total;
         dialogData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
+        if (this.isMob)
+            dialogData.pool.bonus += Math.ceil(this.mob / 2)
         dialogData.pool.rank = weapon.attack.rank;
         dialogData.damageValues = weapon.damageValues
         return dialogData
@@ -388,6 +390,10 @@ export class WrathAndGloryActor extends Actor {
         return levels.findIndex(i => this.corruption.current >= i.range[0] && this.corruption.current <= i.range[1])
     }
 
+    get isMob()
+    {
+        return this.type == "threat" && this.mob > 1
+    }
     
     async addCondition(effect) {
         if (typeof (effect) === "string")
@@ -440,6 +446,7 @@ export class WrathAndGloryActor extends Actor {
     get resources() { return this.data.data.resources }
     get corruption() { return this.data.data.corruption }
     get notes() { return this.data.data.notes }
+    get mob() {return this.data.data.mob}
 
     getItemTypes(type) {
         return (this.itemCategories || this.itemTypes)[type]
