@@ -376,11 +376,11 @@ export class PowerDialog extends RollDialog {
 
 }
 
-function _getTargetDefense() {
+function _getTargetDefence() {
   const targets = game.user.targets.size;
   if (0 >= targets) {
     return 3;
   }
 
-  return game.user.targets.values().next().value.actor.combat.defense.total;
+  return game.user.targets.values().next().value.actor.combat.defence.total;
 }

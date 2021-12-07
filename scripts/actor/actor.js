@@ -24,7 +24,7 @@ export class WrathAndGloryActor extends Actor {
             "token.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
             "token.disposition": CONST.TOKEN_DISPOSITIONS.NEUTRAL,
             "token.name": data.name,
-            "flags.wrath-and-glory.autoCalc.defense": true,
+            "flags.wrath-and-glory.autoCalc.defence": true,
             "flags.wrath-and-glory.autoCalc.resilience": true,
             "flags.wrath-and-glory.autoCalc.shock": true,
             "flags.wrath-and-glory.autoCalc.awareness": true,
@@ -32,7 +32,8 @@ export class WrathAndGloryActor extends Actor {
             "flags.wrath-and-glory.autoCalc.determination": true,
             "flags.wrath-and-glory.autoCalc.wounds": true,
             "flags.wrath-and-glory.autoCalc.conviction": true,
-            "flags.wrath-and-glory.autoWounded" : true
+            "flags.wrath-and-glory.autoWounded" : true,
+            "flags.wrath-and-glory.autoExhausted" : true
         }
         if (data.type === "agent") {
             initData["token.vision"] = true;
@@ -73,22 +74,40 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeItems() {
-        this.combat.resilience.armor = 0;
+        let armour = []
         for (let item of this.items) {
             item.prepareOwnedData()
-            if (item.isArmour) {
-                this._computeArmour(item);
+            if (item.isArmour && item.equipped) {
+                armour.push(item)
             }
             if (this.advances && item.cost) {
                 this.experience.spent = this.experience.spent + item.cost;
             }
         }
+        this._computeArmour(armour);
     }
 
-    _computeArmour(item) {
-        if (this.combat.resilience.armor < item.rating) {
-            this.combat.resilience.armor = item.rating;
+    _computeArmour(armour) {
+        this.combat.resilience.armour = 0;
+        let highestRes = 0
+        for (let item of armour)
+        {
+            if (item.rating )
+
+            if (item.traitList.powered)
+                this.attributes.strength.total += item.traitList.powered.rating
+            
+            if (item.traitList.shield)
+                this.combat.resilience.armour += item.rating;
+            else if (item.rating > highestRes)
+                highestRes = item.rating
+
+    
+            if (item.traitList.invulnerable)
+                this.combat.resilience.invulnerable = true
         }
+        this.combat.resilience.armour += highestRes
+
     }
 
     _computeAttributes() {
@@ -116,14 +135,14 @@ export class WrathAndGloryActor extends Actor {
 
         if (autoCalc.awareness)
             this.combat.passiveAwareness.total = this._setDefault(Math.ceil(this.skills.awareness.total / 2) + this.combat.passiveAwareness.bonus, 1);
-        if (autoCalc.defense)
-            this.combat.defense.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defense.bonus, 1);
+        if (autoCalc.defence)
+            this.combat.defence.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defence.bonus, 1);
         if (autoCalc.resolve)
             this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1, 1) + this.combat.resolve.bonus;
         if (autoCalc.conviction)
             this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
         if (autoCalc.resilience)
-            this.combat.resilience.total = this._setDefault(this.attributes.toughness.total + 1 + this.combat.resilience.bonus + this.combat.resilience.armor, 1);
+            this.combat.resilience.total = this._setDefault(this.attributes.toughness.total + 1 + this.combat.resilience.bonus + this.combat.resilience.armour, 1);
         if (autoCalc.wounds && this.type == "agent")
             this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.total + this.combat.wounds.bonus, 1);
         if (autoCalc.determination)
@@ -338,6 +357,7 @@ export class WrathAndGloryActor extends Actor {
             dialogData.pool.bonus += Math.ceil(this.mob / 2)
         dialogData.pool.rank = weapon.attack.rank;
         dialogData.damageValues = weapon.damageValues
+        dialogData.difficulty.target = WNGUtility._getTargetDefence()
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
         return dialogData
     }
@@ -345,7 +365,7 @@ export class WrathAndGloryActor extends Actor {
     _powerDialogData(power) {
         let dialogData = this._baseDialogData()
         dialogData.power = power
-        dialogData.difficulty.target = power.dn
+        dialogData.difficulty.target = power.dn || WNGUtility._getTargetDefence()
         dialogData.pool.size = power.skill.total;
         return dialogData
     }

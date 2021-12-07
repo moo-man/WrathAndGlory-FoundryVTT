@@ -2,8 +2,8 @@
   <div class="general wrapper">
     <h1>{{localize "TITLE.GENERAL"}}</h1>
     <div class="wrapper-item">
-      <label style="cursor: default;">{{localize "HEADER.DEFENSE"}}</label>
-      <input type="number" name="data.combat.defense.total" value="{{data.combat.defense.total}}" data-dtype="Number" {{#if autoCalc.defense}}disabled{{/if}} />
+      <label style="cursor: default;">{{localize "HEADER.DEFENCE"}}</label>
+      <input type="number" name="data.combat.defence.total" value="{{data.combat.defence.total}}" data-dtype="Number" {{#if autoCalc.defence}}disabled{{/if}} />
     </div>
     <div class="wrapper-item">
       <label style="cursor: default;">{{localize "HEADER.RESILIENCE"}}</label>
@@ -67,8 +67,8 @@
         </div>
         {{#each items.traumaticInjuries as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content item-edit ">
-              <div class="item-property item-name">{{item.name}}</div>
+          <div class="item-content  ">
+              <div class="item-property item-edit item-name">{{item.name}}</div>
               <div class="item-controls">
                 <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
               </div>
@@ -85,8 +85,8 @@
           </div>
           {{#each items.memorableInjuries as |item|}}
           <div class="item" data-item-id="{{item.id}}">
-            <div class="item-content item-edit">
-                <div class="item-property item-name">{{item.name}}</div>
+            <div class="item-content">
+                <div class="item-property item-edit item-name">{{item.name}}</div>
                 <div class="item-controls">
                   <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
                 </div>
@@ -120,8 +120,8 @@
         </div>
         {{#each items.mutations as |item|}}
         <div class="item" data-item-id="{{item.id}}">
-          <div class="item-content item-edit">
-              <div class="item-property item-name">{{item.name}}</div>
+          <div class="item-content">
+              <div class="item-property item-edit item-name">{{item.name}}</div>
               <div class="item-controls">
                 <a class="item-control item-delete" title="Delete Item"><i class="fas fa-times"></i></a>
               </div>

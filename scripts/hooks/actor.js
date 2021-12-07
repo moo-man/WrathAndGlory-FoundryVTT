@@ -8,5 +8,14 @@ export default function() {
         else if (actor.hasCondition("wounded") && actor.getFlag("wrath-and-glory", "autoWounded"))
             actor.removeCondition("wounded")
 
+
+        if (actor.combat.shock.value > actor.combat.shock.max && actor.getFlag("wrath-and-glory", "autoExhausted"))
+        {
+            if (!actor.hasCondition("exhausted"))
+                actor.addCondition("exhausted")
+        }
+        else if (actor.hasCondition("exhausted") && actor.getFlag("wrath-and-glory", "autoExhausted"))
+            actor.removeCondition("exhausted")
+
     })
 }

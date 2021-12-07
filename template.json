@@ -187,6 +187,10 @@
             "bonus": 0,
             "total": 0
           },
+          "defence": {
+            "bonus": 0,
+            "total": 0
+          },
           "resilience": {
             "bonus": 0,
             "total": 0
@@ -375,7 +379,7 @@
       "templates": ["physical", "equipped"],
       "rating": 0,
       "traits": [],
-      "invelnerable" : false
+      "invulnerable" : false
     },
     "ascension": {
       "cost": 0,
