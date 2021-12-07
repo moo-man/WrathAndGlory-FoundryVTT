@@ -70,7 +70,7 @@ function migrateActorData(actor, worldSchemaVersion) {
 
     if (migrate) {
         update = {
-            "flags.wrath-and-glory.autoCalc.defense": true,
+            "flags.wrath-and-glory.autoCalc.defence": true,
             "flags.wrath-and-glory.autoCalc.resilience": true,
             "flags.wrath-and-glory.autoCalc.shock": true,
             "flags.wrath-and-glory.autoCalc.awareness": true,

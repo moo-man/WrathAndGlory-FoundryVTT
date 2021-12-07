@@ -301,7 +301,7 @@ CONFIG.statusEffects = [
         id : "restrained",
         label : "CONDITION.Restrained",
         icon : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
-        changes : [{key: "data.combat.defense.bonus", mode : 2, value : -2},{key: "data.combat.speed", mode : 5, value : "0"} ]
+        changes : [{key: "data.combat.defence.bonus", mode : 2, value : -2},{key: "data.combat.speed", mode : 5, value : "0"} ]
     },
     {
         id : "staggered",
@@ -320,7 +320,7 @@ CONFIG.statusEffects = [
         id : "vulnerable",
         label : "CONDITION.Vulnerable",
         icon : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
-        changes : [{key: "data.combat.defense.bonus", mode : 2, value : -1}]
+        changes : [{key: "data.combat.defence.bonus", mode : 2, value : -1}]
     }
 ]
 

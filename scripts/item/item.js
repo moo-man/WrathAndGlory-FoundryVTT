@@ -222,7 +222,7 @@ export class WrathAndGloryItem extends Item {
     }
 
     get Activation() {
-        return gam.wng.config.powerActivations[this.activation]
+        return game.wng.config.powerActivations[this.activation]
     }
     get Rarity() {
         return game.wng.config.rarity[this.rarity]
