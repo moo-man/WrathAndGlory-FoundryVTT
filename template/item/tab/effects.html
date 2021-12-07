@@ -22,12 +22,11 @@
       </div>
     </div>
     {{#each item.effects as |effect|}}
-    <div class="item" data-item-id="{{effect.id}}">
+    <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content">
           <img class="item-property item-image" src="{{effect.data.icon}}"></img>
           <div class="item-property item-name effect-edit">{{effect.data.label}}</div>
           
-          <div class="item-property flex"></div>
           <div class="item-controls">
             <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>
           </div>

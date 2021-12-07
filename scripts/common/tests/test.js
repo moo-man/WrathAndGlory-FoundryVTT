@@ -416,9 +416,9 @@ export class PoolDie extends Die {
         roll.weight = 1
     }
     if (game.modules.get("wng-core") && game.modules.get("wng-core").active)
-      roll.img = `modules/wng-core/assets/dice/die-pool-${roll.result}`
+      roll.img = `modules/wng-core/assets/dice/die-pool-${roll.result}.webp`
     else
-      roll.img = `systems/wrath-and-glory/asset/image/die-pool-${roll.result}`
+      roll.img = `systems/wrath-and-glory/asset/image/die-pool-${roll.result}.webp`
   }
 
 
@@ -487,9 +487,9 @@ export class WrathDie extends Die {
     };
     roll.isWrath = true;
     if (game.modules.get("wng-core") && game.modules.get("wng-core").active)
-      roll.img = `modules/wng-core/assets/dice/die-wrath-${roll.result}`
+      roll.img = `modules/wng-core/assets/dice/die-wrath-${roll.result}.webp`
     else
-      roll.img = `systems/wrath-and-glory/asset/image/die-wrath-${roll.result}`
+      roll.img = `systems/wrath-and-glory/asset/image/die-wrath-${roll.result}.webp`
   }
 
 

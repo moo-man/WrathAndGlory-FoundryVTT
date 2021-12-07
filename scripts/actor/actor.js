@@ -7,10 +7,16 @@ import MutationTest from "../common/tests/mutation-test.js";
 import ResolveTest from "../common/tests/resolve-test.js";
 import DeterminationRoll from "../common/tests/determination.js";
 import AbilityRoll from "../common/tests/ability-roll.js";
+import WNGUtility from "../common/utility.js";
 
 export class WrathAndGloryActor extends Actor {
 
     async _preCreate(data, options, user) {
+        if (data._id)
+            options.keepId = WNGUtility._keepID(data._id, this)
+        
+        await super._preCreate(data, options, user)
+
         let initData = {
             "token.bar1": { "attribute": "combat.wounds" },
             "token.bar2": { "attribute": "combat.shock" },
@@ -22,6 +28,7 @@ export class WrathAndGloryActor extends Actor {
             "flags.wrath-and-glory.autoCalc.resilience": true,
             "flags.wrath-and-glory.autoCalc.shock": true,
             "flags.wrath-and-glory.autoCalc.awareness": true,
+            "flags.wrath-and-glory.autoCalc.resolve": true,
             "flags.wrath-and-glory.autoCalc.determination": true,
             "flags.wrath-and-glory.autoCalc.wounds": true,
             "flags.wrath-and-glory.autoCalc.conviction": true,
@@ -112,7 +119,7 @@ export class WrathAndGloryActor extends Actor {
         if (autoCalc.defense)
             this.combat.defense.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defense.bonus, 1);
         if (autoCalc.resolve)
-            this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1 + this.combat.resolve.bonus, 1);
+            this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1, 1) + this.combat.resolve.bonus;
         if (autoCalc.conviction)
             this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
         if (autoCalc.resilience)
@@ -120,7 +127,7 @@ export class WrathAndGloryActor extends Actor {
         if (autoCalc.wounds && this.type == "agent")
             this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.total + this.combat.wounds.bonus, 1);
         if (autoCalc.determination)
-            this.combat.determination.total = this._setDefault(this.attributes.toughness.rating + this.combat.determination.bonus, 1);
+            this.combat.determination.total = this._setDefault(this.attributes[this.combat.determination.attribute || "toughness"].rating + this.combat.determination.bonus, 1);
         if (autoCalc.shock && this.type == "agent")
             this.combat.shock.max = this._setDefault(this.attributes.willpower.rating + this.advances.tier + this.combat.shock.bonus, 1);
     }
@@ -284,7 +291,8 @@ export class WrathAndGloryActor extends Actor {
             speaker : this.speakerData(),
             itemId : ability.id,
             damage : {},
-            ed : {}
+            ed : {},
+            ap : {}
         }
         if (ability.hasDamage)
         {
@@ -294,6 +302,9 @@ export class WrathAndGloryActor extends Actor {
             testData.ed.base = ability.ed.base
             testData.ed.bonus = ability.ed.bonus
             testData.ed.rank = ability.ed.rank
+            testData.ap.base = ability.ap.base
+            testData.ap.bonus = ability.ap.bonus
+            testData.ap.rank = ability.ap.rank
         }
         ui.sidebar.activateTab("chat")
         return new AbilityRoll(testData)
@@ -314,7 +325,7 @@ export class WrathAndGloryActor extends Actor {
             wrath: {
                 base: 1
             },
-            effects : this.effects.filter(i => i.hasRollEffect)
+            effects : this.effects.filter(i => i.hasRollEffect).filter(i => !i.data.disabled)
         };
     }
 
@@ -327,6 +338,7 @@ export class WrathAndGloryActor extends Actor {
             dialogData.pool.bonus += Math.ceil(this.mob / 2)
         dialogData.pool.rank = weapon.attack.rank;
         dialogData.damageValues = weapon.damageValues
+        dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
         return dialogData
     }
 
@@ -505,4 +517,20 @@ export class WrathAndGloryActor extends Actor {
                 return 0;
         }
     }
+
+
+          /**
+   * Transform the Document data to be stored in a Compendium pack.
+   * Remove any features of the data which are world-specific.
+   * This function is asynchronous in case any complex operations are required prior to exporting.
+   * @param {CompendiumCollection} [pack]   A specific pack being exported to
+   * @return {object}                       A data object of cleaned data suitable for compendium import
+   * @memberof ClientDocumentMixin#
+   * @override - Retain ID
+   */
+  toCompendium(pack) {
+    let data = super.toCompendium(pack)
+    data._id = this.id; // Replace deleted ID so it is preserved
+    return data;
+  }
 }

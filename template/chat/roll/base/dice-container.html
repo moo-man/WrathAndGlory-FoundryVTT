@@ -1,6 +1,6 @@
 <div class="dice-container">
         {{#each result.dice as |die|}}
-        <a class="die {{die.name}} unshifted" data-index="{{die.index}}"><img src="{{die.img}}.png"/>
+        <a class="die {{die.name}} unshifted" data-index="{{die.index}}"><img src="{{die.img}}"/>
             {{#if die.rerolled}}
                     <span class="reroll die-icon"><i class="fas fa-redo"></i></span>
             {{/if}}    
@@ -12,7 +12,7 @@
     <h4>Shifted</h4>
     <div class="dice-container">
             {{#each result.shifted as |die|}}
-            <a class="die {{die.name}} shifted" data-index="{{die.index}}"><img src="{{die.img}}.png"/>
+            <a class="die {{die.name}} shifted" data-index="{{die.index}}"><img src="{{die.img}}"/>
                     {{log die}}
                     {{#if (eq die.shift "glory")}}
                     <span class="glory die-icon">G</span>

@@ -38,6 +38,7 @@
       "path": "lang/en.json"
     }
   ],
+  "background" : "../../modules/wng-core/assets/images/cover.webp",
   "gridDistance": 1,
   "gridUnits": "m",
   "primaryTokenAttribute": null,

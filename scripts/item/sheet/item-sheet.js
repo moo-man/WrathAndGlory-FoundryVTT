@@ -58,9 +58,11 @@ export class WrathAndGloryItemSheet extends ItemSheet {
   _onDrop(ev) {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
     let dropItem = game.items.get(dragData.id)
-    if (this.item.type != "weapon" || !dropItem || dropItem.type != "weaponUpgrade")
-      super._onDrop(ev)    
-    else { // Valid to upgrade
+
+
+
+    if (this.item.type === "weapon" && dropItem && dropItem.type === "weaponUpgrade")
+    {
       let upgrades = duplicate(this.item.upgrades)
       let upgrade = dropItem.toObject();
       upgrade._id = randomID()
@@ -68,6 +70,33 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       this.item.update({"data.upgrades" : upgrades})
       ui.notifications.notify("Upgrade applied to " + this.item.name)
     } 
+    else if (dragData.type == "ActiveEffect")
+    {
+      this.item.createEmbeddedDocuments("ActiveEffect", [dragData.data])
+    }
+  }
+
+
+  /** @inheritdoc */
+  _onDragStart(event) {
+    super._onDragStart(event)
+    const li = event.currentTarget;
+
+    // Create drag data
+    const dragData = {
+      itemId: this.item.id,
+    };
+
+
+    // Active Effect
+    if ( li.dataset.effectId ) {
+      const effect = this.item.effects.get(li.dataset.effectId);
+      dragData.type = "ActiveEffect";
+      dragData.data = effect.data;
+    }
+
+    // Set data transfer
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
 
     // Prevent upgrades from stacking
@@ -86,7 +115,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     super.activateListeners(html)
 
     html.find(".item-traits").click(ev => {
-      if (this.item.type == "weaponUpgrade")
+      if (this.item.type == "weaponUpgrade" || this.item.type == "ammo")
       {
         let type = ev.currentTarget.classList.contains("add") ? "add" : "remove"
         new ItemTraits(this.item, {type}).render(true)
@@ -95,20 +124,46 @@ export class WrathAndGloryItemSheet extends ItemSheet {
         new ItemTraits(this.item).render(true)
     })
 
-    html.find(".effect-create").click(ev => {
+    html.find(".effect-create").click(async ev => {
       if (this.item.isOwned)
         ui.notifications.error("Effects can only be added to world items or actors directly")
+      let effectData = { label: this.item.name, icon: this.item.data.img }
 
-      this.object.createEmbeddedDocuments("ActiveEffect", [{ label: this.item.name, icon: this.item.data.img }])
+        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.html", effectData)
+        let dialog = new Dialog({
+            title : "Quick Effect",
+            content : html,
+            buttons : {
+                "create" : {
+                    label : "Create",
+                    callback : html => {
+                        let mode = 2
+                        let label = html.find(".label").val()
+                        let key = html.find(".key").val()
+                        let value = parseInt(html.find(".modifier").val())
+                        effectData.label = label
+                        effectData.changes = [{key, mode, value}]
+                        this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
+                    }
+                },
+                "skip" : {
+                    label : "Skip",
+                    callback : () => this.object.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
+                }
+            }
+        })
+        await dialog._render(true)
+        dialog._element.find(".label").select()
+
     })
 
     html.find(".effect-edit").click(ev => {
-      let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+      let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
       this.object.effects.get(id).sheet.render(true)
     })
 
     html.find(".effect-delete").click(ev => {
-      let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+      let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
       this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
     })
 

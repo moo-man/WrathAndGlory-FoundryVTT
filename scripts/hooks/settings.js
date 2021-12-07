@@ -43,6 +43,14 @@ export default function() {
       type: Object,
     });
 
+    
+    game.settings.register('wrath-and-glory', 'bugReportName', {
+      name: 'Bug Report Name',
+      scope: 'world',
+      config: false,
+      default: "",
+      type: String,
+    });
   })
 
 }

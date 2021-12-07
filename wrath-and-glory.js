@@ -21,6 +21,8 @@ import MutationTest from "./scripts/common/tests/mutation-test.js";
 import ResolveTest from "./scripts/common/tests/resolve-test.js";
 import DeterminationRoll from "./scripts/common/tests/determination.js";
 import AbilityRoll from "./scripts/common/tests/ability-roll.js";
+import ModuleInitializer from "./scripts/apps/module-initialization.js"
+import ModuleUpdater from "./scripts/apps/module-updater.js"
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
@@ -41,6 +43,10 @@ Hooks.once("init", () => {
     dice : {
       WrathDie,
       PoolDie,
+    },
+    apps: {
+      ModuleInitializer,
+      ModuleUpdater
     },
     ItemTraits,
     RuinGloryCounter,

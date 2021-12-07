@@ -160,6 +160,8 @@
   "DIALOG.WRATH": "Wrath",
   "DIALOG.WOUNDS": "Wounds",
   "DIALOG.NO_DIFFICULTY" : "Please enter a Difficulty Number",
+  "DIALOG.ITEM_DELETE" : "Item Delete",
+  "DIALOG.ITEM_DELETE_PROMPT" : "Are you sure you want to delete this item?",
 
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",
@@ -191,6 +193,7 @@
   "HEADER.RESOLVE": "Resolve",
   "HEADER.SIZE": "Size",
   "HEADER.SPEED": "Speed",
+  "HEADER.FLY": "Fly",
   "HEADER.WOUNDS": "Wounds",
   "HEADER.TRAUMATIC": "Traumatic",
   "HEADER.MEMORABLE": "Memorable",
@@ -383,6 +386,7 @@
   "AUTOCALC.SHOCK" : "Auto Calculate Max Shock",
   "AUTOCALC.AWARENESS" : "Auto Calculate Awareness",
   "AUTOCALC.DETERMINATION" : "Auto Calculate Determination",
+  "AUTOCALC.RESOLVE" : "Auto Calculate Resolve",
   "AUTOCALC.WOUNDS" : "Auto Calculate Max Wounds",
   "AUTOCALC.CONVICTION" : "Auto Calculate Conviction",
   "AUTOCALC.AUTO_WOUNDED" : "Automatic Wounded",
@@ -403,6 +407,36 @@
   "CONDITION.Vulnerable" : "Vulnerable",
 
   "EFFECT.Wounded" : "Wounded",
-  "THREAT.MOB" : "Mob"
+  "THREAT.MOB" : "Mob",
+
+  "UpdaterTitle1": "Update",
+  "UpdaterTitle2": "Content",
+  "Updater1": "This process will import new documents and overwrite previously imported documents with their content from the Compendium.",
+  "Updater2": "THIS MEANS ANY CHANGES YOU'VE MADE WILL BE OVERWRITTEN.",
+  "Updater3": "Only use this if you've initialized this module previously.",
+  "UPDATER.OverwriteActors": "Overwrite Actors",
+  "UPDATER.OverwriteItems": "Overwrite Items",
+  "UPDATER.OverwriteJournals": "Overwrite Journals",
+  "UPDATER.OverwriteScenes": "Overwrite Scenes",
+  "UPDATER.Exclude": "Exclude Name Changes",
+  "UPDATER.ExcludeHint": "Checking this will not update documents if their names have been changed",
+  "UPDATER.Error": "You can only update if you've initialized this module at least once.",
+  "UPDATER.Notification": "Created {created} and updated {updated} documents from {name} - {version}",
+
+  "BUGREPORT.Contact": "Contact Info",
+  "BUGREPORT.ContactPlaceholder": "Discord Tag or Email.",
+  "BUGREPORT.DescriptionPlaceholder": "What happened, how to reproduce, etc.",
+  "GRIEVANCE.Warning1": "Be aware",
+  "GRIEVANCE.Warning2": ": This information is posted on the GitHub issues page, which is public, so Discord tag is preferred. Otherwise, contact me (Moo Man) directly.",
+  "GRIEVANCE.Warning3": "Before submitting a bug report",
+  "GRIEVANCE.Warning4": "please ensure the Wrath & Glory System and the modules in question are up to date!",
+  "ImperialPost": "The Imperial Post Has Received Your Grievance! See the console for a link.",
+  "ImperialPostError": "The Imperial Post cannot receive your missive. Please see console for details.",
+  "Something went wrong": "Something went wrong",
+  "BugReport.ErrorForm": "Please fill out the form",
+  "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
+  "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
+  "BUTTON.PostBug" : "W&G Bug Report"
+
 
 }

@@ -95,10 +95,10 @@
 <div class="dialog-effects">
     <div class="wrapper">
         <h1>{{localize "HEADER.EFFECTS"}}</h1>
-            <select class="effect-select" multiple>
-                {{#each effects as |effect e|}}
-                <option title="{{effect.data.flags.wrath-and-glory.description}}" value="{{e}}">{{effect.label}}</option>
-                {{/each}}
-            </select>
+        <select class="effect-select" multiple>
+            {{#each effects as |effect e|}}
+            <option title="{{effect.label}} - {{effect.data.flags.wrath-and-glory.description}}" value="{{e}}">{{effect.data.flags.wrath-and-glory.description}}</option>
+            {{/each}}
+        </select>
     </div>
 </div>

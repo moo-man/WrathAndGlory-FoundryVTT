@@ -27,7 +27,7 @@
       </div>
     </div>
     {{#each effects.temporary as |effect|}}
-    <div class="item" data-item-id="{{effect.id}}">
+    <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content">
           <img class="item-property item-image" src="{{effect.data.icon}}"></img>
           <div class="item-property item-name effect-edit">{{effect.data.label}}</div>
@@ -54,7 +54,7 @@
       </div>
     </div>
     {{#each effects.passive as |effect|}}
-    <div class="item" data-item-id="{{effect.id}}">
+    <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content">
           <img class="item-property item-image" src="{{effect.data.icon}}"></img>
           <div class="item-property item-name effect-edit">{{effect.data.label}}</div>
@@ -80,7 +80,7 @@
       </div>
     </div>
     {{#each effects.disabled as |effect|}}
-    <div class="item" data-item-id="{{effect.id}}">
+    <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content" style="opacity : 0.5">
           <img class="item-property item-image" src="{{effect.data.icon}}"></img>
           <div class="item-property item-name effect-edit">{{effect.data.label}}</div>

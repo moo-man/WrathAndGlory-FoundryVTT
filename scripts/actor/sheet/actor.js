@@ -247,8 +247,24 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _onItemDelete(event) {
         event.stopPropagation();
         const div = $(event.currentTarget).parents(".item");
-        this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
-        div.slideUp(200, () => this.render(false));
+        new Dialog({
+            title : game.i18n.localize("DIALOG.ITEM_DELETE"),
+            content : `<p>${game.i18n.localize("DIALOG.ITEM_DELETE_PROMPT")}`,
+            buttons : {
+                "yes" : {
+                    label : game.i18n.localize("Yes"),
+                    callback: () => {
+                        this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
+                        div.slideUp(200, () => this.render(false));
+                    }
+                },
+                "cancel" : {
+                    label : game.i18n.localize("Cancel"),
+                    callback : () => {}
+                }
+            },
+            default : "yes"
+        }).render(true)
     }
 
     _onItemPost(event) {
@@ -286,7 +302,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 },
                 "skip" : {
                     label : "Skip",
-                    callback : () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
+                    callback : () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
                 }
             }
         })
@@ -298,19 +314,19 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     _onEffectEdit(ev)
     {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         this.object.effects.get(id).sheet.render(true)
     }
 
     _onEffectDelete(ev)
     {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
     }
 
     _onEffectToggle(ev)
     {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         let effect = this.object.effects.get(id)
 
         effect.update({"disabled" : !effect.data.disabled})

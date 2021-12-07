@@ -1,8 +1,16 @@
+import WNGUtility from "../common/utility.js";
+
 export class WrathAndGloryItem extends Item {
 
+    // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
+    async _preCreate(data, options, user) {
+        if (data._id && !this.isOwned)
+            options.keepId = WNGUtility._keepID(data._id, this)
 
-    _preUpdate(updateData, options, user)
-    {
+        await super._preCreate(data, options, user)
+    }
+
+    _preUpdate(updateData, options, user) {
         if (hasProperty(updateData, "data.quantity") && updateData.data.quantity < 0)
             updateData.data.quantity = 0;
     }
@@ -22,14 +30,12 @@ export class WrathAndGloryItem extends Item {
 
 
     prepareOwnedWeapon() {
-        if (this.isRanged && this.category == "launcher" && this.Ammo)
-        {
+        if (this.isRanged && this.category == "launcher" && this.Ammo) {
             this.data.data.damage = this.Ammo.damage
             this.data.data.ap = this.Ammo.ap
             this.data.data.ed = this.Ammo.ed
         }
-        if (this.isRanged && this.Ammo)
-        {
+        if (this.isRanged && this.Ammo) {
             this.applyAmmo()
         }
     }
@@ -40,12 +46,12 @@ export class WrathAndGloryItem extends Item {
             item.data.img = null;
         }
 
-        const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.html", {item, data: item.data.data});
+        const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.html", { item, data: item.data.data });
         const chatData = {
             user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
-            "flags.wrath-and-glory.itemData" : this.toObject()
+            "flags.wrath-and-glory.itemData": this.toObject()
         };
         if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
             chatData.whisper = ChatMessage.getWhisperRecipients("GM");
@@ -68,8 +74,8 @@ export class WrathAndGloryItem extends Item {
     }
 
 
-    _dropdownData(){
-        return {text : this.description}
+    _dropdownData() {
+        return { text: this.description }
     }
 
 
@@ -77,44 +83,42 @@ export class WrathAndGloryItem extends Item {
         this._applyEffects(this.Upgrades.reduce((effects, upgrade) => {
             return effects.concat(Array.from(upgrade.effects))
         }, []))
-       
+
         this._addTraits(this.Upgrades.reduce((traits, upgrade) => {
             return traits.concat(upgrade.traits)
-        }, [])) 
-      }
+        }, []))
+    }
 
-      applyAmmo() {
+    applyAmmo() {
         this._applyEffects(this.Ammo.effects)
         this._addTraits(this.Ammo.traits)
-      }
-
-
-    _applyEffects(effects)
-    {
-        let overrides = {}
-         // Organize non-disabled effects by their application priority
-         const changes = effects.reduce((changes, e) => {
-            if ( e.data.disabled ) return changes;
-            return changes.concat(e.data.changes.map(c => {
-              c = foundry.utils.duplicate(c);
-              c.effect = e;
-              c.priority = c.priority ?? (c.mode * 10);
-              return c;
-            }));
-          }, []);
-          changes.sort((a, b) => a.priority - b.priority);
-      
-          // Apply all changes
-          for ( let change of changes ) {
-            const result = change.effect.apply(this, change);
-            if ( result !== null ) overrides[change.key] = result;
-          }    
-  
     }
 
 
-    _addTraits(traits)
-    {
+    _applyEffects(effects) {
+        let overrides = {}
+        // Organize non-disabled effects by their application priority
+        const changes = effects.reduce((changes, e) => {
+            if (e.data.disabled) return changes;
+            return changes.concat(e.data.changes.map(c => {
+                c = foundry.utils.duplicate(c);
+                c.effect = e;
+                c.priority = c.priority ?? (c.mode * 10);
+                return c;
+            }));
+        }, []);
+        changes.sort((a, b) => a.priority - b.priority);
+
+        // Apply all changes
+        for (let change of changes) {
+            const result = change.effect.apply(this, change);
+            if (result !== null) overrides[change.key] = result;
+        }
+
+    }
+
+
+    _addTraits(traits) {
         let add = traits.filter(i => i.type == "add")
         let remove = traits.filter(i => i.type == "remove")
 
@@ -129,16 +133,13 @@ export class WrathAndGloryItem extends Item {
         remove.forEach(trait => {
             let existing = this.data.data.traits.find(i => i.name == trait.name)
             let existingIndex = this.data.data.traits.findIndex(i => i.name == trait.name)
-            if (existing)
-            {
-                if (trait.rating && Number.isNumeric(trait.rating))
-                {
+            if (existing) {
+                if (trait.rating && Number.isNumeric(trait.rating)) {
                     existing.rating = parseInt(existing.rating) - parseInt(trait.rating)
                     if (existing.rating <= 0)
                         this.data.data.traits.splice(existingIndex, 1)
                 }
-                else 
-                {
+                else {
                     this.data.data.traits.splice(existingIndex, 1)
                 }
             }
@@ -148,58 +149,61 @@ export class WrathAndGloryItem extends Item {
 
     async addCondition(effect) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+            effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
         if (!effect)
-          return "No Effect Found"
-    
+            return "No Effect Found"
+
         if (!effect.id)
-          return "Conditions require an id field"
-    
-    
+            return "Conditions require an id field"
+
+
         let existing = this.hasCondition(effect.id)
-    
+
         if (!existing) {
-          effect.label = game.i18n.localize(effect.label)
-          effect["flags.core.statusId"] = effect.id;
-          delete effect.id
-          return this.createEmbeddedDocuments("ActiveEffect", [effect])
+            effect.label = game.i18n.localize(effect.label)
+            effect["flags.core.statusId"] = effect.id;
+            delete effect.id
+            return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
-      }
-    
-      async removeCondition(effect, value = 1) {
+    }
+
+    async removeCondition(effect, value = 1) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+            effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
         if (!effect)
-          return "No Effect Found"
-    
+            return "No Effect Found"
+
         if (!effect.id)
-          return "Conditions require an id field"
-    
+            return "Conditions require an id field"
+
         let existing = this.hasCondition(effect.id)
-    
+
         if (existing) {
-          return existing.delete()
+            return existing.delete()
         }
-      }
-    
-    
-      hasCondition(conditionKey) {
+    }
+
+
+    hasCondition(conditionKey) {
         let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
         return existing
-      }
+    }
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get Range() {
-        if (this.isRanged)
-        {
-            const short = this.range.short < 1 ? "-" : this.range.short;
-            const medium = this.range.medium < 1 ? "-" : this.range.medium;
-            const long = this.range.long < 1 ? "-" : this.range.long;
-            const salvo = this.salvo < 1 ? "-" : this.salvo;
-            return `${salvo} | ${short} / ${medium} / ${long}`;
+        if (this.isRanged) {
+            if (this.category == "launcher" || this.category == "grenade-missile") {
+                return this.range.thrown * this.actor.attributes.strength.total
+            }
+            else {
+                const short = this.range.short < 1 ? "-" : this.range.short;
+                const medium = this.range.medium < 1 ? "-" : this.range.medium;
+                const long = this.range.long < 1 ? "-" : this.range.long;
+                const salvo = this.salvo < 1 ? "-" : this.salvo;
+                return `${salvo} | ${short} / ${medium} / ${long}`;
+            }
         }
-        else if (this.isMelee)
-        {
+        else if (this.isMelee) {
             return this.range.melee
         }
     }
@@ -218,36 +222,10 @@ export class WrathAndGloryItem extends Item {
     }
 
     get Activation() {
-        switch (this.activation) {
-            case "free":
-                return game.i18n.localize("ACTIVATION.FREE");
-            case "action":
-                return game.i18n.localize("ACTIVATION.ACTION");
-            case "simple":
-                return game.i18n.localize("ACTIVATION.SIMPLE");
-            case "full":
-                return game.i18n.localize("ACTIVATION.FULL");
-            case "movement":
-                return game.i18n.localize("ACTIVATION.MOVEMENT");
-            default:
-                return game.i18n.localize("ACTIVATION.ACTION");
-        }
+        return gam.wng.config.powerActivations[this.activation]
     }
     get Rarity() {
-        switch (this.rarity) {
-            case "common":
-                return game.i18n.localize("RARITY.COMMON");
-            case "uncommon":
-                return game.i18n.localize("RARITY.UNCOMMON");
-            case "rare":
-                return game.i18n.localize("RARITY.RARE");
-            case "very-rare":
-                return game.i18n.localize("RARITY.VERY_RARE");
-            case "unique":
-                return game.i18n.localize("RARITY.UNIQUE");
-            default:
-                return game.i18n.localize("RARITY.COMMON");
-        }
+        return game.wng.config.rarity[this.rarity]
     }
     get Category() {
         switch (this.category) {
@@ -272,42 +250,41 @@ export class WrathAndGloryItem extends Item {
         return this.category == "ranged" || this.category == "launcher" || this.category == "grenade-missile"
     }
 
-    get Traits () {
+    get Traits() {
         return Object.values(this.traitList).map(i => i.display)
     }
 
-    get TraitsAdd () {
-        return Object.values(this.traitList).filter(i => i.type=="add").map(i => i.display)
+    get TraitsAdd() {
+        return Object.values(this.traitList).filter(i => i.type == "add").map(i => i.display)
     }
 
-    
-    get TraitsRemove () {
-        return Object.values(this.traitList).filter(i => i.type=="remove").map(i => i.display)
+
+    get TraitsRemove() {
+        return Object.values(this.traitList).filter(i => i.type == "remove").map(i => i.display)
     }
 
-    get traitList () {
+    get traitList() {
         let traits = {}
         this.data.data.traits.forEach(i => {
             traits[i.name] = {
-                name : i.name,
-                display : this.traitsAvailable[i.name],
-                type : i.type
+                name: i.name,
+                display: this.traitsAvailable[i.name],
+                type: i.type
             }
-            if (game.wng.config.traitHasRating[i.name])
-            {
+            if (game.wng.config.traitHasRating[i.name]) {
                 traits[i.name].rating = i.rating;
                 traits[i.name].display += ` (${i.rating})`
             }
         })
         return traits
     }
-    
+
     get Upgrades() {
         return this.upgrades.map(i => new CONFIG.Item.documentClass(i))
     }
 
     get traitsAvailable() {
-        if (this.type == "weapon" || this.type == "weaponUpgrade" || this.type == "ability")
+        if (this.type == "weapon" || this.type == "weaponUpgrade" || this.type == "ability" || this.type == "ammo")
             return game.wng.config.weaponTraits
         else if (this.type == "armour")
             return game.wng.config.armourTraits
@@ -315,22 +292,20 @@ export class WrathAndGloryItem extends Item {
 
 
     get skill() {
-        if (this.isOwned)
-        {
+        if (this.isOwned) {
             if (this.type == "psychicPower")
                 return this.actor.skills.psychicMastery
             else if (this.isMelee)
                 return this.actor.skills.weaponSkill
-            else 
+            else
                 return this.actor.skills.ballisticSkill
         }
-        else 
-        {
+        else {
             if (this.type == "psychicPower")
                 return "psychicMastery"
             else if (this.isMelee)
                 return "weaponSkill"
-            else 
+            else
                 return "ballisticSkill"
         }
     }
@@ -358,7 +333,7 @@ export class WrathAndGloryItem extends Item {
                 if (!e.data.changes.length)
                     return true
                 return e.data.changes.some(c => {
-                    return !hasProperty({data: game.system.model.Item.weapon}, c.key) // Any effect that references a property that doesn't exist on the item
+                    return !hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item
                 })
             })
             return effects
@@ -372,8 +347,7 @@ export class WrathAndGloryItem extends Item {
     }
 
     get rollable() {
-        if (this.type == "ability")
-        {
+        if (this.type == "ability") {
             if (this.abilityType == "determination") return true
             if (this.hasDamage) return true
             if (this.hasTest) return true
@@ -388,26 +362,26 @@ export class WrathAndGloryItem extends Item {
     get damageValues() {
         if (this.traitList.brutal)
             return {
-                1 : 0,
-                2 : 0,
-                3 : 1,
-                4 : 1,
-                5 : 2,
-                6 : 2
+                1: 0,
+                2: 0,
+                3: 1,
+                4: 1,
+                5: 2,
+                6: 2
             }
-        else   
-        return {
-            1 : 0,
-            2 : 0,
-            3 : 0,
-            4 : 1,
-            5 : 1,
-            6 : 2
-        }
+        else
+            return {
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 1,
+                5: 1,
+                6: 2
+            }
     }
 
     get hasTest() {
-        return this.test && this.test.dn && this.test.type
+        return this.test && Number.isNumeric(this.test.dn) && this.test.type
     }
 
     // @@@@@@ TYPE GETTERS @@@@@@
@@ -458,6 +432,6 @@ export class WrathAndGloryItem extends Item {
     get salvo() { return this.data.data.salvo }
     get upgrades() { return this.data.data.upgrades }
     get equipped() { return this.data.data.equipped }
-    get test() {return this.data.data.test}
-    get abilityType() {return this.data.data.abilityType}
+    get test() { return this.data.data.test }
+    get abilityType() { return this.data.data.abilityType }
 }

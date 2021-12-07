@@ -15,7 +15,7 @@ export default class ItemTraits extends FormApplication
         let data = super.getData();
         data.traits = Object.keys(this.object.traitsAvailable).map(i => {
             let existing = this.object.data._source.data.traits.find(t => t.name == i)
-            if (this.object.type == "weaponUpgrade")
+            if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
                 existing = this.object.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
             return  {
                 display : this.object.traitsAvailable[i],
@@ -31,7 +31,7 @@ export default class ItemTraits extends FormApplication
     _updateObject(event, formData)
     {
         let newTraits = []
-        if (this.object.type == "weaponUpgrade")
+        if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
         {
             newTraits = this.object.traits.filter(i => i.type != this.options.type) // Retain traits from the other type
         }

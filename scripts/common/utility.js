@@ -53,16 +53,41 @@ export default class WNGUtility {
 
   static getSpeaker(speaker) {
     try {
-        if (speaker.actor)
-            return game.actors.get(speaker.actor)
-        else if (speaker.token && speaker.scene)
-            return game.scenes.get(speaker.scene).tokens.get(speaker.token).actor
-        else
-            throw "Could not find speaker"
+      if (speaker.actor)
+        return game.actors.get(speaker.actor)
+      else if (speaker.token && speaker.scene)
+        return game.scenes.get(speaker.scene).tokens.get(speaker.token).actor
+      else
+        throw "Could not find speaker"
     }
     catch (e) {
-        throw new Error(e)
+      throw new Error(e)
     }
 
-}
+  }
+
+  static _keepID(id, document) {
+    try {
+      let compendium = !!document.pack
+      let world = !compendium
+      let collection
+
+      if (compendium) {
+        let pack = game.packs.get(document.pack)
+        collection = pack.index
+      }
+      else if (world)
+        collection = document.collection
+
+      if (collection.has(id)) {
+        ui.notifications.notify(`${game.i18n.format("ERROR.ID", { name: document.name })}`)
+        return false
+      }
+      else return true
+    }
+    catch (e) {
+      console.error(e)
+      return false
+    }
+  }
 }

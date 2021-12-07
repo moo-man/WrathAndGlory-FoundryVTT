@@ -120,8 +120,12 @@ export class RollDialog extends Dialog {
     for (let key in this.effectValues)
       this.effectValues[key] = null
 
-    let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)])
+    let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)]).map(i => i.clone())
     let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), []).filter(i => i.mode == 0)
+    changes.forEach(c => {
+      if (c.value.includes("@"))
+          c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
+  })
     for (let c of changes) {
       if (WrathAndGloryEffect.numericTypes.includes(c.key))
         this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)

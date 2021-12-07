@@ -215,6 +215,7 @@
           },
           "size": "average",
           "speed": 6,
+          "fly" : 0,
           "passiveAwareness": {
             "bonus": 0,
             "total": 0
@@ -355,6 +356,11 @@
         "rank": "none"
       },
       "ed": {
+        "base": 0,
+        "bonus": 0,
+        "rank": "none"
+      },
+      "ap": {
         "base": 0,
         "bonus": 0,
         "rank": "none"

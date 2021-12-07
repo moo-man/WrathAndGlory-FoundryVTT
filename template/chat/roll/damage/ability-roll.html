@@ -11,7 +11,12 @@
 
     {{#if result.damage.total}}
     <div class="wrapper-input">
+        {{#if result.damage.total}}
         <p><strong>{{localize "WEAPON.DAMAGE"}}: {{result.damage.total}}</strong></p>
+        {{/if}}
+        {{#if result.damage.ap}}
+        <p><strong>{{localize "WEAPON.AP"}}: {{result.damage.ap}}</strong></p>
+        {{/if}}
         
         {{#if item.traits}}
         <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.Traits}}</strong></p>

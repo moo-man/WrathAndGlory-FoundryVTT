@@ -166,6 +166,23 @@
           </div>
         </div>
         <div class="wrapper">
+          <div class="item-form-group fixed">
+            <label>{{localize "WEAPON.AP"}}</label>
+            <div class="item-form-inputs">
+              <input name="data.ap.base" class="base" type="number" value="{{data.ap.base}}" data-dtype="Number" />
+              <select name="data.ap.rank" class="rank">
+                {{#select data.ap.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="data.ap.bonus" class="modifier" type="number" value="{{data.ap.bonus}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper">
           <div class="item-form-group stacked">
             <label>{{localize "WEAPON.TRAITS"}}<a class="item-traits"><i class="fas fa-cog"></i></a></label>            
             <div class="item-form-inputs">

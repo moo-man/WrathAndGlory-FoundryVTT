@@ -58,6 +58,12 @@ function registerHandlebarsHelpers() {
       return game.wng.config[obj][key]
   })
 
+  
+  Handlebars.registerHelper("enrich", function (string) {
+    return TextEditor.enrichHTML(string)
+})
+
+
   Handlebars.registerHelper("array", function (array, cls) {
     if (typeof cls == "string")
         return array.map(i => `<a class="${cls}">${i}</a>`).join(`,`)
