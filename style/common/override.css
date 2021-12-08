@@ -419,3 +419,7 @@ a.entity-link i, a.inline-roll i {
   font-family: var(--font-header);
   font-size: 20px;
 }
+
+li.folder > .folder-header {
+  background: rgba(138, 46, 42, 0.4);
+}

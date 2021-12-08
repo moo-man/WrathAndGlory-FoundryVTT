@@ -52,12 +52,12 @@
   </div>
   <div class="wrapper" style="margin-top: 8px;">
     <h1>{{localize "TITLE.KEYWORDS"}}</h1>
-    <div class="keywords">
+    <div class="item-row">
       <div class="button">
         <button class="item-create" title="Add Keyword" data-type="keyword">+</a>
       </div>
       {{#each items.keywords as |item|}}
-      <div class="keyword item" data-item-id="{{item.id}}">
+      <div class="item" data-item-id="{{item.id}}">
         <div class="wrapper-hover">
           <div class="avatar" style="background-image: url('{{item.img}}')"></div>
           <div class="name item-edit">{{item.name}}</div>
