@@ -278,3 +278,78 @@ display: none
   border: 1px solid var(--color-red)
 }
 
+
+
+.wrath-and-glory.sheet.actor  .wrapper .item-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: start;
+  width: 100%
+}
+
+
+.wrath-and-glory.sheet.actor .wrapper .item-row .button {
+  height: 36px;
+  width: 36px;
+  padding: 6px;
+}
+
+.wrath-and-glory.sheet.actor .wrapper .item-row .button button{
+  height: 100%;
+  width: 100%;
+  font-weight: normal;
+  padding: 0px;
+  line-height: 12px;
+}
+
+.wrath-and-glory.sheet.actor  .wrapper .item-row .item {
+  display: flex;
+  flex-direction: row;
+  margin: 1px;
+  height: 22px;
+  background-color: var(--color-dark-grey);
+  color: var(--color-white);
+  align-items: center;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.wrath-and-glory.sheet.actor  .wrapper .item-row .item .wrapper-hover {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 22px;
+  background-color: var(--color-dark-grey);
+}
+
+.wrath-and-glory.sheet.actor  .wrapper .item-row .item .wrapper-hover:hover {
+  background-color: var(--color-red);
+}
+
+.wrath-and-glory.sheet.actor  .wrapper .item-row .item .avatar {
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 22px;
+  width: 22px;
+}
+
+.wrath-and-glory.sheet.actor  .wrapper .item-row .item .name {
+  margin: 0 4px;
+}
+
+.wrath-and-glory.sheet.actor  .wrapper .item-row .item .button {
+  padding: 0 4px;
+  height: 100%;
+  width: 20px;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrath-and-glory.sheet.actor  .wrapper .item-row .item .button:hover {
+  background-color: var(--color-red);
+}

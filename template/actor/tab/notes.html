@@ -1,4 +1,4 @@
-<div class="notes">
+<div class="notes-tab">
   <div class="wrapper advances">
     <h1 style="margin-bottom: 8px;">{{localize "TITLE.ADVANCES"}}</h1>
     <div class="advances-fields">
@@ -78,6 +78,25 @@
     <input name="data.bio.obective" type="text" value="{{data.bio.obective}}" />
   </div>
 </div>
+</div>
+<div class="wrapper" style="margin-top: 8px;">
+  <h1>{{localize "TITLE.ASCENSION"}}</h1>
+  <div class="item-row">
+    <div class="button">
+      <button class="item-create" title="Add Ascension" data-type="ascension">+</a>
+    </div>
+    {{#each items.ascensions as |item|}}
+    <div class="item" data-item-id="{{item.id}}">
+      <div class="wrapper-hover">
+        <div class="avatar" style="background-image: url('{{item.img}}')"></div>
+        <div class="name item-edit">{{item.name}}</div>
+      </div>
+      <div class="button item-control item-delete" title="Delete Ascension Package">
+        <a><i class="fas fa-times"></i></a>
+      </div>
+    </div>
+    {{/each}}
+  </div>
 </div>
 <div class="wrapper notes">
   <h1 style="margin-bottom: 8px;">{{localize "TITLE.NOTES"}}</h1>
