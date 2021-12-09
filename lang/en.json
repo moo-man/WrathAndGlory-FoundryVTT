@@ -108,7 +108,7 @@
 
   "BUTTON.POST_ITEM": "Post Item",
   "BUTTON.ROLL": "Roll",
-  "BUTTON.REROLL_FAILED": "Reroll Failed (-1 Glory/Ruin)",
+  "BUTTON.REROLL_FAILED": "Reroll Failed (-1 Wrath/Ruin)",
   "BUTTON.REROLL_SELECTED": "Reroll Selected",
   "BUTTON.CLEAR_REROLLS": "Clear Rerolls",
   "BUTTON.SHIFT": "Shift",
