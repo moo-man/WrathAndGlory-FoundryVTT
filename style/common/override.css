@@ -87,6 +87,18 @@ textarea:focus {
   color: var(--color-text);
 }
 
+.editor a.keyword,
+.editor-content a.keyword {
+  color: var(--color-imperium);
+  text-transform: uppercase;
+  font-weight: bold
+}
+
+.editor a.keyword:hover,
+.editor-content a.keyword:hover {
+  text-shadow: none;
+}
+
 .editor h1,
 .editor-content h1 { 
   font-family: var(--font-header);

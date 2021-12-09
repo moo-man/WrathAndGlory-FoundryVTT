@@ -420,6 +420,7 @@
   "UPDATER.OverwriteActors": "Overwrite Actors",
   "UPDATER.OverwriteItems": "Overwrite Items",
   "UPDATER.OverwriteJournals": "Overwrite Journals",
+  "UPDATER.OverwriteTables": "Overwrite Tables",
   "UPDATER.OverwriteScenes": "Overwrite Scenes",
   "UPDATER.Exclude": "Exclude Name Changes",
   "UPDATER.ExcludeHint": "Checking this will not update documents if their names have been changed",
