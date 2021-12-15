@@ -410,6 +410,8 @@
   "CONDITION.Vulnerable" : "Vulnerable",
 
   "EFFECT.Wounded" : "Wounded",
+  "EFFECT.FullDefence" : "Full Defence",
+  "EFFECT.AllOutAttack" : "All-Out Attack",
   "THREAT.MOB" : "Mob",
 
   "UpdaterTitle1": "Update",

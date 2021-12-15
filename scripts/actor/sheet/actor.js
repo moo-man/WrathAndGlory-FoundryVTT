@@ -211,6 +211,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".condition-toggle").click(this._onConditionToggle.bind(this))
         html.find(".condition-click").click(this._onConditionClick.bind(this));
         html.find(".item-trait").mousedown(this._onItemTraitClick.bind(this))
+        html.find(".effect-select").change(this._onEffectSelect.bind(this))
 
         html.find(".items .item").each((i, e) => {
             e.draggable = true;
@@ -739,6 +740,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
         return this._createDropdown(ev, {text : description})
 
+    }
+
+    _onEffectSelect(ev) {
+        let selection = ev.currentTarget.value
+        this.actor.addCondition(selection)
     }
 
   

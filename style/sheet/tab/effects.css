@@ -17,3 +17,18 @@
   height: 50px;
   border: none
 }
+
+.wrath-and-glory.sheet .tab .effects{
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  overflow: auto
+}
+
+.wrath-and-glory.sheet .tab .system-effects label{
+  padding: 6px
+}
+
+.wrath-and-glory.sheet .tab .system-effects select{
+  margin-left: -5px;
+}

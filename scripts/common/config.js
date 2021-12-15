@@ -230,6 +230,24 @@ WNG.systemEffects = {
         icon : "systems/wrath-and-glory/asset/icons/wounded.svg",
         changes : [{key: "difficulty.base", mode : 0, value : 1}],
         flags : { "wrath-and-glory.description" : "+1 DN to all Tests"}
+    },
+    "full-defence" : {
+        id : "full-defence",
+        label : "EFFECT.FullDefence",
+        icon : "systems/wrath-and-glory/asset/icons/full-defence.svg",
+        changes : [
+            {key: "data.combat.defence.bonus", mode : 2, value : 1},
+        ],
+    },
+    "all-out-attack" : {
+        id : "all-out-attack",
+        label : "EFFECT.AllOutAttack",
+        icon : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
+        changes : [
+            {key: "pool.bonus", mode : 0, value : 2},
+            {key: "data.combat.defence.bonus", mode : 2, value : -2},
+    ],
+        flags : { "wrath-and-glory.description" : "+2 bonus dice to melee"}
     }
 }
 
