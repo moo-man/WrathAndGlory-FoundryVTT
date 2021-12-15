@@ -214,7 +214,7 @@ export class WNGTest {
       content: html,
       speaker : this.context.speaker
     };
-    chatData.speaker.alias = this.actor.name
+    chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.data.token.name
     if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients("GM");
     } else if (chatData.rollMode === "selfroll") {

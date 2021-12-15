@@ -30,10 +30,31 @@ export default function() {
     Hooks.on("preCreateScene", _keepID)
     Hooks.on("preCreateRollTable", _keepID)
 
+
+    Hooks.on("renderApplication", _addKeywordListeners)
+
     
     function _keepID(document, data, options) {
         if (data._id)
             options.keepId = WNGUtility._keepID(data._id, document)
+    }
+
+    function _addKeywordListeners(sheet, app)
+    {
+        Array.from(app.find("a.keyword")).forEach(a => {
+            a.draggable = true
+
+            a.addEventListener("click", (ev) => {
+                let name = ev.target.text
+                let item = game.items.find(i => i.name == name && i.type == "keyword")
+                if (item) item.sheet.render(true)
+            })
+
+            a.addEventListener("dragstart", (ev) => {
+                event.stopPropagation()
+                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "keywordDrop", payload : ev.target.text}))
+            })
+        })
     }
 
 }

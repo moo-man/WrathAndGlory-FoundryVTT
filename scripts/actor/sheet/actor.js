@@ -166,6 +166,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             data = JSON.parse(data)
             if (data.type == "itemDrop")
                 this.actor.createEmbeddedDocuments("Item", [data.payload])
+            else if (data.type == "keywordDrop")
+            {
+                let name = data.payload
+                let item = game.items.find(i => i.name == name && i.type == "keyword")
+                this.actor.createEmbeddedDocuments("Item", [item.toObject()])
+            }
             else
                 super._onDrop(ev)
         }
