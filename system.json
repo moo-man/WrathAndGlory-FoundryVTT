@@ -6,7 +6,7 @@
   "minimumCoreVersion": "0.8.4",
   "compatibleCoreVersion": "0.8.9",
   "templateVersion": 2,
-  "author": "Moo Man, Vivi Aurora, Perfectro",
+  "author": "Moo Man, Thul, Perfectro",
   "scripts": [],
   "esmodules": [
     "wrath-and-glory.js"
@@ -38,6 +38,12 @@
       "path": "lang/en.json"
     }
   ],
+  "media": [
+    {
+      "type": "cover",
+      "url": "https://user-images.githubusercontent.com/28637157/146312294-3568bd17-9556-4a66-8072-905b42d3cff7.png"
+    }
+  ],
   "background" : "../../modules/wng-core/assets/images/cover.webp",
   "gridDistance": 1,
   "gridUnits": "m",
@@ -46,7 +52,7 @@
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/moo-man/WrathAndGlory-FoundryVTT/master/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/archive/refs/heads/3.0.0.zip",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/3.0.0/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 
