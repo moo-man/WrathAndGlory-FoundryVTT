@@ -12,18 +12,26 @@ export default class ItemTraits extends FormApplication
     }
 
     getData() {
-        let data = super.getData();
-        data.traits = Object.keys(this.object.traitsAvailable).map(i => {
-            let existing = this.object.data._source.data.traits.find(t => t.name == i)
-            if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
+        let data = super.getData(); 
+        try {
+
+            data.traits = Object.keys(this.object.traitsAvailable).map(i => {
+                let existing = this.object.data._source.data.traits.find(t => t.name == i)
+                if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
                 existing = this.object.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
-            return  {
-                display : this.object.traitsAvailable[i],
-                key : i,
-                existingTrait : existing,
-                hasRating : game.wng.config.traitHasRating[i],
-            }
-        })
+                return  {
+                    display : this.object.traitsAvailable[i],
+                    key : i,
+                    existingTrait : existing,
+                    hasRating : game.wng.config.traitHasRating[i],
+                }
+            })
+        }
+        catch (e)
+        {
+            data.traits = []
+            console.error("Something went wrong when trying to open the traits menu: " + e)
+        }
         
         return data;
     }

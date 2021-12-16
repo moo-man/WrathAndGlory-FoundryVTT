@@ -353,3 +353,7 @@ display: none
 .wrath-and-glory.sheet.actor  .wrapper .item-row .item .button:hover {
   background-color: var(--color-red);
 }
+
+.tab[data-tab].active {
+  height: 100%;
+}

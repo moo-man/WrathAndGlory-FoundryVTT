@@ -94,6 +94,15 @@
     </div>
     {{/each}}
   </div>
-  
 
+</div>
+
+<div class="system-effects wrapper">
+  <label>Add System Effect</label>
+  <select class="effect-select">
+    <option value="">-</option>
+    {{#each (config "systemEffects") as |effect e|}}
+    <option value="{{e}}">{{effect.label}}</option>
+    {{/each}}
+  </select>
 </div>

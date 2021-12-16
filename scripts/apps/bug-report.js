@@ -3,7 +3,7 @@ export default class BugReportFormWNG extends Application {
     constructor(app) {
         super(app)
 
-        this.endpoint = "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/grievance"
+        this.endpoint = "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/wng"
 
         this.domains = [
             "Wrath & Glory System",
