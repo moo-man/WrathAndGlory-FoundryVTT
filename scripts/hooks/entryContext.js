@@ -2,9 +2,10 @@ export default function() {
     Hooks.on("getChatLogEntryContext", (html, options) => {
         let canApply = li => li.find(".damageRoll").length && canvas.tokens.controlled.length > 0;
         let canRerollFailed = li => {
-            let test = game.messages.get(li.attr("data-message-id")).getTest()
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let test = msg.getTest()
             if (test)
-                return !test.context.rerollFailed
+                return !test.context.rerollFailed && (msg.isAuthor || msg.isOwner)
         }
 
         let canRerollSelected = li => {
@@ -12,27 +13,28 @@ export default function() {
         }
 
         let canShift = li => {
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let test = msg.getTest()
             let selected = Array.from(li.find(".selected")).map(i => Number(i.dataset.index))
-            let test = game.messages.get(li.attr("data-message-id")).getTest()
 
             // If all selected dice are shiftable and number of selected <= shifts possible
-            return selected.length && test.isShiftable && test.result.dice.filter(i => selected.includes(i.index)).every(i => i.canShift) && selected.length <= test.result.shiftsPossible
+            return (msg.isAuthor || msg.isOwner) && selected.length && test.isShiftable && test.result.dice.filter(i => selected.includes(i.index)).every(i => i.canShift) && selected.length <= test.result.shiftsPossible
         }
 
         let canShiftDamage = li => {
-            let test = game.messages.get(li.attr("data-message-id")).getTest()
-            return canShift(li) && test.doesDamage
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let test = msg.getTest()
+            return canShift(li) && test.doesDamage && (msg.isAuthor || msg.isOwner)
         }
 
         let canClearReroll = li => {
             let test = game.messages.get(li.attr("data-message-id")).getTest()
             return game.user.isGM && test.testData.rerolls.length
-            
-
         }
 
         let canUnshift = li => {
-            return li.find(".shifted").length
+            let msg = game.messages.get(li.attr("data-message-id"))
+            return li.find(".shifted").length && (msg.isAuthor || msg.isOwner)
         }
 
 
