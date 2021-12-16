@@ -11,9 +11,12 @@ export default class WNGChat {
   static _onDamageClick(ev) {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let message = game.messages.get(id)
-    let test = message.getTest();
-    test.rollDamage()
-    test.sendDamageToChat();
+    if (message.isAuthor || message.isOwner)
+    {
+      let test = message.getTest();
+      test.rollDamage()
+      test.sendDamageToChat();
+    }
   }
 
   static async _onWrathClick(ev) {
@@ -61,7 +64,10 @@ export default class WNGChat {
   }
 
   static _onDieClick(ev) {
-    ev.currentTarget.classList.toggle("selected")
+    let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+    let message = game.messages.get(id)
+    if (message.isAuthor || message.isOwner)
+      ev.currentTarget.classList.toggle("selected")
   }
 
   static async _onEffectClick(ev)

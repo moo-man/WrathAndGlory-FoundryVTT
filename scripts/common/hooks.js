@@ -31,7 +31,9 @@ export default function() {
     Hooks.on("preCreateRollTable", _keepID)
 
 
-    Hooks.on("renderApplication", _addKeywordListeners)
+    Hooks.on("renderActorSheet", _addKeywordListeners)
+    Hooks.on("renderJournalSheet", _addKeywordListeners)
+    Hooks.on("renderItemSheet", _addKeywordListeners)
 
     
     function _keepID(document, data, options) {
@@ -43,10 +45,17 @@ export default function() {
     {
         Array.from(app.find("a.keyword")).forEach(a => {
             a.draggable = true
+            let item = game.items.find(i => i.name == a.textContent && i.type == "keyword")
+
+            if (game.wng.config.keywordDescriptions &&  game.wng.config.keywordDescriptions[a.textContent])
+                a.title = game.wng.config.keywordDescriptions[a.textContent]
+            else if (item)
+            {
+                const markup = /<(.*?)>/gi;
+                a.title = item.description.replace(markup, "");
+            }
 
             a.addEventListener("click", (ev) => {
-                let name = ev.target.text
-                let item = game.items.find(i => i.name == name && i.type == "keyword")
                 if (item) item.sheet.render(true)
             })
 
