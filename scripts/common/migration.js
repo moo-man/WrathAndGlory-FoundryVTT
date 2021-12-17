@@ -43,7 +43,13 @@ export async function migrateWorld() {
 
 function migrateActorData(actor, worldSchemaVersion) {
 
-    update.items = actor.items.map(i => migrateItemData(i.data, worldSchemaVersion)).filter(i => !isObjectEmpty(i))
+    updateData = {}
+    // for(let attribute in actor.data.attributes)
+    // {   
+    //     updateData[`data.attributes.${attribute}.`]
+    // }
+
+    updateData.items = actor.items.map(i => migrateItemData(i.data, worldSchemaVersion)).filter(i => !isObjectEmpty(i))
     return update;
 }
 
@@ -55,6 +61,7 @@ function migrateItemData(item, worldSchemaVersion) {
 
     return update;
 };
+}
 
 
 

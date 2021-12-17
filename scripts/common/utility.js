@@ -24,18 +24,18 @@ export default class WNGUtility {
   }
 
 
-  static getAttributeCostTotal(rating) {
+  static getAttributeCostTotal(rating, base = 0) {
     let total = 0
 
-    for (let i = 0; i <= rating; i++)
+    for (let i = base; i <= rating; i++)
       total += this.getAttributeCostIncrement(i)
     return total
   }
 
-  static getSkillCostTotal(rating) {
+  static getSkillCostTotal(rating, base = 0) {
     let total = 0
 
-    for (let i = 0; i <= rating; i++)
+    for (let i = base; i <= rating; i++)
       total += this.getSkillCostIncrement(i)
     return total
   }
