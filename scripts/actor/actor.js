@@ -360,6 +360,19 @@ export class WrathAndGloryActor extends Actor {
             dialogData.pool.bonus += Math.ceil(this.mob / 2)
         dialogData.pool.rank = weapon.attack.rank;
         dialogData.damageValues = weapon.damageValues
+
+        dialogData.damage = weapon.damage;
+        dialogData.ed = weapon.ed
+        dialogData.ap = weapon.ap
+
+        if (weapon.traitList.force)
+        {
+            if (this.hasKeyword("PSYKER"))
+                dialogData.damage.bonus += Math.floor(this.attributes.willpower.total / 2)
+            else 
+                dialogData.damage.bonus -= 2
+        }
+
         dialogData.difficulty.target = WNGUtility._getTargetDefence()
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
         return dialogData
@@ -471,6 +484,12 @@ export class WrathAndGloryActor extends Actor {
         let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
         return existing
       }
+
+      hasKeyword(keyword)
+      {
+          return this.getItemTypes("keyword").find(i => i.name == keyword)
+      }
+
 
     get attributes() { return this.data.data.attributes }
     get skills() { return this.data.data.skills }
