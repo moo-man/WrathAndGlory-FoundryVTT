@@ -49,9 +49,9 @@ export class WrathAndGloryActor extends Actor {
     prepareDerivedData() {
         this._applyDerivedEffects()
         this._computeAttributes();
-        this._computeSkills();
         this._computeItems();
         this._computeCombat();
+        this._computeSkills();
     }
 
     prepareData() {
