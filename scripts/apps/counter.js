@@ -91,10 +91,9 @@ export default class RuinGloryCounter extends Application {
       else
       {
         await game.settings.set('wrath-and-glory', type, value);
+        // Emit socket event for users to rerender their counters
+        game.socket.emit('system.wrath-and-glory', {type: 'updateCounter'});
       }
-  
-      // Emit socket event for users to rerender their counters
-      game.socket.emit('system.wrath-and-glory', {type: 'updateCounter'});
   
       return value
     }
