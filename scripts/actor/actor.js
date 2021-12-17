@@ -112,8 +112,8 @@ export class WrathAndGloryActor extends Actor {
 
     _computeAttributes() {
         for (let attribute of Object.values(this.attributes)) {
-            attribute.total = attribute.rating + attribute.bonus;
-            attribute.cost = game.wng.utility.getAttributeCostTotal(attribute.rating);
+            attribute.total = attribute.rating + attribute.bonus + attribute.base;
+            attribute.cost = game.wng.utility.getAttributeCostTotal(attribute.rating + attribute.base, attribute.base);
             if (this.advances) {
                 this.experience.spent = this.experience.spent + attribute.cost;
             }
@@ -122,8 +122,8 @@ export class WrathAndGloryActor extends Actor {
 
     _computeSkills() {
         for (let skill of Object.values(this.skills)) {
-            skill.cost = game.wng.utility.getSkillCostTotal(skill.rating);
-            skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus;
+            skill.cost = game.wng.utility.getSkillCostTotal(skill.rating + skill.base, skill.base);
+            skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus + skill.base;
             if (this.advances) {
                 this.experience.spent = this.experience.spent + skill.cost;
             }

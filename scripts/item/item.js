@@ -430,7 +430,7 @@ export class WrathAndGloryItem extends Item {
     get ap() { return this.data.data.ap }
     get category() { return this.data.data.category }
     get salvo() { return this.data.data.salvo }
-    get upgrades() { return this.data.data.upgrades }
+    get upgrades() { return this.data.data.upgrades || []}
     get equipped() { return this.data.data.equipped }
     get test() { return this.data.data.test }
     get abilityType() { return this.data.data.abilityType }
