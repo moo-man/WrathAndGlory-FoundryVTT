@@ -282,9 +282,12 @@ export class WNGTest {
   async rollDamage() {
     let ed = this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length;
     let values = this.testData.ed.damageValues
+    let add = 0
+    if (this.weapon && this.weapon.traitList.rad)
+      add = this.weapon.traitList.rad.rating
 
     let r = Roll.fromTerms([
-      new PoolDie({ number: ed, faces: 6, options : {values} }),
+      new PoolDie({ number: ed, faces: 6, options : {values, add} }),
     ])
 
     r.evaluate({ async: true });
@@ -388,6 +391,8 @@ export class PoolDie extends Die {
     termData.faces = 6;
     if (!termData.options || !termData.options.values)
       setProperty(termData, "options.values", {1 : 0,2 : 0,3 : 0,4 : 1,5 : 1,6 : 2})
+      if (!termData.options || !termData.options.add)
+      setProperty(termData, "options.add", 0)
     super(termData);
   }
 
@@ -398,7 +403,7 @@ export class PoolDie extends Die {
   /**@overide */
   roll(...args) {
     let roll = super.roll(...args)
-    roll.value = this.options.values[roll.result]
+    roll.value = this.options.values[Math.min(roll.result + this.options.add, 6)]
     if (roll.result === 6) {
       roll.name = "icon",
         roll.canShift = true,
