@@ -177,6 +177,14 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         }
     }
 
+    _getSubmitData(updateData = {}) {
+        this.actor.overrides = {}
+        let data = super._getSubmitData(updateData);
+        data = diffObject(flattenObject(this.actor.toObject(false)), data)
+        return data
+    }
+
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find("select").click(ev => ev.stopPropagation())

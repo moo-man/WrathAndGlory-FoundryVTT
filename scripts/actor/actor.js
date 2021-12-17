@@ -96,6 +96,9 @@ export class WrathAndGloryActor extends Actor {
 
             if (item.traitList.powered)
                 this.attributes.strength.total += item.traitList.powered.rating
+
+            if (item.traitList.bulk)
+                this.combat.speed -= item.traitList.bulk.rating
             
             if (item.traitList.shield)
                 this.combat.resilience.armour += item.rating;
