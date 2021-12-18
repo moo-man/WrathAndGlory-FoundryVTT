@@ -361,9 +361,9 @@ export class WrathAndGloryActor extends Actor {
         dialogData.pool.rank = weapon.attack.rank;
         dialogData.damageValues = weapon.damageValues
 
-        dialogData.damage = weapon.damage;
-        dialogData.ed = weapon.ed
-        dialogData.ap = weapon.ap
+        dialogData.damage = duplicate(weapon.damage)
+        dialogData.ed = duplicate(weapon.ed)
+        dialogData.ap = duplicate(weapon.ap)
 
         if (weapon.traitList.force)
         {
