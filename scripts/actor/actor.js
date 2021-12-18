@@ -50,8 +50,8 @@ export class WrathAndGloryActor extends Actor {
         this._applyDerivedEffects()
         this._computeAttributes();
         this._computeItems();
-        this._computeCombat();
         this._computeSkills();
+        this._computeCombat();
     }
 
     prepareData() {
@@ -149,9 +149,9 @@ export class WrathAndGloryActor extends Actor {
         if (autoCalc.wounds && this.type == "agent")
             this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.total + this.combat.wounds.bonus, 1);
         if (autoCalc.determination)
-            this.combat.determination.total = this._setDefault(this.attributes[this.combat.determination.attribute || "toughness"].rating + this.combat.determination.bonus, 1);
+            this.combat.determination.total = this._setDefault(this.attributes[this.combat.determination.attribute || "toughness"].total + this.combat.determination.bonus, 1);
         if (autoCalc.shock && this.type == "agent")
-            this.combat.shock.max = this._setDefault(this.attributes.willpower.rating + this.advances.tier + this.combat.shock.bonus, 1);
+            this.combat.shock.max = this._setDefault(this.attributes.willpower.total + this.advances.tier + this.combat.shock.bonus, 1);
     }
 
     _setDefault(value, fallback) {
