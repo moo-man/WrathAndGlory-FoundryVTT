@@ -368,7 +368,7 @@ export class WrathAndGloryActor extends Actor {
         if (weapon.traitList.force)
         {
             if (this.hasKeyword("PSYKER"))
-                dialogData.damage.bonus += Math.floor(this.attributes.willpower.total / 2)
+                dialogData.damage.bonus += Math.ceil(this.attributes.willpower.total / 2)
             else 
                 dialogData.damage.bonus -= 2
         }

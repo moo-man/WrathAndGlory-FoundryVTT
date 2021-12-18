@@ -354,6 +354,6 @@ display: none
   background-color: var(--color-red);
 }
 
-.tab[data-tab].active {
+.wrath-and-glory.sheet.actor .tab[data-tab].active {
   height: 100%;
 }
