@@ -49,9 +49,9 @@ export class WrathAndGloryActor extends Actor {
     prepareDerivedData() {
         this._applyDerivedEffects()
         this._computeAttributes();
-        this._computeSkills();
         this._computeItems();
         this._computeCombat();
+        this._computeSkills();
     }
 
     prepareData() {
@@ -96,6 +96,9 @@ export class WrathAndGloryActor extends Actor {
 
             if (item.traitList.powered)
                 this.attributes.strength.total += item.traitList.powered.rating
+
+            if (item.traitList.bulk)
+                this.combat.speed -= item.traitList.bulk.rating
             
             if (item.traitList.shield)
                 this.combat.resilience.armour += item.rating;
@@ -112,8 +115,8 @@ export class WrathAndGloryActor extends Actor {
 
     _computeAttributes() {
         for (let attribute of Object.values(this.attributes)) {
-            attribute.total = attribute.rating + attribute.bonus;
-            attribute.cost = game.wng.utility.getAttributeCostTotal(attribute.rating);
+            attribute.total = attribute.rating + attribute.bonus + attribute.base;
+            attribute.cost = game.wng.utility.getAttributeCostTotal(attribute.rating + attribute.base, attribute.base);
             if (this.advances) {
                 this.experience.spent = this.experience.spent + attribute.cost;
             }
@@ -122,8 +125,8 @@ export class WrathAndGloryActor extends Actor {
 
     _computeSkills() {
         for (let skill of Object.values(this.skills)) {
-            skill.cost = game.wng.utility.getSkillCostTotal(skill.rating);
-            skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus;
+            skill.cost = game.wng.utility.getSkillCostTotal(skill.rating + skill.base, skill.base);
+            skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus + skill.base;
             if (this.advances) {
                 this.experience.spent = this.experience.spent + skill.cost;
             }
@@ -357,6 +360,19 @@ export class WrathAndGloryActor extends Actor {
             dialogData.pool.bonus += Math.ceil(this.mob / 2)
         dialogData.pool.rank = weapon.attack.rank;
         dialogData.damageValues = weapon.damageValues
+
+        dialogData.damage = weapon.damage;
+        dialogData.ed = weapon.ed
+        dialogData.ap = weapon.ap
+
+        if (weapon.traitList.force)
+        {
+            if (this.hasKeyword("PSYKER"))
+                dialogData.damage.bonus += Math.ceil(this.attributes.willpower.total / 2)
+            else 
+                dialogData.damage.bonus -= 2
+        }
+
         dialogData.difficulty.target = WNGUtility._getTargetDefence()
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
         return dialogData
@@ -468,6 +484,12 @@ export class WrathAndGloryActor extends Actor {
         let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
         return existing
       }
+
+      hasKeyword(keyword)
+      {
+          return this.getItemTypes("keyword").find(i => i.name == keyword)
+      }
+
 
     get attributes() { return this.data.data.attributes }
     get skills() { return this.data.data.skills }

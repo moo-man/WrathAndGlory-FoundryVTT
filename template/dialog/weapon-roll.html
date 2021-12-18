@@ -42,7 +42,7 @@
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.DAMAGE"}}</label>
-            <input id="damage-base" class="damage base" type="number" value="{{weapon.damage.base}}" data-dtype="Number" />
+            <input id="damage-base" class="damage base" type="number" value="{{damage.base}}" data-dtype="Number" />
             <select id="damage-rank" class="damage rank">
                 {{#select weapon.damage.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
@@ -50,11 +50,11 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <input id="damage-bonus" class="damage bonus" type="number" value="{{weapon.damage.bonus}}" data-dtype="Number" />
+            <input id="damage-bonus" class="damage bonus" type="number" value="{{damage.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.ED"}}</label>
-            <input id="ed-base" class="ed base" type="number" value="{{weapon.ed.base}}" data-dtype="Number" />
+            <input id="ed-base" class="ed base" type="number" value="{{ed.base}}" data-dtype="Number" />
             <select id="ed-rank" class="ed rank">
                 {{#select weapon.ed.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
@@ -62,11 +62,11 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <input id="ed-bonus" class="ed bonus" type="number" value="{{weapon.ed.bonus}}" data-dtype="Number" />
+            <input id="ed-bonus" class="ed bonus" type="number" value="{{ed.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.AP"}}</label>
-            <input id="ap-base" class="ap base" type="number" value="{{weapon.ap.base}}" data-dtype="Number" />
+            <input id="ap-base" class="ap base" type="number" value="{{ap.base}}" data-dtype="Number" />
             <select id="ap-rank" class="ap rank">
                 {{#select weapon.ap.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
@@ -74,7 +74,7 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <input id="ap-bonus" class="ap bonus" type="number" value="{{weapon.ap.bonus}}" data-dtype="Number" />
+            <input id="ap-bonus" class="ap bonus" type="number" value="{{ap.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.TRAITS"}}</label>

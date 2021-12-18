@@ -5,13 +5,14 @@
       {{#each data.attributes as |attribute key|}}
       <div class="attribute">
         <label class="roll-attribute hover" data-attribute="{{key}}">{{localize attribute.label}}</label>
-        <div class="fake-input show-adv">{{attribute.total}}
-          <div class="adv-buttons" title="{{attribute.tooltip}}" data-type="attribute-{{key}}" style="display:none;">
-            <button type="button" class="decr rm-left-border">-</button>
-            <button type="button" class="incr rm-right-border">+</button>
+          <div class="attribute-inputs">
+            <div class="attribute-input-stack">
+              <input type="number" title="Base" name="data.attributes.{{key}}.base" value="{{attribute.base}}" data-dtype="Number">
+              <input type="number" tabindex="1" title="Advances" name="data.attributes.{{key}}.rating" value="{{attribute.rating}}" data-dtype="Number">
+            </div>
+            <input type="number" title="Total" class="total" disabled value="{{attribute.total}}">
           </div>
         </div>
-      </div>
       {{/each}}
     </div>
   </div>
@@ -23,11 +24,10 @@
         {{#if skill.isLeft}}
         <div class="skill">
           <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{localize skill.label}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
-          <div class="fake-input show-adv">{{skill.total}}
-            <div class="adv-buttons" title="{{skill.tooltip}}" data-type="skill-{{key}}" style="display:none;">
-              <button type="button" class="decr rm-left-border rm-bottom-border">-</button>
-              <button type="button" class="incr rm-right-border rm-bottom-border">+</button>
-            </div>
+          <div class="skill-inputs">
+            <input type="number" title="Base" name="data.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
+            <input type="number" tabindex="1" title="Advances" name="data.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
+            <input type="number" title="Total" class="total" disabled value="{{skill.total}}">
           </div>
         </div>
         {{/if}}
@@ -38,11 +38,10 @@
         {{#if skill.isRight}}
         <div class="skill">
           <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{localize skill.label}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
-          <div class="fake-input show-adv">{{skill.total}}
-            <div class="adv-buttons" title="{{skill.tooltip}}" data-type="skill-{{key}}" style="display:none;">
-              <button type="button" class="decr rm-left-border rm-bottom-border">-</button>
-              <button type="button" class="incr rm-right-border rm-bottom-border">+</button>
-            </div>
+          <div class="skill-inputs">
+            <input type="number" title="Base" name="data.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
+            <input type="number" tabindex="1" title="Advances" name="data.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
+            <input type="number" title="Total" class="total" disabled value="{{skill.total}}">
           </div>
         </div>
         {{/if}}
