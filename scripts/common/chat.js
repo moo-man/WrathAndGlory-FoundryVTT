@@ -55,10 +55,12 @@ export default class WNGChat {
         result = await table.roll({ roll })
         chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Complication Consequence` }
       }
+    }
+    if (chatData.content)
+    {
       chatData.speaker = test.context.speaker
       chatData.roll = result.roll
       chatData.type = CONST.CHAT_MESSAGE_TYPES.ROLL
-
       return ChatMessage.create(chatData)
     }
   }
