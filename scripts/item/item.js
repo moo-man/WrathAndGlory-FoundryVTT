@@ -317,6 +317,8 @@ export class WrathAndGloryItem extends Item {
             return this.actor.getItemTypes("ammo")
         else if (this.category == "launcher")
             return this.actor.getItemTypes("weapon").filter(i => i.category == "grenade-missile")
+        else if (this.category == "grenade-missile")
+            return [this]
 
     }
 
