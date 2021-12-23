@@ -248,29 +248,29 @@ border-width: 25px;
 
 
 
-#controls .control-tool,
-    #controls .scene-control {
+#controls ol .control-tool,
+    #controls ol .scene-control {
     background: url(../../asset/image/dataslate.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-imperium)
 }
 
-#controls .control-tool.active,
-#controls .scene-control.active {
+#controls ol .control-tool.active,
+#controls ol .scene-control.active {
     border: 1px solid black;
     background: var(--color-imperium);
     box-shadow: 0 0 10px var(--color-imperium)
 }
 
-#controls .control-tool:hover,
-#controls .scene-control:hover {
+#controls ol .control-tool:hover,
+#controls ol .scene-control:hover {
     border: 1px solid var(--color-imperium);
     color: var(--color-imperium);
     box-shadow: 0 0 10px var(--color-imperium);
 }
 
-#controls .control-tool.active:hover,
-#controls .scene-control.active:hover {
+#controls ol .control-tool.active:hover,
+#controls ol .scene-control.active:hover {
   color: white;
   border: 1px solid black;
 }
@@ -359,7 +359,7 @@ textarea:focus {
 }
 
 .directory-item .folder-header h3,
-    .directory-item .entity-name{
+    .directory-item .document-name{
     font-family: var(--font-header);
     font-size: 20px;
 }

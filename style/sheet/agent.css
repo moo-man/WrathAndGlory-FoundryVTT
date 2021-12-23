@@ -107,6 +107,7 @@
   background-color: var(--color-black);
   cursor: pointer;
   padding: 5px 0;
+  flex : 1;
 }
 
 .wrath-and-glory.sheet.actor .agent .sheet-tabs .item:hover,
