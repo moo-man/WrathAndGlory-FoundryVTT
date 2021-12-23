@@ -365,6 +365,11 @@ export class WrathAndGloryActor extends Actor {
         dialogData.ed = duplicate(weapon.ed)
         dialogData.ap = duplicate(weapon.ap)
 
+        if (weapon.isMelee)
+        {
+            dialogData.damage.base += this.attributes.strength.total
+        }
+
         if (weapon.traitList.force)
         {
             if (this.hasKeyword("PSYKER"))
