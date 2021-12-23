@@ -18,7 +18,7 @@ export default function() {
             let selected = Array.from(li.find(".selected")).map(i => Number(i.dataset.index))
 
             // If all selected dice are shiftable and number of selected <= shifts possible
-            return (msg.isAuthor || msg.isOwner) && selected.length && test.isShiftable && test.result.dice.filter(i => selected.includes(i.index)).every(i => i.canShift) && selected.length <= test.result.shiftsPossible
+            return test && (msg.isAuthor || msg.isOwner) && selected.length && test.isShiftable && test.result.dice.filter(i => selected.includes(i.index)).every(i => i.canShift) && selected.length <= test.result.shiftsPossible
         }
 
         let canShiftDamage = li => {
@@ -29,7 +29,7 @@ export default function() {
 
         let canClearReroll = li => {
             let test = game.messages.get(li.attr("data-message-id")).getTest()
-            return game.user.isGM && test.testData.rerolls.length
+            return test && game.user.isGM && test.testData.rerolls.length
         }
 
         let canUnshift = li => {
