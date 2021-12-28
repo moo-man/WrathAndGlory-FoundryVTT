@@ -347,7 +347,10 @@ export class WrathAndGloryActor extends Actor {
             wrath: {
                 base: 1
             },
-            effects : this.effects.filter(i => i.hasRollEffect).filter(i => !i.data.disabled)
+            changeList : this.getDialogChanges({condense: true}),
+            changes : this.getDialogChanges(),
+            actor : this,
+            targets : Array.from(game.user.targets)
         };
     }
 
@@ -417,6 +420,22 @@ export class WrathAndGloryActor extends Actor {
             }
         }
     }
+
+    getDialogChanges({condense = false}={}) {
+
+        // Aggregate dialog changes from each effect
+        let changes =  this.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({condense})), [])
+
+        if (game.user.targets.size > 0)
+        {
+            let target = Array.from(game.user.targets)[0].actor
+            let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({target, condense, indexOffset : changes.length})), [])
+            changes = changes.concat(targetChanges)
+        }
+
+        return changes
+    }
+
     //#endregion
 
     get Size() {
@@ -492,7 +511,7 @@ export class WrathAndGloryActor extends Actor {
 
       hasKeyword(keyword)
       {
-          return this.getItemTypes("keyword").find(i => i.name == keyword)
+          return !!this.getItemTypes("keyword").find(i => i.name == keyword)
       }
 
 

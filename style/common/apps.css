@@ -64,3 +64,22 @@
   text-align: center;
   height: 31px;
 }
+
+
+.active-effect-sheet .change-flags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.active-effect-sheet .change-flags .conditional-code {
+  flex: 0 0 20px;
+  margin: 5px;
+}
+
+#effect-script-config textarea {
+  width: 100%;
+  height: calc(100% - 100px);
+  resize: none;
+} 

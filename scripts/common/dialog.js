@@ -9,6 +9,21 @@ export class RollDialog extends Dialog {
     return options
   }
 
+  async _render(...args)
+  {
+      await super._render(...args)
+
+      let automatic = this.runChangeConditionals()
+      let select = this.element.find(".effect-select")[0]
+      let options = Array.from(select.children)
+      options.forEach((opt, i) => {
+          if (automatic[i])
+          {
+              opt.selected = true;
+              select.dispatchEvent(new Event("change"))
+          }
+      })
+  }
 
   static async create(data) {
     const html = await renderTemplate("systems/wrath-and-glory/template/dialog/common-roll.html", data);
@@ -16,7 +31,9 @@ export class RollDialog extends Dialog {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
-        effects: data.effects,
+        actor : data.actor,
+        targets : data.targets,
+        dialogData : data,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
@@ -43,6 +60,22 @@ export class RollDialog extends Dialog {
     testData.wounds = html.find("#wounds")[0]?.value
 
     return testData
+  }
+
+  runChangeConditionals()
+  {
+      let results = this.data.dialogData.changes.map(c => {
+          try {
+              let func = new Function("dialogData", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
+              return (func(this.data.dialogData) == true) // Only accept true returns
+          }
+          catch (e)
+          {
+              console.error("Something went wrong when processing conditional dialog effect: " + e, c)
+              return false
+          }
+      })
+      return results
   }
 
 
@@ -120,8 +153,14 @@ export class RollDialog extends Dialog {
     for (let key in this.effectValues)
       this.effectValues[key] = null
 
-    let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)]).map(i => i.clone())
-    let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), []).filter(i => i.mode == 0)
+      let changes = []
+      $(ev.currentTarget).val().map(i => {
+          let indices = i.split(",");
+          indices.forEach(changeIndex => {
+              changes.push(this.data.dialogData.changes[parseInt(changeIndex)])
+          })
+      })
+
     changes.forEach(c => {
       if (c.value.includes("@"))
           c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
@@ -162,7 +201,9 @@ export class WeaponDialog extends RollDialog {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
-        effects: data.effects,
+        actor : data.actor,
+        targets : data.targets,
+        dialogData : data,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
@@ -274,7 +315,9 @@ export class PowerDialog extends RollDialog {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
-        effects: data.effects,
+        actor : data.actor,
+        targets : data.targets,
+        dialogData : data,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
