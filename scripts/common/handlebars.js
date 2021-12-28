@@ -29,6 +29,7 @@ function preloadHandlebarsTemplates() {
     "systems/wrath-and-glory/template/chat/roll/weapon/weapon-result.html",
     "systems/wrath-and-glory/template/chat/roll/weapon/weapon-buttons.html",
     "systems/wrath-and-glory/template/chat/roll/determination/determination-result.html",
+    "systems/wrath-and-glory/template/chat/roll/stealth/stealth-result.html",
     "systems/wrath-and-glory/template/chat/roll/mutation/mutation-result.html",
     "systems/wrath-and-glory/template/chat/roll/mutation/mutation-buttons.html",
     //"systems/wrath-and-glory/template/partials/damage.html",
@@ -58,7 +59,7 @@ function registerHandlebarsHelpers() {
       return game.wng.config[obj][key]
   })
 
-  
+
   Handlebars.registerHelper("enrich", function (string) {
     return TextEditor.enrichHTML(string)
 })
