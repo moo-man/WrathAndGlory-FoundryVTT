@@ -266,14 +266,22 @@ export class WrathAndGloryItem extends Item {
     get traitList() {
         let traits = {}
         this.data.data.traits.forEach(i => {
-            traits[i.name] = {
-                name: i.name,
-                display: this.traitsAvailable[i.name],
-                type: i.type
+
+            if (i.custom) 
+            {
+                traits[i.name] = duplicate(i)
             }
-            if (game.wng.config.traitHasRating[i.name]) {
-                traits[i.name].rating = i.rating;
-                traits[i.name].display += ` (${i.rating})`
+            else 
+            {
+                traits[i.name] = {
+                    name: i.name,
+                    display: this.traitsAvailable[i.name],
+                    type: i.type
+                }
+                if (game.wng.config.traitHasRating[i.name]) {
+                    traits[i.name].rating = i.rating;
+                    traits[i.name].display += ` (${i.rating})`
+                }
             }
         })
         return traits

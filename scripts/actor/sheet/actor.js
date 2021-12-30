@@ -744,7 +744,8 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
         let traitClicked = traits.find(i => i.display == textClicked.trim())
 
-        let description = game.wng.config.traitDescriptions[traitClicked.name];
+
+        let description = traitClicked.description || game.wng.config.traitDescriptions[traitClicked.name];
 
         return this._createDropdown(ev, {text : description})
 

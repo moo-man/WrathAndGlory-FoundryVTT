@@ -165,14 +165,12 @@ export default function() {
 }
 
 function _dealDamageToTarget(test, target) {
-    let ap = test.result.damage.ap || 0
+    let ap = Math.abs(test.result.damage.ap) || 0
     let damage = test.result.damage.total
     let res = target.combat.resilience.total || 1
     let invuln = target.combat.resilience.invulnerable
     let note;
     let promise
-
-    ap = Math.abs(ap) 
 
     if (!invuln)
         res -= ap

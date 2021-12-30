@@ -6,13 +6,15 @@ export default class ItemTraits extends FormApplication
             template : "systems/wrath-and-glory/template/apps/item-traits.html",
             height : "auto",
             width : "auto",
-            title : "Item Traits"
+            title : "Item Traits",
+            resizable : true
             
         })
     }
 
     getData() {
         let data = super.getData(); 
+        data.custom = this.constructCustomString(this.object.traits);
         try {
 
             data.traits = Object.keys(this.object.traitsAvailable).map(i => {
@@ -32,6 +34,7 @@ export default class ItemTraits extends FormApplication
             data.traits = []
             console.error("Something went wrong when trying to open the traits menu: " + e)
         }
+
         
         return data;
     }
@@ -45,7 +48,10 @@ export default class ItemTraits extends FormApplication
         }
         for (let key in formData)
         {
-            if (formData[key] && !key.includes("rating"))
+            if (key == "custom-traits")
+                newTraits = newTraits.concat(this.parseCustomTraits(formData[key]))
+
+            else if (formData[key] && !key.includes("rating"))
             {
                 let traitObj = { name : key}
                 let rating = formData[`${key}-rating`]
@@ -60,9 +66,36 @@ export default class ItemTraits extends FormApplication
         this.object.update({"data.traits" : newTraits})
     }
 
-    activateListeners(html) {
-        super.activateListeners(html);
+    parseCustomTraits(string)
+    {
+        let regex = /(.+?):(.+?)(\||$)/gm
 
+        let matches = string.matchAll(regex)
+        let traits = []
 
+        for (let match of matches)
+        {
+            traits.push({
+                name : match[1].trim().slugify(),
+                custom : true,
+                display : match[1].trim(),
+                description : match[2].trim(),
+                type : this.options.type
+            })
+        }
+
+        return traits
+    }
+
+    constructCustomString(traits)
+    {
+        let customString = ``
+        let customTraits = traits.filter(i => i.custom)
+
+        customTraits.forEach(t => {
+            customString += `${t.display} : ${t.description} |`
+        })
+        return customString
+        
     }
 }
