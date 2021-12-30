@@ -172,6 +172,8 @@ function _dealDamageToTarget(test, target) {
     let note;
     let promise
 
+    ap = Math.abs(ap) 
+
     if (!invuln)
         res -= ap
     if (res <= 0)
