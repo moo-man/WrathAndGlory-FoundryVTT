@@ -23,6 +23,8 @@ export class RollDialog extends Dialog {
               select.dispatchEvent(new Event("change"))
           }
       })
+      if (automatic.some(i => i))
+        select.focus()
   }
 
   static async create(data) {
