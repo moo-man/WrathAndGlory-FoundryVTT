@@ -4,7 +4,10 @@ export default class DeterminationRoll extends WNGTest {
   constructor(data = {}) {
     super(data)
     if (data)
+    {
       this.testData.wounds = data.wounds
+    }
+    this.testData.useDN = false
 
   }
 
@@ -16,16 +19,6 @@ export default class DeterminationRoll extends WNGTest {
     this.result.poolSize = this.testData.pool.size + this.testData.pool.bonus + this.getRankNum(this.testData.pool.rank);
     await this._rollDice()
     this._computeResult();
-
-    if(this.result.isWrathCritical && !this.context.counterChanged)
-    {
-      this.context.counterChanged = true
-      if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
-      else if (this.actor.type == "threat")
-        game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
-    }
-
   }
 
   async _rollDice() {

@@ -8,7 +8,8 @@ export class WNGTest {
         skill: data.skill,
         wrath: data.wrath,
         shifted : data.shifted || {damage : [], glory : [], other : []},
-        rerolls: [] // Indices of reroll sets
+        rerolls: [], // Indices of reroll sets,
+        useDN : true
       },
       context: {
         title: data.title,
@@ -69,42 +70,30 @@ export class WNGTest {
     await this.roll.evaluate({ async: true });
   }
 
-  _computeResult(useDn = true, useWrath = true) {
-    this.result.dn = (useDn) ? this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank) : 0;
+  _computeResult() {
+    this.result.dn = (this.testData.useDN) ? this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank) : 0;
     this.result.roll = this.roll.toJSON();
     this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), []);
 
     if (this.testData.rerolls.length) {
-      return this._computeReroll();
+      this._computeReroll();
     }
 
+    // Set dice indices before filtering out shifted
     this.result.dice.forEach((die, index) => die.index = index);
-    if (useWrath) {
-      this._computeWrath();
-    }
+
+    this._computeShifted()
+
+    // Compute wrath before filtering out shifted dice
+    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
+    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result === 1);
 
     this.result.allDice = duplicate(this.result.dice);
     this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
     this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0);
     this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0);
-    this.result.shiftsPossible = (useWrath) ? this._countShifting() : 0;
+    this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
-  }
-
-  _computeWrath() {
-    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
-    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result === 1);
-
-    this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index));
-    this.result.shifted.forEach(die => {
-      if (this.testData.shifted.damage.includes(die.index)) {
-        die.shift = "damage";
-      } else if (this.testData.shifted.glory.includes(die.index)) {
-        die.shift = "glory";
-      } else {
-        die.shift = "other";
-      }
-    })
   }
 
   _computeReroll() {
@@ -129,6 +118,19 @@ export class WNGTest {
         return prev;
       }, [])
     }
+  }
+
+  _computeShifted() {
+    this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index));
+    this.result.shifted.forEach(die => {
+      if (this.testData.shifted.damage.includes(die.index)) {
+        die.shift = "damage";
+      } else if (this.testData.shifted.glory.includes(die.index)) {
+        die.shift = "glory";
+      } else {
+        die.shift = "other";
+      }
+    })
   }
 
   async reroll(diceIndices) {

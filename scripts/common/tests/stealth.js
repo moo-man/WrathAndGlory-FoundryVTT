@@ -3,6 +3,7 @@ import { PoolDie, WNGTest } from "./test.js";
 export default class StealthRoll extends WNGTest {
   constructor(data = {}) {
     super(data)
+    this.testData.useDN = false
   }
 
   get template() {
@@ -13,16 +14,6 @@ export default class StealthRoll extends WNGTest {
     this.result.poolSize = this.testData.pool.size + this.testData.pool.bonus + this.getRankNum(this.testData.pool.rank);
     await this._rollDice()
     this._computeResult();
-
-    if(this.result.isWrathCritical && !this.context.counterChanged)
-    {
-      this.context.counterChanged = true
-      if (this.actor.type === "agent")
-        game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
-      else if (this.actor.type === "threat")
-        game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
-    }
-
   }
 
   async _rollDice() {
@@ -34,7 +25,7 @@ export default class StealthRoll extends WNGTest {
   }
 
   _computeResult() {
-    super._computeResult(false,false);
+    super._computeResult();
     this.result.stealth = this.result.success;
     this._setStealthScore(this.result.success);
   }
@@ -44,4 +35,6 @@ export default class StealthRoll extends WNGTest {
   }
 
   get isShiftable() { return false }
+
+  get stealth() {return true}
 }
