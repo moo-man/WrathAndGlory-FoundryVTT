@@ -1,15 +1,12 @@
 import { PoolDie, WNGTest } from "./test.js";
 
-export default class DeterminationRoll extends WNGTest {
+export default class StealthRoll extends WNGTest {
   constructor(data = {}) {
     super(data)
-    if (data)
-      this.testData.wounds = data.wounds
-
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/determination/determination-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/stealth/stealth-roll.html"
   }
 
   async rollTest() {
@@ -20,16 +17,15 @@ export default class DeterminationRoll extends WNGTest {
     if(this.result.isWrathCritical && !this.context.counterChanged)
     {
       this.context.counterChanged = true
-      if (this.actor.type == "agent")
+      if (this.actor.type === "agent")
         game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
-      else if (this.actor.type == "threat")
+      else if (this.actor.type === "threat")
         game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
     }
 
   }
 
   async _rollDice() {
-
     this.roll = Roll.fromTerms([
       new PoolDie({ number: this.result.poolSize, faces: 6 }),
     ])
@@ -39,12 +35,13 @@ export default class DeterminationRoll extends WNGTest {
 
   _computeResult() {
     super._computeResult(false,false);
-    this.result.shock = this.result.success >= this.result.wounds ? this.result.wounds : Math.min(this.result.success, this.testData.wounds)
-    this.result.wounds = this.testData.wounds >= this.result.success ? this.testData.wounds - this.result.success : 0
+    this.result.stealth = this.result.success;
+    this._setStealthScore(this.result.success);
+  }
+
+  async _setStealthScore(stealthScore) {
+    await this.actor.update({"data.combat.stealth" : stealthScore})
   }
 
   get isShiftable() { return false }
-
-  get determination() { return true}
-
 }

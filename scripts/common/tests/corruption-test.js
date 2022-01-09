@@ -21,47 +21,40 @@ export default class CorruptionTest  extends WNGTest {
       this._computeResult()
     }
 
-    if (!this.result.isSuccess)
-    {
-      if (!this.context.pointsAdded)
-      {
-        this.context.pointsAdded = true;
-        game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {
-          game.counter.render(true)
+    if (!this.result.isSuccess && !this.context.pointsAdded) {
+      this.context.pointsAdded = true;
+      game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => {
+        game.counter.render(true)
+      })
+
+      let corruption = this.result.dn - this.result.success;
+
+      if (this.result.isWrathComplication) {
+        corruption *= 2
+        this.result.doubleCorruption = true;
+      }
+
+      this.result.failure += " - " + game.i18n.format(`CHAT.FAIL_CORRUPTION`, {corruption})
+      this.context.corruptionAdded = corruption;
+
+      let prevLevel = this.actor.corruptionLevel;
+
+      await this.actor.update({"data.corruption.current": this.actor.corruption.current + corruption})
+
+      let newLevel = this.actor.corruptionLevel;
+
+      if (prevLevel < newLevel) {
+        ui.notifications.notify(game.i18n.localize("ROLL.NewCorruptionLevel"))
+        this.actor.setupGenericTest("mutation").then(async mutationTest => {
+          await mutationTest.rollTest();
+          mutationTest.sendToChat();
         })
-
-        let corruption = this.result.dn - this.result.success;
-
-        if (this.result.isWrathComplication)
-        {
-          corruption *= 2
-          this.result.doubleCorruption = true;
-        }
-
-        this.result.failure += " - " + game.i18n.format(`CHAT.FAIL_CORRUPTION`, {corruption})
-        this.context.corruptionAdded = corruption;
-
-        let prevLevel = this.actor.corruptionLevel;
-
-        await this.actor.update({"data.corruption.current" : this.actor.corruption.current + corruption})
-
-        let newLevel = this.actor.corruptionLevel;
-
-        if (prevLevel < newLevel)
-        {
-          ui.notifications.notify(game.i18n.localize("ROLL.NewCorruptionLevel"))
-          this.actor.setupGenericTest("mutation").then(async mutationTest => {
-            await mutationTest.rollTest();
-            mutationTest.sendToChat();
-          })
-        }
-
       }
     }
   }
 
   async reroll(...args) {
-    await super.reroll(...args) 
+    await super.reroll(...args)
     if (this.result.isSuccess && this.context.pointsAdded)
     {
       this.revertPoints()
@@ -82,7 +75,7 @@ export default class CorruptionTest  extends WNGTest {
     Object.values(ui.windows).filter(app => app.data?.title == "Mutation").forEach(app => app.close())
 
   }
-  
+
   get corruption() {
     return true;
   }

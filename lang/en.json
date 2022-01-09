@@ -16,7 +16,7 @@
   "ITEM.TypeTraumaticinjury" : "Traumatic Injury",
   "ITEM.TypeWeapon" : "Weapon",
   "ITEM.TypeWeaponupgrade" : "Weapon Upgrade",
-  
+
   "ABILITY.NAME": "Name",
   "ABILITY.EFFECT": "Effect",
   "ABILITY.COST": "Cost",
@@ -147,6 +147,8 @@
   "CHAT.FAIL_FEAR" : "Gains the @JournalEntry[Fear] Condition, 1 Ruin added",
   "CHAT.DETERMINATION" : "Determination",
   "CHAT.DETERMINATION_RESULT" : "{wounds} Wounds, {shock} Shock",
+  "CHAT.STEALTH" : "Stealth",
+  "CHAT.STEALTH_RESULT" : "{stealth}",
 
   "DIALOG.YES": "Yes",
   "DIALOG.NO": "No",
@@ -272,6 +274,7 @@
   "ROLL.MUTATION" : "Mutation",
   "ROLL.FEAR" : "Fear",
   "ROLL.TERROR" : "Terror",
+  "ROLL.STEALTH" : "Stealth",
 
   "SIZE.TINY": "Tiny",
   "SIZE.SMALL": "Small",

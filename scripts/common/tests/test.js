@@ -69,52 +69,66 @@ export class WNGTest {
     await this.roll.evaluate({ async: true });
   }
 
-  _computeResult() {
-    this.result.dn = this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank);
-    this.result.roll = this.roll.toJSON()
-    this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), [])
-    if (this.testData.rerolls.length) {
-      this.result.rerolls = this.rerolledTests.map(r => r.toJSON()) // save roll objects for recreation
-      this.result.rerolledDice = [] 
-      for (let reroll of this.rerolledTests)
-        this.result.rerolledDice.push(reroll.dice.reduce((prev, current) => prev.concat(current.results.map(i => { i.rerolled = true; return i })), []))
+  _computeResult(useDn = true, useWrath = true) {
+    this.result.dn = (useDn) ? this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank) : 0;
+    this.result.roll = this.roll.toJSON();
+    this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), []);
 
-      // Merge rerolls and roll - For each reroll set, take the corresponding reroll indices and keep the dice that the indices indicate
-      for(let i = 0; i < this.result.rerolledDice.length; i++)
-      {
-        let rerollDice = this.result.rerolledDice[i]
-        let shouldRerollSet = this.testData.rerolls[i]
-        this.result.dice = this.result.dice.reduce((prev, current, i) => {
-          if (shouldRerollSet.includes(i))
-            prev.push(rerollDice[i])
-          else {
-            prev.push(current)
-          }
-          return prev
-        }, [])
-      }
+    if (this.testData.rerolls.length) {
+      return this._computeReroll();
     }
 
-    this.result.dice.forEach((die, index) => die.index = index)
-    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result == 6)
-    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result == 1)
+    this.result.dice.forEach((die, index) => die.index = index);
+    if (useWrath) {
+      this._computeWrath();
+    }
 
-    this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index))
-    this.result.shifted.forEach(die => {
-      if(this.testData.shifted.damage.includes(die.index))
-        die.shift = "damage";
-      else if(this.testData.shifted.glory.includes(die.index))
-        die.shift = "glory";
-      else
-        die.shift = "other"
-    })
-
-    this.result.allDice = duplicate(this.result.dice)
-    this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index))
-    this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0)
-    this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0)
-    this.result.shiftsPossible = this._countShifting();
+    this.result.allDice = duplicate(this.result.dice);
+    this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
+    this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0);
+    this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0);
+    this.result.shiftsPossible = (useWrath) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
+  }
+
+  _computeWrath() {
+    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
+    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result === 1);
+
+    this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index));
+    this.result.shifted.forEach(die => {
+      if (this.testData.shifted.damage.includes(die.index)) {
+        die.shift = "damage";
+      } else if (this.testData.shifted.glory.includes(die.index)) {
+        die.shift = "glory";
+      } else {
+        die.shift = "other";
+      }
+    })
+  }
+
+  _computeReroll() {
+    this.result.rerolls = this.rerolledTests.map(r => r.toJSON()); // save roll objects for recreation
+    this.result.rerolledDice = [];
+    for (let reroll of this.rerolledTests)
+      this.result.rerolledDice.push(reroll.dice.reduce((prev, current) => prev.concat(current.results.map(i => {
+        i.rerolled = true;
+        return i;
+      })), []))
+
+    // Merge rerolls and roll - For each reroll set, take the corresponding reroll indices and keep the dice that the indices indicate
+    for (let i = 0; i < this.result.rerolledDice.length; i++) {
+      let rerollDice = this.result.rerolledDice[i];
+      let shouldRerollSet = this.testData.rerolls[i];
+      this.result.dice = this.result.dice.reduce((prev, current, i) => {
+        if (shouldRerollSet.includes(i)) {
+          prev.push(rerollDice[i]);
+        } else {
+          prev.push(current);
+        }
+        return prev;
+      }, [])
+    }
   }
 
   async reroll(diceIndices) {
@@ -139,14 +153,14 @@ export class WNGTest {
       })
       await game.dice3d.showForRoll(Roll.fromData(rerollShow))
     }
-      
+
     this.sendToChat()
   }
 
   async rerollFailed() {
     this.context.rerollFailed = true;
     let reroll = [] // Reroll indices
-      
+
     // If rerollable, record index of die
     this.result.dice.forEach((die) => {
       if(die.rerollable)
@@ -355,7 +369,7 @@ export class WNGTest {
   }
 
   get showTest() {
-    return this.result.isSuccess && this.item && this.item.hasTest 
+    return this.result.isSuccess && this.item && this.item.hasTest
   }
 
   get testDisplay() {

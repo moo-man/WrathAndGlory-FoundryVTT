@@ -39,7 +39,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         return sheetData;
     }
 
-    
+
     _organizeSkills(sheetData) {
         let middle = Object.values(sheetData.data.skills).length / 2;
         let i = 0;
@@ -61,7 +61,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         }
     }
 
-    constructItemLists(sheetData) 
+    constructItemLists(sheetData)
     {
         let items = {}
         items.equipped = {}
@@ -138,10 +138,10 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         }
     }
 
-    constructEffectLists(sheetData) 
+    constructEffectLists(sheetData)
     {
         let effects = {}
-        
+
         effects.conditions = CONFIG.statusEffects.map(i => {
             return {
                 label : i.label,
@@ -149,7 +149,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 img : i.icon,
                 existing : this.actor.hasCondition(i.id)
             }
-        })  
+        })
         effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled && !i.isCondition)
         effects.disabled = sheetData.actor.effects.filter(i => i.data.disabled && !i.isCondition)
         effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled && !i.isCondition)
@@ -197,10 +197,10 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").mousedown(this._onItemDelete.bind(this));
         html.find(".item-post").mousedown(this._onItemPost.bind(this));
-        html.find(".effect-create").click(this._onEffectCreate.bind(this));  
-        html.find(".effect-edit").click(this._onEffectEdit.bind(this));  
-        html.find(".effect-delete").click(this._onEffectDelete.bind(this));  
-        html.find(".effect-toggle").click(this._onEffectToggle.bind(this));  
+        html.find(".effect-create").click(this._onEffectCreate.bind(this));
+        html.find(".effect-edit").click(this._onEffectEdit.bind(this));
+        html.find(".effect-delete").click(this._onEffectDelete.bind(this));
+        html.find(".effect-toggle").click(this._onEffectToggle.bind(this));
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".roll-attribute").click(this._onAttributeClick.bind(this));
         html.find(".roll-skill").click(this._onSkillClick.bind(this));
@@ -210,6 +210,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".roll-influence").click(this._onInfluenceClick.bind(this));
         html.find(".roll-weapon").click(this._onWeaponClick.bind(this));
         html.find(".roll-psychic-power").click(this._onPowerClick.bind(this));
+        html.find(".roll-stealth").click(this._onStealthClick.bind(this));
         html.find(".checkbox").click(this._onCheckboxClick.bind(this))
         html.find(".property-edit").change(this._onSelectChange.bind(this))
         html.find(".qty-click").click(this._onQuantityClick.bind(this))
@@ -290,7 +291,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             item.sendToChat()
     }
 
-    
+
     async _onEffectCreate(ev) {
         let type = ev.currentTarget.attributes["data-type"].value
         let effectData = { label: "New Effect" , icon: "icons/svg/aura.svg"}
@@ -324,7 +325,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         await dialog._render(true)
         dialog._element.find(".label").select()
 
- 
+
       }
 
     _onEffectEdit(ev)
@@ -354,20 +355,20 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     async _onRollableAbilityClick(ev) {
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
-        
+
         if (ev.button == 0)
         {
             let test
             if (item.abilityType == "determination")
             test = await this.actor.setupGenericTest("determination")
-            else 
+            else
             test = await this.actor.setupAbilityRoll(item)
-            
+
             await test.rollTest();
             test.sendToChat()
         }
-        else 
-            this._dropdownRightClick(ev)   
+        else
+            this._dropdownRightClick(ev)
     }
 
     _toggleDice(ev) {
@@ -447,6 +448,13 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     async _onDeterminationClick(event) {
         event.preventDefault();
         let test = await this.actor.setupGenericTest("determination")
+        await test.rollTest();
+        test.sendToChat()
+    }
+
+    async _onStealthClick(event) {
+        event.preventDefault();
+        let test = await this.actor.setupGenericTest("stealth")
         await test.rollTest();
         test.sendToChat()
     }
@@ -635,7 +643,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let target = $(event.currentTarget).attr("data-target")
         let id = $(event.currentTarget).parents(".item").attr("data-item-id")
         let item = this.actor.items.get(id)
-        return item.update({[target] : event.target.value})    
+        return item.update({[target] : event.target.value})
     }
 
     _onQuantityClick(event) {
@@ -650,7 +658,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         else
             multiplier = event.button == 0 ? 1 : -1
 
-        multiplier = event.ctrlKey ? multiplier * 10 : multiplier  
+        multiplier = event.ctrlKey ? multiplier * 10 : multiplier
         item.update({"data.quantity" : item.quantity + 1 * multiplier})
     }
 
@@ -667,7 +675,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this._createDropdown(event, item._dropdownData())
     }
 
-    
+
     _createDropdown(event, dropdownData) {
         let dropdownHTML = ""
         event.preventDefault()
@@ -710,7 +718,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         $(event.currentTarget).children(".adv-buttons")[0].style="display: none"
     }
 
-    _onAdvButtonClick(event) 
+    _onAdvButtonClick(event)
     {
         let amt
         if (event.currentTarget.classList.contains("incr")) amt = 1
@@ -756,5 +764,5 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.actor.addCondition(selection)
     }
 
-  
+
 }

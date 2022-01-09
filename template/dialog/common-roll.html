@@ -6,8 +6,8 @@
         <b class="rank">{{localize "DIALOG.RANK"}}</b>
         <b class="bonus">{{localize "DIALOG.BONUS"}}</b>
     </div>
-    
-    <div class="wrapper" {{#if determination}}style="display: none"{{/if}}>
+
+    <div class="wrapper" {{#if noDn }}style="display: none"{{/if}}>
         <label class="name">{{localize "DIALOG.DN"}}</label>
         <input id="difficulty-target" class="difficulty base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
         <select id="difficulty-rank" class="difficulty rank">
