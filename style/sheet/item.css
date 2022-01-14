@@ -271,9 +271,45 @@
 }
 
   .wrath-and-glory.sheet.item .wrapper.potency {
-  height: calc(100% - 160px);
+    flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
+
+
+.wrath-and-glory.sheet.item .wrapper.potency .potency-header{
+ display: flex; 
+ justify-content: center;
+}
+
+.wrath-and-glory.sheet.item .wrapper.potency button{
+  height: 20px;
+  width: 20px;
+  margin: 3px;
+  padding: 0px;
+  vertical-align: middle;
+ }
+
+.wrath-and-glory.sheet.item .potency-list{
+  display: flex;
+  flex-direction: column;
+}
+
+.wrath-and-glory.sheet.item .potency-fields{
+  display: flex;
+  text-align: center;
+}
+ 
+.wrath-and-glory.sheet.item .potency-fields > *{
+  flex: 1
+}
+ 
+.wrath-and-glory.sheet.item .potency-fields > a{
+  flex: 0 0 20px
+}
+ 
+ 
+ 
 
 .wrath-and-glory.sheet.item .wrapper.benefits {
   height: 100%;

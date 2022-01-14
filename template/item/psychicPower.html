@@ -182,6 +182,23 @@
             </div>
           </div>
         </div>
+
+        <div class="wrapper">
+          <div class="damage-header">
+            <b class="spacer"></b>
+            <b class="base">{{localize "PSYCHIC_POWER.SHOCK"}}</b>
+            <b class="rank">{{localize "PSYCHIC_POWER.WOUNDS"}}</b>
+            <b class="modifier">{{localize "PSYCHIC_POWER.MORTAL"}}</b>
+          </div>
+          <div class="item-form-group fixed">
+            <label>{{localize "PSYCHIC_POWER.OTHER_DAMAGE"}}</label>
+            <div class="item-form-inputs">
+              <input name="data.other.shock" class="base" type="text" value="{{data.other.shock}}" data-dtype="String" />
+              <input name="data.other.wounds" class="base" type="text" value="{{data.other.wounds}}" data-dtype="String" />
+              <input name="data.other.mortalWounds" class="modifier" type="text" value="{{data.other.mortalWounds}}" data-dtype="String" />
+            </div>
+          </div>
+        </div>
       
         <div class="wrapper">
           <div class="item-form-group">
@@ -190,6 +207,48 @@
               <input name="data.keywords" type="text" value="{{data.keywords}}" />
             </div>
           </div>
+        </div>
+
+        <div class="wrapper potency">
+            <h1>{{localize "TITLE.POTENCY"}}</h1>
+            
+              {{#if data.potency.length}}
+              <div class="potency-list">
+                      <div class="potency-header potency-fields">
+                          <div>{{localize "POWER.POTENCY_COST"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_COST'}}"></i></div>
+                          <div>{{localize "POWER.POTENCY_INITIAL"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_INITIAL_HELP'}}"></i></div>
+                          <div>{{localize "POWER.POTENCY_PROPERTY"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_PROPERTY_HELP'}}"></i></div>
+                          <div>{{localize "POWER.POTENCY_VALUE"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_VALUE_HELP'}}"></i></div>
+                          <div>{{localize "POWER.POTENCY_TITLE"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_TITLE_HELP'}}"></i></div>
+                          <a style="width : 10px"></a>
+                      </div>
+                      {{#each data.potency as |potency index|}}
+                      <div class="potency-content">
+                          <div class="potency-fields" data-index="{{index}}">
+                            <input type="number" data-path="cost" placeholder='{{localize "POWER.POTENCY_COST"}}' value="{{potency.cost}}">
+
+                              <input type="number"  data-dtype="Number"  data-path="initial" value="{{potency.initial}}" placeholder='{{localize "POWER.POTENCY_INITIAL"}}' {{#if potency.initialDisabled}} disabled style="opacity:0.5"{{/if}}>
+
+                              <input type="text" data-path="property" placeholder='{{localize "POWER.POTENCY_PROPERTY"}}' value="{{potency.property}}">
+
+                              <input type="text" data-path="value" placeholder='{{localize "POWER.POTENCY_VALUE"}}' value="{{potency.value}}">
+
+                              <input type="text" data-path="title" placeholder='{{localize "POWER.POTENCY_TITLE"}}' value="{{potency.title}}">
+                              <a class="potency-delete"><i class="fas fa-times"></i></a>
+                          </div>
+                      </div>
+                      <div class="potency-description">
+                          <div class="potency-fields" data-index="{{index}}">
+                              <input type="text" data-path="description" placeholder="Description" value="{{potency.description}}">
+                          </div>
+                      </div>
+                      <hr>
+                      {{/each}}
+
+              </div>
+              {{/if}}
+
+            <button class="add-potency">+</button>
         </div>
 
         <div class="wrapper potency">

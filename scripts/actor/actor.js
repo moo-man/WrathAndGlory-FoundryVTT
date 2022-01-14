@@ -432,7 +432,7 @@ export class WrathAndGloryActor extends Actor {
     getDialogChanges({condense = false}={}) {
 
         // Aggregate dialog changes from each effect
-        let changes =  this.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({condense})), [])
+        let changes =  this.effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({condense, indexOffset : prev.length})), [])
 
         if (game.user.targets.size > 0)
         {

@@ -241,6 +241,22 @@
   "PSYCHIC_POWER.ED": "ED",
   "PSYCHIC_POWER.DIE_VALUE": "Die Value",
   "PSYCHIC_POWER.TEST": "Test",
+  "PSYCHIC_POWER.OTHER_DAMAGE": "Other",
+  "PSYCHIC_POWER.WOUNDS": "Wounds",
+  "PSYCHIC_POWER.SHOCK": "Shock",
+  "PSYCHIC_POWER.MORTAL": "Mortal",
+
+
+  "POWER.POTENCY_COST" : "Cost",
+  "POWER.POTENCY_INITIAL" : "Initial",
+  "POWER.POTENCY_PROPERTY" : "Property",
+  "POWER.POTENCY_VALUE" : "Value",
+  "POWER.POTENCY_TITLE" : "Title",
+  "POWER.POTENCY_COST_HELP" : "How many shifts this costs",
+  "POWER.POTENCY_INITIAL_HELP" : "Initial value before overcasting",
+  "POWER.POTENCY_PROPERTY_HELP" : "Property being overcasted",
+  "POWER.POTENCY_VALUE_HELP" : "How much to add per overcast",
+  "POWER.POTENCY_TITLE_HELP" : "Overcast button label",
 
   "RANK.NONE": "None",
   "RANK.SINGLE": "+Rank",
