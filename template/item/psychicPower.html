@@ -193,9 +193,9 @@
           <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.OTHER_DAMAGE"}}</label>
             <div class="item-form-inputs">
-              <input name="data.other.shock" class="base" type="text" value="{{data.other.shock}}" data-dtype="String" />
-              <input name="data.other.wounds" class="base" type="text" value="{{data.other.wounds}}" data-dtype="String" />
-              <input name="data.other.mortalWounds" class="modifier" type="text" value="{{data.other.mortalWounds}}" data-dtype="String" />
+              <input name="data.otherDamage.shock" class="base" type="text" value="{{data.otherDamage.shock}}" data-dtype="String" />
+              <input name="data.otherDamage.wounds" class="base" type="text" value="{{data.otherDamage.wounds}}" data-dtype="String" />
+              <input name="data.otherDamage.mortalWounds" class="modifier" type="text" value="{{data.otherDamage.mortalWounds}}" data-dtype="String" />
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@
               </div>
               {{/if}}
 
-            <button class="add-potency">+</button>
+            <button type="button" class="add-potency">+</button>
         </div>
 
         <div class="wrapper potency">

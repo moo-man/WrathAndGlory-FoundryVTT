@@ -151,6 +151,9 @@
   "CHAT.DETERMINATION_RESULT" : "{wounds} Wounds, {shock} Shock",
   "CHAT.STEALTH" : "Stealth",
   "CHAT.STEALTH_RESULT" : "{stealth}",
+  "CHAT.WOUNDS": "Wounds",
+  "CHAT.SHOCK": "Shock",
+  "CHAT.MORTAL": "Mortal Wounds",
 
   "DIALOG.YES": "Yes",
   "DIALOG.NO": "No",

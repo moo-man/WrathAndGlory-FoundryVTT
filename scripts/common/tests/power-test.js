@@ -10,9 +10,10 @@ export default class PowerTest extends WNGTest {
     this.data.testData.ed = data.ed || {}
     this.data.testData.ap = data.ap || {}
     this.data.testData.damage= data.damage || {}
-
+    
     this.data.testData.itemId = data.itemId
     
+    this.data.testData.otherDamage = this.item.otherDamage // TODO: add to dialog
     this.data.testData.potency = duplicate(this.item.potency)
     this.data.testData.potency.forEach(p => p.allocation = 0)
   }
@@ -62,7 +63,10 @@ export default class PowerTest extends WNGTest {
 
     })
     this.result.potency.options.forEach(p => {
-      p.canAllocate = p.single ? p.allocation == 0 : (this.result.potency.spent + p.cost) <= this.result.potency.available
+      p.canAllocate = (this.result.potency.spent + p.cost) <= this.result.potency.available
+
+      if (p.single)
+        p.canAllocate = p.canAllocate && p.allocation == 0
     })
   }
 

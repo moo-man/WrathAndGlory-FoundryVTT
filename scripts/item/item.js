@@ -446,6 +446,7 @@ export class WrathAndGloryItem extends Item {
     get prerequisites() { return this.data.data.prerequisites }
     get potency() { return this.data.data.potency }
     get damage() { return this.data.data.damage }
+    get otherDamage() { return this.data.data.otherDamage }
     get ed() { return this.data.data.ed }
     get attack() { return this.data.data.attack }
     get ap() { return this.data.data.ap }

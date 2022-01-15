@@ -15,6 +15,18 @@
         <p><strong>{{localize "WEAPON.AP"}}: {{result.damage.ap}}</strong></p>
         {{/if}}
 
+        {{#if result.damage.other.mortalWounds}}
+        <p><strong>{{localize "CHAT.MORTAL"}}: {{result.damage.other.mortalWounds}}</strong></p>
+        {{/if}}
+
+        {{#if result.damage.other.wounds}}
+        <p><strong>{{localize "CHAT.WOUNDS"}}: {{result.damage.other.wounds}}</strong></p>
+        {{/if}}
+
+        {{#if result.damage.other.shock}}
+        <p><strong>{{localize "CHAT.SHOCK"}}: {{result.damage.other.shock}}</strong></p>
+        {{/if}}
+
         {{#if item.traits}}
         <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.Traits}}</strong></p>
         {{/if}}

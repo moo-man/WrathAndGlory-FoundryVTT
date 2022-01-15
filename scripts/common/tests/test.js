@@ -309,6 +309,7 @@ export class WNGTest {
       dice: [],
       flat : this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
       total : 0,
+      other : duplicate(this.testData.otherDamage || {})
     }
     this.result.damage.total = this.result.damage.flat
     this.result.damage.ed = {number : this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length};
@@ -320,7 +321,8 @@ export class WNGTest {
 
     this.result.damage.total = this.result.damage.flat
     this.result.damage.dice = [];
-    
+    this.result.damage.other = duplicate(this.testData.otherDamage || {})
+
     let add = 0
     if (this.weapon && this.weapon.traitList.rad)
       add = this.weapon.traitList.rad.rating
@@ -339,6 +341,14 @@ export class WNGTest {
         });
       }
     });
+
+    // Other Damage
+    for (let damage in this.result.damage.other)
+    {
+      if (this.result.damage.other[damage])
+        this.result.damage.other[damage] = (await new Roll(this.result.damage.other[damage]).evaluate({async: true})).total
+    }
+
     this.damageRoll = r;
     this.result.damage.roll = r.toJSON()
     this.updateMessageFlags()
