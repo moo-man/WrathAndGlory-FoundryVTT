@@ -350,7 +350,6 @@ export class PowerDialog extends RollDialog {
     testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
     testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
     testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
-    testData.potency = html.find("#potency")[0].value;
     return testData
   }
 

@@ -7,7 +7,7 @@ export class WNGTest {
         attribute: data.attribute,
         skill: data.skill,
         wrath: data.wrath,
-        shifted : data.shifted || {damage : [], glory : [], other : []},
+        shifted : data.shifted || {damage : [], glory : [], other : [], potency : []},
         rerolls: [], // Indices of reroll sets,
         useDN : true
       },
@@ -37,7 +37,7 @@ export class WNGTest {
       test.roll = Roll.fromData(test.result.roll)
     if (test.testData.rerolls.length)
       test.rerolledTests = test.result.rerolls.map(r => Roll.fromData(r))
-    if (test.result.damage)
+    if (test.result.damage.roll)
       test.damageRoll = Roll.fromData(test.result.damage.roll)
     return test
   }
@@ -123,13 +123,14 @@ export class WNGTest {
   _computeShifted() {
     this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index));
     this.result.shifted.forEach(die => {
-      if (this.testData.shifted.damage.includes(die.index)) {
+      if (this.testData.shifted.damage.includes(die.index)) 
         die.shift = "damage";
-      } else if (this.testData.shifted.glory.includes(die.index)) {
+      else if (this.testData.shifted.glory.includes(die.index))
         die.shift = "glory";
-      } else {
+      else if (this.testData.shifted.potency.includes(die.index))
+          die.shift = "potency"
+      else
         die.shift = "other";
-      }
     })
   }
 
@@ -210,6 +211,7 @@ export class WNGTest {
     this.testData.shifted.other = []
     this.testData.shifted.damage = []
     this.testData.shifted.glory = []
+    this.testData.shifted.potency = []
     this._computeResult()
     this.sendToChat()
   }
@@ -272,6 +274,8 @@ export class WNGTest {
       return true
     if(this.testData.shifted.glory.includes(dieIndex))
       return true
+    if(this.testData.shifted.potency.includes(dieIndex))
+      return true
     if(this.testData.shifted.other.includes(dieIndex))
       return true
 
@@ -295,23 +299,38 @@ export class WNGTest {
     }
   }
 
+  /**
+   * Set Base values for damage, before any rolling
+   */
+  computeDamage() {
+    this.result.damage = {
+      ed : {},
+      ap: (this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank)) || 0,
+      dice: [],
+      flat : this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
+      total : 0,
+    }
+    this.result.damage.total = this.result.damage.flat
+    this.result.damage.ed = {number : this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length};
+    this.result.damage.ed.values = this.testData.ed.damageValues
+
+  }
+
   async rollDamage() {
-    let ed = this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length;
-    let values = this.testData.ed.damageValues
+
+    this.result.damage.total = this.result.damage.flat
+    this.result.damage.dice = [];
+    
     let add = 0
     if (this.weapon && this.weapon.traitList.rad)
       add = this.weapon.traitList.rad.rating
 
+    let damage = this.result.damage
     let r = Roll.fromTerms([
-      new PoolDie({ number: ed, faces: 6, options : {values, add} }),
+      new PoolDie({ number: damage.ed.number, faces: 6, options : {values : damage.ed.values, add} }),
     ])
 
-    r.evaluate({ async: true });
-    this.result.damage = {
-      total: this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
-      ap: (this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank)) || 0,
-      dice: []
-    };
+    await r.evaluate({ async: true });
     r.terms.forEach((term) => {
       if (typeof term === 'object' && term !== null) {
         term.results.forEach(die => {
@@ -322,6 +341,8 @@ export class WNGTest {
     });
     this.damageRoll = r;
     this.result.damage.roll = r.toJSON()
+    this.updateMessageFlags()
+    this.sendDamageToChat()
   }
 
 

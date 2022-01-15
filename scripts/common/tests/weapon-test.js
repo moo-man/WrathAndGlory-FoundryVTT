@@ -22,7 +22,7 @@ export default class WeaponTest extends WNGTest {
   {
     super._computeResult()
     if (this.result.isSuccess)
-      this.rollDamage() 
+      this.computeDamage() 
   }
 
   get weapon() {return this.actor.items.get(this.testData.itemId)}

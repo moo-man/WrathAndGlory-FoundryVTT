@@ -146,8 +146,49 @@
 }
 
 
+.wrath-and-glory.chat .die.shifted .die-icon.potency,
 .wrath-and-glory.chat .die.shifted .die-icon.other,
 .wrath-and-glory.chat .die.shifted .die-icon.damage,
   .wrath-and-glory.chat .die.shifted .die-icon.glory{
   left: -5px;
 }
+
+.wrath-and-glory.chat .wrapper.potency 
+{
+  margin-top: 5px;
+}
+
+
+.wrath-and-glory.chat .potency .potency-allocation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.wrath-and-glory.chat .potency .potency-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.wrath-and-glory.chat .potency .potency-list .potency-option{
+  display: flex;
+  align-items: center;
+}
+
+.wrath-and-glory.chat .potency .potency-list .potency-option button{
+
+  height: 20px;
+  width: 20px;
+  margin: 3px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+
+}
+

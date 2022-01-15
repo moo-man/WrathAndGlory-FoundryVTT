@@ -8,3 +8,9 @@
         <p><strong class="red">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>:
                 {{localize "CHAT.WRATH_COMPLICATION_PSY"}}</strong></p>
         {{/if}}
+
+        
+        {{#if result.range}}
+        <p><strong>{{localize "PSYCHIC_POWER.RANGE"}}</strong><strong>:
+                {{result.range}}</strong></p>
+        {{/if}}

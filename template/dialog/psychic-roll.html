@@ -1,6 +1,6 @@
 <div class="wrath-and-glory dialog power-dialog">
     <div class="wrapper-left">
-        <h1>{{localize skillName}}</h1>
+        <h1>{{localize "SKILL.PSYCHIC_MASTERY"}}</h1>
         <div class="wrapper">
             <b class="name"></b>
             <b class="base">{{localize "DIALOG.BASE"}}</b>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="wrapper-right">
-        <h1 style="margin-top: 8px;">{{name}}</h1>
+        <h1 style="margin-top: 8px;">{{power.name}}</h1>
         <div class="wrapper">
             <b class="name"></b>
             <b class="base">{{localize "DIALOG.BASE"}}</b>
@@ -67,10 +67,6 @@
                 {{/select}}
             </select>
             <input id="ed-bonus" class="ed bonus" type="number" value="{{power.ed.bonus}}" data-dtype="Number" />
-        </div>
-        <div class="wrapper">
-            <label class="name">{{localize "PSYCHIC_POWER.POTENCY"}}</label>
-            <input id="potency" class="full" type="text" value="{{{power.potency}}}" />
         </div>
         <div class="wrapper">
             <b class="name"></b>

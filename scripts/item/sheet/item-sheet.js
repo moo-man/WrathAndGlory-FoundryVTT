@@ -5,6 +5,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["wrath-and-glory", "sheet", "item"],
       resizable: true,
+      scrollY: [".sheet-body"],
       tabs: [
         {
           navSelector: ".sheet-tabs",
@@ -191,8 +192,15 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     html.find(".item-checkbox").click(ev => {
       let target = ev.currentTarget.dataset["target"]
-
-      this.item.update({ [target]: !getProperty(this.item.data, target) })
+      
+      if (target == "potency")
+      {
+        let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
+        let path = ev.currentTarget.dataset["path"]
+        this._updatePotency(index, path, !ev.currentTarget.classList.contains("checked"))
+      }
+      else
+        this.item.update({ [target]: !getProperty(this.item.data, target) })
     })
 
     html.find(".add-potency").click(ev => {
@@ -202,7 +210,8 @@ export class WrathAndGloryItemSheet extends ItemSheet {
         "cost": 1,
         "property": "",
         "initial": "",
-        "value": ""
+        "value": "",
+        "single" : false
       })
       this.item.update({ "data.potency": potency })
     })
@@ -213,5 +222,23 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       potency.splice(index, 1)
       this.item.update({ "data.potency": potency })
     })
+
+    
+    html.find(".potency-fields input").change(ev => {
+      let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
+      let path = ev.currentTarget.dataset.path
+      this._updatePotency(index, path, ev.target.value)
+    })
   }
+
+  _updatePotency(index, path, value) {
+    let potency = foundry.utils.deepClone(this.item.potency)
+    if (Number.isNumeric(value) && value != true && value != false) // 
+      value = parseInt(value)
+
+    setProperty(potency[index], path, value)
+
+    this.item.update({ "data.potency": potency })
+  }
+
 }

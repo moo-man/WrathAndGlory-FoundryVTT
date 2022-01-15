@@ -1,3 +1,23 @@
+<div class="wrapper potency">
+        {{#if result.isSuccess}}
+        {{#if result.potency.options}}
+        <h3>Potency</h3>
+        <div class="potency-allocation">
+                <h4>Spent: {{result.potency.spent}}/{{result.potency.available}}  <a class="potency-reset"><i class="fas fa-redo"></i></a> </h4>
+               
+        </div>
+        <div class="potency-list">
+                
+                {{#each result.potency.options as |p index|}}
+                <div class="potency-option" {{#unless p.canAllocate}}style="opacity:0.5"{{/unless}}>
+                        <button data-index="{{index}}" class="add-potency" {{#unless p.canAllocate}}disabled{{/unless}}>+</button>[{{p.cost}}] {{p.description}} {{#if p.allocation}}({{p.allocation}}){{/if}}
+                </div>
+                {{/each}}
+        </div>
+        {{/if}}
+        {{/if}}
+</div>
+
 {{> systems/wrath-and-glory/template/chat/roll/base/base-buttons.html}}
 {{#if result.isWrathComplication}}
 <div class="wrapper">

@@ -27,6 +27,20 @@ export default function() {
             return canShift(li) && test.doesDamage && (msg.isAuthor || msg.isOwner)
         }
 
+        let canShiftPotency = li => {
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let test = msg.getTest()
+            return canShift(li) && test.testData.potency.length && (msg.isAuthor || msg.isOwner)
+        }
+
+        let canResetPotency = li => {
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let test = msg.getTest()
+            return test.testData.potency.some(p => p.allocation) && (msg.isAuthor || msg.isOwner)
+        }
+
+
+
         let canClearReroll = li => {
             let test = game.messages.get(li.attr("data-message-id")).getTest()
             return test && game.user.isGM && test.testData.rerolls.length
@@ -93,6 +107,16 @@ export default function() {
                 }
             },
             {
+                name: "BUTTON.RESET_POTENCY",
+                icon: '<i class="fas fa-redo"></i>',
+                condition: canResetPotency,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    test.resetAllocation()
+                }
+            },
+            {
                 name: "BUTTON.SHIFT",
                 icon: '<i class="fas fa-angle-double-right"></i>',
                 condition: canShift,
@@ -129,6 +153,17 @@ export default function() {
                         ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : shifted.length}))
                     })
                     game.counter.render(true)
+                }
+            },
+            {
+                name: "BUTTON.SHIFT_POTENCY",
+                icon: '<i class="fas fa-angle-double-right"></i>',
+                condition: canShiftPotency,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
+                    test.shift(shifted, "potency")
                 }
             },
             {

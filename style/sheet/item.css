@@ -158,7 +158,11 @@
 }
 
 .wrath-and-glory.sheet.sheet.item .wrapper > *{
-  margin-left: 5px;
+  width: 100%
+}
+
+.wrath-and-glory.sheet.sheet.item .wrapper > h1{
+  width: unset
 }
 
 .wrath-and-glory.sheet.sheet.item .wrapper .item-form-group{
@@ -240,7 +244,6 @@
   text-align: center;
   font-size: 24px;
   color: white
-
 }
 
 
@@ -280,6 +283,7 @@
 .wrath-and-glory.sheet.item .wrapper.potency .potency-header{
  display: flex; 
  justify-content: center;
+ font-weight:bold
 }
 
 .wrath-and-glory.sheet.item .wrapper.potency button{
@@ -287,7 +291,11 @@
   width: 20px;
   margin: 3px;
   padding: 0px;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
  }
 
 .wrath-and-glory.sheet.item .potency-list{
@@ -301,11 +309,29 @@
 }
  
 .wrath-and-glory.sheet.item .potency-fields > *{
-  flex: 1
+  flex: 1;
 }
  
 .wrath-and-glory.sheet.item .potency-fields > a{
-  flex: 0 0 20px
+  flex: 0 0 20px;
+}
+
+.wrath-and-glory.sheet.item .potency-fields > .item-checkbox{
+  flex: 0 0 31px;
+}
+
+.wrath-and-glory.sheet.item .potency-content .potency-fields > a{
+text-align: center;
+color: white;
+background: black;
+align-items: center;
+font-size: 16px;
+display: flex;
+justify-content: center;
+}
+
+.wrath-and-glory.sheet.item .potency-content  .potency-fields > a:hover{
+  background: var(--color-imperium)
 }
  
  

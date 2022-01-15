@@ -6,6 +6,8 @@ export default class WNGChat {
     html.on("click", ".test-effect", this._onEffectClick.bind(this))
     html.on("click", ".invoke-test", this._onTestClick.bind(this))
     html.on("click", ".roll-mutation", this._onMutationClick.bind(this))
+    html.on("click", ".add-potency", this._onPotencyClick.bind(this))
+    html.on("click", ".potency-reset", this._onPotencyReset.bind(this))
   }
 
   static _onDamageClick(ev) {
@@ -15,7 +17,6 @@ export default class WNGChat {
     {
       let test = message.getTest();
       test.rollDamage()
-      test.sendDamageToChat();
     }
   }
 
@@ -158,6 +159,22 @@ export default class WNGChat {
     let roll = new Roll(table.data.formula)
     let result = await table.roll({ roll })
     ChatMessage.create({ content: result.results[0].getChatText() + ` (${result.roll.total})`, roll : result.roll, type: CONST.CHAT_MESSAGE_TYPES.ROLL, flavor: `Mutation`, speaker : test.context.speaker })
-   
+  }
+
+  static async _onPotencyClick(ev)
+  {
+    let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+    let msg = game.messages.get(id)
+    let test = msg.getTest();
+
+    test.addAllocation(parseInt(ev.currentTarget.dataset.index))
+  }
+  
+  static async _onPotencyReset(ev)
+  {
+    let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+    let msg = game.messages.get(id)
+    let test = msg.getTest();
+    test.resetAllocation()
   }
 }
