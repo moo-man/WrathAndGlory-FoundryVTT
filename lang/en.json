@@ -164,6 +164,7 @@
   "DIALOG.WRATH": "Wrath",
   "DIALOG.WOUNDS": "Wounds",
   "DIALOG.NO_DIFFICULTY" : "Please enter a Difficulty Number",
+  "DIALOG.TARGET_DEFENSE_WARNING" : "This Psychic Power may need you to target a token to set the DN. Please close this dialog and target a token before opening it again.",
   "DIALOG.ITEM_DELETE" : "Item Delete",
   "DIALOG.ITEM_DELETE_PROMPT" : "Are you sure you want to delete this item?",
 

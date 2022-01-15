@@ -397,7 +397,11 @@ export class WrathAndGloryActor extends Actor {
     _powerDialogData(power) {
         let dialogData = this._baseDialogData()
         dialogData.power = power
-        dialogData.difficulty.target = power.dn || WNGUtility._getTargetDefence()
+        dialogData.difficulty.target = power.DN
+        if (!Number.isNumeric(dialogData.difficulty.target))
+        {
+            ui.notifications.warn(game.i18n.localize("DIALOG.TARGET_DEFENSE_WARNING"))
+        }
         dialogData.pool.size = power.skill.total;
         return dialogData
     }

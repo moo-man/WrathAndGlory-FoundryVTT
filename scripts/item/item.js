@@ -394,6 +394,17 @@ export class WrathAndGloryItem extends Item {
         return this.test && Number.isNumeric(this.test.dn) && this.test.type
     }
 
+    get DN() {
+        if (Number.isNumeric(this.dn))
+            return parseInt(this.dn)
+        else if (this.dn.includes("@") && game.user.targets.size)
+        {
+            let target = Array.from(game.user.targets)[0]
+            return eval(Roll.replaceFormulaData(this.dn, target.actor.getRollData()))
+        }
+        else return "?"
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     get isKeyword() { return this.type === "keyword" }
     get isTalent() { return this.type === "talent" }

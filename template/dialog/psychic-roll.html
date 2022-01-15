@@ -23,7 +23,7 @@
             <label class="name">{{localize "DIALOG.DICE_POOL"}}</label>
             <input id="pool-size" class="pool base" type="number" value="{{pool.size}}" data-dtype="Number" />
             <select id="pool-rank" class="pool rank">
-                {{#select pool.rank}}
+                {{#select power.pool.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
                 <option value="{{r}}">{{rank}}</option>
                 {{/each}}

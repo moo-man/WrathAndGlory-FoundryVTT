@@ -441,7 +441,7 @@
       "description": "",
       "effect": "",
       "cost": 0,
-      "dn": 0,
+      "dn": "",
       "activation": "action",
       "duration": "",
       "range": "",

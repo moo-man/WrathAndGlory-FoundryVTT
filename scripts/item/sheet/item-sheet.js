@@ -6,6 +6,8 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       classes: ["wrath-and-glory", "sheet", "item"],
       resizable: true,
       scrollY: [".sheet-body"],
+      width: 650,
+      height: 600,
       tabs: [
         {
           navSelector: ".sheet-tabs",
