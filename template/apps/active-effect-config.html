@@ -131,7 +131,9 @@
                 </div>
                 <div class="effect-controls">
                     <a class="effect-control" data-action="delete"><i class="fas fa-trash"></i></a>
+                    {{#if (gt change.mode 5)}}
                     <a class="effect-script-config"><i class="fas fa-cog"></i></a>
+                    {{/if}}
                 </div>
             </li>
             {{/each}}

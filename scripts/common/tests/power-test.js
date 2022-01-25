@@ -12,8 +12,14 @@ export default class PowerTest extends WNGTest {
     this.data.testData.damage= data.damage || {}
     
     this.data.testData.itemId = data.itemId
+
+    // TODO: add to dialog
+    this.data.testData.otherDamage = {
+      "mortalWounds": { value: this.item.otherDamage.mortalWounds, bonus : 0 },
+      "wounds": { value: this.item.otherDamage.wounds, bonus : 0 },
+      "shock": { value: this.item.otherDamage.shock, bonus : 0 },
+    }
     
-    this.data.testData.otherDamage = this.item.otherDamage // TODO: add to dialog
     this.data.testData.potency = duplicate(this.item.potency)
     this.data.testData.potency.forEach(p => p.allocation = 0)
   }
@@ -42,20 +48,22 @@ export default class PowerTest extends WNGTest {
     this.result.potency.options.forEach(p => {
       // Set initial potency values (before potency allocation)
       if (p.property)
-        setProperty(this.result, p.property, getProperty(this.result, p.property) || p.initial) // If property already exists, use that as initial
+        setProperty(this.result, p.property, hasProperty(this.result, p.property) ? getProperty(this.result, p.property) : p.initial) // If property already exists, use that as initial
 
       
       // Mainly for Range - try to accomodate for string range values (10 m) by replacing only numeric content
       let propValue = getProperty(this.result, p.property)
       let addToValue = (p.allocation * p.value)
       let newValue
-      if (!Number.isNumeric(propValue) && Number.isNumeric(parseInt(propValue))) // If not numeric
+      if (!Number.isNumeric(propValue) && Number.isNumeric(parseInt(propValue))) // If property to add is not numeric
       {
         let propValueNum = (parseInt(propValue)) // parse the number
         newValue = propValue.replace(propValueNum, propValueNum + addToValue) // Replace the number with the potency value added
       }
       else 
         newValue = propValue + addToValue // If numeric property, just add the potency value
+
+
 
       setProperty(this.result, p.property, newValue) 
 

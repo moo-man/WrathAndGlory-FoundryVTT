@@ -321,7 +321,6 @@ export class WNGTest {
 
     this.result.damage.total = this.result.damage.flat
     this.result.damage.dice = [];
-    this.result.damage.other = duplicate(this.testData.otherDamage || {})
 
     let add = 0
     if (this.weapon && this.weapon.traitList.rad)
@@ -346,7 +345,7 @@ export class WNGTest {
     for (let damage in this.result.damage.other)
     {
       if (this.result.damage.other[damage])
-        this.result.damage.other[damage] = (await new Roll(this.result.damage.other[damage]).evaluate({async: true})).total
+        this.result.damage.other[damage].total = (await new Roll(this.result.damage.other[damage].value).evaluate({async: true})).total + this.result.damage.other[damage].bonus
     }
 
     this.damageRoll = r;
