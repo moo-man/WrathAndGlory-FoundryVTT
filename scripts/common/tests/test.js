@@ -254,6 +254,8 @@ export class WNGTest {
   // Update message data without rerendering the message content
   updateMessageFlags(){
     return this.message.update({"flags.wrath-and-glory.testData" : this.data})
+    if (this.message)
+      return this.message.update({"flags.wrath-and-glory.testData" : this.data})
   }
 
   _countShifting() {
@@ -414,7 +416,9 @@ export class WNGTest {
       if (this.item.test.type == "resolve")
         return `DN ${this.item.test.dn} ${game.wng.config.resolveTests[this.item.test.specification]} Test`
         if (this.item.test.type == "conviction")
+      if (this.item.test.type == "conviction")
         return `DN ${this.item.test.dn} ${game.wng.config.convictionTests[this.item.test.specification]} Test`
+      if (this.item.test.type == "corruption")
     }
   }
 

@@ -29,6 +29,8 @@ export default class AbilityRoll extends WNGTest {
 
   _computeResult()
   {
+    this.data.result = {}
+    this.computeDamage()
     this.rollDamage() 
   }
   

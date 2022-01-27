@@ -47,7 +47,7 @@ export class RollDialog extends Dialog {
           }
         },
         default: "roll"
-      }, { width: 430 }).render(true)
+      }, { width: 550 }).render(true)
     })
   }
 
@@ -68,7 +68,7 @@ export class RollDialog extends Dialog {
   {
       let results = this.data.dialogData.changes.map(c => {
           try {
-              let func = new Function("dialogData", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
+              let func = new Function("data", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
               return (func(this.data.dialogData) == true) // Only accept true returns
           }
           catch (e)
@@ -164,7 +164,7 @@ export class RollDialog extends Dialog {
       })
 
     changes.forEach(c => {
-      if (c.value.includes("@"))
+      if (c.value.toString().includes("@"))
           c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
   })
     for (let c of changes) {

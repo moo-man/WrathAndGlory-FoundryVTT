@@ -48,7 +48,6 @@
 .wrath-and-glory.dialog {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin-bottom: 8px;
   flex: 0 0 380px
 }
@@ -87,8 +86,7 @@
 
 .wrath-and-glory.dialog .wrapper-left {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   flex-basis: calc(50% - 4px);
   margin-right: 4px;
   justify-content: center;
@@ -97,7 +95,7 @@
 
 .wrath-and-glory.dialog .wrapper-right {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   flex-basis: calc(50% - 4px);
   margin-left: 4px;
@@ -108,7 +106,6 @@
 .wrath-and-glory.dialog .wrapper {
   display: flex;
   flex-direction: row;
-  flex-basis: 100%;
   margin-top: 8px;
   text-align: center;
 }

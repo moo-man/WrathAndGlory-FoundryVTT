@@ -192,10 +192,11 @@ export class WrathAndGloryActor extends Actor {
         dialogData.title = `${game.i18n.localize(attributeObject.label)} Test`
         dialogData.pool.size = attributeObject.total
         this._addOptions(dialogData, options)
+        dialogData.type = "attribute"
+        dialogData.attribute = attribute
         let testData = await RollDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
-        testData.type = "attribute"
         testData.attribute = attribute;
         return new WNGTest(testData)
     }
@@ -207,11 +208,12 @@ export class WrathAndGloryActor extends Actor {
         dialogData.title = `${game.i18n.localize(skillObject.label)} Test`
         dialogData.pool.size = skillObject.total
         this._addOptions(dialogData, options)
+        dialogData.type = "skill"
+        dialogData.skill = skill
         let testData = await RollDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.skill = skill
-        testData.type = "skill"
         testData.attribute = skillObject.attribute
         return new WNGTest(testData)
     }
@@ -266,10 +268,9 @@ export class WrathAndGloryActor extends Actor {
             dialogData.pool.size = this.resources.influence
             dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
             break;
-
         }
-
         this._addOptions(dialogData, options)
+        dialogData.type = type
         let testData = await RollDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
@@ -285,10 +286,10 @@ export class WrathAndGloryActor extends Actor {
         let dialogData = this._weaponDialogData(weapon);
         dialogData.title = `${weapon.name} Test`
         this._addOptions(dialogData, options)
+        dialogData.type = "weapon"
         let testData = await WeaponDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
-        testData.type = "weapon"
         testData.itemId = weapon.id
         testData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
         testData.attribute = weapon.skill.attribute
@@ -303,10 +304,10 @@ export class WrathAndGloryActor extends Actor {
         let dialogData = this._powerDialogData(power);
         dialogData.title = `${power.name}`
         this._addOptions(dialogData, options)
+        dialogData.type = "power"
         let testData = await PowerDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
-        testData.type = "power"
         testData.itemId = power.id
         testData.skill = "psychicMastery"
         testData.attribute = power.skill.attribute
@@ -361,6 +362,7 @@ export class WrathAndGloryActor extends Actor {
             targets : Array.from(game.user.targets)
         };
     }
+    
 
     _weaponDialogData(weapon) {
         let dialogData = this._baseDialogData()

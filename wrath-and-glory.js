@@ -24,6 +24,8 @@ import StealthRoll from "./scripts/common/tests/stealth.js";
 import AbilityRoll from "./scripts/common/tests/ability-roll.js";
 import ModuleInitializer from "./scripts/apps/module-initialization.js"
 import ModuleUpdater from "./scripts/apps/module-updater.js"
+import {migrateWorld} from "./scripts/common/migration.js"
+
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
@@ -52,7 +54,8 @@ Hooks.once("init", () => {
     },
     ItemTraits,
     RuinGloryCounter,
-    utility : WNGUtility
+    utility : WNGUtility,
+    migration : {migrateWorld}
   };
 
   CONFIG.Dice.terms.w = WrathDie;
