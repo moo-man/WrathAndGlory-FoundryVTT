@@ -235,8 +235,8 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
   _updatePotency(index, path, value) {
     let potency = foundry.utils.deepClone(this.item.potency)
-    if (Number.isNumeric(value) && value != true && value != false) // 
-      value = parseInt(value)
+    if (Number.isNumeric(value) && typeof value != "boolean") // 
+      value = Number(value)
 
     setProperty(potency[index], path, value)
 

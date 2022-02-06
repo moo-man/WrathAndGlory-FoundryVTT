@@ -33,10 +33,12 @@ export default class PowerTest extends WNGTest {
   _computeResult()
   {
     super._computeResult()
+    if (this.item.hasTest) this.result.test = duplicate(this.item.test);
     this.computeDamage() 
     if (this.result.isSuccess)
     {
       this.result.range = this.item.range
+      this.result.duration = this.item.duration
       this.computePotencies()
     }
   }

@@ -1,3 +1,5 @@
+import WrathAndGloryEffect from "./effect.js"
+
 export default class WNGChat {
   static chatListeners(html) {
     html.on("click", ".roll-damage", this._onDamageClick.bind(this))
@@ -81,8 +83,8 @@ export default class WNGChat {
       let test = msg.getTest();
       let item = test.item
       let effect = test.getEffect(effectId).toObject()
-      effect.origin = test.actor.uuid
-      setProperty(effect, "flags.core.statusId", getProperty(effect, "flags.core.statusId") || effect.label.slugify())
+
+      WrathAndGloryEffect.populateEffectData(effect, test, item);
       
       if (canvas.tokens.controlled.length)
       {
@@ -103,7 +105,7 @@ export default class WNGChat {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let msg = game.messages.get(id)
     let msgTest = msg.getTest();
-    let itemTest = msgTest.item.test;
+    let itemTest = msgTest.result.test;
 
     if (canvas.tokens.controlled.length)
     {

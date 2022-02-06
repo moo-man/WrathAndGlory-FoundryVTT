@@ -71,6 +71,7 @@ export class WNGTest {
   }
 
   _computeResult() {
+    this.data.result = {}
     this.result.dn = (this.testData.useDN) ? this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank) : 0;
     this.result.roll = this.roll.toJSON();
     this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), []);
@@ -346,8 +347,11 @@ export class WNGTest {
     // Other Damage
     for (let damage in this.result.damage.other)
     {
-      if (this.result.damage.other[damage])
+      if (this.result.damage.other[damage].value)
         this.result.damage.other[damage].total = (await new Roll(this.result.damage.other[damage].value).evaluate({async: true})).total + this.result.damage.other[damage].bonus
+      else if (this.result.damage.other[damage].bonus)
+        this.result.damage.other[damage].total = this.result.damage.other[damage].bonus
+
     }
 
     this.damageRoll = r;
@@ -403,22 +407,21 @@ export class WNGTest {
   }
 
   get showTest() {
-    return this.result.isSuccess && this.item && this.item.hasTest
+    return this.result.isSuccess && this.result.test
   }
 
   get testDisplay() {
     if (this.showTest)
     {
-      if (this.item.test.type == "attribute")
-        return `DN ${this.item.test.dn} ${game.wng.config.attributes[this.item.test.specification]} Test`
-      if (this.item.test.type == "skill")
-        return `DN ${this.item.test.dn} ${game.wng.config.skills[this.item.test.specification]} (${game.wng.config.attributeAbbrev[game.wng.config.skillAttribute[this.item.test.specification]]}) Test`
-      if (this.item.test.type == "resolve")
-        return `DN ${this.item.test.dn} ${game.wng.config.resolveTests[this.item.test.specification]} Test`
-        if (this.item.test.type == "conviction")
-      if (this.item.test.type == "conviction")
-        return `DN ${this.item.test.dn} ${game.wng.config.convictionTests[this.item.test.specification]} Test`
-      if (this.item.test.type == "corruption")
+      if (this.result.test.type == "attribute")
+        return `DN ${this.result.test.dn} ${game.wng.config.attributes[this.result.test.specification]} Test`
+      if (this.result.test.type == "skill")
+        return `DN ${this.result.test.dn} ${game.wng.config.skills[this.result.test.specification]} (${game.wng.config.attributeAbbrev[game.wng.config.skillAttribute[this.result.test.specification]]}) Test`
+      if (this.result.test.type == "resolve")
+        return `DN ${this.result.test.dn} ${game.wng.config.resolveTests[this.result.test.specification]} Test`
+        if (this.result.test.type == "conviction")
+      if (this.result.test.type == "conviction")
+        return `DN ${this.result.test.dn} ${game.wng.config.convictionTests[this.result.test.specification]} Test`
     }
   }
 

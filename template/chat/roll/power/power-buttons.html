@@ -9,7 +9,9 @@
         <div class="potency-list">
                 
                 {{#each result.potency.options as |p index|}}
-                <div class="potency-option" {{#unless p.canAllocate}}style="opacity:0.5"{{/unless}}>
+                <div class="potency-option" style="
+                {{#unless p.canAllocate}}opacity:0.5;{{/unless}} 
+                {{#if p.allocation}}color: var(--color-imperium);{{/if}}">
                         <button data-index="{{index}}" class="add-potency" {{#unless p.canAllocate}}disabled{{/unless}}>+</button>{{#if p.single}}*{{/if}}[{{p.cost}}] {{p.description}} {{#if p.allocation}}({{p.allocation}}){{/if}}
                 </div>
                 {{/each}}

@@ -226,12 +226,12 @@
                           <div class="potency-fields" data-index="{{index}}">
                             <input type="number" data-path="cost" placeholder='{{localize "POWER.POTENCY_COST"}}' value="{{potency.cost}}">
 
-                              <input type="number"  data-dtype="Number"  data-path="initial" value="{{potency.initial}}" placeholder='{{localize "POWER.POTENCY_INITIAL"}}' {{#if potency.initialDisabled}} disabled style="opacity:0.5"{{/if}}>
+                              <input type="number" step="any" data-dtype="Number"  data-path="initial" value="{{potency.initial}}" placeholder='{{localize "POWER.POTENCY_INITIAL"}}' {{#if potency.initialDisabled}} disabled style="opacity:0.5"{{/if}}>
 
                               <input type="text" data-path="property" placeholder='{{localize "POWER.POTENCY_PROPERTY"}}' value="{{potency.property}}">
                               
                               
-                              <input type="number" data-path="value" placeholder='{{localize "POWER.POTENCY_VALUE"}}' value="{{potency.value}}">
+                              <input type="number" step = "any" data-path="value" placeholder='{{localize "POWER.POTENCY_VALUE"}}' value="{{potency.value}}">
                               
                               <div class="item-checkbox {{#if potency.single}}checked{{else}}unchecked{{/if}}" data-path="single" data-target="potency">
                                 {{#if potency.single}}
