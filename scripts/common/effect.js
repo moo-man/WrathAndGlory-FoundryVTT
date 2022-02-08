@@ -12,7 +12,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
 
     fillDerivedData(actor, change)
     {
-        change.value = eval(Roll.replaceFormulaData(change.value, actor.getRollData()))
+        change.value = eval(Roll.replaceFormulaData(change.value, actor.getRollData())).toString();
     }
 
     getDialogChanges({target = false, condense = false, indexOffset = 0}={}) {

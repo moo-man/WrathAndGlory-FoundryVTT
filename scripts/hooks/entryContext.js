@@ -30,7 +30,7 @@ export default function() {
         let canShiftPotency = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
             let test = msg.getTest()
-            return canShift(li) && test.testData.potency.length && (msg.isAuthor || msg.isOwner)
+            return canShift(li) && test.testData.potency?.length && (msg.isAuthor || msg.isOwner)
         }
 
         let canResetPotency = li => {
