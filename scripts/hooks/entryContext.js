@@ -201,7 +201,7 @@ export default function() {
 
 function _dealDamageToTarget(test, target) {
     let ap = Math.abs(test.result.damage.ap) || 0
-    let damage = test.result.damage.total + (test.result.damage.other.wounds.total || 0)
+    let damage = test.result.damage.total + (test.result.damage.other?.wounds?.total || 0)
     let res = target.combat.resilience.total || 1
     let invuln = target.combat.resilience.invulnerable
     let note;
@@ -230,9 +230,9 @@ function _dealDamageToTarget(test, target) {
         addWounds = 0
         
     }
-    addWounds += test.result.damage.other.mortalWounds.total
+    addWounds += test.result.damage.other?.mortalWounds?.total || 0
     
-    if (test.result.damage.other.shock.total)
+    if (test.result.damage.other?.shock?.total)
     {
         addShock += test.result.damage.other.shock.total
     }

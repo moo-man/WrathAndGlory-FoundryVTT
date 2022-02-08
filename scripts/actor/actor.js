@@ -487,7 +487,7 @@ export class WrathAndGloryActor extends Actor {
         return this.type == "threat" && this.mob > 1
     }
 
-    async addCondition(effect) {
+    async addCondition(effect, flags = {}) {
         if (typeof (effect) === "string")
           effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
         if (!effect)
@@ -496,6 +496,7 @@ export class WrathAndGloryActor extends Actor {
         if (!effect.id)
           return "Conditions require an id field"
 
+        effect.flags = flags;
 
         let existing = this.hasCondition(effect.id)
 

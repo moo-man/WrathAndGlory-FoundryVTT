@@ -14,10 +14,13 @@ export default function() {
             if (actor.combat.shock.value > actor.combat.shock.max && actor.getFlag("wrath-and-glory", "autoExhausted"))
             {
                 if (!actor.hasCondition("exhausted"))
-                    actor.addCondition("exhausted")
+                    actor.addCondition("exhausted", {"wrath-and-glory.auto" : true}) // Auto flag for auto deletion
             }
-            else if (actor.hasCondition("exhausted") && actor.getFlag("wrath-and-glory", "autoExhausted"))
-                actor.removeCondition("exhausted")
+            else if (actor.hasCondition("exhausted") && actor.getFlag("wrath-and-glory", "autoExhausted")) // If not auto added, don't auto delete
+            {
+                if (actor.hasCondition("exhausted").getFlag("wrath-and-glory", "auto"))
+                    actor.removeCondition("exhausted")
+            }
         }
     })
 }
