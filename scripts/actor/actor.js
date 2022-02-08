@@ -366,6 +366,12 @@ export class WrathAndGloryActor extends Actor {
 
     _weaponDialogData(weapon) {
         let dialogData = this._baseDialogData()
+        if (weapon.Ammo)
+        {
+            // Add ammo dialog changes if any exist
+            dialogData.changeList = this.getDialogChanges({condense: true, add : weapon.Ammo.ammoDialogEffects})
+            dialogData.changes = this.getDialogChanges({add : weapon.Ammo.ammoDialogEffects})
+        }
         dialogData.weapon = weapon
         dialogData.pool.size = weapon.skill.total;
         dialogData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
@@ -435,10 +441,10 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    getDialogChanges({condense = false}={}) {
-
+    getDialogChanges({condense = false, add = []}={}) {
+        let effects = Array.from(this.effects).concat(add);
         // Aggregate dialog changes from each effect
-        let changes =  this.effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({condense, indexOffset : prev.length})), [])
+        let changes =  effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({condense, indexOffset : prev.length})), [])
 
         if (game.user.targets.size > 0)
         {

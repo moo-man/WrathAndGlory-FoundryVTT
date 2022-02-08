@@ -343,7 +343,23 @@ export class WrathAndGloryItem extends Item {
                 if (!e.data.changes.length)
                     return true
                 return e.data.changes.some(c => {
-                    return !hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item
+                    return !hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item, and isn't a dialog effect
+                })
+            })
+            return effects
+        }
+        else
+            return []
+    }
+
+    get ammoDialogEffects() {
+        if (this.type == "ammo") {
+            let effects = this.effects.filter(e => {
+                if (e.data.disabled) return false;
+                if (!e.data.changes.length)
+                    return false
+                return e.data.changes.some(c => {
+                    return c.mode == 6
                 })
             })
             return effects
