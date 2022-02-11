@@ -142,6 +142,7 @@
   "CHAT.WRATH_CRITICAL_CORRUPTION": "DN Reduced by 2!",
   "CHAT.WRATH_COMPLICATION_TITLE": "Wrath Complication",
   "CHAT.WRATH_COMPLICATION_COMMON": "something unexpected happened!",
+  "CHAT.WRATH_COMPLICATION_TRAUMATIC_INJURY": "Gain a Traumatic Injury!",
   "CHAT.WRATH_COMPLICATION_PSY": "roll on the Perils of the Warp table!",
   "CHAT.WRATH_COMPLICATION_WEAPON": "something unexpected happened!",
   "CHAT.WRATH_COMPLICATION_CORRUPTION": "Double Corruption points!",
@@ -433,6 +434,8 @@
   "CONDITION.Staggered" : "Staggered",
   "CONDITION.Terror" : "Terror",
   "CONDITION.Vulnerable" : "Vulnerable",
+  "CONDITION.Dying" : "Dying",
+  "CONDITION.Dead" : "Dead",
 
   "EFFECT.Wounded" : "Wounded",
   "EFFECT.FullDefence" : "Full Defence",

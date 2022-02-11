@@ -339,7 +339,18 @@ CONFIG.statusEffects = [
         label : "CONDITION.Vulnerable",
         icon : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
         changes : [{key: "data.combat.defence.bonus", mode : 2, value : -1}]
+    },
+    {
+        id : "dying",
+        label : "CONDITION.Dying",
+        icon : "systems/wrath-and-glory/asset/icons/dying.svg"
+    },
+    {
+        id : "dead",
+        label : "CONDITION.Dead",
+        icon : "systems/wrath-and-glory/asset/icons/dead.svg"
     }
+    
 ]
 
 export default WNG

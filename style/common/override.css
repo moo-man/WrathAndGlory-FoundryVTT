@@ -1,4 +1,9 @@
 
+  option {
+    background: unset
+  }
+
+
 .window-app .window-content {
     background: var(--image-background) 0 100% repeat;/*, var(--image-background) 50px 100% repeat;*/
     font-family: var(--font-text);

@@ -354,7 +354,7 @@ export class WrathAndGloryActor extends Actor {
                 rank: "none"
             },
             wrath: {
-                base: 1
+                base: this.hasCondition("dying") ? 1 + this.itemCategories["traumaticInjury"].length : 1
             },
             changeList : this.getDialogChanges({condense: true}),
             changes : this.getDialogChanges(),
@@ -499,6 +499,9 @@ export class WrathAndGloryActor extends Actor {
         effect.flags = flags;
 
         let existing = this.hasCondition(effect.id)
+
+        if (effect.id == "dying")
+            await this.addCondition("prone")
 
         if (!existing) {
           effect.label = game.i18n.localize(effect.label)

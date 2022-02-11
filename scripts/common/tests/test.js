@@ -37,14 +37,21 @@ export class WNGTest {
       test.roll = Roll.fromData(test.result.roll)
     if (test.testData.rerolls.length)
       test.rerolledTests = test.result.rerolls.map(r => Roll.fromData(r))
-    if (test.result.damage.roll)
+    if (test.result.damage?.roll)
       test.damageRoll = Roll.fromData(test.result.damage.roll)
     return test
   }
 
   async rollTest() {
-    this.result.wrathSize = this.testData.wrath.base > 0 ? this.testData.wrath.base : 1;
-    this.result.poolSize = this.testData.pool.size + this.testData.pool.bonus - 1 + this.getRankNum(this.testData.pool.rank);
+    // Total dice in the test
+    let diceNum = this.testData.pool.size + this.testData.pool.bonus + this.getRankNum(this.testData.pool.rank);
+
+    // Wrath = wrath value inputted, but can't be above total number of dice, and can't be negative
+    this.result.wrathSize = this.testData.wrath.base < 0 ? 0 : Math.min(this.testData.wrath.base, diceNum);
+
+    // Leftover, if any, is pool dice
+    this.result.poolSize = Math.max(diceNum - this.result.wrathSize, 0)
+
     await this._rollDice()
     this._computeResult();
 
@@ -86,8 +93,8 @@ export class WNGTest {
     this._computeShifted()
 
     // Compute wrath before filtering out shifted dice
-    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
-    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result === 1);
+
+    this._handleWrath() 
 
     this.result.allDice = duplicate(this.result.dice);
     this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
@@ -119,6 +126,19 @@ export class WNGTest {
         return prev;
       }, [])
     }
+  }
+
+  _handleWrath()
+  {
+    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result === 1);
+
+    if (this.actor.hasCondition("dying"))
+    {
+      this.result.isWrathCritical = this.result.dice.every(r => r.isWrath && r.result === 6);
+      this.result.gainTraumaticInjury = this.result.isWrathComplication 
+    }
+    else 
+      this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
   }
 
   _computeShifted() {
