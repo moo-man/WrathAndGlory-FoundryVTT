@@ -419,6 +419,11 @@ export class WrathAndGloryActor extends Actor {
         dialogData.difficulty.target = options.dn || dialogData.difficulty.target
         dialogData.pool.size = options.pool || dialogData.pool.size
         dialogData.title = options.title || dialogData.title
+        delete options.title;
+        delete options.pool;
+        delete options.dn;
+
+        mergeObject(dialogData, options);
     }
 
     _addCorruptionData(dialogData)

@@ -274,7 +274,6 @@ export class WNGTest {
 
   // Update message data without rerendering the message content
   updateMessageFlags(){
-    return this.message.update({"flags.wrath-and-glory.testData" : this.data})
     if (this.message)
       return this.message.update({"flags.wrath-and-glory.testData" : this.data})
   }
@@ -439,9 +438,8 @@ export class WNGTest {
         return `DN ${this.result.test.dn} ${game.wng.config.skills[this.result.test.specification]} (${game.wng.config.attributeAbbrev[game.wng.config.skillAttribute[this.result.test.specification]]}) Test`
       if (this.result.test.type == "resolve")
         return `DN ${this.result.test.dn} ${game.wng.config.resolveTests[this.result.test.specification]} Test`
-        if (this.result.test.type == "conviction")
-      if (this.result.test.type == "conviction")
-        return `DN ${this.result.test.dn} ${game.wng.config.convictionTests[this.result.test.specification]} Test`
+      if (this.result.test.type == "corruption")
+        return `DN ${this.result.test.dn} Corruption Test`
     }
   }
 

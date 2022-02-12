@@ -122,7 +122,7 @@ export default class WNGChat {
           itemTest = duplicate(itemTest)
         }
 
-        await testFunction(itemTest.specification, {dn: itemTest.dn}).then(async test => {
+        await testFunction(itemTest.specification, {dn: itemTest.dn, resistPower : msgTest.item?.type == "psychicPower"}).then(async test => {
           await test.rollTest();
           test.sendToChat()
         })
