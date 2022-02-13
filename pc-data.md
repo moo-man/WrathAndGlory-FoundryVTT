@@ -136,7 +136,7 @@ Example: `data.attributes.strength.total` will give you the total strenght of a 
          "cost":<Integer>,
          "total":<Integer>
       },
-      "persusasion":{
+      "persuasion":{
          "label":"SKILL.PERSUASION",
          "attribute":"fellowship",
          "rating":<Integer>,
