@@ -287,12 +287,14 @@ export class WrathAndGloryActor extends Actor {
         dialogData.title = `${weapon.name} Test`
         this._addOptions(dialogData, options)
         dialogData.type = "weapon"
+        dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
+        dialogData.attribute = weapon.skill.attribute
         let testData = await WeaponDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.itemId = weapon.id
-        testData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
-        testData.attribute = weapon.skill.attribute
+        testData.skill = dialogData.skill
+        testData.attribute = dialogData.attribute
         ui.sidebar.activateTab("chat")
         return new WeaponTest(testData)
     }
@@ -305,12 +307,14 @@ export class WrathAndGloryActor extends Actor {
         dialogData.title = `${power.name}`
         this._addOptions(dialogData, options)
         dialogData.type = "power"
+        dialogData.skill = "psychicMastery"
+        dialogData.attribute = power.skill.attribute
         let testData = await PowerDialog.create(dialogData)
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.itemId = power.id
-        testData.skill = "psychicMastery"
-        testData.attribute = power.skill.attribute
+        testData.skill = dialogData.skill
+        testData.attribute = dialogData.attribute
         ui.sidebar.activateTab("chat")
         return new PowerTest(testData)
     }

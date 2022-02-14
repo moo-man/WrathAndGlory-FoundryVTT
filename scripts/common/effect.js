@@ -15,6 +15,22 @@ export default class WrathAndGloryEffect extends ActiveEffect {
         change.value = eval(Roll.replaceFormulaData(change.value, actor.getRollData())).toString();
     }
 
+    get item() {
+        if (this.parent && this.parent.documentName == "Item")
+            return this.parent
+        else if (this.data.origin && this.parent.documentName == "Actor") 
+        {
+            let origin = this.data.origin.split(".")
+            if (origin[1] == this.parent.id) // If origin ID is same as parent ID
+            {
+                if (origin[3])
+                {
+                    return this.parent.items.get(origin[3])
+                }
+            }
+        }
+    }
+
     getDialogChanges({target = false, condense = false, indexOffset = 0}={}) {
         let allChanges = this.data.changes.map(c => c.toObject())
         allChanges.forEach((c, i) => {
@@ -87,7 +103,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
                 value = split.join(".")
                 value = getProperty(test, value)
                 if (Number.isNumeric(value))
-                    change.value = parseInt(value)
+                    change.value = Number(value)
                 else 
                     change.value = 0
             }

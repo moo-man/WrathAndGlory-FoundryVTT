@@ -37,7 +37,7 @@ function migrateActorData(actor) {
     if (actor.data.persusasion)
     {
         updateData["data.skills.persuasion"] = duplicate(actor.data.persusasion)
-        updateData["data.skills.-=.persusasion"]
+        updateData["data.skills.-=.persusasion"] = null
     }
     updateData.items = actor.items.map(i => i.data).map(migrateItemData)
     return updateData;

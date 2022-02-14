@@ -102,6 +102,8 @@ export class WNGTest {
     this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0);
     this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
+    if (this.result.isWrathCritical)
+      this.result.isWrathCritical == this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
   }
 
   _computeReroll() {
