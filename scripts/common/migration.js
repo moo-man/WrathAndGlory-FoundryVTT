@@ -34,10 +34,10 @@ export async function migrateWorld() {
 function migrateActorData(actor) {
     const updateData = {_id: actor._id}
     updateData.effects = actor.effects.map(migrateEffectData)
-    if (actor.data.persusasion)
+    if (actor.data.skills.persusasion)
     {
-        updateData["data.skills.persuasion"] = duplicate(actor.data.persusasion)
-        updateData["data.skills.-=.persusasion"] = null
+        updateData["data.skills.persuasion"] = duplicate(actor.data.skills.persusasion)
+        updateData["data.skills.-=persusasion"] = null
     }
     updateData.items = actor.items.map(i => i.data).map(migrateItemData)
     return updateData;

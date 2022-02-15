@@ -66,8 +66,8 @@ export default class PowerTest extends WNGTest {
         newValue = propValue + addToValue // If numeric property, just add the potency value
 
 
-
-      setProperty(this.result, p.property, newValue) 
+      if (p.property)
+        setProperty(this.result, p.property, newValue) 
 
       this.result.potency.spent += p.cost * p.allocation
 

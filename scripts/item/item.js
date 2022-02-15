@@ -413,6 +413,8 @@ export class WrathAndGloryItem extends Item {
     }
 
     get DN() {
+        if (!this.dn)
+            return "?"
         if (Number.isNumeric(this.dn))
             return parseInt(this.dn)
         else if (this.dn.includes("@") && game.user.targets.size)
