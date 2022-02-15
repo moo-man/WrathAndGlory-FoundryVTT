@@ -6,8 +6,8 @@
         <b class="rank">{{localize "DIALOG.RANK"}}</b>
         <b class="bonus">{{localize "DIALOG.BONUS"}}</b>
     </div>
-    
-    <div class="wrapper" {{#if determination}}style="display: none"{{/if}}>
+
+    <div class="wrapper" {{#if noDn }}style="display: none"{{/if}}>
         <label class="name">{{localize "DIALOG.DN"}}</label>
         <input id="difficulty-target" class="difficulty base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
         <select id="difficulty-rank" class="difficulty rank">
@@ -31,11 +31,15 @@
         </select>
         <input id="pool-bonus" class="pool bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
     </div>
-
     {{#if determination}}
     <div class="wrapper">
         <label class="name">{{localize "DIALOG.WOUNDS"}}</label>
         <input id="wounds" class="wounds" type="number" value="0" data-dtype="Number" />
+    </div>
+    {{else}}
+    <div class="wrapper">
+        <label class="name">{{localize "DIALOG.WRATH"}}</label>
+        <input id="wrath-base" class="base" type="number" value="{{wrath.base}}" data-dtype="Number" />
     </div>
     {{/if}}
 
@@ -44,8 +48,8 @@
     <div class="wrapper">
         <h1>{{localize "HEADER.EFFECTS"}}</h1>
         <select class="effect-select" multiple>
-            {{#each effects as |effect e|}}
-            <option title="{{effect.label}} - {{effect.data.flags.wrath-and-glory.description}}" value="{{e}}">{{effect.data.flags.wrath-and-glory.description}}</option>
+            {{#each changeList as |change c|}}
+            <option title="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">&#8226; {{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
             {{/each}}
         </select>
     </div>

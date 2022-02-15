@@ -5,6 +5,9 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["wrath-and-glory", "sheet", "item"],
       resizable: true,
+      scrollY: [".sheet-body"],
+      width: 650,
+      height: 600,
       tabs: [
         {
           navSelector: ".sheet-tabs",
@@ -171,29 +174,73 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       let index = parseInt($(ev.currentTarget).parents(".item").attr("data-index"))
       let upgrades = duplicate(this.item.upgrades)
       upgrades.splice(index, 1)
-      return this.item.update({"data.upgrades" : upgrades})
+      return this.item.update({ "data.upgrades": upgrades })
     })
 
     html.find(".upgrade-name").click(ev => {
       let index = parseInt($(ev.currentTarget).parents(".item").attr("data-index"))
       this.item.Upgrades[index].sheet.render(true)
       ui.notifications.warn("Changes made to an upgrade will not be saved")
-    }) 
+    })
 
 
     html.find(".condition-toggle").click(event => {
       let key = $(event.currentTarget).parents(".condition").attr("data-key")
       if (this.item.hasCondition(key))
-          this.item.removeCondition(key)
+        this.item.removeCondition(key)
       else
-          this.item.addCondition(key)
+        this.item.addCondition(key)
     })
 
     html.find(".item-checkbox").click(ev => {
       let target = ev.currentTarget.dataset["target"]
-
-      this.item.update({[target] : !getProperty(this.item.data, target)})
+      
+      if (target == "potency")
+      {
+        let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
+        let path = ev.currentTarget.dataset["path"]
+        this._updatePotency(index, path, !ev.currentTarget.classList.contains("checked"))
+      }
+      else
+        this.item.update({ [target]: !getProperty(this.item.data, target) })
     })
 
+    html.find(".add-potency").click(ev => {
+      let potency = duplicate(this.item.potency)
+      potency.push({
+        "description": "",
+        "cost": 1,
+        "property": "",
+        "initial": "",
+        "value": "",
+        "single" : false
+      })
+      this.item.update({ "data.potency": potency })
+    })
+
+    html.find(".potency-delete").click(ev => {
+      let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
+      let potency = duplicate(this.item.potency)
+      potency.splice(index, 1)
+      this.item.update({ "data.potency": potency })
+    })
+
+    
+    html.find(".potency-fields input").change(ev => {
+      let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
+      let path = ev.currentTarget.dataset.path
+      this._updatePotency(index, path, ev.target.value)
+    })
   }
+
+  _updatePotency(index, path, value) {
+    let potency = foundry.utils.deepClone(this.item.potency)
+    if (Number.isNumeric(value) && typeof value != "boolean") // 
+      value = Number(value)
+
+    setProperty(potency[index], path, value)
+
+    this.item.update({ "data.potency": potency })
+  }
+
 }

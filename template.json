@@ -140,7 +140,7 @@
             "bonus" : 0,
             "cost": 0
           },
-          "persusasion": {
+          "persuasion": {
             "label": "SKILL.PERSUASION",
             "attribute": "fellowship",
             "rating": 0,
@@ -441,14 +441,13 @@
       "description": "",
       "effect": "",
       "cost": 0,
-      "dn": 0,
+      "dn": "",
       "activation": "action",
       "duration": "",
       "range": "",
       "multiTarget": false,
       "keywords": "",
       "prerequisites": "",
-      "potency": "",
       "damage": {
         "base": 0,
         "bonus": 0,
@@ -458,7 +457,13 @@
         "base": 0,
         "bonus": 0,
         "rank": "none"
-      }
+      },
+      "otherDamage" : {
+        "mortalWounds" : "",
+        "wounds" : "",
+        "shock" : ""
+      },
+      "potency" : []
     },
     "talent": {
       "templates": [],

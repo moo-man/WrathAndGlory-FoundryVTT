@@ -13,6 +13,8 @@ export class WrathAndGloryItem extends Item {
     _preUpdate(updateData, options, user) {
         if (hasProperty(updateData, "data.quantity") && updateData.data.quantity < 0)
             updateData.data.quantity = 0;
+        if (getProperty(updateData, "data.test.type") == "corruption")
+            setProperty(updateData, "data.test.specification", "corruption")
     }
 
     prepareData() {
@@ -266,14 +268,22 @@ export class WrathAndGloryItem extends Item {
     get traitList() {
         let traits = {}
         this.data.data.traits.forEach(i => {
-            traits[i.name] = {
-                name: i.name,
-                display: this.traitsAvailable[i.name],
-                type: i.type
+
+            if (i.custom) 
+            {
+                traits[i.name] = duplicate(i)
             }
-            if (game.wng.config.traitHasRating[i.name]) {
-                traits[i.name].rating = i.rating;
-                traits[i.name].display += ` (${i.rating})`
+            else 
+            {
+                traits[i.name] = {
+                    name: i.name,
+                    display: this.traitsAvailable[i.name],
+                    type: i.type
+                }
+                if (game.wng.config.traitHasRating[i.name]) {
+                    traits[i.name].rating = i.rating;
+                    traits[i.name].display += ` (${i.rating})`
+                }
             }
         })
         return traits
@@ -335,7 +345,23 @@ export class WrathAndGloryItem extends Item {
                 if (!e.data.changes.length)
                     return true
                 return e.data.changes.some(c => {
-                    return !hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item
+                    return !hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item, and isn't a dialog effect
+                })
+            })
+            return effects
+        }
+        else
+            return []
+    }
+
+    get ammoDialogEffects() {
+        if (this.type == "ammo") {
+            let effects = this.effects.filter(e => {
+                if (e.data.disabled) return false;
+                if (!e.data.changes.length)
+                    return false
+                return e.data.changes.some(c => {
+                    return c.mode == 6
                 })
             })
             return effects
@@ -386,6 +412,19 @@ export class WrathAndGloryItem extends Item {
         return this.test && Number.isNumeric(this.test.dn) && this.test.type
     }
 
+    get DN() {
+        if (!this.dn)
+            return "?"
+        if (Number.isNumeric(this.dn))
+            return parseInt(this.dn)
+        else if (this.dn.includes("@") && game.user.targets.size)
+        {
+            let target = Array.from(game.user.targets)[0]
+            return eval(Roll.replaceFormulaData(this.dn, target.actor.getRollData()))
+        }
+        else return "?"
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     get isKeyword() { return this.type === "keyword" }
     get isTalent() { return this.type === "talent" }
@@ -427,6 +466,7 @@ export class WrathAndGloryItem extends Item {
     get prerequisites() { return this.data.data.prerequisites }
     get potency() { return this.data.data.potency }
     get damage() { return this.data.data.damage }
+    get otherDamage() { return this.data.data.otherDamage }
     get ed() { return this.data.data.ed }
     get attack() { return this.data.data.attack }
     get ap() { return this.data.data.ap }
@@ -436,4 +476,20 @@ export class WrathAndGloryItem extends Item {
     get equipped() { return this.data.data.equipped }
     get test() { return this.data.data.test }
     get abilityType() { return this.data.data.abilityType }
+
+
+  /**
+   * Transform the Document data to be stored in a Compendium pack.
+   * Remove any features of the data which are world-specific.
+   * This function is asynchronous in case any complex operations are required prior to exporting.
+   * @param {CompendiumCollection} [pack]   A specific pack being exported to
+   * @return {object}                       A data object of cleaned data suitable for compendium import
+   * @memberof ClientDocumentMixin#
+   * @override - Retain ID
+   */
+  toCompendium(pack) {
+    let data = super.toCompendium(pack)
+    data._id = this.id; // Replace deleted ID so it is preserved
+    return data;
+  }
 }

@@ -10,6 +10,9 @@
         {{/if}}
 
         {{#if result.isWrathComplication}}
-        <p><strong class="red">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>:
-                {{localize "CHAT.WRATH_COMPLICATION_COMMON"}}</strong></p>
+        {{#if result.gainTraumaticInjury}}
+        <p><strong class="red">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>: {{localize "CHAT.WRATH_COMPLICATION_TRAUMATIC_INJURY"}}</strong></p>
+        {{else}}
+        <p><strong class="red">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>: {{localize "CHAT.WRATH_COMPLICATION_COMMON"}}</strong></p>
+        {{/if}}
         {{/if}}

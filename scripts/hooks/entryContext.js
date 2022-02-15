@@ -27,6 +27,20 @@ export default function() {
             return canShift(li) && test.doesDamage && (msg.isAuthor || msg.isOwner)
         }
 
+        let canShiftPotency = li => {
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let test = msg.getTest()
+            return canShift(li) && test.testData.potency?.length && (msg.isAuthor || msg.isOwner)
+        }
+
+        let canResetPotency = li => {
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let test = msg.getTest()
+            return test.testData.potency?.length && test.testData.potency.some(p => p.allocation) && (msg.isAuthor || msg.isOwner)
+        }
+
+
+
         let canClearReroll = li => {
             let test = game.messages.get(li.attr("data-message-id")).getTest()
             return test && game.user.isGM && test.testData.rerolls.length
@@ -93,6 +107,16 @@ export default function() {
                 }
             },
             {
+                name: "BUTTON.RESET_POTENCY",
+                icon: '<i class="fas fa-redo"></i>',
+                condition: canResetPotency,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    test.resetAllocation()
+                }
+            },
+            {
                 name: "BUTTON.SHIFT",
                 icon: '<i class="fas fa-angle-double-right"></i>',
                 condition: canShift,
@@ -132,6 +156,17 @@ export default function() {
                 }
             },
             {
+                name: "BUTTON.SHIFT_POTENCY",
+                icon: '<i class="fas fa-angle-double-right"></i>',
+                condition: canShiftPotency,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
+                    test.shift(shifted, "potency")
+                }
+            },
+            {
                 name: "BUTTON.UNSHIFT",
                 icon: '<i class="fas fa-angle-double-left"></i>',
                 condition: canUnshift,
@@ -165,12 +200,15 @@ export default function() {
 }
 
 function _dealDamageToTarget(test, target) {
-    let ap = test.result.damage.ap || 0
-    let damage = test.result.damage.total
+    let ap = Math.abs(test.result.damage.ap) || 0
+    let damage = test.result.damage.total + (test.result.damage.other?.wounds?.total || 0)
     let res = target.combat.resilience.total || 1
     let invuln = target.combat.resilience.invulnerable
     let note;
     let promise
+
+    let addWounds = 0;
+    let addShock = 0;
 
     if (!invuln)
         res -= ap
@@ -182,16 +220,35 @@ function _dealDamageToTarget(test, target) {
 
     if (res == damage)
     {
-        note = game.i18n.format("NOTE.APPLY_DAMAGE_SHOCK", {name : target.data.token.name});
-        promise = target.update({"data.combat.shock.value" : target.combat.shock.value + 1})
+        addShock++
     }
+    
     if (res < damage)
     {
-        let wounds = test.result.damage.total - res
-        if (wounds <= 0) return
-        promise = target.update({"data.combat.wounds.value" : target.combat.wounds.value + wounds});
-        note = game.i18n.format("NOTE.APPLY_DAMAGE", {damage : wounds, name : target.data.token.name});
+        addWounds = damage - res
+        if (addWounds <= 0)
+        addWounds = 0
+        
     }
-    ui.notifications.notify(note);
+    addWounds += test.result.damage.other?.mortalWounds?.total || 0
+    
+    if (test.result.damage.other?.shock?.total)
+    {
+        addShock += test.result.damage.other.shock.total
+    }
+
+    let updateObj = {}
+    if (addShock)
+    {
+        updateObj["data.combat.shock.value"] = target.combat.shock.value + 1
+        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_SHOCK", {name : target.data.token.name}));
+}
+    if (addWounds)      
+    {
+        updateObj["data.combat.wounds.value"] = target.combat.wounds.value + addWounds;
+        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE", {damage : addWounds, name : target.data.token.name}));
+    }
+    
+    target.update(updateObj);
     return promise
 }

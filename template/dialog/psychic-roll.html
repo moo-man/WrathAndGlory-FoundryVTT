@@ -1,6 +1,6 @@
 <div class="wrath-and-glory dialog power-dialog">
     <div class="wrapper-left">
-        <h1>{{localize skillName}}</h1>
+        <h1>{{localize "SKILL.PSYCHIC_MASTERY"}}</h1>
         <div class="wrapper">
             <b class="name"></b>
             <b class="base">{{localize "DIALOG.BASE"}}</b>
@@ -23,7 +23,7 @@
             <label class="name">{{localize "DIALOG.DICE_POOL"}}</label>
             <input id="pool-size" class="pool base" type="number" value="{{pool.size}}" data-dtype="Number" />
             <select id="pool-rank" class="pool rank">
-                {{#select pool.rank}}
+                {{#select power.pool.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
                 <option value="{{r}}">{{rank}}</option>
                 {{/each}}
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="wrapper-right">
-        <h1 style="margin-top: 8px;">{{name}}</h1>
+        <h1 style="margin-top: 8px;">{{power.name}}</h1>
         <div class="wrapper">
             <b class="name"></b>
             <b class="base">{{localize "DIALOG.BASE"}}</b>
@@ -69,10 +69,6 @@
             <input id="ed-bonus" class="ed bonus" type="number" value="{{power.ed.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
-            <label class="name">{{localize "PSYCHIC_POWER.POTENCY"}}</label>
-            <input id="potency" class="full" type="text" value="{{{power.potency}}}" />
-        </div>
-        <div class="wrapper">
             <b class="name"></b>
             <b class="die">1</b>
             <b class="die">2</b>
@@ -96,8 +92,8 @@
     <div class="wrapper">
         <h1>{{localize "HEADER.EFFECTS"}}</h1>
         <select class="effect-select" multiple>
-            {{#each effects as |effect e|}}
-            <option title="{{effect.label}} - {{effect.data.flags.wrath-and-glory.description}}" value="{{e}}">{{effect.data.flags.wrath-and-glory.description}}</option>
+            {{#each changeList as |change c|}}
+            <option title="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">&#8226; {{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
             {{/each}}
         </select>
     </div>

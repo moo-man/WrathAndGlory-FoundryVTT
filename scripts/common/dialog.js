@@ -9,6 +9,23 @@ export class RollDialog extends Dialog {
     return options
   }
 
+  async _render(...args)
+  {
+      await super._render(...args)
+
+      let automatic = this.runChangeConditionals()
+      let select = this.element.find(".effect-select")[0]
+      let options = Array.from(select.children)
+      options.forEach((opt, i) => {
+          if (automatic[i])
+          {
+              opt.selected = true;
+              select.dispatchEvent(new Event("change"))
+          }
+      })
+      if (automatic.some(i => i))
+        select.focus()
+  }
 
   static async create(data) {
     const html = await renderTemplate("systems/wrath-and-glory/template/dialog/common-roll.html", data);
@@ -16,7 +33,9 @@ export class RollDialog extends Dialog {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
-        effects: data.effects,
+        actor : data.actor,
+        targets : data.targets,
+        dialogData : data,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
@@ -28,7 +47,7 @@ export class RollDialog extends Dialog {
           }
         },
         default: "roll"
-      }, { width: 430 }).render(true)
+      }, { width: 550 }).render(true)
     })
   }
 
@@ -41,8 +60,25 @@ export class RollDialog extends Dialog {
     testData.pool.bonus = parseInt(html.find("#pool-bonus")[0].value);
     testData.pool.rank = html.find("#pool-rank")[0].value;
     testData.wounds = html.find("#wounds")[0]?.value
+    testData.wrath.base = parseInt(html.find("#wrath-base")[0]?.value);
 
     return testData
+  }
+
+  runChangeConditionals()
+  {
+      let results = this.data.dialogData.changes.map(c => {
+          try {
+              let func = new Function("data", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
+              return (func(this.data.dialogData) == true) // Only accept true returns
+          }
+          catch (e)
+          {
+              console.error("Something went wrong when processing conditional dialog effect: " + e, c)
+              return false
+          }
+      })
+      return results
   }
 
 
@@ -120,10 +156,16 @@ export class RollDialog extends Dialog {
     for (let key in this.effectValues)
       this.effectValues[key] = null
 
-    let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)]).map(i => i.clone())
-    let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), []).filter(i => i.mode == 0)
+      let changes = []
+      $(ev.currentTarget).val().map(i => {
+          let indices = i.split(",");
+          indices.forEach(changeIndex => {
+              changes.push(this.data.dialogData.changes[parseInt(changeIndex)])
+          })
+      })
+
     changes.forEach(c => {
-      if (c.value.includes("@"))
+      if (c.value.toString().includes("@"))
           c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
   })
     for (let c of changes) {
@@ -162,7 +204,9 @@ export class WeaponDialog extends RollDialog {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
-        effects: data.effects,
+        actor : data.actor,
+        targets : data.targets,
+        dialogData : data,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
@@ -195,6 +239,7 @@ export class WeaponDialog extends RollDialog {
     testData.ed.damageValues[4] = parseInt(html.find("#die-four")[0].value);
     testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
     testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
+    testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
     return testData
   }
 
@@ -274,7 +319,9 @@ export class PowerDialog extends RollDialog {
       new this({
         title: game.i18n.localize(data.title),
         content: html,
-        effects: data.effects,
+        actor : data.actor,
+        targets : data.targets,
+        dialogData : data,
         buttons: {
           roll: {
             icon: '<i class="fas fa-check"></i>',
@@ -305,7 +352,6 @@ export class PowerDialog extends RollDialog {
     testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
     testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
     testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
-    testData.potency = html.find("#potency")[0].value;
     return testData
   }
 

@@ -20,9 +20,12 @@ import CorruptionTest from "./scripts/common/tests/corruption-test.js";
 import MutationTest from "./scripts/common/tests/mutation-test.js";
 import ResolveTest from "./scripts/common/tests/resolve-test.js";
 import DeterminationRoll from "./scripts/common/tests/determination.js";
+import StealthRoll from "./scripts/common/tests/stealth.js";
 import AbilityRoll from "./scripts/common/tests/ability-roll.js";
 import ModuleInitializer from "./scripts/apps/module-initialization.js"
 import ModuleUpdater from "./scripts/apps/module-updater.js"
+import {migrateWorld} from "./scripts/common/migration.js"
+
 
 Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
@@ -38,6 +41,7 @@ Hooks.once("init", () => {
       MutationTest,
       ResolveTest,
       DeterminationRoll,
+      StealthRoll,
       AbilityRoll
     },
     dice : {
@@ -50,7 +54,8 @@ Hooks.once("init", () => {
     },
     ItemTraits,
     RuinGloryCounter,
-    utility : WNGUtility
+    utility : WNGUtility,
+    migration : {migrateWorld}
   };
 
   CONFIG.Dice.terms.w = WrathDie;

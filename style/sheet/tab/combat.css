@@ -41,7 +41,7 @@
 }
 
 .wrath-and-glory.sheet.actor .combat .wrapper .wrapper-item label {
-  flex: 1
+  flex: 2;
 }
 
 .wrath-and-glory.sheet.actor .combat .wrapper .wrapper-item .input-group,

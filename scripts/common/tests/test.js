@@ -7,8 +7,9 @@ export class WNGTest {
         attribute: data.attribute,
         skill: data.skill,
         wrath: data.wrath,
-        shifted : data.shifted || {damage : [], glory : [], other : []},
-        rerolls: [] // Indices of reroll sets
+        shifted : data.shifted || {damage : [], glory : [], other : [], potency : []},
+        rerolls: [], // Indices of reroll sets,
+        useDN : true
       },
       context: {
         title: data.title,
@@ -36,14 +37,21 @@ export class WNGTest {
       test.roll = Roll.fromData(test.result.roll)
     if (test.testData.rerolls.length)
       test.rerolledTests = test.result.rerolls.map(r => Roll.fromData(r))
-    if (test.result.damage)
+    if (test.result.damage?.roll)
       test.damageRoll = Roll.fromData(test.result.damage.roll)
     return test
   }
 
   async rollTest() {
-    this.result.wrathSize = this.testData.wrath.base > 0 ? this.testData.wrath.base : 1;
-    this.result.poolSize = this.testData.pool.size + this.testData.pool.bonus - 1 + this.getRankNum(this.testData.pool.rank);
+    // Total dice in the test
+    let diceNum = this.testData.pool.size + this.testData.pool.bonus + this.getRankNum(this.testData.pool.rank);
+
+    // Wrath = wrath value inputted, but can't be above total number of dice, and can't be negative
+    this.result.wrathSize = this.testData.wrath.base < 0 ? 0 : Math.min(this.testData.wrath.base, diceNum);
+
+    // Leftover, if any, is pool dice
+    this.result.poolSize = Math.max(diceNum - this.result.wrathSize, 0)
+
     await this._rollDice()
     this._computeResult();
 
@@ -70,51 +78,83 @@ export class WNGTest {
   }
 
   _computeResult() {
-    this.result.dn = this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank);
-    this.result.roll = this.roll.toJSON()
-    this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), [])
-    if (this.testData.rerolls.length) {
-      this.result.rerolls = this.rerolledTests.map(r => r.toJSON()) // save roll objects for recreation
-      this.result.rerolledDice = [] 
-      for (let reroll of this.rerolledTests)
-        this.result.rerolledDice.push(reroll.dice.reduce((prev, current) => prev.concat(current.results.map(i => { i.rerolled = true; return i })), []))
+    this.data.result = {}
+    this.result.dn = (this.testData.useDN) ? this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank) : 0;
+    this.result.roll = this.roll.toJSON();
+    this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), []);
 
-      // Merge rerolls and roll - For each reroll set, take the corresponding reroll indices and keep the dice that the indices indicate
-      for(let i = 0; i < this.result.rerolledDice.length; i++)
-      {
-        let rerollDice = this.result.rerolledDice[i]
-        let shouldRerollSet = this.testData.rerolls[i]
-        this.result.dice = this.result.dice.reduce((prev, current, i) => {
-          if (shouldRerollSet.includes(i))
-            prev.push(rerollDice[i])
-          else {
-            prev.push(current)
-          }
-          return prev
-        }, [])
-      }
+    if (this.testData.rerolls.length) {
+      this._computeReroll();
     }
 
-    this.result.dice.forEach((die, index) => die.index = index)
-    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result == 6)
-    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result == 1)
+    // Set dice indices before filtering out shifted
+    this.result.dice.forEach((die, index) => die.index = index);
 
-    this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index))
-    this.result.shifted.forEach(die => {
-      if(this.testData.shifted.damage.includes(die.index))
-        die.shift = "damage";
-      else if(this.testData.shifted.glory.includes(die.index))
-        die.shift = "glory";
-      else
-        die.shift = "other"
-    })
+    this._computeShifted()
 
-    this.result.allDice = duplicate(this.result.dice)
-    this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index))
-    this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0)
-    this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0)
-    this.result.shiftsPossible = this._countShifting();
+    // Compute wrath before filtering out shifted dice
+
+    this._handleWrath() 
+
+    this.result.allDice = duplicate(this.result.dice);
+    this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
+    this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0);
+    this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0);
+    this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
+    if (this.result.isWrathCritical)
+      this.result.isWrathCritical == this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
+  }
+
+  _computeReroll() {
+    this.result.rerolls = this.rerolledTests.map(r => r.toJSON()); // save roll objects for recreation
+    this.result.rerolledDice = [];
+    for (let reroll of this.rerolledTests)
+      this.result.rerolledDice.push(reroll.dice.reduce((prev, current) => prev.concat(current.results.map(i => {
+        i.rerolled = true;
+        return i;
+      })), []))
+
+    // Merge rerolls and roll - For each reroll set, take the corresponding reroll indices and keep the dice that the indices indicate
+    for (let i = 0; i < this.result.rerolledDice.length; i++) {
+      let rerollDice = this.result.rerolledDice[i];
+      let shouldRerollSet = this.testData.rerolls[i];
+      this.result.dice = this.result.dice.reduce((prev, current, i) => {
+        if (shouldRerollSet.includes(i)) {
+          prev.push(rerollDice[i]);
+        } else {
+          prev.push(current);
+        }
+        return prev;
+      }, [])
+    }
+  }
+
+  _handleWrath()
+  {
+    this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result === 1);
+
+    if (this.actor.hasCondition("dying"))
+    {
+      this.result.isWrathCritical = this.result.dice.every(r => r.isWrath && r.result === 6);
+      this.result.gainTraumaticInjury = this.result.isWrathComplication 
+    }
+    else 
+      this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
+  }
+
+  _computeShifted() {
+    this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index));
+    this.result.shifted.forEach(die => {
+      if (this.testData.shifted.damage.includes(die.index)) 
+        die.shift = "damage";
+      else if (this.testData.shifted.glory.includes(die.index))
+        die.shift = "glory";
+      else if (this.testData.shifted.potency.includes(die.index))
+          die.shift = "potency"
+      else
+        die.shift = "other";
+    })
   }
 
   async reroll(diceIndices) {
@@ -139,14 +179,14 @@ export class WNGTest {
       })
       await game.dice3d.showForRoll(Roll.fromData(rerollShow))
     }
-      
+
     this.sendToChat()
   }
 
   async rerollFailed() {
     this.context.rerollFailed = true;
     let reroll = [] // Reroll indices
-      
+
     // If rerollable, record index of die
     this.result.dice.forEach((die) => {
       if(die.rerollable)
@@ -194,6 +234,7 @@ export class WNGTest {
     this.testData.shifted.other = []
     this.testData.shifted.damage = []
     this.testData.shifted.glory = []
+    this.testData.shifted.potency = []
     this._computeResult()
     this.sendToChat()
   }
@@ -235,7 +276,8 @@ export class WNGTest {
 
   // Update message data without rerendering the message content
   updateMessageFlags(){
-    return this.message.update({"flags.wrath-and-glory.testData" : this.data})
+    if (this.message)
+      return this.message.update({"flags.wrath-and-glory.testData" : this.data})
   }
 
   _countShifting() {
@@ -255,6 +297,8 @@ export class WNGTest {
     if(this.testData.shifted.damage.includes(dieIndex))
       return true
     if(this.testData.shifted.glory.includes(dieIndex))
+      return true
+    if(this.testData.shifted.potency.includes(dieIndex))
       return true
     if(this.testData.shifted.other.includes(dieIndex))
       return true
@@ -279,23 +323,39 @@ export class WNGTest {
     }
   }
 
+  /**
+   * Set Base values for damage, before any rolling
+   */
+  computeDamage() {
+    this.result.damage = {
+      ed : {},
+      ap: (this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank)) || 0,
+      dice: [],
+      flat : this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
+      total : 0,
+      other : duplicate(this.testData.otherDamage || {})
+    }
+    this.result.damage.total = this.result.damage.flat
+    this.result.damage.ed = {number : this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length};
+    this.result.damage.ed.values = this.testData.ed.damageValues
+
+  }
+
   async rollDamage() {
-    let ed = this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length;
-    let values = this.testData.ed.damageValues
+
+    this.result.damage.total = this.result.damage.flat
+    this.result.damage.dice = [];
+
     let add = 0
     if (this.weapon && this.weapon.traitList.rad)
       add = this.weapon.traitList.rad.rating
 
+    let damage = this.result.damage
     let r = Roll.fromTerms([
-      new PoolDie({ number: ed, faces: 6, options : {values, add} }),
+      new PoolDie({ number: damage.ed.number, faces: 6, options : {values : damage.ed.values, add} }),
     ])
 
-    r.evaluate({ async: true });
-    this.result.damage = {
-      total: this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
-      ap: (this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank)) || 0,
-      dice: []
-    };
+    await r.evaluate({ async: true });
     r.terms.forEach((term) => {
       if (typeof term === 'object' && term !== null) {
         term.results.forEach(die => {
@@ -304,8 +364,21 @@ export class WNGTest {
         });
       }
     });
+
+    // Other Damage
+    for (let damage in this.result.damage.other)
+    {
+      if (this.result.damage.other[damage].value)
+        this.result.damage.other[damage].total = (await new Roll(this.result.damage.other[damage].value).evaluate({async: true})).total + this.result.damage.other[damage].bonus
+      else if (this.result.damage.other[damage].bonus)
+        this.result.damage.other[damage].total = this.result.damage.other[damage].bonus
+
+    }
+
     this.damageRoll = r;
     this.result.damage.roll = r.toJSON()
+    this.updateMessageFlags()
+    this.sendDamageToChat()
   }
 
 
@@ -355,20 +428,20 @@ export class WNGTest {
   }
 
   get showTest() {
-    return this.result.isSuccess && this.item && this.item.hasTest 
+    return this.result.isSuccess && this.result.test
   }
 
   get testDisplay() {
     if (this.showTest)
     {
-      if (this.item.test.type == "attribute")
-        return `DN ${this.item.test.dn} ${game.wng.config.attributes[this.item.test.specification]} Test`
-      if (this.item.test.type == "skill")
-        return `DN ${this.item.test.dn} ${game.wng.config.skills[this.item.test.specification]} (${game.wng.config.attributeAbbrev[game.wng.config.skillAttribute[this.item.test.specification]]}) Test`
-      if (this.item.test.type == "resolve")
-        return `DN ${this.item.test.dn} ${game.wng.config.resolveTests[this.item.test.specification]} Test`
-        if (this.item.test.type == "conviction")
-        return `DN ${this.item.test.dn} ${game.wng.config.convictionTests[this.item.test.specification]} Test`
+      if (this.result.test.type == "attribute")
+        return `DN ${this.result.test.dn} ${game.wng.config.attributes[this.result.test.specification]} Test`
+      if (this.result.test.type == "skill")
+        return `DN ${this.result.test.dn} ${game.wng.config.skills[this.result.test.specification]} (${game.wng.config.attributeAbbrev[game.wng.config.skillAttribute[this.result.test.specification]]}) Test`
+      if (this.result.test.type == "resolve")
+        return `DN ${this.result.test.dn} ${game.wng.config.resolveTests[this.result.test.specification]} Test`
+      if (this.result.test.type == "corruption")
+        return `DN ${this.result.test.dn} Corruption Test`
     }
   }
 

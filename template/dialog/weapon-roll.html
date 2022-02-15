@@ -32,6 +32,10 @@
             <input id="pool-bonus" class="pool bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
         </div>
     </div>
+    <div class="wrapper">
+        <label class="name">{{localize "DIALOG.WRATH"}}</label>
+        <input id="wrath-base" class="base" type="number" value="{{wrath.base}}" data-dtype="Number" />
+    </div>
     <div class="wrapper-right">
         <h1 style="margin-top: 8px;">{{weapon.name}}</h1>
         <div class="wrapper">
@@ -77,10 +81,6 @@
             <input id="ap-bonus" class="ap bonus" type="number" value="{{ap.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
-            <label class="name">{{localize "WEAPON.TRAITS"}}</label>
-            <input id="traits" class="full" type="text" value="{{weapon.Traits}}" />
-        </div>
-        <div class="wrapper">
             <b class="name"></b>
             <b class="die">1</b>
             <b class="die">2</b>
@@ -104,8 +104,8 @@
     <div class="wrapper">
         <h1>{{localize "HEADER.EFFECTS"}}</h1>
         <select class="effect-select" multiple>
-            {{#each effects as |effect e|}}
-            <option title="{{effect.label}} - {{effect.data.flags.wrath-and-glory.description}}" value="{{e}}">{{effect.data.flags.wrath-and-glory.description}}</option>
+            {{#each changeList as |change c|}}
+            <option title="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">&#8226; {{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
             {{/each}}
         </select>
     </div>

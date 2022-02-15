@@ -1,11 +1,11 @@
 export async function migrateWorld() {
-    const schemaVersion = 4;
+    const schemaVersion = 6;
     const worldSchemaVersion = Number(game.settings.get("wrath-and-glory", "worldSchemaVersion"));
     if (worldSchemaVersion !== schemaVersion && game.user.isGM) {
         ui.notifications.info("Upgrading the world, please wait...");
             for (let actor of game.actors.contents) {
                 try {
-                    const update = migrateActorData(actor.data, worldSchemaVersion);
+                    const update = migrateActorData(actor.data);
                     if (!isObjectEmpty(update)) {
                         console.log(`Migrating ${actor.name}`)
                         await actor.update(update);
@@ -17,7 +17,7 @@ export async function migrateWorld() {
             for (let item of game.items.contents) {
                 try {
                     console.log(`Migrating ${item.name}`)
-                    const update = migrateItemData(item.data, worldSchemaVersion);
+                    const update = migrateItemData(item.data);
                     if (!isObjectEmpty(update)) {
                         console.log(`Migrating ${item.name}`)
                         await item.update(update);
@@ -26,84 +26,58 @@ export async function migrateWorld() {
                     console.error(e);
                 }
             }
-        for (let pack of game.packs) {
-            try {
-                if (pack.metadata.package == "world") {
-                    console.log(`Migrating ${pack.metadata.label}`)
-                    await migrateCompendium(pack)
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        }
         game.settings.set("wrath-and-glory", "worldSchemaVersion", schemaVersion);
         ui.notifications.info("Upgrade complete!");
     }
 };
 
-function migrateActorData(actor, worldSchemaVersion) {
-
-    updateData = {}
-    // for(let attribute in actor.data.attributes)
-    // {   
-    //     updateData[`data.attributes.${attribute}.`]
-    // }
-
-    updateData.items = actor.items.map(i => migrateItemData(i.data, worldSchemaVersion)).filter(i => !isObjectEmpty(i))
-    return update;
-}
-
-
-function migrateItemData(item, worldSchemaVersion) {
-    const update = {};
-    if (item.type === "weapon" && !item.data.upgrades) {
-        update["data.upgrades"] = []
-
-    return update;
-};
-}
-
-
-
-const migrateSceneData = (scene, worldSchemaVersion) => {
-    // const tokens = foundry.utils.deepClone(scene.tokens);
-    // return {
-    //     tokens: tokens.map((tokenData) => {
-    //         if (!tokenData.actorId || tokenData.actorLink || !tokenData.actorData.data) {
-    //             tokenData.actorData = {};
-    //             return tokenData;
-    //         }
-    //         const token = new Token(tokenData);
-    //         if (!token.actor) {
-    //             tokenData.actorId = null;
-    //             tokenData.actorData = {};
-    //         } else if (!tokenData.actorLink && token.data.actorData.items) {
-    //             const update = migrateActorData(token.data.actorData, worldSchemaVersion);
-    //             console.log("ACTOR CHANGED", token.data.actorData, update);
-    //             tokenData.actorData = mergeObject(token.data.actorData, update);
-    //         }
-    //         return tokenData;
-    //     }),
-    // };
-};
-
-async function migrateCompendium(pack, worldSchemaVersion) {
-    const entity = pack.metadata.entity;
-
-    await pack.migrate();
-    const content = await pack.getDocuments();
-
-    for (let ent of content) {
-        let updateData = {};
-        if (entity === "Actor") {
-            updateData = migrateActorData(ent.data);
-        }
-        else if (entity === "Item") {
-            updateData = migrateItemData(ent.data);
-        }
-        if (!isObjectEmpty(updateData)) {
-            console.log(`Migrating ${ent.name} in ${pack.metadata.label}`)
-            await ent.update(updateData);
-        }
+function migrateActorData(actor) {
+    const updateData = {_id: actor._id}
+    updateData.effects = actor.effects.map(migrateEffectData)
+    if (actor.data.skills.persusasion)
+    {
+        updateData["data.skills.persuasion"] = duplicate(actor.data.skills.persusasion)
+        updateData["data.skills.-=persusasion"] = null
     }
-};
+    updateData.items = actor.items.map(i => i.data).map(migrateItemData)
+    return updateData;
+}
+
+
+function migrateItemData(item) {
+    const updateData = {_id : item._id};
+    updateData.effects = item.effects.map(migrateEffectData)
+    let regex = /\*?\[(\d)\](.+?)</gm
+    if (typeof item.data.potency == "string")
+    {
+        let potencies = [];
+        let matches = Array.from(item.data.potency.matchAll(regex));
+        for(let match of matches)
+        {
+            let potencyObj = {}
+            potencyObj.cost = parseInt(match[1]) || 1
+            potencyObj.single = match[0].includes("*")
+            potencyObj.description = match[2].split("").filter(c => c != "*").join("").trim();
+            if (potencyObj.description.includes("+1 ED"))
+                potencyObj.property = "damage.ed.number"
+            potencies.push(potencyObj);
+        }
+        updateData["data.potency"] = potencies;
+    }
+    return updateData;
+}
+
+function migrateEffectData(effect)
+{
+    let effectData = effect.toObject()
+    let description = getProperty(effectData, "flags.wrath-and-glory.description")
+    effectData.changes.forEach((change, i) => {
+        if (change.mode == 0)
+        {
+            change.mode = 6
+            setProperty(effectData, `flags.wrath-and-glory.changeCondition.${i}`, {description, script:""})
+        }
+    })
+    return effectData
+}
+

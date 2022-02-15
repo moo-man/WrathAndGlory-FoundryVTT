@@ -24,7 +24,7 @@ WNG.skills = {
     "investigation" : "SKILL.INVESTIGATION",
     "leadership" : "SKILL.LEADERSHIP",
     "medicae" : "SKILL.MEDICAE",
-    "persusasion" : "SKILL.PERSUASION",
+    "persuasion" : "SKILL.PERSUASION",
     "pilot" : "SKILL.PILOT",
     "psychicMastery" : "SKILL.PSYCHIC_MASTERY",
     "scholar" : "SKILL.SCHOLAR",
@@ -55,7 +55,7 @@ WNG.skillAttribute = {
     "investigation" : "intellect",
     "leadership" : "willpower",
     "medicae" : "intellect",
-    "persusasion" : "fellowship",
+    "persuasion" : "fellowship",
     "pilot" : "agility",
     "psychicMastery" : "willpower",
     "scholar" : "intellect",
@@ -339,7 +339,18 @@ CONFIG.statusEffects = [
         label : "CONDITION.Vulnerable",
         icon : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
         changes : [{key: "data.combat.defence.bonus", mode : 2, value : -1}]
+    },
+    {
+        id : "dying",
+        label : "CONDITION.Dying",
+        icon : "systems/wrath-and-glory/asset/icons/dying.svg"
+    },
+    {
+        id : "dead",
+        label : "CONDITION.Dead",
+        icon : "systems/wrath-and-glory/asset/icons/dead.svg"
     }
+    
 ]
 
 export default WNG
