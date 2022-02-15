@@ -12,7 +12,13 @@ export default class WrathAndGloryEffect extends ActiveEffect {
 
     fillDerivedData(actor, change)
     {
-        change.value = eval(Roll.replaceFormulaData(change.value, actor.getRollData())).toString();
+        try {
+            change.value = eval(Roll.replaceFormulaData(change.value, actor.getRollData())).toString();
+        }
+        catch(e)
+        {
+            console.error("Something went wrong when filling derived effect: " + e)
+        }
     }
 
     get item() {
