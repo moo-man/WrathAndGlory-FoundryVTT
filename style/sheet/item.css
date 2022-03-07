@@ -369,3 +369,79 @@ justify-content: center;
   flex-basis: calc(50% - 4px);
   margin-left: 4px;
 }
+
+
+.wrath-and-glory.sheet.item .archetype{
+ height: 100%
+}
+
+.wrath-and-glory.sheet.item .archetype .sheet-body {
+  margin-top: 5px;
+  height: calc(100% - 105px)
+}
+
+.wrath-and-glory.sheet.item .wrapper.archetype-skills,
+  .wrath-and-glory.sheet.item .wrapper.archetype-attributes {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrath-and-glory.sheet.item .archetype .wrapper.archetype-attributes .item-form-inputs {
+  width: unset;
+}
+
+.wrath-and-glory.sheet.item .archetype .wrapper.archetype-skills .item-form-inputs input,
+  .wrath-and-glory.sheet.item .archetype .wrapper.archetype-attributes .item-form-inputs input{
+  border: 1px solid black;
+  flex: 1;
+}
+
+
+
+.wrath-and-glory.sheet.item .wrapper.archetype-attributes .item-form-groups {
+  flex-direction: row;
+  display: flex;
+}
+
+.wrath-and-glory.sheet.item .wrapper.archetype-attributes .item-form-group {
+  flex-direction: column;
+  display: flex;
+  margin: 5px;
+}
+
+.wrath-and-glory.sheet.item .wrapper.archetype-skills .item-form-groups {
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex: 1;
+  margin-top: 3px;
+}
+
+.wrath-and-glory.sheet.item .wrapper.archetype-skills .item-form-groups .item-form-group {
+  margin: 3px;
+}
+
+.wrath-and-glory.sheet.item .wrapper.archetype-skills .item-form-groups label{
+  width: 125px;
+}
+
+.wrath-and-glory.sheet.item .wrapper.archetype-skills .item-form-groups .item-form-inputs{
+  width: 100px;
+}
+
+
+.wrath-and-glory.sheet.item .archetype .wrapper.equipment {
+  flex-direction: column;
+}
+
+.wrath-and-glory.sheet.item .archetype .wrapper.equipment .equipment-list {
+  background: url(../../asset/image/input.webp) repeat;
+  min-height: 200px;
+  box-shadow: inset 0 0 20px var(--color-dark-grey);
+  margin: 5px;
+  width:unset;
+}
+
+
