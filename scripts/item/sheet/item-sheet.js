@@ -55,6 +55,12 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     })  
 
     data.rangeType = (this.item.isMelee || this.item.category == "grenade-missile") ? "single" : "multi"
+
+    if (this.item.type == "archetype")
+    {
+      data.wargearHTML = this.item.wargear.map(i => i.name).join(", ")
+      data.talents = this.item.suggested.talents.map(i => i.name).join(", ")
+    }
     return data;
   }
 
@@ -73,6 +79,10 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       this.item.update({"data.upgrades" : upgrades})
       ui.notifications.notify("Upgrade applied to " + this.item.name)
     } 
+    else if (this.item.type == "archetype")
+    {
+      this.item.handleArchetypeItem(dropItem);
+    }
     else if (dragData.type == "ActiveEffect")
     {
       this.item.createEmbeddedDocuments("ActiveEffect", [dragData.data])

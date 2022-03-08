@@ -42,7 +42,7 @@
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.KEYWORDS"}}</label>
           <div class="item-form-inputs">
-            <input type="text" class="keywords" value="{{keywords}}"/>
+            <input type="text" class="keywords" value="{{data.keywords}}"/>
           </div>
         </div>
       </div>
@@ -82,10 +82,10 @@
         </div>
       </div>
 
-      <div class="wrapper equipment">
-        <h1>{{localize "ARCHETYPE.EQUIPMENT"}}</h1>
-        <div class="equipment-list">
-          
+      <div class="wrapper wargear">
+        <h1>{{localize "ARCHETYPE.WARGEAR"}} <button type="button" class="add-wargear">+</button> <button type="button" class="reset"><i class="fas fa-redo"></i></button></h1>
+        <div class="wargear-list">
+          {{{wargearHTML}}}
         </div>
       </div>
 

@@ -432,11 +432,11 @@ justify-content: center;
 }
 
 
-.wrath-and-glory.sheet.item .archetype .wrapper.equipment {
+.wrath-and-glory.sheet.item .archetype .wrapper.wargear {
   flex-direction: column;
 }
 
-.wrath-and-glory.sheet.item .archetype .wrapper.equipment .equipment-list {
+.wrath-and-glory.sheet.item .archetype .wrapper.wargear .wargear-list {
   background: url(../../asset/image/input.webp) repeat;
   min-height: 200px;
   box-shadow: inset 0 0 20px var(--color-dark-grey);

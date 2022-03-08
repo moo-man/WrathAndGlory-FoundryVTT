@@ -527,6 +527,7 @@
         "name" : "",
         "id" : ""
       },
+      "influence" : 0,
       "cost" : 0,
       "keywords" : [],
       "attributes" : {
@@ -568,6 +569,11 @@
           "id" : ""
         }]
       ],
+      "groups" : {
+        "type": "and",
+        "groupId" : "root",
+        "items" : []
+      },
       "suggested" : {
         "attributes" : {
           "strength" : 0,

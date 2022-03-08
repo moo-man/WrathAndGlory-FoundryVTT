@@ -149,6 +149,45 @@ export class WrathAndGloryItem extends Item {
 
     }
 
+    handleArchetypeItem(item)
+    {
+        if (["weapon", "weaponUpgrade", "armour", "equipment", "ammo", "augmentic"].includes(item.type))
+        {
+            let wargear = duplicate(this.wargear);
+            wargear.push({
+                name : item.name,
+                id : item.id,
+                diff : {}
+            })
+            let groups = this.addToGroup({index: wargear.length, type : "item"})
+            return this.update({"data.wargear" : wargear, "data.groups" : groups})
+        }
+        if(item.type == "ability")
+        {
+            return this.update({"data.ability.id" : item.id, "data.ability.name" : item.name})
+        }
+        if (item.type == "talent")
+        {   
+            let talents = duplicate(this.suggested.talents)
+            talents.push({"id" : item.id, "name" : item.name})
+            this.update({"data.suggested.talents" : talents})
+        }
+        if (item.type == "keyword")
+        {
+            let keywords = duplicate(this.keywords)
+            keywords.push(item.name)
+            this.update({"data.keywords" : keywords})
+        }
+    }
+    
+    addToGroup(object)
+    {
+        let groups = duplicate(this.groups)
+        object.groupId = randomID()
+        groups.items.push(object)
+        return groups
+    }
+
     async addCondition(effect) {
         if (typeof (effect) === "string")
             effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
@@ -476,6 +515,15 @@ export class WrathAndGloryItem extends Item {
     get equipped() { return this.data.data.equipped }
     get test() { return this.data.data.test }
     get abilityType() { return this.data.data.abilityType }
+    get tier() { return this.data.data.tier}
+    get species() { return this.data.data.species}
+    get attributes() { return this.data.data.attributes}
+    get skills() { return this.data.data.skills}
+    get ability() { return this.data.data.ability}
+    get wargear() { return this.data.data.wargear}
+    get groups() { return this.data.data.groups}
+    get suggested() { return this.data.data.suggested}
+    
 
 
   /**
