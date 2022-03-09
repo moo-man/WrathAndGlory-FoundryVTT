@@ -2,13 +2,13 @@
   <div class="archetype">
     <div class="sheet-header">
       <div class="avatar">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{name}}" />
       </div>
       <div class="bio">
         <div class="wrapper-row">
           <div class="name">
             <label>{{localize "ARCHETYPE.NAME"}}</label>
-            <input name="name" type="text" value="{{item.name}}" />
+            <input name="name" type="text" value="{{name}}" />
           </div>
         </div>
       </div>
@@ -76,14 +76,18 @@
       <div class="wrapper">
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.ABILITY"}}</label>
-          <div class="item-form-inputs">
-            <input type="text" value="{{data.ability.name}}" disabled/>
+          <div class="archetype-item-list">
+            <a class="archetype-item" data-id="{{data.ability.id}}">{{data.ability.name}}</a>
           </div>
         </div>
       </div>
 
       <div class="wrapper wargear">
-        <h1>{{localize "ARCHETYPE.WARGEAR"}} <button type="button" class="add-wargear">+</button> <button type="button" class="reset"><i class="fas fa-redo"></i></button></h1>
+        <h1>{{localize "ARCHETYPE.WARGEAR"}} 
+          <button type="button" class="add-wargear"><i class="fas fa-plus"></i></button>
+          <button type="button" class="reset"><i class="fas fa-redo"></i></button>
+          <button type="button" class="configure-groups"><i class="fas fa-cog"></i></button>
+        </h1>
         <div class="wargear-list">
           {{{wargearHTML}}}
         </div>
@@ -121,154 +125,11 @@
       <div class="wrapper">
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.SUGGESTED_TALENTS"}}</label>
-          <div class="item-form-inputs">
-            <input type="text" value="{{talents}}"/>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- {{#if (eq rangeType "multi")}}
-      <div class="wrapper">
-        <div class="item-form-group static">
-          <label>{{localize "ARCHETYPE.SALVO"}}</label>
-          <div class="item-form-inputs small">
-            <input name="data.salvo" type="number" value="{{data.salvo}}" data-dtype="Number" />
-          </div>
-        </div>
-        <div class="item-form-group static">
-          <label>{{localize "ARCHETYPE.RANGE"}}</label>
-          <div class="item-form-inputs medium">
-            <input name="data.range.short" type="number" value="{{data.range.short}}" data-dtype="Number" />
-            <input name="data.range.medium" type="number" value="{{data.range.medium}}" data-dtype="Number" />
-            <input name="data.range.long" type="number" value="{{data.range.long}}" data-dtype="Number" />
-          </div>
-        </div>
-      </div>
-      {{else}}
-      <div class="wrapper">
-        <div class="item-form-group static">
-          <label>{{localize "ARCHETYPE.RANGE"}}</label>
-          <div class="item-form-inputs small">
-            <input name="data.range.melee" type="number" value="{{data.range.melee}}" data-dtype="Number" />
-          </div>
-        </div>
-        <div class="item-form-group static">
-          <label>{{localize "ARCHETYPE.THROWN"}} S x </label>
-          <div class="item-form-inputs small">
-            <input name="data.range.thrown" type="number" value="{{data.range.thrown}}" data-dtype="Number" />
-          </div>
-        </div>
-      </div>
-      {{/if}}
-      <div class="wrapper">
-        <div class="damage-header">
-          <b class="spacer"></b>
-          <b class="base">{{localize "DIALOG.BASE"}}</b>
-          <b class="rank">{{localize "DIALOG.RANK"}}</b>
-          <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
-        </div>
-        <div class="item-form-group fixed">
-          <label>{{localize "ARCHETYPE.DAMAGE"}}</label>
-          <div class="item-form-inputs">
-            <input name="data.damage.base" class="base" type="number" value="{{data.damage.base}}"
-              data-dtype="Number" />
-            <select name="data.damage.rank" class="rank">
-              {{#select data.damage.rank}}
-              <option value="none">{{localize "RANK.NONE"}}</option>
-              <option value="single">{{localize "RANK.SINGLE"}}</option>
-              <option value="double">{{localize "RANK.DOUBLE"}}</option>
-              {{/select}}
-            </select>
-            <input name="data.damage.bonus" class="modifier" type="number" value="{{data.damage.bonus}}"
-              data-dtype="Number" />
-          </div>
-        </div>
-      </div>
-      <div class="wrapper">
-        <div class="item-form-group fixed">
-          <label>{{localize "ARCHETYPE.ED"}}</label>
-          <div class="item-form-inputs">
-            <input name="data.ed.base" class="base" type="number" value="{{data.ed.base}}" data-dtype="Number" />
-            <select name="data.ed.rank" class="rank">
-              {{#select data.ed.rank}}
-              <option value="none">{{localize "RANK.NONE"}}</option>
-              <option value="single">{{localize "RANK.SINGLE"}}</option>
-              <option value="double">{{localize "RANK.DOUBLE"}}</option>
-              {{/select}}
-            </select>
-            <input name="data.ed.bonus" class="modifier" type="number" value="{{data.ed.bonus}}" data-dtype="Number" />
-          </div>
-        </div>
-      </div>
-      <div class="wrapper">
-        <div class="item-form-group fixed">
-          <label>{{localize "ARCHETYPE.AP"}}</label>
-          <div class="item-form-inputs">
-            <input name="data.ap.base" class="base" type="number" value="{{data.ap.base}}" data-dtype="Number" />
-            <select name="data.ap.rank" class="rank">
-              {{#select data.ap.rank}}
-              <option value="none">{{localize "RANK.NONE"}}</option>
-              <option value="single">{{localize "RANK.SINGLE"}}</option>
-              <option value="double">{{localize "RANK.DOUBLE"}}</option>
-              {{/select}}
-            </select>
-            <input name="data.ap.bonus" class="modifier" type="number" value="{{data.ap.bonus}}" data-dtype="Number" />
-          </div>
-        </div>
-      </div>
-
-      <div class="wrapper">
-        <div class="item-form-group static">
-          <label>{{localize "ARCHETYPE.VALUE"}}</label>
-          <div class="item-form-inputs small">
-            <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
-          </div>
-        </div>
-        <div class="item-form-group static">
-          <label>{{localize "ARCHETYPE.RARITY"}}</label>
-          <div class="item-form-inputs">
-            <select name="data.rarity">
-              {{#select data.rarity}}
-              <option value=""> - </option>
-              {{#each (config "rarity") as |rarity r|}}
-              <option value="{{r}}">{{rarity}}</option>
-              {{/each}}
-              {{/select}}
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="wrapper">
-        <div class="item-form-group">
-          <label>{{localize "ARCHETYPE.KEYWORDS"}}</label>
-          <div class="item-form-inputs">
-            <input name="data.keywords" type="text" value="{{data.keywords}}" />
-          </div>
-        </div>
-      </div>
-
-      <div class="item-list">
-        <div class="header">
-          <div class="item-property item-image"></div>
-          <span class="item-property item-name">{{localize "HEADER.UPGRADES"}}</span>
-          <div class="item-controls">
-          </div>
-        </div>
-        {{#each item.upgrades as |upgrade u|}}
-        <div class="item" data-index="{{u}}">
-          <div class="item-content">
-            <img class="item-property item-image" src="{{upgrade.img}}"></img>
-            <div class="item-property item-name upgrade-name">{{upgrade.name}}</div>
-
-            <div class="item-property flex"></div>
-            <div class="item-controls">
-              <a class="item-control upgrade-delete" title="Delete Upgrade"><i class="fas fa-times"></i></a>
+            <div class="archetype-item-list">
+              {{{talents}}}
             </div>
-          </div>
         </div>
-        {{/each}}
-      </div> -->
+      </div>
     </div>
   </div>
 </form>

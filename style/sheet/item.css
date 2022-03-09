@@ -444,4 +444,113 @@ justify-content: center;
   width:unset;
 }
 
+.wrath-and-glory.sheet.item .archetype .archetype-item-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--image-input) repeat;
+    border: 1px solid var(--color-black);
+    border-radius: 0;
+    border-left: 0;
+    box-shadow: inset 0 0 6px var(--color-dark-grey);
+    color: var(--color-black);
+    font-size: 14px;
+    font-family: var(--font-text);
+    text-align: center;
+    height: 31px;
+    width: 100%
+}
 
+.wrath-and-glory.sheet.item .archetype .wargear-list{
+  padding: 5px;
+}
+
+
+
+.wrath-and-glory.sheet .group-wrapper,
+#archetype-groups .group-wrapper {
+    display: flex;
+}
+
+#archetype-groups .group
+{
+    margin: 3px;
+    border: 1px solid var(--color-imperium);
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+}
+
+.wrath-and-glory.sheet .group-wrapper .group
+{
+    padding: 2px;
+    display: flex;
+}
+
+.wrath-and-glory.sheet .group-wrapper .group-list,
+#archetype-groups .group-list
+{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#archetype-groups .group .wargear
+{
+    margin: 3px;
+    padding: 2px;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.wrath-and-glory.sheet .group .wargear {
+    width: fit-content;
+    font-weight: bold;
+}
+
+.wrath-and-glory.sheet .connector {
+  margin: 0px 5px;
+}
+
+
+.wrath-and-glory.sheet .comma {
+  margin-right: 5px;
+}
+
+.wrath-and-glory.sheet .group .wargear:hover,
+#archetype-groups .group .wargear:hover
+{   
+    cursor: pointer;
+    text-shadow: 0 0 8px var(--color-imperium)
+}
+
+
+#archetype-groups .dragenter
+{   
+    outline: 1px dotted var(--color-imperium);
+}
+
+
+.wrath-and-glory.sheet .archetype .wargear h1 {
+  display: flex;
+  justify-content: center;
+}
+
+
+.wrath-and-glory.sheet .archetype button {
+  height: 20px;
+  width: 20px;
+  margin: 3px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.wrath-and-glory.sheet .archetype button > i{
+  margin: 0px;
+}

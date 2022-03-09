@@ -2,6 +2,16 @@ import WNGUtility from "../common/utility.js";
 
 export class WrathAndGloryItem extends Item {
 
+    constructor(data, context)
+    {
+        super(data, context)
+        if (context && context.archetype)
+        {
+            this.archetype = context.archetype.item;
+            this.wargearIndex = context.archetype.index;
+        }
+    }
+
     // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
     async _preCreate(data, options, user) {
         if (data._id && !this.isOwned)
@@ -187,6 +197,12 @@ export class WrathAndGloryItem extends Item {
         groups.items.push(object)
         return groups
     }
+
+    resetGroups()
+    {
+        this.update({ "data.groups": {type: "and", groupId: "root", items : Array.fromRange(this.wargear.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
+    }
+
 
     async addCondition(effect) {
         if (typeof (effect) === "string")

@@ -1,0 +1,39 @@
+<form>
+
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" name="name" value="{{name}}">
+  </div>
+
+
+
+
+  {{#each filters as |filter f|}}
+  <hr>
+  <div class="form-group">
+    <label>Property</label>
+    <input type="text" class="property" value="{{filter.property}}" data-index="{{f}}">
+  </div>
+
+  <div class="form-group">
+    <label>Filter</label>
+    <select class="test" data-index="{{f}}">
+      {{#select filter.test}}
+      <option value=""></option>
+      <option value="lt"><</option>
+      <option value="le"><=</option>
+      <option value="eq">==</option>
+      <option value="gt">></option>
+      <option value="ge">>=</option>
+      {{/select}}
+    </select>
+  </div>
+
+  {{/each}}
+
+  {{#if object.index}}
+  <a class="add-filter"><i class="fas fa-plus"></i> Add Filter</a>
+  {{/if}}
+
+  <button> Save </button>
+</form>

@@ -1,4 +1,7 @@
+import ArchetypeGeneric from "../../apps/archetype-generic.js";
+import ArchetypeGroups from "../../apps/archetype-groups.js";
 import ItemTraits from "../../apps/item-traits.js";
+import { WrathAndGloryItem } from "../item.js";
 
 export class WrathAndGloryItemSheet extends ItemSheet {
   static get defaultOptions() {
@@ -42,7 +45,19 @@ export class WrathAndGloryItemSheet extends ItemSheet {
   }
 
   getData() {
+
     const data = super.getData();
+
+    // If this is a temp item with an archetype parent
+    if (this.item.archetype) {
+      let list = duplicate(this.item.archetype.wargear)
+      let wargearObj = list[this.item.wargearIndex];
+      mergeObject(data.data, wargearObj.diff, { overwrite: true }) // Merge archetype diff with item data
+      data.name = wargearObj.diff.name || data.item.name
+    }
+    else
+      data.name = data.item.name
+
     data.data = data.data.data // project system data so that handlebars has the same name and value paths
 
     data.conditions = CONFIG.statusEffects.map(i => {
@@ -58,10 +73,56 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     if (this.item.type == "archetype")
     {
-      data.wargearHTML = this.item.wargear.map(i => i.name).join(", ")
-      data.talents = this.item.suggested.talents.map(i => i.name).join(", ")
+      let element = $(ArchetypeGroups.constructHTML(this.item, {parentheses: true, commas: true, draggable:false}))
+      // Remove unnecessary outside parentheses
+      let parentheses = Array.from(element.find(".parentheses"))
+      parentheses[0].remove();
+      parentheses[parentheses.length - 1].remove()
+      data.wargearHTML = `<div class="group-wrapper">${element.html()}</div>`
+
+      data.talents = this.item.suggested.talents.map(i => `<a class="archetype-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
     }
     return data;
+  }
+
+  async _updateObject(event, formData) {
+    // If this item is from an archetype entry, update the diff instead of the actual item
+    // I would like to have done this is the item's _preCreate but the item seems to lose 
+    // its "archetype" reference so it has to be done here
+    // TODO: Current Issue - changing a property, then changing back to the original value
+    // does not work due to `diffObject()`
+
+    if (this.item.archetype) {
+      // Get the archetype's wargear, find the corresponding object, add to its diff
+      let list = duplicate(this.item.archetype.wargear)
+      let wargearObj = list[this.item.wargearIndex];
+      mergeObject( // Merge current diff with new diff
+        wargearObj.diff,
+        diffObject(this.item.toObject(), expandObject(formData)),
+        { overwrite: true })
+
+      // If the diff includes the item's name, change the name stored in the archetype
+      if (wargearObj.diff.name)
+        wargearObj.name = wargearObj.diff.name
+      else
+        wargearObj.name = this.item.name
+
+      this.item.archetype.update({ "data.wargear": list })
+      return
+    }
+
+    // Special processing for archetype items to parse a list of skills available to spend exp on from the checkboxes
+    if (this.item.type == "archetype") {
+      let skills = []
+      this.element.find(".skill-checkbox").each((i, cb) => {
+        if (cb.checked)
+          skills.push(cb.dataset.skill)
+      });
+
+      // Add skills array to form data
+      formData["data.skills.list"] = skills
+    }
+    return super._updateObject(event, formData)
   }
 
   _onDrop(ev) {
@@ -110,6 +171,17 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     // Set data transfer
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+  }
+
+
+  _updatePotency(index, path, value) {
+    let potency = foundry.utils.deepClone(this.item.potency)
+    if (Number.isNumeric(value) && typeof value != "boolean") // 
+      value = Number(value)
+
+    setProperty(potency[index], path, value)
+
+    this.item.update({ "data.potency": potency })
   }
 
     // Prevent upgrades from stacking
@@ -241,16 +313,59 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       let path = ev.currentTarget.dataset.path
       this._updatePotency(index, path, ev.target.value)
     })
-  }
 
-  _updatePotency(index, path, value) {
-    let potency = foundry.utils.deepClone(this.item.potency)
-    if (Number.isNumeric(value) && typeof value != "boolean") // 
-      value = Number(value)
+    html.find(".add-generic").click(async ev => {
+      new ArchetypeGeneric({item: this.item}).render(true)
+    })
 
-    setProperty(potency[index], path, value)
+    html.find(".reset").click(ev => {
+      this.item.resetGroups();
+    })
 
-    this.item.update({ "data.potency": potency })
+    html.find(".configure-groups").click(ev => {
+      new ArchetypeGroups(this.item).render(true)
+    })
+
+    html.find(".wargear").mouseup(ev => {
+      let path = ev.currentTarget.dataset.path
+      let index = Number(ev.currentTarget.dataset.index)
+      let array = duplicate(getProperty(this.item.data, path));
+
+      let obj = array[index];
+
+      if (obj) {
+        if (ev.button == 0)
+        {
+          if (obj.type == "generic")
+          new ArchetypeGeneric({item: this.item, index}).render(true);
+          else
+            new WrathAndGloryItem(game.items.get(obj.id).toObject(), { archetype: { item: this.item, index } }).sheet.render(true)
+        }
+        else {
+          new Dialog({
+            title: "Delete Item?",
+            content: "Do you want to remove this item from the Archetype? This will reset the groupings.",
+            buttons: {
+              yes: {
+                label: "Yes",
+                callback: async () => {
+                  array.splice(index, 1)
+                  await this.item.update({ [`${path}`]: array })
+                  if (path.includes("wargear")) {
+                    this.item.resetGroups();
+                  }
+                }
+              },
+              no: {
+                label: "No",
+                callback: () => { }
+              }
+            }
+          }).render(true)
+        }
+      }
+    })
+
   }
 
 }
