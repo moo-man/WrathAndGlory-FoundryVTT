@@ -10,7 +10,7 @@ export default class ArchetypeGeneric extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "archetype-generic",
-            template: "systems/age-of-sigmar-soulbound/template/apps/archetype-generic.html",
+            template: "systems/wrath-and-glory/template/apps/archetype-generic.html",
             height: "auto",
             width: 285,
             title: "Archetype Item Generic",
@@ -44,13 +44,16 @@ export default class ArchetypeGeneric extends FormApplication {
         filters = filters.filter(f => f.property)
 
         let generic = {type: "generic", name : formData.name, filters}
+        let groups = this.object.item.groups
         if (this.object.index)
             wargear[this.object.index] = generic
-        else 
+        else
+        {
             wargear.push(generic)
+            // Add new index to groups (last index + 1)
+            groups = this.object.item.addToGroup({type : "item", index : (wargear.length - 1 || 0)})
 
-          // Add new index to groups (last index + 1)
-        let groups = this.object.addToGroup({type : "item", index : (wargear.length - 1 || 0)})
+        } 
 
         this.object.item.update({"data.wargear" : wargear, "data.groups" : groups})
     }
@@ -66,10 +69,10 @@ export default class ArchetypeGeneric extends FormApplication {
             let generic = wargear[this.object.index || 0]
             generic.filters.push({test : "", property: ""})
 
-             // Add new index to groups (last index + 1)
-            let groups = this.object.addToGroup({type : "item", index : (wargear.length - 1 || 0)})
+            //  // Add new index to groups (last index + 1)
+            // let groups = this.object.item.addToGroup({type : "item", index : (wargear.length - 1 || 0)})
             
-            this.object.item.update({"data.wargear" : wargear, "data.groups" : groups})
+            await this.object.item.update({"data.wargear" : wargear})
             this.render(true);
         })
     }

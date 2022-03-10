@@ -326,12 +326,30 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       new ArchetypeGroups(this.item).render(true)
     })
 
+    html.find(".archetype-item").mouseup(ev => {
+      let id = ev.currentTarget.dataset.id;
+      if (ev.button == 0)
+        game.items.get(id)?.sheet?.render(true, {editable: false})
+      else 
+      {
+       if (ev.currentTarget.classList.contains("archetype-ability")) 
+       {
+         this.item.update({"data.ability" : {id: "", name: ""}})
+       }
+       else // Is talent
+       {
+         let index = this.item.suggested.talents.findIndex(t => t.id == id)
+         let array = duplicate(this.item.suggested.talents)
+         array.splice(index, 1);
+         this.item.update({"data.suggested.talents" : array})
+       }
+      }
+    })
+    
     html.find(".wargear").mouseup(ev => {
-      let path = ev.currentTarget.dataset.path
       let index = Number(ev.currentTarget.dataset.index)
-      let array = duplicate(getProperty(this.item.data, path));
-
-      let obj = array[index];
+      let array = duplicate(this.item.wargear);
+      let obj = this.item.wargear[index];
 
       if (obj) {
         if (ev.button == 0)
@@ -350,10 +368,8 @@ export class WrathAndGloryItemSheet extends ItemSheet {
                 label: "Yes",
                 callback: async () => {
                   array.splice(index, 1)
-                  await this.item.update({ [`${path}`]: array })
-                  if (path.includes("wargear")) {
-                    this.item.resetGroups();
-                  }
+                  await this.item.update({ "data.wargear" : array })
+                  this.item.resetGroups();
                 }
               },
               no: {

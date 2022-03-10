@@ -36,6 +36,12 @@
             <input type="text" value="" disabled />
           </div>
         </div>
+      <div class="item-form-group">
+          <label>{{localize "ARCHETYPE.INFLUENCE"}}</label>
+          <div class="item-form-inputs">
+            <input type="number" value="{{data.influence}}" name="data.influence" data-dtype="Number" />
+          </div>
+        </div>
       </div>
 
       <div class="wrapper">
@@ -77,14 +83,14 @@
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.ABILITY"}}</label>
           <div class="archetype-item-list">
-            <a class="archetype-item" data-id="{{data.ability.id}}">{{data.ability.name}}</a>
+            <a class="archetype-item archetype-ability" data-id="{{data.ability.id}}">{{data.ability.name}}</a>
           </div>
         </div>
       </div>
 
       <div class="wrapper wargear">
         <h1>{{localize "ARCHETYPE.WARGEAR"}} 
-          <button type="button" class="add-wargear"><i class="fas fa-plus"></i></button>
+          <button type="button" class="add-generic"><i class="fas fa-plus"></i></button>
           <button type="button" class="reset"><i class="fas fa-redo"></i></button>
           <button type="button" class="configure-groups"><i class="fas fa-cog"></i></button>
         </h1>
