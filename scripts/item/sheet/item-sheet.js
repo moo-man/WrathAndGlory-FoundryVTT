@@ -18,7 +18,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
           initial: "description",
         },
       ],
-      dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null }]
+      dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null}, {dragSelector: ".journal-list .journalentry", dropSelector: null}]
     });
   }
 
@@ -41,6 +41,17 @@ export class WrathAndGloryItemSheet extends ItemSheet {
         onclick: (ev) => this.item.sendToChat(),
       }
     ].concat(buttons);
+
+    if (this.item.journal)
+    {
+      buttons.unshift({
+        label : game.i18n.localize("BUTTON.JOURNAL"),
+        class: "item-journal",
+        icon : "fas fa-book",
+        onclick: (ev) => this.item.Journal?.sheet?.render(true)
+      })
+    }
+
     return buttons;
   }
 
@@ -81,6 +92,10 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       data.wargearHTML = `<div class="group-wrapper">${element.html()}</div>`
 
       data.talents = this.item.suggested.talents.map(i => `<a class="archetype-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
+    }
+    else if (this.item.type == "species")
+    {
+      data.abilities = this.item.abilities.map(i => `<a class="species-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
     }
     return data;
   }
@@ -129,7 +144,10 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
     let dropItem = game.items.get(dragData.id)
 
-
+    if (["archetype", "species", "faction"].includes(this.item.type) && dragData.type == "JournalEntry")
+    {
+      return this.item.update({"data.journal" : dragData.id})
+    }
 
     if (this.item.type === "weapon" && dropItem && dropItem.type === "weaponUpgrade")
     {
@@ -143,6 +161,10 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     else if (this.item.type == "archetype")
     {
       this.item.handleArchetypeItem(dropItem);
+    }
+    else if (this.item.type == "species")
+    {
+      this.item.handleSpeciesItem(dropItem);
     }
     else if (dragData.type == "ActiveEffect")
     {
@@ -326,7 +348,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       new ArchetypeGroups(this.item).render(true)
     })
 
-    html.find(".archetype-item").mouseup(ev => {
+    html.find(".archetype-item,.species-item").mouseup(ev => {
       let id = ev.currentTarget.dataset.id;
       if (ev.button == 0)
         game.items.get(id)?.sheet?.render(true, {editable: false})
@@ -336,12 +358,19 @@ export class WrathAndGloryItemSheet extends ItemSheet {
        {
          this.item.update({"data.ability" : {id: "", name: ""}})
        }
-       else // Is talent
+       else if (this.item.type == "archetype") // Is archetype talent
        {
          let index = this.item.suggested.talents.findIndex(t => t.id == id)
          let array = duplicate(this.item.suggested.talents)
          array.splice(index, 1);
          this.item.update({"data.suggested.talents" : array})
+       }
+       else if (this.item.type == "species") // TODO Combine these if statements
+       {
+          let index = this.item.abilities.findIndex(t => t.id == id)
+          let array = duplicate(this.item.abilities)
+          array.splice(index, 1);
+          this.item.update({"data.abilities" : array})
        }
       }
     })

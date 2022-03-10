@@ -371,46 +371,48 @@ justify-content: center;
 }
 
 
-.wrath-and-glory.sheet.item .archetype{
+.wrath-and-glory.sheet.item .species,
+  .wrath-and-glory.sheet.item .archetype{
  height: 100%
 }
 
-.wrath-and-glory.sheet.item .archetype .sheet-body {
+.wrath-and-glory.sheet.item .species .sheet-body,
+  .wrath-and-glory.sheet.item .archetype .sheet-body {
   margin-top: 5px;
   height: calc(100% - 105px)
 }
 
-.wrath-and-glory.sheet.item .wrapper.archetype-skills,
-  .wrath-and-glory.sheet.item .wrapper.archetype-attributes {
+.wrath-and-glory.sheet.item .wrapper.item-skills,
+  .wrath-and-glory.sheet.item .wrapper.item-attributes {
   text-align: center;
   display: flex;
   flex-direction: column;
 }
 
-.wrath-and-glory.sheet.item .archetype .wrapper.archetype-attributes .item-form-inputs {
+.wrath-and-glory.sheet.item .wrapper.item-attributes .item-form-inputs {
   width: unset;
 }
 
-.wrath-and-glory.sheet.item .archetype .wrapper.archetype-skills .item-form-inputs input,
-  .wrath-and-glory.sheet.item .archetype .wrapper.archetype-attributes .item-form-inputs input{
+.wrath-and-glory.sheet.item .wrapper.item-skills .item-form-inputs input,
+  .wrath-and-glory.sheet.item .wrapper.item-attributes .item-form-inputs input{
   border: 1px solid black;
   flex: 1;
 }
 
 
 
-.wrath-and-glory.sheet.item .wrapper.archetype-attributes .item-form-groups {
+.wrath-and-glory.sheet.item .wrapper.item-attributes .item-form-groups {
   flex-direction: row;
   display: flex;
 }
 
-.wrath-and-glory.sheet.item .wrapper.archetype-attributes .item-form-group {
+.wrath-and-glory.sheet.item .wrapper.item-attributes .item-form-group {
   flex-direction: column;
   display: flex;
   margin: 5px;
 }
 
-.wrath-and-glory.sheet.item .wrapper.archetype-skills .item-form-groups {
+.wrath-and-glory.sheet.item .wrapper.item-skills .item-form-groups {
   height: 340px;
   display: flex;
   flex-direction: column;
@@ -419,15 +421,15 @@ justify-content: center;
   margin-top: 3px;
 }
 
-.wrath-and-glory.sheet.item .wrapper.archetype-skills .item-form-groups .item-form-group {
+.wrath-and-glory.sheet.item .wrapper.item-skills .item-form-groups .item-form-group {
   margin: 3px;
 }
 
-.wrath-and-glory.sheet.item .wrapper.archetype-skills .item-form-groups label{
+.wrath-and-glory.sheet.item .wrapper.item-skills .item-form-groups label{
   width: 125px;
 }
 
-.wrath-and-glory.sheet.item .wrapper.archetype-skills .item-form-groups .item-form-inputs{
+.wrath-and-glory.sheet.item .wrapper.item-skills .item-form-groups .item-form-inputs{
   width: 100px;
 }
 
@@ -444,7 +446,8 @@ justify-content: center;
   width:unset;
 }
 
-.wrath-and-glory.sheet.item .archetype .archetype-item-list {
+.wrath-and-glory.sheet.item .species .species-item-list,
+  .wrath-and-glory.sheet.item .archetype .archetype-item-list {
     display: flex;
     align-items: center;
     justify-content: center;

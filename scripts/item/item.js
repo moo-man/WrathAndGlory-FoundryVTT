@@ -189,6 +189,16 @@ export class WrathAndGloryItem extends Item {
             this.update({"data.keywords" : keywords})
         }
     }
+
+    handleSpeciesItem(item)
+    {
+        if(item.type == "ability")
+        {
+            let abilities = duplicate(this.abilities);
+            abilities.push({id : item.id, name : item.name})
+            return this.update({"data.abilities" : abilities})
+        }
+    }
     
     addToGroup(object)
     {
@@ -425,6 +435,10 @@ export class WrathAndGloryItem extends Item {
             return []
     }
 
+    get Journal() {
+        return game.journal.get(this.journal)
+    }
+
     get AbilityType() {
         return game.wng.config.abilityTypes[this.abilityType]
     }
@@ -536,9 +550,11 @@ export class WrathAndGloryItem extends Item {
     get attributes() { return this.data.data.attributes}
     get skills() { return this.data.data.skills}
     get ability() { return this.data.data.ability}
+    get abilities() { return this.data.data.abilities}
     get wargear() { return this.data.data.wargear}
     get groups() { return this.data.data.groups}
     get suggested() { return this.data.data.suggested}
+    get journal() { return this.data.data.journal}
     
 
 

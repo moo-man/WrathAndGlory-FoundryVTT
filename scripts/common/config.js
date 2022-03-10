@@ -65,6 +65,15 @@ WNG.skillAttribute = {
     "weaponSkill" : "initiative"
 }
 
+WNG.size = {
+   tiny :  "SIZE.TINY",
+   small :  "SIZE.SMALL",
+   average :  "SIZE.AVERAGE",
+   large :  "SIZE.LARGE",
+   huge :  "SIZE.HUGE",
+   gargantuan :  "SIZE.GARGANTUAN"
+}
+
 
 WNG.weaponTraits = {
     "agonising": "Agonising",

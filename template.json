@@ -353,7 +353,9 @@
       "traumaticInjury",
       "weapon",
       "weaponUpgrade",
-      "archetype"
+      "archetype",
+      "species",
+      "faction"
     ],
     "templates": {
       "equipped" : {
@@ -523,6 +525,7 @@
     },
     "archetype" : {
       "tier" : 1,
+      "journal" : "",
       "species" : {
         "name" : "",
         "id" : ""
@@ -606,6 +609,71 @@
         },
         "talents" : []
       }
+    },
+    "species" : {
+      "cost" : 0,
+      "speed" : 0,
+      "size" : "",
+      "journal" : "",
+      "abilities" : [],
+      "attributes" : {
+        "strength" : 0,
+        "toughness" : 0,
+        "agility" : 0,
+        "initiative" : 0,
+        "willpower" : 0,
+        "intellect" : 0,
+        "fellowship" : 0
+      },
+      "skills" : {
+        "athletics" : 0,
+        "awareness" : 0,
+        "ballisticSkill" : 0,
+        "cunning" : 0,
+        "deception" : 0,
+        "insight" : 0,
+        "intimidation" : 0,
+        "investigation" : 0,
+        "leadership" : 0,
+        "medicae" : 0,
+        "persuasion" : 0,
+        "pilot" : 0,
+        "psychicMastery" : 0,
+        "scholar" : 0,
+        "stealth" : 0,
+        "survival" : 0,
+        "tech" : 0,
+        "weaponSkill" : 0
+      },
+      "attributeMax" : {
+        "strength" : 0,
+        "toughness" : 0,
+        "agility" : 0,
+        "initiative" : 0,
+        "willpower" : 0,
+        "intellect" : 0,
+        "fellowship" : 0
+      }
+    },
+    "faction" : {
+      "backgrounds" : {
+        "origin" : [{
+          "name" : "",
+          "description" : "",
+          "effect" : ""
+        }],
+        "accomplishment" : [{
+          "name" : "",
+          "description" : "",
+          "effect" : ""
+        }],
+        "goal" : [{
+          "name" : "",
+          "description" : "",
+          "effect" : ""
+        }]
+      },
+      "objectives" : []
     }
   }
 }

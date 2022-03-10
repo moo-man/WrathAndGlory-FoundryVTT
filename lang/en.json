@@ -90,6 +90,15 @@
   "ARCHETYPE.SUGGESTED_SKILLS" : "Suggested Skills",
   "ARCHETYPE.SUGGESTED_TALENTS" : "Suggested Talents",
 
+  "SPECIES.NAME" : "Name",
+  "SPECIES.COST" : "XP Cost",
+  "SPECIES.SPEED" : "Speed",
+  "SPECIES.SIZE" : "Size",
+  "SPECIES.ABILITIES" : "Abilities",
+  "SPECIES.ATTRIBUTE_MAX" : "Attribute Maximums",
+  "SPECIES.ATTRIBUTES" : "Attributes",
+  "SPECIES.SKILLS" : "Skills",
+
   "ATTRIBUTE.STRENGTH": "Strength",
   "ATTRIBUTE.TOUGHNESS": "Toughness",
   "ATTRIBUTE.AGILITY": "Agility",
@@ -134,6 +143,7 @@
   "BUTTON.CANCEL": "Cancel",
   "BUTTON.DAMAGE": "Damage",
   "BUTTON.CONFIGURE": "Configure",
+  "BUTTON.JOURNAL": "Journal",
 
   "BUTTON.ApplyDamage" : "Apply Damage",
   "BUTTON.ApplyDamageInvuln" : "Apply Damage (Invulnerable armour)",
