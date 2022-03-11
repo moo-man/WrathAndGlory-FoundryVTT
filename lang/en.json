@@ -99,6 +99,14 @@
   "SPECIES.ATTRIBUTES" : "Attributes",
   "SPECIES.SKILLS" : "Skills",
 
+  "FACTION.NAME" : "Name",
+  "FACTION.ORIGIN" : "Origin",
+  "FACTION.DESCRIPTION" : "Description",
+  "FACTION.EFFECT" : "Effect",
+  "FACTION.ACCOMPLISHMENT" : "Accomplishment",
+  "FACTION.GOAL" : "Goal",
+  "FACTION.OBJECTIVES" : "Objectives",
+
   "ATTRIBUTE.STRENGTH": "Strength",
   "ATTRIBUTE.TOUGHNESS": "Toughness",
   "ATTRIBUTE.AGILITY": "Agility",
@@ -357,6 +365,7 @@
   "TAB.STATS": "STATS",
   "TAB.TALENTS": "TALENTS",
   "TAB.DESCRIPTION": "DESCRIPTION",
+  "TAB.DETAILS": "DETAILS",
   "TAB.BONUS": "BONUS",
   "TAB.MAIN": "MAIN",
 

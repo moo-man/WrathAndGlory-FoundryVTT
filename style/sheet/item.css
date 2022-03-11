@@ -286,7 +286,9 @@
  font-weight:bold
 }
 
-.wrath-and-glory.sheet.item .wrapper.potency button{
+.wrath-and-glory.sheet.item .objectives button,
+.wrath-and-glory.sheet.item .faction-backgrounds button,
+  .wrath-and-glory.sheet.item .wrapper.potency button{
   height: 20px;
   width: 20px;
   margin: 3px;
@@ -557,3 +559,48 @@ justify-content: center;
 .wrath-and-glory.sheet .archetype button > i{
   margin: 0px;
 }
+
+
+.wrath-and-glory.sheet .objectives,
+.wrath-and-glory.sheet .objectives .objectives-list,
+.wrath-and-glory.sheet .faction-backgrounds .backgrounds,
+.wrath-and-glory.sheet .faction-backgrounds .backgrounds .background-list,
+  .wrath-and-glory.sheet .faction-backgrounds {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+}
+
+
+.wrath-and-glory.sheet .faction-backgrounds .background {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.wrath-and-glory.sheet .faction-backgrounds .bg-effect,
+  .wrath-and-glory.sheet .faction-backgrounds .bg-name {
+  flex: 0.3
+}
+
+.wrath-and-glory.sheet .faction-backgrounds .bg-description {
+  flex: 1
+}
+
+.wrath-and-glory.sheet .faction-backgrounds .background-delete {
+  flex: 0 0 20px;
+}
+
+.wrath-and-glory.sheet .faction-backgrounds .background-header {
+  display: flex;
+  width: 100%;
+  text-align: center
+}
+
+.wrath-and-glory.sheet .objectives .objective {
+  flex: 1
+}
+
+
+
