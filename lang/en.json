@@ -89,6 +89,7 @@
   "ARCHETYPE.SUGGESTED_ATTRIBUTES" : "Suggested Attributes",
   "ARCHETYPE.SUGGESTED_SKILLS" : "Suggested Skills",
   "ARCHETYPE.SUGGESTED_TALENTS" : "Suggested Talents",
+  "ARCHETYPE.FACTION" : "Faction",
 
   "SPECIES.NAME" : "Name",
   "SPECIES.COST" : "XP Cost",

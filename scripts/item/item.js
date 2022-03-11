@@ -176,6 +176,10 @@ export class WrathAndGloryItem extends Item {
         {
             return this.update({"data.ability.id" : item.id, "data.ability.name" : item.name})
         }
+        if(item.type == "faction")
+        {
+            return this.update({"data.faction.id" : item.id, "data.faction.name" : item.name})
+        }
         if (item.type == "talent")
         {   
             let talents = duplicate(this.suggested.talents)
@@ -211,6 +215,13 @@ export class WrathAndGloryItem extends Item {
     resetGroups()
     {
         this.update({ "data.groups": {type: "and", groupId: "root", items : Array.fromRange(this.wargear.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
+    }
+
+    _deleteIndex(index, path)
+    {
+        let array = duplicate(getProperty(this.data, path))
+        array.splice(index, 1)
+        this.update({ [path]: array})
     }
 
 
@@ -555,7 +566,7 @@ export class WrathAndGloryItem extends Item {
     get groups() { return this.data.data.groups}
     get suggested() { return this.data.data.suggested}
     get journal() { return this.data.data.journal}
-    
+    get objectives() { return this.data.data.objectives}
 
 
   /**

@@ -530,6 +530,10 @@
         "name" : "",
         "id" : ""
       },
+      "faction" : {
+        "name" : "",
+        "id" : ""
+      },
       "influence" : 0,
       "cost" : 0,
       "keywords" : [],

@@ -1,5 +1,5 @@
 <form class="{{cssClass}}" autocomplete="off">
-  <div class="weapon">
+  <div class="faction">
     <div class="sheet-header">
       <div class="avatar">
         <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{name}}" />
@@ -24,7 +24,7 @@
       <div class="tab" data-group="primary" data-tab="details">
         <div class="faction-backgrounds">
           <div class="backgrounds" data-path="data.backgrounds.origin">
-            <h1>{{localize "FACTION.ORIGIN"}}</h1>
+            <h1>{{localize "FACTION.ORIGIN"}} <button type="button" class="add-background">+</button></h1>
             <div class="background-header">
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
@@ -33,25 +33,25 @@
             </div>
             <div class="background-list">
               {{#each data.backgrounds.origin as |background bg|}}
-              <div class="background">
+              <div class="background" data-index="{{bg}}">
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
-                <input class="bg-description" data-path="description" type="text" value="{{background.name}}" />
+                <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
                   {{#select background.effect}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
-                  <option value="{{effect.id}}">{{effect.name}}</option>
+                  <option value="{{effect.id}}">{{effect.data.label}}</option>
                   {{/each}}
                   {{/select}}
                 </select>
                 <a class="background-delete"><i class="fas fa-times"></i></a>
-                {{/each}}
               </div>
+              {{/each}}
             </div>
-            <button type="button" class="add-background">+</button>
+            
           </div>
           <div class="backgrounds" data-path="data.backgrounds.accomplishment">
-            <h1>{{localize "FACTION.ACCOMPLISHMENT"}}</h1>
+            <h1>{{localize "FACTION.ACCOMPLISHMENT"}} <button type="button" class="add-background">+</button></h1>
             <div class="background-header">
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
@@ -60,25 +60,25 @@
             </div>
             <div class="background-list">
               {{#each data.backgrounds.accomplishment as |background bg|}}
-              <div class="background">
+              <div class="background" data-index="{{bg}}">
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
-                <input class="bg-description" data-path="description" type="text" value="{{background.name}}" />
+                <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
                   {{#select background.effect}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
-                  <option value="{{effect.id}}">{{effect.name}}</option>
+                  <option value="{{effect.id}}">{{effect.data.label}}</option>
                   {{/each}}
                   {{/select}}
                 </select>
                 <a class="background-delete"><i class="fas fa-times"></i></a>
-                {{/each}}
               </div>
+              {{/each}}
             </div>
-            <button type="button" class="add-background">+</button>
+            
           </div>
           <div class="backgrounds" data-path="data.backgrounds.goal">
-            <h1>{{localize "FACTION.GOAL"}}</h1>
+            <h1>{{localize "FACTION.GOAL"}} <button type="button" class="add-background">+</button> </h1>
             <div class="background-header">
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
@@ -87,33 +87,33 @@
             </div>
             <div class="background-list">
               {{#each data.backgrounds.goal as |background bg|}}
-              <div class="background">
+              <div class="background" data-index="{{bg}}">
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
-                <input class="bg-description" data-path="description" type="text" value="{{background.name}}" />
+                <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
                   {{#select background.effect}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
-                  <option value="{{effect.id}}">{{effect.name}}</option>
+                  <option value="{{effect.id}}">{{effect.data.label}}</option>
                   {{/each}}
                   {{/select}}
                 </select>
                 <a class="background-delete"><i class="fas fa-times"></i></a>
-                {{/each}}
               </div>
+              {{/each}}
             </div>
-            <button type="button" class="add-background">+</button>
+            
           </div>
         </div>
 
-        <div class="objectives">
-          <h1>{{localize "FACTION.OBJECTIVES"}}</h1>
-          <div class="objectives-list" data-path="data.objectives">
+        <div class="objectives backgrounds" data-path="data.objectives">
+          <h1>{{localize "FACTION.OBJECTIVES"}}  <button type="button" class="add-background">+</button></h1>
+          <div class="objectives-list backgrounds" >
             {{#each data.objectives as |objective o|}}
-            <input class="objective" data-path="" type="text" value="{{objective}}" />
+            <input class="objective" data-index={{o}} type="text" value="{{objective}}" />
             {{/each}}
           </div>
-          <button type="button" class="add-background">+</button>
+         
         </div>
       </div>
 

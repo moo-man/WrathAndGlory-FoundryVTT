@@ -14,6 +14,9 @@
   height: 100%
 }
 
+.wrath-and-glory.sheet.item .species,
+.wrath-and-glory.sheet.item .faction,
+.wrath-and-glory.sheet.item .archetype,
 .wrath-and-glory.sheet.item .ability,
 .wrath-and-glory.sheet.item .ammo,
 .wrath-and-glory.sheet.item .armour,
@@ -322,7 +325,9 @@
   flex: 0 0 31px;
 }
 
-.wrath-and-glory.sheet.item .potency-content .potency-fields > a{
+
+.wrath-and-glory.sheet.item .background .background-delete,
+  .wrath-and-glory.sheet.item .potency-content .potency-fields > a{
 text-align: center;
 color: white;
 background: black;
@@ -332,6 +337,7 @@ display: flex;
 justify-content: center;
 }
 
+.wrath-and-glory.sheet.item .background .background-delete:hover,
 .wrath-and-glory.sheet.item .potency-content  .potency-fields > a:hover{
   background: var(--color-imperium)
 }
@@ -538,7 +544,8 @@ justify-content: center;
 }
 
 
-.wrath-and-glory.sheet .archetype .wargear h1 {
+.wrath-and-glory.sheet .faction h1,
+  .wrath-and-glory.sheet .archetype .wargear h1 {
   display: flex;
   justify-content: center;
 }
@@ -577,6 +584,7 @@ justify-content: center;
   display: flex;
   width: 100%;
   align-items: center;
+  margin: 3px;
 }
 
 .wrath-and-glory.sheet .faction-backgrounds .bg-effect,
@@ -590,6 +598,7 @@ justify-content: center;
 
 .wrath-and-glory.sheet .faction-backgrounds .background-delete {
   flex: 0 0 20px;
+  height: 31px;
 }
 
 .wrath-and-glory.sheet .faction-backgrounds .background-header {
@@ -599,7 +608,7 @@ justify-content: center;
 }
 
 .wrath-and-glory.sheet .objectives .objective {
-  flex: 1
+  margin: 3px;
 }
 
 

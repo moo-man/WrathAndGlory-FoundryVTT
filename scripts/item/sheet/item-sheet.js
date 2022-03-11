@@ -322,19 +322,68 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       this.item.update({ "data.potency": potency })
     })
 
-    html.find(".potency-delete").click(ev => {
-      let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
-      let potency = duplicate(this.item.potency)
-      potency.splice(index, 1)
-      this.item.update({ "data.potency": potency })
+    
+    html.find(".add-background").click(ev => {
+      let path = $(ev.currentTarget).parents(".backgrounds").attr("data-path")
+      let array = duplicate(getProperty(this.item.data, path))
+
+      if (path.includes("backgrounds"))
+      {
+        array.push({
+          "name" : "",
+          "description" : "",
+          "effect" : ""
+        })
+      }
+      else if (path.includes("objectives"))
+      {
+        array.push("")
+      }
+      
+      this.item.update({[path] : array})
     })
 
+    html.find(".potency-delete").click(ev => {
+      let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
+      this.item._deleteIndex(index, "data.potency")
+    })
+
+    html.find(".background-delete").click(ev => {
+      let index = parseInt($(ev.currentTarget).parents(".background").attr("data-index"))
+      let path = $(ev.currentTarget).parents(".backgrounds").attr("data-path")
+      this.item._deleteIndex(index, path)
+    })
     
     html.find(".potency-fields input").change(ev => {
       let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
       let path = ev.currentTarget.dataset.path
       this._updatePotency(index, path, ev.target.value)
     })
+
+    html.find(".bg-name,.bg-description,.bg-effect").change(ev => {
+      let index = parseInt($(ev.currentTarget).parents(".background").attr("data-index"))
+      let path = $(ev.currentTarget).parents(".backgrounds").attr("data-path")
+      let innerPath = ev.currentTarget.dataset.path;
+      let value = ev.target.value
+
+      let array = duplicate(getProperty(this.item.data, path))
+      array[index][innerPath] = value;
+
+      this.item.update({[path] : array})
+    })
+
+    html.find(".objective").change(ev => {
+      let index = parseInt(ev.currentTarget.dataset.index)
+      let value = ev.target.value
+
+      let array = duplicate(this.item.objectives)
+      array[index] = value;
+      array = array.filter(i => i) // Objectives are deleted if blank (instead of X button like backgrounds)
+
+      this.item.update({"data.objectives" : array})
+    })
+
+
 
     html.find(".add-generic").click(async ev => {
       new ArchetypeGeneric({item: this.item}).render(true)
@@ -348,7 +397,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       new ArchetypeGroups(this.item).render(true)
     })
 
-    html.find(".archetype-item,.species-item").mouseup(ev => {
+    html.find(".archetype-item,.species-item,.archetype-faction").mouseup(ev => {
       let id = ev.currentTarget.dataset.id;
       if (ev.button == 0)
         game.items.get(id)?.sheet?.render(true, {editable: false})
@@ -357,6 +406,10 @@ export class WrathAndGloryItemSheet extends ItemSheet {
        if (ev.currentTarget.classList.contains("archetype-ability")) 
        {
          this.item.update({"data.ability" : {id: "", name: ""}})
+       }
+       if (ev.currentTarget.classList.contains("archetype-faction")) 
+       {
+         this.item.update({"data.faction" : {id: "", name: ""}})
        }
        else if (this.item.type == "archetype") // Is archetype talent
        {
