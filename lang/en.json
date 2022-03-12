@@ -16,6 +16,9 @@
   "ITEM.TypeTraumaticinjury" : "Traumatic Injury",
   "ITEM.TypeWeapon" : "Weapon",
   "ITEM.TypeWeaponupgrade" : "Weapon Upgrade",
+  "ITEM.TypeArchetype" : "Archetype",
+  "ITEM.TypeSpecies" : "Species",
+  "ITEM.TypeFaction" : "Faction",
 
   "ABILITY.NAME": "Name",
   "ABILITY.EFFECT": "Effect",

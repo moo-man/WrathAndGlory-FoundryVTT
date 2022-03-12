@@ -172,6 +172,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 let item = game.items.find(i => i.name == name && i.type == "keyword")
                 this.actor.createEmbeddedDocuments("Item", [item.toObject()])
             }
+            else if (data.type == "Item")
+            {
+                let item = game.items.get(data.id);
+                if (item.type == "archetype")
+                    return this.actor.characterCreation(item)
+            }
             else
                 super._onDrop(ev)
         }

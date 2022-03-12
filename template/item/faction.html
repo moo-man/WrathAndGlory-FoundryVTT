@@ -24,7 +24,7 @@
       <div class="tab" data-group="primary" data-tab="details">
         <div class="faction-backgrounds">
           <div class="backgrounds" data-path="data.backgrounds.origin">
-            <h1>{{localize "FACTION.ORIGIN"}} <button type="button" class="add-background">+</button></h1>
+            <h1>{{localize "FACTION.ORIGIN"}} {{#if options.editable}} <button type="button" class="add-background">+</button>{{/if}}</h1>
             <div class="background-header">
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
@@ -44,14 +44,16 @@
                   {{/each}}
                   {{/select}}
                 </select>
+                {{#if ../options.editable}}
                 <a class="background-delete"><i class="fas fa-times"></i></a>
+                {{/if}}
               </div>
               {{/each}}
             </div>
             
           </div>
           <div class="backgrounds" data-path="data.backgrounds.accomplishment">
-            <h1>{{localize "FACTION.ACCOMPLISHMENT"}} <button type="button" class="add-background">+</button></h1>
+            <h1>{{localize "FACTION.ACCOMPLISHMENT"}} {{#if options.editable}} <button type="button" class="add-background">+</button>{{/if}}</h1>
             <div class="background-header">
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
@@ -71,14 +73,16 @@
                   {{/each}}
                   {{/select}}
                 </select>
+                {{#if ../options.editable}}
                 <a class="background-delete"><i class="fas fa-times"></i></a>
+                {{/if}}
               </div>
               {{/each}}
             </div>
             
           </div>
           <div class="backgrounds" data-path="data.backgrounds.goal">
-            <h1>{{localize "FACTION.GOAL"}} <button type="button" class="add-background">+</button> </h1>
+            <h1>{{localize "FACTION.GOAL"}} {{#if options.editable}} <button type="button" class="add-background">+</button> {{/if}}</h1>
             <div class="background-header">
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
@@ -98,7 +102,9 @@
                   {{/each}}
                   {{/select}}
                 </select>
+                {{#if ../options.editable}}
                 <a class="background-delete"><i class="fas fa-times"></i></a>
+                {{/if}}
               </div>
               {{/each}}
             </div>
@@ -107,7 +113,7 @@
         </div>
 
         <div class="objectives backgrounds" data-path="data.objectives">
-          <h1>{{localize "FACTION.OBJECTIVES"}}  <button type="button" class="add-background">+</button></h1>
+          <h1>{{localize "FACTION.OBJECTIVES"}}  {{#if options.editable}} <button type="button" class="add-background">+</button>{{/if}}</h1>
           <div class="objectives-list backgrounds" >
             {{#each data.objectives as |objective o|}}
             <input class="objective" data-index={{o}} type="text" value="{{objective}}" />

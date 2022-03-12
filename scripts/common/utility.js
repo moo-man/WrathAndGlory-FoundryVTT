@@ -96,7 +96,39 @@ export default class WNGUtility {
     if (0 >= targets) {
       return 3;
     }
-  
+
     return game.user.targets.values().next().value.actor.combat.defence.total;
   }
+
+  /**
+   * Given an ID, find an item within the world, and if necessary, search the compendium using the type argument
+   * 
+   * @param {String} id id of the item
+   * @param {String} type type of item, e.g. 'weapon' 'armour' 'talent' etc.
+   * @returns an Item object if the item is in the world, or a Promise of an Item if it was from the compendium
+   */
+  static findItem(id, type) {
+    if (game.items.has(id))
+      return game.items.get(id)
+
+    let packs = game.wng.tags.getPacksWithTag(type)
+    for (let pack of packs) {
+      if (pack.index.has(id)) {
+        return pack.getDocument(id)
+      }
+    }
+  }
+
+  static findJournal(id) {
+    if (game.journal.has(id))
+      return game.journal.get(id)
+
+    let packs = game.packs.filter(i => i.metadata.type == "JournalEntry")
+    for (let pack of packs) {
+      if (pack.index.has(id)) {
+        return pack.getDocument(id)
+      }
+    }
+  }
+
 }

@@ -221,6 +221,8 @@ export class WrathAndGloryItemSheet extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html)
 
+    if (!this.options.editable) return
+
     html.find(".item-traits").click(ev => {
       if (this.item.type == "weaponUpgrade" || this.item.type == "ammo")
       {
@@ -397,7 +399,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       new ArchetypeGroups(this.item).render(true)
     })
 
-    html.find(".archetype-item,.species-item,.archetype-faction").mouseup(ev => {
+    html.find(".archetype-item,.species-item,.archetype-faction,.archetype-species").mouseup(ev => {
       let id = ev.currentTarget.dataset.id;
       if (ev.button == 0)
         game.items.get(id)?.sheet?.render(true, {editable: false})
@@ -410,6 +412,10 @@ export class WrathAndGloryItemSheet extends ItemSheet {
        if (ev.currentTarget.classList.contains("archetype-faction")) 
        {
          this.item.update({"data.faction" : {id: "", name: ""}})
+       }
+       if (ev.currentTarget.classList.contains("archetype-species")) 
+       {
+         this.item.update({"data.species" : {id: "", name: ""}})
        }
        else if (this.item.type == "archetype") // Is archetype talent
        {

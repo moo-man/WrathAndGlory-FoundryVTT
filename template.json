@@ -660,6 +660,7 @@
       }
     },
     "faction" : {
+      "journal" : "",
       "backgrounds" : {
         "origin" : [{
           "name" : "",

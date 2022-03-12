@@ -1,0 +1,63 @@
+<form>
+    <div class="character-creation">
+        <header class="header">
+            <h1><input type="text" name="name" value="{{actor.name}}" placeholder="Name"></h1>
+        </header>
+        <div class="sheet-body">
+            <div class="species column">
+                <h3>{{species.name}}</h3>
+                <div class="column-details">
+                    <div class="wrapper">
+                        <label>{{localize "SPECIES.SPEED"}}</label>
+                        <input type="text" name="data.combat.speed" disabled value="{{species.speed}}" >
+                    </div>
+                    <div class="wrapper">
+                        <label>{{localize "SPECIES.SIZE"}}</label>
+                        <input type="text" disabled value="{{configLookup 'size' species.size}}" >
+                    </div>
+
+                        <h4>Attributes</h4>
+                        {{#each species.attributes as |attribute a|}}
+                        {{#if attribute}}
+                        <div class="wrapper">
+                            <label>{{configLookup "attributes" a}}</label>
+                            <input type="text" disabled value="{{attribute}}" >
+                        </div>
+                        {{/if}}
+                        {{/each}}
+
+                        <h4>Skills</h4>
+                        {{#each species.skills as |skill s|}}
+                        {{#if skill}}
+                        <div class="wrapper">
+                            <label>{{configLookup "skills" s}}</label>
+                            <input type="text" disabled value="{{skill}}" >
+                        </div>
+                        {{/if}}
+                        {{/each}}
+
+
+                        <h4>Abilities</h4>
+                        {{#each speciesAbilities as |ability a|}}
+                        <div class="ability">
+                            <div class="ability-header">
+                                <img src="{{ability.data.img}}">
+                                <label>{{ability.name}}</label>
+                            </div>
+                            <div class="ability-description">
+                                {{{ability.description}}}
+                            </div>
+                        </div>
+                        {{/each}}
+
+                </div>
+            </div>
+            <div class="archetype column">
+                <h3>{{archetype.name}}</h3>
+            </div>
+            <div class="faction column">
+                <h3>{{faction.name}}</h3>
+            </div>
+        </div>
+    </div>
+</form>

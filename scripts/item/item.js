@@ -180,6 +180,10 @@ export class WrathAndGloryItem extends Item {
         {
             return this.update({"data.faction.id" : item.id, "data.faction.name" : item.name})
         }
+        if(item.type == "species")
+        {
+            return this.update({"data.species.id" : item.id, "data.species.name" : item.name})
+        }
         if (item.type == "talent")
         {   
             let talents = duplicate(this.suggested.talents)
@@ -559,6 +563,7 @@ export class WrathAndGloryItem extends Item {
     get tier() { return this.data.data.tier}
     get species() { return this.data.data.species}
     get attributes() { return this.data.data.attributes}
+    get attributeMax() { return this.data.data.attributeMax}
     get skills() { return this.data.data.skills}
     get ability() { return this.data.data.ability}
     get abilities() { return this.data.data.abilities}
@@ -567,6 +572,9 @@ export class WrathAndGloryItem extends Item {
     get suggested() { return this.data.data.suggested}
     get journal() { return this.data.data.journal}
     get objectives() { return this.data.data.objectives}
+    get faction() { return this.data.data.faction}
+    get size() { return this.data.data.size}
+    get speed() { return this.data.data.speed}
 
 
   /**

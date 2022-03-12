@@ -9,6 +9,7 @@ import DeterminationRoll from "../common/tests/determination.js";
 import AbilityRoll from "../common/tests/ability-roll.js";
 import WNGUtility from "../common/utility.js";
 import StealthRoll from "../common/tests/stealth.js";
+import CharacterCreation from "../apps/character-creation.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -463,6 +464,27 @@ export class WrathAndGloryActor extends Actor {
         }
 
         return changes
+    }
+
+
+    characterCreation(archetype)
+    {
+        new Dialog({
+            title : "Character Creation",
+            content : "<p>Begin Character Creation?</p>",
+            buttons : {
+                yes : {
+                    label: "Yes",
+                    callback: () => {
+                        new CharacterCreation({actor: this, archetype}).render(true)
+                    }
+                },
+                no : {
+                    label : "No",
+                    callback: () => {}
+                }
+            }
+        }).render(true)
     }
 
     //#endregion
