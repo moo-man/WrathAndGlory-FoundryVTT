@@ -126,7 +126,7 @@
 .character-creation .sheet-body {
   flex: 1;
   display: flex;
-  height: calc(100% - 40px)
+  height: calc(100% - 70px)
 }
 
 .character-creation .sheet-body .column {
@@ -160,7 +160,8 @@
 #character-creation .wrapper {
   display: flex;
   flex-direction: row;
-  margin-bottom: 5px
+  margin-bottom: 5px;
+  padding: 0px 10px;
 }
 
 #character-creation .wrapper label {
@@ -193,6 +194,17 @@
 #character-creation .ability {
   display: flex;
   flex-direction: column;
+  padding: 10px;
+}
+
+#character-creation a.keyword {
+  color: var(--color-imperium);
+  text-transform: uppercase;
+  font-weight: bold
+}
+
+#character-creation a.keyword:hover {
+  text-shadow: none;
 }
 
 #character-creation .ability-header {
@@ -213,3 +225,48 @@
   flex: 1
 }
 
+#character-creation .wargear,
+  #character-creation .keywords {
+  padding: 10px;
+}
+
+
+
+#character-creation .wargear .wargear-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#character-creation .wargear .wargear-group.root {
+  flex-direction: column;
+}
+
+#character-creation .wargear .wargear-group .connector {
+  margin: 0px 3px;
+}
+
+#character-creation .wargear .wargear-group .wargear-selector {
+  margin: 0px 3px;
+}
+
+#character-creation .wargear .wargear-group .wargear-item {
+  color: var(--color-imperium);
+  font-weight: bold;
+  cursor: pointer
+}
+
+#character-creation .wargear .wargear-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#character-creation .wargear .wargear-selection > .wargear-item,
+  #character-creation .wargear .wargear-selection > .wargear-group{
+  border-bottom: 1px solid var(--color-imperium)
+}
+
+
+#character-creation .wargear .disabled {
+  opacity: 0.5
+}

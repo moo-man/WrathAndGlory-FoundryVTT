@@ -161,15 +161,16 @@ export class WrathAndGloryItem extends Item {
 
     handleArchetypeItem(item)
     {
-        if (["weapon", "weaponUpgrade", "armour", "equipment", "ammo", "augmentic"].includes(item.type))
+        if (["weapon", "weaponUpgrade", "armour", "gear", "ammo", "augmentic"].includes(item.type))
         {
             let wargear = duplicate(this.wargear);
             wargear.push({
                 name : item.name,
                 id : item.id,
+                type: "item",
                 diff : {}
             })
-            let groups = this.addToGroup({index: wargear.length, type : "item"})
+            let groups = this.addToGroup({index: wargear.length - 1, type : "item"})
             return this.update({"data.wargear" : wargear, "data.groups" : groups})
         }
         if(item.type == "ability")
