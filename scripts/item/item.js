@@ -576,6 +576,7 @@ export class WrathAndGloryItem extends Item {
     get faction() { return this.data.data.faction}
     get size() { return this.data.data.size}
     get speed() { return this.data.data.speed}
+    get backgrounds() {return this.data.data.backgrounds}
 
 
   /**

@@ -30,7 +30,7 @@ export default class ArchetypeGeneric extends FormApplication {
 
         data.property = generic.property;
         data.name = generic.name;
-        data.filters = generic.filters || [{test : "", property: ""}]
+        data.filters = generic.filters || [{test : "", property: "", value : ""}]
 
         return data
     }
@@ -38,8 +38,14 @@ export default class ArchetypeGeneric extends FormApplication {
     async _updateObject(event, formData) {
         let wargear = duplicate(this.object.item.wargear)
 
+        // Create filter array with 
         let filters = Array.from($(event.target).find(".test")).map(t => { return {test : t.value}})
+
+        // Add Property to each element in the filter array
         Array.from($(event.target).find(".property")).map((p, i) => filters[i].property = p.value)
+
+        // Add value to each element in the filter array
+        Array.from($(event.target).find(".value")).map((p, i) => filters[i].value = p.value)
 
         filters = filters.filter(f => f.property)
 
@@ -67,7 +73,7 @@ export default class ArchetypeGeneric extends FormApplication {
             await this._updateObject(ev, new FormDataExtended(this.form))
             let wargear = duplicate(this.object.item.wargear)
             let generic = wargear[this.object.index || 0]
-            generic.filters.push({test : "", property: ""})
+            generic.filters.push({test : "", property: "", value: ""})
 
             //  // Add new index to groups (last index + 1)
             // let groups = this.object.item.addToGroup({type : "item", index : (wargear.length - 1 || 0)})

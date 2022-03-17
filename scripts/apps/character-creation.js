@@ -1,10 +1,12 @@
+import { WrathAndGloryItem } from "../item/item.js";
 import ArchetypeGroups from "./archetype-groups.js";
+import FilterResults from "./filter-results.js";
 
 export default class CharacterCreation extends FormApplication {
     constructor(object) {
         super(object)
         this.actor = object.actor;
-        this.archetype = object.archetype;
+        this.archetype = object.archetype.clone();
         this.species = game.wng.utility.findItem(object.archetype.species.id, "species")
         this.faction = game.wng.utility.findItem(object.archetype.faction.id, "faction")
         this.speciesAbilities = this.species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
@@ -16,7 +18,7 @@ export default class CharacterCreation extends FormApplication {
             id: "character-creation",
             title: "Character Creation",
             template: "systems/wrath-and-glory/template/apps/character-creation.html",
-            width: 1000,
+            width: 1400,
             height: 800,
             resizable: true
         })
@@ -76,6 +78,30 @@ export default class CharacterCreation extends FormApplication {
         return html;
     }
 
+    /**
+     * Replace a filter html with an item
+     * 
+     * @param {Object} filter Filter details (to replace with object)
+     * @param {String} id ID of item chosen
+     */
+    chooseWargear(filter, id)
+    {
+        let element = this.element.find(`.generic[data-id=${filter.groupId}]`)[0]
+        let group = ArchetypeGroups.search(filter.groupId, this.archetype.groups)
+        let wargearObject = this.archetype.wargear[group.index]
+        let item = game.items.get(id)
+        
+        if (element && item) 
+        {
+            element.classList.remove("generic")
+            element.textContent = item.name
+
+            wargearObject.type = "item"
+            wargearObject.name = item.name;
+            wargearObject.id = item.id;
+        }
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
 
@@ -121,6 +147,92 @@ export default class CharacterCreation extends FormApplication {
             }
 
         })
+
+        html.find(".wargear-item").click(async ev => {
+            let id = ev.currentTarget.dataset.id
+            let group = ArchetypeGroups.search(id, this.archetype.groups)
+            let wargear = this.archetype.wargear[group.index]
+
+            if (wargear.type == "generic")
+            {
+                new FilterResults({wargear, app: this}).render(true)
+            }
+            else
+              new WrathAndGloryItem(game.items.get(wargear.id).toObject()).sheet.render(true, {editable: false})
+        })
+
+
+        html.find(".background").click(ev => {
+            // let parent = $(ev.currentTarget).parents("ol");
+            // parent.find(".active").each((i, e) => {
+            //     e.classList.remove("active")
+            // })
+            // ev.currentTarget.classList.add("active")
+
+            // this.resetBonus()
+
+            this.chooseBackground(ev.currentTarget)
+        })
+
+        html.find(".roll-background").click(ev => {
+            let background = ev.currentTarget.classList[1];
+            let list = this.faction.backgrounds[background]
+            let random = Math.floor(CONFIG.Dice.randomUniform() * list.length);
+            let chosen = this.element.find(`.${background} .background[data-index="${random}"]`)
+            this.chooseBackground(chosen[0])
+        })
+    }
+
+    /**
+     * Takes a background element that's part of a background list, clears other active (can only choose 1), and adds active to the element passed into it
+     * Finally it calls resetBonus to update the select element that contains all the background bonuses selected
+     * 
+     * @param {HTMLElement} element HTML background element
+     */
+    chooseBackground(element)
+    {
+
+        let parent = $(element).parents("ol");
+        parent.find(".active").each((i, e) => {
+            e.classList.remove("active")
+        })
+        element.classList.add("active")
+
+        this.resetBonus()
+
+    }
+
+
+    /**
+     * The selector should only include bonuses from selected backgrounds. This returns a string for html representing the available bonuses
+     * based on what backgrounds have the active class
+     * 
+     * @returns html representing the select's available options
+     */
+    getAvailableBonuses()
+    {
+        let ids = []
+        this.element.find(".background.active").each((i, e) => {
+            ids.push(e.dataset.effect)
+        })
+        let effects = ids.map(id => this.faction.effects.get(id))
+        let html = "<option value=''>-</option>"
+
+        effects.forEach(e => {
+            html += `<option value=${e.id}>${e.data.label}</option>`
+        })
+        return html
+    }
+
+    /**
+     * Each time backgrounds are updated, the available bonuses must be updated to only include
+     * effects from the selected backgrounds
+     */
+    resetBonus() {
+        let select = this.element.find(".background-bonus")
+        select[0].value = "";
+        select.children().remove()
+        select.append(this.getAvailableBonuses())
     }
 
 
