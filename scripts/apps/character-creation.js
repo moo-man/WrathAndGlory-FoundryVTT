@@ -1,3 +1,4 @@
+import { WrathAndGloryActor } from "../actor/actor.js";
 import { WrathAndGloryItem } from "../item/item.js";
 import ArchetypeGroups from "./archetype-groups.js";
 import FilterResults from "./filter-results.js";
@@ -11,6 +12,9 @@ export default class CharacterCreation extends FormApplication {
         this.faction = game.wng.utility.findItem(object.archetype.faction.id, "faction")
         this.speciesAbilities = this.species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
         this.archetypeAbility = game.wng.utility.findItem(this.archetype.ability.id, "ability")
+        this.addedTalents = [];
+
+        this.initializeCharacter();
     }
 
     static get defaultOptions() {
@@ -20,8 +24,38 @@ export default class CharacterCreation extends FormApplication {
             template: "systems/wrath-and-glory/template/apps/character-creation.html",
             width: 1400,
             height: 800,
-            resizable: true
-        })
+            resizable: true,
+            dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null}]
+    })
+    }
+
+
+    initializeCharacter()
+    {
+        this.character = new WrathAndGloryActor({type: "agent", name : this.object.actor.name}) // Temporary actor 
+
+        // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
+        for (let attribute in this.character.attributes)
+        {
+            if (this.species.attributes[attribute])
+                this.character.data.update({[`data.attributes.${attribute}.base`] : this.species.attributes[attribute]})
+            if (this.archetype.attributes[attribute])
+                this.character.data.update({[`data.attributes.${attribute}.base`] : this.archetype.attributes[attribute]})
+        }
+        for (let skill in this.character.skills)
+        {
+            if (this.species.skills[skill])
+            this.character.data.update({[`data.skills.${skill}.base`] : this.species.skills[skill]})
+            if (this.archetype.skills[skill])
+                this.character.data.update({[`data.skills.${skill}.base`] : this.archetype.skills[skill]})
+        }
+
+        this.character.data.update({"data.experience.total" : this.archetype.tier * 100, "data.advances.species" : this.archetype.cost})
+        
+        this.character.prepareData();
+
+        // Allows us to prevent user from going below base stats
+        this.baseCharacter = {data : duplicate(this.character.data.data)} // toObject(true) didn't maintain derived (total) values of stats so here we are
     }
 
     async getData() {
@@ -32,13 +66,13 @@ export default class CharacterCreation extends FormApplication {
         this.speciesAbilities = await Promise.all(this.speciesAbilities)
 
         data.actor = this.actor;
+        data.character = this.character
         data.archetype = this.archetype;
         data.species = this.species;
         data.faction = this.faction;
         data.archetypeAbility = this.archetypeAbility
         data.speciesAbilities = this.speciesAbilities
         data.wargearHTML = this.constructWargearHTML();
-        console.log(data)
         return data
     }
 
@@ -46,6 +80,16 @@ export default class CharacterCreation extends FormApplication {
     async _updateObject(event, formData) {
         this.object.update(formData)
     }
+    
+   _onDrop(ev) {
+    let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
+    let dropItem = game.items.get(dragData.id)
+    if (dropItem.type == "talent")
+    {
+        this.addedTalents.push(dropItem.toObject());
+        this.updateExperience();
+    }
+  }
 
     constructWargearHTML() {
         let html = ""
@@ -181,8 +225,48 @@ export default class CharacterCreation extends FormApplication {
             let chosen = this.element.find(`.${background} .background[data-index="${random}"]`)
             this.chooseBackground(chosen[0])
         })
+        
+        
+        html.find(".stat-edit button").mouseup(ev => {
+            let parent = $(ev.currentTarget).parents(".stat-edit")
+            let target = parent.attr("data-attribute") ? "attributes" : "skills"
+            let stat
+            if (target == "attributes")
+                stat = parent.attr("data-attribute")
+            else 
+                stat = parent.attr("data-skill")
+            
+            let statObj = duplicate(getProperty(this.character, `${target}.${stat}`))
+
+            if (ev.target.classList.contains("inc"))
+            {
+                statObj.rating++;
+                statObj.total++;
+            }
+            else if (ev.target.classList.contains("dec"))
+            {
+                statObj.rating--;
+                statObj.total--;
+            }
+
+            // Can't go to 0 or base character, and can't go above species max
+            if (statObj.total <= 0 || statObj.total < getProperty(this.baseCharacter, `data.${target}.${stat}.total`) || (target == "attributes" && (statObj.total > getProperty(this.species, `attributeMax.${stat}`))))
+                return;
+
+            this.character.data.update({[`data.${target}.${stat}.rating`] : statObj.rating})
+
+            parent.find("input")[0].value = statObj.total
+            this.updateExperience();
+        })
     }
 
+    updateExperience()
+    {
+        this.character.prepareData();
+        let talentXP = this.addedTalents.reduce((prev, current) => prev + current.data.cost, 0)
+        this.element.find(".xp input")[0].value = this.character.experience.spent + talentXP;
+    }
+        
     /**
      * Takes a background element that's part of a background list, clears other active (can only choose 1), and adds active to the element passed into it
      * Finally it calls resetBonus to update the select element that contains all the background bonuses selected
@@ -234,6 +318,19 @@ export default class CharacterCreation extends FormApplication {
         select.children().remove()
         select.append(this.getAvailableBonuses())
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    //#region Wargear 
 
 
     _toggleGroupIcon(element, force) {
@@ -307,4 +404,5 @@ export default class CharacterCreation extends FormApplication {
             fa.classList.add("fa-circle")
         }
     }
+    //#endregion
 }

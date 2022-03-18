@@ -494,6 +494,9 @@
   "UPDATER.Error": "You can only update if you've initialized this module at least once.",
   "UPDATER.Notification": "Created {created} and updated {updated} documents from {name} - {version}",
 
+  "CC.XP_AVAILABLE" : "XP Available",
+  "CC.XP_SPENT" : "XP Spent",
+
   "BUGREPORT.Contact": "Contact Info",
   "BUGREPORT.ContactPlaceholder": "Discord Tag or Email.",
   "BUGREPORT.DescriptionPlaceholder": "What happened, how to reproduce, etc.",
@@ -508,6 +511,7 @@
   "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
   "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
   "BUTTON.PostBug" : "W&G Bug Report"
+
 
 
 }

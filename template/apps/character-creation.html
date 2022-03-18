@@ -153,7 +153,37 @@
 
             </div>
             <div class="customization column">
+                <div class="column-details">
+
                 <h3>Customization</h3>
+
+                <div class="wrapper xp">
+                    <label>{{localize "CC.XP_SPENT"}}</label>
+                    <input type="text" value="{{character.experience.spent}}">
+                    <label>{{localize "CC.XP_AVAILABLE"}}</label>
+                    <input type="text" value="{{character.experience.total}}">
+                </div>
+
+                <h4>Attributes</h4>
+                {{#each character.attributes as |attribute a|}}
+                <div class="wrapper stat-edit" data-attribute="{{a}}">
+                    <label><span></span>{{configLookup "attributes" a}} {{#if (lookup ../species.attributeMax a)}}<span>Max: {{lookup ../species.attributeMax a}}</span>{{/if}}</label>
+                    <input  type="number" value="{{attribute.total}}">
+                    <button class="dec" type="button">-</button>
+                    <button class="inc" type="button">+</button>
+                </div>
+                {{/each}}
+
+                <h4>Skills</h4>
+                {{#each character.skills as |skill s|}}
+                <div class="wrapper stat-edit" data-skill="{{s}}">
+                    <label>{{configLookup "skills" s}}</label>
+                    <input  type="number" value="{{skill.total}}">
+                    <button class="dec" type="button">-</button>
+                    <button class="inc" type="button">+</button>
+                </div>
+                {{/each}}
+                </div>
             </div>
         </div>
     </div>

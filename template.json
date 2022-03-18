@@ -12,49 +12,56 @@
             "rating": 0,
             "base" : 1,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "toughness": {
             "label": "ATTRIBUTE.TOUGHNESS",
             "rating": 0,
             "base" : 1,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "agility": {
             "label": "ATTRIBUTE.AGILITY",
             "rating": 0,
             "base" : 1,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "initiative": {
             "label": "ATTRIBUTE.INITIATIVE",
             "rating": 0,
             "base" : 1,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "willpower": {
             "label": "ATTRIBUTE.WILLPOWER",
             "rating": 0,
             "base" : 1,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "intellect": {
             "label": "ATTRIBUTE.INTELLECT",
             "rating": 0,
             "base" : 1,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "fellowship": {
             "label": "ATTRIBUTE.FELLOWSHIP",
             "rating": 0,
             "base" : 1,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           }
         }
       },
@@ -66,7 +73,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "awareness": {
             "label": "SKILL.AWARENESS",
@@ -74,7 +82,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "ballisticSkill": {
             "label": "SKILL.BALLISTIC_SKILL",
@@ -82,7 +91,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "cunning": {
             "label": "SKILL.CUNNING",
@@ -90,7 +100,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "deception": {
             "label": "SKILL.DECEPTION",
@@ -98,7 +109,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "insight": {
             "label": "SKILL.INSIGHT",
@@ -106,7 +118,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "intimidation": {
             "label": "SKILL.INTIMIDATION",
@@ -114,7 +127,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "investigation": {
             "label": "SKILL.INVESTIGATION",
@@ -122,7 +136,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "leadership": {
             "label": "SKILL.LEADERSHIP",
@@ -130,7 +145,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "medicae": {
             "label": "SKILL.MEDICAE",
@@ -138,7 +154,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "persuasion": {
             "label": "SKILL.PERSUASION",
@@ -146,7 +163,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "pilot": {
             "label": "SKILL.PILOT",
@@ -154,7 +172,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "psychicMastery": {
             "label": "SKILL.PSYCHIC_MASTERY",
@@ -162,7 +181,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "scholar": {
             "label": "SKILL.SCHOLAR",
@@ -170,7 +190,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "stealth": {
             "label": "SKILL.STEALTH",
@@ -178,7 +199,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "survival": {
             "label": "SKILL.SURVIVAL",
@@ -186,7 +208,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "tech": {
             "label": "SKILL.TECH",
@@ -194,7 +217,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           },
           "weaponSkill": {
             "label": "SKILL.WEAPON_SKILL",
@@ -202,7 +226,8 @@
             "rating": 0,
             "base" : 0,
             "bonus" : 0,
-            "cost": 0
+            "cost": 0,
+            "total" : 0
           }
         }
       },
@@ -284,12 +309,7 @@
       "advances": {
         "tier": 1,
         "rank": 1,
-        "species": 0,
-        "experience": {
-          "current": 0,
-          "spent": 0,
-          "total": 0
-        }
+        "species": 0
       },
       "experience": {
         "current": 0,
@@ -538,33 +558,33 @@
       "cost" : 0,
       "keywords" : [],
       "attributes" : {
-        "strength" : 0,
-        "toughness" : 0,
-        "agility" : 0,
-        "initiative" : 0,
-        "willpower" : 0,
-        "intellect" : 0,
-        "fellowship" : 0
+        "strength" : null,
+        "toughness" : null,
+        "agility" : null,
+        "initiative" : null,
+        "willpower" : null,
+        "intellect" : null,
+        "fellowship" : null
       },
       "skills" : {
-        "athletics" : 0,
-        "awareness" : 0,
-        "ballisticSkill" : 0,
-        "cunning" : 0,
-        "deception" : 0,
-        "insight" : 0,
-        "intimidation" : 0,
-        "investigation" : 0,
-        "leadership" : 0,
-        "medicae" : 0,
-        "persuasion" : 0,
-        "pilot" : 0,
-        "psychicMastery" : 0,
-        "scholar" : 0,
-        "stealth" : 0,
-        "survival" : 0,
-        "tech" : 0,
-        "weaponSkill" : 0
+        "athletics" : null,
+        "awareness" : null,
+        "ballisticSkill" : null,
+        "cunning" : null,
+        "deception" : null,
+        "insight" : null,
+        "intimidation" : null,
+        "investigation" : null,
+        "leadership" : null,
+        "medicae" : null,
+        "persuasion" : null,
+        "pilot" : null,
+        "psychicMastery" : null,
+        "scholar" : null,
+        "stealth" : null,
+        "survival" : null,
+        "tech" : null,
+        "weaponSkill" : null
       },
       "ability" : {
         "name" : "",
@@ -583,33 +603,33 @@
       },
       "suggested" : {
         "attributes" : {
-          "strength" : 0,
-          "toughness" : 0,
-          "agility" : 0,
-          "initiative" : 0,
-          "willpower" : 0,
-          "intellect" : 0,
-          "fellowship" : 0
+          "strength" : null,
+          "toughness" : null,
+          "agility" : null,
+          "initiative" : null,
+          "willpower" : null,
+          "intellect" : null,
+          "fellowship" : null
         },
         "skills" : {
-          "athletics" : 0,
-          "awareness" : 0,
-          "ballisticSkill" : 0,
-          "cunning" : 0,
-          "deception" : 0,
-          "insight" : 0,
-          "intimidation" : 0,
-          "investigation" : 0,
-          "leadership" : 0,
-          "medicae" : 0,
-          "persuasion" : 0,
-          "pilot" : 0,
-          "psychicMastery" : 0,
-          "scholar" : 0,
-          "stealth" : 0,
-          "survival" : 0,
-          "tech" : 0,
-          "weaponSkill" : 0
+          "athletics" : null,
+          "awareness" : null,
+          "ballisticSkill" : null,
+          "cunning" : null,
+          "deception" : null,
+          "insight" : null,
+          "intimidation" : null,
+          "investigation" : null,
+          "leadership" : null,
+          "medicae" : null,
+          "persuasion" : null,
+          "pilot" : null,
+          "psychicMastery" : null,
+          "scholar" : null,
+          "stealth" : null,
+          "survival" : null,
+          "tech" : null,
+          "weaponSkill" : null
         },
         "talents" : []
       }
@@ -621,42 +641,42 @@
       "journal" : "",
       "abilities" : [],
       "attributes" : {
-        "strength" : 0,
-        "toughness" : 0,
-        "agility" : 0,
-        "initiative" : 0,
-        "willpower" : 0,
-        "intellect" : 0,
-        "fellowship" : 0
+        "strength" : null,
+        "toughness" : null,
+        "agility" : null,
+        "initiative" : null,
+        "willpower" : null,
+        "intellect" : null,
+        "fellowship" : null
       },
       "skills" : {
-        "athletics" : 0,
-        "awareness" : 0,
-        "ballisticSkill" : 0,
-        "cunning" : 0,
-        "deception" : 0,
-        "insight" : 0,
-        "intimidation" : 0,
-        "investigation" : 0,
-        "leadership" : 0,
-        "medicae" : 0,
-        "persuasion" : 0,
-        "pilot" : 0,
-        "psychicMastery" : 0,
-        "scholar" : 0,
-        "stealth" : 0,
-        "survival" : 0,
-        "tech" : 0,
-        "weaponSkill" : 0
+        "athletics" : null,
+        "awareness" : null,
+        "ballisticSkill" : null,
+        "cunning" : null,
+        "deception" : null,
+        "insight" : null,
+        "intimidation" : null,
+        "investigation" : null,
+        "leadership" : null,
+        "medicae" : null,
+        "persuasion" : null,
+        "pilot" : null,
+        "psychicMastery" : null,
+        "scholar" : null,
+        "stealth" : null,
+        "survival" : null,
+        "tech" : null,
+        "weaponSkill" : null
       },
       "attributeMax" : {
-        "strength" : 0,
-        "toughness" : 0,
-        "agility" : 0,
-        "initiative" : 0,
-        "willpower" : 0,
-        "intellect" : 0,
-        "fellowship" : 0
+        "strength" : null,
+        "toughness" : null,
+        "agility" : null,
+        "initiative" : null,
+        "willpower" : null,
+        "intellect" : null,
+        "fellowship" : null
       }
     },
     "faction" : {

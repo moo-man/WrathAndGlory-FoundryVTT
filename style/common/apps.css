@@ -176,6 +176,11 @@
   flex: 1
 }
 
+#character-creation .wrapper.xp label {
+  flex: 2
+}
+
+
 #character-creation .wrapper select,
   #character-creation .wrapper input {
   background: var(--image-input) repeat;
@@ -271,9 +276,19 @@
   color: var(--color-imperium)
 }
 
+#character-creation .customization button {
+  flex: 0 0 25px;
+  height: 80%;
+}
+
 
 #character-creation .wargear .disabled {
   opacity: 0.5
+}
+
+#character-creation .wrapper label > span {
+  opacity: 0.5;
+  flex: 0 0 40px;
 }
 
 .filter-results {
@@ -289,4 +304,5 @@
 #filter-results .document.active {
   box-shadow: inset 0 0 10px var(--color-imperium);
 }
+
 

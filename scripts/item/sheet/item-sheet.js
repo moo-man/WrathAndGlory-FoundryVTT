@@ -126,17 +126,6 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       return
     }
 
-    // Special processing for archetype items to parse a list of skills available to spend exp on from the checkboxes
-    if (this.item.type == "archetype") {
-      let skills = []
-      this.element.find(".skill-checkbox").each((i, cb) => {
-        if (cb.checked)
-          skills.push(cb.dataset.skill)
-      });
-
-      // Add skills array to form data
-      formData["data.skills.list"] = skills
-    }
     return super._updateObject(event, formData)
   }
 
