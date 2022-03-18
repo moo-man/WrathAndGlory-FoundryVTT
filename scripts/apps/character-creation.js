@@ -86,8 +86,7 @@ export default class CharacterCreation extends FormApplication {
     let dropItem = game.items.get(dragData.id)
     if (dropItem.type == "talent")
     {
-        this.addedTalents.push(dropItem.toObject());
-        this.updateExperience();
+        this.addTalent(dropItem)
     }
   }
 
@@ -155,11 +154,8 @@ export default class CharacterCreation extends FormApplication {
             if (this.isDisabled(ev.currentTarget))
                 return
 
-                
-                let parent = $(ev.currentTarget).closest(".wargear-selection");
-                let group = parent.find(".wargear-group,.wargear-item")
-                let groupId = group.attr("data-id")
-                let choice = parent.closest(".choice")
+            let parent = $(ev.currentTarget).closest(".wargear-selection");
+            let choice = parent.closest(".choice")
 
             // Cannot uncheck that which has checked descendents ( >1 to exclude self, kinda gross but whatever)
             if (!this.isDisabled(ev.currentTarget) && parent.find(".on").length > 1)
@@ -173,15 +169,12 @@ export default class CharacterCreation extends FormApplication {
                 parent.parents(".wargear-selection").each((i, e) => {
                     $(e).children(".wargear-selector").each((j, selector) => {
                         this.setSelector(selector, "on")
+                        this.disableSiblingChoices(selector)
                     })
                 })
 
                 // Disable siblings
-                choice.children().each((i, e) => {
-                    if (e.dataset.id != groupId) {
-                        this.disableElements(e)
-                    }
-                })
+                this.disableSiblingChoices(ev.currentTarget)
             }
             else // If unchecked
             {
@@ -258,6 +251,32 @@ export default class CharacterCreation extends FormApplication {
             parent.find("input")[0].value = statObj.total
             this.updateExperience();
         })
+
+        html.on("click", ".talent-delete", ev => {
+            let parent = $(ev.currentTarget).parents(".ability")
+            let index = parseInt(parent.attr("data-index"));
+            parent.remove();
+            this.addedTalents.splice(index, 1);
+            if (this.addedTalents.length == 0)
+            {
+                this.element.find(".talents h4").remove()
+            }
+        })
+    }
+
+    disableSiblingChoices(element)
+    {
+        let parent = $(element).closest(".wargear-selection");
+        let group = parent.find(".wargear-group,.wargear-item")
+        let groupId = group.attr("data-id")
+        let choice = parent.closest(".choice")
+        
+        // Disable siblings
+        choice.children().each((i, e) => {
+            if (e.dataset.id != groupId) {
+                this.disableElements(e)
+            }
+        })
     }
 
     updateExperience()
@@ -284,6 +303,32 @@ export default class CharacterCreation extends FormApplication {
 
         this.resetBonus()
 
+    }
+
+
+    addTalent(talent)
+    {
+        let list = this.element.find(".talents")
+        if (this.addedTalents.length == 0)
+        {
+            list.append(`<h4>Talents</h4>`)
+        }
+        this.addedTalents.push(talent.toObject());
+        this.updateExperience();
+
+        let html = `
+        <div class="ability data-index='${this.addedTalents.length-1}'">
+        <div class="ability-header">
+            <img src="${talent.data.img}">
+            <label>${talent.name}</label>
+            <a class="talent-delete"><i class="fas fa-times"></i></a>
+        </div>
+        <div class="ability-description">
+            ${talent.description}
+        </div>
+        </div>`
+
+        list.append(html)
     }
 
 
