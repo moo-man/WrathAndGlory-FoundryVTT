@@ -175,8 +175,10 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             else if (data.type == "Item")
             {
                 let item = game.items.get(data.id);
-                if (item.type == "archetype")
+                if (item.type == "archetype" && this.actor.type == "agent")
                     return this.actor.characterCreation(item)
+                else if(item.type == "archetype" && this.actor.type == "threat")
+                    return this.actor.applyArchetype(item);
             }
             else
                 super._onDrop(ev)

@@ -475,6 +475,52 @@ export class WrathAndGloryActor extends Actor {
         }).render(true)
     }
 
+    async applyArchetype(archetype) {
+        ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+        let actorData = this.toObject();
+
+        let items = archetype.ArchetypeItems
+        items.push(archetype.toObject())
+        let faction = items.find(i => i.type == "faction")
+        let species = items.find(i => i.type == "species")
+        faction.effects = [];
+        actorData.data.combat.speed = species.data.speed;
+        actorData.data.combat.size = species.data.size;
+
+
+        for(let attr in archetype.attributes)
+        {
+            let attribute = actorData.data.attributes[attr]
+            if (archetype.attributes[attr])
+                attribute.base = archetype.attributes[attr]
+
+            if (archetype.suggested.attributes[attr] > attribute.base)
+                attribute.rating = archetype.suggested.attributes[attr] - attribute.base
+        }
+
+        for(let sk in archetype.skills)
+        {
+            let skill = actorData.data.skills[sk]
+            if (archetype.skills[sk])
+                skill.base = archetype.skills[sk]
+
+            if (archetype.suggested.skills[sk] > skill.base)
+                skill.rating = archetype.suggested.skills[sk] - skill.base
+        }
+
+
+        // Remove IDs so items work within the update method
+        items.forEach(i => delete i._id)
+
+        actorData.img = archetype.data.img
+        actorData.token.img = archetype.data.img.replace("images", "tokens")
+
+        await this.update(actorData)
+
+        // Add items separately so active effects get added seamlessly
+        this.createEmbeddedDocuments("Item", items)
+    }
+
     //#endregion
 
     get Size() {

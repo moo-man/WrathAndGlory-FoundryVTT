@@ -407,6 +407,48 @@ export class WrathAndGloryItem extends Item {
         return traits
     }
 
+
+    get ArchetypeItems() {
+        let items = [];
+
+        let species = game.wng.utility.findItem(this.species.id, "species")
+        let faction = game.wng.utility.findItem(this.faction.id, "faction")
+
+        let speciesAbilities = species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
+        let archetypeAbility = game.wng.utility.findItem(this.ability.id, "ability")
+        let keywords = this.keywords.map(WNGUtility.getKeywordItem)
+
+
+        // Get all archetype talents, merge with diff
+        let talents = this.suggested.talents.map(t => {
+            let item = game.items.get(t.id)?.toObject();
+            if (item)
+                mergeObject(item, t.diff, {overwrite : true})
+            return item
+        })
+
+        // Get all archetype talents, merge with diff
+        let wargear = this.wargear.map(i => {
+            let item = game.items.get(i.id)?.toObject();
+            if (item)
+                mergeObject(item, i.diff, {overwrite : true})
+            return item
+        })
+
+        items = items.concat(
+            [species], 
+            [faction],
+            [faction],
+            [archetypeAbility],
+            speciesAbilities,
+            keywords).map(i => i.toObject()).concat( // Wargear and talents are already objects
+                talents,
+                wargear
+            )
+
+        return items.filter(i => i);
+    }
+
     get Upgrades() {
         return this.upgrades.map(i => new CONFIG.Item.documentClass(i))
     }
