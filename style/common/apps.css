@@ -86,10 +86,19 @@
 
 
 #character-creation .character-creation{
-  height: 100%;
+  height: calc(100% - 30px);
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+#character-creation .background-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.08;
+  pointer-events: none;
 }
 
   #character-creation form {

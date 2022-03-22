@@ -357,3 +357,8 @@ display: none
 .wrath-and-glory.sheet.actor .tab[data-tab].active {
   height: 100%;
 }
+
+.wrath-and-glory.sheet .item-label:hover{
+  background: var(--color-imperium);
+  cursor: pointer;
+}

@@ -8,7 +8,8 @@ export class WrathAndGloryItem extends Item {
         if (context && context.archetype)
         {
             this.archetype = context.archetype.item;
-            this.wargearIndex = context.archetype.index;
+            this.archetypeItemIndex = context.archetype.index;
+            this.archetypeItemPath = context.archetype.path
         }
     }
 
@@ -271,6 +272,42 @@ export class WrathAndGloryItem extends Item {
         let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
         return existing
     }
+
+
+        /**
+     * Override update to account for archetype parent
+     */
+         async update(data={}, context={}) 
+         {
+             // If this item is from an archetype entry, update the diff instead of the actual item
+             // I would like to have done this is the item's _preCreate but the item seems to lose 
+             // its "archetype" reference so it has to be done here
+             // TODO: Current Issue - changing a property, then changing back to the original value
+             // does not work due to `diffObject()`
+     
+             if (this.archetype) {
+                 // Get the archetype's equipment, find the corresponding object, add to its diff
+     
+                 let list = duplicate(getProperty(this.archetype.data, this.archetypeItemPath))
+                 let item = list[this.archetypeItemIndex];
+                 mergeObject( // Merge current diff with new diff
+                 item.diff,
+                 diffObject(this.toObject(), data),
+                 { overwrite: true })
+         
+                 // If the diff includes the item's name, change the name stored in the archetype
+                 if (item.diff.name)
+                 item.name = item.diff.name
+                 else
+                 item.name = this.name
+     
+                 this.archetype.update({ [`${this.archetypeItemPath}`]: list })
+                 data={}
+             }
+             return super.update(data, context)
+         }
+     
+
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get Range() {

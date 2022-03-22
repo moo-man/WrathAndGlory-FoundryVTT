@@ -61,8 +61,8 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     // If this is a temp item with an archetype parent
     if (this.item.archetype) {
-      let list = duplicate(this.item.archetype.wargear)
-      let wargearObj = list[this.item.wargearIndex];
+      let list = duplicate(getProperty(this.item.archetype.data, this.item.archetypeItemPath))
+      let wargearObj = list[this.item.archetypeItemIndex];
       mergeObject(data.data, wargearObj.diff, { overwrite: true }) // Merge archetype diff with item data
       data.name = wargearObj.diff.name || data.item.name
     }
@@ -98,35 +98,6 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       data.abilities = this.item.abilities.map(i => `<a class="species-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
     }
     return data;
-  }
-
-  async _updateObject(event, formData) {
-    // If this item is from an archetype entry, update the diff instead of the actual item
-    // I would like to have done this is the item's _preCreate but the item seems to lose 
-    // its "archetype" reference so it has to be done here
-    // TODO: Current Issue - changing a property, then changing back to the original value
-    // does not work due to `diffObject()`
-
-    if (this.item.archetype) {
-      // Get the archetype's wargear, find the corresponding object, add to its diff
-      let list = duplicate(this.item.archetype.wargear)
-      let wargearObj = list[this.item.wargearIndex];
-      mergeObject( // Merge current diff with new diff
-        wargearObj.diff,
-        diffObject(this.item.toObject(), expandObject(formData)),
-        { overwrite: true })
-
-      // If the diff includes the item's name, change the name stored in the archetype
-      if (wargearObj.diff.name)
-        wargearObj.name = wargearObj.diff.name
-      else
-        wargearObj.name = this.item.name
-
-      this.item.archetype.update({ "data.wargear": list })
-      return
-    }
-
-    return super._updateObject(event, formData)
   }
 
   _onDrop(ev) {
@@ -434,7 +405,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
           if (obj.type == "generic")
           new ArchetypeGeneric({item: this.item, index}).render(true);
           else
-            new WrathAndGloryItem(game.items.get(obj.id).toObject(), { archetype: { item: this.item, index } }).sheet.render(true)
+            new WrathAndGloryItem(game.items.get(obj.id).toObject(), { archetype: { item: this.item, index, path: "data.wargear" } }).sheet.render(true)
         }
         else {
           new Dialog({

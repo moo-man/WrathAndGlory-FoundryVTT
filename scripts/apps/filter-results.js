@@ -20,7 +20,6 @@ export default class FilterResults extends FormApplication {
         let filters = this.object.wargear.filters
         let items = await this.getAllItems();
         items = this.applyFilters(items, filters)
-        console.log(items)
         data.items = items;
         return data
     }

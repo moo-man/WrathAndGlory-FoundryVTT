@@ -1,3 +1,5 @@
+import { WrathAndGloryItem } from "../item/item.js";
+
 export default class WNGUtility {
   /**
    * Searches an object for a key that matches the given value.
@@ -63,7 +65,15 @@ export default class WNGUtility {
     catch (e) {
       throw new Error(e)
     }
+  }
 
+  static getKeywordItem(name) {
+    let item = game.items.contents.find(i => i.type == "keyword" && i.name.toLowerCase() == name.toLowerCase())
+
+    if (item)
+      return item
+    else 
+      return new WrathAndGloryItem({name, type: "keyword", img : "modules/wng-core/assets/ui/aquila-white.webp"})
   }
 
   static _keepID(id, document) {

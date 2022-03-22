@@ -518,6 +518,21 @@ export class WrathAndGloryActor extends Actor {
         return this.type == "threat" && this.mob > 1
     }
 
+    get activeBackground() {
+        let background = {
+            origin : "",
+            accomplishment : "",
+            goal : ""
+        }
+        if (!this.faction)
+            return background
+
+        background.origin = this.faction.backgrounds.origin.find(b => b.active).description
+        background.accomplishment = this.faction.backgrounds.accomplishment.find(b => b.active).description
+        background.goal = this.faction.backgrounds.goal.find(b => b.active).description
+        return background
+    }
+
     async addCondition(effect, flags = {}) {
         if (typeof (effect) === "string")
           effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
@@ -558,6 +573,9 @@ export class WrathAndGloryActor extends Actor {
         }
       }
 
+      get archetype() { return this.getItemTypes("archetype")[0]}
+      get species() {return this.getItemTypes("species")[0]}
+      get faction() {return this.getItemTypes("faction")[0]}
 
       hasCondition(conditionKey) {
         let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)

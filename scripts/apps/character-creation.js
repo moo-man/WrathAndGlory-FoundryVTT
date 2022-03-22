@@ -1,4 +1,5 @@
 import { WrathAndGloryActor } from "../actor/actor.js";
+import WNGUtility from "../common/utility.js";
 import { WrathAndGloryItem } from "../item/item.js";
 import ArchetypeGroups from "./archetype-groups.js";
 import FilterResults from "./filter-results.js";
@@ -55,7 +56,7 @@ export default class CharacterCreation extends FormApplication {
         this.character.prepareData();
 
         // Allows us to prevent user from going below base stats
-        this.baseCharacter = {data : duplicate(this.character.data.data)} // toObject(true) didn't maintain derived (total) values of stats so here we are
+        this.baseCharacter = this.character.toObject(false) 
     }
 
     async getData() {
@@ -143,6 +144,127 @@ export default class CharacterCreation extends FormApplication {
             wargearObject.name = item.name;
             wargearObject.id = item.id;
         }
+    }
+
+    async _updateObject(ev, formData) {
+
+        // let proceed = await this.validateForm()
+        // if (!proceed) {
+        //     return
+        // }
+
+        this.character.data.update({ "token": this.actor.data.token })
+
+        this.character.data.update({"data.combat.speed" : this.species.speed, "data.combat.size" : this.species.size})
+        this.character.data.update({"data.resources.influence" : this.archetype.influence});
+        this.character.data.update({
+            "img": this.actor.data.img,
+            "name": formData.name,
+            "token.name": formData.name,
+            "data.currencies.drops": Number(formData.aqua)
+        })
+
+        let faction = this.faction.toObject();
+        faction.effects = faction.effects.filter(e => e._id == formData["background-bonus"])
+        faction.effects[0].transfer = true;
+
+        // Set chosen backgrounds to active
+        faction.data.backgrounds.origin[$(this.form).find(".origin .active")[0].dataset.index || 0].active = true;
+        faction.data.backgrounds.accomplishment[$(this.form).find(".accomplishment .active")[0].dataset.index || 0].active = true;
+        faction.data.backgrounds.goal[$(this.form).find(".goal .active")[0].dataset.index || 0].active = true;
+
+
+        let wargear = this.retrieveChosenWargear();
+        let items = [
+            this.archetype.toObject(), 
+            this.species.toObject(), 
+            faction,
+            this.archetypeAbility.toObject()]
+            .concat(wargear.map(e => e.toObject()))
+            .concat(this.speciesAbilities.map(a=> a.toObject()))
+            .concat(this.addedTalents)
+            .concat(this.archetype.keywords.map(WNGUtility.getKeywordItem).map(i => i.toObject()))
+
+            let effects = items.reduce((prev, current) => {
+                prev = prev.concat(current.effects.filter(e => e.transfer))
+                return prev
+            }, [])
+    
+
+        this.actor.update(mergeObject(this.character.toObject(), { items, effects }, { overwrite: true }))
+        this.close();
+    }
+
+    validateForm() {
+        return new Promise((resolve) => {
+            // SKILLS
+            let errors = [];
+
+            let unresolvedGenerics = false;
+            // WARGEAR
+            this.element.find(".wargear-item.generic").each((i, e) => {
+                if (!this.isDisabled(e)) {
+                    let id = e.dataset.id
+                    let group = ArchetypeGroups.search(id, this.archetype.groups)
+                    let wargear = this.archetype.wargear[group.index]
+                    if (wargear.filters.length)
+                        unresolvedGenerics = true;
+                }
+            })
+            if (unresolvedGenerics)
+                errors.push("Unresolved Generic Items")
+
+
+            if (errors.length) {
+                new Dialog({
+                    label: "Errors",
+                    content: `<p>The following errors have been detected.</p>
+                  <ul>
+                  <li>${errors.join("</li><li>")}</li>
+                  </ul>
+                  <p>Proceed anyway?</p>
+                  `,
+                    buttons: {
+                        confirm: {
+                            label: "Confirm",
+                            callback: () => {
+                                resolve(true)
+                            }
+                        },
+                        cancel: {
+                            label: "Cancel",
+                            callback: () => {
+                                resolve(false)
+                            }
+                        }
+                    }
+                }).render(true)
+            }
+            else resolve(true)
+        })
+    }
+
+    
+    // Take the wargear of the archetype, check if it has the disabled class in the form (if it was not chosen), create a temporary item
+    retrieveChosenWargear() {
+        let wargear = this.archetype.wargear;
+        // Filter wargear by whether it has a disabled ancestor, if not, add to actor
+        return wargear.filter(e => {
+            let element = this.element.find(`.wargear-item[data-id='${e.groupId}']`)
+            let enabled = element.parents(".disabled").length == 0
+            return enabled
+        }).map(e => {
+            let item;
+            // If chosen item is still generic, create a basic item for it
+            if (e.type == "generic") {
+                item = new WrathAndGloryItem({ type: "gear", name: e.name, img: "modules/wng-core/assets/icons/gear/gear.webp" })
+            }
+            else {
+                // Create a temp item and incorporate the diff
+                item = new WrathAndGloryItem(mergeObject(game.items.get(e.id).toObject(), e.diff, { overwrite: true }))
+            }
+            return item
+        });
     }
 
     activateListeners(html) {
@@ -264,21 +386,6 @@ export default class CharacterCreation extends FormApplication {
         })
     }
 
-    disableSiblingChoices(element)
-    {
-        let parent = $(element).closest(".wargear-selection");
-        let group = parent.find(".wargear-group,.wargear-item")
-        let groupId = group.attr("data-id")
-        let choice = parent.closest(".choice")
-        
-        // Disable siblings
-        choice.children().each((i, e) => {
-            if (e.dataset.id != groupId) {
-                this.disableElements(e)
-            }
-        })
-    }
-
     updateExperience()
     {
         this.character.prepareData();
@@ -324,7 +431,7 @@ export default class CharacterCreation extends FormApplication {
             <a class="talent-delete"><i class="fas fa-times"></i></a>
         </div>
         <div class="ability-description">
-            ${talent.description}
+            ${TextEditor.enrichHTML(talent.description)}
         </div>
         </div>`
 
@@ -366,15 +473,6 @@ export default class CharacterCreation extends FormApplication {
 
 
 
-
-
-
-
-
-
-
-
-
     //#region Wargear 
 
 
@@ -390,6 +488,21 @@ export default class CharacterCreation extends FormApplication {
         element.classList.add("disabled")
         $(element).find(".wargear-selector").each((i, el) => {
             this.setSelector(el, "off")
+        })
+    }
+
+    disableSiblingChoices(element)
+    {
+        let parent = $(element).closest(".wargear-selection");
+        let group = parent.find(".wargear-group,.wargear-item")
+        let groupId = group.attr("data-id")
+        let choice = parent.closest(".choice")
+        
+        // Disable siblings
+        choice.children().each((i, e) => {
+            if (e.dataset.id != groupId) {
+                this.disableElements(e)
+            }
         })
     }
 

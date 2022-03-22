@@ -227,6 +227,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".condition-click").click(this._onConditionClick.bind(this));
         html.find(".item-trait").mousedown(this._onItemTraitClick.bind(this))
         html.find(".effect-select").change(this._onEffectSelect.bind(this))
+        html.find(".item-label").click(this._onItemLabelClick.bind(this))
 
         html.find(".items .item").each((i, e) => {
             e.draggable = true;
@@ -768,6 +769,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _onEffectSelect(ev) {
         let selection = ev.currentTarget.value
         this.actor.addCondition(selection)
+    }
+
+    _onItemLabelClick(ev) {
+        if (this.actor[ev.currentTarget.dataset.type])
+            this.actor[ev.currentTarget.dataset.type]?.sheet?.render(true);
+        else ui.notifications.error(`No Item of type ${ev.currentTarget.dataset.type} found`)
     }
 
 

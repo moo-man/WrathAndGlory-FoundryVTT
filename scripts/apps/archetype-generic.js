@@ -21,7 +21,7 @@ export default class ArchetypeGeneric extends FormApplication {
     getData() {
         let data = super.getData();
         let generic = {}
-        if (this.object.index)
+        if (Number.isNumeric(this.object.index))
         {
             generic.property = this.object.item.wargear[this.object.index]?.property
             generic.name = this.object.item.wargear[this.object.index]?.name

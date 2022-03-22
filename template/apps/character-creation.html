@@ -1,4 +1,5 @@
 <form>
+    <img class="background-image" src="{{archetype.data.img}}">
     <div class="character-creation">
         <header class="header">
             <h1><input type="text" name="name" value="{{actor.name}}" placeholder="Name"></h1>
@@ -50,7 +51,7 @@
                             <label>{{ability.name}}</label>
                         </div>
                         <div class="ability-description">
-                            {{{ability.description}}}
+                            {{{enrich ability.description}}}
                         </div>
                     </div>
                     {{/each}}
@@ -97,7 +98,7 @@
                 <h4>Ability</h4>
                 <div class="ability">
                     <div class="ability-header">
-                        <img src="{{archetype.data.img}}">
+                        <img src="{{archetypeAbility.data.img}}">
                         <label>{{archetypeAbility.name}}</label>
                     </div>
                     <div class="ability-description">
@@ -139,7 +140,7 @@
 
                 <div class="wrapper">
                     <label>Selected Bonus</label>
-                    <select class="background-bonus">
+                    <select name="background-bonus" class="background-bonus">
                         <option>-</option>
                     </select>
                 </div>
@@ -192,4 +193,5 @@
             </div>
         </div>
     </div>
+    <button class="submit">Submit</button>
 </form>
