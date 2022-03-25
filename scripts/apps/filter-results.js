@@ -54,6 +54,14 @@ export default class FilterResults extends FormApplication {
                 itemData.hasKeyword = (keyword) => {
                     return itemData.data.keywords.split(", ").map(i => i.trim().toLowerCase()).includes(keyword.toLowerCase())
                 }
+
+                if (f.property.includes("("))
+                {
+                    let split = f.property.split("(")
+                    split[1] = split[1].substring(0, split[1].length - 1)
+                    split[1] = split[1].split("").filter(i => i != '"').join("")
+                    return itemData[split[0]](split[1]) // Invoke function
+                }
                 
                 let propValue = getProperty(itemData, f.property)
                 let testValue = f.value;
@@ -86,11 +94,11 @@ export default class FilterResults extends FormApplication {
 
     get rarityNumber() {
         return {
-            "common": 0,
-            "uncommon": 1,
-            "rare": 2,
-            "very-rare": 3,
-            "unique": 4
+            "common": 1,
+            "uncommon": 2,
+            "rare": 3,
+            "very-rare": 4,
+            "unique": 5
         }
     }
 

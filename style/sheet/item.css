@@ -524,11 +524,12 @@ justify-content: center;
 }
 
 .wrath-and-glory.sheet .connector {
-  margin-right: 5px;
+  margin: 0px 5px;
 }
 
 
 .wrath-and-glory.sheet .comma {
+  margin-left: 0px;
   margin-right: 5px;
 }
 
