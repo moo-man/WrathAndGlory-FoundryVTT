@@ -280,7 +280,7 @@ export default class ArchetypeGroups extends Application {
         html.find(".connector").click(async ev => {
             let id = $(ev.currentTarget).parents(".group-list").attr("data-id")
             let groups = duplicate(this.object.groups);
-            let obj = this.search(id, groups);
+            let obj = ArchetypeGroups.search(id, groups);
             obj.type = obj.type == "and" ? "or" : "and"; // flip and/or
             await this.object.update({"data.groups" : groups})
             this.render(true);

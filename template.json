@@ -441,6 +441,7 @@
     },
     "augmentic": {
       "templates": ["physical"],
+      "requirements": "",
       "effect": ""
     },
     "gear": {
@@ -636,8 +637,8 @@
     },
     "species" : {
       "cost" : 0,
-      "speed" : 0,
-      "size" : "",
+      "speed" : 6,
+      "size" : "average",
       "journal" : "",
       "abilities" : [],
       "attributes" : {

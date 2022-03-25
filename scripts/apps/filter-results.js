@@ -50,7 +50,12 @@ export default class FilterResults extends FormApplication {
     applyFilters(items, filters) {
         filters.forEach(f => {
             items = items.filter(i => {
-                let propValue = getProperty(i.data, f.property)
+                let itemData = i.toObject();
+                itemData.hasKeyword = (keyword) => {
+                    return itemData.data.keywords.split(", ").map(i => i.trim().toLowerCase()).includes(keyword.toLowerCase())
+                }
+                
+                let propValue = getProperty(itemData, f.property)
                 let testValue = f.value;
                 let test = f.test
                 
