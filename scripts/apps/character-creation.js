@@ -261,7 +261,14 @@ export default class CharacterCreation extends FormApplication {
             }
             else {
                 // Create a temp item and incorporate the diff
-                item = new WrathAndGloryItem(mergeObject(game.items.get(e.id).toObject(), e.diff, { overwrite: true }))
+                let document = game.items.get(e.id)
+                if (document)
+                    item = new WrathAndGloryItem(mergeObject(game.items.get(e.id).toObject(), e.diff, { overwrite: true }))
+                else 
+                {
+                    ui.notifications.warn(`Could not find ${e.name}, creating generic`)
+                    item = new WrathAndGloryItem({ type: "gear", name: e.name, img: "modules/wng-core/assets/icons/gear/gear.webp" })
+            }
             }
             return item
         });
