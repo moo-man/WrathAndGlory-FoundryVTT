@@ -575,7 +575,10 @@ export class WrathAndGloryActor extends Actor {
         if (!effect.id)
             return "Conditions require an id field"
 
-        effect.flags = flags;
+        if (!effect.flags)
+            effect.flags = flags
+        else
+            mergeObject(effect.flags, flags);
 
         let existing = this.hasCondition(effect.id)
 
