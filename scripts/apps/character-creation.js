@@ -79,10 +79,6 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-    async _updateObject(event, formData) {
-        this.object.update(formData)
-    }
-    
    _onDrop(ev) {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
     let dropItem = game.items.get(dragData.id)
@@ -178,8 +174,9 @@ export default class CharacterCreation extends FormApplication {
         else 
         {
             faction.effects[0].transfer = true;
+            faction.effects[0].label = $(ev.currentTarget).find(".background-bonus").children("option").filter(":selected").text()
+            // Gross but whatever, uses the selected text (with background name appended) as the effect name
         }
-
 
         // Set chosen backgrounds to active
         faction.data.backgrounds.origin[$(this.form).find(".origin .active")[0]?.dataset?.index || 0].active = true;
@@ -209,7 +206,7 @@ export default class CharacterCreation extends FormApplication {
             // SKILLS
             let errors = [];
 
-            if (this.element.find(".xp input")[0].value > this.element.find(".xp input")[1].value)
+            if (parseInt(this.element.find(".xp input")[0].value) > parseInt(this.element.find(".xp input")[1].value))
             {
                 errors.push("Spent XP exceeds Available XP")
             }
@@ -256,6 +253,10 @@ export default class CharacterCreation extends FormApplication {
                                 resolve(false)
                             }
                         }
+                    },
+                    close : () => resolve(false),
+                    render : (html) => {
+                        html.parents(".dialog").find("header a").remove()
                     }
                 }).render(true)
             }
@@ -473,15 +474,17 @@ export default class CharacterCreation extends FormApplication {
      */
     getAvailableBonuses()
     {
-        let ids = []
+        let backgroundsChosen = []
         this.element.find(".background.active").each((i, e) => {
-            ids.push(e.dataset.effect)
+            backgroundsChosen.push({id : e.dataset.effect, index : e.dataset.index, type : $(e).parents("ol")[0].classList.value})
         })
-        let effects = ids.map(id => this.faction.effects.get(id))
+        backgroundsChosen.forEach(bg => {
+            bg.effect = this.faction.effects.get(bg.id)
+        })
         let html = "<option value=''>-</option>"
 
-        effects.forEach(e => {
-            html += `<option value=${e.id}>${e.data.label}</option>`
+        backgroundsChosen.forEach(bg => {
+            html += `<option value=${bg.id}>${bg.effect.data.label} (${this.faction.backgrounds[bg.type][bg.index]?.name})</option>`
         })
         return html
     }
