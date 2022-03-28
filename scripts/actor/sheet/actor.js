@@ -165,12 +165,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         {
             data = JSON.parse(data)
             if (data.type == "itemDrop")
-                this.actor.createEmbeddedDocuments("Item", [data.payload])
+                return this.actor.createEmbeddedDocuments("Item", [data.payload])
             else if (data.type == "keywordDrop")
             {
                 let name = data.payload
                 let item = game.items.find(i => i.name == name && i.type == "keyword")
-                this.actor.createEmbeddedDocuments("Item", [item.toObject()])
+                return this.actor.createEmbeddedDocuments("Item", [item.toObject()])
             }
             else if (data.type == "Item")
             {
@@ -180,8 +180,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 else if(item.type == "archetype" && this.actor.type == "threat")
                     return this.actor.applyArchetype(item);
             }
-            else
-                super._onDrop(ev)
+            super._onDrop(ev)
         }
     }
 
