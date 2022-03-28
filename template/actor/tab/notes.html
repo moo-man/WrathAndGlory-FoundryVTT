@@ -13,10 +13,9 @@
         <input class="current" name="data.advances.rank" type="number" value="{{data.advances.rank}}" min="1" max="4"
           data-dtype="Number" />
       </div>
-      <div class="species">
+      <div class="archetype">
         <label>{{localize "BIO.ARCHETYPE"}}</label>
-        <input class="cost" name="data.advances.species" type="number" value="{{data.advances.species}}" min="0"
-          data-dtype="Number" />
+        <input class="cost" type="number" value="{{actor.archetype.cost}}" disabled data-dtype="Number" />
       </div>
       <div class="experience">
         <div class="header">
@@ -53,22 +52,19 @@
   <div class="form-row background">
     <div class="form-field">
       <label>{{localize "BIO.ORIGIN"}}</label>
-      <input name="data.bio.origin.value" type="text" value="{{data.bio.origin.value}}" />
-      <input class="bg-bonus" name="data.bio.origin.bonus" type="text" value="{{data.bio.origin.bonus}}" />
+      <input type="text" value="{{actor.activeBackground.origin}}" />
     </div>
   </div>
   <div class="form-row background">
     <div class="form-field">
       <label>{{localize "BIO.ACCOMPLISHMENT"}}</label>
-      <input name="data.bio.accomplishment.value" type="text" value="{{data.bio.accomplishment.value}}" />
-      <input class="bg-bonus" name="data.bio.accomplishment.bonus" type="text" value="{{data.bio.accomplishment.bonus}}" />
+      <input type="text" value="{{actor.activeBackground.accomplishment}}" />
     </div>
   </div>
   <div class="form-row background">
     <div class="form-field">
       <label>{{localize "BIO.GOAL"}}</label>
-      <input name="data.bio.goal.value" type="text" value="{{data.bio.goal.value}}" />
-      <input class="bg-bonus" name="data.bio.goal.bonus" type="text" value="{{data.bio.goal.bonus}}" />
+      <input type="text" value="{{actor.activeBackground.goal}}" />
     </div>
 </div>
 <hr>

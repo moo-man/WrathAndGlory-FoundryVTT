@@ -28,12 +28,9 @@
       <label style="cursor: default;">{{localize "HEADER.SIZE"}}</label>
       <select name="data.combat.size">
         {{#select data.combat.size}}
-        <option value="tiny">{{localize "SIZE.TINY"}}</option>
-        <option value="small">{{localize "SIZE.SMALL"}}</option>
-        <option value="average">{{localize "SIZE.AVERAGE"}}</option>
-        <option value="large">{{localize "SIZE.LARGE"}}</option>
-        <option value="huge">{{localize "SIZE.HUGE"}}</option>
-        <option value="gargantuan">{{localize "SIZE.GARGANTUAN"}}</option>
+        {{#each (config "size") as |size s|}}
+        <option value="{{s}}">{{size}}</option>
+        {{/each}}
         {{/select}}
       </select>
     </div>

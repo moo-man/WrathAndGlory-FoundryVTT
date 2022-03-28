@@ -25,6 +25,7 @@ import AbilityRoll from "./scripts/common/tests/ability-roll.js";
 import ModuleInitializer from "./scripts/apps/module-initialization.js"
 import ModuleUpdater from "./scripts/apps/module-updater.js"
 import {migrateWorld} from "./scripts/common/migration.js"
+import TagManager from "./scripts/common/tag-manager.js";
 
 
 Hooks.once("init", () => {
@@ -55,7 +56,8 @@ Hooks.once("init", () => {
     ItemTraits,
     RuinGloryCounter,
     utility : WNGUtility,
-    migration : {migrateWorld}
+    migration : {migrateWorld},
+    tags: new TagManager()
   };
 
   CONFIG.Dice.terms.w = WrathDie;

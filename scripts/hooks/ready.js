@@ -21,13 +21,13 @@ export default function() {
             let effect = game.wng.config.systemEffects[e]
             effect.label = game.i18n.localize(effect.label)
         }
+        game.wng.tags.createTags();
     });
-
+    
     CONFIG.ChatMessage.documentClass.prototype.getTest = function () {
         if (hasProperty(this, "data.flags.wrath-and-glory.testData"))
           return game.wng.rollClasses.WNGTest.recreate(this.getFlag("wrath-and-glory", "testData"))
       }
-
 
     FoundryOverrides();
 

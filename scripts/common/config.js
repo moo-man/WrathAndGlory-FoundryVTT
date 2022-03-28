@@ -65,6 +65,15 @@ WNG.skillAttribute = {
     "weaponSkill" : "initiative"
 }
 
+WNG.size = {
+   tiny :  "SIZE.TINY",
+   small :  "SIZE.SMALL",
+   average :  "SIZE.AVERAGE",
+   large :  "SIZE.LARGE",
+   huge :  "SIZE.HUGE",
+   gargantuan :  "SIZE.GARGANTUAN"
+}
+
 
 WNG.weaponTraits = {
     "agonising": "Agonising",
@@ -228,8 +237,14 @@ WNG.systemEffects = {
         id : "wounded",
         label : "EFFECT.Wounded",
         icon : "systems/wrath-and-glory/asset/icons/wounded.svg",
-        changes : [{key: "difficulty.base", mode : 0, value : 1}],
-        flags : { "wrath-and-glory.description" : "+1 DN to all Tests"}
+        changes : [
+            {key: "difficulty.base", mode : 6, value : 1}
+        ],
+        flags : { 
+            "wrath-and-glory.changeCondition" : { 
+                0 : {description : "+1 DN to all Tests", script : "return true"}
+            }
+        }
     },
     "full-defence" : {
         id : "full-defence",
@@ -244,10 +259,14 @@ WNG.systemEffects = {
         label : "EFFECT.AllOutAttack",
         icon : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
         changes : [
-            {key: "pool.bonus", mode : 0, value : 2},
+            {key: "pool.bonus", mode : 6, value : 2},
             {key: "data.combat.defence.bonus", mode : 2, value : -2},
-    ],
-        flags : { "wrath-and-glory.description" : "+2 bonus dice to melee"}
+        ],
+        flags : { 
+            "wrath-and-glory.changeCondition" : { 
+                0 : {description : "+2 bonus dice to melee", script : "return data.weapon && data.weapon.isMelee"}
+            }
+        }
     }
 }
 
@@ -263,8 +282,13 @@ CONFIG.statusEffects = [
         label : "CONDITION.Blinded",
         icon : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
         changes : [
-            {key: "difficulty.base", mode : 0, value : 4}],
-        flags : { "wrath-and-glory.description" : "Increase DN for any sight-related task (including all combat Tests), replacing lesser penalties."}
+            {key: "difficulty.base", mode : 6, value : 4}
+        ],
+        flags : { 
+            "wrath-and-glory.changeCondition" : { 
+                0 : {description : "Blinded", script : "return data.weapon"}
+            }
+        }
     },
     {
         id : "exhausted",
@@ -275,8 +299,14 @@ CONFIG.statusEffects = [
         id : "fear",
         label : "CONDITION.Fear",
         icon : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
-        changes : [{key: "difficulty.base", mode : 0, value : 2}],
-        flags : { "wrath-and-glory.description" : "+2DN to all Tests"}
+        changes : [
+            {key: "difficulty.base", mode : 6, value : 2}
+        ],
+        flags : { 
+            "wrath-and-glory.changeCondition" : { 
+                0 : {description : "+2 DN to all Tests", script : "return true"}
+            }
+        }
     },
     {
         id : "frenzied",
@@ -288,8 +318,14 @@ CONFIG.statusEffects = [
         id : "hindered",
         label : "CONDITION.Hindered",
         icon : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
-        changes : [{key: "difficulty.base", mode : 0, value : 1}],
-        flags : { "wrath-and-glory.description" : "+DN to all Tests"}
+        changes : [
+            {key: "difficulty.base", mode : 6, value : 1}
+        ],
+        flags : { 
+            "wrath-and-glory.changeCondition" : { 
+                0 : {description : "+DN to all Tests", script : "return true"}
+            }
+        }
     },
     {
         id : "onfire",
@@ -300,15 +336,23 @@ CONFIG.statusEffects = [
         id : "pinned",
         label : "CONDITION.Pinned",
         icon : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
-        changes : [{key: "difficulty.base", mode : 0, value : 2}],
-        flags : { "wrath-and-glory.description" : "Penalty to Ballistic Skill Tests when targeting an enemy using a Pinning Attacks against you"}
+        changes : [{key: "difficulty.base", mode : 6, value : 2}],
+        flags : { 
+            "wrath-and-glory.changeCondition" : { 
+                0 : {description : "Pinned: Ballistic Skill Test Penalty", script : ""}
+            }
+        }
     },
     {
         id : "poisoned",
         label : "CONDITION.Poisoned",
         icon : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
-        changes : [{key: "difficulty.base", mode : 0, value : 2}],
-        flags : { "wrath-and-glory.description" : "+DN to all Tests"}
+        changes : [{key: "difficulty.base", mode : 6, value : 2}],
+        flags : { 
+            "wrath-and-glory.changeCondition" : { 
+                0 : {description : "+DN to all Tests", script : "return true"}
+            }
+        }
     },
     {
         id : "prone",
@@ -331,8 +375,12 @@ CONFIG.statusEffects = [
         id : "terror",
         label : "CONDITION.Terror",
         icon : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
-        changes : [{key: "difficulty.base", mode : 0, value : 2}],
-        flags : { "wrath-and-glory.description" : "+2DN to all Tests"}
+        changes : [{key: "difficulty.base", mode : 6, value : 2}],
+        flags : { 
+            "wrath-and-glory.changeCondition" : { 
+                0 : {description : "+2 DN to all Tests", script : "return true"}
+            }
+        }
     },
     {
         id : "vulnerable",

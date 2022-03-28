@@ -158,7 +158,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
 
-    _onDrop(ev)
+    async _onDrop(ev)
     {
         let data = ev.dataTransfer.getData("text/plain")
         if (data)
@@ -171,6 +171,14 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 let name = data.payload
                 let item = game.items.find(i => i.name == name && i.type == "keyword")
                 this.actor.createEmbeddedDocuments("Item", [item.toObject()])
+            }
+            else if (data.type == "Item")
+            {
+                let item = await Item.implementation.fromDropData(data);
+                if (item.type == "archetype" && this.actor.type == "agent")
+                    return this.actor.characterCreation(item)
+                else if(item.type == "archetype" && this.actor.type == "threat")
+                    return this.actor.applyArchetype(item);
             }
             else
                 super._onDrop(ev)
@@ -221,6 +229,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".condition-click").click(this._onConditionClick.bind(this));
         html.find(".item-trait").mousedown(this._onItemTraitClick.bind(this))
         html.find(".effect-select").change(this._onEffectSelect.bind(this))
+        html.find(".item-label").click(this._onItemLabelClick.bind(this))
 
         html.find(".items .item").each((i, e) => {
             e.draggable = true;
@@ -762,6 +771,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _onEffectSelect(ev) {
         let selection = ev.currentTarget.value
         this.actor.addCondition(selection)
+    }
+
+    _onItemLabelClick(ev) {
+        if (this.actor[ev.currentTarget.dataset.type])
+            this.actor[ev.currentTarget.dataset.type]?.sheet?.render(true);
+        else ui.notifications.error(`No Item of type ${ev.currentTarget.dataset.type} found`)
     }
 
 

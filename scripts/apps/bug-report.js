@@ -7,17 +7,20 @@ export default class BugReportFormWNG extends Application {
 
         this.domains = [
             "Wrath & Glory System",
-            "Wrath & Glory Core Module"
+            "Wrath & Glory Core Module",
+            "Wrath & Glory Forsaken System Module"
         ]
 
         this.domainKeys = [
             "wrath-and-glory",
-            "wng-core"
+            "wng-core",
+            "wng-forsaken"
         ]
 
         this.domainKeysToLabel = {
             "wrath-and-glory" : "system",
             "wng-core" : "core",
+            "wng-forsaken" : "forsaken"
         }
     }
 

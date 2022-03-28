@@ -2,6 +2,17 @@ import WNGUtility from "../common/utility.js";
 
 export class WrathAndGloryItem extends Item {
 
+    constructor(data, context)
+    {
+        super(data, context)
+        if (context && context.archetype)
+        {
+            this.archetype = context.archetype.item;
+            this.archetypeItemIndex = context.archetype.index;
+            this.archetypeItemPath = context.archetype.path
+        }
+    }
+
     // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
     async _preCreate(data, options, user) {
         if (data._id && !this.isOwned)
@@ -149,6 +160,77 @@ export class WrathAndGloryItem extends Item {
 
     }
 
+    handleArchetypeItem(item)
+    {
+        if (["weapon", "weaponUpgrade", "armour", "gear", "ammo", "augmentic"].includes(item.type))
+        {
+            let wargear = duplicate(this.wargear);
+            wargear.push({
+                name : item.name,
+                id : item.id,
+                type: "item",
+                diff : {}
+            })
+            let groups = this.addToGroup({index: wargear.length - 1, type : "item"})
+            return this.update({"data.wargear" : wargear, "data.groups" : groups})
+        }
+        if(item.type == "ability")
+        {
+            return this.update({"data.ability.id" : item.id, "data.ability.name" : item.name})
+        }
+        if(item.type == "faction")
+        {
+            return this.update({"data.faction.id" : item.id, "data.faction.name" : item.name})
+        }
+        if(item.type == "species")
+        {
+            return this.update({"data.species.id" : item.id, "data.species.name" : item.name})
+        }
+        if (item.type == "talent")
+        {   
+            let talents = duplicate(this.suggested.talents)
+            talents.push({"id" : item.id, "name" : item.name})
+            this.update({"data.suggested.talents" : talents})
+        }
+        if (item.type == "keyword")
+        {
+            let keywords = duplicate(this.keywords)
+            keywords.push(item.name)
+            this.update({"data.keywords" : keywords})
+        }
+    }
+
+    handleSpeciesItem(item)
+    {
+        if(item.type == "ability")
+        {
+            let abilities = duplicate(this.abilities);
+            abilities.push({id : item.id, name : item.name})
+            return this.update({"data.abilities" : abilities})
+        }
+    }
+    
+    addToGroup(object)
+    {
+        let groups = duplicate(this.groups)
+        object.groupId = randomID()
+        groups.items.push(object)
+        return groups
+    }
+
+    resetGroups()
+    {
+        this.update({ "data.groups": {type: "and", groupId: "root", items : Array.fromRange(this.wargear.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
+    }
+
+    _deleteIndex(index, path)
+    {
+        let array = duplicate(getProperty(this.data, path))
+        array.splice(index, 1)
+        this.update({ [path]: array})
+    }
+
+
     async addCondition(effect) {
         if (typeof (effect) === "string")
             effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
@@ -190,6 +272,42 @@ export class WrathAndGloryItem extends Item {
         let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
         return existing
     }
+
+
+        /**
+     * Override update to account for archetype parent
+     */
+         async update(data={}, context={}) 
+         {
+             // If this item is from an archetype entry, update the diff instead of the actual item
+             // I would like to have done this is the item's _preCreate but the item seems to lose 
+             // its "archetype" reference so it has to be done here
+             // TODO: Current Issue - changing a property, then changing back to the original value
+             // does not work due to `diffObject()`
+     
+             if (this.archetype) {
+                 // Get the archetype's equipment, find the corresponding object, add to its diff
+     
+                 let list = duplicate(getProperty(this.archetype.data, this.archetypeItemPath))
+                 let item = list[this.archetypeItemIndex];
+                 mergeObject( // Merge current diff with new diff
+                 item.diff,
+                 diffObject(this.toObject(), data),
+                 { overwrite: true })
+         
+                 // If the diff includes the item's name, change the name stored in the archetype
+                 if (item.diff.name)
+                 item.name = item.diff.name
+                 else
+                 item.name = this.name
+     
+                 this.archetype.update({ [`${this.archetypeItemPath}`]: list })
+                 data={}
+             }
+             return super.update(data, context)
+         }
+     
+
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get Range() {
@@ -289,6 +407,48 @@ export class WrathAndGloryItem extends Item {
         return traits
     }
 
+
+    get ArchetypeItems() {
+        let items = [];
+
+        let species = game.wng.utility.findItem(this.species.id, "species")
+        let faction = game.wng.utility.findItem(this.faction.id, "faction")
+
+        let speciesAbilities = species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
+        let archetypeAbility = game.wng.utility.findItem(this.ability.id, "ability")
+        let keywords = this.keywords.map(WNGUtility.getKeywordItem)
+
+
+        // Get all archetype talents, merge with diff
+        let talents = this.suggested.talents.map(t => {
+            let item = game.items.get(t.id)?.toObject();
+            if (item)
+                mergeObject(item, t.diff, {overwrite : true})
+            return item
+        })
+
+        // Get all archetype talents, merge with diff
+        let wargear = this.wargear.map(i => {
+            let item = game.items.get(i.id)?.toObject();
+            if (item)
+                mergeObject(item, i.diff, {overwrite : true})
+            return item
+        })
+
+        items = items.concat(
+            [species], 
+            [faction],
+            [faction],
+            [archetypeAbility],
+            speciesAbilities,
+            keywords).map(i => i.toObject()).concat( // Wargear and talents are already objects
+                talents,
+                wargear
+            )
+
+        return items.filter(i => i);
+    }
+
     get Upgrades() {
         return this.upgrades.map(i => new CONFIG.Item.documentClass(i))
     }
@@ -368,6 +528,10 @@ export class WrathAndGloryItem extends Item {
         }
         else
             return []
+    }
+
+    get Journal() {
+        return game.journal.get(this.journal)
     }
 
     get AbilityType() {
@@ -476,6 +640,22 @@ export class WrathAndGloryItem extends Item {
     get equipped() { return this.data.data.equipped }
     get test() { return this.data.data.test }
     get abilityType() { return this.data.data.abilityType }
+    get tier() { return this.data.data.tier}
+    get species() { return this.data.data.species}
+    get attributes() { return this.data.data.attributes}
+    get attributeMax() { return this.data.data.attributeMax}
+    get skills() { return this.data.data.skills}
+    get ability() { return this.data.data.ability}
+    get abilities() { return this.data.data.abilities}
+    get wargear() { return this.data.data.wargear}
+    get groups() { return this.data.data.groups}
+    get suggested() { return this.data.data.suggested}
+    get journal() { return this.data.data.journal}
+    get objectives() { return this.data.data.objectives}
+    get faction() { return this.data.data.faction}
+    get size() { return this.data.data.size}
+    get speed() { return this.data.data.speed}
+    get backgrounds() {return this.data.data.backgrounds}
 
 
   /**

@@ -9,6 +9,7 @@ import DeterminationRoll from "../common/tests/determination.js";
 import AbilityRoll from "../common/tests/ability-roll.js";
 import WNGUtility from "../common/utility.js";
 import StealthRoll from "../common/tests/stealth.js";
+import CharacterCreation from "../apps/character-creation.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -33,8 +34,8 @@ export class WrathAndGloryActor extends Actor {
             "flags.wrath-and-glory.autoCalc.determination": true,
             "flags.wrath-and-glory.autoCalc.wounds": true,
             "flags.wrath-and-glory.autoCalc.conviction": true,
-            "flags.wrath-and-glory.autoWounded" : true,
-            "flags.wrath-and-glory.autoExhausted" : true
+            "flags.wrath-and-glory.autoWounded": true,
+            "flags.wrath-and-glory.autoExhausted": true
         }
         if (data.type === "agent") {
             initData["token.vision"] = true;
@@ -91,12 +92,11 @@ export class WrathAndGloryActor extends Actor {
     _computeArmour(armour) {
         this.combat.resilience.armour = 0;
         let highestRes = 0
-        for (let item of armour)
-        {
-            if (item.rating )
+        for (let item of armour) {
+            if (item.rating)
 
-            if (item.traitList.powered)
-                this.attributes.strength.total += item.traitList.powered.rating
+                if (item.traitList.powered)
+                    this.attributes.strength.total += item.traitList.powered.rating
 
             if (item.traitList.bulk)
                 this.combat.speed -= item.traitList.bulk.rating
@@ -160,7 +160,6 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeExperience() {
-        this.experience.spent += this.advances.species;
         this.experience.current = this.experience.total - this.experience.spent;
     }
 
@@ -168,24 +167,24 @@ export class WrathAndGloryActor extends Actor {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)
             const modes = CONST.ACTIVE_EFFECT_MODES;
-            switch ( change.mode ) {
+            switch (change.mode) {
                 case modes.CUSTOM:
-                return change.effect._applyCustom(this, change);
+                    return change.effect._applyCustom(this, change);
                 case modes.ADD:
-                return change.effect._applyAdd(this, change);
+                    return change.effect._applyAdd(this, change);
                 case modes.MULTIPLY:
-                return change.effect._applyMultiply(this, change);
+                    return change.effect._applyMultiply(this, change);
                 case modes.OVERRIDE:
-                return change.effect._applyOverride(this, change);
+                    return change.effect._applyOverride(this, change);
                 case modes.UPGRADE:
                 case modes.DOWNGRADE:
-                return change.effect._applyUpgrade(this, change);
+                    return change.effect._applyUpgrade(this, change);
             }
         })
     }
 
     //#region Rolling
-    async setupAttributeTest(attribute, options={}) {
+    async setupAttributeTest(attribute, options = {}) {
         let attributeObject = this.attributes[attribute]
 
         let dialogData = this._baseDialogData();
@@ -201,7 +200,7 @@ export class WrathAndGloryActor extends Actor {
         return new WNGTest(testData)
     }
 
-    async setupSkillTest(skill, options={}) {
+    async setupSkillTest(skill, options = {}) {
         let skillObject = this.skills[skill]
 
         let dialogData = this._baseDialogData();
@@ -218,56 +217,55 @@ export class WrathAndGloryActor extends Actor {
         return new WNGTest(testData)
     }
 
-    async setupGenericTest(type, options={}) {
+    async setupGenericTest(type, options = {}) {
         let dialogData = this._baseDialogData();
         let testClass = WNGTest
-        switch(type)
-        {
+        switch (type) {
             case "stealth":
-            dialogData.pool.size = this.skills.stealth.total;
-            dialogData.title =  game.i18n.localize(`ROLL.STEALTH`);
-            dialogData.noDn = true;
-            testClass = StealthRoll;
-            break;
+                dialogData.pool.size = this.skills.stealth.total;
+                dialogData.title = game.i18n.localize(`ROLL.STEALTH`);
+                dialogData.noDn = true;
+                testClass = StealthRoll;
+                break;
             case "determination":
-            dialogData.pool.size = this.combat.determination.total
-            dialogData.title =  game.i18n.localize(`ROLL.DETERMINATION`)
-            dialogData.determination = true;
-            dialogData.noDn = true;
-            testClass = DeterminationRoll;
-            break;
+                dialogData.pool.size = this.combat.determination.total
+                dialogData.title = game.i18n.localize(`ROLL.DETERMINATION`)
+                dialogData.determination = true;
+                dialogData.noDn = true;
+                testClass = DeterminationRoll;
+                break;
             case "conviction":
-            dialogData.pool.size = this.combat.conviction.total
-            dialogData.title =  game.i18n.localize(`ROLL.CONVICTION`)
-            break;
+                dialogData.pool.size = this.combat.conviction.total
+                dialogData.title = game.i18n.localize(`ROLL.CONVICTION`)
+                break;
             case "corruption":
-            dialogData.pool.size = this.combat.conviction.total
-            dialogData.title =  game.i18n.localize(`ROLL.CORRUPTION`)
-            this._addCorruptionData(dialogData)
-            testClass = CorruptionTest;
-            break;
+                dialogData.pool.size = this.combat.conviction.total
+                dialogData.title = game.i18n.localize(`ROLL.CORRUPTION`)
+                this._addCorruptionData(dialogData)
+                testClass = CorruptionTest;
+                break;
             case "mutation":
-            dialogData.pool.size = this.combat.conviction.total
-            dialogData.title =  game.i18n.localize(`ROLL.MUTATION`)
-            dialogData.difficulty.target = 3
-            testClass = MutationTest;
-            break;
+                dialogData.pool.size = this.combat.conviction.total
+                dialogData.title = game.i18n.localize(`ROLL.MUTATION`)
+                dialogData.difficulty.target = 3
+                testClass = MutationTest;
+                break;
             case "fear":
-            dialogData.pool.size = this.combat.resolve.total
-            dialogData.title =  game.i18n.localize(`ROLL.FEAR`)
-            dialogData.type == "fear"
-            testClass = ResolveTest
-            break;
+                dialogData.pool.size = this.combat.resolve.total
+                dialogData.title = game.i18n.localize(`ROLL.FEAR`)
+                dialogData.type == "fear"
+                testClass = ResolveTest
+                break;
             case "terror":
-            dialogData.pool.size = this.combat.resolve.total
-            dialogData.title =  game.i18n.localize(`ROLL.TERROR`)
-            dialogData.type == "terror"
-            testClass = ResolveTest
-            break;
+                dialogData.pool.size = this.combat.resolve.total
+                dialogData.title = game.i18n.localize(`ROLL.TERROR`)
+                dialogData.type == "terror"
+                testClass = ResolveTest
+                break;
             case "influence":
-            dialogData.pool.size = this.resources.influence
-            dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
-            break;
+                dialogData.pool.size = this.resources.influence
+                dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
+                break;
         }
         this._addOptions(dialogData, options)
         dialogData.type = type
@@ -279,7 +277,7 @@ export class WrathAndGloryActor extends Actor {
         return new testClass(testData)
     }
 
-    async setupWeaponTest(weapon, options={}) {
+    async setupWeaponTest(weapon, options = {}) {
         if (typeof weapon == "string")
             weapon = this.items.get(weapon)
 
@@ -299,7 +297,7 @@ export class WrathAndGloryActor extends Actor {
         return new WeaponTest(testData)
     }
 
-    async setupPowerTest(power, options={}) {
+    async setupPowerTest(power, options = {}) {
         if (typeof power == "string")
             power = this.items.get(power)
 
@@ -319,18 +317,16 @@ export class WrathAndGloryActor extends Actor {
         return new PowerTest(testData)
     }
 
-    async setupAbilityRoll(ability, options={})
-    {
+    async setupAbilityRoll(ability, options = {}) {
         let testData = {
-            title : ability.name,
-            speaker : this.speakerData(),
-            itemId : ability.id,
-            damage : {},
-            ed : {},
-            ap : {}
+            title: ability.name,
+            speaker: this.speakerData(),
+            itemId: ability.id,
+            damage: {},
+            ed: {},
+            ap: {}
         }
-        if (ability.hasDamage)
-        {
+        if (ability.hasDamage) {
             testData.damage.base = ability.damage.base
             testData.damage.bonus = ability.damage.bonus
             testData.damage.rank = ability.damage.rank
@@ -360,21 +356,20 @@ export class WrathAndGloryActor extends Actor {
             wrath: {
                 base: this.hasCondition("dying") ? 1 + this.itemCategories["traumaticInjury"].length : 1
             },
-            changeList : this.getDialogChanges({condense: true}),
-            changes : this.getDialogChanges(),
-            actor : this,
-            targets : Array.from(game.user.targets)
+            changeList: this.getDialogChanges({ condense: true }),
+            changes: this.getDialogChanges(),
+            actor: this,
+            targets: Array.from(game.user.targets)
         };
     }
-    
+
 
     _weaponDialogData(weapon) {
         let dialogData = this._baseDialogData()
-        if (weapon.Ammo)
-        {
+        if (weapon.Ammo) {
             // Add ammo dialog changes if any exist
-            dialogData.changeList = this.getDialogChanges({condense: true, add : weapon.Ammo.ammoDialogEffects})
-            dialogData.changes = this.getDialogChanges({add : weapon.Ammo.ammoDialogEffects})
+            dialogData.changeList = this.getDialogChanges({ condense: true, add: weapon.Ammo.ammoDialogEffects })
+            dialogData.changes = this.getDialogChanges({ add: weapon.Ammo.ammoDialogEffects })
         }
         dialogData.weapon = weapon
         dialogData.pool.size = weapon.skill.total;
@@ -388,13 +383,11 @@ export class WrathAndGloryActor extends Actor {
         dialogData.ed = duplicate(weapon.ed)
         dialogData.ap = duplicate(weapon.ap)
 
-        if (weapon.isMelee)
-        {
+        if (weapon.isMelee) {
             dialogData.damage.base += this.attributes.strength.total
         }
 
-        if (weapon.traitList.force)
-        {
+        if (weapon.traitList.force) {
             if (this.hasKeyword("PSYKER"))
                 dialogData.damage.bonus += Math.ceil(this.attributes.willpower.total / 2)
             else
@@ -410,16 +403,14 @@ export class WrathAndGloryActor extends Actor {
         let dialogData = this._baseDialogData()
         dialogData.power = power
         dialogData.difficulty.target = power.DN
-        if (!Number.isNumeric(dialogData.difficulty.target))
-        {
+        if (!Number.isNumeric(dialogData.difficulty.target)) {
             ui.notifications.warn(game.i18n.localize("DIALOG.TARGET_DEFENSE_WARNING"))
         }
         dialogData.pool.size = power.skill.total;
         return dialogData
     }
 
-    _addOptions(dialogData, options)
-    {
+    _addOptions(dialogData, options) {
         dialogData.difficulty.target = options.dn || dialogData.difficulty.target
         dialogData.pool.size = options.pool || dialogData.pool.size
         dialogData.title = options.title || dialogData.title
@@ -430,8 +421,7 @@ export class WrathAndGloryActor extends Actor {
         mergeObject(dialogData, options);
     }
 
-    _addCorruptionData(dialogData)
-    {
+    _addCorruptionData(dialogData) {
         let level = game.wng.config.corruptionLevels[this.corruptionLevel]
         dialogData.difficulty.penalty += level.dn
     }
@@ -450,19 +440,85 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    getDialogChanges({condense = false, add = []}={}) {
+    getDialogChanges({ condense = false, add = [] } = {}) {
         let effects = Array.from(this.effects).concat(add);
         // Aggregate dialog changes from each effect
-        let changes =  effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({condense, indexOffset : prev.length})), [])
+        let changes = effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({ condense, indexOffset: prev.length })), [])
 
-        if (game.user.targets.size > 0)
-        {
+        if (game.user.targets.size > 0) {
             let target = Array.from(game.user.targets)[0].actor
-            let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({target, condense, indexOffset : changes.length})), [])
+            let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({ target, condense, indexOffset: changes.length })), [])
             changes = changes.concat(targetChanges)
         }
 
         return changes
+    }
+
+
+    characterCreation(archetype) {
+        new Dialog({
+            title: "Character Creation",
+            content: "<p>Begin Character Creation?</p>",
+            buttons: {
+                yes: {
+                    label: "Yes",
+                    callback: () => {
+                        new CharacterCreation({ actor: this, archetype }).render(true)
+                    }
+                },
+                no: {
+                    label: "No",
+                    callback: () => { }
+                }
+            }
+        }).render(true)
+    }
+
+    async applyArchetype(archetype) {
+        ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+        let actorData = this.toObject();
+
+        let items = archetype.ArchetypeItems
+        items.push(archetype.toObject())
+        let faction = items.find(i => i.type == "faction")
+        let species = items.find(i => i.type == "species")
+        faction.effects = [];
+        actorData.data.combat.speed = species.data.speed;
+        actorData.data.combat.size = species.data.size;
+
+
+        for(let attr in archetype.attributes)
+        {
+            let attribute = actorData.data.attributes[attr]
+            if (archetype.attributes[attr])
+                attribute.base = archetype.attributes[attr]
+
+            if (archetype.suggested.attributes[attr] > attribute.base)
+                attribute.rating = archetype.suggested.attributes[attr] - attribute.base
+        }
+
+        for(let sk in archetype.skills)
+        {
+            let skill = actorData.data.skills[sk]
+            if (archetype.skills[sk])
+                skill.base = archetype.skills[sk]
+
+            if (archetype.suggested.skills[sk] > skill.base)
+                skill.rating = archetype.suggested.skills[sk] - skill.base
+        }
+
+
+        // Remove IDs so items work within the update method
+        items.forEach(i => delete i._id)
+
+        actorData.img = archetype.data.img
+        actorData.token.img = archetype.data.img.replace("images", "tokens")
+        actorData.token.img = archetype.data.img.replace("actors", "tokens")
+
+        await this.update(actorData)
+
+        // Add items separately so active effects get added seamlessly
+        this.createEmbeddedDocuments("Item", items)
     }
 
     //#endregion
@@ -491,21 +547,38 @@ export class WrathAndGloryActor extends Actor {
         return levels.findIndex(i => this.corruption.current >= i.range[0] && this.corruption.current <= i.range[1])
     }
 
-    get isMob()
-    {
+    get isMob() {
         return this.type == "threat" && this.mob > 1
+    }
+
+    get activeBackground() {
+        let background = {
+            origin: "",
+            accomplishment: "",
+            goal: ""
+        }
+        if (!this.faction)
+            return background
+
+        background.origin = this.faction.backgrounds.origin.find(b => b.active).description
+        background.accomplishment = this.faction.backgrounds.accomplishment.find(b => b.active).description
+        background.goal = this.faction.backgrounds.goal.find(b => b.active).description
+        return background
     }
 
     async addCondition(effect, flags = {}) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
+            effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
         if (!effect)
-          return "No Effect Found"
+            return "No Effect Found"
 
         if (!effect.id)
-          return "Conditions require an id field"
+            return "Conditions require an id field"
 
-        effect.flags = flags;
+        if (!effect.flags)
+            effect.flags = flags
+        else
+            mergeObject(effect.flags, flags);
 
         let existing = this.hasCondition(effect.id)
 
@@ -513,39 +586,41 @@ export class WrathAndGloryActor extends Actor {
             await this.addCondition("prone")
 
         if (!existing) {
-          effect.label = game.i18n.localize(effect.label)
-          effect["flags.core.statusId"] = effect.id;
-          delete effect.id
-          return this.createEmbeddedDocuments("ActiveEffect", [effect])
+            effect.label = game.i18n.localize(effect.label)
+            effect["flags.core.statusId"] = effect.id;
+            delete effect.id
+            return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
-      }
+    }
 
-      async removeCondition(effect, value = 1) {
+    async removeCondition(effect, value = 1) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
+            effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
         if (!effect)
-          return "No Effect Found"
+            return "No Effect Found"
 
         if (!effect.id)
-          return "Conditions require an id field"
+            return "Conditions require an id field"
 
         let existing = this.hasCondition(effect.id)
 
         if (existing) {
-          return existing.delete()
+            return existing.delete()
         }
-      }
+    }
 
+    get archetype() { return this.getItemTypes("archetype")[0] }
+    get species() { return this.getItemTypes("species")[0] }
+    get faction() { return this.getItemTypes("faction")[0] }
 
-      hasCondition(conditionKey) {
+    hasCondition(conditionKey) {
         let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
         return existing
-      }
+    }
 
-      hasKeyword(keyword)
-      {
-          return !!this.getItemTypes("keyword").find(i => i.name == keyword)
-      }
+    hasKeyword(keyword) {
+        return !!this.getItemTypes("keyword").find(i => i.name == keyword)
+    }
 
 
     get attributes() { return this.data.data.attributes }
@@ -557,7 +632,7 @@ export class WrathAndGloryActor extends Actor {
     get resources() { return this.data.data.resources }
     get corruption() { return this.data.data.corruption }
     get notes() { return this.data.data.notes }
-    get mob() {return this.data.data.mob}
+    get mob() { return this.data.data.mob }
 
     getItemTypes(type) {
         return (this.itemCategories || this.itemTypes)[type]
@@ -618,18 +693,19 @@ export class WrathAndGloryActor extends Actor {
     }
 
 
-          /**
-   * Transform the Document data to be stored in a Compendium pack.
-   * Remove any features of the data which are world-specific.
-   * This function is asynchronous in case any complex operations are required prior to exporting.
-   * @param {CompendiumCollection} [pack]   A specific pack being exported to
-   * @return {object}                       A data object of cleaned data suitable for compendium import
-   * @memberof ClientDocumentMixin#
-   * @override - Retain ID
-   */
-  toCompendium(pack) {
-    let data = super.toCompendium(pack)
-    data._id = this.id; // Replace deleted ID so it is preserved
-    return data;
-  }
+    /**
+* Transform the Document data to be stored in a Compendium pack.
+* Remove any features of the data which are world-specific.
+* This function is asynchronous in case any complex operations are required prior to exporting.
+* @param {CompendiumCollection} [pack]   A specific pack being exported to
+* @return {object}                       A data object of cleaned data suitable for compendium import
+* @memberof ClientDocumentMixin#
+* @override - Retain ID
+*/
+    toCompendium(pack) {
+        let data = super.toCompendium(pack)
+        data._id = this.id; // Replace deleted ID so it is preserved
+        return data;
+    }
+
 }

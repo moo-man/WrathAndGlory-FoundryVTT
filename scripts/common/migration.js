@@ -80,4 +80,3 @@ function migrateEffectData(effect)
     })
     return effectData
 }
-

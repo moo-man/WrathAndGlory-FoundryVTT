@@ -72,24 +72,29 @@
 
 .wrath-and-glory.sheet.actor .advances-fields .tier,
 .wrath-and-glory.sheet.actor .advances-fields .rank,
-.wrath-and-glory.sheet.actor .advances-fields .species {
+.wrath-and-glory.sheet.actor .advances-fields .archetype {
   display: flex;
   flex-direction: row;
-  width: 110px;
+  width: 8 0px;
   text-align: center;
   justify-content: space-evenly;
 }
 
+.wrath-and-glory.sheet.actor .advances-fields .archetype {
+  width: 150px;
+}
+
+
 .wrath-and-glory.sheet.actor .advances-fields .tier label,
 .wrath-and-glory.sheet.actor .advances-fields .rank label,
-.wrath-and-glory.sheet.actor .advances-fields .species label {
+.wrath-and-glory.sheet.actor .advances-fields .archetype label {
   flex-basis: 57%;
   cursor: default;
 }
 
 .wrath-and-glory.sheet.actor .advances-fields .tier .current,
 .wrath-and-glory.sheet.actor .advances-fields .rank .current,
-.wrath-and-glory.sheet.actor .advances-fields .species .cost {
+.wrath-and-glory.sheet.actor .advances-fields .archetype .cost {
   flex-basis: 43%;
 }
 

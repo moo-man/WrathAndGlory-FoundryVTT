@@ -16,6 +16,9 @@
   "ITEM.TypeTraumaticinjury" : "Traumatic Injury",
   "ITEM.TypeWeapon" : "Weapon",
   "ITEM.TypeWeaponupgrade" : "Weapon Upgrade",
+  "ITEM.TypeArchetype" : "Archetype",
+  "ITEM.TypeSpecies" : "Species",
+  "ITEM.TypeFaction" : "Faction",
 
   "ABILITY.NAME": "Name",
   "ABILITY.EFFECT": "Effect",
@@ -75,6 +78,39 @@
   "AUGMETIC.VALUE": "Value",
   "AUGMETIC.RARITY": "Rarity",
   "AUGMETIC.KEYWORDS": "Keywords",
+  "AUGMETIC.REQUIREMENTS": "Requirements",
+
+  "ARCHETYPE.ATTRIBUTES" : "Attributes",
+  "ARCHETYPE.SKILLS" : "Skills",
+  "ARCHETYPE.NAME" : "Name",
+  "ARCHETYPE.TIER" : "Tier",
+  "ARCHETYPE.SPECIES" : "Species",
+  "ARCHETYPE.COST" : "XP Cost",
+  "ARCHETYPE.KEYWORDS" : "Keywords",
+  "ARCHETYPE.ABILITY" : "Archetype Ability",
+  "ARCHETYPE.WARGEAR" : "Wargear",
+  "ARCHETYPE.INFLUENCE" : "Influence",
+  "ARCHETYPE.SUGGESTED_ATTRIBUTES" : "Suggested Attributes",
+  "ARCHETYPE.SUGGESTED_SKILLS" : "Suggested Skills",
+  "ARCHETYPE.SUGGESTED_TALENTS" : "Suggested Talents",
+  "ARCHETYPE.FACTION" : "Faction",
+
+  "SPECIES.NAME" : "Name",
+  "SPECIES.COST" : "XP Cost",
+  "SPECIES.SPEED" : "Speed",
+  "SPECIES.SIZE" : "Size",
+  "SPECIES.ABILITIES" : "Abilities",
+  "SPECIES.ATTRIBUTE_MAX" : "Attribute Maximums",
+  "SPECIES.ATTRIBUTES" : "Attributes",
+  "SPECIES.SKILLS" : "Skills",
+
+  "FACTION.NAME" : "Name",
+  "FACTION.ORIGIN" : "Origin",
+  "FACTION.DESCRIPTION" : "Description",
+  "FACTION.EFFECT" : "Effect",
+  "FACTION.ACCOMPLISHMENT" : "Accomplishment",
+  "FACTION.GOAL" : "Goal",
+  "FACTION.OBJECTIVES" : "Objectives",
 
   "ATTRIBUTE.STRENGTH": "Strength",
   "ATTRIBUTE.TOUGHNESS": "Toughness",
@@ -120,6 +156,7 @@
   "BUTTON.CANCEL": "Cancel",
   "BUTTON.DAMAGE": "Damage",
   "BUTTON.CONFIGURE": "Configure",
+  "BUTTON.JOURNAL": "Journal",
 
   "BUTTON.ApplyDamage" : "Apply Damage",
   "BUTTON.ApplyDamageInvuln" : "Apply Damage (Invulnerable armour)",
@@ -333,6 +370,7 @@
   "TAB.STATS": "STATS",
   "TAB.TALENTS": "TALENTS",
   "TAB.DESCRIPTION": "DESCRIPTION",
+  "TAB.DETAILS": "DETAILS",
   "TAB.BONUS": "BONUS",
   "TAB.MAIN": "MAIN",
 
@@ -403,6 +441,7 @@
   "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
   "ERROR.NoMoreWrath" : "No more Wrath",
   "NOTE.WrathSubtracted" : "Wrath Subtracted",
+  "ERROR.ID": "ID for {name} already exists in collection. This Document has been given a unique ID.",
   "ERROR.NoMoreRuin" : "No more Ruin",
   "NOTE.RuinSubtracted" : "Ruin Subtracted",
   "NOTE.APPLY_DAMAGE_RESIST" : "{name} resisted the Damage",
@@ -457,6 +496,9 @@
   "UPDATER.Error": "You can only update if you've initialized this module at least once.",
   "UPDATER.Notification": "Created {created} and updated {updated} documents from {name} - {version}",
 
+  "CC.XP_AVAILABLE" : "XP Available",
+  "CC.XP_SPENT" : "XP Spent",
+
   "BUGREPORT.Contact": "Contact Info",
   "BUGREPORT.ContactPlaceholder": "Discord Tag or Email.",
   "BUGREPORT.DescriptionPlaceholder": "What happened, how to reproduce, etc.",
@@ -471,6 +513,7 @@
   "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
   "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
   "BUTTON.PostBug" : "W&G Bug Report"
+
 
 
 }
