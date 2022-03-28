@@ -441,6 +441,7 @@
   "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
   "ERROR.NoMoreWrath" : "No more Wrath",
   "NOTE.WrathSubtracted" : "Wrath Subtracted",
+  "ERROR.ID": "ID for {name} already exists in collection. This Document has been given a unique ID.",
   "ERROR.NoMoreRuin" : "No more Ruin",
   "NOTE.RuinSubtracted" : "Ruin Subtracted",
   "NOTE.APPLY_DAMAGE_RESIST" : "{name} resisted the Damage",

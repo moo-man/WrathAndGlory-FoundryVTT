@@ -13,10 +13,9 @@
         <input class="current" name="data.advances.rank" type="number" value="{{data.advances.rank}}" min="1" max="4"
           data-dtype="Number" />
       </div>
-      <div class="species">
+      <div class="archetype">
         <label>{{localize "BIO.ARCHETYPE"}}</label>
-        <input class="cost" name="data.advances.species" type="number" value="{{data.advances.species}}" min="0"
-          data-dtype="Number" />
+        <input class="cost" type="number" value="{{actor.archetype.cost}}" disabled data-dtype="Number" />
       </div>
       <div class="experience">
         <div class="header">

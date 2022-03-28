@@ -24,6 +24,7 @@ export default class CharacterCreation extends FormApplication {
             title: "Character Creation",
             template: "systems/wrath-and-glory/template/apps/character-creation.html",
             width: 1400,
+            closeOnSubmit: false,
             height: 800,
             resizable: true,
             dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null}]
@@ -110,7 +111,7 @@ export default class CharacterCreation extends FormApplication {
                 html += "</div>"
                 return html
             }
-            else if (group.type == "item") {
+            else if (group.type == "item" || (group.type == "generic" && group.filters.length == 0)) {
                 return `<div class="wargear-item" data-id='${group.groupId}'>${group.name}</div>`
             }
             else if (group.type == "generic") {
@@ -148,30 +149,42 @@ export default class CharacterCreation extends FormApplication {
 
     async _updateObject(ev, formData) {
 
-        // let proceed = await this.validateForm()
-        // if (!proceed) {
-        //     return
-        // }
+        let proceed = await this.validateForm(formData)
+        if (!proceed) {
+            return
+        }
 
         this.character.data.update({ "token": this.actor.data.token })
 
         this.character.data.update({"data.combat.speed" : this.species.speed, "data.combat.size" : this.species.size})
         this.character.data.update({"data.resources.influence" : this.archetype.influence});
+        this.character.data.update({"data.advances.tier" : this.archetype.tier});
         this.character.data.update({
             "img": this.actor.data.img,
             "name": formData.name,
-            "token.name": formData.name,
-            "data.currencies.drops": Number(formData.aqua)
+            "token.name": formData.name
         })
 
         let faction = this.faction.toObject();
         faction.effects = faction.effects.filter(e => e._id == formData["background-bonus"])
-        faction.effects[0].transfer = true;
+
+        if (faction.effects[0].changes[0].mode == 0)
+        {
+            let key = faction.effects[0].changes[0].key
+            // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
+            this.character.data.update({[key] : getProperty(this.character.data, key) + 1})
+            faction.effects = [];
+        }
+        else 
+        {
+            faction.effects[0].transfer = true;
+        }
+
 
         // Set chosen backgrounds to active
-        faction.data.backgrounds.origin[$(this.form).find(".origin .active")[0].dataset.index || 0].active = true;
-        faction.data.backgrounds.accomplishment[$(this.form).find(".accomplishment .active")[0].dataset.index || 0].active = true;
-        faction.data.backgrounds.goal[$(this.form).find(".goal .active")[0].dataset.index || 0].active = true;
+        faction.data.backgrounds.origin[$(this.form).find(".origin .active")[0]?.dataset?.index || 0].active = true;
+        faction.data.backgrounds.accomplishment[$(this.form).find(".accomplishment .active")[0]?.dataset?.index || 0].active = true;
+        faction.data.backgrounds.goal[$(this.form).find(".goal .active")[0]?.dataset?.index || 0].active = true;
 
 
         let wargear = this.retrieveChosenWargear();
@@ -185,20 +198,26 @@ export default class CharacterCreation extends FormApplication {
             .concat(this.addedTalents)
             .concat(this.archetype.keywords.map(WNGUtility.getKeywordItem).map(i => i.toObject()))
 
-            let effects = items.reduce((prev, current) => {
-                prev = prev.concat(current.effects.filter(e => e.transfer))
-                return prev
-            }, [])
-    
 
-        this.actor.update(mergeObject(this.character.toObject(), { items, effects }, { overwrite: true }))
+        await this.actor.update(mergeObject(this.character.toObject(), { overwrite: true }))
+        this.actor.createEmbeddedDocuments("Item", items) // Separately add items so effects are inherently added
         this.close();
     }
 
-    validateForm() {
+    validateForm(formData) {
         return new Promise((resolve) => {
             // SKILLS
             let errors = [];
+
+            if (this.element.find(".xp input")[0].value > this.element.find(".xp input")[1].value)
+            {
+                errors.push("Spent XP exceeds Available XP")
+            }
+
+            if (!formData["background-bonus"])
+            {
+                errors.push("Background bonus not selected")
+            }
 
             let unresolvedGenerics = false;
             // WARGEAR
@@ -264,14 +283,14 @@ export default class CharacterCreation extends FormApplication {
                 let document = game.items.get(e.id)
                 if (document)
                     item = new WrathAndGloryItem(mergeObject(game.items.get(e.id).toObject(), e.diff, { overwrite: true }))
-                else 
+                else if (e.name)
                 {
                     ui.notifications.warn(`Could not find ${e.name}, creating generic`)
                     item = new WrathAndGloryItem({ type: "gear", name: e.name, img: "modules/wng-core/assets/icons/gear/gear.webp" })
-            }
+                }
             }
             return item
-        });
+        }).filter(i => i);
     }
 
     activateListeners(html) {
@@ -319,7 +338,7 @@ export default class CharacterCreation extends FormApplication {
             let group = ArchetypeGroups.search(id, this.archetype.groups)
             let wargear = this.archetype.wargear[group.index]
 
-            if (wargear.type == "generic")
+            if (wargear.type == "generic" && wargear.filters.length)
             {
                 new FilterResults({wargear, app: this}).render(true)
             }
@@ -397,7 +416,7 @@ export default class CharacterCreation extends FormApplication {
     {
         this.character.prepareData();
         let talentXP = this.addedTalents.reduce((prev, current) => prev + current.data.cost, 0)
-        this.element.find(".xp input")[0].value = this.character.experience.spent + talentXP;
+        this.element.find(".xp input")[0].value = this.character.experience.spent + talentXP + this.archetype.cost;
     }
         
     /**

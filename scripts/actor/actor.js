@@ -160,7 +160,6 @@ export class WrathAndGloryActor extends Actor {
     }
 
     _computeExperience() {
-        this.experience.spent += this.advances.species;
         this.experience.current = this.experience.total - this.experience.spent;
     }
 
@@ -514,6 +513,7 @@ export class WrathAndGloryActor extends Actor {
 
         actorData.img = archetype.data.img
         actorData.token.img = archetype.data.img.replace("images", "tokens")
+        actorData.token.img = archetype.data.img.replace("actors", "tokens")
 
         await this.update(actorData)
 

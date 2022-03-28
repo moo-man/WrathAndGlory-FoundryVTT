@@ -40,11 +40,11 @@ export default class FilterResults extends FormApplication {
 
         let packs = await Promise.all(game.packs.filter(p => p.metadata.type == "Item").map(i => i.getDocuments()))
 
-        packs.forEach(p => {
-            items = items.concat(p);
+        packs.forEach(p => {        // Remove duplicates (match by ID, don't show compendium item if world item already listed)
+            items = items.concat(p.filter(i => !items.find(existing => existing.id == i.id)));
         })
 
-        return items
+        return items.sort((a, b) => a.name > b.name ? 1 : -1)
     }
 
     applyFilters(items, filters) {

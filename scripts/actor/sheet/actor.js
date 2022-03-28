@@ -158,7 +158,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
 
-    _onDrop(ev)
+    async _onDrop(ev)
     {
         let data = ev.dataTransfer.getData("text/plain")
         if (data)
@@ -174,7 +174,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             }
             else if (data.type == "Item")
             {
-                let item = game.items.get(data.id);
+                let item = await Item.implementation.fromDropData(data);
                 if (item.type == "archetype" && this.actor.type == "agent")
                     return this.actor.characterCreation(item)
                 else if(item.type == "archetype" && this.actor.type == "threat")
