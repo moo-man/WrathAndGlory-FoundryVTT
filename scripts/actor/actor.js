@@ -82,7 +82,7 @@ export class WrathAndGloryActor extends Actor {
             if (item.isArmour && item.equipped) {
                 armour.push(item)
             }
-            if (this.advances && item.cost) {
+            if (this.advances && item.cost && item.type != "species") { // Species is included in archetype
                 this.experience.spent = this.experience.spent + item.cost;
             }
         }
