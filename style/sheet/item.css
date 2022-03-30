@@ -234,7 +234,7 @@
   flex: 1
 }
 
-.wrath-and-glory.sheet.item .wrapper .item-checkbox {
+.wrath-and-glory.sheet.item  .item-checkbox {
   height: 31px;
   width: 31px;
   background: white;
@@ -242,7 +242,7 @@
   cursor: pointer
 }
 
-.wrath-and-glory.sheet.item .wrapper .item-checkbox.checked{
+.wrath-and-glory.sheet.item  .item-checkbox.checked{
   background: var(--color-imperium);
   text-align: center;
   font-size: 24px;

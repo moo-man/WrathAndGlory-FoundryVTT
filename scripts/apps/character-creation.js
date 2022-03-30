@@ -11,11 +11,9 @@ export default class CharacterCreation extends FormApplication {
         this.archetype = object.archetype.clone();
         this.species = game.wng.utility.findItem(object.archetype.species.id, "species")
         this.faction = game.wng.utility.findItem(object.archetype.faction.id, "faction")
-        this.speciesAbilities = this.species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
+        this.speciesAbilities = []; // Must be awaited if species is a promise
         this.archetypeAbility = game.wng.utility.findItem(this.archetype.ability.id, "ability")
         this.addedTalents = [];
-
-        this.initializeCharacter();
     }
 
     static get defaultOptions() {
@@ -65,7 +63,9 @@ export default class CharacterCreation extends FormApplication {
         this.species = await this.species;
         this.faction = await this.faction;
         this.archetypeAbility = await this.archetypeAbility
-        this.speciesAbilities = await Promise.all(this.speciesAbilities)
+        this.speciesAbilities = await Promise.all(this.species.abilities.map(i => game.wng.utility.findItem(i.id, "ability")))
+
+        this.initializeCharacter()
 
         data.actor = this.actor;
         data.character = this.character
@@ -79,9 +79,9 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-   _onDrop(ev) {
-    let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-    let dropItem = game.items.get(dragData.id)
+   async _onDrop(ev) {
+    let data = JSON.parse(ev.dataTransfer.getData("text/plain"));
+    let dropItem = await Item.implementation.fromDropData(data);
     if (dropItem.type == "talent")
     {
         this.addTalent(dropItem)
@@ -125,12 +125,12 @@ export default class CharacterCreation extends FormApplication {
      * @param {Object} filter Filter details (to replace with object)
      * @param {String} id ID of item chosen
      */
-    chooseWargear(filter, id)
+    async chooseWargear(filter, id)
     {
         let element = this.element.find(`.generic[data-id=${filter.groupId}]`)[0]
         let group = ArchetypeGroups.search(filter.groupId, this.archetype.groups)
         let wargearObject = this.archetype.wargear[group.index]
-        let item = game.items.get(id)
+        let item = await game.wng.utility.findItem(id)
         
         if (element && item) 
         {
@@ -184,7 +184,7 @@ export default class CharacterCreation extends FormApplication {
         faction.data.backgrounds.goal[$(this.form).find(".goal .active")[0]?.dataset?.index || 0].active = true;
 
 
-        let wargear = this.retrieveChosenWargear();
+        let wargear = await Promise.all(this.retrieveChosenWargear());
         let items = [
             this.archetype.toObject(), 
             this.species.toObject(), 
@@ -273,7 +273,7 @@ export default class CharacterCreation extends FormApplication {
             let element = this.element.find(`.wargear-item[data-id='${e.groupId}']`)
             let enabled = element.parents(".disabled").length == 0
             return enabled
-        }).map(e => {
+        }).map(async e => {
             let item;
             // If chosen item is still generic, create a basic item for it
             if (e.type == "generic") {
@@ -281,9 +281,9 @@ export default class CharacterCreation extends FormApplication {
             }
             else {
                 // Create a temp item and incorporate the diff
-                let document = game.items.get(e.id)
+                let document = await game.wng.utility.findItem(e.id)
                 if (document)
-                    item = new WrathAndGloryItem(mergeObject(game.items.get(e.id).toObject(), e.diff, { overwrite: true }))
+                    item = new WrathAndGloryItem(mergeObject(document.toObject(), e.diff, { overwrite: true }))
                 else if (e.name)
                 {
                     ui.notifications.warn(`Could not find ${e.name}, creating generic`)
@@ -344,7 +344,7 @@ export default class CharacterCreation extends FormApplication {
                 new FilterResults({wargear, app: this}).render(true)
             }
             else
-              new WrathAndGloryItem(game.items.get(wargear.id).toObject()).sheet.render(true, {editable: false})
+              new WrathAndGloryItem((await game.wng.utility.findItem(wargear.id)).toObject()).sheet.render(true, {editable: false})
         })
 
 

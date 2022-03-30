@@ -468,7 +468,11 @@ export class WrathAndGloryActor extends Actor {
                 },
                 no: {
                     label: "No",
-                    callback: () => { }
+                    callback: async () => {
+                        let species = await game.wng.utility.findItem(archetype.species.id, "species")
+                        let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
+                        this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
+                    }
                 }
             }
         }).render(true)
@@ -560,9 +564,9 @@ export class WrathAndGloryActor extends Actor {
         if (!this.faction)
             return background
 
-        background.origin = this.faction.backgrounds.origin.find(b => b.active).description
-        background.accomplishment = this.faction.backgrounds.accomplishment.find(b => b.active).description
-        background.goal = this.faction.backgrounds.goal.find(b => b.active).description
+        background.origin = this.faction.backgrounds.origin.find(b => b.active)?.description
+        background.accomplishment = this.faction.backgrounds.accomplishment.find(b => b.active)?.description
+        background.goal = this.faction.backgrounds.goal.find(b => b.active)?.description
         return background
     }
 

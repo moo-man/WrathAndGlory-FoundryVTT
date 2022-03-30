@@ -260,12 +260,21 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     html.find(".item-checkbox").click(ev => {
       let target = ev.currentTarget.dataset["target"]
+      let index = ev.currentTarget.dataset["index"]
       
       if (target == "potency")
       {
         let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
         let path = ev.currentTarget.dataset["path"]
         this._updatePotency(index, path, !ev.currentTarget.classList.contains("checked"))
+      }
+      else if (Number.isNumeric(index)) // If value is inside an array
+      {
+        index = parseInt(index);
+        let innerTarget = ev.currentTarget.dataset.innerTarget
+        let array = duplicate(getProperty(this.item.data, target))
+        array[index][innerTarget] = !array[index][innerTarget]
+        this.item.update({[target] : array})
       }
       else
         this.item.update({ [target]: !getProperty(this.item.data, target) })
