@@ -52,7 +52,14 @@ export default class FilterResults extends FormApplication {
             items = items.filter(i => {
                 let itemData = i.toObject();
                 itemData.hasKeyword = (keyword) => {
-                    return itemData.data.keywords.split(", ").map(i => i.trim().toLowerCase()).includes(keyword.toLowerCase())
+                    let keywords = itemData.data.keywords
+                    if (!keywords) return false
+
+                    if (!Array.isArray(keywords))
+                        keywords = keywords.split(",")
+
+                    keywords = keywords.map(i => i.trim().toLowerCase())
+                    return keywords.includes(keyword.toLowerCase())
                 }
 
                 if (f.property.includes("("))

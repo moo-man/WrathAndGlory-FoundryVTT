@@ -26,6 +26,9 @@
           <div class="backgrounds" data-path="data.backgrounds.origin">
             <h1>{{localize "FACTION.ORIGIN"}} {{#if options.editable}} <button type="button" class="add-background">+</button>{{/if}}</h1>
             <div class="background-header">
+              {{#if item.isOwned}}
+              <div style="flex: 0 0 31px"></div>
+              {{/if}}
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
               <div class="bg-effect">{{localize "FACTION.EFFECT"}}</div>
@@ -34,6 +37,13 @@
             <div class="background-list">
               {{#each data.backgrounds.origin as |background bg|}}
               <div class="background" data-index="{{bg}}">
+                {{#if ../item.isOwned}}
+                <div class="item-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.origin" data-index="{{bg}}" data-inner-target="active" >
+                  {{#if background.active}}
+                    <i class="fas fa-check"></i>
+                  {{/if}}
+                  </div>
+                {{/if}}
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
@@ -55,6 +65,9 @@
           <div class="backgrounds" data-path="data.backgrounds.accomplishment">
             <h1>{{localize "FACTION.ACCOMPLISHMENT"}} {{#if options.editable}} <button type="button" class="add-background">+</button>{{/if}}</h1>
             <div class="background-header">
+              {{#if item.isOwned}}
+              <div style="flex: 0 0 31px"></div>
+              {{/if}}
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
               <div class="bg-effect">{{localize "FACTION.EFFECT"}}</div>
@@ -63,6 +76,13 @@
             <div class="background-list">
               {{#each data.backgrounds.accomplishment as |background bg|}}
               <div class="background" data-index="{{bg}}">
+                {{#if ../item.isOwned}}
+                <div class="item-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="active">
+                  {{#if background.active}}
+                    <i class="fas fa-check"></i>
+                  {{/if}}
+                  </div>
+                {{/if}}
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
@@ -84,6 +104,9 @@
           <div class="backgrounds" data-path="data.backgrounds.goal">
             <h1>{{localize "FACTION.GOAL"}} {{#if options.editable}} <button type="button" class="add-background">+</button> {{/if}}</h1>
             <div class="background-header">
+              {{#if item.isOwned}}
+              <div style="flex: 0 0 31px"></div>
+              {{/if}}
               <div class="bg-name">{{localize "FACTION.NAME"}}</div>
               <div class="bg-description">{{localize "FACTION.DESCRIPTION"}}</div>
               <div class="bg-effect">{{localize "FACTION.EFFECT"}}</div>
@@ -92,6 +115,13 @@
             <div class="background-list">
               {{#each data.backgrounds.goal as |background bg|}}
               <div class="background" data-index="{{bg}}">
+                {{#if ../item.isOwned}}
+                <div class="item-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.goal" data-index="{{bg}}" data-inner-target="active">
+                  {{#if background.active}}
+                    <i class="fas fa-check"></i>
+                  {{/if}}
+                  </div>
+                {{/if}}
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
