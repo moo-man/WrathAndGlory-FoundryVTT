@@ -162,26 +162,42 @@ export default class CharacterCreation extends FormApplication {
         })
 
         let faction = this.faction.toObject();
-        faction.effects = faction.effects.filter(e => e._id == formData["background-bonus"])
 
-        if (faction.effects[0].changes[0].mode == 0)
+        if (formData["background-bonus"])
         {
-            let key = faction.effects[0].changes[0].key
-            // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
-            this.character.data.update({[key] : getProperty(this.character.data, key) + 1})
-            faction.effects = [];
+            faction.effects = faction.effects.filter(e => e._id == formData["background-bonus"])
+
+            if (faction.effects[0].changes[0].mode == 0)
+            {
+                let key = faction.effects[0].changes[0].key
+                // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
+                this.character.data.update({[key] : getProperty(this.character.data, key) + 1})
+                faction.effects = [];
+            }
+            else 
+            {
+                faction.effects[0].transfer = true;
+                faction.effects[0].label = $(ev.currentTarget).find(".background-bonus").children("option").filter(":selected").text()
+                // Gross but whatever, uses the selected text (with background name appended) as the effect name
+            }
         }
-        else 
-        {
-            faction.effects[0].transfer = true;
-            faction.effects[0].label = $(ev.currentTarget).find(".background-bonus").children("option").filter(":selected").text()
-            // Gross but whatever, uses the selected text (with background name appended) as the effect name
-        }
+
 
         // Set chosen backgrounds to active
-        faction.data.backgrounds.origin[$(this.form).find(".origin .active")[0]?.dataset?.index || 0].active = true;
-        faction.data.backgrounds.accomplishment[$(this.form).find(".accomplishment .active")[0]?.dataset?.index || 0].active = true;
-        faction.data.backgrounds.goal[$(this.form).find(".goal .active")[0]?.dataset?.index || 0].active = true;
+        let chosenOrigin = $(this.form).find(".origin .active")[0]
+        let chosenAccomplishment = $(this.form).find(".accomplishment .active")[0]
+        let chosenGoal = $(this.form).find(".goal .active")[0]
+
+        if(chosenOrigin) {
+            faction.data.backgrounds.origin[chosenOrigin.dataset.index || 0].active = true;
+        }
+        if(chosenAccomplishment) {
+            faction.data.backgrounds.accomplishment[chosenAccomplishment.dataset.index || 0].active = true;
+        }
+        if(chosenGoal) {
+            faction.data.backgrounds.goal[chosenGoal.dataset.index || 0].active = true;
+        }
+
 
 
         let wargear = await Promise.all(this.retrieveChosenWargear());
@@ -190,10 +206,10 @@ export default class CharacterCreation extends FormApplication {
             this.species.toObject(), 
             faction,
             this.archetypeAbility.toObject()]
-            .concat(wargear.map(e => e.toObject()))
+            .concat(wargear.filter(i => i).map(e => e.toObject()))
             .concat(this.speciesAbilities.map(a=> a.toObject()))
             .concat(this.addedTalents)
-            .concat(this.archetype.keywords.map(WNGUtility.getKeywordItem).map(i => i.toObject()))
+            .concat((await Promise.all(this.archetype.keywords.map(WNGUtility.getKeywordItem))).map(i => i.toObject()))
 
 
         await this.actor.update(mergeObject(this.character.toObject(), { overwrite: true }))
