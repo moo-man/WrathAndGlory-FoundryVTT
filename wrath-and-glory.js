@@ -1,3 +1,4 @@
+import { WngCombat } from "./scripts/common/wngCombat.js";
 import { WrathAndGloryActor } from "./scripts/actor/actor.js";
 import { WrathAndGloryItem } from "./scripts/item/item.js";
 import { AgentSheet } from "./scripts/actor/sheet/agent.js";
@@ -28,7 +29,9 @@ import {migrateWorld} from "./scripts/common/migration.js"
 import TagManager from "./scripts/common/tag-manager.js";
 
 
+
 Hooks.once("init", () => {
+  CONFIG.Combat.documentClass = WngCombat;
   CONFIG.Actor.documentClass = WrathAndGloryActor;
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
@@ -76,6 +79,7 @@ Hooks.once("init", () => {
   CONFIG.fontFamilies.push("Priori");
   CONFIG.defaultFontFamily = "Priori"
   CONFIG.canvasTextStyle._fontFamily = "Priori"
+
 });
 
 

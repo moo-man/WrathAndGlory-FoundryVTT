@@ -36,6 +36,7 @@ export default function() {
         let canResetPotency = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
             let test = msg.getTest()
+            if (!test) return;
             return test.testData.potency?.length && test.testData.potency.some(p => p.allocation) && (msg.isAuthor || msg.isOwner)
         }
 
@@ -65,7 +66,7 @@ export default function() {
                     {
                       if (actor.resources.wrath <= 0)
                         return ui.notifications.error(game.i18n.localize("ERROR.NoMoreWrath"))
-                      else 
+                      else
                       {
                         actor.update({"data.resources.wrath" : actor.resources.wrath - 1})
                         ui.notifications.notify(game.i18n.localize("NOTE.WrathSubtracted"))
@@ -75,7 +76,7 @@ export default function() {
                     {
                         if (game.counter.ruin <= 0)
                             return ui.notifications.error(game.i18n.localize("ERROR.NoMoreRuin"))
-                        else 
+                        else
                         {
                             game.wng.RuinGloryCounter.changeCounter(-1,  "ruin").then(() => {game.counter.render(true)})
                             ui.notifications.notify(game.i18n.localize("NOTE.RuinSubtracted"))
@@ -124,7 +125,7 @@ export default function() {
                     let message = game.messages.get(li.attr("data-message-id"));
                     let test = message.getTest();
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
-                    test.shift(shifted, "other")        
+                    test.shift(shifted, "other")
                 }
             },
             {
@@ -214,7 +215,7 @@ function _dealDamageToTarget(test, target) {
         res -= ap
     if (res <= 0)
         res = 1
-    
+
     if (res > damage)
         note = game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : target.data.token.name});
 
@@ -222,16 +223,16 @@ function _dealDamageToTarget(test, target) {
     {
         addShock++
     }
-    
+
     if (res < damage)
     {
         addWounds = damage - res
         if (addWounds <= 0)
         addWounds = 0
-        
+
     }
     addWounds += test.result.damage.other?.mortalWounds?.total || 0
-    
+
     if (test.result.damage.other?.shock?.total)
     {
         addShock += test.result.damage.other.shock.total
@@ -243,12 +244,12 @@ function _dealDamageToTarget(test, target) {
         updateObj["data.combat.shock.value"] = target.combat.shock.value + 1
         ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_SHOCK", {name : target.data.token.name}));
 }
-    if (addWounds)      
+    if (addWounds)
     {
         updateObj["data.combat.wounds.value"] = target.combat.wounds.value + addWounds;
         ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE", {damage : addWounds, name : target.data.token.name}));
     }
-    
+
     target.update(updateObj);
     return promise
 }

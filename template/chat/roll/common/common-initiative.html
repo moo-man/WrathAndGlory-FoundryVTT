@@ -1,0 +1,15 @@
+<div class="wrath-and-glory chat roll">
+        <div class="wrapper">
+                <h3>{{title}}</h3>
+                <div class="dice-container">
+                        {{#each dice as |die|}}
+                        <span class="die {{die.name}} unshifted" data-index="{{die.index}}">
+                                <img src="{{die.img}}"/>
+                        </span>
+                        {{/each}}
+                </div>
+                <div class="wrapper-input">
+                        <p><strong class="red">{{localize "ATTRIBUTE.INITIATIVE"}}</strong><strong>: {{initiative}} </strong></p>
+                </div>
+        </div>
+</div>
