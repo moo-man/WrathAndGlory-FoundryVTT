@@ -44,7 +44,6 @@ export class WngCombat extends Combat
 
                 dice.push(die);
             });
-            icons = 10;
             updates.push({_id: id, initiative: icons});
 
             const html = await renderTemplate('systems/wrath-and-glory/template/chat/roll/common/common-initiative.html', {
