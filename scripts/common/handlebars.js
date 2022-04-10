@@ -32,6 +32,7 @@ function preloadHandlebarsTemplates() {
     "systems/wrath-and-glory/template/chat/roll/stealth/stealth-result.html",
     "systems/wrath-and-glory/template/chat/roll/mutation/mutation-result.html",
     "systems/wrath-and-glory/template/chat/roll/mutation/mutation-buttons.html",
+    "systems/wrath-and-glory/template/apps/combatant-list.html",
     //"systems/wrath-and-glory/template/partials/damage.html",
   ];
   return loadTemplates(templatePaths);

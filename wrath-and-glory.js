@@ -26,6 +26,8 @@ import ModuleInitializer from "./scripts/apps/module-initialization.js"
 import ModuleUpdater from "./scripts/apps/module-updater.js"
 import {migrateWorld} from "./scripts/common/migration.js"
 import TagManager from "./scripts/common/tag-manager.js";
+import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./scripts/common/combat.js";
+import WrathANdGloryCombatTracker from "./scripts/apps/combat-tracker.js";
 
 
 Hooks.once("init", () => {
@@ -33,6 +35,9 @@ Hooks.once("init", () => {
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
   CONFIG.ActiveEffect.sheetClass = WrathAndGloryEffectSheet;
+  CONFIG.Combat.documentClass = WrathAndGloryCombat;
+  CONFIG.Combatant.documentClass = WrathAndGloryCombatant
+  CONFIG.ui.combat = WrathANdGloryCombatTracker
   game.wng = {
     rollClasses : {
       WNGTest,

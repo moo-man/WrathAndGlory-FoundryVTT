@@ -1,0 +1,40 @@
+<li class="combatant actor directory-item flexrow {{combatant.css}}" data-combatant-id="{{combatant.id}}">
+    <img class="token-image" data-src="{{combatant.img}}" title="{{combatant.name}}" {{#if combatant.isComplete}}style="opacity: 0.5"{{/if}}/>
+    <div class="token-name flexcol">
+        <h4>{{combatant.name}}</h4>
+        <div class="combatant-controls flexrow">
+            {{#if (isGM)}}
+            <a class="combatant-control {{#if combatant.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
+                <i class="fas fa-eye-slash"></i></a>
+            <a class="combatant-control {{#if combatant.defeated}}active{{/if}}" title="{{localize 'COMBAT.ToggleDead'}}" data-control="toggleDefeated">
+                <i class="fas fa-skull"></i></a>
+            {{/if}}
+            <div class="token-effects">
+                {{#each combatant.effects}}
+                <img class="token-effect" src="{{combatant}}"/>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    {{#if combatant.hasResource}}
+    <div class="token-resource">
+        <span class="resource">{{combatant.resource}}</span>
+    </div>
+    {{/if}}
+
+    {{#unless combatant.defeated}}
+    <div class="token-initiative">
+        {{#unless combatant.active}}
+        <a class="combatant-control activate" title="Activate" data-control="activate"></a>
+        {{else}}
+        <a class="combatant-control deactivate" title="Deactivate" data-control="deactivate"></a>
+        {{/unless}}
+        <!-- {{#if combatant.hasRolled}}
+        <span class="initiative">{{combatant.initiative}}</span>
+        {{else if combatant.owner}}-->
+        <!-- <a class="combatant-control roll" title="{{localize 'COMBAT.InitiativeRoll'}}" data-control="rollInitiative"></a>  -->
+        <!-- {{/if}} -->
+    </div>
+    {{/unless}}
+</li>
