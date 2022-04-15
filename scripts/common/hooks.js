@@ -12,6 +12,7 @@ import token from "../hooks/token.js";
 import canvas from "../hooks/canvas.js";
 import WNGUtility from "./utility.js";
 import sidebar from "../hooks/sidebar.js";
+import item from "../hooks/item.js";
 
 export default function() {
     entryContextHooks();
@@ -20,6 +21,7 @@ export default function() {
     init();
     effects();
     chat();
+    item();
     combat();
     actor();
     token();
