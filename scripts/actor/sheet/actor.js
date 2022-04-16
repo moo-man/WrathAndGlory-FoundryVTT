@@ -531,9 +531,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     async _onWeaponClick(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        let test = await this.actor.setupWeaponTest(div.data("itemId"))
-        await test.rollTest();
-        test.sendToChat()
+        let tests = await Promise.all(this.actor.setupWeaponTest(div.data("itemId")))
+        await Promise.all(tests.map(t => t.rollTest()));
+        tests.forEach(t => {
+            t.sendToChat()
+        })
     }
 
     async _onPowerClick(event) {

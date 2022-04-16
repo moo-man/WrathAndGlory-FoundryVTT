@@ -10,6 +10,9 @@ export default class WNGChat {
     html.on("click", ".roll-mutation", this._onMutationClick.bind(this))
     html.on("click", ".add-potency", this._onPotencyClick.bind(this))
     html.on("click", ".potency-reset", this._onPotencyReset.bind(this))
+    html.on("mouseenter", ".target", game.wng.utility.highlightToken.bind(this))
+    html.on("mouseleave", ".target", game.wng.utility.unhighlightToken.bind(this))
+    html.on("click", ".target", game.wng.utility.focusToken.bind(this))
   }
 
   static _onDamageClick(ev) {

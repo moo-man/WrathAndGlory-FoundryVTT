@@ -1,5 +1,15 @@
 <div class="wrath-and-glory dialog">
     <h1>{{title}}</h1>
+    {{#if targets.length}}
+    <div class="targets">
+            <a class="crosshair">
+                    <i class="fas fa-crosshairs"></i>
+            </a>
+            {{#each targets as |target t|}}
+                    <a class="target" data-token-id="{{target.id}}">{{target.name}}</a>
+            {{/each}}
+    </div>
+    {{/if}}
     <div class="wrapper">
         <b class="name"></b>
         <b class="base">{{localize "DIALOG.BASE"}}</b>

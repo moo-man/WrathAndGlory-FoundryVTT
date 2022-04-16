@@ -13,6 +13,7 @@ export class WNGTest {
       },
       context: {
         title: data.title,
+        targets : data.targets.map(i => i.document.toObject()) || [],
         type: data.type,
         speaker: data.speaker,
         rollClass: this.constructor.name,
@@ -66,7 +67,7 @@ export class WNGTest {
 
   }
 
-  async _rollDice() {
+  _rollDice() {
 
     this.roll = Roll.fromTerms([
       new PoolDie({ number: this.result.poolSize, faces: 6 }),
@@ -74,7 +75,7 @@ export class WNGTest {
       new WrathDie({ number: this.result.wrathSize, faces: 6 })
     ])
 
-    await this.roll.evaluate({ async: true });
+    return this.roll.evaluate({ async: true });
   }
 
   _computeResult() {

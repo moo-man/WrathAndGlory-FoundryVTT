@@ -194,6 +194,7 @@ export class WrathAndGloryActor extends Actor {
         dialogData.type = "attribute"
         dialogData.attribute = attribute
         let testData = await RollDialog.create(dialogData)
+        testData.targets = dialogData.targets
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.attribute = attribute;
@@ -210,6 +211,7 @@ export class WrathAndGloryActor extends Actor {
         dialogData.type = "skill"
         dialogData.skill = skill
         let testData = await RollDialog.create(dialogData)
+        testData.targets = dialogData.targets
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.skill = skill
@@ -277,24 +279,30 @@ export class WrathAndGloryActor extends Actor {
         return new testClass(testData)
     }
 
-    async setupWeaponTest(weapon, options = {}) {
+    setupWeaponTest(weapon, options = {}) {
         if (typeof weapon == "string")
             weapon = this.items.get(weapon)
+        
+        let targets = Array.from(game.user.targets);
+        let multi = targets.length;
 
-        let dialogData = this._weaponDialogData(weapon);
-        dialogData.title = `${weapon.name} Test`
-        this._addOptions(dialogData, options)
-        dialogData.type = "weapon"
-        dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
-        dialogData.attribute = weapon.skill.attribute
-        let testData = await WeaponDialog.create(dialogData)
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.itemId = weapon.id
-        testData.skill = dialogData.skill
-        testData.attribute = dialogData.attribute
-        ui.sidebar.activateTab("chat")
-        return new WeaponTest(testData)
+        return targets.map(async target => {
+            let dialogData = this._weaponDialogData(weapon, {multi, targets : [target]});
+            dialogData.title = `${weapon.name} Test`
+            this._addOptions(dialogData, options)
+            dialogData.type = "weapon"
+            dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
+            dialogData.attribute = weapon.skill.attribute
+            let testData = await WeaponDialog.create(dialogData)
+            testData.targets = dialogData.targets
+            testData.title = dialogData.title
+            testData.speaker = this.speakerData();
+            testData.itemId = weapon.id
+            testData.skill = dialogData.skill
+            testData.attribute = dialogData.attribute
+            ui.sidebar.activateTab("chat")
+            return new WeaponTest(testData)
+        })
     }
 
     async setupPowerTest(power, options = {}) {
@@ -308,6 +316,7 @@ export class WrathAndGloryActor extends Actor {
         dialogData.skill = "psychicMastery"
         dialogData.attribute = power.skill.attribute
         let testData = await PowerDialog.create(dialogData)
+        testData.targets = dialogData.targets
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.itemId = power.id
@@ -364,12 +373,17 @@ export class WrathAndGloryActor extends Actor {
     }
 
 
-    _weaponDialogData(weapon) {
+    _weaponDialogData(weapon, options={}) {
+
         let dialogData = this._baseDialogData()
+        if (options.targets)
+            dialogData.targets = options.targets;
+            
+        
         if (weapon.Ammo) {
             // Add ammo dialog changes if any exist
-            dialogData.changeList = this.getDialogChanges({ condense: true, add: weapon.Ammo.ammoDialogEffects })
-            dialogData.changes = this.getDialogChanges({ add: weapon.Ammo.ammoDialogEffects })
+            dialogData.changeList = this.getDialogChanges({ condense: true, add: weapon.Ammo.ammoDialogEffects, targets : dialogData.targets })
+            dialogData.changes = this.getDialogChanges({ add: weapon.Ammo.ammoDialogEffects, targets : dialogData.targets })
         }
         dialogData.weapon = weapon
         dialogData.pool.size = weapon.skill.total;
@@ -394,8 +408,12 @@ export class WrathAndGloryActor extends Actor {
                 dialogData.damage.bonus -= 2
         }
 
-        dialogData.difficulty.target = WNGUtility._getTargetDefence()
+        dialogData.difficulty.target = dialogData.targets[0].actor.combat.defence.total
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
+
+        if (options.multi > 1)
+            dialogData.difficulty.penalty += options.multi * 2
+
         return dialogData
     }
 
@@ -440,13 +458,13 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    getDialogChanges({ condense = false, add = [] } = {}) {
+    getDialogChanges({ condense = false, add = [], targets=[] } = {}) {
         let effects = Array.from(this.effects).concat(add);
         // Aggregate dialog changes from each effect
         let changes = effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({ condense, indexOffset: prev.length })), [])
 
-        if (game.user.targets.size > 0) {
-            let target = Array.from(game.user.targets)[0].actor
+        if (targets.length) {
+            let target = targets[0].actor
             let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({ target, condense, indexOffset: changes.length })), [])
             changes = changes.concat(targetChanges)
         }

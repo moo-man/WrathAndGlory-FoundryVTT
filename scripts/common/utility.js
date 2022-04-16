@@ -153,4 +153,33 @@ export default class WNGUtility {
     }
   }
 
+  static highlightToken(ev)
+  {
+      if ( !canvas.ready ) return;
+      const li = ev.target;
+      let tokenId = li.dataset.tokenId
+      const token = canvas.tokens.get(tokenId);
+      if ( token?.isVisible ) {
+        if ( !token._controlled ) token._onHoverIn();
+        this._highlighted = token;
+      }
+  }
+
+  static unhighlightToken(ev)
+  {
+    const li = ev.target;
+    let tokenId = li.dataset.tokenId
+      if ( this._highlighted ) this._highlighted._onHoverOut();
+      this._highlighted = null;
+  }
+
+  
+  static focusToken(ev)
+  {
+    const li = ev.target;
+    let tokenId = li.dataset.tokenId
+      const token = canvas.tokens.get(tokenId);
+      canvas.animatePan({x: token.center.x, y: token.center.y, duration: 250});
+  }
+
 }
