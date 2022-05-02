@@ -95,7 +95,7 @@ export class WNGTest {
 
     // Compute wrath before filtering out shifted dice
 
-    this._handleWrath() 
+    this._handleWrath()
 
     this.result.allDice = duplicate(this.result.dice);
     this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
@@ -104,7 +104,7 @@ export class WNGTest {
     this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
     if (this.result.isWrathCritical)
-      this.result.isWrathCritical == this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
+      this.result.isWrathCritical = this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
   }
 
   _computeReroll() {
@@ -138,16 +138,17 @@ export class WNGTest {
     if (this.actor.hasCondition("dying"))
     {
       this.result.isWrathCritical = this.result.dice.every(r => r.isWrath && r.result === 6);
-      this.result.gainTraumaticInjury = this.result.isWrathComplication 
+      this.result.gainTraumaticInjury = this.result.isWrathComplication
+      return;
     }
-    else 
-      this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
+
+    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
   }
 
   _computeShifted() {
     this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index));
     this.result.shifted.forEach(die => {
-      if (this.testData.shifted.damage.includes(die.index)) 
+      if (this.testData.shifted.damage.includes(die.index))
         die.shift = "damage";
       else if (this.testData.shifted.glory.includes(die.index))
         die.shift = "glory";
