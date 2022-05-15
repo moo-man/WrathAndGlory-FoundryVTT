@@ -13,6 +13,7 @@ export class WNGTest {
       },
       context: {
         title: data.title,
+        targets : data.targets.map(i => i.document.toObject()) || [],
         type: data.type,
         speaker: data.speaker,
         rollClass: this.constructor.name,
@@ -59,18 +60,11 @@ export class WNGTest {
     await this._rollDice()
     this._computeResult();
 
-    if(this.result.isWrathCritical && !this.context.counterChanged)
-    {
-      this.context.counterChanged = true
-      if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
-      else if (this.actor.type == "threat")
-        game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
-    }
+    this.handleCounters();
 
   }
 
-  async _rollDice() {
+  _rollDice() {
 
     this.roll = Roll.fromTerms([
       new PoolDie({ number: this.result.poolSize, faces: 6 }),
@@ -78,7 +72,7 @@ export class WNGTest {
       new WrathDie({ number: this.result.wrathSize, faces: 6 })
     ])
 
-    await this.roll.evaluate({ async: true });
+    return this.roll.evaluate({ async: true });
   }
 
   _computeResult() {
@@ -198,8 +192,11 @@ export class WNGTest {
     })
 
     await this.reroll(reroll)
+    this.handleCounters();
+  }
 
-    if(this.result.isWrathCritical && !this.context.counterChanged)
+  handleCounters() {
+    if(this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies"))
     {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
@@ -207,7 +204,6 @@ export class WNGTest {
       else if (this.actor.type == "threat")
           game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
     }
-
   }
 
   clearRerolls() {

@@ -113,6 +113,11 @@ export class RollDialog extends Dialog {
 
   activateListeners(html) {
     super.activateListeners(html);
+
+    html.on("mouseenter", ".target", game.wng.utility.highlightToken.bind(this))
+    html.on("mouseleave", ".target", game.wng.utility.unhighlightToken.bind(this))
+    html.on("click", ".target", game.wng.utility.focusToken.bind(this))
+    
     // Reset effect values
     this.effectValues = {
       "pool.base": null,

@@ -359,7 +359,7 @@ export default class CharacterCreation extends FormApplication {
             {
                 new FilterResults({wargear, app: this}).render(true)
             }
-            else
+            else if (wargear.type == "item")
               new WrathAndGloryItem((await game.wng.utility.findItem(wargear.id)).toObject()).sheet.render(true, {editable: false})
         })
 
