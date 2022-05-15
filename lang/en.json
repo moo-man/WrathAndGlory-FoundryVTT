@@ -458,6 +458,7 @@
   "AUTOCALC.CONVICTION" : "Auto Calculate Conviction",
   "AUTOCALC.AUTO_WOUNDED" : "Automatic Wounded",
   "AUTOCALC.AUTO_EXHAUSTED" : "Automatic Exhausted",
+  "CONFIGURE.GenerateMetaCurrencies" : "Generate Meta Currencies",
 
   "CONDITION.Bleeding" : "Bleeding",
   "CONDITION.Blinded" : "Blinded",
