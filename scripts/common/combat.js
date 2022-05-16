@@ -37,6 +37,10 @@ export class WrathAndGloryCombatant extends Combatant {
     async _preCreate(data, options, user) {
         super._preCreate(data, options, user)
 
+        if (this.isDefeated)
+        {
+            this.data.update({"defeated" : true})
+        }
         // "pending" , "complete", "current"
         this.data.update({"flags.wrath-and-glory.combatStatus" : "pending", "turn" : null})
     }

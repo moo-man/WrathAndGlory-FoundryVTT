@@ -1,4 +1,3 @@
-import { WngCombat } from "./scripts/common/wngCombat.js";
 import { WrathAndGloryActor } from "./scripts/actor/actor.js";
 import { WrathAndGloryItem } from "./scripts/item/item.js";
 import { AgentSheet } from "./scripts/actor/sheet/agent.js";
@@ -29,18 +28,32 @@ import {migrateWorld} from "./scripts/common/migration.js"
 import TagManager from "./scripts/common/tag-manager.js";
 import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./scripts/common/combat.js";
 import WrathANdGloryCombatTracker from "./scripts/apps/combat-tracker.js";
+import { WrathAndGloryOptionalCombat } from "./scripts/common/combat-optional.js";
+import settings from "./scripts/hooks/settings.js";
 
 
 
 Hooks.once("init", () => {
-  CONFIG.Combat.documentClass = WngCombat;
+
+  settings()
+
   CONFIG.Actor.documentClass = WrathAndGloryActor;
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
   CONFIG.ActiveEffect.sheetClass = WrathAndGloryEffectSheet;
-  CONFIG.Combat.documentClass = WrathAndGloryCombat;
-  CONFIG.Combatant.documentClass = WrathAndGloryCombatant
-  CONFIG.ui.combat = WrathANdGloryCombatTracker
+  
+  if (game.settings.get("wrath-and-glory", "initiativeRollOption"))
+  {
+    CONFIG.Combat.documentClass = WrathAndGloryOptionalCombat;
+  }
+  else 
+  {
+    CONFIG.Combat.documentClass = WrathAndGloryCombat;
+    CONFIG.ui.combat = WrathANdGloryCombatTracker
+    CONFIG.Combatant.documentClass = WrathAndGloryCombatant
+  }
+
+
   game.wng = {
     rollClasses : {
       WNGTest,
@@ -73,7 +86,7 @@ Hooks.once("init", () => {
 
 
   game.wng.config = WNG
-  CONFIG.Combat.initiative = { formula: "(@attributes.initiative.total)d6", decimals: 0 };
+  CONFIG.Combat.initiative = { formula: "(@attributes.initiative.total)dp", decimals: 0 };
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("wrath-and-glory", AgentSheet, { types: ["agent"], makeDefault: true });
   Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });

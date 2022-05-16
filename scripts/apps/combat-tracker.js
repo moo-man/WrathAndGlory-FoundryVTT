@@ -10,6 +10,10 @@ export default class WrathANdGloryCombatTracker extends CombatTracker {
         data.complete = data.turns.filter(t => data.combat.combatants.get(t.id).isComplete)
         data.current = data.turns.filter(t => data.combat.combatants.get(t.id).isCurrent)
         data.defeated = data.turns.filter(t => data.combat.combatants.get(t.id).isDefeated)
+        data.defeated.forEach(c => {
+            c.css = "defeated"
+            c.defeated = true;
+        })
         return data
     }
 

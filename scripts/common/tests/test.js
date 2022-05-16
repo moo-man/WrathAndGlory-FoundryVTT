@@ -13,7 +13,7 @@ export class WNGTest {
       },
       context: {
         title: data.title,
-        targets : data.targets.map(i => i.document.toObject()) || [],
+        targets : data.targets ? data.targets.map(i => i.document.toObject()) || [] : [],
         type: data.type,
         speaker: data.speaker,
         rollClass: this.constructor.name,
@@ -244,7 +244,7 @@ export class WNGTest {
     return true
   }
 
-  async sendToChat({newMessage = null}={}) {
+  async sendToChat({newMessage = null, chatDataMerge={}}={}) {
     const html = await renderTemplate(this.template, this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
