@@ -101,7 +101,7 @@ export class WNGTest {
     this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
     if (this.result.isWrathCritical)
-      this.result.isWrathCritical == this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
+      this.result.isWrathCritical = this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
   }
 
   _computeReroll() {
@@ -136,9 +136,10 @@ export class WNGTest {
     {
       this.result.isWrathCritical = this.result.dice.every(r => r.isWrath && r.result === 6);
       this.result.gainTraumaticInjury = this.result.isWrathComplication
+      return;
     }
-    else
-      this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
+
+    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
   }
 
   _computeShifted() {
