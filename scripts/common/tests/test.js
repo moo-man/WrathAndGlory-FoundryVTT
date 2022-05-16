@@ -56,14 +56,7 @@ export class WNGTest {
     await this._rollDice()
     this._computeResult();
 
-    if(this.result.isWrathCritical && !this.context.counterChanged)
-    {
-      this.context.counterChanged = true
-      if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
-      else if (this.actor.type == "threat")
-        game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
-    }
+    this.handleCounters();
 
   }
 
@@ -196,8 +189,11 @@ export class WNGTest {
     })
 
     await this.reroll(reroll)
+    this.handleCounters();
+  }
 
-    if(this.result.isWrathCritical && !this.context.counterChanged)
+  handleCounters() {
+    if(this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies"))
     {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
@@ -205,7 +201,6 @@ export class WNGTest {
       else if (this.actor.type == "threat")
           game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
     }
-
   }
 
   clearRerolls() {

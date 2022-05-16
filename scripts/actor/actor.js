@@ -35,7 +35,8 @@ export class WrathAndGloryActor extends Actor {
             "flags.wrath-and-glory.autoCalc.wounds": true,
             "flags.wrath-and-glory.autoCalc.conviction": true,
             "flags.wrath-and-glory.autoWounded": true,
-            "flags.wrath-and-glory.autoExhausted": true
+            "flags.wrath-and-glory.autoExhausted": true,
+            "flags.wrath-and-glory.generateMetaCurrencies": true
         }
         if (data.type === "agent") {
             initData["token.vision"] = true;
@@ -412,7 +413,10 @@ export class WrathAndGloryActor extends Actor {
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 
         if (options.multi > 1)
+        {
             dialogData.difficulty.penalty += options.multi * 2
+            dialogData.multi = options.multi
+        }
 
         return dialogData
     }
