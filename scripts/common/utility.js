@@ -70,8 +70,7 @@ export default class WNGUtility {
   static async getKeywordItem(name) {
 
     let item = game.items.contents.find(i => i.type == "keyword" && i.name.toLowerCase() == name.toLowerCase())
-    if (!item)
-    {
+    if (!item) {
       let packs = game.wng.tags.getPacksWithTag("keyword")
       for (let pack of packs) {
         let i = pack.index.contents.find(i => i.name == name)
@@ -84,8 +83,8 @@ export default class WNGUtility {
 
     if (item)
       return item
-    else 
-      return new WrathAndGloryItem({name, type: "keyword", img : "modules/wng-core/assets/ui/aquila-white.webp"})
+    else
+      return new WrathAndGloryItem({ name, type: "keyword", img: "modules/wng-core/assets/ui/aquila-white.webp" })
   }
 
   static _keepID(id, document) {
@@ -153,33 +152,73 @@ export default class WNGUtility {
     }
   }
 
-  static highlightToken(ev)
-  {
-      if ( !canvas.ready ) return;
-      const li = ev.target;
-      let tokenId = li.dataset.tokenId
-      const token = canvas.tokens.get(tokenId);
-      if ( token?.isVisible ) {
-        if ( !token._controlled ) token._onHoverIn();
-        this._highlighted = token;
-      }
-  }
-
-  static unhighlightToken(ev)
-  {
+  static highlightToken(ev) {
+    if (!canvas.ready) return;
     const li = ev.target;
     let tokenId = li.dataset.tokenId
-      if ( this._highlighted ) this._highlighted._onHoverOut();
-      this._highlighted = null;
+    const token = canvas.tokens.get(tokenId);
+    if (token?.isVisible) {
+      if (!token._controlled) token._onHoverIn();
+      this._highlighted = token;
+    }
   }
 
-  
-  static focusToken(ev)
-  {
+  static unhighlightToken(ev) {
     const li = ev.target;
     let tokenId = li.dataset.tokenId
-      const token = canvas.tokens.get(tokenId);
-      canvas.animatePan({x: token.center.x, y: token.center.y, duration: 250});
+    if (this._highlighted) this._highlighted._onHoverOut();
+    this._highlighted = null;
+  }
+
+
+  static focusToken(ev) {
+    const li = ev.target;
+    let tokenId = li.dataset.tokenId
+    const token = canvas.tokens.get(tokenId);
+    canvas.animatePan({ x: token.center.x, y: token.center.y, duration: 250 });
+  }
+
+
+  static async rollItemMacro(itemName, itemType) {
+    const speaker = ChatMessage.getSpeaker();
+    let actor;
+    if (speaker.token) actor = game.actors.tokens[speaker.token];
+    if (!actor) actor = game.actors.get(speaker.actor);
+
+    let item
+    if (["weapon", "psychicPower", "ability"].includes(itemType)) {
+      item = actor ? actor.getItemTypes(itemType).find(i => i.name === itemName) : null;
+      if (!item) return ui.notifications.warn(`${game.i18n.localize("ERROR.MacroItemMissing")} ${itemName}`);
+    }
+
+
+    let test
+    // Trigger the item roll
+    switch (itemType) {
+      case "attribute":
+        test = await actor.setupAttributeTest(itemName)
+        break;
+      case "skill":
+        test = await actor.setupSkill(itemName)
+        break;
+      case "weapon":
+        test = await actor.setupWeaponTest(item)
+        break;
+      case "psychicPower":
+        test = await actor.setupPowerTest(item)
+        break;
+      case "ability":
+        test = await actor.setupAbilityRoll(item)
+        break;
+      default:
+        test = await actor.setupGenericTest(itemType)
+        break;
+    }
+
+    return Array.isArray(test)
+      ? test.forEach(t => t.rollTest().then(roll => roll.sendToChat()))
+      : test.rollTest().then(roll => roll.sendToChat())
+
   }
 
 }

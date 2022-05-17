@@ -62,6 +62,8 @@ export class WNGTest {
 
     this.handleCounters();
 
+    return this
+
   }
 
   _rollDice() {

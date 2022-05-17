@@ -13,11 +13,11 @@ import canvas from "../hooks/canvas.js";
 import WNGUtility from "./utility.js";
 import sidebar from "../hooks/sidebar.js";
 import item from "../hooks/item.js";
+import hotbar from "../hooks/hotbar.js";
 
 export default function() {
     entryContextHooks();
     ready();
-    settings();
     init();
     effects();
     chat();
@@ -27,6 +27,7 @@ export default function() {
     token();
     canvas();
     sidebar();
+    hotbar();
 
     Hooks.on("preCreateJournalEntry", _keepID)
     Hooks.on("preCreateScene", _keepID)

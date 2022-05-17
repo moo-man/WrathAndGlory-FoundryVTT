@@ -269,6 +269,8 @@ export class WrathAndGloryActor extends Actor {
                 dialogData.pool.size = this.resources.influence
                 dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
                 break;
+            default: 
+                throw new Error("Unknown roll type: " + type)
         }
         this._addOptions(dialogData, options)
         dialogData.type = type
@@ -280,15 +282,30 @@ export class WrathAndGloryActor extends Actor {
         return new testClass(testData)
     }
 
-    setupWeaponTest(weapon, options = {}) {
-        if (typeof weapon == "string")
-            weapon = this.items.get(weapon)
-        
-        let targets = Array.from(game.user.targets);
-        let multi = targets.length;
 
-        return targets.map(async target => {
-            let dialogData = this._weaponDialogData(weapon, {multi, targets : [target]});
+
+    async setupWeaponTest(weapon, options={})
+    {
+        if (typeof weapon == "string")
+            weapon = this.items.get(weapon) 
+
+        let tests = []
+        // If targets, call this function again with single target option
+        if (game.user.targets.size)
+        {
+            let targets = Array.from(game.user.targets)
+            game.user.updateTokenTargets([])
+
+            // Function needs to return an array of WeaponTests so need to do some funky stuff to convert
+            targets.forEach(target => tests.push(this.setupWeaponTest(weapon, {target, multi : options.multi})))
+
+            tests = await Promise.all(tests)
+            tests = tests.map(t => t[0])
+        }
+
+        else // If no target or target supplied in options
+        {
+            let dialogData = this._weaponDialogData(weapon, {multi : options.multi, targets : [options.target].filter(t => t)});
             dialogData.title = `${weapon.name} Test`
             this._addOptions(dialogData, options)
             dialogData.type = "weapon"
@@ -302,9 +319,21 @@ export class WrathAndGloryActor extends Actor {
             testData.skill = dialogData.skill
             testData.attribute = dialogData.attribute
             ui.sidebar.activateTab("chat")
-            return new WeaponTest(testData)
-        })
+            tests =  [new WeaponTest(testData)]
+        }
+        return tests
     }
+
+    _setupWeaponTestForTargets(weapon, options = {}) {
+
+        
+        let targets = Array.from(game.user.targets);
+        let multi = targets.length;
+
+ 
+    }
+
+    
 
     async setupPowerTest(power, options = {}) {
         if (typeof power == "string")
@@ -409,7 +438,10 @@ export class WrathAndGloryActor extends Actor {
                 dialogData.damage.bonus -= 2
         }
 
-        dialogData.difficulty.target = dialogData.targets[0].actor.combat.defence.total
+        if (dialogData.targets[0])
+        {
+            dialogData.difficulty.target = dialogData.targets[0].actor.combat.defence.total
+        }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 
         if (options.multi > 1)
