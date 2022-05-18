@@ -269,7 +269,7 @@ export class WrathAndGloryActor extends Actor {
                 dialogData.pool.size = this.resources.influence
                 dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
                 break;
-            default: 
+            default:
                 throw new Error("Unknown roll type: " + type)
         }
         this._addOptions(dialogData, options)
@@ -287,7 +287,7 @@ export class WrathAndGloryActor extends Actor {
     async setupWeaponTest(weapon, options={})
     {
         if (typeof weapon == "string")
-            weapon = this.items.get(weapon) 
+            weapon = this.items.get(weapon)
 
         let tests = []
         // If targets, call this function again with single target option
@@ -295,9 +295,8 @@ export class WrathAndGloryActor extends Actor {
         {
             let targets = Array.from(game.user.targets)
             game.user.updateTokenTargets([])
-
             // Function needs to return an array of WeaponTests so need to do some funky stuff to convert
-            targets.forEach(target => tests.push(this.setupWeaponTest(weapon, {target, multi : options.multi})))
+            targets.forEach(target => tests.push(this.setupWeaponTest(weapon, {target, multi : targets.length})))
 
             tests = await Promise.all(tests)
             tests = tests.map(t => t[0])
@@ -323,17 +322,6 @@ export class WrathAndGloryActor extends Actor {
         }
         return tests
     }
-
-    _setupWeaponTestForTargets(weapon, options = {}) {
-
-        
-        let targets = Array.from(game.user.targets);
-        let multi = targets.length;
-
- 
-    }
-
-    
 
     async setupPowerTest(power, options = {}) {
         if (typeof power == "string")
@@ -408,8 +396,7 @@ export class WrathAndGloryActor extends Actor {
         let dialogData = this._baseDialogData()
         if (options.targets)
             dialogData.targets = options.targets;
-            
-        
+
         if (weapon.Ammo) {
             // Add ammo dialog changes if any exist
             dialogData.changeList = this.getDialogChanges({ condense: true, add: weapon.Ammo.ammoDialogEffects, targets : dialogData.targets })
