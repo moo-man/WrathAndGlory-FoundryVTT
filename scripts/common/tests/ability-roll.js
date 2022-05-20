@@ -12,6 +12,8 @@ export default class AbilityRoll extends WNGTest {
     this.data.testData.ap = data.ap || {}
     this.data.testData.damage= data.damage || {}
 
+    this.data.testData.otherDamage = data.otherDamage || {}
+
     this.testData.itemId = data.itemId
   }
 

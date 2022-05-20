@@ -31,8 +31,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.constructEffectLists(sheetData)
         this._organizeSkills(sheetData)
         sheetData.autoCalc = this.actor.getFlag("wrath-and-glory", "autoCalc") || {}
-        if (this.actor.type == "threat")
-        {
+        if (this.actor.type == "threat") {
             sheetData.autoCalc.wounds = false;
             sheetData.autoCalc.shock = false;
         }
@@ -61,8 +60,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         }
     }
 
-    constructItemLists(sheetData)
-    {
+    constructItemLists(sheetData) {
         let items = {}
         items.equipped = {}
 
@@ -90,64 +88,62 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.constructInventory(sheetData)
     }
 
-    constructInventory(sheetData)
-    {
+    constructInventory(sheetData) {
         sheetData.inventory = {
-            weapons : {
-                header : "HEADER.WEAPON",
-                items : this.actor.getItemTypes("weapon"),
-                equippable : true,
-                quantity : true,
-                type : "weapon"
+            weapons: {
+                header: "HEADER.WEAPON",
+                items: this.actor.getItemTypes("weapon"),
+                equippable: true,
+                quantity: true,
+                type: "weapon"
             },
-            armour : {
-                header : "HEADER.ARMOUR",
-                items : this.actor.getItemTypes("armour"),
-                equippable : true,
-                quantity : true,
-                type : "armour"
+            armour: {
+                header: "HEADER.ARMOUR",
+                items: this.actor.getItemTypes("armour"),
+                equippable: true,
+                quantity: true,
+                type: "armour"
             },
-            gear : {
-                header : "HEADER.GEAR",
-                items : this.actor.getItemTypes("gear"),
-                equippable : false,
-                quantity : true,
-                type : "gear"
+            gear: {
+                header: "HEADER.GEAR",
+                items: this.actor.getItemTypes("gear"),
+                equippable: false,
+                quantity: true,
+                type: "gear"
             },
-            ammo : {
-                header : "HEADER.AMMO",
-                items : this.actor.getItemTypes("ammo"),
-                equippable : false,
-                quantity : true,
-                type : "ammo"
+            ammo: {
+                header: "HEADER.AMMO",
+                items: this.actor.getItemTypes("ammo"),
+                equippable: false,
+                quantity: true,
+                type: "ammo"
             },
-            weaponUpgrades : {
-                header : "HEADER.WEAPON_UPGRADE",
-                items : this.actor.getItemTypes("weaponUpgrade"),
-                equippable : false,
-                quantity : false,
-                type : "weaponUpgrade"
+            weaponUpgrades: {
+                header: "HEADER.WEAPON_UPGRADE",
+                items: this.actor.getItemTypes("weaponUpgrade"),
+                equippable: false,
+                quantity: false,
+                type: "weaponUpgrade"
             },
-            augmentics : {
-                header : "HEADER.AUGMETIC",
-                items : this.actor.getItemTypes("augmentic"),
-                equippable : false,
-                quantity : false,
-                type : "augmentic"
+            augmentics: {
+                header: "HEADER.AUGMETIC",
+                items: this.actor.getItemTypes("augmentic"),
+                equippable: false,
+                quantity: false,
+                type: "augmentic"
             }
         }
     }
 
-    constructEffectLists(sheetData)
-    {
+    constructEffectLists(sheetData) {
         let effects = {}
 
         effects.conditions = CONFIG.statusEffects.map(i => {
             return {
-                label : i.label,
-                key : i.id,
-                img : i.icon,
-                existing : this.actor.hasCondition(i.id)
+                label: i.label,
+                key: i.id,
+                img: i.icon,
+                existing: this.actor.hasCondition(i.id)
             }
         })
         effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled && !i.isCondition)
@@ -158,30 +154,32 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
 
-    async _onDrop(ev)
-    {
+    async _onDrop(ev) {
         let data = ev.dataTransfer.getData("text/plain")
-        if (data)
-        {
+        if (data) {
             data = JSON.parse(data)
             if (data.type == "itemDrop")
                 return this.actor.createEmbeddedDocuments("Item", [data.payload])
-            else if (data.type == "keywordDrop")
-            {
+            else if (data.type == "keywordDrop") {
                 let name = data.payload
                 let item = game.items.find(i => i.name == name && i.type == "keyword")
                 return this.actor.createEmbeddedDocuments("Item", [item.toObject()])
             }
-            else if (data.type == "Item")
-            {
+            else if (data.type == "Item") {
                 let item = await Item.implementation.fromDropData(data);
-                if (item.type == "archetype" && this.actor.type == "agent")
-                    return this.actor.characterCreation(item)
-                else if(item.type == "archetype" && this.actor.type == "threat")
-                    return this.actor.applyArchetype(item);
+
+                if (item.type == "archetype")
+                {
+                    Dialog.confirm({
+                        title: this.actor.type == "agent" ? "Character Creation" : "Apply Archetype",
+                        content: `<p>${this.actor.type == "agent" ? "Begin Character Creation?" : "Apply Archetype data to this Actor?"}</p>`,
+                        yes: () => this.actor.applyArchetype(item, true),
+                        no: () => this.actor.applyArchetype(item, false)
+                    })
+                }
             }
-            super._onDrop(ev)
         }
+        super._onDrop(ev)
     }
 
     _getSubmitData(updateData = {}) {
@@ -240,9 +238,9 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         if (this.actor.isOwner) {
             buttons = [
                 {
-                    label : "BUTTON.CONFIGURE",
-                    class : "actor-configure",
-                    icon : "fas fa-wrench",
+                    label: "BUTTON.CONFIGURE",
+                    class: "actor-configure",
+                    icon: "fas fa-wrench",
                     onclick: (ev) => new ActorConfigure(this.actor).render(true)
                 }
             ].concat(buttons);
@@ -255,8 +253,8 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let header = event.currentTarget.dataset
 
         let data = {
-             name : `New ${game.i18n.localize("ITEM.Type" + header.type.toLowerCase().capitalize())}`,
-             type : header.type
+            name: `New ${game.i18n.localize("ITEM.Type" + header.type.toLowerCase().capitalize())}`,
+            type: header.type
         };
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
     }
@@ -272,22 +270,22 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         event.stopPropagation();
         const div = $(event.currentTarget).parents(".item");
         new Dialog({
-            title : game.i18n.localize("DIALOG.ITEM_DELETE"),
-            content : `<p>${game.i18n.localize("DIALOG.ITEM_DELETE_PROMPT")}`,
-            buttons : {
-                "yes" : {
-                    label : game.i18n.localize("Yes"),
+            title: game.i18n.localize("DIALOG.ITEM_DELETE"),
+            content: `<p>${game.i18n.localize("DIALOG.ITEM_DELETE_PROMPT")}`,
+            buttons: {
+                "yes": {
+                    label: game.i18n.localize("Yes"),
                     callback: () => {
                         this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
                         div.slideUp(200, () => this.render(false));
                     }
                 },
-                "cancel" : {
-                    label : game.i18n.localize("Cancel"),
-                    callback : () => {}
+                "cancel": {
+                    label: game.i18n.localize("Cancel"),
+                    callback: () => { }
                 }
             },
-            default : "yes"
+            default: "yes"
         }).render(true)
     }
 
@@ -302,31 +300,31 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     async _onEffectCreate(ev) {
         let type = ev.currentTarget.attributes["data-type"].value
-        let effectData = { label: "New Effect" , icon: "icons/svg/aura.svg"}
+        let effectData = { label: "New Effect", icon: "icons/svg/aura.svg" }
         if (type == "temporary") {
             effectData["duration.rounds"] = 1;
-          }
+        }
 
         let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.html")
         let dialog = new Dialog({
-            title : "Quick Effect",
-            content : html,
-            buttons : {
-                "create" : {
-                    label : "Create",
-                    callback : html => {
+            title: "Quick Effect",
+            content: html,
+            buttons: {
+                "create": {
+                    label: "Create",
+                    callback: html => {
                         let mode = 2
                         let label = html.find(".label").val()
                         let key = html.find(".key").val()
                         let value = parseInt(html.find(".modifier").val())
                         effectData.label = label
-                        effectData.changes = [{key, mode, value}]
+                        effectData.changes = [{ key, mode, value }]
                         this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
                     }
                 },
-                "skip" : {
-                    label : "Skip",
-                    callback : () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
+                "skip": {
+                    label: "Skip",
+                    callback: () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
                 }
             }
         })
@@ -334,26 +332,23 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         dialog._element.find(".label").select()
 
 
-      }
+    }
 
-    _onEffectEdit(ev)
-    {
+    _onEffectEdit(ev) {
         let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         this.object.effects.get(id).sheet.render(true)
     }
 
-    _onEffectDelete(ev)
-    {
+    _onEffectDelete(ev) {
         let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
     }
 
-    _onEffectToggle(ev)
-    {
+    _onEffectToggle(ev) {
         let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         let effect = this.object.effects.get(id)
 
-        effect.update({"disabled" : !effect.data.disabled})
+        effect.update({ "disabled": !effect.data.disabled })
     }
 
     _onFocusIn(event) {
@@ -364,13 +359,12 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
 
-        if (ev.button == 0)
-        {
+        if (ev.button == 0) {
             let test
             if (item.abilityType == "determination")
-            test = await this.actor.setupGenericTest("determination")
+                test = await this.actor.setupGenericTest("determination")
             else
-            test = await this.actor.setupAbilityRoll(item)
+                test = await this.actor.setupAbilityRoll(item)
 
             await test.rollTest();
             test.sendToChat()
@@ -384,13 +378,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
         let img = li.find("img")[0]
 
-        if (img.style.display == "none")
-        {
+        if (img.style.display == "none") {
             img.style.display = "flex";
             Array.from(li.find(".dice")).forEach(d => d.remove())
         }
-        else
-        {
+        else {
             $(img).after("<div class='dice'><i class='fas fa-dice'></i></div>")
             img.style.display = "none"
         }
@@ -440,7 +432,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     async _onAttributeClick(event) {
         event.preventDefault();
         const attribute = $(event.currentTarget).data("attribute");
-        let test = await  this.actor.setupAttributeTest(attribute)
+        let test = await this.actor.setupAttributeTest(attribute)
         await test.rollTest();
         test.sendToChat()
     }
@@ -472,20 +464,20 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this._resetRollData();
 
         new Dialog({
-            title : "Conviction Roll",
-            buttons : {
-                "corruption" : {
-                    label : "Corruption",
-                    callback : async () => {
+            title: "Conviction Roll",
+            buttons: {
+                "corruption": {
+                    label: "Corruption",
+                    callback: async () => {
                         let test = await this.actor.setupGenericTest("corruption")
                         await test.rollTest();
                         test.sendToChat()
 
                     }
                 },
-                "mutation" : {
-                    label : "Mutation",
-                    callback : async () => {
+                "mutation": {
+                    label: "Mutation",
+                    callback: async () => {
                         let test = await this.actor.setupGenericTest("mutation")
                         await test.rollTest();
                         test.sendToChat()
@@ -498,20 +490,20 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     async _onResolveClick(event) {
         event.preventDefault();
         new Dialog({
-            title : "Resolve Roll",
-            buttons : {
-                "corruption" : {
-                    label : "Fear",
-                    callback : async () => {
+            title: "Resolve Roll",
+            buttons: {
+                "corruption": {
+                    label: "Fear",
+                    callback: async () => {
                         let test = await this.actor.setupGenericTest("fear")
                         await test.rollTest();
                         test.sendToChat()
 
                     }
                 },
-                "mutation" : {
-                    label : "Terror",
-                    callback : async () => {
+                "mutation": {
+                    label: "Terror",
+                    callback: async () => {
                         let test = await this.actor.setupGenericTest("terror")
                         await test.rollTest();
                         test.sendToChat()
@@ -645,15 +637,14 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             return item.update({ [`${target}`]: !getProperty(item.data, target) })
         }
         if (target)
-            return this.actor.update({[`${target}`] : !getProperty(this.actor.data, target)});
+            return this.actor.update({ [`${target}`]: !getProperty(this.actor.data, target) });
     }
 
-    _onSelectChange(event)
-    {
+    _onSelectChange(event) {
         let target = $(event.currentTarget).attr("data-target")
         let id = $(event.currentTarget).parents(".item").attr("data-item-id")
         let item = this.actor.items.get(id)
-        return item.update({[target] : event.target.value})
+        return item.update({ [target]: event.target.value })
     }
 
     _onQuantityClick(event) {
@@ -669,7 +660,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             multiplier = event.button == 0 ? 1 : -1
 
         multiplier = event.ctrlKey ? multiplier * 10 : multiplier
-        item.update({"data.quantity" : item.quantity + 1 * multiplier})
+        item.update({ "data.quantity": item.quantity + 1 * multiplier })
     }
 
     _dropdownRightClick(event) {
@@ -718,18 +709,15 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         li.toggleClass("expanded");
     }
 
-    _onAdvHover(event)
-    {
-        $(event.currentTarget).children(".adv-buttons")[0].style="display: flex"
+    _onAdvHover(event) {
+        $(event.currentTarget).children(".adv-buttons")[0].style = "display: flex"
     }
 
-    _onAdvLeave(event)
-    {
-        $(event.currentTarget).children(".adv-buttons")[0].style="display: none"
+    _onAdvLeave(event) {
+        $(event.currentTarget).children(".adv-buttons")[0].style = "display: none"
     }
 
-    _onAdvButtonClick(event)
-    {
+    _onAdvButtonClick(event) {
         let amt
         if (event.currentTarget.classList.contains("incr")) amt = 1
         else if (event.currentTarget.classList.contains("decr")) amt = -1
@@ -737,15 +725,13 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let type = $(event.currentTarget).parents(".adv-buttons").attr("data-type").split("-")
         let target = `data.${type[0]}s.${type[1]}.rating` // Only slightly disgusting
 
-        this.actor.update({[`${target}`] : getProperty(this.actor.data._source, target) + amt})
+        this.actor.update({ [`${target}`]: getProperty(this.actor.data._source, target) + amt })
     }
 
-    _onConditionClick(ev)
-    {
+    _onConditionClick(ev) {
         let key = $(ev.currentTarget).parents(".condition").data("key")
         let effect = CONFIG.statusEffects.find(i => i.id == key)
-        if (effect)
-        {
+        if (effect) {
             let journal = game.journal.getName(effect.label)
             if (journal)
                 journal.sheet.render(true)
@@ -765,7 +751,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
         let description = traitClicked.description || game.wng.config.traitDescriptions[traitClicked.name];
 
-        return this._createDropdown(ev, {text : description})
+        return this._createDropdown(ev, { text: description })
 
     }
 

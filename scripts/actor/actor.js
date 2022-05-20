@@ -363,6 +363,12 @@ export class WrathAndGloryActor extends Actor {
             testData.ap.base = ability.ap.base
             testData.ap.bonus = ability.ap.bonus
             testData.ap.rank = ability.ap.rank
+            testData.otherDamage = {
+                mortalWounds: { value: ability.otherDamage.mortalWounds, bonus : 0 },
+                wounds: { value: ability.otherDamage.wounds, bonus : 0 },
+                shock: { value: ability.otherDamage.shock, bonus : 0 },
+            }
+  
         }
         ui.sidebar.activateTab("chat")
         return new AbilityRoll(testData)
@@ -500,70 +506,73 @@ export class WrathAndGloryActor extends Actor {
         new Dialog({
             title: "Character Creation",
             content: "<p>Begin Character Creation?</p>",
-            buttons: {
-                yes: {
-                    label: "Yes",
-                    callback: () => {
-                        new CharacterCreation({ actor: this, archetype }).render(true)
-                    }
-                },
-                no: {
-                    label: "No",
-                    callback: async () => {
-                        let species = await game.wng.utility.findItem(archetype.species.id, "species")
-                        let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
-                        this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
-                    }
-                }
-            }
+            yes: () =>  new CharacterCreation({ actor: this, archetype }).render(true),
+            no: async () => {
+                let species = await game.wng.utility.findItem(archetype.species.id, "species")
+                let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
+                this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
+               }
         }).render(true)
     }
 
-    async applyArchetype(archetype) {
-        ui.notifications.notify(`Applying ${archetype.name} Archetype`)
-        let actorData = this.toObject();
+    async applyArchetype(archetype, apply) {
 
-        let items = archetype.ArchetypeItems
-        items.push(archetype.toObject())
-        let faction = items.find(i => i.type == "faction")
-        let species = items.find(i => i.type == "species")
-        faction.effects = [];
-        actorData.data.combat.speed = species.data.speed;
-        actorData.data.combat.size = species.data.size;
+        let species = await game.wng.utility.findItem(archetype.species.id, "species")
+        let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
+        this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
 
 
-        for(let attr in archetype.attributes)
+        if (this.type == "agent" && apply) // If agent, start character creation
         {
-            let attribute = actorData.data.attributes[attr]
-            if (archetype.attributes[attr])
-                attribute.base = archetype.attributes[attr]
-
-            if (archetype.suggested.attributes[attr] > attribute.base)
-                attribute.rating = archetype.suggested.attributes[attr] - attribute.base
+            new CharacterCreation({ actor: this, archetype }).render(true)
         }
-
-        for(let sk in archetype.skills)
+        else if (this.type == "threat" && apply) // If threat, apply archetype statistics
         {
-            let skill = actorData.data.skills[sk]
-            if (archetype.skills[sk])
-                skill.base = archetype.skills[sk]
-
-            if (archetype.suggested.skills[sk] > skill.base)
-                skill.rating = archetype.suggested.skills[sk] - skill.base
+            ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+            let actorData = this.toObject();
+    
+            let items = await archetype.GetArchetypeItems()
+            items.push(archetype.toObject())
+            let faction = items.find(i => i.type == "faction")
+            let species = items.find(i => i.type == "species")
+            faction.effects = [];
+            actorData.data.combat.speed = species.data.speed;
+            actorData.data.combat.size = species.data.size;
+    
+    
+            for(let attr in archetype.attributes)
+            {
+                let attribute = actorData.data.attributes[attr]
+                if (archetype.attributes[attr])
+                    attribute.base = archetype.attributes[attr]
+    
+                if (archetype.suggested.attributes[attr] > attribute.base)
+                    attribute.rating = archetype.suggested.attributes[attr] - attribute.base
+            }
+    
+            for(let sk in archetype.skills)
+            {
+                let skill = actorData.data.skills[sk]
+                if (archetype.skills[sk])
+                    skill.base = archetype.skills[sk]
+    
+                if (archetype.suggested.skills[sk] > skill.base)
+                    skill.rating = archetype.suggested.skills[sk] - skill.base
+            }
+    
+    
+            // Remove IDs so items work within the update method
+            items.forEach(i => delete i._id)
+    
+            actorData.img = archetype.data.img
+            actorData.token.img = archetype.data.img.replace("images", "tokens")
+            actorData.token.img = archetype.data.img.replace("actors", "tokens")
+    
+            await this.update(actorData)
+    
+            // Add items separately so active effects get added seamlessly
+            this.createEmbeddedDocuments("Item", items)
         }
-
-
-        // Remove IDs so items work within the update method
-        items.forEach(i => delete i._id)
-
-        actorData.img = archetype.data.img
-        actorData.token.img = archetype.data.img.replace("images", "tokens")
-        actorData.token.img = archetype.data.img.replace("actors", "tokens")
-
-        await this.update(actorData)
-
-        // Add items separately so active effects get added seamlessly
-        this.createEmbeddedDocuments("Item", items)
     }
 
     //#endregion
