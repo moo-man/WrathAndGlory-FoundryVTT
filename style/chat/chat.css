@@ -193,3 +193,25 @@
 
 }
 
+.wrath-and-glory .targets {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px
+}
+
+.wrath-and-glory.dialog .targets {
+  margin-top: 5px;
+}
+
+
+.wrath-and-glory .targets .crosshair {
+  color: var(--color-imperium);
+  font-size: 18px;
+}
+
+.wrath-and-glory .targets .target {
+  border: 1px solid var(--color-imperium);
+  border-radius: 5px;
+  padding: 1px;
+  margin: 0px 3px;
+}

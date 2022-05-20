@@ -13,6 +13,7 @@ export class WNGTest {
       },
       context: {
         title: data.title,
+        targets : data.targets ? data.targets.map(i => i.document.toObject()) || [] : [],
         type: data.type,
         speaker: data.speaker,
         rollClass: this.constructor.name,
@@ -31,6 +32,10 @@ export class WNGTest {
   }
 
   static recreate(data) {
+    if (!data.context) {
+      return;
+    }
+
     let test = new game.wng.rollClasses[data.context.rollClass]()
     test.data = data;
     if (test.result.roll)
@@ -55,18 +60,13 @@ export class WNGTest {
     await this._rollDice()
     this._computeResult();
 
-    if(this.result.isWrathCritical && !this.context.counterChanged)
-    {
-      this.context.counterChanged = true
-      if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
-      else if (this.actor.type == "threat")
-        game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
-    }
+    this.handleCounters();
+
+    return this
 
   }
 
-  async _rollDice() {
+  _rollDice() {
 
     this.roll = Roll.fromTerms([
       new PoolDie({ number: this.result.poolSize, faces: 6 }),
@@ -74,7 +74,7 @@ export class WNGTest {
       new WrathDie({ number: this.result.wrathSize, faces: 6 })
     ])
 
-    await this.roll.evaluate({ async: true });
+    return this.roll.evaluate({ async: true });
   }
 
   _computeResult() {
@@ -94,7 +94,7 @@ export class WNGTest {
 
     // Compute wrath before filtering out shifted dice
 
-    this._handleWrath() 
+    this._handleWrath()
 
     this.result.allDice = duplicate(this.result.dice);
     this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
@@ -103,7 +103,7 @@ export class WNGTest {
     this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
     if (this.result.isWrathCritical)
-      this.result.isWrathCritical == this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
+      this.result.isWrathCritical = this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
   }
 
   _computeReroll() {
@@ -137,16 +137,17 @@ export class WNGTest {
     if (this.actor.hasCondition("dying"))
     {
       this.result.isWrathCritical = this.result.dice.every(r => r.isWrath && r.result === 6);
-      this.result.gainTraumaticInjury = this.result.isWrathComplication 
+      this.result.gainTraumaticInjury = this.result.isWrathComplication
+      return;
     }
-    else 
-      this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
+
+    this.result.isWrathCritical = this.result.dice.some(r => r.isWrath && r.result === 6);
   }
 
   _computeShifted() {
     this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index));
     this.result.shifted.forEach(die => {
-      if (this.testData.shifted.damage.includes(die.index)) 
+      if (this.testData.shifted.damage.includes(die.index))
         die.shift = "damage";
       else if (this.testData.shifted.glory.includes(die.index))
         die.shift = "glory";
@@ -194,8 +195,11 @@ export class WNGTest {
     })
 
     await this.reroll(reroll)
+    this.handleCounters();
+  }
 
-    if(this.result.isWrathCritical && !this.context.counterChanged)
+  handleCounters() {
+    if(this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies"))
     {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
@@ -203,7 +207,6 @@ export class WNGTest {
       else if (this.actor.type == "threat")
           game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
     }
-
   }
 
   clearRerolls() {
@@ -244,7 +247,7 @@ export class WNGTest {
     return true
   }
 
-  async sendToChat({newMessage = null}={}) {
+  async sendToChat({newMessage = null, chatDataMerge={}}={}) {
     const html = await renderTemplate(this.template, this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,

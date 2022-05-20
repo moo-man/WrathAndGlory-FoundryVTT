@@ -447,6 +447,8 @@
   "NOTE.APPLY_DAMAGE_RESIST" : "{name} resisted the Damage",
   "NOTE.APPLY_DAMAGE_SHOCK" : "{name} sustained 1 Shock",
   "NOTE.APPLY_DAMAGE" : "{damage} Wounds applied to {name}",
+  "ERROR.MacroItemMissing" : "Your controlled Actor does not have an item named",
+
 
   "AUTOCALC.DEFENCE" : "Auto Calculate Defence",
   "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",
@@ -458,6 +460,7 @@
   "AUTOCALC.CONVICTION" : "Auto Calculate Conviction",
   "AUTOCALC.AUTO_WOUNDED" : "Automatic Wounded",
   "AUTOCALC.AUTO_EXHAUSTED" : "Automatic Exhausted",
+  "CONFIGURE.GenerateMetaCurrencies" : "Generate Meta Currencies",
 
   "CONDITION.Bleeding" : "Bleeding",
   "CONDITION.Blinded" : "Blinded",

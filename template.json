@@ -416,6 +416,11 @@
         "base": 0,
         "bonus": 0,
         "rank": "none"
+      },
+      "otherDamage" : {
+        "mortalWounds" : "",
+        "wounds" : "",
+        "shock" : ""
       }
     },
     "ammo": {

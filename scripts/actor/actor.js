@@ -35,7 +35,8 @@ export class WrathAndGloryActor extends Actor {
             "flags.wrath-and-glory.autoCalc.wounds": true,
             "flags.wrath-and-glory.autoCalc.conviction": true,
             "flags.wrath-and-glory.autoWounded": true,
-            "flags.wrath-and-glory.autoExhausted": true
+            "flags.wrath-and-glory.autoExhausted": true,
+            "flags.wrath-and-glory.generateMetaCurrencies": true
         }
         if (data.type === "agent") {
             initData["token.vision"] = true;
@@ -194,6 +195,7 @@ export class WrathAndGloryActor extends Actor {
         dialogData.type = "attribute"
         dialogData.attribute = attribute
         let testData = await RollDialog.create(dialogData)
+        testData.targets = dialogData.targets
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.attribute = attribute;
@@ -210,6 +212,7 @@ export class WrathAndGloryActor extends Actor {
         dialogData.type = "skill"
         dialogData.skill = skill
         let testData = await RollDialog.create(dialogData)
+        testData.targets = dialogData.targets
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.skill = skill
@@ -266,6 +269,8 @@ export class WrathAndGloryActor extends Actor {
                 dialogData.pool.size = this.resources.influence
                 dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
                 break;
+            default:
+                throw new Error("Unknown roll type: " + type)
         }
         this._addOptions(dialogData, options)
         dialogData.type = type
@@ -277,24 +282,45 @@ export class WrathAndGloryActor extends Actor {
         return new testClass(testData)
     }
 
-    async setupWeaponTest(weapon, options = {}) {
+
+
+    async setupWeaponTest(weapon, options={})
+    {
         if (typeof weapon == "string")
             weapon = this.items.get(weapon)
 
-        let dialogData = this._weaponDialogData(weapon);
-        dialogData.title = `${weapon.name} Test`
-        this._addOptions(dialogData, options)
-        dialogData.type = "weapon"
-        dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
-        dialogData.attribute = weapon.skill.attribute
-        let testData = await WeaponDialog.create(dialogData)
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.itemId = weapon.id
-        testData.skill = dialogData.skill
-        testData.attribute = dialogData.attribute
-        ui.sidebar.activateTab("chat")
-        return new WeaponTest(testData)
+        let tests = []
+        // If targets, call this function again with single target option
+        if (game.user.targets.size)
+        {
+            let targets = Array.from(game.user.targets)
+            game.user.updateTokenTargets([])
+            // Function needs to return an array of WeaponTests so need to do some funky stuff to convert
+            targets.forEach(target => tests.push(this.setupWeaponTest(weapon, {target, multi : targets.length})))
+
+            tests = await Promise.all(tests)
+            tests = tests.map(t => t[0])
+        }
+
+        else // If no target or target supplied in options
+        {
+            let dialogData = this._weaponDialogData(weapon, {multi : options.multi, targets : [options.target].filter(t => t)});
+            dialogData.title = `${weapon.name} Test`
+            this._addOptions(dialogData, options)
+            dialogData.type = "weapon"
+            dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
+            dialogData.attribute = weapon.skill.attribute
+            let testData = await WeaponDialog.create(dialogData)
+            testData.targets = dialogData.targets
+            testData.title = dialogData.title
+            testData.speaker = this.speakerData();
+            testData.itemId = weapon.id
+            testData.skill = dialogData.skill
+            testData.attribute = dialogData.attribute
+            ui.sidebar.activateTab("chat")
+            tests =  [new WeaponTest(testData)]
+        }
+        return tests
     }
 
     async setupPowerTest(power, options = {}) {
@@ -308,6 +334,7 @@ export class WrathAndGloryActor extends Actor {
         dialogData.skill = "psychicMastery"
         dialogData.attribute = power.skill.attribute
         let testData = await PowerDialog.create(dialogData)
+        testData.targets = dialogData.targets
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
         testData.itemId = power.id
@@ -336,6 +363,12 @@ export class WrathAndGloryActor extends Actor {
             testData.ap.base = ability.ap.base
             testData.ap.bonus = ability.ap.bonus
             testData.ap.rank = ability.ap.rank
+            testData.otherDamage = {
+                mortalWounds: { value: ability.otherDamage.mortalWounds, bonus : 0 },
+                wounds: { value: ability.otherDamage.wounds, bonus : 0 },
+                shock: { value: ability.otherDamage.shock, bonus : 0 },
+            }
+  
         }
         ui.sidebar.activateTab("chat")
         return new AbilityRoll(testData)
@@ -364,12 +397,16 @@ export class WrathAndGloryActor extends Actor {
     }
 
 
-    _weaponDialogData(weapon) {
+    _weaponDialogData(weapon, options={}) {
+
         let dialogData = this._baseDialogData()
+        if (options.targets)
+            dialogData.targets = options.targets;
+
         if (weapon.Ammo) {
             // Add ammo dialog changes if any exist
-            dialogData.changeList = this.getDialogChanges({ condense: true, add: weapon.Ammo.ammoDialogEffects })
-            dialogData.changes = this.getDialogChanges({ add: weapon.Ammo.ammoDialogEffects })
+            dialogData.changeList = this.getDialogChanges({ condense: true, add: weapon.Ammo.ammoDialogEffects, targets : dialogData.targets })
+            dialogData.changes = this.getDialogChanges({ add: weapon.Ammo.ammoDialogEffects, targets : dialogData.targets })
         }
         dialogData.weapon = weapon
         dialogData.pool.size = weapon.skill.total;
@@ -394,8 +431,18 @@ export class WrathAndGloryActor extends Actor {
                 dialogData.damage.bonus -= 2
         }
 
-        dialogData.difficulty.target = WNGUtility._getTargetDefence()
+        if (dialogData.targets[0])
+        {
+            dialogData.difficulty.target = dialogData.targets[0].actor.combat.defence.total
+        }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
+
+        if (options.multi > 1)
+        {
+            dialogData.difficulty.penalty += options.multi * 2
+            dialogData.multi = options.multi
+        }
+
         return dialogData
     }
 
@@ -440,13 +487,13 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    getDialogChanges({ condense = false, add = [] } = {}) {
+    getDialogChanges({ condense = false, add = [], targets=[] } = {}) {
         let effects = Array.from(this.effects).concat(add);
         // Aggregate dialog changes from each effect
         let changes = effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({ condense, indexOffset: prev.length })), [])
 
-        if (game.user.targets.size > 0) {
-            let target = Array.from(game.user.targets)[0].actor
+        if (targets.length) {
+            let target = targets[0].actor
             let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({ target, condense, indexOffset: changes.length })), [])
             changes = changes.concat(targetChanges)
         }
@@ -459,70 +506,73 @@ export class WrathAndGloryActor extends Actor {
         new Dialog({
             title: "Character Creation",
             content: "<p>Begin Character Creation?</p>",
-            buttons: {
-                yes: {
-                    label: "Yes",
-                    callback: () => {
-                        new CharacterCreation({ actor: this, archetype }).render(true)
-                    }
-                },
-                no: {
-                    label: "No",
-                    callback: async () => {
-                        let species = await game.wng.utility.findItem(archetype.species.id, "species")
-                        let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
-                        this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
-                    }
-                }
-            }
+            yes: () =>  new CharacterCreation({ actor: this, archetype }).render(true),
+            no: async () => {
+                let species = await game.wng.utility.findItem(archetype.species.id, "species")
+                let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
+                this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
+               }
         }).render(true)
     }
 
-    async applyArchetype(archetype) {
-        ui.notifications.notify(`Applying ${archetype.name} Archetype`)
-        let actorData = this.toObject();
+    async applyArchetype(archetype, apply) {
 
-        let items = archetype.ArchetypeItems
-        items.push(archetype.toObject())
-        let faction = items.find(i => i.type == "faction")
-        let species = items.find(i => i.type == "species")
-        faction.effects = [];
-        actorData.data.combat.speed = species.data.speed;
-        actorData.data.combat.size = species.data.size;
+        let species = await game.wng.utility.findItem(archetype.species.id, "species")
+        let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
+        this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
 
 
-        for(let attr in archetype.attributes)
+        if (this.type == "agent" && apply) // If agent, start character creation
         {
-            let attribute = actorData.data.attributes[attr]
-            if (archetype.attributes[attr])
-                attribute.base = archetype.attributes[attr]
-
-            if (archetype.suggested.attributes[attr] > attribute.base)
-                attribute.rating = archetype.suggested.attributes[attr] - attribute.base
+            new CharacterCreation({ actor: this, archetype }).render(true)
         }
-
-        for(let sk in archetype.skills)
+        else if (this.type == "threat" && apply) // If threat, apply archetype statistics
         {
-            let skill = actorData.data.skills[sk]
-            if (archetype.skills[sk])
-                skill.base = archetype.skills[sk]
-
-            if (archetype.suggested.skills[sk] > skill.base)
-                skill.rating = archetype.suggested.skills[sk] - skill.base
+            ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+            let actorData = this.toObject();
+    
+            let items = await archetype.GetArchetypeItems()
+            items.push(archetype.toObject())
+            let faction = items.find(i => i.type == "faction")
+            let species = items.find(i => i.type == "species")
+            faction.effects = [];
+            actorData.data.combat.speed = species.data.speed;
+            actorData.data.combat.size = species.data.size;
+    
+    
+            for(let attr in archetype.attributes)
+            {
+                let attribute = actorData.data.attributes[attr]
+                if (archetype.attributes[attr])
+                    attribute.base = archetype.attributes[attr]
+    
+                if (archetype.suggested.attributes[attr] > attribute.base)
+                    attribute.rating = archetype.suggested.attributes[attr] - attribute.base
+            }
+    
+            for(let sk in archetype.skills)
+            {
+                let skill = actorData.data.skills[sk]
+                if (archetype.skills[sk])
+                    skill.base = archetype.skills[sk]
+    
+                if (archetype.suggested.skills[sk] > skill.base)
+                    skill.rating = archetype.suggested.skills[sk] - skill.base
+            }
+    
+    
+            // Remove IDs so items work within the update method
+            items.forEach(i => delete i._id)
+    
+            actorData.img = archetype.data.img
+            actorData.token.img = archetype.data.img.replace("images", "tokens")
+            actorData.token.img = archetype.data.img.replace("actors", "tokens")
+    
+            await this.update(actorData)
+    
+            // Add items separately so active effects get added seamlessly
+            this.createEmbeddedDocuments("Item", items)
         }
-
-
-        // Remove IDs so items work within the update method
-        items.forEach(i => delete i._id)
-
-        actorData.img = archetype.data.img
-        actorData.token.img = archetype.data.img.replace("images", "tokens")
-        actorData.token.img = archetype.data.img.replace("actors", "tokens")
-
-        await this.update(actorData)
-
-        // Add items separately so active effects get added seamlessly
-        this.createEmbeddedDocuments("Item", items)
     }
 
     //#endregion

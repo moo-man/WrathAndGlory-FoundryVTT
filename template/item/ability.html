@@ -183,6 +183,23 @@
         </div>
 
         <div class="wrapper">
+          <div class="damage-header">
+            <b class="spacer"></b>
+            <b class="base">{{localize "PSYCHIC_POWER.SHOCK"}}</b>
+            <b class="rank">{{localize "PSYCHIC_POWER.WOUNDS"}}</b>
+            <b class="modifier">{{localize "PSYCHIC_POWER.MORTAL"}}</b>
+          </div>
+          <div class="item-form-group fixed">
+            <label>{{localize "PSYCHIC_POWER.OTHER_DAMAGE"}}</label>
+            <div class="item-form-inputs">
+              <input name="data.otherDamage.shock" class="base" type="text" value="{{data.otherDamage.shock}}" data-dtype="String" />
+              <input name="data.otherDamage.wounds" class="base" type="text" value="{{data.otherDamage.wounds}}" data-dtype="String" />
+              <input name="data.otherDamage.mortalWounds" class="modifier" type="text" value="{{data.otherDamage.mortalWounds}}" data-dtype="String" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper">
           <div class="item-form-group stacked">
             <label>{{localize "WEAPON.TRAITS"}}<a class="item-traits"><i class="fas fa-cog"></i></a></label>            
             <div class="item-form-inputs">

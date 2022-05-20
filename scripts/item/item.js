@@ -408,7 +408,7 @@ export class WrathAndGloryItem extends Item {
     }
 
 
-    get ArchetypeItems() {
+    async GetArchetypeItems() {
         let items = [];
 
         let species = game.wng.utility.findItem(this.species.id, "species")
@@ -416,7 +416,7 @@ export class WrathAndGloryItem extends Item {
 
         let speciesAbilities = species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
         let archetypeAbility = game.wng.utility.findItem(this.ability.id, "ability")
-        let keywords = this.keywords.map(WNGUtility.getKeywordItem)
+        let keywords = await Promise.all(this.keywords.map(WNGUtility.getKeywordItem))
 
 
         // Get all archetype talents, merge with diff
@@ -548,7 +548,7 @@ export class WrathAndGloryItem extends Item {
     }
 
     get hasDamage() {
-        return (this.damage && (this.damage.base || this.damage.bonus || this.damage.rank != "none")) || (this.ed && (this.ed.base || this.ed.bonus || this.ed.rank != "none"))
+        return (this.damage && (this.damage.base || this.damage.bonus || this.damage.rank != "none")) || (this.ed && (this.ed.base || this.ed.bonus || this.ed.rank != "none") || (this.otherDamage.shock || this.otherDamage.wounds || this.otherDamage.mortalWounds))
     }
 
     get damageValues() {

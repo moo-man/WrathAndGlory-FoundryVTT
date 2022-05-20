@@ -1,5 +1,5 @@
 export async function migrateWorld() {
-    const schemaVersion = 6;
+    const schemaVersion = 7;
     const worldSchemaVersion = Number(game.settings.get("wrath-and-glory", "worldSchemaVersion"));
     if (worldSchemaVersion !== schemaVersion && game.user.isGM) {
         ui.notifications.info("Upgrading the world, please wait...");
@@ -33,37 +33,36 @@ export async function migrateWorld() {
 
 function migrateActorData(actor) {
     const updateData = {_id: actor._id}
-    updateData.effects = actor.effects.map(migrateEffectData)
     if (actor.data.skills.persusasion)
     {
-        updateData["data.skills.persuasion"] = duplicate(actor.data.skills.persusasion)
         updateData["data.skills.-=persusasion"] = null
     }
-    updateData.items = actor.items.map(i => i.data).map(migrateItemData)
+    updateData["flags.wrath-and-glory.generateMetaCurrencies"] = true
     return updateData;
 }
 
 
 function migrateItemData(item) {
-    const updateData = {_id : item._id};
-    updateData.effects = item.effects.map(migrateEffectData)
-    let regex = /\*?\[(\d)\](.+?)</gm
-    if (typeof item.data.potency == "string")
-    {
-        let potencies = [];
-        let matches = Array.from(item.data.potency.matchAll(regex));
-        for(let match of matches)
-        {
-            let potencyObj = {}
-            potencyObj.cost = parseInt(match[1]) || 1
-            potencyObj.single = match[0].includes("*")
-            potencyObj.description = match[2].split("").filter(c => c != "*").join("").trim();
-            if (potencyObj.description.includes("+1 ED"))
-                potencyObj.property = "damage.ed.number"
-            potencies.push(potencyObj);
-        }
-        updateData["data.potency"] = potencies;
-    }
+    return {}
+// const updateData = {_id : item._id};
+// updateData.effects = item.effects.map(migrateEffectData)
+// let regex = /\*?\[(\d)\](.+?)</gm
+// if (typeof item.data.potency == "string")
+// {
+//     let potencies = [];
+//     let matches = Array.from(item.data.potency.matchAll(regex));
+//     for(let match of matches)
+//     {
+//         let potencyObj = {}
+//         potencyObj.cost = parseInt(match[1]) || 1
+//         potencyObj.single = match[0].includes("*")
+//         potencyObj.description = match[2].split("").filter(c => c != "*").join("").trim();
+//         if (potencyObj.description.includes("+1 ED"))
+//             potencyObj.property = "damage.ed.number"
+//         potencies.push(potencyObj);
+//     }
+//     updateData["data.potency"] = potencies;
+// }
     return updateData;
 }
 
