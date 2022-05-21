@@ -269,7 +269,7 @@ export class WrathAndGloryActor extends Actor {
                 dialogData.pool.size = this.resources.influence
                 dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
                 break;
-            default: 
+            default:
                 throw new Error("Unknown roll type: " + type)
         }
         this._addOptions(dialogData, options)
@@ -287,7 +287,7 @@ export class WrathAndGloryActor extends Actor {
     async setupWeaponTest(weapon, options={})
     {
         if (typeof weapon == "string")
-            weapon = this.items.get(weapon) 
+            weapon = this.items.get(weapon)
 
         let tests = []
         // If targets, call this function again with single target option
@@ -326,14 +326,14 @@ export class WrathAndGloryActor extends Actor {
 
     _setupWeaponTestForTargets(weapon, options = {}) {
 
-        
+
         let targets = Array.from(game.user.targets);
         let multi = targets.length;
 
- 
+
     }
 
-    
+
 
     async setupPowerTest(power, options = {}) {
         if (typeof power == "string")
@@ -408,8 +408,8 @@ export class WrathAndGloryActor extends Actor {
         let dialogData = this._baseDialogData()
         if (options.targets)
             dialogData.targets = options.targets;
-            
-        
+
+
         if (weapon.Ammo) {
             // Add ammo dialog changes if any exist
             dialogData.changeList = this.getDialogChanges({ condense: true, add: weapon.Ammo.ammoDialogEffects, targets : dialogData.targets })
@@ -446,7 +446,7 @@ export class WrathAndGloryActor extends Actor {
 
         if (options.multi > 1)
         {
-            dialogData.difficulty.penalty += options.multi * 2
+            dialogData.difficulty.penalty += (options.multi - 1) * 2;
             dialogData.multi = options.multi
         }
 
