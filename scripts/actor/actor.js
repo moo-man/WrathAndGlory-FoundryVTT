@@ -763,4 +763,3 @@ export class WrathAndGloryActor extends Actor {
     }
 
 }
-
