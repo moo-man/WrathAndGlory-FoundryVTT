@@ -203,6 +203,16 @@ export class RollDialog extends Dialog {
 
 export class WeaponDialog extends RollDialog {
 
+
+  async _render(...args)
+  {
+      await super._render(...args)
+
+      this.distance.dispatchEvent(new Event("change"))
+
+  }
+
+
   static async create(data) {
     const html = await renderTemplate("systems/wrath-and-glory/template/dialog/weapon-roll.html", data);
     return new Promise((resolve) => {
@@ -245,6 +255,7 @@ export class WeaponDialog extends RollDialog {
     testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
     testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
     testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
+    testData.range = html.find(".range")[0].value
     return testData
   }
 
@@ -276,6 +287,22 @@ export class WeaponDialog extends RollDialog {
     }, super._baseTestData())
   }
 
+  calculateRange(range)
+  {
+    this.applyEffects()
+    if (range == "short")
+    {
+      this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 1
+      if (this.data.dialogData.weapon.traitList.rapidFire)
+        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (this.data.dialogData.weapon.traitList.rapidFire.rating || 0)
+
+    }
+    else if (range == "long")
+    {
+      this.inputs["difficulty.bonus"].value = parseInt(this.inputs["difficulty.bonus"].value) + 2
+    }
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
 
@@ -301,6 +328,38 @@ export class WeaponDialog extends RollDialog {
     }).each((i, input) => {
       this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input
     })
+
+    this.range = html.find(".range").change(ev => {
+      this.calculateRange(ev.target.value);
+    })[0]
+
+
+
+    this.distance = html.find(".distance").change(ev => {
+      let rangeNum = parseInt(ev.target.value);
+      let weapon = this.data.dialogData.weapon
+      let range
+
+      if (rangeNum <= weapon.range.short)
+      {
+        range = "short"
+      }
+
+      else if (rangeNum > weapon.range.short && rangeNum <= weapon.range.medium)
+      {
+        range = "medium"
+      }
+
+      else if (rangeNum > weapon.range.medium && rangeNum <= weapon.range.long)
+      {
+        range = "long"
+      }
+      
+      else 
+        range = ""
+      this.range.value = range;
+      this.range.dispatchEvent(new Event("change"))
+    })[0]
 
     this.userEntry = flattenObject(mergeObject(this.userEntry, {
       "damage.base": parseInt(this.inputs["damage.base"].value),

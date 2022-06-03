@@ -424,6 +424,10 @@
   "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
   "WEAPON_UPGRADE.TRAITS_REMOVE" : "Traits Removed",
 
+  "RANGE.SHORT"   : "Short",
+  "RANGE.MEDIUM"   : "Medium",
+  "RANGE.LONG" : "Long",
+
   "ITEM.EQP": "Eqp.",
   "ITEM.QTY": "Qty.",
 

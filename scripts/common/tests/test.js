@@ -341,7 +341,6 @@ export class WNGTest {
     this.result.damage.total = this.result.damage.flat
     this.result.damage.ed = {number : this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length};
     this.result.damage.ed.values = this.testData.ed.damageValues
-
   }
 
   async rollDamage() {

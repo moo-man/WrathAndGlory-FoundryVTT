@@ -433,7 +433,18 @@ export class WrathAndGloryActor extends Actor {
 
         if (dialogData.targets[0])
         {
-            dialogData.difficulty.target = dialogData.targets[0].actor.combat.defence.total
+            let target = dialogData.targets[0]
+            let token
+            dialogData.difficulty.target = target.actor.combat.defence.total
+
+            if (this.isToken)
+                token = this.token
+            else
+                token = this.getActiveTokens()[0]?.document
+
+            if (token)
+                dialogData.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.data.x, y: token.data.y }, { x: target.data.x, y: target.data.y }) }], { gridSpaces: true })[0]
+
         }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 

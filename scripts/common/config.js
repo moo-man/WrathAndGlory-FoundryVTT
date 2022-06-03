@@ -145,6 +145,12 @@ WNG.traitHasRating = {
     "shield": false
 }
 
+WNG.ranges = {
+    "short" : "RANGE.SHORT",
+    "medium" : "RANGE.MEDIUM",
+    "long" : "RANGE.LONG"
+}
+
 
 WNG.traitDescriptions = {}
 

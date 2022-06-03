@@ -91,6 +91,18 @@
             <input id="ap-bonus" class="ap bonus" type="number" value="{{ap.bonus}}" data-dtype="Number" />
         </div>
         <div class="wrapper">
+            <label class="name">{{localize "WEAPON.RANGE"}}</label>
+            <input id="distance" class="distance" type="number" value="{{distance}}" data-dtype="Number" />
+            <select id="range" class="range">
+                {{#select range}}
+                <option value=""></option>
+                {{#each (config "ranges") as |range r|}}
+                <option value="{{r}}">{{range}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        <div class="wrapper">
             <b class="name"></b>
             <b class="die">1</b>
             <b class="die">2</b>

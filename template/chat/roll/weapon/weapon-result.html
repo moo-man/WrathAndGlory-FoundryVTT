@@ -1,4 +1,9 @@
         {{> systems/wrath-and-glory/template/chat/roll/base/base-result.html}}
+
+        {{#if result.range}}
+        <p><strong>{{localize "WEAPON.RANGE"}}: {{configLookup "ranges" result.range }}</strong></p>
+        {{/if}}
+
         {{#if result.isWrathCritical}}
         <p><strong class="red">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
                 {{localize "CHAT.WRATH_CRITICAL_WEAPON"}}</strong></p>
