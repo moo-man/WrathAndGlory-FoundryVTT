@@ -413,8 +413,7 @@ export default class CharacterCreation extends FormApplication {
 
             this.character.data.update({[`data.${target}.${stat}.rating`] : statObj.rating})
 
-            parent.find("input")[0].value = statObj.total
-            this.updateExperience();
+            this.updateDerived();
         })
 
         html.on("click", ".talent-delete", ev => {
@@ -429,9 +428,30 @@ export default class CharacterCreation extends FormApplication {
         })
     }
 
+    updateDerived() {
+        this.character.prepareData();
+        this.updateStats()
+        this.updateExperience()
+    }
+
+    updateStats() {
+        let stats = this.element.find(".stat-edit");
+        let attributes = Array.from(stats.filter((i, e) => e.dataset.attribute))
+        let skills = Array.from(stats.filter((i, e) => e.dataset.skill))
+
+        attributes.forEach(element => {
+            let input = $(element).find("input")[0]
+            input.value = this.character.data.data.attributes[element.dataset.attribute].total
+        })
+
+        skills.forEach(element => {
+            let input = $(element).find("input")[0]
+            input.value = this.character.data.data.skills[element.dataset.skill].total
+        })
+    }
+
     updateExperience()
     {
-        this.character.prepareData();
         let talentXP = this.addedTalents.reduce((prev, current) => prev + current.data.cost, 0)
         this.element.find(".xp input")[0].value = this.character.experience.spent + talentXP + this.archetype.cost;
     }
