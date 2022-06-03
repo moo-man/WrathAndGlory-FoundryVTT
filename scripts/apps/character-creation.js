@@ -484,7 +484,7 @@ export default class CharacterCreation extends FormApplication {
             list.append(`<h4>Talents</h4>`)
         }
         this.addedTalents.push(talent.toObject());
-        this.updateExperience();
+        this.updateDerived();
 
         let html = `
         <div class="ability data-index='${this.addedTalents.length-1}'">
