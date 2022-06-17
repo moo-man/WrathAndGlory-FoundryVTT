@@ -146,6 +146,7 @@
   "BUTTON.ROLL": "Roll",
   "BUTTON.REROLL_FAILED": "Reroll Failed (-1 Wrath/Ruin)",
   "BUTTON.REROLL_SELECTED": "Reroll Selected",
+  "BUTTON.EDIT": "Edit Test",
   "BUTTON.CLEAR_REROLLS": "Clear Rerolls",
   "BUTTON.SHIFT": "Shift",
   "BUTTON.SHIFT_DAMAGE": "Shift (+Damage)",
@@ -335,6 +336,14 @@
   "ROLL.FEAR" : "Fear",
   "ROLL.TERROR" : "Terror",
   "ROLL.STEALTH" : "Stealth",
+
+  "EDIT.POOL_DICE" : "Pool Dice",
+  "EDIT.WRATH_DICE" : "Wrath Dice",
+  "EDIT.ICONS" : "Icons",
+  "EDIT.DAMAGE" : "Damage",
+  "EDIT.ED" : "ED",
+  "EDIT.AP" : "AP",
+  "EDIT.POTENCY" : "Potency",
 
   "SIZE.TINY": "Tiny",
   "SIZE.SMALL": "Small",

@@ -22,6 +22,7 @@ export default class PowerTest extends WNGTest {
     
     this.data.testData.potency = duplicate(this.item.potency)
     this.data.testData.potency.forEach(p => p.allocation = 0)
+    this.data.context.edit.potency = 0;
   }
 
   get template() {
@@ -45,7 +46,7 @@ export default class PowerTest extends WNGTest {
 
   computePotencies() {
 
-    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.length}
+    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.length + this.context.edit.potency}
 
     this.result.potency.options.forEach(p => {
       // Set initial potency values (before potency allocation)
@@ -89,6 +90,15 @@ export default class PowerTest extends WNGTest {
   unshift() {
     this.testData.potency.forEach(p => p.allocation = 0)
     super.unshift()
+  }
+
+  async edit({pool=0, wrath=0, icons=0, damage=0, ed=0, ap=0, potency=0}={})
+  {
+    this.data.context.edit.damage += damage;
+    this.data.context.edit.ed += ed;
+    this.data.context.edit.ap += ap;
+    this.data.context.edit.potency += potency;
+    await super.edit({pool, wrath, icons})
   }
 
   addAllocation(index) {
