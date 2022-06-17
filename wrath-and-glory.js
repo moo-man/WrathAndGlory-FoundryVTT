@@ -3,8 +3,6 @@ import { WrathAndGloryItem } from "./scripts/item/item.js";
 import { AgentSheet } from "./scripts/actor/sheet/agent.js";
 import { ThreatSheet } from "./scripts/actor/sheet/threat.js";
 import { initializeHandlebars } from "./scripts/common/handlebars.js";
-import {RollDialog } from "./scripts/common/dialog.js";
-//import { commonRoll, weaponRoll, damageRoll, psychicRoll } from "./scripts/common/roll.js";
 import hooks from "./scripts/common/hooks.js"
 import RuinGloryCounter from "./scripts/apps/counter.js"
 import ItemTraits from "./scripts/apps/item-traits.js"

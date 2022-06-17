@@ -90,6 +90,7 @@
             </select>
             <input id="ap-bonus" class="ap bonus" type="number" value="{{ap.bonus}}" data-dtype="Number" />
         </div>
+        {{#if weapon.isRanged}}
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.RANGE"}}</label>
             <input id="distance" class="distance" type="number" value="{{distance}}" data-dtype="Number" />
@@ -101,7 +102,11 @@
                 {{/each}}
                 {{/select}}
             </select>
+            <label>Aim</label>
+            <div class="wng-checkbox aim" ></div>
         </div>
+        {{/if}}
+
         <div class="wrapper">
             <b class="name"></b>
             <b class="die">1</b>

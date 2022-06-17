@@ -234,7 +234,7 @@
   flex: 1
 }
 
-.wrath-and-glory.sheet.item  .item-checkbox {
+ .wng-checkbox {
   height: 31px;
   width: 31px;
   background: white;
@@ -242,7 +242,7 @@
   cursor: pointer
 }
 
-.wrath-and-glory.sheet.item  .item-checkbox.checked{
+ .wng-checkbox.checked{
   background: var(--color-imperium);
   text-align: center;
   font-size: 24px;
@@ -321,7 +321,7 @@
   flex: 0 0 20px;
 }
 
-.wrath-and-glory.sheet.item .potency-fields > .item-checkbox{
+.wrath-and-glory.sheet.item .potency-fields > .wng-checkbox{
   flex: 0 0 31px;
 }
 

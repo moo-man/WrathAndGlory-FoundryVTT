@@ -1,4 +1,3 @@
-import { RollDialog, WeaponDialog, PowerDialog } from "../common/dialog.js";
 import { WNGTest } from "../common/tests/test.js";
 import WeaponTest from "../common/tests/weapon-test.js";
 import PowerTest from "../common/tests/power-test.js";
@@ -10,6 +9,9 @@ import AbilityRoll from "../common/tests/ability-roll.js";
 import WNGUtility from "../common/utility.js";
 import StealthRoll from "../common/tests/stealth.js";
 import CharacterCreation from "../apps/character-creation.js";
+import { RollDialog } from "../common/dialogs/base-dialog.js";
+import { WeaponDialog } from "../common/dialogs/weapon-dialog.js";
+import { PowerDialog } from "../common/dialogs/power-dialog.js";
 
 export class WrathAndGloryActor extends Actor {
 

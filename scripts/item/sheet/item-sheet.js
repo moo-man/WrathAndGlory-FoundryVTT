@@ -258,7 +258,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
         this.item.addCondition(key)
     })
 
-    html.find(".item-checkbox").click(ev => {
+    html.find(".wng-checkbox").click(ev => {
       let target = ev.currentTarget.dataset["target"]
       let index = ev.currentTarget.dataset["index"]
       

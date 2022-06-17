@@ -38,7 +38,7 @@
               {{#each data.backgrounds.origin as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="item-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.origin" data-index="{{bg}}" data-inner-target="active" >
+                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.origin" data-index="{{bg}}" data-inner-target="active" >
                   {{#if background.active}}
                     <i class="fas fa-check"></i>
                   {{/if}}
@@ -77,7 +77,7 @@
               {{#each data.backgrounds.accomplishment as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="item-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="active">
+                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="active">
                   {{#if background.active}}
                     <i class="fas fa-check"></i>
                   {{/if}}
@@ -116,7 +116,7 @@
               {{#each data.backgrounds.goal as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="item-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.goal" data-index="{{bg}}" data-inner-target="active">
+                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.goal" data-index="{{bg}}" data-inner-target="active">
                   {{#if background.active}}
                     <i class="fas fa-check"></i>
                   {{/if}}
