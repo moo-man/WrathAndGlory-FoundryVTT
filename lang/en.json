@@ -421,6 +421,8 @@
   "WEAPON.DIE_VALUE": "Die Value",
   "WEAPON.ATTACK": "Attack",
   "WEAPON.QUANTITY": "Quantity",
+  "WEAPON.AIM": "Aim",
+  "WEAPON.AIMED": "Aimed",
   "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
   "WEAPON_UPGRADE.TRAITS_REMOVE" : "Traits Removed",
 

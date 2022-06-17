@@ -53,6 +53,7 @@ export class WeaponDialog extends RollDialog {
     testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
     testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
     testData.range = html.find(".range")[0].value
+    testData.aim = !!html.find(".aim.checked")[0]
     return testData
   }
 
@@ -86,11 +87,12 @@ export class WeaponDialog extends RollDialog {
 
   _calculateRange(range)
   {
+    let weapon = this.data.dialogData.weapon
     if (range == "short")
     {
       this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 1
-      if (this.data.dialogData.weapon.traitList.rapidFire)
-        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (this.data.dialogData.weapon.traitList.rapidFire.rating || 0)
+      if (weapon.traitList.rapidFire)
+        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (weapon.traitList.rapidFire.rating || 0)
 
     }
     else if (range == "long")
@@ -99,14 +101,26 @@ export class WeaponDialog extends RollDialog {
     }
   }
 
+  _calculateAim() {
+    let weapon = this.data.dialogData.weapon
+    if (this.userEntry.aim)
+    {
+      if (weapon.traitList.sniper)
+      {
+        this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 2
+        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (weapon.traitList.sniper.rating || 0)
+      }
+      else 
+      {
+        this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 1
+      }
+    }
+  }
+
   applyEffects() {
     super.applyEffects();
     this._calculateRange(this.range.value);
-
-    if (this.userEntry.aim)
-    {
-      this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 1
-    }
+    this._calculateAim()
   }
 
   activateListeners(html) {

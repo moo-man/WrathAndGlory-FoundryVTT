@@ -11,6 +11,7 @@ export default class WeaponTest extends WNGTest {
     this.data.testData.ap = data.ap
     this.data.testData.damage= data.damage
     this.data.testData.range = data.range
+    this.data.testData.aim = data.aim
 
     this.testData.itemId = data.itemId
   }
@@ -24,6 +25,7 @@ export default class WeaponTest extends WNGTest {
     super._computeResult()
 
     this.result.range = this.testData.range
+    this.result.aim = this.testData.aim
     if (this.item.hasTest) this.result.test = duplicate(this.item.test);
     if (this.result.isSuccess)
       this.computeDamage() 
