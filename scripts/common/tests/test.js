@@ -222,7 +222,7 @@ export class WNGTest {
     }
 
     // Dice removed previously still show up (Terms with no results) So remove terms that have no results
-    let oldTerms = this.roll.toJSON().terms.filter(t => t instanceof OperatorTerm || t.results.length > 0); 
+    let oldTerms = this.roll.toJSON().terms.filter(t => t instanceof OperatorTerm || t.results.length > 0);
 
 
     // Find the last term of what is being deleted, and delete dice from that term
@@ -233,16 +233,14 @@ export class WNGTest {
     // TODO: Known issue that if you delete more than the last term, it doesn't carry over to the next term
     // Example: Previously added 2 Pool Dice, which creates another Pool DiceTerm at the end of the Roll object. 
     // Then, you delete 4 Pool Dice. This will result in deleting only the 2 Pool Dice at the end
-    if (removePool)
-    {
+    if (removePool) {
       let lastPoolTerm = oldTerms.slice().reverse().find(t => t instanceof DiceTerm && !t.isWrath) // Need instanceof because don't want to find OperatorTerms
       if (lastPoolTerm)
         lastPoolTerm.results = lastPoolTerm.results.slice(0, lastPoolTerm.results.length - removePool)
 
     }
 
-    if (removeWrath)
-    {
+    if (removeWrath) {
       let lastWrathTerm = oldTerms.slice().reverse().find(t => t instanceof DiceTerm && t.isWrath) // Need instanceof because don't want to find OperatorTerms
       if (lastWrathTerm)
         lastWrathTerm.results = lastWrathTerm.results.slice(0, lastWrathTerm.results.length - removePool)
@@ -251,8 +249,7 @@ export class WNGTest {
     let connector
 
     // Only add a connecting operator term if dice were added (don't want trailing "+")
-    if (added)
-    {
+    if (added) {
       await added.evaluate({ async: true });
       connector = await new OperatorTerm({ operator: "+" }).evaluate({ async: true });
       if (game.dice3d)
@@ -263,8 +260,7 @@ export class WNGTest {
 
 
     // Foundry throws an error if the last term is an operator term
-    if (newRoll[newRoll.length - 1] instanceof OperatorTerm)
-    {
+    if (newRoll[newRoll.length - 1] instanceof OperatorTerm) {
       newRoll.splice(newRoll.length - 1, 1);
     }
 
@@ -433,7 +429,22 @@ export class WNGTest {
     if (this.weapon && this.weapon.traitList.rad)
       add = this.weapon.traitList.rad.rating
 
+
     let damage = this.result.damage
+
+
+    // Don't like this but will work for now
+    if (this.weapon && this.weapon.traitList.melta && this.result.range == "short") {
+      damage.ed.values = {
+        1: 0,
+        2: 0,
+        3: 1,
+        4: 1,
+        5: 2,
+        6: 2
+      }
+    }
+
     let r = Roll.fromTerms([
       new PoolDie({ number: damage.ed.number, faces: 6, options: { values: damage.ed.values, add } }),
     ])

@@ -209,6 +209,7 @@
   "DIALOG.TARGET_DEFENSE_WARNING" : "This Psychic Power may need you to target a token to set the DN. Please close this dialog and target a token before opening it again.",
   "DIALOG.ITEM_DELETE" : "Item Delete",
   "DIALOG.ITEM_DELETE_PROMPT" : "Are you sure you want to delete this item?",
+  "DIALOG.OUT_OF_RANGE" : "Out of Range!",
 
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",
