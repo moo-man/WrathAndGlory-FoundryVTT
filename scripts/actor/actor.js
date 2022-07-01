@@ -450,6 +450,13 @@ export class WrathAndGloryActor extends Actor {
         }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 
+        if (this.species?.name.toLowerCase() == "ork" && weapon.traitList["waaagh!"])
+        {
+            dialogData.pool.bonus += 1;
+            if (this.combat.wounds.value > 0)
+                dialogData.ed.bonus += 1
+        }
+
         if (options.multi > 1)
         {
             dialogData.difficulty.penalty += options.multi * 2

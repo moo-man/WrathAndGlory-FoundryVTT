@@ -176,7 +176,8 @@ export class WeaponDialog extends RollDialog {
       else 
       {
         range = ""
-        ui.notifications.warn(game.i18n.localize("DIALOG.OUT_OF_RANGE"))
+        if (rangeNum)
+          ui.notifications.warn(game.i18n.localize("DIALOG.OUT_OF_RANGE"))
       }
       this.range.value = range;
       this.range.dispatchEvent(new Event("change"))
