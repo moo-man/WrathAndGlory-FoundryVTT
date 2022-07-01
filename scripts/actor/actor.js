@@ -105,7 +105,10 @@ export class WrathAndGloryActor extends Actor {
                 this.combat.speed -= item.traitList.bulk.rating
 
             if (item.traitList.shield)
+            {
                 this.combat.resilience.armour += item.rating;
+                this.combat.defence.bonus += item.rating
+            }
             else if (item.rating > highestRes)
                 highestRes = item.rating
 
@@ -450,7 +453,7 @@ export class WrathAndGloryActor extends Actor {
         }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 
-        if (this.species?.name.toLowerCase() == "ork" && weapon.traitList["waaagh!"])
+        if (this.hasKeyword("ORK") && weapon.traitList["waaagh!"])
         {
             dialogData.pool.bonus += 1;
             if (this.combat.wounds.value > 0)
