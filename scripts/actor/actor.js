@@ -540,11 +540,6 @@ export class WrathAndGloryActor extends Actor {
 
     async applyArchetype(archetype, apply) {
 
-        let species = await game.wng.utility.findItem(archetype.species.id, "species")
-        let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
-        this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
-
-
         if (this.type == "agent" && apply) // If agent, start character creation
         {
             new CharacterCreation({ actor: this, archetype }).render(true)

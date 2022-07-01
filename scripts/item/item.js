@@ -437,7 +437,7 @@ export class WrathAndGloryItem extends Item {
 
         items = items.concat(
             [species], 
-            [faction],
+            [this],
             [faction],
             [archetypeAbility],
             speciesAbilities,
