@@ -1,3 +1,5 @@
+import EditTestForm from "../apps/edit-test.js";
+
 export default function() {
     Hooks.on("getChatLogEntryContext", (html, options) => {
         let canApply = li => li.find(".damageRoll").length && canvas.tokens.controlled.length > 0;
@@ -10,6 +12,13 @@ export default function() {
 
         let canRerollSelected = li => {
             return li.find(".selected").length// && !li.find(".shifted").length
+        }
+
+        let canEdit = li => {
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let test = msg.getTest()
+            if (test)
+                return msg.isAuthor || msg.isOwner
         }
 
         let canShift = li => {
@@ -84,6 +93,16 @@ export default function() {
                     }
 
                     test.rerollFailed()
+                }
+            },
+            {
+                name: "BUTTON.EDIT",
+                icon: '<i class="fas fa-edit"></i>',
+                condition: canEdit,
+                callback: async li => {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.getTest();
+                    new EditTestForm(test).render(true)
                 }
             },
             {

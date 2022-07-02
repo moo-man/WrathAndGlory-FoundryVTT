@@ -118,16 +118,19 @@
   width: 95px;
 }
 
-.wrath-and-glory.dialog .wrapper .base {
-  flex-basis: 15%;
-}
-
-.wrath-and-glory.dialog .wrapper .bonus {
+.wrath-and-glory.dialog .wrapper .distance,
+.wrath-and-glory.dialog .wrapper .bonus ,
+  .wrath-and-glory.dialog .wrapper .base {
   flex-basis: 15%;
 }
 
 .wrath-and-glory.dialog .wrapper .full {
   flex-basis: 70%;
+}
+
+
+.wrath-and-glory.dialog .wrapper .range {
+  flex: 0.5
 }
 
 .wrath-and-glory.dialog .wrapper .die {

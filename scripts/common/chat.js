@@ -43,20 +43,26 @@ export default class WNGChat {
     }
     if (test.result.isWrathComplication) {
       if (test.weapon) {
-        table = game.tables.getName("Combat Complications")
+        table = game.tables.getName(game.i18n.localize("TABLE.COMBAT_COMPLICATIONS"))
+        if (!table)
+          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : "Combat Complications"}))
         roll = new Roll(table.data.formula)
         result = await table.roll({ roll })
         chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Combat Complication` }
       }
       else if (test.power) {
-        table = game.tables.getName("Perils of the Warp")
+        table = game.tables.getName(game.i18n.localize("TABLE.PERILS_OF_THE_WARP"))
+        if (!table)
+          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : "Perils of the Warp"}))
         let modifier = (test.result.allDice.filter(die => die.name == "wrath-complication").length - 1) * 10
         roll = new Roll(table.data.formula + " + " + modifier)
         result = await table.roll({ roll })
         chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Perils of the Warp ${modifier ? "(+" + modifier + ")" : ""}` }
       }
       else {
-        table = game.tables.getName("Complication Consequences")
+        table = game.tables.getName(game.i18n.localize("TABLE.COMPLICATION_CONSEQUENCES"))
+        if (!table)
+          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : "Complication Consequences"}))
         roll = new Roll(table.data.formula)
         result = await table.roll({ roll })
         chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Complication Consequence` }

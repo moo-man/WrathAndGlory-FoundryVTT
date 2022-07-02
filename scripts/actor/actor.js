@@ -1,4 +1,3 @@
-import { RollDialog, WeaponDialog, PowerDialog } from "../common/dialog.js";
 import { WNGTest } from "../common/tests/test.js";
 import WeaponTest from "../common/tests/weapon-test.js";
 import PowerTest from "../common/tests/power-test.js";
@@ -10,6 +9,9 @@ import AbilityRoll from "../common/tests/ability-roll.js";
 import WNGUtility from "../common/utility.js";
 import StealthRoll from "../common/tests/stealth.js";
 import CharacterCreation from "../apps/character-creation.js";
+import { RollDialog } from "../common/dialogs/base-dialog.js";
+import { WeaponDialog } from "../common/dialogs/weapon-dialog.js";
+import { PowerDialog } from "../common/dialogs/power-dialog.js";
 
 export class WrathAndGloryActor extends Actor {
 
@@ -103,7 +105,10 @@ export class WrathAndGloryActor extends Actor {
                 this.combat.speed -= item.traitList.bulk.rating
 
             if (item.traitList.shield)
+            {
                 this.combat.resilience.armour += item.rating;
+                this.combat.defence.bonus += item.rating
+            }
             else if (item.rating > highestRes)
                 highestRes = item.rating
 
@@ -368,7 +373,7 @@ export class WrathAndGloryActor extends Actor {
                 wounds: { value: ability.otherDamage.wounds, bonus : 0 },
                 shock: { value: ability.otherDamage.shock, bonus : 0 },
             }
-  
+
         }
         ui.sidebar.activateTab("chat")
         return new AbilityRoll(testData)
@@ -433,13 +438,31 @@ export class WrathAndGloryActor extends Actor {
 
         if (dialogData.targets[0])
         {
-            dialogData.difficulty.target = dialogData.targets[0].actor.combat.defence.total
+            let target = dialogData.targets[0]
+            let token
+            dialogData.difficulty.target = target.actor.combat.defence.total
+
+            if (this.isToken)
+                token = this.token
+            else
+                token = this.getActiveTokens()[0]?.document
+
+            if (token)
+                dialogData.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.data.x, y: token.data.y }, { x: target.data.x, y: target.data.y }) }], { gridSpaces: true })[0]
+
         }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 
+        if (this.hasKeyword("ORK") && weapon.traitList["waaagh!"])
+        {
+            dialogData.pool.bonus += 1;
+            if (this.combat.wounds.value > 0)
+                dialogData.ed.bonus += 1
+        }
+
         if (options.multi > 1)
         {
-            dialogData.difficulty.penalty += options.multi * 2
+            dialogData.difficulty.penalty += (options.multi - 1) * 2;
             dialogData.multi = options.multi
         }
 
@@ -517,11 +540,6 @@ export class WrathAndGloryActor extends Actor {
 
     async applyArchetype(archetype, apply) {
 
-        let species = await game.wng.utility.findItem(archetype.species.id, "species")
-        let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
-        this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
-
-
         if (this.type == "agent" && apply) // If agent, start character creation
         {
             new CharacterCreation({ actor: this, archetype }).render(true)
@@ -530,7 +548,7 @@ export class WrathAndGloryActor extends Actor {
         {
             ui.notifications.notify(`Applying ${archetype.name} Archetype`)
             let actorData = this.toObject();
-    
+
             let items = await archetype.GetArchetypeItems()
             items.push(archetype.toObject())
             let faction = items.find(i => i.type == "faction")
@@ -538,38 +556,38 @@ export class WrathAndGloryActor extends Actor {
             faction.effects = [];
             actorData.data.combat.speed = species.data.speed;
             actorData.data.combat.size = species.data.size;
-    
-    
+
+
             for(let attr in archetype.attributes)
             {
                 let attribute = actorData.data.attributes[attr]
                 if (archetype.attributes[attr])
                     attribute.base = archetype.attributes[attr]
-    
+
                 if (archetype.suggested.attributes[attr] > attribute.base)
                     attribute.rating = archetype.suggested.attributes[attr] - attribute.base
             }
-    
+
             for(let sk in archetype.skills)
             {
                 let skill = actorData.data.skills[sk]
                 if (archetype.skills[sk])
                     skill.base = archetype.skills[sk]
-    
+
                 if (archetype.suggested.skills[sk] > skill.base)
                     skill.rating = archetype.suggested.skills[sk] - skill.base
             }
-    
-    
+
+
             // Remove IDs so items work within the update method
             items.forEach(i => delete i._id)
-    
+
             actorData.img = archetype.data.img
             actorData.token.img = archetype.data.img.replace("images", "tokens")
             actorData.token.img = archetype.data.img.replace("actors", "tokens")
-    
+
             await this.update(actorData)
-    
+
             // Add items separately so active effects get added seamlessly
             this.createEmbeddedDocuments("Item", items)
         }

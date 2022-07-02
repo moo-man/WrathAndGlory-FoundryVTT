@@ -1,0 +1,43 @@
+<form autocomplete="off">
+    <div class="form-group">
+        <label>+/- {{localize "EDIT.POOL_DICE"}}</label>
+        <input type="number" name="pool" value="0">
+    </div>
+
+    <div class="form-group">
+        <label>+/- {{localize "EDIT.WRATH_DICE"}}</label>
+        <input type="number" name="wrath" value="0">
+    </div>
+
+    <div class="form-group">
+        <label>+/- {{localize "EDIT.ICONS"}}</label>
+        <input type="number" name="icons" value="0">
+    </div>
+
+    {{#if damage}}
+    <div class="form-group">
+        <label>+/- {{localize "EDIT.DAMAGE"}}</label>
+        <input type="number" name="damage" value="0">
+    </div>
+
+    <div class="form-group">
+        <label>+/- {{localize "EDIT.ED"}}</label>
+        <input type="number" name="ed" value="0">
+    </div>
+
+    <div class="form-group">
+        <label>+/- {{localize "EDIT.AP"}}</label>
+        <input type="number" name="ap" value="0">
+    </div>
+    {{/if}}
+
+    {{#if object.power}}
+    <div class="form-group">
+        <label>+/- {{localize "EDIT.POTENCY"}}</label>
+        <input type="number" name="potency" value="0">
+    </div>
+    {{/if}}
+
+
+    <button type="submit">{{localize "Submit"}}</button>
+</form>

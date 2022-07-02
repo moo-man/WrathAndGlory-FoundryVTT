@@ -7,17 +7,18 @@ export class WNGTest {
         attribute: data.attribute,
         skill: data.skill,
         wrath: data.wrath,
-        shifted : data.shifted || {damage : [], glory : [], other : [], potency : []},
+        shifted: data.shifted || { damage: [], glory: [], other: [], potency: [] },
         rerolls: [], // Indices of reroll sets,
-        useDN : true
+        useDN: true
       },
       context: {
         title: data.title,
-        targets : data.targets ? data.targets.map(i => i.document.toObject()) || [] : [],
+        targets: data.targets ? data.targets.map(i => i.document.toObject()) || [] : [],
         type: data.type,
         speaker: data.speaker,
         rollClass: this.constructor.name,
-        rerolled: data.rerolled || false
+        rerolled: data.rerolled || false,
+        edit: { pool: 0, wrath: 0, icons: 0, damage: 0, ed: 0, ap: 0 }
       },
       result: {}
     }
@@ -98,7 +99,7 @@ export class WNGTest {
 
     this.result.allDice = duplicate(this.result.dice);
     this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
-    this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0);
+    this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0) + this.context.edit.icons;
     this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0);
     this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
@@ -130,12 +131,10 @@ export class WNGTest {
     }
   }
 
-  _handleWrath()
-  {
+  _handleWrath() {
     this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result === 1);
 
-    if (this.actor.hasCondition("dying"))
-    {
+    if (this.actor.hasCondition("dying")) {
       this.result.isWrathCritical = this.result.dice.every(r => r.isWrath && r.result === 6);
       this.result.gainTraumaticInjury = this.result.isWrathComplication
       return;
@@ -152,7 +151,7 @@ export class WNGTest {
       else if (this.testData.shifted.glory.includes(die.index))
         die.shift = "glory";
       else if (this.testData.shifted.potency.includes(die.index))
-          die.shift = "potency"
+        die.shift = "potency"
       else
         die.shift = "other";
     })
@@ -167,13 +166,12 @@ export class WNGTest {
     this._computeResult();
 
     if (game.dice3d) {
-      let rerollShow = duplicate(this.rerolledTests[this.rerolledTests.length-1])
+      let rerollShow = duplicate(this.rerolledTests[this.rerolledTests.length - 1])
       rerollShow.terms = rerollShow.terms.map((term, t) => {
-        if (term.results)
-        {
+        if (term.results) {
           term.results = term.results.map((die, i) => {
-            if (diceIndices.includes(this.roll.terms[t].results[i].index))
-            return die
+            if (diceIndices.includes(this.roll.terms[t].results[i]?.index))
+              return die
           }).filter(i => i)
         }
         return term
@@ -190,7 +188,7 @@ export class WNGTest {
 
     // If rerollable, record index of die
     this.result.dice.forEach((die) => {
-      if(die.rerollable)
+      if (die.rerollable)
         reroll.push(die.index)
     })
 
@@ -198,14 +196,97 @@ export class WNGTest {
     this.handleCounters();
   }
 
+  async _addDice({ pool = 0, wrath = 0 } = {}) {
+    let poolDice
+    let wrathDice
+    let removePool = 0;
+    let removeWrath = 0;
+
+    if (pool > 0)
+      poolDice = new PoolDie({ number: pool, faces: 6 })
+    if (wrath > 0)
+      wrathDice = new WrathDie({ number: wrath, faces: 6 })
+
+    let added
+    if (poolDice || wrathDice) {
+      added = Roll.fromTerms([
+        poolDice, wrathDice
+      ].filter(d => d))
+    }
+
+    if (pool < 0) {
+      removePool = Math.abs(pool);
+    }
+    if (wrath < 0) {
+      removeWrath = Math.abs(wrath)
+    }
+
+    // Dice removed previously still show up (Terms with no results) So remove terms that have no results
+    let oldTerms = this.roll.toJSON().terms.filter(t => t instanceof OperatorTerm || t.results.length > 0);
+
+
+    // Find the last term of what is being deleted, and delete dice from that term
+    // Example: Normal dice rolls will look like [PoolDieTerm, Operator, WrathDieTerm]
+    // But, the user previously added dice, it will look like [PoolDieTerm, Operator, WrathDieTerm, PoolDieTerm]
+    // If the user wants to then delete PoolDie, it should be deleted from the last PoolDieTerm, not the first
+
+    // TODO: Known issue that if you delete more than the last term, it doesn't carry over to the next term
+    // Example: Previously added 2 Pool Dice, which creates another Pool DiceTerm at the end of the Roll object. 
+    // Then, you delete 4 Pool Dice. This will result in deleting only the 2 Pool Dice at the end
+    if (removePool) {
+      let lastPoolTerm = oldTerms.slice().reverse().find(t => t instanceof DiceTerm && !t.isWrath) // Need instanceof because don't want to find OperatorTerms
+      if (lastPoolTerm)
+        lastPoolTerm.results = lastPoolTerm.results.slice(0, lastPoolTerm.results.length - removePool)
+
+    }
+
+    if (removeWrath) {
+      let lastWrathTerm = oldTerms.slice().reverse().find(t => t instanceof DiceTerm && t.isWrath) // Need instanceof because don't want to find OperatorTerms
+      if (lastWrathTerm)
+        lastWrathTerm.results = lastWrathTerm.results.slice(0, lastWrathTerm.results.length - removePool)
+    }
+
+    let connector
+
+    // Only add a connecting operator term if dice were added (don't want trailing "+")
+    if (added) {
+      await added.evaluate({ async: true });
+      connector = await new OperatorTerm({ operator: "+" }).evaluate({ async: true });
+      if (game.dice3d)
+        await game.dice3d.showForRoll(added)
+    }
+
+    let newRoll = oldTerms.concat(connector || []).concat(added?.terms || [])
+
+
+    // Foundry throws an error if the last term is an operator term
+    if (newRoll[newRoll.length - 1] instanceof OperatorTerm) {
+      newRoll.splice(newRoll.length - 1, 1);
+    }
+
+    this.roll = Roll.fromTerms(newRoll)
+  }
+
+
+  async edit({ pool = 0, wrath = 0, icons = 0 } = {}) {
+    this.context.edit.icons += icons;
+    this.context.edit.pool += pool;
+    this.context.edit.wrath += wrath;
+    if (pool || wrath)
+      await this._addDice({ pool, wrath })
+
+    this._computeResult();
+    this.sendToChat();
+  }
+
+
   handleCounters() {
-    if(this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies"))
-    {
+    if (this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies")) {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1,  "glory").then(() => {game.counter.render(true)})
+        game.wng.RuinGloryCounter.changeCounter(1, "glory").then(() => { game.counter.render(true) })
       else if (this.actor.type == "threat")
-          game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {game.counter.render(true)})
+        game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => { game.counter.render(true) })
     }
   }
 
@@ -225,13 +306,12 @@ export class WNGTest {
     this.sendToChat()
   }
 
-  unshift()
-  {
+  unshift() {
     let glorySubtract = -this.testData.shifted.glory.length
     game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
-        game.counter.render(true)
-        if (glorySubtract)
-          ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", {change : glorySubtract}))
+      game.counter.render(true)
+      if (glorySubtract)
+        ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", { change: glorySubtract }))
     })
     //this.result.allDice.filter(die => die.shift).forEach(die => die.shift = "")
     this.testData.shifted.other = []
@@ -247,7 +327,7 @@ export class WNGTest {
     return true
   }
 
-  async sendToChat({newMessage = null, chatDataMerge={}}={}) {
+  async sendToChat({ newMessage = null, chatDataMerge = {} } = {}) {
     const html = await renderTemplate(this.template, this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
@@ -256,7 +336,7 @@ export class WNGTest {
       user: game.user.id,
       rollMode: game.settings.get("core", "rollMode"),
       content: html,
-      speaker : this.context.speaker
+      speaker: this.context.speaker
     };
     chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.data.token.name
     if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
@@ -264,23 +344,21 @@ export class WNGTest {
     } else if (chatData.rollMode === "selfroll") {
       chatData.whisper = [game.user];
     }
-    if (newMessage || !this.message)
-    {
+    if (newMessage || !this.message) {
       return ChatMessage.create(chatData).then(msg => {
-        msg.update({"flags.wrath-and-glory.testData.context.messageId" : msg.id})
+        msg.update({ "flags.wrath-and-glory.testData.context.messageId": msg.id })
       });
     }
-    else
-    {
+    else {
       delete chatData.roll
       return this.message.update(chatData)
     }
   }
 
   // Update message data without rerendering the message content
-  updateMessageFlags(){
+  updateMessageFlags() {
     if (this.message)
-      return this.message.update({"flags.wrath-and-glory.testData" : this.data})
+      return this.message.update({ "flags.wrath-and-glory.testData": this.data })
   }
 
   _countShifting() {
@@ -295,15 +373,14 @@ export class WNGTest {
     return shifting;
   }
 
-  isShifted(dieIndex)
-  {
-    if(this.testData.shifted.damage.includes(dieIndex))
+  isShifted(dieIndex) {
+    if (this.testData.shifted.damage.includes(dieIndex))
       return true
-    if(this.testData.shifted.glory.includes(dieIndex))
+    if (this.testData.shifted.glory.includes(dieIndex))
       return true
-    if(this.testData.shifted.potency.includes(dieIndex))
+    if (this.testData.shifted.potency.includes(dieIndex))
       return true
-    if(this.testData.shifted.other.includes(dieIndex))
+    if (this.testData.shifted.other.includes(dieIndex))
       return true
 
     return false
@@ -331,31 +408,45 @@ export class WNGTest {
    */
   computeDamage() {
     this.result.damage = {
-      ed : {},
-      ap: (this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank)) || 0,
+      ed: {},
+      ap: (this.testData.ap.base + this.testData.ap.bonus + this.getRankNum(this.testData.ap.rank) + this.context.edit.ap) || 0,
       dice: [],
-      flat : this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
-      total : 0,
-      other : duplicate(this.testData.otherDamage || {})
+      flat: this.testData.damage.base + this.testData.damage.bonus + this.getRankNum(this.testData.damage.rank),
+      total: 0,
+      other: duplicate(this.testData.otherDamage || {})
     }
-    this.result.damage.total = this.result.damage.flat
-    this.result.damage.ed = {number : this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length};
+    this.result.damage.total = this.result.damage.flat + this.context.edit.damage
+    this.result.damage.ed = { number: this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length + this.context.edit.ed };
     this.result.damage.ed.values = this.testData.ed.damageValues
-
   }
 
   async rollDamage() {
 
-    this.result.damage.total = this.result.damage.flat
+    this.result.damage.total = this.result.damage.flat + this.context.edit.damage
     this.result.damage.dice = [];
 
     let add = 0
     if (this.weapon && this.weapon.traitList.rad)
       add = this.weapon.traitList.rad.rating
 
+
     let damage = this.result.damage
+
+
+    // Don't like this but will work for now
+    if (this.weapon && this.weapon.traitList.melta && this.result.range == "short") {
+      damage.ed.values = {
+        1: 0,
+        2: 0,
+        3: 1,
+        4: 1,
+        5: 2,
+        6: 2
+      }
+    }
+
     let r = Roll.fromTerms([
-      new PoolDie({ number: damage.ed.number, faces: 6, options : {values : damage.ed.values, add} }),
+      new PoolDie({ number: damage.ed.number, faces: 6, options: { values: damage.ed.values, add } }),
     ])
 
     await r.evaluate({ async: true });
@@ -369,10 +460,9 @@ export class WNGTest {
     });
 
     // Other Damage
-    for (let damage in this.result.damage.other)
-    {
+    for (let damage in this.result.damage.other) {
       if (this.result.damage.other[damage].value)
-        this.result.damage.other[damage].total = (await new Roll(this.result.damage.other[damage].value).evaluate({async: true})).total + this.result.damage.other[damage].bonus
+        this.result.damage.other[damage].total = (await new Roll(this.result.damage.other[damage].value).evaluate({ async: true })).total + this.result.damage.other[damage].bonus
       else if (this.result.damage.other[damage].bonus)
         this.result.damage.other[damage].total = this.result.damage.other[damage].bonus
 
@@ -394,7 +484,7 @@ export class WNGTest {
       user: game.user.id,
       rollMode: game.settings.get("core", "rollMode"),
       content: html,
-      speaker : this.context.speaker
+      speaker: this.context.speaker
     };
     if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients("GM");
@@ -406,13 +496,12 @@ export class WNGTest {
 
 
   // Need a specialized function to account for both item and ammo effects
-  getEffect(effectId)
-  {
+  getEffect(effectId) {
     return this.testEffects.find(e => e.id == effectId)
   }
 
   get doesDamage() {
-        return (this.testData.damage && (this.testData.damage.base || this.testData.damage.bonus || this.testData.damage.rank != "none")) || (this.testData.ed && (this.testData.ed.base || this.testData.ed.bonus || this.testData.ed.rank != "none"))
+    return (this.testData.damage && (this.testData.damage.base || this.testData.damage.bonus || this.testData.damage.rank != "none")) || (this.testData.ed && (this.testData.ed.base || this.testData.ed.bonus || this.testData.ed.rank != "none"))
   }
 
   get testEffects() {
@@ -435,8 +524,7 @@ export class WNGTest {
   }
 
   get testDisplay() {
-    if (this.showTest)
-    {
+    if (this.showTest) {
       if (this.result.test.type == "attribute")
         return `DN ${this.result.test.dn} ${game.wng.config.attributes[this.result.test.specification]} Test`
       if (this.result.test.type == "skill")
@@ -456,7 +544,7 @@ export class WNGTest {
 
   get item() { return this.actor.items.get(this.testData.itemId) }
   get actor() { return game.wng.utility.getSpeaker(this.context.speaker) }
-  get message() { return game.messages.get(this.context.messageId)}
+  get message() { return game.messages.get(this.context.messageId) }
 
 }
 
@@ -466,8 +554,8 @@ export class PoolDie extends Die {
   constructor(termData) {
     termData.faces = 6;
     if (!termData.options || !termData.options.values)
-      setProperty(termData, "options.values", {1 : 0,2 : 0,3 : 0,4 : 1,5 : 1,6 : 2})
-      if (!termData.options || !termData.options.add)
+      setProperty(termData, "options.values", { 1: 0, 2: 0, 3: 0, 4: 1, 5: 1, 6: 2 })
+    if (!termData.options || !termData.options.add)
       setProperty(termData, "options.add", 0)
     super(termData);
   }
