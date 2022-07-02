@@ -10,6 +10,8 @@ The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT
 
 ## Official Modules
 - [Wrath & Glory - Core Module](https://foundryvtt.com/packages/wng-core) - Provides all the content from the Core Rulebook within Foundry, from rules and lore to weapons and spells, already created for you to begin adventuring in the Gilead System!
+- [Wrath & Glory - Forsaken System](https://foundryvtt.com/packages/wng-forsaken) - Expanded lore on the worlds of the Gilead System and its factions and patrons, as well as new playable species, archetypes, and optional rules for downtime activities and endeavours
+- [Wrath & Glory - Litanies of the Lost](https://foundryvtt.com/packages/wng-litanies) - Four exciting scenarios suitable for Wrath & Glory characters of Tiers 1 and 2
 
 ## Special Thanks
 - Cubicle 7
