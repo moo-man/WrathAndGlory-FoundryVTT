@@ -5,8 +5,8 @@ export class WeaponDialog extends RollDialog {
   {
       await super._render(...args)
 
-      this.distance.dispatchEvent(new Event("change"))
-
+      if (this.distance)
+        this.distance.dispatchEvent(new Event("change"))
   }
 
 
@@ -52,7 +52,7 @@ export class WeaponDialog extends RollDialog {
     testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
     testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
     testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
-    testData.range = html.find(".range")[0].value
+    testData.range = html.find(".range")[0]?.value
     testData.aim = !!html.find(".aim.checked")[0]
     return testData
   }
@@ -119,8 +119,11 @@ export class WeaponDialog extends RollDialog {
 
   applyEffects() {
     super.applyEffects();
-    this._calculateRange(this.range.value);
-    this._calculateAim()
+    if (this.range)
+    {
+      this._calculateRange(this.range.value);
+      this._calculateAim()
+    }
   }
 
   activateListeners(html) {

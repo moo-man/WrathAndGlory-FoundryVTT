@@ -35,7 +35,9 @@ export default class WNGChat {
     let result
     if (test.result.isWrathCritical) {
       if (test.weapon) {
-        table = game.tables.getName("Critical Hit Table")
+        table = game.tables.getName(game.i18n.localize("TABLE.CRITICAL_HIT_TABLE"))
+        if (!table)
+          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : game.i18n.localize("TABLE.CRITICAL_HIT_TABLE")}))
         roll = new Roll(table.data.formula)
         result = await table.roll({ roll })
         chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Critical Hit` }
@@ -45,7 +47,7 @@ export default class WNGChat {
       if (test.weapon) {
         table = game.tables.getName(game.i18n.localize("TABLE.COMBAT_COMPLICATIONS"))
         if (!table)
-          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : "Combat Complications"}))
+          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : game.i18n.localize("TABLE.COMBAT_COMPLICATIONS")}))
         roll = new Roll(table.data.formula)
         result = await table.roll({ roll })
         chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Combat Complication` }
@@ -53,7 +55,7 @@ export default class WNGChat {
       else if (test.power) {
         table = game.tables.getName(game.i18n.localize("TABLE.PERILS_OF_THE_WARP"))
         if (!table)
-          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : "Perils of the Warp"}))
+          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : game.i18n.localize("TABLE.PERILS_OF_THE_WARP")}))
         let modifier = (test.result.allDice.filter(die => die.name == "wrath-complication").length - 1) * 10
         roll = new Roll(table.data.formula + " + " + modifier)
         result = await table.roll({ roll })
@@ -62,7 +64,7 @@ export default class WNGChat {
       else {
         table = game.tables.getName(game.i18n.localize("TABLE.COMPLICATION_CONSEQUENCES"))
         if (!table)
-          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : "Complication Consequences"}))
+          return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : game.i18n.localize("TABLE.COMPLICATION_CONSEQUENCES")}))
         roll = new Roll(table.data.formula)
         result = await table.roll({ roll })
         chatData = { content: result.results[0].data.text + ` (${result.roll.total})`, flavor: `Complication Consequence` }

@@ -469,6 +469,7 @@
   "TABLE.COMBAT_COMPLICATIONS" : "Combat Complications",
   "TABLE.PERILS_OF_THE_WARP" : "Perils of the Warp",
   "TABLE.COMPLICATION_CONSEQUENCES" : "Complication Consequences",
+  "TABLE.CRITICAL_HIT_TABLE" : "Critical Hit Table",
 
   "AUTOCALC.DEFENCE" : "Auto Calculate Defence",
   "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",
