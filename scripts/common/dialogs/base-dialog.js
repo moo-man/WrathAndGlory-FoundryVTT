@@ -171,7 +171,7 @@ export class RollDialog extends Dialog {
   
       changes.forEach(c => {
         if (c.value.toString().includes("@"))
-            c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
+            c.value = (0, eval)(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
     })
       for (let c of changes) {
         if (WrathAndGloryEffect.numericTypes.includes(c.key))

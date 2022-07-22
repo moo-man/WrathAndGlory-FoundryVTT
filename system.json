@@ -1,35 +1,18 @@
 {
-  "name": "wrath-and-glory",
+  "id": "wrath-and-glory",
   "title": "Wrath & Glory",
   "description": "The official system for Warhammer 40k Roleplay: Wrath & Glory! Time is running out in the 41st Millennium. This accursed age needs heroes more than ever before. Will you answer the call?",
-  "version": "3.6.1",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
+  "version": "4.0.0",
+  "compatability" : {
+    "minimum" : 10,
+    "verified" : 10,
+    "maximum" : 10    
+  },
   "templateVersion": 2,
   "author": "Moo Man, Thul, Perfectro",
-  "scripts": [],
-  "esmodules": [
-    "wrath-and-glory.js"
-  ],
-  "styles": [
-    "style/chat/chat.css",
-    "style/common/override.css",
-    "style/common/sheet.css",
-    "style/common/variable.css",
-    "style/dialog/dialog.css",
-    "style/sheet/agent.css",
-    "style/sheet/threat.css",
-    "style/sheet/tab/combat.css",
-    "style/sheet/tab/gear.css",
-    "style/sheet/tab/notes.css",
-    "style/sheet/tab/stats.css",
-    "style/sheet/tab/settings.css",
-    "style/sheet/tab/talents.css",
-    "style/sheet/tab/effects.css",
-    "style/sheet/item.css",
-    "style/common/counter.css",
-    "style/common/apps.css"
-  ],
+  "scripts": ["./wrath-and-glory.js"],
+  "esmodules": [],
+  "styles": ["./wrath-and-glory.css"],
   "packs": [],
   "languages": [
     {
@@ -51,8 +34,8 @@
   "secondaryTokenAttribute": null,
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/moo-man/WrathAndGlory-FoundryVTT/master/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/3.6.1/wrath-and-glory.zip",
+  "manifest": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/latest/download/system.json",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/4.0.0/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 

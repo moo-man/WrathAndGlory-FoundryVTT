@@ -1,3 +1,5 @@
 .idea/
 .vscode/launch.json
 debug.log
+node_modules
+foundryconfig.json

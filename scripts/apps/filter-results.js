@@ -83,7 +83,7 @@ export default class FilterResults extends FormApplication {
 
                 if ([propValue, test, testValue].includes(undefined))
                     return false
-                return eval(`"${propValue}" ${this.comparisons[test]} "${testValue}"`)
+                return (0, eval)(`"${propValue}" ${this.comparisons[test]} "${testValue}"`)
             })
         })
         return items
