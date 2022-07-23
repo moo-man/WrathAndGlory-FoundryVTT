@@ -15,12 +15,12 @@
   .window-app.actor .window-content {
   border: 30px solid transparent;
   border-top: 0px;
-  border-image: url(../../asset/image/journal-border.webp) 0 80 60 repeat;
+  border-image: url(./asset/image/journal-border.webp) 0 80 60 repeat;
   border-bottom: 20px solid transparent;
 }
 
 .window-app .window-header {
-  border-image: url(../../asset/image/header.webp) repeat;
+  border-image: url(./asset/image/header.webp) repeat;
   border-image-slice: 8 8 7 7 fill;
   border-image-width: 0px 0px 2px 2px;
   font-family: var(--font-text);
@@ -28,14 +28,14 @@
 }
 
 .dialog.window-app .window-content {
-  background: url(../../asset/image/background.webp) repeat;
+  background: url(./asset/image/background.webp) repeat;
   border: 8px solid transparent;
   border-image: var(--image-border) 8 8 8 8 repeat repeat;
   border-image-outset: 0px;
 }
 
 /* #sidebar {
-  background: url(../../asset/image/sidebar.webp) repeat;
+  background: url(./asset/image/sidebar.webp) repeat;
   background-size: 100%;
   border-radius: 0px;
   width: 310px;
@@ -43,7 +43,7 @@
 } */
 
 /* #sidebar-tabs {
-  background: url(../../asset/image/sidebar-header.webp) repeat;
+  background: url(./asset/image/sidebar-header.webp) repeat;
   background-size: 100%;
   border-bottom: none;
   position: relative;
@@ -67,7 +67,7 @@
 
 #chat-form textarea {
   background: var(--image-input);
-  content: url(../../asset/image/corner-skull.webp)
+  content: url(./asset/image/corner-skull.webp)
 }
 
 textarea:focus {
@@ -131,7 +131,7 @@ textarea:focus {
   content: "";
   height: 11px;
   width: 51px;
-  background: url(../../asset/image/wingtip.webp);
+  background: url(./asset/image/wingtip.webp);
   background-size: contain;
 }
 
@@ -179,11 +179,11 @@ textarea:focus {
 .editor .sidebar,
 .editor-content .sidebar {
   margin-right: 20px;
-  background: url(../../asset/image/journal-sidebar.webp) 0px 100% repeat;
+  background: url(./asset/image/journal-sidebar.webp) 0px 100% repeat;
   border: 10px solid transparent;
   border-left: 0px;
   border-right: 0px;
-  border-image: url(../../asset/image/sidebar-journal-border.webp) 30 0 repeat;
+  border-image: url(./asset/image/sidebar-journal-border.webp) 30 0 repeat;
   box-shadow: inset 0px 0px 5px black;
   padding:10px;
 }
@@ -197,7 +197,7 @@ textarea:focus {
   font-size: 16px;
   /* border-style: solid;
   border-width: 8px 8px 8px 8px;
-  border-image: url(../../asset/image/border.webp) 8 8 8 8 repeat repeat; */
+  border-image: url(./asset/image/border.webp) 8 8 8 8 repeat repeat; */
 }
 
 .editor table .table-header.aeldari,
@@ -222,7 +222,7 @@ textarea:focus {
 }
 
 .chat-message { 
-  background: url(../../asset/image/journal-sidebar.webp) repeat;
+  background: url(./asset/image/journal-sidebar.webp) repeat;
   border: 8px solid transparent;
   border-image: var(--image-border) 8 8 8 8 repeat repeat;
   border-image-outset: 0px;
@@ -234,15 +234,15 @@ textarea:focus {
 border-color: transparent;
 border-style: solid;
 border-width: 25px;
--webkit-border-image: url(../../asset/image/border.webp) 7 repeat;
-  border-image: url(../../asset/image/border.webp) 8 8 8 8 repeat repeat;  */
+-webkit-border-image: url(./asset/image/border.webp) 7 repeat;
+  border-image: url(./asset/image/border.webp) 8 8 8 8 repeat repeat;  */
 } 
 
 
 
 /* 
 #sidebar {
-  background: url(../../asset/image/sidebar.webp)
+  background: url(./asset/image/sidebar.webp)
 } */
 
 
@@ -255,7 +255,7 @@ border-width: 25px;
 
 #controls ol .control-tool,
     #controls ol .scene-control {
-    background: url(../../asset/image/dataslate.webp) repeat;
+    background: url(./asset/image/dataslate.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-imperium)
 }
@@ -292,7 +292,7 @@ border-width: 25px;
     color: #CCC;
     font-family: var(--font-sidebar);
     border: 1px solid var(--color-imperium);
-    background: url(../../asset/image/dataslate.webp) repeat;
+    background: url(./asset/image/dataslate.webp) repeat;
 }
 
 #navigation #scene-list .scene.context {
@@ -300,13 +300,13 @@ border-width: 25px;
 }
 
 #navigation #nav-toggle {
-    background: url(../../asset/image/dataslate.webp) repeat;
+    background: url(./asset/image/dataslate.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-imperium)
 }
 
 #players {
-    background: url(../../asset/image/dataslate.webp) repeat;
+    background: url(./asset/image/dataslate.webp) repeat;
     border: 1px solid var(--color-imperium)
 }
 
@@ -320,7 +320,7 @@ border-width: 25px;
     #macro-list {
     font-family: var(--font-sidebar);
     color: white;
-    background: url(../../asset/image/dataslate.webp) repeat;
+    background: url(./asset/image/dataslate.webp) repeat;
     background-size : 100%;
 }
 
@@ -377,7 +377,7 @@ textarea:focus {
 }
 
 .window-app.image-popout .window-content {
-  background: url(../../asset/image/background.webp) repeat;
+  background: url(./asset/image/background.webp) repeat;
 }
 
 .directory-item .folder-header h3,
@@ -390,7 +390,7 @@ button {
   width: 100%;
   margin: 0 1px;
   border: 1px solid black;
-  background: url(../../asset/image/button.webp) repeat;
+  background: url(./asset/image/button.webp) repeat;
   color: #CCC;
   font-family: var(--font-header);
   font-size: 16px;
@@ -398,18 +398,18 @@ button {
 
 .filepicker .current-dir button,
 form button {
-  background: url(../../asset/image/button.webp) repeat;
+  background: url(./asset/image/button.webp) repeat;
   border: 1px solid black;
 }
 
 .dialog .dialog-buttons button {
-  background: url(../../asset/image/button.webp) repeat;
+  background: url(./asset/image/button.webp) repeat;
   border: 1px solid black;
 }
 
 .dialog .dialog-buttons button.default {
   box-shadow: 0 0 10px inset var(--color-imperium);
-  background: url(../../asset/image/button.webp) repeat;
+  background: url(./asset/image/button.webp) repeat;
   border: 1px solid black;
 }
 
