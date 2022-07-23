@@ -2,13 +2,13 @@
   <div class="wrapper">
     <h1>{{localize "TITLE.ATTRIBUTES"}}</h1>
     <div class="attributes">
-      {{#each data.attributes as |attribute key|}}
+      {{#each system.attributes as |attribute key|}}
       <div class="attribute">
         <label class="roll-attribute hover" data-attribute="{{key}}">{{localize attribute.label}}</label>
           <div class="attribute-inputs">
             <div class="attribute-input-stack">
-              <input type="number" title="Base" name="data.attributes.{{key}}.base" value="{{attribute.base}}" data-dtype="Number">
-              <input type="number" tabindex="1" title="Advances" name="data.attributes.{{key}}.rating" value="{{attribute.rating}}" data-dtype="Number">
+              <input type="number" title="Base" name="system.attributes.{{key}}.base" value="{{attribute.base}}" data-dtype="Number">
+              <input type="number" tabindex="1" title="Advances" name="system.attributes.{{key}}.rating" value="{{attribute.rating}}" data-dtype="Number">
             </div>
             <input type="number" title="Total" class="total" disabled value="{{attribute.total}}">
           </div>
@@ -20,13 +20,13 @@
     <h1>{{localize "TITLE.SKILLS"}}</h1>
     <div class="skills">
       <div class="left">
-        {{#each data.skills as |skill key|}}
+        {{#each system.skills as |skill key|}}
         {{#if skill.isLeft}}
         <div class="skill">
           <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{localize skill.label}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
           <div class="skill-inputs">
-            <input type="number" title="Base" name="data.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
-            <input type="number" tabindex="1" title="Advances" name="data.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
+            <input type="number" title="Base" name="system.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
+            <input type="number" tabindex="1" title="Advances" name="system.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
             <input type="number" title="Total" class="total" disabled value="{{skill.total}}">
           </div>
         </div>
@@ -34,13 +34,13 @@
         {{/each}}
       </div>
       <div class="right">
-        {{#each data.skills as |skill key|}}
+        {{#each system.skills as |skill key|}}
         {{#if skill.isRight}}
         <div class="skill">
           <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{localize skill.label}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
           <div class="skill-inputs">
-            <input type="number" title="Base" name="data.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
-            <input type="number" tabindex="1" title="Advances" name="data.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
+            <input type="number" title="Base" name="system.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
+            <input type="number" tabindex="1" title="Advances" name="system.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
             <input type="number" title="Total" class="total" disabled value="{{skill.total}}">
           </div>
         </div>

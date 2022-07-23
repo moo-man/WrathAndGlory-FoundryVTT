@@ -24,9 +24,9 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     get item() {
         if (this.parent && this.parent.documentName == "Item")
             return this.parent
-        else if (this.data.origin && this.parent.documentName == "Actor") 
+        else if (this.origin && this.parent.documentName == "Actor") 
         {
-            let origin = this.data.origin.split(".")
+            let origin = this.origin.split(".")
             if (origin[1] == this.parent.id) // If origin ID is same as parent ID
             {
                 if (origin[3])
@@ -38,7 +38,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     }
 
     getDialogChanges({target = false, condense = false, indexOffset = 0}={}) {
-        let allChanges = this.data.changes.map(c => c.toObject())
+        let allChanges = this.changes.map(c => c.toObject())
         allChanges.forEach((c, i) => {
             c.conditional = this.changeConditionals[i] || {}
             c.document = this
@@ -124,23 +124,19 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     get changeConditionals() {
         return (getProperty(this.data, "flags.wrath-and-glory.changeCondition") || {})
     }
-    get label() {
-        return this.data.label
-    }
-
     get description() {
         return getProperty(this.data, "flags.wrath-and-glory.description")
     }
 
     get hasRollEffect() {
-        return this.data.changes.some(c => c.mode == 0)
+        return this.changes.some(c => c.mode == 0)
     }
 
     get sourceName() {
-        if (!this.data.origin)
+        if (!this.origin)
             return super.sourceName
 
-        let data = this.data.origin.split(".")
+        let data = this.origin.split(".")
 
         if (data.length == 4) {
             let item = this.parent.items.get(data[3])

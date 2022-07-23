@@ -32,12 +32,7 @@ export async function migrateWorld() {
 };
 
 function migrateActorData(actor) {
-    const updateData = {_id: actor._id}
-    if (actor.data.skills.persusasion)
-    {
-        updateData["data.skills.-=persusasion"] = null
-    }
-    updateData["flags.wrath-and-glory.generateMetaCurrencies"] = true
+    const updateData = {}
     return updateData;
 }
 

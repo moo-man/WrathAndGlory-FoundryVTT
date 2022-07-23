@@ -6,10 +6,10 @@
       <b class="rating">{{localize "HEADER.RATING"}}</b>
     </div>
     <div class="item-list">
-      {{#each data.attributes as |attribute key|}}
+      {{#each system.attributes as |attribute key|}}
       <div class="item">
         <label class="name">{{localize attribute.label}}</label>
-        <input class="rating" name="data.attributes.{{key}}.rating" type="number" value="{{attribute.rating}}"
+        <input class="rating" name="system.attributes.{{key}}.rating" type="number" value="{{attribute.rating}}"
           data-dtype="Number" />
       </div>
       {{/each}}
@@ -22,10 +22,10 @@
       <b class="rating">{{localize "HEADER.RATING"}}</b>
     </div>
     <div class="item-list">
-      {{#each data.skills as |skill key|}}
+      {{#each system.skills as |skill key|}}
       <div class="item">
         <label class="name">{{localize skill.label}}</label>
-        <input class="rating" name="data.skills.{{key}}.rating" type="number" value="{{skill.rating}}"
+        <input class="rating" name="system.skills.{{key}}.rating" type="number" value="{{skill.rating}}"
           data-dtype="Number" />
       </div>
       {{/each}}

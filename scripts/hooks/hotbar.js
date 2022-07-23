@@ -32,9 +32,9 @@ export default function() {
         let macro = game.macros.contents.find(m => (m.name === actor.name) && (m.command === command));
         if (!macro) {
           macro = await Macro.create({
-            name: actor.data.name,
+            name: actor.name,
             type: "script",
-            img: actor.data.img,
+            img: actor.img,
             command: command
           }, { displaySheet: false })
           game.user.assignHotbarMacro(macro, slot);
@@ -47,7 +47,7 @@ export default function() {
         let macro = game.macros.contents.find(m => (m.name === journal.name) && (m.command === command));
         if (!macro) {
           macro = await Macro.create({
-            name: journal.data.name,
+            name: journal.name,
             type: "script",
             img: "icons/svg/book.svg",
             command: command

@@ -23,7 +23,7 @@
     <div class="sheet-body">
       <div class="tab" data-group="primary" data-tab="description">
         <div class="description">
-          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+          {{editor system.description target="system.description" button=true owner=owner editable=editable}}
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
@@ -31,7 +31,7 @@
           <div class="item-form-group">
             <label>{{localize "ASCENSION.REQUIREMENTS"}}</label>
             <div class="item-form-inputs">
-              <input name="data.requirements" type="text" value="{{data.requirements}}" />
+              <input name="system.requirements" type="text" value="{{system.requirements}}" />
             </div>
           </div>
         </div>
@@ -39,13 +39,13 @@
           <div class="item-form-group static">
             <label>{{localize "ASCENSION.COST"}}</label>
             <div class="item-form-inputs small">
-              <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+              <input name="system.cost" type="number" value="{{system.cost}}" data-dtype="Number" />
             </div>
           </div>
           <div class="item-form-group static">
             <label>{{localize "ASCENSION.INFLUENCE"}}</label>
             <div class="item-form-inputs small">
-              <input name="data.influence" type="number" value="{{data.influence}}" data-dtype="Number" />
+              <input name="system.influence" type="number" value="{{system.influence}}" data-dtype="Number" />
             </div>
           </div>
         </div>
@@ -53,13 +53,13 @@
           <div class="item-form-group">
             <label>{{localize "ASCENSION.KEYWORDS"}}</label>
             <div class="item-form-inputs">
-              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+              <input name="system.keywords" type="text" value="{{system.keywords}}" />
             </div>
           </div>
         </div>
         <div class="wrapper benefits">
           <h1>{{localize "TITLE.BENEFITS"}}</h1>
-          {{editor content=data.benefits target="data.benefits" button=true owner=owner editable=editable}}
+          {{editor system.benefits target="system.benefits" button=true owner=owner editable=editable}}
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="effects">

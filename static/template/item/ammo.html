@@ -23,7 +23,7 @@
     <div class="sheet-body">
       <div class="tab" data-group="primary" data-tab="description">
         <div class="description">
-          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+          {{editor system.description target="system.description" button=true owner=owner editable=editable}}
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
@@ -32,20 +32,20 @@
           <div class="item-form-group static">
             <label>{{localize "AMMO.QUANTITY"}}</label>
             <div class="item-form-inputs small">
-              <input name="data.quantity" type="number" value="{{data.quantity}}" data-dtype="Number" />
+              <input name="system.quantity" type="number" value="{{system.quantity}}" data-dtype="Number" />
             </div>
           </div>
           <div class="item-form-group static">
             <label>{{localize "AMMO.VALUE"}}</label>
             <div class="item-form-inputs small">
-              <input name="data.value" type="number" value="{{data.value}}" data-dtype="Number" />
+              <input name="system.value" type="number" value="{{system.value}}" data-dtype="Number" />
             </div>
           </div>
           <div class="item-form-group static">
             <label>{{localize "AMMO.RARITY"}}</label>
             <div class="item-form-inputs">
-              <select name="data.rarity">
-                {{#select data.rarity}}
+              <select name="system.rarity">
+                {{#select system.rarity}}
                 <option value=""> - </option>
                 {{#each (config "rarity") as |rarity r|}}
                 <option value="{{r}}">{{rarity}}</option>
@@ -75,7 +75,7 @@
           <div class="item-form-group">
             <label>{{localize "AMMO.KEYWORDS"}}</label>
             <div class="item-form-inputs">
-              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+              <input name="system.keywords" type="text" value="{{system.keywords}}" />
             </div>
           </div>
         </div>

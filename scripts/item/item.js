@@ -22,10 +22,10 @@ export class WrathAndGloryItem extends Item {
     }
 
     _preUpdate(updateData, options, user) {
-        if (hasProperty(updateData, "data.quantity") && updateData.data.quantity < 0)
-            updateData.data.quantity = 0;
-        if (getProperty(updateData, "data.test.type") == "corruption")
-            setProperty(updateData, "data.test.specification", "corruption")
+        if (hasProperty(updateData, "system.quantity") && updateData.system.quantity < 0)
+            updateData.system.quantity = 0;
+        if (getProperty(updateData, "data.system.type") == "corruption")
+            setProperty(updateData, "data.system.specification", "corruption")
     }
 
     prepareData() {
@@ -44,9 +44,9 @@ export class WrathAndGloryItem extends Item {
 
     prepareOwnedWeapon() {
         if (this.isRanged && this.category == "launcher" && this.Ammo) {
-            this.data.data.damage = this.Ammo.damage
-            this.data.data.ap = this.Ammo.ap
-            this.data.data.ed = this.Ammo.ed
+            this.system.damage = this.Ammo.damage
+            this.system.ap = this.Ammo.ap
+            this.system.ed = this.Ammo.ed
         }
         if (this.isRanged && this.Ammo) {
             this.applyAmmo()
@@ -54,12 +54,12 @@ export class WrathAndGloryItem extends Item {
     }
 
     async sendToChat() {
-        const item = new CONFIG.Item.documentClass(this.data._source)
-        if (item.data.img.includes("/unknown")) {
-            item.data.img = null;
+        const item = new CONFIG.Item.documentClass(this._source)
+        if (item.img.includes("/unknown")) {
+            item.img = null;
         }
 
-        const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.html", { item, data: item.data.data });
+        const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.html", { item, data: item.system });
         const chatData = {
             user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),
@@ -112,8 +112,8 @@ export class WrathAndGloryItem extends Item {
         let overrides = {}
         // Organize non-disabled effects by their application priority
         const changes = effects.reduce((changes, e) => {
-            if (e.data.disabled) return changes;
-            return changes.concat(e.data.changes.map(c => {
+            if (e.disabled) return changes;
+            return changes.concat(e.changes.map(c => {
                 c = foundry.utils.duplicate(c);
                 c.effect = e;
                 c.priority = c.priority ?? (c.mode * 10);
@@ -136,24 +136,24 @@ export class WrathAndGloryItem extends Item {
         let remove = traits.filter(i => i.type == "remove")
 
         add.forEach(trait => {
-            let existing = this.data.data.traits.find(i => i.name == trait.name)
+            let existing = this.system.traits.find(i => i.name == trait.name)
             if (!existing)
-                this.data.data.traits.push(trait)
+                this.system.traits.push(trait)
             else if (existing && Number.isNumeric(trait.rating))
                 existing.rating = parseInt(existing.rating) + parseInt(trait.rating)
         })
 
         remove.forEach(trait => {
-            let existing = this.data.data.traits.find(i => i.name == trait.name)
-            let existingIndex = this.data.data.traits.findIndex(i => i.name == trait.name)
+            let existing = this.system.traits.find(i => i.name == trait.name)
+            let existingIndex = this.system.traits.findIndex(i => i.name == trait.name)
             if (existing) {
                 if (trait.rating && Number.isNumeric(trait.rating)) {
                     existing.rating = parseInt(existing.rating) - parseInt(trait.rating)
                     if (existing.rating <= 0)
-                        this.data.data.traits.splice(existingIndex, 1)
+                        this.system.traits.splice(existingIndex, 1)
                 }
                 else {
-                    this.data.data.traits.splice(existingIndex, 1)
+                    this.system.traits.splice(existingIndex, 1)
                 }
             }
         })
@@ -385,7 +385,7 @@ export class WrathAndGloryItem extends Item {
 
     get traitList() {
         let traits = {}
-        this.data.data.traits.forEach(i => {
+        this.system.traits.forEach(i => {
 
             if (i.custom) 
             {
@@ -501,10 +501,10 @@ export class WrathAndGloryItem extends Item {
     get ammoEffects() {
         if (this.type == "ammo") {
             let effects = this.effects.filter(e => {
-                if (e.data.disabled) return false;
-                if (!e.data.changes.length)
+                if (e.disabled) return false;
+                if (!e.changes.length)
                     return true
-                return e.data.changes.some(c => {
+                return e.changes.some(c => {
                     return !hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item, and isn't a dialog effect
                 })
             })
@@ -517,10 +517,10 @@ export class WrathAndGloryItem extends Item {
     get ammoDialogEffects() {
         if (this.type == "ammo") {
             let effects = this.effects.filter(e => {
-                if (e.data.disabled) return false;
-                if (!e.data.changes.length)
+                if (e.disabled) return false;
+                if (!e.changes.length)
                     return false
-                return e.data.changes.some(c => {
+                return e.changes.some(c => {
                     return c.mode == 6
                 })
             })
@@ -607,55 +607,55 @@ export class WrathAndGloryItem extends Item {
     get isAugmentic() { return this.type === "augmentic" }
 
     // @@@@@@ DATA GETTERS @@@@@@
-    get ammo() { return this.data.data.ammo }
-    get bonus() { return this.data.data.bonus }
-    get effect() { return this.data.data.effect }
-    get cost() { return this.data.data.cost }
-    get requirements() { return this.data.data.requirements }
-    get description() { return this.data.data.description }
-    get display() { return this.data.data.display }
-    get value() { return this.data.data.value }
-    get rarity() { return this.data.data.rarity }
-    get keywords() { return this.data.data.keywords }
-    get quantity() { return this.data.data.quantity }
-    get rating() { return this.data.data.rating }
-    get traits() { return this.data.data.traits }
-    get influence() { return this.data.data.influence }
-    get benefits() { return this.data.data.benefits }
-    get dn() { return this.data.data.dn }
-    get activation() { return this.data.data.activation }
-    get duration() { return this.data.data.duration }
-    get range() { return this.data.data.range }
-    get multiTarget() { return this.data.data.multiTarget }
-    get prerequisites() { return this.data.data.prerequisites }
-    get potency() { return this.data.data.potency }
-    get damage() { return this.data.data.damage }
-    get otherDamage() { return this.data.data.otherDamage }
-    get ed() { return this.data.data.ed }
-    get attack() { return this.data.data.attack }
-    get ap() { return this.data.data.ap }
-    get category() { return this.data.data.category }
-    get salvo() { return this.data.data.salvo }
-    get upgrades() { return this.data.data.upgrades || []}
-    get equipped() { return this.data.data.equipped }
-    get test() { return this.data.data.test }
-    get abilityType() { return this.data.data.abilityType }
-    get tier() { return this.data.data.tier}
-    get species() { return this.data.data.species}
-    get attributes() { return this.data.data.attributes}
-    get attributeMax() { return this.data.data.attributeMax}
-    get skills() { return this.data.data.skills}
-    get ability() { return this.data.data.ability}
-    get abilities() { return this.data.data.abilities}
-    get wargear() { return this.data.data.wargear}
-    get groups() { return this.data.data.groups}
-    get suggested() { return this.data.data.suggested}
-    get journal() { return this.data.data.journal}
-    get objectives() { return this.data.data.objectives}
-    get faction() { return this.data.data.faction}
-    get size() { return this.data.data.size}
-    get speed() { return this.data.data.speed}
-    get backgrounds() {return this.data.data.backgrounds}
+    get ammo() { return this.system.ammo }
+    get bonus() { return this.system.bonus }
+    get effect() { return this.system.effect }
+    get cost() { return this.system.cost }
+    get requirements() { return this.system.requirements }
+    get description() { return this.system.description }
+    get display() { return this.system.display }
+    get value() { return this.system.value }
+    get rarity() { return this.system.rarity }
+    get keywords() { return this.system.keywords }
+    get quantity() { return this.system.quantity }
+    get rating() { return this.system.rating }
+    get traits() { return this.system.traits }
+    get influence() { return this.system.influence }
+    get benefits() { return this.system.benefits }
+    get dn() { return this.system.dn }
+    get activation() { return this.system.activation }
+    get duration() { return this.system.duration }
+    get range() { return this.system.range }
+    get multiTarget() { return this.system.multiTarget }
+    get prerequisites() { return this.system.prerequisites }
+    get potency() { return this.system.potency }
+    get damage() { return this.system.damage }
+    get otherDamage() { return this.system.otherDamage }
+    get ed() { return this.system.ed }
+    get attack() { return this.system.attack }
+    get ap() { return this.system.ap }
+    get category() { return this.system.category }
+    get salvo() { return this.system.salvo }
+    get upgrades() { return this.system.upgrades || []}
+    get equipped() { return this.system.equipped }
+    get test() { return this.system.test }
+    get abilityType() { return this.system.abilityType }
+    get tier() { return this.system.tier}
+    get species() { return this.system.species}
+    get attributes() { return this.system.attributes}
+    get attributeMax() { return this.system.attributeMax}
+    get skills() { return this.system.skills}
+    get ability() { return this.system.ability}
+    get abilities() { return this.system.abilities}
+    get wargear() { return this.system.wargear}
+    get groups() { return this.system.groups}
+    get suggested() { return this.system.suggested}
+    get journal() { return this.system.journal}
+    get objectives() { return this.system.objectives}
+    get faction() { return this.system.faction}
+    get size() { return this.system.size}
+    get speed() { return this.system.speed}
+    get backgrounds() {return this.system.backgrounds}
 
 
   /**

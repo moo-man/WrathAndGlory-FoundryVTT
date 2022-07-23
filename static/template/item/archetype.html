@@ -21,25 +21,25 @@
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.TIER"}}</label>
           <div class="item-form-inputs">
-            <input name="data.tier" type="number" value="{{data.tier}}" data-dtype="Number" />
+            <input name="system.tier" type="number" value="{{system.tier}}" data-dtype="Number" />
           </div>
         </div>
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.SPECIES"}}</label>
           <div class="archetype-item-list">
-            <a class="archetype-item archetype-species" title="Drag and drop a Species Item to populate this field" data-id="{{data.species.id}}">{{data.species.name}}</a>
+            <a class="archetype-item archetype-species" title="Drag and drop a Species Item to populate this field" data-id="{{system.species.id}}">{{system.species.name}}</a>
           </div>
         </div>
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.COST"}}</label>
           <div class="item-form-inputs">
-            <input type="number" value="{{data.cost}}" name="data.cost" data-dtype="Number"/>
+            <input type="number" value="{{system.cost}}" name="system.cost" data-dtype="Number"/>
           </div>
         </div>
       <div class="item-form-group">
           <label>{{localize "ARCHETYPE.INFLUENCE"}}</label>
           <div class="item-form-inputs">
-            <input type="number" value="{{data.influence}}" name="data.influence" data-dtype="Number" />
+            <input type="number" value="{{system.influence}}" name="system.influence" data-dtype="Number" />
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.KEYWORDS"}}</label>
           <div class="item-form-inputs">
-            <input type="text" class="keywords" value="{{data.keywords}}"/>
+            <input type="text" class="keywords" value="{{system.keywords}}"/>
           </div>
         </div>
       </div>
@@ -57,7 +57,7 @@
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.FACTION"}}</label>
           <div class="archetype-item-list">
-            <a class="archetype-item archetype-faction" title="Drag and drop a Faction Item to populate this field" data-id="{{data.faction.id}}">{{data.faction.name}}</a>
+            <a class="archetype-item archetype-faction" title="Drag and drop a Faction Item to populate this field" data-id="{{system.faction.id}}">{{system.faction.name}}</a>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@
             <div class="item-form-group">
               <label>{{attribute}}</label>
               <div class="item-form-inputs">
-                <input name="data.attributes.{{a}}" type="number" value="{{lookup ../data.attributes a}}" data-dtype="Number" />
+                <input name="system.attributes.{{a}}" type="number" value="{{lookup ../system.attributes a}}" data-dtype="Number" />
               </div>
             </div>
             {{/each}}
@@ -82,7 +82,7 @@
           <div class="item-form-group">
             <label>{{skill}}</label>
             <div class="item-form-inputs">
-              <input name="data.skills.{{s}}" type="number" value="{{lookup ../data.skills s}}" data-dtype="Number" />
+              <input name="system.skills.{{s}}" type="number" value="{{lookup ../system.skills s}}" data-dtype="Number" />
             </div>
           </div>
           {{/each}}
@@ -92,7 +92,7 @@
         <div class="item-form-group">
           <label>{{localize "ARCHETYPE.ABILITY"}}</label>
           <div class="archetype-item-list">
-            <a class="archetype-item archetype-ability" data-id="{{data.ability.id}}">{{data.ability.name}}</a>
+            <a class="archetype-item archetype-ability" data-id="{{system.ability.id}}">{{system.ability.name}}</a>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@
             <div class="item-form-group">
               <label>{{attribute}}</label>
               <div class="item-form-inputs">
-                <input name="data.suggested.attributes.{{a}}" type="number" value="{{lookup ../data.suggested.attributes a}}" data-dtype="Number" />
+                <input name="system.suggested.attributes.{{a}}" type="number" value="{{lookup ../system.suggested.attributes a}}" data-dtype="Number" />
               </div>
             </div>
             {{/each}}
@@ -129,7 +129,7 @@
           <div class="item-form-group">
             <label>{{skill}}</label>
             <div class="item-form-inputs">
-              <input name="data.suggested.skills.{{s}}" type="number" value="{{lookup ../data.suggested.skills s}}" data-dtype="Number" />
+              <input name="system.suggested.skills.{{s}}" type="number" value="{{lookup ../system.suggested.skills s}}" data-dtype="Number" />
             </div>
           </div>
           {{/each}}

@@ -52,7 +52,7 @@ export default class FilterResults extends FormApplication {
             items = items.filter(i => {
                 let itemData = i.toObject();
                 itemData.hasKeyword = (keyword) => {
-                    let keywords = itemData.data.keywords
+                    let keywords = itemData.system.keywords
                     if (!keywords) return false
 
                     if (!Array.isArray(keywords))

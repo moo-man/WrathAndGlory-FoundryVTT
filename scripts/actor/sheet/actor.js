@@ -26,7 +26,8 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     getData() {
         const sheetData = super.getData();
-        sheetData.data = sheetData.data.data // project system data so that handlebars has the same name and value paths
+        console.log(sheetData);
+        sheetData.system = sheetData.data.system // project system data so that handlebars has the same name and value paths
         this.constructItemLists(sheetData)
         this.constructEffectLists(sheetData)
         this._organizeSkills(sheetData)
@@ -40,9 +41,9 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
 
     _organizeSkills(sheetData) {
-        let middle = Object.values(sheetData.data.skills).length / 2;
+        let middle = Object.values(sheetData.system.skills).length / 2;
         let i = 0;
-        for (let skill of Object.values(sheetData.data.skills)) {
+        for (let skill of Object.values(sheetData.system.skills)) {
             skill.isLeft = i < middle;
             skill.isRight = i >= middle;
             i++;
@@ -51,11 +52,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
     _attributeAndSkillTooltips(sheetData) {
 
-        for (let attribute of Object.values(sheetData.data.attributes)) {
+        for (let attribute of Object.values(sheetData.system.attributes)) {
             attribute.tooltip = `Rating: ${attribute.rating} | Advance Cost: ${game.wng.utility.getAttributeCostIncrement(attribute.rating + 1)} | Current XP: ${this.actor.experience.current}`
         }
 
-        for (let skill of Object.values(sheetData.data.skills)) {
+        for (let skill of Object.values(sheetData.system.skills)) {
             skill.tooltip = `Rating: ${skill.rating} | Advance Cost: ${game.wng.utility.getSkillCostIncrement(skill.rating + 1)} | Current XP: ${this.actor.experience.current}`
         }
     }
@@ -146,9 +147,9 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 existing: this.actor.hasCondition(i.id)
             }
         })
-        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled && !i.isCondition)
-        effects.disabled = sheetData.actor.effects.filter(i => i.data.disabled && !i.isCondition)
-        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled && !i.isCondition)
+        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.disabled && !i.isCondition)
+        effects.disabled = sheetData.actor.effects.filter(i => i.disabled && !i.isCondition)
+        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.disabled && !i.isCondition)
 
         sheetData.effects = effects;
     }
@@ -348,7 +349,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         let effect = this.object.effects.get(id)
 
-        effect.update({ "disabled": !effect.data.disabled })
+        effect.update({ "disabled": !effect.disabled })
     }
 
     _onFocusIn(event) {
@@ -553,7 +554,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         const psychicPower = this.actor.items.get(div.data("itemId"));
         const skill = this.actor.skills.psychicMastery;
         this.rollData.difficulty.target = psychicPower.dn;
-        this.rollData.name = psychicPower.data.name;
+        this.rollData.name = psychicPower.name;
         this.rollData.weapon = {
             damage: {
                 base: psychicPower.damage.base,
@@ -572,7 +573,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         this.rollData.wrath.isCommon = false;
         this.rollData.pool.size = skill.total;
         this.rollData.skillName = skill.label;
-        this.rollData.name = psychicPower.data.name;
+        this.rollData.name = psychicPower.name;
         return preparePsychicRoll(this.rollData);
     }
 
@@ -725,7 +726,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let type = $(event.currentTarget).parents(".adv-buttons").attr("data-type").split("-")
         let target = `data.${type[0]}s.${type[1]}.rating` // Only slightly disgusting
 
-        this.actor.update({ [`${target}`]: getProperty(this.actor.data._source, target) + amt })
+        this.actor.update({ [`${target}`]: getProperty(this.actor._source, target) + amt })
     }
 
     _onConditionClick(ev) {

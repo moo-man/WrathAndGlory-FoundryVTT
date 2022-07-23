@@ -24,7 +24,7 @@
     <div class="sheet-body">
       <div class="tab" data-group="primary" data-tab="description">
         <div class="description">
-          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+          {{editor system.description target="system.description" button=true owner=owner editable=editable}}
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
@@ -33,7 +33,7 @@
           <div class="item-form-group">
             <label>{{localize "TALENT.REQUIREMENTS"}}</label>
             <div class="item-form-inputs">
-              <input name="data.requirements" type="text" value="{{data.requirements}}" />
+              <input name="system.requirements" type="text" value="{{system.requirements}}" />
             </div>
           </div>
         </div>
@@ -41,14 +41,14 @@
           <div class="item-form-group static">
             <label>{{localize "TALENT.COST"}}</label>
             <div class="item-form-inputs small">
-              <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+              <input name="system.cost" type="number" value="{{system.cost}}" data-dtype="Number" />
             </div>
           </div>
           <div class="item-form-group static">
             <label>{{localize "TALENT.DISPLAY"}}</label>
             <div class="item-form-inputs">
-              <div class="wng-checkbox {{#if data.display}}checked{{else}}unchecked{{/if}}" data-target="data.display">
-              {{#if data.display}}
+              <div class="wng-checkbox {{#if system.display}}checked{{else}}unchecked{{/if}}" data-target="system.display">
+              {{#if system.display}}
                 <i class="fas fa-check"></i>
               {{/if}}
               </div>

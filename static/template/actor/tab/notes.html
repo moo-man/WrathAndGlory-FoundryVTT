@@ -4,13 +4,13 @@
     <div class="advances-fields">
       <div class="tier">
         <label>{{localize "ADVANCE.TIER"}}</label>
-        <input class="current" name="data.advances.tier" type="number" value="{{data.advances.tier}}" min="1" max="5"
+        <input class="current" name="system.advances.tier" type="number" value="{{system.advances.tier}}" min="1" max="5"
           data-dtype="Number" />
 
       </div>
       <div class="rank">
         <label>{{localize "ADVANCE.RANK"}}</label>
-        <input class="current" name="data.advances.rank" type="number" value="{{data.advances.rank}}" min="1" max="4"
+        <input class="current" name="system.advances.rank" type="number" value="{{system.advances.rank}}" min="1" max="4"
           data-dtype="Number" />
       </div>
       <div class="archetype">
@@ -26,9 +26,9 @@
         </div>
         <div class="data">
           <label>{{localize "RESOURCE.EXPERIENCE"}}</label>
-          <input class="current" type="number" value="{{data.experience.current}}" data-dtype="Number" disabled/>
-          <input class="spent" type="number" value="{{data.experience.spent}}" data-dtype="Number" disabled />
-          <input class="total" type="number" name="data.experience.total" value="{{data.experience.total}}" data-dtype="Number" />
+          <input class="current" type="number" value="{{system.experience.current}}" data-dtype="Number" disabled/>
+          <input class="spent" type="number" value="{{system.experience.spent}}" data-dtype="Number" disabled />
+          <input class="total" type="number" name="system.experience.total" value="{{system.experience.total}}" data-dtype="Number" />
         </div>
       </div>
     </div>
@@ -38,15 +38,15 @@
     <div class="form-row cosmetic">
       <div class="form-field">
         <label>{{localize "BIO.HEIGHT"}}</label>
-        <input name="data.bio.height" type="text" value="{{data.bio.height}}" />
+        <input name="system.bio.height" type="text" value="{{system.bio.height}}" />
       </div>
       <div class="form-field">
         <label>{{localize "BIO.EYE_COLOUR"}}</label>
-        <input name="data.bio.eye" type="text" value="{{data.bio.eye}}" />
+        <input name="system.bio.eye" type="text" value="{{system.bio.eye}}" />
       </div>
       <div class="form-field">
         <label>{{localize "BIO.HAIR_COLOUR"}}</label>
-        <input name="data.bio.hair" type="text" value="{{data.bio.hair}}" />
+        <input name="system.bio.hair" type="text" value="{{system.bio.hair}}" />
       </div>
     </div>
   <div class="form-row background">
@@ -71,7 +71,7 @@
 <div class="form-row">
   <div class="form-field">
     <label>{{localize "BIO.OBJECTIVE"}}</label>
-    <input name="data.bio.obective" type="text" value="{{data.bio.obective}}" />
+    <input name="system.bio.obective" type="text" value="{{system.bio.obective}}" />
   </div>
 </div>
 </div>
@@ -96,6 +96,6 @@
 </div>
 <div class="wrapper notes">
   <h1 style="margin-bottom: 8px;">{{localize "TITLE.NOTES"}}</h1>
-  {{editor content=data.notes target="data.notes" button=true owner=owner editable=editable}}
+  {{editor system.notes target="system.notes" button=true owner=owner editable=editable}}
 </div>
 </div>

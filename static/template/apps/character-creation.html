@@ -1,5 +1,5 @@
 <form>
-    <img class="background-image" src="{{archetype.data.img}}">
+    <img class="background-image" src="{{archetype.img}}">
     <div class="character-creation">
         <header class="header">
             <h1><input type="text" name="name" value="{{actor.name}}" placeholder="Name"></h1>
@@ -15,7 +15,7 @@
 
                     <div class="wrapper">
                         <label>{{localize "SPECIES.SPEED"}}</label>
-                        <input type="text" name="data.combat.speed" disabled value="{{species.speed}}">
+                        <input type="text" name="system.combat.speed" disabled value="{{species.speed}}">
                     </div>
                     <div class="wrapper">
                         <label>{{localize "SPECIES.SIZE"}}</label>
@@ -47,7 +47,7 @@
                     {{#each speciesAbilities as |ability a|}}
                     <div class="ability">
                         <div class="ability-header">
-                            <img src="{{ability.data.img}}">
+                            <img src="{{ability.img}}">
                             <label>{{ability.name}}</label>
                         </div>
                         <div class="ability-description">
@@ -98,7 +98,7 @@
                 <h4>Ability</h4>
                 <div class="ability">
                     <div class="ability-header">
-                        <img src="{{archetypeAbility.data.img}}">
+                        <img src="{{archetypeAbility.img}}">
                         <label>{{archetypeAbility.name}}</label>
                     </div>
                     <div class="ability-description">

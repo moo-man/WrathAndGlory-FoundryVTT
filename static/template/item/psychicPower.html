@@ -23,7 +23,7 @@
     <div class="sheet-body">
       <div class="tab" data-group="primary" data-tab="description">
         <div class="description">
-          {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+          {{editor system.description target="system.description" button=true owner=owner editable=editable}}
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
@@ -32,21 +32,21 @@
           <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.COST"}}</label>
             <div class="item-form-inputs small">
-              <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+              <input name="system.cost" type="number" value="{{system.cost}}" data-dtype="Number" />
             </div>
           </div>
           <div class="item-form-group">
             <label>{{localize "PSYCHIC_POWER.PREREQUISITES"}}</label>
             <div class="item-form-inputs">
-              <input name="data.prerequisites" type="text" value="{{data.prerequisites}}" />
+              <input name="system.prerequisites" type="text" value="{{system.prerequisites}}" />
             </div>
           </div>
         </div>
         <div class="wrapper">
           <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.ACTIVATION"}}</label>
-            <select name="data.activation">
-              {{#select data.activation}}
+            <select name="system.activation">
+              {{#select system.activation}}
               <option value=""> - </option>
               {{#each (config "powerActivations") as |type t|}}
               <option value="{{t}}">{{type}}</option>
@@ -57,7 +57,7 @@
           <div class="item-form-group">
             <label>{{localize "PSYCHIC_POWER.DURATION"}}</label>
             <div class="item-form-inputs">
-              <input name="data.duration" type="text" value="{{data.duration}}" />
+              <input name="system.duration" type="text" value="{{system.duration}}" />
             </div>
           </div>
         </div>
@@ -65,20 +65,20 @@
           <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.DN"}}</label>
             <div class="item-form-inputs">
-              <input name="data.dn" type="text" value="{{data.dn}}" />
+              <input name="system.dn" type="text" value="{{system.dn}}" />
             </div>
           </div>
           <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.RANGE"}}</label>
             <div class="item-form-inputs medium">
-              <input name="data.range" type="text" value="{{data.range}}" />
+              <input name="system.range" type="text" value="{{system.range}}" />
             </div>
           </div>
           <div class="item-form-group static">
             <label>{{localize "PSYCHIC_POWER.MULTI_TARGET"}}</label>
             <div class="item-form-inputs">
-              <div class="wng-checkbox {{#if data.multiTarget}}checked{{else}}unchecked{{/if}}" data-target="data.multiTarget">
-              {{#if data.multiTarget}}
+              <div class="wng-checkbox {{#if system.multiTarget}}checked{{else}}unchecked{{/if}}" data-target="system.multiTarget">
+              {{#if system.multiTarget}}
                 <i class="fas fa-check"></i>
               {{/if}}
               </div>
@@ -89,20 +89,20 @@
           <div class="item-form-group">
             <label>{{localize "PSYCHIC_POWER.TEST"}}</label>
             <div class="item-form-inputs small">
-              <input name="data.test.dn" class="dn" placeholder="DN" type="number" value="{{data.test.dn}}" data-dtype="Number" />
+              <input name="system.test.dn" class="dn" placeholder="DN" type="number" value="{{system.test.dn}}" data-dtype="Number" />
             </div>
             <div class="item-form-inputs">
-              <select name="data.test.type" class="type">
-                {{#select data.test.type}}
+              <select name="system.test.type" class="type">
+                {{#select system.test.type}}
                   <option value="">-</option>
                   {{#each (config "testTypes") as |type k|}}
                   <option value="{{k}}">{{type}}</option>
                   {{/each}}
                 {{/select}}
               </select>
-              {{#if (eq data.test.type "attribute")}}
-                <select name="data.test.specification" class="attribute">
-                {{#select data.test.specification}}
+              {{#if (eq system.test.type "attribute")}}
+                <select name="system.test.specification" class="attribute">
+                {{#select system.test.specification}}
                   <option value="">-</option>
                   {{#each (config "attributes") as |attribute k|}}
                   <option value="{{k}}">{{attribute}}</option>
@@ -110,9 +110,9 @@
                 {{/select}}
               </select>
               {{/if}}
-              {{#if (eq data.test.type "skill")}}
-              <select name="data.test.specification" class="skill">
-                {{#select data.test.specification}}
+              {{#if (eq system.test.type "skill")}}
+              <select name="system.test.specification" class="skill">
+                {{#select system.test.specification}}
                   <option value="">-</option>
                   {{#each (config "skills") as |skill k|}}
                   <option value="{{k}}">{{skill}}</option>
@@ -120,9 +120,9 @@
                 {{/select}}
               </select>
               {{/if}}
-              {{#if (eq data.test.type "resolve")}}
-              <select name="data.test.specification" class="resolve">
-                {{#select data.test.specification}}
+              {{#if (eq system.test.type "resolve")}}
+              <select name="system.test.specification" class="resolve">
+                {{#select system.test.specification}}
                   <option value="">-</option>
                   {{#each (config "resolveTests") as |test k|}}
                   <option value="{{k}}">{{test}}</option>
@@ -130,9 +130,9 @@
                 {{/select}}
               </select>
               {{/if}}
-              {{#if (eq data.test.type "conviction")}}
-              <select name="data.test.specification" class="conviction">
-                {{#select data.test.specification}}
+              {{#if (eq system.test.type "conviction")}}
+              <select name="system.test.specification" class="conviction">
+                {{#select system.test.specification}}
                   <option value="">-</option>
                   {{#each (config "convictionTests") as |test k|}}
                   <option value="{{k}}">{{test}}</option>
@@ -153,16 +153,16 @@
           <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
             <div class="item-form-inputs">
-              <input name="data.damage.base" class="base" type="number" value="{{data.damage.base}}"
+              <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}"
               data-dtype="Number" />
-              <select name="data.damage.rank" class="rank">
-                {{#select data.damage.rank}}
+              <select name="system.damage.rank" class="rank">
+                {{#select system.damage.rank}}
                 <option value="none">{{localize "RANK.NONE"}}</option>
                 <option value="single">{{localize "RANK.SINGLE"}}</option>
                 <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
               </select>
-              <input name="data.damage.bonus" class="modifier" type="number" value="{{data.damage.bonus}}" data-dtype="Number" />
+              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" data-dtype="Number" />
             </div>
           </div>
         </div>
@@ -170,15 +170,15 @@
           <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.ED"}}</label>
             <div class="item-form-inputs">
-              <input name="data.ed.base" class="base" type="number" value="{{data.ed.base}}" data-dtype="Number" />
-              <select name="data.ed.rank" class="rank">
-                {{#select data.ed.rank}}
+              <input name="system.ed.base" class="base" type="number" value="{{system.ed.base}}" data-dtype="Number" />
+              <select name="system.ed.rank" class="rank">
+                {{#select system.ed.rank}}
                 <option value="none">{{localize "RANK.NONE"}}</option>
                 <option value="single">{{localize "RANK.SINGLE"}}</option>
                 <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
               </select>
-              <input name="data.ed.bonus" class="modifier" type="number" value="{{data.ed.bonus}}" data-dtype="Number" />
+              <input name="system.ed.bonus" class="modifier" type="number" value="{{system.ed.bonus}}" data-dtype="Number" />
             </div>
           </div>
         </div>
@@ -193,9 +193,9 @@
           <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.OTHER_DAMAGE"}}</label>
             <div class="item-form-inputs">
-              <input name="data.otherDamage.shock" class="base" type="text" value="{{data.otherDamage.shock}}" data-dtype="String" />
-              <input name="data.otherDamage.wounds" class="base" type="text" value="{{data.otherDamage.wounds}}" data-dtype="String" />
-              <input name="data.otherDamage.mortalWounds" class="modifier" type="text" value="{{data.otherDamage.mortalWounds}}" data-dtype="String" />
+              <input name="system.otherDamage.shock" class="base" type="text" value="{{system.otherDamage.shock}}" data-dtype="String" />
+              <input name="system.otherDamage.wounds" class="base" type="text" value="{{system.otherDamage.wounds}}" data-dtype="String" />
+              <input name="system.otherDamage.mortalWounds" class="modifier" type="text" value="{{system.otherDamage.mortalWounds}}" data-dtype="String" />
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@
           <div class="item-form-group">
             <label>{{localize "GEAR.KEYWORDS"}}</label>
             <div class="item-form-inputs">
-              <input name="data.keywords" type="text" value="{{data.keywords}}" />
+              <input name="system.keywords" type="text" value="{{system.keywords}}" />
             </div>
           </div>
         </div>
@@ -212,7 +212,7 @@
         <div class="wrapper potency">
             <h1>{{localize "TITLE.POTENCY"}}</h1>
             
-              {{#if data.potency.length}}
+              {{#if system.potency.length}}
               <div class="potency-list">
                       <div class="potency-header potency-fields">
                           <div>{{localize "POWER.POTENCY_COST"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_COST_HELP'}}"></i></div>
@@ -221,7 +221,7 @@
                           <div>{{localize "POWER.POTENCY_VALUE"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_VALUE_HELP'}}"></i></div>
                           <div style="flex: 0 0 70px">{{localize "POWER.POTENCY_SINGLE"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_SINGLE_HELP'}}"></i></div>
                       </div>
-                      {{#each data.potency as |potency index|}}
+                      {{#each system.potency as |potency index|}}
                       <div class="potency-content">
                           <div class="potency-fields" data-index="{{index}}">
                             <input type="number" data-path="cost" placeholder='{{localize "POWER.POTENCY_COST"}}' value="{{potency.cost}}">

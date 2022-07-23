@@ -29,8 +29,8 @@
     {{#each effects.temporary as |effect|}}
     <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content">
-          <img class="item-property item-image" src="{{effect.data.icon}}"></img>
-          <div class="item-property item-name effect-edit">{{effect.data.label}}</div>
+          <img class="item-property item-image" src="{{effecticon}}"></img>
+          <div class="item-property item-name effect-edit">{{effectlabel}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>
           <div class="item-controls">
@@ -56,8 +56,8 @@
     {{#each effects.passive as |effect|}}
     <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content">
-          <img class="item-property item-image" src="{{effect.data.icon}}"></img>
-          <div class="item-property item-name effect-edit">{{effect.data.label}}</div>
+          <img class="item-property item-image" src="{{effecticon}}"></img>
+          <div class="item-property item-name effect-edit">{{effectlabel}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>
           <div class="item-controls">
@@ -82,8 +82,8 @@
     {{#each effects.disabled as |effect|}}
     <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content" style="opacity : 0.5">
-          <img class="item-property item-image" src="{{effect.data.icon}}"></img>
-          <div class="item-property item-name effect-edit">{{effect.data.label}}</div>
+          <img class="item-property item-image" src="{{effecticon}}"></img>
+          <div class="item-property item-name effect-edit">{{effectlabel}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>
           <div class="item-controls">

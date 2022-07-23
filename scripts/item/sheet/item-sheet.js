@@ -69,7 +69,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     else
       data.name = data.item.name
 
-    data.data = data.data.data // project system data so that handlebars has the same name and value paths
+    data.data = data.system // project system data so that handlebars has the same name and value paths
 
     data.conditions = CONFIG.statusEffects.map(i => {
       return {
@@ -196,7 +196,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     html.find(".effect-create").click(async ev => {
       if (this.item.isOwned)
         ui.notifications.error("Effects can only be added to world items or actors directly")
-      let effectData = { label: this.item.name, icon: this.item.data.img }
+      let effectData = { label: this.item.name, icon: this.item.img }
 
         let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.html", effectData)
         let dialog = new Dialog({

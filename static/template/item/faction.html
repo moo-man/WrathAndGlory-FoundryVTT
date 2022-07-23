@@ -23,7 +23,7 @@
     <div class="sheet-body">
       <div class="tab" data-group="primary" data-tab="details">
         <div class="faction-backgrounds">
-          <div class="backgrounds" data-path="data.backgrounds.origin">
+          <div class="backgrounds" data-path="system.backgrounds.origin">
             <h1>{{localize "FACTION.ORIGIN"}} {{#if options.editable}} <button type="button" class="add-background">+</button>{{/if}}</h1>
             <div class="background-header">
               {{#if item.isOwned}}
@@ -35,10 +35,10 @@
               <div style="flex: 0 0 20px"></div>
             </div>
             <div class="background-list">
-              {{#each data.backgrounds.origin as |background bg|}}
+              {{#each system.backgrounds.origin as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.origin" data-index="{{bg}}" data-inner-target="active" >
+                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.origin" data-index="{{bg}}" data-inner-target="active" >
                   {{#if background.active}}
                     <i class="fas fa-check"></i>
                   {{/if}}
@@ -50,7 +50,7 @@
                   {{#select background.effect}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
-                  <option value="{{effect.id}}">{{effect.data.label}}</option>
+                  <option value="{{effect.id}}">{{effect.label}}</option>
                   {{/each}}
                   {{/select}}
                 </select>
@@ -62,7 +62,7 @@
             </div>
             
           </div>
-          <div class="backgrounds" data-path="data.backgrounds.accomplishment">
+          <div class="backgrounds" data-path="system.backgrounds.accomplishment">
             <h1>{{localize "FACTION.ACCOMPLISHMENT"}} {{#if options.editable}} <button type="button" class="add-background">+</button>{{/if}}</h1>
             <div class="background-header">
               {{#if item.isOwned}}
@@ -74,10 +74,10 @@
               <div style="flex: 0 0 20px"></div>
             </div>
             <div class="background-list">
-              {{#each data.backgrounds.accomplishment as |background bg|}}
+              {{#each system.backgrounds.accomplishment as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="active">
+                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="active">
                   {{#if background.active}}
                     <i class="fas fa-check"></i>
                   {{/if}}
@@ -89,7 +89,7 @@
                   {{#select background.effect}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
-                  <option value="{{effect.id}}">{{effect.data.label}}</option>
+                  <option value="{{effect.id}}">{{effect.label}}</option>
                   {{/each}}
                   {{/select}}
                 </select>
@@ -101,7 +101,7 @@
             </div>
             
           </div>
-          <div class="backgrounds" data-path="data.backgrounds.goal">
+          <div class="backgrounds" data-path="system.backgrounds.goal">
             <h1>{{localize "FACTION.GOAL"}} {{#if options.editable}} <button type="button" class="add-background">+</button> {{/if}}</h1>
             <div class="background-header">
               {{#if item.isOwned}}
@@ -113,10 +113,10 @@
               <div style="flex: 0 0 20px"></div>
             </div>
             <div class="background-list">
-              {{#each data.backgrounds.goal as |background bg|}}
+              {{#each system.backgrounds.goal as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="data.backgrounds.goal" data-index="{{bg}}" data-inner-target="active">
+                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.goal" data-index="{{bg}}" data-inner-target="active">
                   {{#if background.active}}
                     <i class="fas fa-check"></i>
                   {{/if}}
@@ -128,7 +128,7 @@
                   {{#select background.effect}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
-                  <option value="{{effect.id}}">{{effect.data.label}}</option>
+                  <option value="{{effect.id}}">{{effect.label}}</option>
                   {{/each}}
                   {{/select}}
                 </select>
@@ -142,10 +142,10 @@
           </div>
         </div>
 
-        <div class="objectives backgrounds" data-path="data.objectives">
+        <div class="objectives backgrounds" data-path="system.objectives">
           <h1>{{localize "FACTION.OBJECTIVES"}}  {{#if options.editable}} <button type="button" class="add-background">+</button>{{/if}}</h1>
           <div class="objectives-list backgrounds" >
-            {{#each data.objectives as |objective o|}}
+            {{#each system.objectives as |objective o|}}
             <input class="objective" data-index={{o}} type="text" value="{{objective}}" />
             {{/each}}
           </div>

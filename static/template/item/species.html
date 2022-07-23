@@ -21,20 +21,20 @@
         <div class="item-form-group">
           <label>{{localize "SPECIES.COST"}}</label>
           <div class="item-form-inputs">
-            <input type="number" name="data.cost" value="{{data.cost}}" data-dtype="Number" />
+            <input type="number" name="system.cost" value="{{system.cost}}" data-dtype="Number" />
           </div>
         </div>
         <div class="item-form-group">
           <label>{{localize "SPECIES.SPEED"}}</label>
           <div class="item-form-inputs">
-            <input name="data.speed" type="number" value="{{data.speed}}" data-dtype="Number" />
+            <input name="system.speed" type="number" value="{{system.speed}}" data-dtype="Number" />
           </div>
         </div>
         <div class="item-form-group">
           <label>{{localize "SPECIES.SIZE"}}</label>
           <div class="item-form-inputs">
-            <select name="data.size">
-              {{#select data.size}}
+            <select name="system.size">
+              {{#select system.size}}
               {{#each (config "size") as |size s|}}
               <option value="{{s}}">{{size}}</option>
               {{/each}}
@@ -60,7 +60,7 @@
               <div class="item-form-group">
                 <label>{{attribute}}</label>
                 <div class="item-form-inputs">
-                  <input name="data.attributeMax.{{a}}" type="number" value="{{lookup ../data.attributeMax a}}" data-dtype="Number" />
+                  <input name="system.attributeMax.{{a}}" type="number" value="{{lookup ../system.attributeMax a}}" data-dtype="Number" />
                 </div>
               </div>
               {{/each}}
@@ -73,7 +73,7 @@
               <div class="item-form-group">
                 <label>{{attribute}}</label>
                 <div class="item-form-inputs">
-                  <input name="data.attributes.{{a}}" type="number" value="{{lookup ../data.attributes a}}" data-dtype="Number" />
+                  <input name="system.attributes.{{a}}" type="number" value="{{lookup ../system.attributes a}}" data-dtype="Number" />
                 </div>
               </div>
               {{/each}}
@@ -86,7 +86,7 @@
             <div class="item-form-group">
               <label>{{skill}}</label>
               <div class="item-form-inputs">
-                <input name="data.skills.{{s}}" type="number" value="{{lookup ../data.skills s}}" data-dtype="Number" />
+                <input name="system.skills.{{s}}" type="number" value="{{lookup ../system.skills s}}" data-dtype="Number" />
               </div>
             </div>
             {{/each}}

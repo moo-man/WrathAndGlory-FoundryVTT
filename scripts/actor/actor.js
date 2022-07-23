@@ -44,7 +44,7 @@ export class WrathAndGloryActor extends Actor {
             initData["token.vision"] = true;
             initData["token.actorLink"] = true;
         }
-        this.data.update(initData)
+        this.update(initData)
     }
 
 
@@ -448,7 +448,7 @@ export class WrathAndGloryActor extends Actor {
                 token = this.getActiveTokens()[0]?.document
 
             if (token)
-                dialogData.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.data.x, y: token.data.y }, { x: target.data.x, y: target.data.y }) }], { gridSpaces: true })[0]
+                dialogData.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
 
         }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
@@ -513,7 +513,7 @@ export class WrathAndGloryActor extends Actor {
     getDialogChanges({ condense = false, add = [], targets=[] } = {}) {
         let effects = Array.from(this.effects).concat(add);
         // Aggregate dialog changes from each effect
-        let changes = effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({ condense, indexOffset: prev.length })), [])
+        let changes = effects.filter(i => !i.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({ condense, indexOffset: prev.length })), [])
 
         if (targets.length) {
             let target = targets[0].actor
@@ -554,13 +554,13 @@ export class WrathAndGloryActor extends Actor {
             let faction = items.find(i => i.type == "faction")
             let species = items.find(i => i.type == "species")
             faction.effects = [];
-            actorData.data.combat.speed = species.data.speed;
-            actorData.data.combat.size = species.data.size;
+            actorData.system.combat.speed = species.system.speed;
+            actorData.system.combat.size = species.system.size;
 
 
             for(let attr in archetype.attributes)
             {
-                let attribute = actorData.data.attributes[attr]
+                let attribute = actorData.system.attributes[attr]
                 if (archetype.attributes[attr])
                     attribute.base = archetype.attributes[attr]
 
@@ -570,7 +570,7 @@ export class WrathAndGloryActor extends Actor {
 
             for(let sk in archetype.skills)
             {
-                let skill = actorData.data.skills[sk]
+                let skill = actorData.system.skills[sk]
                 if (archetype.skills[sk])
                     skill.base = archetype.skills[sk]
 
@@ -582,9 +582,9 @@ export class WrathAndGloryActor extends Actor {
             // Remove IDs so items work within the update method
             items.forEach(i => delete i._id)
 
-            actorData.img = archetype.data.img
-            actorData.token.img = archetype.data.img.replace("images", "tokens")
-            actorData.token.img = archetype.data.img.replace("actors", "tokens")
+            actorData.img = archetype.img
+            actorData.token.img = archetype.img.replace("images", "tokens")
+            actorData.token.img = archetype.img.replace("actors", "tokens")
 
             await this.update(actorData)
 
@@ -695,16 +695,16 @@ export class WrathAndGloryActor extends Actor {
     }
 
 
-    get attributes() { return this.data.data.attributes }
-    get skills() { return this.data.data.skills }
-    get combat() { return this.data.data.combat }
-    get bio() { return this.data.data.bio }
-    get advances() { return this.data.data.advances }
-    get experience() { return this.data.data.experience }
-    get resources() { return this.data.data.resources }
-    get corruption() { return this.data.data.corruption }
-    get notes() { return this.data.data.notes }
-    get mob() { return this.data.data.mob }
+    get attributes() { return this.system.attributes }
+    get skills() { return this.system.skills }
+    get combat() { return this.system.combat }
+    get bio() { return this.system.bio }
+    get advances() { return this.system.advances }
+    get experience() { return this.system.experience }
+    get resources() { return this.system.resources }
+    get corruption() { return this.system.corruption }
+    get notes() { return this.system.notes }
+    get mob() { return this.system.mob }
 
     getItemTypes(type) {
         return (this.itemCategories || this.itemTypes)[type]

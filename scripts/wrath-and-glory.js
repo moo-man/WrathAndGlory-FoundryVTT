@@ -92,7 +92,7 @@ Hooks.once("init", () => {
   Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
   initializeHandlebars();
 
-  CONFIG.fontFamilies.push("Priori");
+  CONFIG.fontDefinitions.Priori = {editor : true, fonts : []}
   CONFIG.defaultFontFamily = "Priori"
   CONFIG.canvasTextStyle._fontFamily = "Priori"
 

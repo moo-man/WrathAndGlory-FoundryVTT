@@ -3,11 +3,11 @@
   <div class="wrapper influence-wealth">
     <div class="wrapper-item influence">
       <label class="roll-influence hover">{{localize "RESOURCE.INFLUENCE"}}</label>
-      <input name="data.resources.influence" type="number" value="{{data.resources.influence}}" data-dtype="Number" />
+      <input name="system.resources.influence" type="number" value="{{system.resources.influence}}" data-dtype="Number" />
     </div>
     <div class="wrapper-item wealth">
       <label>{{localize "RESOURCE.WEALTH"}}</label>
-      <input name="data.resources.wealth" type="number" value="{{data.resources.wealth}}" data-dtype="Number" />
+      <input name="system.resources.wealth" type="number" value="{{system.resources.wealth}}" data-dtype="Number" />
     </div>
   </div>
   {{/if}}
@@ -38,9 +38,9 @@
             {{#if ../equippable}}
             <div class="item-property small">
               {{#if item.equipped}}
-              <a class="checkbox" data-target="item" data-item-target="data.equipped"><i class="far fa-check-circle"></i></a>
+              <a class="checkbox" data-target="item" data-item-target="system.equipped"><i class="far fa-check-circle"></i></a>
               {{else}}
-              <a class="checkbox" data-target="item" data-item-target="data.equipped"><i class="far fa-circle"></i></a>
+              <a class="checkbox" data-target="item" data-item-target="system.equipped"><i class="far fa-circle"></i></a>
               {{/if}}
             </div>
             {{/if}}
