@@ -24,9 +24,9 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         return `systems/wrath-and-glory/template/actor/${this.actor.type}.html`
     }
 
-    getData() {
-        const sheetData = super.getData();
-        console.log(sheetData);
+    async getData() {
+        const sheetData = await super.getData();
+        sheetData.enrichment = {};
         sheetData.system = sheetData.data.system // project system data so that handlebars has the same name and value paths
         this.constructItemLists(sheetData)
         this.constructEffectLists(sheetData)
@@ -36,7 +36,18 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             sheetData.autoCalc.wounds = false;
             sheetData.autoCalc.shock = false;
         }
+
+        sheetData.enrichment = await this._handleEnrichment()
+        
         return sheetData;
+    }
+
+    async _handleEnrichment()
+    {
+        let enrichment = {}
+        enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true})
+
+        return expandObject(enrichment)
     }
 
 
@@ -678,7 +689,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
 
-    _createDropdown(event, dropdownData) {
+    async _createDropdown(event, dropdownData) {
         let dropdownHTML = ""
         event.preventDefault()
         let li = $(event.currentTarget).parents(".item")
@@ -693,7 +704,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
             if (!dropdownData) {
                 return
             } else {
-                dropdownHTML = `<div class="item-summary">${TextEditor.enrichHTML(dropdownData.text)}`;
+                dropdownHTML = `<div class="item-summary">${await TextEditor.enrichHTML(dropdownData.text, {async: true})}`;
             }
             if (dropdownData.tags) {
                 let tags = `<div class='tags'>`

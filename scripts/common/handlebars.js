@@ -62,7 +62,7 @@ function registerHandlebarsHelpers() {
 
 
   Handlebars.registerHelper("enrich", function (string) {
-    return TextEditor.enrichHTML(string)
+    return  TextEditor.enrichHTML(string, {async: false})
 })
 
 

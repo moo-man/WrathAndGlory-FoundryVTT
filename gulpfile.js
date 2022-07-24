@@ -1,14 +1,22 @@
 var gulp = require('gulp');
 // const esbuild = require('esbuild')
+const fs = require("fs")
 
 const sass = require('gulp-sass')(require('sass'));
 const foundryPath = require("./foundry-path.js")
 // const esBuildConfig = require("./esbuild.config");
 
+let manifest = JSON.parse(fs.readFileSync("./system.json"))
+
+if (!manifest?.id)
+{
+  return console.error("Could not find system ID")
+}
+
 gulp.task('sass', function () {
-  return gulp.src('style/wrath-and-glory.scss')
+  return gulp.src(`style/${manifest.id}.scss`)
     .pipe(sass()) // Converts Sass to CSS with gulp-sass
-    .pipe(gulp.dest(foundryPath.systemPath("wrath-and-glory")))
+    .pipe(gulp.dest(foundryPath.systemPath(manifest.id)))
 });
 
 // gulp.task('watch', function () {

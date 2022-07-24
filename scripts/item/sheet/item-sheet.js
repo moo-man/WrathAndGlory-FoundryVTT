@@ -55,9 +55,9 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     return buttons;
   }
 
-  getData() {
+  async getData() {
 
-    const data = super.getData();
+    const data = await super.getData();
 
     // If this is a temp item with an archetype parent
     if (this.item.archetype) {
@@ -69,7 +69,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     else
       data.name = data.item.name
 
-    data.data = data.system // project system data so that handlebars has the same name and value paths
+    data.system = data.data.system // project system data so that handlebars has the same name and value paths
 
     data.conditions = CONFIG.statusEffects.map(i => {
       return {
@@ -97,8 +97,19 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     {
       data.abilities = this.item.abilities.map(i => `<a class="species-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
     }
+
+    data.enrichment = await this._handleEnrichment()
+        
     return data;
-  }
+}
+
+async _handleEnrichment()
+{
+    let enrichment = {}
+    enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true})
+
+    return expandObject(enrichment)
+}
 
   _onDrop(ev) {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));

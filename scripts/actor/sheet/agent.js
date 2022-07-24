@@ -9,8 +9,8 @@ export class AgentSheet extends WrathAndGloryActorSheet {
         return options
     }
 
-    getData() {
-        let sheetData = super.getData()
+    async getData() {
+        let sheetData = await super.getData()
         this._attributeAndSkillTooltips(sheetData)
         return sheetData
     }

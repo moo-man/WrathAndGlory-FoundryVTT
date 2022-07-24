@@ -38,19 +38,19 @@ export default class CharacterCreation extends FormApplication {
         for (let attribute in this.character.attributes)
         {
             if (this.species.attributes[attribute])
-                this.character.updateSource({[`data.attributes.${attribute}.base`] : this.species.attributes[attribute]})
+                this.character.updateSource({[`system.attributes.${attribute}.base`] : this.species.attributes[attribute]})
             if (this.archetype.attributes[attribute])
-                this.character.updateSource({[`data.attributes.${attribute}.base`] : this.archetype.attributes[attribute]})
+                this.character.updateSource({[`system.attributes.${attribute}.base`] : this.archetype.attributes[attribute]})
         }
         for (let skill in this.character.skills)
         {
             if (this.species.skills[skill])
-            this.character.updateSource({[`data.skills.${skill}.base`] : this.species.skills[skill]})
+            this.character.updateSource({[`system.skills.${skill}.base`] : this.species.skills[skill]})
             if (this.archetype.skills[skill])
-                this.character.updateSource({[`data.skills.${skill}.base`] : this.archetype.skills[skill]})
+                this.character.updateSource({[`system.skills.${skill}.base`] : this.archetype.skills[skill]})
         }
 
-        this.character.updateSource({"data.experience.total" : this.archetype.tier * 100, "data.advances.species" : this.archetype.cost})
+        this.character.updateSource({"system.experience.total" : this.archetype.tier * 100, "system.advances.species" : this.archetype.cost})
         
         this.character.prepareData();
 
@@ -152,9 +152,9 @@ export default class CharacterCreation extends FormApplication {
 
         this.character.updateSource({ "prototypeToken": this.actor.prototypeToken })
 
-        this.character.updateSource({"data.combat.speed" : this.species.speed, "data.combat.size" : this.species.size})
-        this.character.updateSource({"data.resources.influence" : this.archetype.influence});
-        this.character.updateSource({"data.advances.tier" : this.archetype.tier});
+        this.character.updateSource({"system.combat.speed" : this.species.speed, "system.combat.size" : this.species.size})
+        this.character.updateSource({"system.resources.influence" : this.archetype.influence});
+        this.character.updateSource({"system.advances.tier" : this.archetype.tier});
         this.character.updateSource({
             "img": this.actor.img,
             "name": formData.name,
@@ -408,10 +408,10 @@ export default class CharacterCreation extends FormApplication {
             }
 
             // Can't go to 0 or base character, and can't go above species max
-            if (statObj.total <= 0 || statObj.total < getProperty(this.baseCharacter, `data.${target}.${stat}.total`) || (target == "attributes" && (statObj.total > getProperty(this.species, `attributeMax.${stat}`))))
+            if (statObj.total <= 0 || statObj.total < getProperty(this.baseCharacter, `system.${target}.${stat}.total`) || (target == "attributes" && (statObj.total > getProperty(this.species, `attributeMax.${stat}`))))
                 return;
 
-            this.character.updateSource({[`data.${target}.${stat}.rating`] : statObj.rating})
+            this.character.updateSource({[`system.${target}.${stat}.rating`] : statObj.rating})
 
             this.updateDerived();
         })
@@ -476,7 +476,7 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-    addTalent(talent)
+    async addTalent(talent)
     {
         let list = this.element.find(".talents")
         if (this.addedTalents.length == 0)
@@ -494,7 +494,7 @@ export default class CharacterCreation extends FormApplication {
             <a class="talent-delete"><i class="fas fa-times"></i></a>
         </div>
         <div class="ability-description">
-            ${TextEditor.enrichHTML(talent.description)}
+            ${await TextEditor.enrichHTML(talent.description, {async: true})}
         </div>
         </div>`
 

@@ -4,19 +4,10 @@ const path = require("path")
 const esCopy = require("esbuild-plugin-copy")
 const copyStaticFiles = require("esbuild-copy-static-files")
 const foundryPath = require("./foundry-path.js")
-const sassPlugin = require("esbuild-sass-plugin");
 
 let manifest = JSON.parse(fs.readFileSync("./system.json"))
 
-let systemPath
-if (process.env.NODE_ENV == "production")
-{
-    systemPath = "./build"
-}
-else 
-{
-    systemPath = foundryPath.systemPath(manifest.id)
-}
+systemPath = foundryPath.systemPath(manifest.id)
 
 console.log("Bundling to " + systemPath)
 

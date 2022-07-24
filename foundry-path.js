@@ -15,6 +15,12 @@ function foundryConfig(systemId) {
   else
     foundryPath = path.resolve(__dirname, 'build')
 
+
+  if (process.env.NODE_ENV == "production")
+  {
+      foundryPath = "./build"
+  }
+
   console.log("Foundry Path: " + foundryPath)
   return foundryPath
 }

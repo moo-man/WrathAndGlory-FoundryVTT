@@ -89,9 +89,9 @@ export default class ModuleInitializer extends Dialog {
             for (let document of documents) {
                 let folder = document.getFlag(this.moduleKey, "initialization-folder")
                 if (folder)
-                    document.update({ "folder": this.folders[document.documentName][folder].id })
+                    document.updateSource({ "folder": this.folders[document.documentName][folder].id })
                 if (document.flags[this.moduleKey].sort)
-                    document.update({ "sort": document.flags[this.moduleKey].sort })
+                    document.updateSource({ "sort": document.flags[this.moduleKey].sort })
             }
             try {
             switch (documents[0].documentName) {
@@ -143,7 +143,7 @@ export default class ModuleInitializer extends Dialog {
                 if (folder)
                     map.updateSource.update({ "folder": this.folders["Scene"][folder].id })
             }
-            await Scene.create(maps.map(m => m.data)).then(sceneArray => {
+            await Scene.create(maps).then(sceneArray => {
                 sceneArray.forEach(async s => {
                     let thumb = await s.createThumbnail();
                     s.update({ "thumb": thumb.thumb })

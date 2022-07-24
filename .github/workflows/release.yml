@@ -25,6 +25,7 @@ jobs:
         
       - name: Build Project
         run: npm run release
+        run: npm run gulp_release
         
       - name: Get System ID
         id: systemID

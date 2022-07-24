@@ -86,33 +86,33 @@ textarea:focus {
 }
 
 .editor,
-.editor-content {
+.journal-entry-page.text {
   font-family: var(--font-text);
   font-size: 14px;
   color: var(--color-text);
 }
 
 .editor a.keyword,
-.editor-content a.keyword {
+.journal-entry-page.text a.keyword {
   color: var(--color-imperium);
   text-transform: uppercase;
   font-weight: bold
 }
 
 .editor a.keyword:hover,
-.editor-content a.keyword:hover {
+.journal-entry-page.text a.keyword:hover {
   text-shadow: none;
 }
 
 .editor h1,
-.editor-content h1 { 
+.journal-entry-page.text h1 { 
   font-family: var(--font-header);
   font-size : 40px;
   text-align: center;
 }
 
 .editor h2,
-.editor-content h2 { 
+.journal-entry-page.text h2 { 
   font-family: var(--font-header);
   text-transform: uppercase;
   font-size: 36px;
@@ -124,7 +124,7 @@ textarea:focus {
 }
 
 .editor h2::after,
-.editor-content h2::after { 
+.journal-entry-page.text h2::after { 
   display: inline-block;
   margin-bottom: -17px;
   margin-right: -45px;
@@ -136,7 +136,7 @@ textarea:focus {
 }
 
 .editor h3,
-.editor-content h3 { 
+.journal-entry-page.text h3 { 
   font-family: var(--font-header);
   font-size : 30px;
   text-transform: uppercase;
@@ -146,7 +146,7 @@ textarea:focus {
 }
 
 .editor .sidebar h3,
-.editor-content .sidebar h3 { 
+.journal-entry-page.text .sidebar h3 { 
   font-family: var(--font-text);
   text-align: center;
   text-transform: uppercase;
@@ -156,7 +156,7 @@ textarea:focus {
 }
 
 .editor  h4,
-.editor-content  h4 { 
+.journal-entry-page.text  h4 { 
   font-family: var(--font-header);
   border: none;
   font-weight: bold;
@@ -166,7 +166,7 @@ textarea:focus {
 }
 
 .editor  h5,
-.editor-content  h5 { 
+.journal-entry-page.text  h5 { 
   font-family: var(--font-header);
   border: none;
   font-weight: bold;
@@ -177,7 +177,7 @@ textarea:focus {
 }
 
 .editor .sidebar,
-.editor-content .sidebar {
+.journal-entry-page.text .sidebar {
   margin-right: 20px;
   background: url(./asset/image/journal-sidebar.webp) 0px 100% repeat;
   border: 10px solid transparent;
@@ -189,7 +189,7 @@ textarea:focus {
 }
 
 .editor table .table-header,
-.editor-content table .table-header {
+.journal-entry-page.text table .table-header {
   text-align: center; 
   background-color: #752322; 
   /*text-transform: uppercase;*/
@@ -201,22 +201,22 @@ textarea:focus {
 }
 
 .editor table .table-header.aeldari,
-.editor-content table .table-header.aeldari {
+.journal-entry-page.text table .table-header.aeldari {
   background-color: var(--color-aeldari); 
 }
 
 .editor table .table-header.ork,
-.editor-content table .table-header.ork {
+.journal-entry-page.text table .table-header.ork {
   background-color: var(--color-ork); 
 }
 
 .editor table .table-header.chaos,
-.editor-content table .table-header.chaos {
+.journal-entry-page.text table .table-header.chaos {
   background-color: var(--color-chaos); 
 }
 
 .editor table .table-col-header,
-.editor-content table .table-col-header {
+.journal-entry-page.text table .table-col-header {
   background-color: #484746; 
   color: #ddd;
 }
@@ -228,7 +228,7 @@ textarea:focus {
   border-image-outset: 0px;
 }
 
- .editor-content table,
+ .journal-entry-page.text table,
 .editor table {
 /* border: 0;
 border-color: transparent;
@@ -423,20 +423,20 @@ button:disabled {
 }
 
 
-a.entity-link, a.inline-roll {
+a.content-link, a.inline-roll {
     background: none;
     font-weight: bold;
     color: var(--color-imperium);
     border: none
 }
 
-a.entity-link:hover, a.inline-roll:hover {
+a.content-link:hover, a.inline-roll:hover {
   text-shadow: 0 0 8px var(--color-imperium)
 }
 
 
 
-a.entity-link i, a.inline-roll i {
+a.content-link i, a.inline-roll i {
     color: var(--color-imperium);
 }
 

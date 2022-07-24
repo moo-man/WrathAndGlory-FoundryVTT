@@ -24,8 +24,8 @@ export class WrathAndGloryItem extends Item {
     _preUpdate(updateData, options, user) {
         if (hasProperty(updateData, "system.quantity") && updateData.system.quantity < 0)
             updateData.system.quantity = 0;
-        if (getProperty(updateData, "data.system.type") == "corruption")
-            setProperty(updateData, "data.system.specification", "corruption")
+        if (getProperty(updateData, "system.type") == "corruption")
+            setProperty(updateData, "system.specification", "corruption")
     }
 
     prepareData() {

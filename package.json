@@ -5,7 +5,9 @@
   "main": "wrath-and-glory.js",
   "scripts": {
     "build": "cross-env NODE_ENV=development node ./esbuild.config.js",
-    "release": "cross-env NODE_ENV=production node ./esbuild.config.js"
+    "release": "cross-env NODE_ENV=production node ./esbuild.config.js",
+    "gulp_build": "cross-env NODE_ENV=development gulp sass",
+    "gulp_release": "cross-env NODE_ENV=production gulp sass"
   },
   "repository": {
     "type": "git",
