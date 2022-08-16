@@ -2,7 +2,7 @@
 export class WrathAndGloryCombat extends Combat {
     async _preCreate(data, options, user) {
         super._preCreate(data, options, user)
-        this.data.update({"turn" : null})
+        this.updateSource({"turn" : null})
     }
     async startCombat() {
         return this.update({round: 1}); // Don't update turn, that must be chosen
@@ -23,7 +23,7 @@ export class WrathAndGloryCombat extends Combat {
     }
 
     async nextRound() {
-        let advanceTime = Math.max(this.turns.length - (this.data.turn || 0), 0) * CONFIG.time.turnTime;
+        let advanceTime = Math.max(this.turns.length - (this.turn || 0), 0) * CONFIG.time.turnTime;
         advanceTime += CONFIG.time.roundTime;
         let combatants = this.combatants.map(c => c.setPending())
         return this.update({round: this.round + 1, turn : null, combatants}, {advanceTime});
@@ -39,10 +39,10 @@ export class WrathAndGloryCombatant extends Combatant {
 
         if (this.isDefeated)
         {
-            this.data.update({"defeated" : true})
+            this.updateSource({"defeated" : true})
         }
         // "pending" , "complete", "current"
-        this.data.update({"flags.wrath-and-glory.combatStatus" : "pending", "turn" : null})
+        this.updateSource({"flags.wrath-and-glory.combatStatus" : "pending", "turn" : null})
     }
 
 

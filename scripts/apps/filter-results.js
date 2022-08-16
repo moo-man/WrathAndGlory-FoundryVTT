@@ -52,7 +52,7 @@ export default class FilterResults extends FormApplication {
             items = items.filter(i => {
                 let itemData = i.toObject();
                 itemData.hasKeyword = (keyword) => {
-                    let keywords = itemData.data.keywords
+                    let keywords = itemData.system.keywords
                     if (!keywords) return false
 
                     if (!Array.isArray(keywords))
@@ -83,7 +83,7 @@ export default class FilterResults extends FormApplication {
 
                 if ([propValue, test, testValue].includes(undefined))
                     return false
-                return eval(`"${propValue}" ${this.comparisons[test]} "${testValue}"`)
+                return (0, eval)(`"${propValue}" ${this.comparisons[test]} "${testValue}"`)
             })
         })
         return items

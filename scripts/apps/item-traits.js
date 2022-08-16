@@ -18,7 +18,7 @@ export default class ItemTraits extends FormApplication
         try {
 
             data.traits = Object.keys(this.object.traitsAvailable).map(i => {
-                let existing = this.object.data._source.data.traits.find(t => t.name == i)
+                let existing = this.object._source.system.traits.find(t => t.name == i)
                 if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
                 existing = this.object.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
                 return  {

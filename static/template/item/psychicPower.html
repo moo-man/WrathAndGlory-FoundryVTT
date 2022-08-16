@@ -1,0 +1,264 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="psychic-power">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "PSYCHIC_POWER.NAME"}}</label>
+            <input name="name" type="text" value="{{name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+      <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="description">
+        <div class="description">
+          {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="stats">
+
+        <div class="wrapper">
+          <div class="item-form-group static">
+            <label>{{localize "PSYCHIC_POWER.COST"}}</label>
+            <div class="item-form-inputs small">
+              <input name="system.cost" type="number" value="{{system.cost}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group">
+            <label>{{localize "PSYCHIC_POWER.PREREQUISITES"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.prerequisites" type="text" value="{{system.prerequisites}}" />
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="item-form-group static">
+            <label>{{localize "PSYCHIC_POWER.ACTIVATION"}}</label>
+            <select name="system.activation">
+              {{#select system.activation}}
+              <option value=""> - </option>
+              {{#each (config "powerActivations") as |type t|}}
+              <option value="{{t}}">{{type}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
+          <div class="item-form-group">
+            <label>{{localize "PSYCHIC_POWER.DURATION"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.duration" type="text" value="{{system.duration}}" />
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="item-form-group static">
+            <label>{{localize "PSYCHIC_POWER.DN"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.dn" type="text" value="{{system.dn}}" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "PSYCHIC_POWER.RANGE"}}</label>
+            <div class="item-form-inputs medium">
+              <input name="system.range" type="text" value="{{system.range}}" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "PSYCHIC_POWER.MULTI_TARGET"}}</label>
+            <div class="item-form-inputs">
+              <div class="wng-checkbox {{#if system.multiTarget}}checked{{else}}unchecked{{/if}}" data-target="system.multiTarget">
+              {{#if system.multiTarget}}
+                <i class="fas fa-check"></i>
+              {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="item-form-group">
+            <label>{{localize "PSYCHIC_POWER.TEST"}}</label>
+            <div class="item-form-inputs small">
+              <input name="system.test.dn" class="dn" placeholder="DN" type="number" value="{{system.test.dn}}" data-dtype="Number" />
+            </div>
+            <div class="item-form-inputs">
+              <select name="system.test.type" class="type">
+                {{#select system.test.type}}
+                  <option value="">-</option>
+                  {{#each (config "testTypes") as |type k|}}
+                  <option value="{{k}}">{{type}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{#if (eq system.test.type "attribute")}}
+                <select name="system.test.specification" class="attribute">
+                {{#select system.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "attributes") as |attribute k|}}
+                  <option value="{{k}}">{{attribute}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq system.test.type "skill")}}
+              <select name="system.test.specification" class="skill">
+                {{#select system.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "skills") as |skill k|}}
+                  <option value="{{k}}">{{skill}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq system.test.type "resolve")}}
+              <select name="system.test.specification" class="resolve">
+                {{#select system.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "resolveTests") as |test k|}}
+                  <option value="{{k}}">{{test}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+              {{#if (eq system.test.type "conviction")}}
+              <select name="system.test.specification" class="conviction">
+                {{#select system.test.specification}}
+                  <option value="">-</option>
+                  {{#each (config "convictionTests") as |test k|}}
+                  <option value="{{k}}">{{test}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="damage-header">
+            <b class="spacer"></b>
+            <b class="base">{{localize "DIALOG.BASE"}}</b>
+            <b class="rank">{{localize "DIALOG.RANK"}}</b>
+            <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
+          </div>
+          <div class="item-form-group fixed">
+            <label>{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}"
+              data-dtype="Number" />
+              <select name="system.damage.rank" class="rank">
+                {{#select system.damage.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="item-form-group fixed">
+            <label>{{localize "PSYCHIC_POWER.ED"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.ed.base" class="base" type="number" value="{{system.ed.base}}" data-dtype="Number" />
+              <select name="system.ed.rank" class="rank">
+                {{#select system.ed.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="system.ed.bonus" class="modifier" type="number" value="{{system.ed.bonus}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper">
+          <div class="damage-header">
+            <b class="spacer"></b>
+            <b class="base">{{localize "PSYCHIC_POWER.SHOCK"}}</b>
+            <b class="rank">{{localize "PSYCHIC_POWER.WOUNDS"}}</b>
+            <b class="modifier">{{localize "PSYCHIC_POWER.MORTAL"}}</b>
+          </div>
+          <div class="item-form-group fixed">
+            <label>{{localize "PSYCHIC_POWER.OTHER_DAMAGE"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.otherDamage.shock" class="base" type="text" value="{{system.otherDamage.shock}}" data-dtype="String" />
+              <input name="system.otherDamage.wounds" class="base" type="text" value="{{system.otherDamage.wounds}}" data-dtype="String" />
+              <input name="system.otherDamage.mortalWounds" class="modifier" type="text" value="{{system.otherDamage.mortalWounds}}" data-dtype="String" />
+            </div>
+          </div>
+        </div>
+      
+        <div class="wrapper">
+          <div class="item-form-group">
+            <label>{{localize "GEAR.KEYWORDS"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.keywords" type="text" value="{{system.keywords}}" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper potency">
+            <h1>{{localize "TITLE.POTENCY"}}</h1>
+            
+              {{#if system.potency.length}}
+              <div class="potency-list">
+                      <div class="potency-header potency-fields">
+                          <div>{{localize "POWER.POTENCY_COST"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_COST_HELP'}}"></i></div>
+                          <div>{{localize "POWER.POTENCY_INITIAL"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_INITIAL_HELP'}}"></i></div>
+                          <div>{{localize "POWER.POTENCY_PROPERTY"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_PROPERTY_HELP'}}"></i></div>
+                          <div>{{localize "POWER.POTENCY_VALUE"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_VALUE_HELP'}}"></i></div>
+                          <div style="flex: 0 0 70px">{{localize "POWER.POTENCY_SINGLE"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_SINGLE_HELP'}}"></i></div>
+                      </div>
+                      {{#each system.potency as |potency index|}}
+                      <div class="potency-content">
+                          <div class="potency-fields" data-index="{{index}}">
+                            <input type="number" data-path="cost" placeholder='{{localize "POWER.POTENCY_COST"}}' value="{{potency.cost}}">
+
+                              <input type="number" step="any" data-dtype="Number"  data-path="initial" value="{{potency.initial}}" placeholder='{{localize "POWER.POTENCY_INITIAL"}}' {{#if potency.initialDisabled}} disabled style="opacity:0.5"{{/if}}>
+
+                              <input type="text" data-path="property" placeholder='{{localize "POWER.POTENCY_PROPERTY"}}' value="{{potency.property}}">
+                              
+                              
+                              <input type="number" step = "any" data-path="value" placeholder='{{localize "POWER.POTENCY_VALUE"}}' value="{{potency.value}}">
+                              
+                              <div class="wng-checkbox {{#if potency.single}}checked{{else}}unchecked{{/if}}" data-path="single" data-target="potency">
+                                {{#if potency.single}}
+                                  <i class="fas fa-check"></i>
+                                {{/if}}
+                              </div>
+
+                              <a class="potency-delete"><i class="fas fa-times"></i></a>
+                          </div>
+                      </div>
+                      <div class="potency-description">
+                          <div class="potency-fields" data-index="{{index}}">
+                              <input type="text" data-path="description" placeholder="Description" value="{{potency.description}}">
+                          </div>
+                      </div>
+                      <hr>
+                      {{/each}}
+
+              </div>
+              {{/if}}
+
+            <button type="button" class="add-potency">+</button>
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="effects">
+        {{> systems/wrath-and-glory/template/item/tab/effects.html}}
+      </div>
+    </div>
+  </div>
+</form>

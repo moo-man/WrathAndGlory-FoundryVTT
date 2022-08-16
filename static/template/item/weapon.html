@@ -1,0 +1,206 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="weapon">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "WEAPON.NAME"}}</label>
+            <input name="name" type="text" value="{{name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+
+      <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="description">
+        <div class="description">
+          {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="stats">
+          <div class="wrapper">
+            <div class="item-form-group static">
+              <label>{{localize "WEAPON.CATEGORY"}}</label>
+              <select name="system.category">
+                {{#select system.category}}
+                <option value="melee">{{localize "CATEGORY.MELEE"}}</option>
+                <option value="ranged">{{localize "CATEGORY.RANGED"}}</option>
+                <option value="grenade-missile">{{localize "CATEGORY.GRENADE_MISSILE"}}</option>
+                <option value="launcher">{{localize "CATEGORY.LAUNCHER"}}</option>
+                {{/select}}
+              </select>
+            </div>
+            <div class="item-form-group static">
+              <label>{{localize "WEAPON.QUANTITY"}}</label>
+              <div class="item-form-inputs small">
+                <input name="system.quantity" type="number" value="{{system.quantity}}" data-dtype="Number" />
+              </div>
+            </div>
+        </div>
+        {{#if (eq rangeType "multi")}}
+        <div class="wrapper">
+          <div class="item-form-group static">
+            <label>{{localize "WEAPON.SALVO"}}</label>
+            <div class="item-form-inputs small">
+              <input name="system.salvo" type="number" value="{{system.salvo}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "WEAPON.RANGE"}}</label>
+            <div class="item-form-inputs medium">
+              <input name="system.range.short" type="number" value="{{system.range.short}}" data-dtype="Number" />
+              <input name="system.range.medium" type="number" value="{{system.range.medium}}" data-dtype="Number" />
+              <input name="system.range.long" type="number" value="{{system.range.long}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+        {{else}}
+        <div class="wrapper">
+          <div class="item-form-group static">
+            <label>{{localize "WEAPON.RANGE"}}</label>
+            <div class="item-form-inputs small">
+              <input name="system.range.melee" type="number" value="{{system.range.melee}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "WEAPON.THROWN"}} S x </label>
+            <div class="item-form-inputs small">
+              <input name="system.range.thrown" type="number" value="{{system.range.thrown}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+        {{/if}}
+        <div class="wrapper">
+          <div class="damage-header">
+            <b class="spacer"></b>
+            <b class="base">{{localize "DIALOG.BASE"}}</b>
+            <b class="rank">{{localize "DIALOG.RANK"}}</b>
+            <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
+          </div>
+          <div class="item-form-group fixed">
+            <label>{{localize "WEAPON.DAMAGE"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}"
+              data-dtype="Number" />
+              <select name="system.damage.rank" class="rank">
+                {{#select system.damage.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="item-form-group fixed">
+            <label>{{localize "WEAPON.ED"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.ed.base" class="base" type="number" value="{{system.ed.base}}" data-dtype="Number" />
+              <select name="system.ed.rank" class="rank">
+                {{#select system.ed.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="system.ed.bonus" class="modifier" type="number" value="{{system.ed.bonus}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="item-form-group fixed">
+            <label>{{localize "WEAPON.AP"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.ap.base" class="base" type="number" value="{{system.ap.base}}" data-dtype="Number" />
+              <select name="system.ap.rank" class="rank">
+                {{#select system.ap.rank}}
+                <option value="none">{{localize "RANK.NONE"}}</option>
+                <option value="single">{{localize "RANK.SINGLE"}}</option>
+                <option value="double">{{localize "RANK.DOUBLE"}}</option>
+                {{/select}}
+              </select>
+              <input name="system.ap.bonus" class="modifier" type="number" value="{{system.ap.bonus}}" data-dtype="Number" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper">
+          <div class="item-form-group stacked">
+            <label>{{localize "WEAPON.TRAITS"}}<a class="item-traits"><i class="fas fa-cog"></i></a></label>            
+            <div class="item-form-inputs">
+              <input disabled type="text" value="{{item.Traits}}" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper">
+          <div class="item-form-group static">
+            <label>{{localize "WEAPON.VALUE"}}</label>
+            <div class="item-form-inputs small">
+              <input name="system.value" type="number" value="{{system.value}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "WEAPON.RARITY"}}</label>
+            <div class="item-form-inputs">
+              <select name="system.rarity">
+                {{#select system.rarity}}
+                <option value=""> - </option>
+                {{#each (config "rarity") as |rarity r|}}
+                <option value="{{r}}">{{rarity}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="item-form-group">
+            <label>{{localize "WEAPON.KEYWORDS"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.keywords" type="text" value="{{system.keywords}}" />
+            </div>
+          </div>
+        </div>
+
+        <div class="item-list">
+          <div class="header">
+            <div class="item-property item-image"></div>
+            <span class="item-property item-name">{{localize "HEADER.UPGRADES"}}</span>
+            <div class="item-controls">
+            </div>
+          </div>
+          {{#each item.upgrades as |upgrade u|}}
+          <div class="item" data-index="{{u}}">
+            <div class="item-content">
+                <img class="item-property item-image" src="{{upgrade.img}}"></img>
+                <div class="item-property item-name upgrade-name">{{upgrade.name}}</div>
+                
+                <div class="item-property flex"></div>
+                <div class="item-controls">
+                  <a class="item-control upgrade-delete" title="Delete Upgrade"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="tab" data-group="primary" data-tab="effects">
+        {{> systems/wrath-and-glory/template/item/tab/effects.html}}
+      </div>
+    </div>
+  </div>
+</form>

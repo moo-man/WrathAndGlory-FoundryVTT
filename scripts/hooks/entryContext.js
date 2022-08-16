@@ -236,7 +236,7 @@ function _dealDamageToTarget(test, target) {
         res = 1
 
     if (res > damage)
-        note = game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : target.data.token.name});
+        note = game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : target.prototypeToken.name});
 
     if (res == damage)
     {
@@ -261,12 +261,12 @@ function _dealDamageToTarget(test, target) {
     if (addShock)
     {
         updateObj["data.combat.shock.value"] = target.combat.shock.value + 1
-        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_SHOCK", {name : target.data.token.name}));
+        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_SHOCK", {name : target.prototypeToken.name}));
 }
     if (addWounds)
     {
         updateObj["data.combat.wounds.value"] = target.combat.wounds.value + addWounds;
-        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE", {damage : addWounds, name : target.data.token.name}));
+        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE", {damage : addWounds, name : target.prototypeToken.name}));
     }
 
     target.update(updateObj);

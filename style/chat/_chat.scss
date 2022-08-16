@@ -1,0 +1,217 @@
+.wrath-and-glory.chat {
+  color: var(--color-black);
+  font-family: var(--font-text);
+  font-size: 12px;
+  line-height: 16px;
+  padding: 5px;
+}
+
+
+.wrath-and-glory.chat .wrapper-input {
+  background: url(./asset/image/input.webp) repeat;
+  padding: 10px;
+  border: 1px solid var(--color-black);
+  box-shadow: inset 0 0 6px var(--color-dark-grey);
+  position: relative;
+}
+
+.wrath-and-glory.chat .wrapper-input .red {
+  color: var(--color-red)
+}
+
+.wrath-and-glory.chat .wrapper button {
+  margin: 5px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrath-and-glory.chat .wrapper button img {
+  margin: 0px 5px;
+}
+
+
+.wrath-and-glory.chat strong {
+  font-family: var(--font-text);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.wrath-and-glory.chat h3 {
+  color: var(--color-red);
+  font-family: var(--font-text);
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  border-style: solid;
+  border-width: 0px 8px 8px 8px;
+  border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
+}
+
+.wrath-and-glory.chat h4 {
+  color: var(--color-black);
+  font-family: var(--font-text);
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.wrath-and-glory.chat.item img {
+  display: block;
+  margin: 0 auto 8px;
+  max-height: 64px;
+  width: auto;
+  border: 8px solid transparent;
+  border-image: var(--image-border) 8 8 8 8 repeat repeat;
+}
+
+.wrath-and-glory.chat.item:hover {
+  outline: 1px dotted black;
+  cursor: pointer
+}
+
+
+.wrath-and-glory.chat.roll img {
+  border: none;
+  border-radius: 0;
+}
+
+.wrath-and-glory.chat.roll .seal {
+  border: none;
+  border-radius: 0;
+  position: absolute;
+  right: -12px;
+  top: -40px;
+  width: 100px;
+  height: 100px;
+  background-size: 100px;
+}
+
+.wrath-and-glory.chat.roll .seal.approved {
+  background-image: url("./asset/image/approved.webp");
+}
+
+.wrath-and-glory.chat.roll .seal.heresy {
+  background-image: url("./asset/image/heresy.webp");
+}
+
+.wrath-and-glory.chat p {
+  margin: 0 0 4px;
+}
+
+.wrath-and-glory.chat .dice-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.wrath-and-glory.chat .die {
+  width: 60px;
+  height: 60px;
+  margin: 3px;
+  margin-right: 7px;
+  position: relative;
+}
+
+.wrath-and-glory.chat .die.selected {
+  box-shadow: 0 0 10px var(--color-imperium)
+}
+
+.wrath-and-glory.chat .die .die-icon {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid var(--color-imperium);
+  color: var(--color-imperium);
+  z-index: 1;
+  right: -5px;
+  top: -5px;
+  padding-top: 2px;
+  padding-top: 3px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.wrath-and-glory.chat .die:hover {
+  text-shadow: none;
+}
+
+  .wrath-and-glory.chat .die .die-icon.reroll{
+  right: -5px;
+  top: -5px;
+}
+
+
+.wrath-and-glory.chat .die.shifted .die-icon.potency,
+.wrath-and-glory.chat .die.shifted .die-icon.other,
+.wrath-and-glory.chat .die.shifted .die-icon.damage,
+  .wrath-and-glory.chat .die.shifted .die-icon.glory{
+  left: -5px;
+}
+
+.wrath-and-glory.chat .wrapper.potency 
+{
+  margin-top: 5px;
+}
+
+
+.wrath-and-glory.chat .potency .potency-allocation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.wrath-and-glory.chat .potency .potency-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.wrath-and-glory.chat .potency .potency-list .potency-option{
+  display: flex;
+  align-items: center;
+}
+
+.wrath-and-glory.chat .potency .potency-list .potency-option button{
+
+  height: 20px;
+  width: 20px;
+  min-width: 20px;
+  margin: 3px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+
+}
+
+.wrath-and-glory .targets {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px
+}
+
+.wrath-and-glory.dialog .targets {
+  margin-top: 5px;
+}
+
+
+.wrath-and-glory .targets .crosshair {
+  color: var(--color-imperium);
+  font-size: 18px;
+}
+
+.wrath-and-glory .targets .target {
+  border: 1px solid var(--color-imperium);
+  border-radius: 5px;
+  padding: 1px;
+  margin: 0px 3px;
+}

@@ -1,0 +1,98 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="species">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "SPECIES.NAME"}}</label>
+            <input name="name" type="text" value="{{name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-body">
+
+
+      <div class="wrapper">
+        <div class="item-form-group">
+          <label>{{localize "SPECIES.COST"}}</label>
+          <div class="item-form-inputs">
+            <input type="number" name="system.cost" value="{{system.cost}}" data-dtype="Number" />
+          </div>
+        </div>
+        <div class="item-form-group">
+          <label>{{localize "SPECIES.SPEED"}}</label>
+          <div class="item-form-inputs">
+            <input name="system.speed" type="number" value="{{system.speed}}" data-dtype="Number" />
+          </div>
+        </div>
+        <div class="item-form-group">
+          <label>{{localize "SPECIES.SIZE"}}</label>
+          <div class="item-form-inputs">
+            <select name="system.size">
+              {{#select system.size}}
+              {{#each (config "size") as |size s|}}
+              <option value="{{s}}">{{size}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
+      </div>
+      </div>
+
+        <div class="wrapper">
+          <div class="item-form-group">
+            <label>{{localize "SPECIES.ABILITIES"}}</label>
+              <div class="species-item-list">
+                {{{abilities}}}
+              </div>
+          </div>
+        </div>
+
+        <div class="wrapper item-attributes">
+          <h1>{{localize "SPECIES.ATTRIBUTE_MAX"}}</h1>
+          <div class="item-form-groups">
+            {{#each (config "attributeAbbrev") as |attribute a|}}
+              <div class="item-form-group">
+                <label>{{attribute}}</label>
+                <div class="item-form-inputs">
+                  <input name="system.attributeMax.{{a}}" type="number" value="{{lookup ../system.attributeMax a}}" data-dtype="Number" />
+                </div>
+              </div>
+              {{/each}}
+          </div>
+        </div>
+        <div class="wrapper item-attributes">
+          <h1>{{localize "SPECIES.ATTRIBUTES"}}</h1>
+          <div class="item-form-groups">
+            {{#each (config "attributeAbbrev") as |attribute a|}}
+              <div class="item-form-group">
+                <label>{{attribute}}</label>
+                <div class="item-form-inputs">
+                  <input name="system.attributes.{{a}}" type="number" value="{{lookup ../system.attributes a}}" data-dtype="Number" />
+                </div>
+              </div>
+              {{/each}}
+          </div>
+        </div>
+        <div class="wrapper item-skills">
+          <h1>{{localize "SPECIES.SKILLS"}}</h1>
+          <div class="item-form-groups">
+            {{#each (config "skills") as |skill s|}}
+            <div class="item-form-group">
+              <label>{{skill}}</label>
+              <div class="item-form-inputs">
+                <input name="system.skills.{{s}}" type="number" value="{{lookup ../system.skills s}}" data-dtype="Number" />
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

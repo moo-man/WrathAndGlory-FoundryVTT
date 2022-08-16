@@ -38,19 +38,19 @@ export default class CharacterCreation extends FormApplication {
         for (let attribute in this.character.attributes)
         {
             if (this.species.attributes[attribute])
-                this.character.data.update({[`data.attributes.${attribute}.base`] : this.species.attributes[attribute]})
+                this.character.updateSource({[`system.attributes.${attribute}.base`] : this.species.attributes[attribute]})
             if (this.archetype.attributes[attribute])
-                this.character.data.update({[`data.attributes.${attribute}.base`] : this.archetype.attributes[attribute]})
+                this.character.updateSource({[`system.attributes.${attribute}.base`] : this.archetype.attributes[attribute]})
         }
         for (let skill in this.character.skills)
         {
             if (this.species.skills[skill])
-            this.character.data.update({[`data.skills.${skill}.base`] : this.species.skills[skill]})
+            this.character.updateSource({[`system.skills.${skill}.base`] : this.species.skills[skill]})
             if (this.archetype.skills[skill])
-                this.character.data.update({[`data.skills.${skill}.base`] : this.archetype.skills[skill]})
+                this.character.updateSource({[`system.skills.${skill}.base`] : this.archetype.skills[skill]})
         }
 
-        this.character.data.update({"data.experience.total" : this.archetype.tier * 100, "data.advances.species" : this.archetype.cost})
+        this.character.updateSource({"system.experience.total" : this.archetype.tier * 100, "system.advances.species" : this.archetype.cost})
         
         this.character.prepareData();
 
@@ -150,13 +150,13 @@ export default class CharacterCreation extends FormApplication {
             return
         }
 
-        this.character.data.update({ "token": this.actor.data.token })
+        this.character.updateSource({ "prototypeToken": this.actor.prototypeToken })
 
-        this.character.data.update({"data.combat.speed" : this.species.speed, "data.combat.size" : this.species.size})
-        this.character.data.update({"data.resources.influence" : this.archetype.influence});
-        this.character.data.update({"data.advances.tier" : this.archetype.tier});
-        this.character.data.update({
-            "img": this.actor.data.img,
+        this.character.updateSource({"system.combat.speed" : this.species.speed, "system.combat.size" : this.species.size})
+        this.character.updateSource({"system.resources.influence" : this.archetype.influence});
+        this.character.updateSource({"system.advances.tier" : this.archetype.tier});
+        this.character.updateSource({
+            "img": this.actor.img,
             "name": formData.name,
             "token.name": formData.name
         })
@@ -171,7 +171,7 @@ export default class CharacterCreation extends FormApplication {
             {
                 let key = faction.effects[0].changes[0].key
                 // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
-                this.character.data.update({[key] : getProperty(this.character.data, key) + 1})
+                this.character.updateSource({[key] : getProperty(this.character.data, key) + 1})
                 faction.effects = [];
             }
             else 
@@ -189,13 +189,13 @@ export default class CharacterCreation extends FormApplication {
         let chosenGoal = $(this.form).find(".goal .active")[0]
 
         if(chosenOrigin) {
-            faction.data.backgrounds.origin[chosenOrigin.dataset.index || 0].active = true;
+            faction.system.backgrounds.origin[chosenOrigin.dataset.index || 0].active = true;
         }
         if(chosenAccomplishment) {
-            faction.data.backgrounds.accomplishment[chosenAccomplishment.dataset.index || 0].active = true;
+            faction.system.backgrounds.accomplishment[chosenAccomplishment.dataset.index || 0].active = true;
         }
         if(chosenGoal) {
-            faction.data.backgrounds.goal[chosenGoal.dataset.index || 0].active = true;
+            faction.system.backgrounds.goal[chosenGoal.dataset.index || 0].active = true;
         }
 
 
@@ -408,10 +408,10 @@ export default class CharacterCreation extends FormApplication {
             }
 
             // Can't go to 0 or base character, and can't go above species max
-            if (statObj.total <= 0 || statObj.total < getProperty(this.baseCharacter, `data.${target}.${stat}.total`) || (target == "attributes" && (statObj.total > getProperty(this.species, `attributeMax.${stat}`))))
+            if (statObj.total <= 0 || statObj.total < getProperty(this.baseCharacter, `system.${target}.${stat}.total`) || (target == "attributes" && (statObj.total > getProperty(this.species, `attributeMax.${stat}`))))
                 return;
 
-            this.character.data.update({[`data.${target}.${stat}.rating`] : statObj.rating})
+            this.character.updateSource({[`system.${target}.${stat}.rating`] : statObj.rating})
 
             this.updateDerived();
         })
@@ -441,18 +441,18 @@ export default class CharacterCreation extends FormApplication {
 
         attributes.forEach(element => {
             let input = $(element).find("input")[0]
-            input.value = this.character.data.data.attributes[element.dataset.attribute].total
+            input.value = this.character.system.attributes[element.dataset.attribute].total
         })
 
         skills.forEach(element => {
             let input = $(element).find("input")[0]
-            input.value = this.character.data.data.skills[element.dataset.skill].total
+            input.value = this.character.system.skills[element.dataset.skill].total
         })
     }
 
     updateExperience()
     {
-        let talentXP = this.addedTalents.reduce((prev, current) => prev + current.data.cost, 0)
+        let talentXP = this.addedTalents.reduce((prev, current) => prev + current.cost, 0)
         this.element.find(".xp input")[0].value = this.character.experience.spent + talentXP + this.archetype.cost;
     }
         
@@ -476,7 +476,7 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-    addTalent(talent)
+    async addTalent(talent)
     {
         let list = this.element.find(".talents")
         if (this.addedTalents.length == 0)
@@ -489,12 +489,12 @@ export default class CharacterCreation extends FormApplication {
         let html = `
         <div class="ability data-index='${this.addedTalents.length-1}'">
         <div class="ability-header">
-            <img src="${talent.data.img}">
+            <img src="${talent.img}">
             <label>${talent.name}</label>
             <a class="talent-delete"><i class="fas fa-times"></i></a>
         </div>
         <div class="ability-description">
-            ${TextEditor.enrichHTML(talent.description)}
+            ${await TextEditor.enrichHTML(talent.description, {async: true})}
         </div>
         </div>`
 
@@ -520,7 +520,7 @@ export default class CharacterCreation extends FormApplication {
         let html = "<option value=''>-</option>"
 
         backgroundsChosen.forEach(bg => {
-            html += `<option value=${bg.id}>${bg.effect.data.label} (${this.faction.backgrounds[bg.type][bg.index]?.name})</option>`
+            html += `<option value=${bg.id}>${bg.effect.label} (${this.faction.backgrounds[bg.type][bg.index]?.name})</option>`
         })
         return html
     }
