@@ -1,9 +1,11 @@
 {
   "id": "wrath-and-glory",
+  "name" : "wrath-and-glory",
   "title": "Wrath & Glory",
   "description": "The official system for Warhammer 40k Roleplay: Wrath & Glory! Time is running out in the 41st Millennium. This accursed age needs heroes more than ever before. Will you answer the call?",
   "version": "4.0.0",
-  "compatability" : {
+  "minimumCompatibleVersion" : 10,
+  "compatibility" : {
     "minimum" : 10,
     "verified" : 10,
     "maximum" : 10    
