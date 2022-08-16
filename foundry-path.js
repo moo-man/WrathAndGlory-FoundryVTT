@@ -16,7 +16,7 @@ function foundryConfig(systemId) {
   }
   else if (config?.path)
   {
-    foundryPath = path.join(config.path, systemId)
+    foundryPath = path.join(config.path, "systems", systemId)
   }
 
   console.log("Foundry Path: " + foundryPath)
