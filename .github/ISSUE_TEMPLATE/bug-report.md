@@ -20,12 +20,6 @@ If applicable, add screenshots to help explain your problem.
 PLEASE PROVIDE YOUR FOUNDRY, SYSTEM, and MODULE VERSIONS (where applicable) 
 
 Foundry:
-wfrp4e:
-wfrp4e-core:
-wfrp4e-starter-set:
-wfrp4e-rnhd:
-wfrp4e-eis:
-wfrp4e-ua1:
-wfrp4e-dotr:
-wfrp4e-archives1:
-wfrp4e-middenheim:
+wrath-and-glory:
+wng-forsaken:
+wng-litanies:
