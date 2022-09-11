@@ -28,13 +28,13 @@ import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./common/combat.js"
 import WrathANdGloryCombatTracker from "./apps/combat-tracker.js";
 import { WrathAndGloryOptionalCombat } from "./common/combat-optional.js";
 import settings from "./hooks/settings.js";
+import { AgentData } from "./actor/data/agent.js";
 
 
 
 Hooks.once("init", () => {
 
   settings()
-
   CONFIG.Actor.documentClass = WrathAndGloryActor;
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
@@ -50,6 +50,8 @@ Hooks.once("init", () => {
     CONFIG.ui.combat = WrathANdGloryCombatTracker
     CONFIG.Combatant.documentClass = WrathAndGloryCombatant
   }
+
+  CONFIG.Actor.systemDataModels["agent"] = AgentData
 
 
   game.wng = {

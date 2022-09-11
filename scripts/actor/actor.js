@@ -120,26 +120,6 @@ export class WrathAndGloryActor extends Actor {
 
     }
 
-    _computeAttributes() {
-        for (let attribute of Object.values(this.attributes)) {
-            attribute.total = attribute.rating + attribute.bonus + attribute.base;
-            attribute.cost = game.wng.utility.getAttributeCostTotal(attribute.rating + attribute.base, attribute.base);
-            if (this.advances) {
-                this.experience.spent = this.experience.spent + attribute.cost;
-            }
-        }
-    }
-
-    _computeSkills() {
-        for (let skill of Object.values(this.skills)) {
-            skill.cost = game.wng.utility.getSkillCostTotal(skill.rating + skill.base, skill.base);
-            skill.total = this.attributes[skill.attribute].total + skill.rating + skill.bonus + skill.base;
-            if (this.advances) {
-                this.experience.spent = this.experience.spent + skill.cost;
-            }
-        }
-    }
-
     _computeCombat() {
         let autoCalc = this.getFlag("wrath-and-glory", "autoCalc") || {}
 
@@ -161,9 +141,6 @@ export class WrathAndGloryActor extends Actor {
             this.combat.shock.max = this._setDefault(this.attributes.willpower.total + this.advances.tier + this.combat.shock.bonus, 1);
     }
 
-    _setDefault(value, fallback) {
-        return (value < fallback ? fallback : value);
-    }
 
     _computeExperience() {
         this.experience.current = this.experience.total - this.experience.spent;
