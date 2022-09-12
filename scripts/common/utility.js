@@ -129,6 +129,10 @@ export default class WNGUtility {
    * @returns an Item object if the item is in the world, or a Promise of an Item if it was from the compendium
    */
   static findItem(id, type) {
+
+    if (id.includes("."))
+      return fromUuid(id);
+
     if (game.items.has(id))
       return game.items.get(id)
 
