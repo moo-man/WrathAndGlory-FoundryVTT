@@ -2,10 +2,6 @@
 import EffectScriptConfig from "./effect-script.js"
 
 export default class WrathAndGloryEffectSheet extends ActiveEffectConfig {
-    get template() {
-        return "systems/wrath-and-glory/template/apps/active-effect-config.html"
-    }
-
     getData() {
         let data = super.getData()
         data.modes[6] = "Dialog Effect"
@@ -15,6 +11,15 @@ export default class WrathAndGloryEffectSheet extends ActiveEffectConfig {
 
     
     activateListeners(html) {
+
+
+        html.find(".changes-list .effect-controls").each((i, element) => {
+            if (this.object.changes[i].mode > 5)
+            {
+                element.append($(`<a class="effect-script-config"><i class="fas fa-cog"></i></a>`)[0])
+            }
+        })
+
         super.activateListeners(html)
         html.find(".effect-script-config").click(ev => {
             let index = parseInt($(ev.currentTarget).parents(".effect-change").attr("data-index"))
