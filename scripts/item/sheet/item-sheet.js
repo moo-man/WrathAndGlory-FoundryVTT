@@ -48,7 +48,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
         label : game.i18n.localize("BUTTON.JOURNAL"),
         class: "item-journal",
         icon : "fas fa-book",
-        onclick: (ev) => this.item.Journal?.sheet?.render(true)
+        onclick: async ev => (await this.item.Journal)?.sheet?.render(true)
       })
     }
 
@@ -111,36 +111,41 @@ async _handleEnrichment()
     return expandObject(enrichment)
 }
 
-  _onDrop(ev) {
+  async _onDrop(ev) {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-    let dropItem = game.items.get(dragData.id)
+    let dropDocument = await fromUuid(dragData.uuid)
 
-    if (["archetype", "species", "faction"].includes(this.item.type) && dragData.type == "JournalEntry")
+    if (!dropDocument)
+      return
+
+    if (["archetype", "species", "faction"].includes(this.item.type) && ["JournalPage", "JournalEntry"].includes(dropDocument.documentName))
     {
-      return this.item.update({"data.journal" : dragData.id})
+      return this.item.update({"data.journal" : dropDocument.uuid})
     }
 
-    if (this.item.type === "weapon" && dropItem && dropItem.type === "weaponUpgrade")
+    if (this.item.type === "weapon" && dropDocument.type === "weaponUpgrade")
     {
       let upgrades = duplicate(this.item.upgrades)
-      let upgrade = dropItem.toObject();
+      let upgrade = dropDocument.toObject();
       upgrade._id = randomID()
       upgrades.push(upgrade)
       this.item.update({"data.upgrades" : upgrades})
       ui.notifications.notify("Upgrade applied to " + this.item.name)
     } 
-    else if (this.item.type == "archetype")
+    else if (this.item.type == "archetype" && dropDocument.documentName == "Item")
     {
-      this.item.handleArchetypeItem(dropItem);
+      this.item.handleArchetypeItem(dropDocument);
     }
-    else if (this.item.type == "species")
+    else if (this.item.type == "species" && dropDocument.documentName == "Item")
     {
-      this.item.handleSpeciesItem(dropItem);
+      this.item.handleSpeciesItem(dropDocument);
     }
-    else if (dragData.type == "ActiveEffect")
-    {
-      this.item.createEmbeddedDocuments("ActiveEffect", [dragData.data])
-    }
+    else
+      super._onDrop(ev)
+    // else if (dragData.type == "ActiveEffect")
+    // {
+    //   this.item.createEmbeddedDocuments("ActiveEffect", [dragData.data])
+    // }
   }
 
 
@@ -379,10 +384,21 @@ async _handleEnrichment()
       new ArchetypeGroups(this.item).render(true)
     })
 
-    html.find(".archetype-item,.species-item,.archetype-faction,.archetype-species").mouseup(ev => {
+    html.find(".archetype-item,.species-item,.archetype-faction,.archetype-species").mouseup(async ev => {
       let id = ev.currentTarget.dataset.id;
       if (ev.button == 0)
-        game.items.get(id)?.sheet?.render(true, {editable: false})
+      {
+        let item = game.items.get(id)
+        if (!item)
+          item = await fromUuid(id)
+        
+        if (!item)
+        {
+          throw new Error("Could not find Item with ID " + id)
+        }
+
+        item.sheet?.render(true, {editable: false})
+      }
       else 
       {
        if (ev.currentTarget.classList.contains("archetype-ability")) 
@@ -414,7 +430,7 @@ async _handleEnrichment()
       }
     })
     
-    html.find(".wargear").mouseup(ev => {
+    html.find(".wargear").mouseup(async ev => {
       let index = Number(ev.currentTarget.dataset.index)
       let array = duplicate(this.item.wargear);
       let obj = this.item.wargear[index];
@@ -425,7 +441,17 @@ async _handleEnrichment()
           if (obj.type == "generic")
           new ArchetypeGeneric({item: this.item, index}).render(true);
           else
-            new WrathAndGloryItem(game.items.get(obj.id).toObject(), { archetype: { item: this.item, index, path: "data.wargear" } }).sheet.render(true)
+          {
+            let item = game.items.get(obj.id)
+            if (!item)
+              item = await fromUuid(obj.id)
+
+            if (!item) 
+              throw new Error("Could not find Item with ID " + obj.id)
+
+            new WrathAndGloryItem(item.toObject(), { archetype: { item: this.item, index, path: "data.wargear" } }).sheet.render(true)
+
+          }
         }
         else {
           new Dialog({

@@ -429,7 +429,6 @@ export default class CharacterCreation extends FormApplication {
     }
 
     updateDerived() {
-        this.character.prepareData();
         this.updateStats()
         this.updateExperience()
     }

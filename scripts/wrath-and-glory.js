@@ -39,6 +39,7 @@ Hooks.once("init", () => {
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
   CONFIG.ActiveEffect.sheetClass = WrathAndGloryEffectSheet;
+
   
   if (game.settings.get("wrath-and-glory", "initiativeRollOption"))
   {
@@ -90,6 +91,7 @@ Hooks.once("init", () => {
   Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
+  DocumentSheetConfig.registerSheet(ActiveEffect, "wrath-and-glory", WrathAndGloryEffectSheet, {makeDefault: true, label : "Wrath & Glory Active Effect Config"})
   initializeHandlebars();
 
   CONFIG.fontDefinitions.Priori = {editor : true, fonts : []}
