@@ -172,20 +172,7 @@ export class WrathAndGloryActor extends Actor {
     _applyDerivedEffects() {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)
-            const modes = CONST.ACTIVE_EFFECT_MODES;
-            switch (change.mode) {
-                case modes.CUSTOM:
-                    return change.effect._applyCustom(this, change);
-                case modes.ADD:
-                    return change.effect._applyAdd(this, change);
-                case modes.MULTIPLY:
-                    return change.effect._applyMultiply(this, change);
-                case modes.OVERRIDE:
-                    return change.effect._applyOverride(this, change);
-                case modes.UPGRADE:
-                case modes.DOWNGRADE:
-                    return change.effect._applyUpgrade(this, change);
-            }
+            change.effect.apply(this, change);
         })
     }
 
