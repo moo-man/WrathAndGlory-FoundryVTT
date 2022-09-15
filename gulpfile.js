@@ -19,13 +19,13 @@ gulp.task('sass', function () {
     .pipe(gulp.dest(foundryPath.systemPath(manifest.id)))
 });
 
-// gulp.task('watch', function () {
-//   gulp.watch('./src/styles/*', gulp.series('sass'));
-//   gulp.watch('./static/**/*', gulp.series('src'));
-//   gulp.watch('./src/**/*', gulp.series('src'));
-//   gulp.watch('./template.json', gulp.series('src'));
-//   gulp.watch('./system.json', gulp.series('src'));
-// });
+gulp.task('watch', function () {
+  gulp.watch('style/**/*', gulp.series('sass'));
+  //gulp.watch('./static/**/*', gulp.series('src'));
+  // gulp.watch('./src/**/*', gulp.series('src'));
+  // gulp.watch('./template.json', gulp.series('src'));
+  // gulp.watch('./system.json', gulp.series('src'));
+});
 
 // gulp.task("build", function()
 // {

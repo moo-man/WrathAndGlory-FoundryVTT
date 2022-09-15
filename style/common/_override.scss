@@ -457,3 +457,40 @@ a.content-link i, a.inline-roll i {
 li.folder > .folder-header {
   background: rgba(138, 46, 42, 0.4);
 }
+
+.prosemirror menu {
+  background: rgb(138, 46, 42, 0.8);
+  //background: var(--color-imperium);
+
+  .pm-dropdown {
+    color: black;
+    font-family: unset;
+  }
+}
+
+// @@@@ V10 JOURNAL @@@@ 
+.sheet.journal-entry {
+
+  .window-content {
+    background: var(--image-background) 0 100% repeat;
+  }
+
+  .journal-entry-content {
+    background: unset;
+    border: none;
+  }
+
+  .sidebar {
+    border-right: 8px solid transparent;
+    border-image: var(--image-border) 8 8 8 8 repeat repeat;
+
+    .pages-list {
+      color: black;
+    }
+
+    .action-button {
+      color: var(--color-imperium)
+    }
+
+  }
+}
