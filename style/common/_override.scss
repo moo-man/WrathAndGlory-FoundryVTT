@@ -109,6 +109,9 @@ textarea:focus {
   font-family: var(--font-header);
   font-size : 40px;
   text-align: center;
+  text-transform: uppercase;
+  border: none;
+  font-weight: bold;
 }
 
 .editor h2,
@@ -161,6 +164,7 @@ textarea:focus {
   border: none;
   font-weight: bold;
   font-size: 28px;
+  font-variant: small-caps;
   font-weight: bold;
   color: var(--color-subheader)
 }
@@ -480,16 +484,24 @@ li.folder > .folder-header {
     border: none;
   }
 
-  .sidebar {
+  .journal-sidebar {
     border-right: 8px solid transparent;
     border-image: var(--image-border) 8 8 8 8 repeat repeat;
 
     .pages-list {
       color: black;
+
+      .level4 .page-title {
+        text-indent: calc(3 * var(--level-indent));
+    }
     }
 
     .action-button {
       color: var(--color-imperium)
+    }
+
+    .directory-item.active {
+      color: var(--color-imperium);
     }
 
   }

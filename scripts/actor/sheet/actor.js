@@ -170,7 +170,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         let data = ev.dataTransfer.getData("text/plain")
         if (data) {
             data = JSON.parse(data)
-            if (data.type == "itemDrop")
+            if (data.type == "itemFromChat")
                 return this.actor.createEmbeddedDocuments("Item", [data.payload])
             else if (data.type == "keywordDrop") {
                 let name = data.payload
