@@ -93,6 +93,12 @@ export class WrathAndGloryItem extends Item {
 
 
     applyUpgrades() {
+
+        if (this.system.upgradesApplied)
+            return
+        else 
+            this.system.upgradesApplied = true;
+
         this._applyEffects(this.Upgrades.reduce((effects, upgrade) => {
             return effects.concat(Array.from(upgrade.effects))
         }, []))
