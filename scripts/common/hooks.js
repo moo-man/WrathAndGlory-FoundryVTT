@@ -65,7 +65,7 @@ export default function() {
             })
 
             a.addEventListener("dragstart", (ev) => {
-                event.stopPropagation()
+                ev.stopPropagation()
                 ev.dataTransfer.setData("text/plain", JSON.stringify({type : "keywordDrop", payload : ev.target.text}))
             })
         })
