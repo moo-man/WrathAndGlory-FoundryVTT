@@ -14,6 +14,9 @@ export default class WrathANdGloryCombatTracker extends CombatTracker {
             c.css = "defeated"
             c.defeated = true;
         })
+        data.turns.forEach(t => {
+            t.active = data.combat.combatants.get(t.id).isCurrent
+        })
         return data
     }
 
