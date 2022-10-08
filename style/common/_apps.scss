@@ -318,4 +318,17 @@
   box-shadow: inset 0 0 10px var(--color-imperium);
 }
 
+blockquote.foundry-note {
+  border-left: none;
+  font-style: normal;
+  border-radius: 20px;
+  padding: 5px;
+  background: radial-gradient(circle, rgba(255, 143, 32, 0.76) 0%, rgba(255, 77, 30, 0.75) 100%);
+  display: flex;
+  box-shadow: 0 0 7px black;
 
+}
+
+blockquote.foundry-note::before {
+  content:url(/icons/vtt.png)
+}
