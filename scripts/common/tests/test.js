@@ -222,7 +222,7 @@ export class WNGTest {
     }
 
     // Dice removed previously still show up (Terms with no results) So remove terms that have no results
-    let oldTerms = this.roll.toJSON().terms.filter(t => t instanceof OperatorTerm || t.results.length > 0);
+    let oldTerms = foundry.utils.deepClone(this.roll.terms).filter(t => t instanceof OperatorTerm || t.results.length > 0);
 
 
     // Find the last term of what is being deleted, and delete dice from that term

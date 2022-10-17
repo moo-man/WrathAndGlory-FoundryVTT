@@ -22,12 +22,12 @@ export class WrathAndGloryActor extends Actor {
         await super._preCreate(data, options, user)
 
         let initData = {
-            "token.bar1": { "attribute": "combat.wounds" },
-            "token.bar2": { "attribute": "combat.shock" },
-            "token.displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
-            "token.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
-            "token.disposition": CONST.TOKEN_DISPOSITIONS.NEUTRAL,
-            "token.name": data.name,
+            "prototypeToken.bar1": { "attribute": "combat.wounds" },
+            "prototypeToken.bar2": { "attribute": "combat.shock" },
+            "prototypeToken.displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+            "prototypeToken.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+            "prototypeToken.disposition": CONST.TOKEN_DISPOSITIONS.NEUTRAL,
+            "prototypeToken.name": data.name,
             "flags.wrath-and-glory.autoCalc.defence": true,
             "flags.wrath-and-glory.autoCalc.resilience": true,
             "flags.wrath-and-glory.autoCalc.shock": true,
@@ -41,10 +41,10 @@ export class WrathAndGloryActor extends Actor {
             "flags.wrath-and-glory.generateMetaCurrencies": true
         }
         if (data.type === "agent") {
-            initData["token.vision"] = true;
-            initData["token.actorLink"] = true;
+            initData["prototypeToken.vision"] = true;
+            initData["prototypeToken.actorLink"] = true;
         }
-        this.update(initData)
+        this.updateSource(initData)
     }
 
 
@@ -149,20 +149,7 @@ export class WrathAndGloryActor extends Actor {
     _applyDerivedEffects() {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)
-            const modes = CONST.ACTIVE_EFFECT_MODES;
-            switch (change.mode) {
-                case modes.CUSTOM:
-                    return change.effect._applyCustom(this, change);
-                case modes.ADD:
-                    return change.effect._applyAdd(this, change);
-                case modes.MULTIPLY:
-                    return change.effect._applyMultiply(this, change);
-                case modes.OVERRIDE:
-                    return change.effect._applyOverride(this, change);
-                case modes.UPGRADE:
-                case modes.DOWNGRADE:
-                    return change.effect._applyUpgrade(this, change);
-            }
+            change.effect.apply(this, change);
         })
     }
 

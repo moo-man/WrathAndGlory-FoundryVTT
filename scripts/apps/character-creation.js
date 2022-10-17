@@ -161,55 +161,59 @@ export default class CharacterCreation extends FormApplication {
             "token.name": formData.name
         })
 
-        let faction = this.faction.toObject();
-
-        if (formData["background-bonus"])
+        let faction = this.faction?.toObject()
+        if (faction)
         {
-            faction.effects = faction.effects.filter(e => e._id == formData["background-bonus"])
-
-            if (faction.effects[0].changes[0].mode == 0)
+            if (formData["background-bonus"])
             {
-                let key = faction.effects[0].changes[0].key
-                // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
-                this.character.updateSource({[key] : getProperty(this.character.data, key) + 1})
-                faction.effects = [];
+                faction.effects = faction.effects.filter(e => e._id == formData["background-bonus"])
+                
+                if (faction.effects[0].changes[0].mode == 0)
+                {
+                    let key = faction.effects[0].changes[0].key
+                    // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
+                    this.character.updateSource({[key] : getProperty(this.character.data, key) + 1})
+                    faction.effects = [];
+                }
+                else 
+                {
+                    faction.effects[0].transfer = true;
+                    faction.effects[0].label = $(ev.currentTarget).find(".background-bonus").children("option").filter(":selected").text()
+                    // Gross but whatever, uses the selected text (with background name appended) as the effect name
+                }
             }
-            else 
-            {
-                faction.effects[0].transfer = true;
-                faction.effects[0].label = $(ev.currentTarget).find(".background-bonus").children("option").filter(":selected").text()
-                // Gross but whatever, uses the selected text (with background name appended) as the effect name
+
+            // Set chosen backgrounds to active
+            let chosenOrigin = $(this.form).find(".origin .active")[0]
+            let chosenAccomplishment = $(this.form).find(".accomplishment .active")[0]
+            let chosenGoal = $(this.form).find(".goal .active")[0]
+
+            if(chosenOrigin) {
+                faction.system.backgrounds.origin[chosenOrigin.dataset.index || 0].active = true;
+            }
+            if(chosenAccomplishment) {
+                faction.system.backgrounds.accomplishment[chosenAccomplishment.dataset.index || 0].active = true;
+            }
+            if(chosenGoal) {
+                faction.system.backgrounds.goal[chosenGoal.dataset.index || 0].active = true;
             }
         }
-
-
-        // Set chosen backgrounds to active
-        let chosenOrigin = $(this.form).find(".origin .active")[0]
-        let chosenAccomplishment = $(this.form).find(".accomplishment .active")[0]
-        let chosenGoal = $(this.form).find(".goal .active")[0]
-
-        if(chosenOrigin) {
-            faction.system.backgrounds.origin[chosenOrigin.dataset.index || 0].active = true;
+        else
+        {
+            ui.notifications.warn("Faction could not be found. Skipping Faction bonuses")
         }
-        if(chosenAccomplishment) {
-            faction.system.backgrounds.accomplishment[chosenAccomplishment.dataset.index || 0].active = true;
-        }
-        if(chosenGoal) {
-            faction.system.backgrounds.goal[chosenGoal.dataset.index || 0].active = true;
-        }
-
 
 
         let wargear = await Promise.all(this.retrieveChosenWargear());
         let items = [
-            this.archetype.toObject(), 
-            this.species.toObject(), 
+            this.archetype?.toObject(), 
+            this.species?.toObject(), 
             faction,
-            this.archetypeAbility.toObject()]
-            .concat(wargear.filter(i => i).map(e => e.toObject()))
-            .concat(this.speciesAbilities.map(a=> a.toObject()))
+            this.archetypeAbility?.toObject()]
+            .concat(wargear.filter(i => i).map(e => e?.toObject()))
+            .concat(this.speciesAbilities.map(a=> a?.toObject()))
             .concat(this.addedTalents)
-            .concat((await Promise.all(this.archetype.keywords.map(WNGUtility.getKeywordItem))).map(i => i.toObject()))
+            .concat((await Promise.all(this.archetype.keywords.map(WNGUtility.getKeywordItem))).map(i => i?.toObject())).filter(i => i)
 
 
         await this.actor.update(mergeObject(this.character.toObject(), { overwrite: true }))
@@ -295,7 +299,7 @@ export default class CharacterCreation extends FormApplication {
             if (e.type == "generic") {
                 item = new WrathAndGloryItem({ type: "gear", name: e.name, img: "modules/wng-core/assets/icons/gear/gear.webp" })
             }
-            else {
+            else if (e.id) {
                 // Create a temp item and incorporate the diff
                 let document = await game.wng.utility.findItem(e.id)
                 if (document)
@@ -429,7 +433,6 @@ export default class CharacterCreation extends FormApplication {
     }
 
     updateDerived() {
-        this.character.prepareData();
         this.updateStats()
         this.updateExperience()
     }

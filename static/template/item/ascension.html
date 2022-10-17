@@ -23,7 +23,7 @@
     <div class="sheet-body">
       <div class="tab" data-group="primary" data-tab="description">
         <div class="description">
-          {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
+          {{editor enrichment.system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="stats">
@@ -59,7 +59,7 @@
         </div>
         <div class="wrapper benefits">
           <h1>{{localize "TITLE.BENEFITS"}}</h1>
-          {{editor system.benefits target="system.benefits" button=true owner=owner editable=editable}}
+          {{editor system.benefits target="system.benefits" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="effects">

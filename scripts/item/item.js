@@ -93,6 +93,12 @@ export class WrathAndGloryItem extends Item {
 
 
     applyUpgrades() {
+
+        if (this.system.upgradesApplied)
+            return
+        else 
+            this.system.upgradesApplied = true;
+
         this._applyEffects(this.Upgrades.reduce((effects, upgrade) => {
             return effects.concat(Array.from(upgrade.effects))
         }, []))
@@ -167,7 +173,7 @@ export class WrathAndGloryItem extends Item {
             let wargear = duplicate(this.wargear);
             wargear.push({
                 name : item.name,
-                id : item.id,
+                id : item.uuid,
                 type: "item",
                 diff : {}
             })
@@ -176,15 +182,15 @@ export class WrathAndGloryItem extends Item {
         }
         if(item.type == "ability")
         {
-            return this.update({"data.ability.id" : item.id, "data.ability.name" : item.name})
+            return this.update({"data.ability.id" : item.uuid, "data.ability.name" : item.name})
         }
         if(item.type == "faction")
         {
-            return this.update({"data.faction.id" : item.id, "data.faction.name" : item.name})
+            return this.update({"data.faction.id" : item.uuid, "data.faction.name" : item.name})
         }
         if(item.type == "species")
         {
-            return this.update({"data.species.id" : item.id, "data.species.name" : item.name})
+            return this.update({"data.species.id" : item.uuid, "data.species.name" : item.name})
         }
         if (item.type == "talent")
         {   
@@ -205,7 +211,7 @@ export class WrathAndGloryItem extends Item {
         if(item.type == "ability")
         {
             let abilities = duplicate(this.abilities);
-            abilities.push({id : item.id, name : item.name})
+            abilities.push({id : item.uuid, name : item.name})
             return this.update({"data.abilities" : abilities})
         }
     }
@@ -416,37 +422,31 @@ export class WrathAndGloryItem extends Item {
 
         let speciesAbilities = species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
         let archetypeAbility = game.wng.utility.findItem(this.ability.id, "ability")
-        let keywords = await Promise.all(this.keywords.map(WNGUtility.getKeywordItem))
+        let keywords = this.keywords.map(WNGUtility.getKeywordItem)
 
 
-        // Get all archetype talents, merge with diff
-        let talents = this.suggested.talents.map(t => {
-            let item = game.items.get(t.id)?.toObject();
+        // Get all archetype talents/wargear, merge with diff
+        for (let i of this.suggested.talents.concat(this.wargear))
+        {
+            let item = await game.wng.utility.findItem(i.id)
             if (item)
-                mergeObject(item, t.diff, {overwrite : true})
-            return item
-        })
+            {
+                item = item.toObject();
+                items.push(mergeObject(item, i.diff, {overwrite: true}))
+            }
+        }
 
-        // Get all archetype talents, merge with diff
-        let wargear = this.wargear.map(i => {
-            let item = game.items.get(i.id)?.toObject();
-            if (item)
-                mergeObject(item, i.diff, {overwrite : true})
-            return item
-        })
-
-        items = items.concat(
+        items = await Promise.all(items.concat(
             [species], 
             [this],
             [faction],
             [archetypeAbility],
             speciesAbilities,
-            keywords).map(i => i.toObject()).concat( // Wargear and talents are already objects
-                talents,
-                wargear
-            )
+            keywords))
+            .filter(i => i)
+            .map(i => i instanceof Item ? i.toObject() : i)
 
-        return items.filter(i => i);
+        return items
     }
 
     get Upgrades() {
@@ -531,7 +531,7 @@ export class WrathAndGloryItem extends Item {
     }
 
     get Journal() {
-        return game.journal.get(this.journal)
+        return game.wng.utility.findItem(this.journal)
     }
 
     get AbilityType() {

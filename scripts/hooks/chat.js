@@ -11,7 +11,7 @@ export default function() {
         {
             item.attr("draggable", true)
             item[0].addEventListener("dragstart", ev => {
-                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemDrop", payload : message.getFlag("wrath-and-glory", "itemData")}))
+                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemFromChat", payload : message.getFlag("wrath-and-glory", "itemData")}))
             })
         }
 

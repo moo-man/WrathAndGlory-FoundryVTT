@@ -29,6 +29,7 @@ import WrathANdGloryCombatTracker from "./apps/combat-tracker.js";
 import { WrathAndGloryOptionalCombat } from "./common/combat-optional.js";
 import settings from "./hooks/settings.js";
 import { AgentData } from "./actor/data/agent.js";
+import { Level4TextPageSheet } from "./apps/journal-sheet.js";
 
 
 
@@ -39,6 +40,8 @@ Hooks.once("init", () => {
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
   CONFIG.ActiveEffect.sheetClass = WrathAndGloryEffectSheet;
+  DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", Level4TextPageSheet, { makeDefault: true, label : "W&G Journal Sheet" });
+
   
   if (game.settings.get("wrath-and-glory", "initiativeRollOption"))
   {
@@ -92,6 +95,7 @@ Hooks.once("init", () => {
   Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
+  DocumentSheetConfig.registerSheet(ActiveEffect, "wrath-and-glory", WrathAndGloryEffectSheet, {makeDefault: true, label : "Wrath & Glory Active Effect Config"})
   initializeHandlebars();
 
   CONFIG.fontDefinitions.Priori = {editor : true, fonts : []}

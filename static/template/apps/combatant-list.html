@@ -1,21 +1,29 @@
 <li class="combatant actor directory-item flexrow {{combatant.css}}" data-combatant-id="{{combatant.id}}">
-    <img class="token-image" data-src="{{combatant.img}}" title="{{combatant.name}}" {{#if combatant.isComplete}}style="opacity: 0.5"{{/if}}/>
+    <img class="token-image" data-src="{{combatant.img}}" alt="{{combatant.name}}"/>
     <div class="token-name flexcol">
         <h4>{{combatant.name}}</h4>
         <div class="combatant-controls flexrow">
             {{#if (isGM)}}
-            <a class="combatant-control {{#if combatant.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-                <i class="fas fa-eye-slash"></i></a>
-            <a class="combatant-control {{#if combatant.defeated}}active{{/if}}" title="{{localize 'COMBAT.ToggleDead'}}" data-control="toggleDefeated">
-                <i class="fas fa-skull"></i></a>
+            <a class="combatant-control {{#if combatant.hidden}}active{{/if}}" data-tooltip="COMBAT.ToggleVis" data-control="toggleHidden">
+                <i class="fas fa-eye-slash"></i>
+            </a>
+            <a class="combatant-control {{#if combatant.defeated}}active{{/if}}" data-tooltip="COMBAT.ToggleDead" data-control="toggleDefeated">
+                <i class="fas fa-skull"></i>
+            </a>
+            {{/if}}
+            {{#if combatant.canPing}}
+            <a class="combatant-control" data-tooltip="COMBAT.PingCombatant" data-control="pingCombatant">
+                <i class="fa-solid fa-bullseye-arrow"></i>
+            </a>
             {{/if}}
             <div class="token-effects">
                 {{#each combatant.effects}}
-                <img class="token-effect" src="{{combatant}}"/>
+                <img class="token-effect" src="{{this}}"/>
                 {{/each}}
             </div>
         </div>
     </div>
+
 
     {{#if combatant.hasResource}}
     <div class="token-resource">
