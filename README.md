@@ -1,6 +1,10 @@
 # Wrath & Glory
 The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
 
+![](https://img.shields.io/github/v/release/moo-man/WrathAndGlory-FoundryVTT?label=Latest%20Version)
+![](https://img.shields.io/github/downloads/moo-man/WrathAndGlory-FoundryVTT/latest/wrath-and-glory.zip?label=Downloads%20%28Latest%20Version%29)
+![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V10-orange)
+
 ![repo-cover-wng](https://user-images.githubusercontent.com/28637157/146312294-3568bd17-9556-4a66-8072-905b42d3cff7.png)
 
 ## Install
