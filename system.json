@@ -43,7 +43,7 @@
       "url": "https://user-images.githubusercontent.com/28637157/146312294-3568bd17-9556-4a66-8072-905b42d3cff7.png"
     }
   ],
-  "background" : "../../modules/wng-core/assets/images/cover.webp",
+  "background" : "/modules/wng-core/assets/images/cover.webp",
   "gridDistance": 1,
   "gridUnits": "m",
   "primaryTokenAttribute": null,

@@ -48,7 +48,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
         label : game.i18n.localize("BUTTON.JOURNAL"),
         class: "item-journal",
         icon : "fas fa-book",
-        onclick: async ev => (await this.item.Journal)?.sheet?.render(true)
+        onclick: async ev => this.item.showInJournal()
       })
     }
 
@@ -118,9 +118,9 @@ async _handleEnrichment()
     if (!dropDocument)
       return
 
-    if (["archetype", "species", "faction"].includes(this.item.type) && ["JournalPage", "JournalEntry"].includes(dropDocument.documentName))
+    if (["archetype", "species", "faction"].includes(this.item.type) && ["JournalEntryPage", "JournalEntry"].includes(dropDocument.documentName))
     {
-      return this.item.update({"data.journal" : dropDocument.uuid})
+      return this.item.update({"system.journal" : dropDocument.uuid})
     }
 
     if (this.item.type === "weapon" && dropDocument.type === "weaponUpgrade")
@@ -129,7 +129,7 @@ async _handleEnrichment()
       let upgrade = dropDocument.toObject();
       upgrade._id = randomID()
       upgrades.push(upgrade)
-      this.item.update({"data.upgrades" : upgrades})
+      this.item.update({"system.upgrades" : upgrades})
       ui.notifications.notify("Upgrade applied to " + this.item.name)
     } 
     else if (this.item.type == "archetype" && dropDocument.documentName == "Item")
