@@ -142,9 +142,9 @@ export default class WrathAndGloryEffect extends ActiveEffect {
             let item = this.parent.items.get(data[3])
             if (item)
                 return item.name
-            else
-                return super.sourceName;
         }
+
+        return super.sourceName
     }
 
     get isCondition() {

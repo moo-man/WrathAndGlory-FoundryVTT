@@ -6,56 +6,54 @@ export default function() {
      * Actor     - open actor sheet
      * Journal   - open journal sheet
      */
-    Hooks.on("hotbarDrop", async (bar, data, slot) => {
-      // Create item macro if rollable item - weapon, spell, prayer, trait, or skill
-      if (data.type == "Item") {
-        if (data.data.type != "weapon" && data.data.type != "psychicPower" && data.data.type != "ability")
-          return
+    Hooks.on("hotbarDrop", (bar, data, slot) => {
 
-        let item = data.data
-        let command = `game.wng.utility.rollItemMacro("${item.name}", "${item.type}");`;
-        let macro = game.macros.contents.find(m => (m.name === item.name) && (m.command === command));
+      if (data.type == "Item" || data.type == "Actor")
+      {
+        createMacro(bar, data, slot)
+        return false
+      }
+
+    });
+    
+
+    async function createMacro(bar, data, slot)
+    {
+      let document = await fromUuid(data.uuid);
+      let command
+      // Create item macro if rollable item - weapon, spell, prayer, trait, or skill
+      if (document.documentName == "Item") {
+        if (document.type != "weapon" && document.type != "psychicPower" && document.type != "ability")
+          command = `Hotbar.toggleDocumentSheet("${data.uuid}")`
+        else 
+          command = `game.wng.utility.rollItemMacro("${document.name}", "${document.type}");`;
+
+        let macro = game.macros.contents.find(m => (m.name === document.name) && (m.command === command));
         if (!macro) {
           macro = await Macro.create({
-            name: item.name,
+            name: document.name,
             type: "script",
-            img: item.img,
+            img: document.img,
             command: command
           }, { displaySheet: false })
         }
         game.user.assignHotbarMacro(macro, slot);
       }
       // Create a macro to open the actor sheet of the actor dropped on the hotbar
-      else if (data.type == "Actor") {
-        let actor = game.actors.get(data.id);
-        let command = `game.actors.get("${data.id}").sheet.render(true)`
-        let macro = game.macros.contents.find(m => (m.name === actor.name) && (m.command === command));
+      else if (document.documentName == "Actor") {
+        command = `game.actors.get("${document.id}").sheet.render(true)`
+        let macro = game.macros.contents.find(m => (m.name === document.name) && (m.command === command));
         if (!macro) {
           macro = await Macro.create({
-            name: actor.name,
+            name: document.name,
             type: "script",
-            img: actor.img,
+            img: document.img,
             command: command
           }, { displaySheet: false })
           game.user.assignHotbarMacro(macro, slot);
         }
       }
-      // Create a macro to open the journal sheet of the journal dropped on the hotbar
-      else if (data.type == "JournalEntry") {
-        let journal = game.journal.get(data.id);
-        let command = `game.journal.get("${data.id}").sheet.render(true)`
-        let macro = game.macros.contents.find(m => (m.name === journal.name) && (m.command === command));
-        if (!macro) {
-          macro = await Macro.create({
-            name: journal.name,
-            type: "script",
-            img: "icons/svg/book.svg",
-            command: command
-          }, { displaySheet: false })
-          game.user.assignHotbarMacro(macro, slot);
-        }
-      }
-      return false;
-    });
+    }
+    
   }
   

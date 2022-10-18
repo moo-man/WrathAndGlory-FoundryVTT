@@ -1,5 +1,12 @@
 export default function() {
 
+  
+  JournalEntryPage.prototype.showInJournal = function() {
+    let journal = this.parent;
+    journal.sheet.goToPage(this.id)
+  }
+
+
 
    /**
     * Apply data transformations when importing a Document from a Compendium pack

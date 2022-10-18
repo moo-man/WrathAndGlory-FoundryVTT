@@ -1,6 +1,10 @@
 # Wrath & Glory
 The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
 
+![](https://img.shields.io/github/v/release/moo-man/WrathAndGlory-FoundryVTT?label=Latest%20Version)
+![](https://img.shields.io/github/downloads/moo-man/WrathAndGlory-FoundryVTT/latest/wrath-and-glory.zip?label=Downloads%20%28Latest%20Version%29)
+![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V10-orange)
+
 ![repo-cover-wng](https://user-images.githubusercontent.com/28637157/146312294-3568bd17-9556-4a66-8072-905b42d3cff7.png)
 
 ## Install
@@ -17,6 +21,26 @@ The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT
 - Cubicle 7
 - Perfectro (original system creator)
 - Thul (Features, testing and suggestions)
+
+## Environment Setup
+
+If you want to contribute to system development, clone the project to any folder to begin setting up your environment
+
+### 1. Install Dependencies
+
+```
+npm install
+```
+### 2. Configure your Foundry Data Path
+
+Copy and rename `example.foundryconfig.json` to `foundryconfig.json` and change the `path` property to your Foundry's Data location
+
+### 3. Build the project
+
+```
+npm run build
+```
+This will build the project into the location specified by the path property in step 2, which provides a working system that Foundry can use.
 
 ## Related Websites
 - [Foundry Virtual Tabletop](https://foundryvtt.com)

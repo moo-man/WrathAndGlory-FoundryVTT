@@ -166,11 +166,11 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
 
-    async _onDrop(ev) {
+    _onDrop(ev) {
         let data = ev.dataTransfer.getData("text/plain")
         if (data) {
             data = JSON.parse(data)
-            if (data.type == "itemDrop")
+            if (data.type == "itemFromChat")
                 return this.actor.createEmbeddedDocuments("Item", [data.payload])
             else if (data.type == "keywordDrop") {
                 let name = data.payload
@@ -178,17 +178,17 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 return this.actor.createEmbeddedDocuments("Item", [item.toObject()])
             }
             else if (data.type == "Item") {
-                let item = await Item.implementation.fromDropData(data);
-
-                if (item.type == "archetype")
-                {
-                    Dialog.confirm({
-                        title: this.actor.type == "agent" ? "Character Creation" : "Apply Archetype",
-                        content: `<p>${this.actor.type == "agent" ? "Begin Character Creation?" : "Apply Archetype data to this Actor?"}</p>`,
-                        yes: () => this.actor.applyArchetype(item, true),
-                        no: () => this.actor.applyArchetype(item, false)
-                    })
-                }
+                Item.implementation.fromDropData(data).then(item => {
+                    if (item.type == "archetype")
+                    {
+                        Dialog.confirm({
+                            title: this.actor.type == "agent" ? "Character Creation" : "Apply Archetype",
+                            content: `<p>${this.actor.type == "agent" ? "Begin Character Creation?" : "Apply Archetype data to this Actor?"}</p>`,
+                            yes: () => this.actor.applyArchetype(item, true),
+                            no: () => this.actor.applyArchetype(item, false)
+                        })
+                    }
+                });
             }
         }
         super._onDrop(ev)

@@ -93,6 +93,12 @@ export class WrathAndGloryItem extends Item {
 
 
     applyUpgrades() {
+
+        if (this.system.upgradesApplied)
+            return
+        else 
+            this.system.upgradesApplied = true;
+
         this._applyEffects(this.Upgrades.reduce((effects, upgrade) => {
             return effects.concat(Array.from(upgrade.effects))
         }, []))
@@ -525,7 +531,17 @@ export class WrathAndGloryItem extends Item {
     }
 
     get Journal() {
-        return game.wng.utility.findItem(this.journal)
+        return fromUuid(this.journal)
+    }
+
+    async showInJournal() {
+        let journal = await this.Journal
+
+        if (journal instanceof JournalEntry)
+            return journal.sheet.render(true)
+        else if (journal instanceof JournalEntryPage) 
+            return journal.showInJournal()
+
     }
 
     get AbilityType() {

@@ -81,6 +81,7 @@ export class WrathAndGloryCombatant extends Combatant {
     {
         let data = this.toObject()
         setProperty(data, "flags.wrath-and-glory.combatStatus", "complete")
+        data.active = false;
         return data
     }
 

@@ -37,7 +37,7 @@ export default function() {
 
 
     Hooks.on("renderActorSheet", _addKeywordListeners)
-    Hooks.on("renderJournalSheet", _addKeywordListeners)
+    Hooks.on("renderJournalTextPageSheet", _addKeywordListeners)
     Hooks.on("renderItemSheet", _addKeywordListeners)
 
     
@@ -48,16 +48,16 @@ export default function() {
 
     function _addKeywordListeners(sheet, app)
     {
-        Array.from(app.find("a.keyword")).forEach(a => {
+        Array.from(app.find("a.keyword")).forEach(async a => {
             a.draggable = true
             let item = game.items.find(i => i.name == a.textContent && i.type == "keyword")
 
             if (game.wng.config.keywordDescriptions &&  game.wng.config.keywordDescriptions[a.textContent])
-                a.title = game.wng.config.keywordDescriptions[a.textContent]
+                a.dataset.tooltip = await TextEditor.enrichHTML(game.wng.config.keywordDescriptions[a.textContent], {async: true})
             else if (item)
             {
                 const markup = /<(.*?)>/gi;
-                a.title = item.description.replace(markup, "");
+                a.dataset.tooltip = await TextEditor.enrichHTML(item.description, {async : true})
             }
 
             a.addEventListener("click", (ev) => {
@@ -65,7 +65,7 @@ export default function() {
             })
 
             a.addEventListener("dragstart", (ev) => {
-                event.stopPropagation()
+                ev.stopPropagation()
                 ev.dataTransfer.setData("text/plain", JSON.stringify({type : "keywordDrop", payload : ev.target.text}))
             })
         })
