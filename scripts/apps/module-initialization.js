@@ -62,7 +62,7 @@ export default class ModuleInitializer extends Dialog {
 
                         let parent = this.folders[folderType][folder].getFlag(this.moduleKey, "initialization-parent")
                         if (parent) {
-                            let parentId = this.folders[folderType][parent].id
+                            let parentId = this.folders[folderType][parent]?.id
                             await this.folders[folderType][folder].update({ parent: parentId })
                         }
                     }
@@ -89,7 +89,7 @@ export default class ModuleInitializer extends Dialog {
             for (let document of documents) {
                 let folder = document.getFlag(this.moduleKey, "initialization-folder")
                 if (folder)
-                    document.updateSource({ "folder": this.folders[document.documentName][folder].id })
+                    document.updateSource({ "folder": this.folders[document.documentName][folder]?.id })
                 if (document.flags[this.moduleKey].sort)
                     document.updateSource({ "sort": document.flags[this.moduleKey].sort })
             }
@@ -141,7 +141,7 @@ export default class ModuleInitializer extends Dialog {
             for (let map of maps) {
                 let folder = map.getFlag(this.moduleKey, "initialization-folder")
                 if (folder)
-                    map.updateSource.update({ "folder": this.folders["Scene"][folder].id })
+                    map.updateSource.update({ "folder": this.folders["Scene"][folder]?.id })
             }
             await Scene.create(maps).then(sceneArray => {
                 sceneArray.forEach(async s => {
