@@ -25,7 +25,6 @@
       "name" : "Perfectro"
     }
   ],
-  "author": "Moo Man, Thul, Perfectro",
   "scripts": ["./wrath-and-glory.js"],
   "esmodules": [],
   "styles": ["./wrath-and-glory.css"],
