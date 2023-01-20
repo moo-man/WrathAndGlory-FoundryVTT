@@ -159,6 +159,11 @@ export class WrathAndGloryActor extends Actor {
             this.combat.determination.total = this._setDefault(this.attributes[this.combat.determination.attribute || "toughness"].total + this.combat.determination.bonus, 1);
         if (autoCalc.shock && this.type == "agent")
             this.combat.shock.max = this._setDefault(this.attributes.willpower.total + this.advances.tier + this.combat.shock.bonus, 1);
+
+        if (autoCalc.defence)
+        {
+            this._applySizeModifiers();
+        }
     }
 
     _setDefault(value, fallback) {
@@ -174,6 +179,18 @@ export class WrathAndGloryActor extends Actor {
             change.effect.fillDerivedData(this, change)
             change.effect.apply(this, change);
         })
+    }
+
+    _applySizeModifiers()
+    {
+        if (this.combat.size == "small")
+        {
+            this.combat.defence.total += 1
+        }
+        else if (this.combat.size == "tiny")
+        {
+            this.combat.defence.total += 2  
+        }
     }
 
     //#region Rolling
@@ -437,6 +454,18 @@ export class WrathAndGloryActor extends Actor {
             if (token)
                 dialogData.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
 
+            if (target.actor.system.combat.size == "large")
+            {
+                dialogData.pool.bonus += 1;
+            }
+            else if (target.actor.system.combat.size == "huge")
+            {
+                dialogData.pool.bonus += 2;
+            }
+            else if (target.actor.system.combat.size == "gargantuan")
+            {
+                dialogData.pool.bonus += 3;
+            }
         }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 
