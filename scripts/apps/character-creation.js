@@ -429,6 +429,7 @@ export default class CharacterCreation extends FormApplication {
             {
                 this.element.find(".talents h4").remove()
             }
+            this.updateDerived();
         })
     }
 
@@ -455,7 +456,7 @@ export default class CharacterCreation extends FormApplication {
 
     updateExperience()
     {
-        let talentXP = this.addedTalents.reduce((prev, current) => prev + current.cost, 0)
+        let talentXP = this.addedTalents.reduce((prev, current) => prev + current.system.cost, 0)
         this.element.find(".xp input")[0].value = this.character.experience.spent + talentXP + this.archetype.cost;
     }
         
