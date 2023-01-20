@@ -72,6 +72,10 @@ export class WrathAndGloryActor extends Actor {
 
     prepareAgent() {
         this._computeExperience();
+
+        this.system.bio.origin.value = this.system.bio.origin.value || this.faction?.backgrounds.origin.find(b => b.active)?.description
+        this.system.bio.accomplishment.value = this.system.bio.accomplishment.value || this.faction?.backgrounds.accomplishment.find(b => b.active)?.description
+        this.system.bio.goal.value = this.system.bio.goal.value || this.faction?.backgrounds.goal.find(b => b.active)?.description
     }
 
     prepareThreat() {
@@ -647,20 +651,6 @@ export class WrathAndGloryActor extends Actor {
         return this.type == "threat" && this.mob > 1
     }
 
-    get activeBackground() {
-        let background = {
-            origin: "",
-            accomplishment: "",
-            goal: ""
-        }
-        if (!this.faction)
-            return background
-
-        background.origin = this.faction.backgrounds.origin.find(b => b.active)?.description
-        background.accomplishment = this.faction.backgrounds.accomplishment.find(b => b.active)?.description
-        background.goal = this.faction.backgrounds.goal.find(b => b.active)?.description
-        return background
-    }
 
     async addCondition(effect, flags = {}) {
         if (typeof (effect) === "string")
