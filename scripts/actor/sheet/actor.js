@@ -235,7 +235,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".show-adv").mouseleave(this._onAdvLeave.bind(this))
         html.find(".adv-buttons button").click(this._onAdvButtonClick.bind(this))
         html.find(".condition-toggle").click(this._onConditionToggle.bind(this))
-        html.find(".condition-click").click(this._onConditionClick.bind(this));
+        html.find(".condition-click").mousedown(this._onConditionClick.bind(this));
         html.find(".item-trait").mousedown(this._onItemTraitClick.bind(this))
         html.find(".effect-select").change(this._onEffectSelect.bind(this))
         html.find(".item-label").click(this._onItemLabelClick.bind(this))
@@ -743,10 +743,18 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _onConditionClick(ev) {
         let key = $(ev.currentTarget).parents(".condition").data("key")
         let effect = CONFIG.statusEffects.find(i => i.id == key)
-        if (effect) {
-            let journal = game.journal.getName(effect.label)
-            if (journal)
-                journal.sheet.render(true)
+        if (ev.button == 0) { // Left click
+
+            if (effect) {
+                let journal = game.journal.getName(effect.label)
+                if (journal)
+                    journal.sheet.render(true)
+            }
+        }
+        else if (ev.button == 2) // Right click
+        {
+            let effect = this.actor.hasCondition(key);
+            effect?.sheet.render(true);
         }
     }
 
