@@ -288,12 +288,12 @@ async _handleEnrichment()
       {
         index = parseInt(index);
         let innerTarget = ev.currentTarget.dataset.innerTarget
-        let array = duplicate(getProperty(this.item.data, target))
+        let array = duplicate(getProperty(this.item, target))
         array[index][innerTarget] = !array[index][innerTarget]
         this.item.update({[target] : array})
       }
       else
-        this.item.update({ [target]: !getProperty(this.item.data, target) })
+        this.item.update({ [target]: !getProperty(this.item, target) })
     })
 
     html.find(".add-potency").click(ev => {
@@ -312,7 +312,7 @@ async _handleEnrichment()
     
     html.find(".add-background").click(ev => {
       let path = $(ev.currentTarget).parents(".backgrounds").attr("data-path")
-      let array = duplicate(getProperty(this.item.data, path))
+      let array = duplicate(getProperty(this.item, path))
 
       if (path.includes("backgrounds"))
       {
@@ -353,7 +353,7 @@ async _handleEnrichment()
       let innerPath = ev.currentTarget.dataset.path;
       let value = ev.target.value
 
-      let array = duplicate(getProperty(this.item.data, path))
+      let array = duplicate(getProperty(this.item, path))
       array[index][innerPath] = value;
 
       this.item.update({[path] : array})
