@@ -466,6 +466,14 @@ export class WrathAndGloryActor extends Actor {
             {
                 dialogData.pool.bonus += 3;
             }
+
+
+        // If using melee and target has parry weapon equipped, increase difficulty
+        if (weapon.system.category == "melee" && target.actor.getItemTypes("weapon").find(i => i.equipped && i.traitList["parry"]))
+        {
+            dialogData.difficulty.penalty += 1;
+        }
+
         }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 
