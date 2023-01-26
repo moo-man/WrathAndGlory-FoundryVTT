@@ -746,9 +746,10 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         if (ev.button == 0) { // Left click
 
             if (effect) {
-                let journal = game.journal.getName(effect.label)
+                let journal = game.journal.get("FWVnJvg0Gy7IMzO7")
+                let page = journal.pages.getName(effect.label)
                 if (journal)
-                    journal.sheet.render(true)
+                    journal.sheet.render(true, {pageId : page.id})
             }
         }
         else if (ev.button == 2) // Right click
