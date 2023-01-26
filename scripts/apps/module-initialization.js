@@ -141,7 +141,7 @@ export default class ModuleInitializer extends Dialog {
             for (let map of maps) {
                 let folder = map.getFlag(this.moduleKey, "initialization-folder")
                 if (folder)
-                    map.updateSource.update({ "folder": this.folders["Scene"][folder]?.id })
+                    map.updateSource({ "folder": this.folders["Scene"][folder]?.id })
             }
             await Scene.create(maps).then(sceneArray => {
                 sceneArray.forEach(async s => {

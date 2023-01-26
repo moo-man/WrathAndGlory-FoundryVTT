@@ -8,14 +8,14 @@
 export default class ArchetypeGeneric extends FormApplication {
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            id: "archetype-generic",
-            template: "systems/wrath-and-glory/template/apps/archetype-generic.html",
-            height: "auto",
-            width: 285,
-            title: "Archetype Item Generic",
-            resizable: true,
-        })
+        let options = super.defaultOptions;
+        options.classes.push("archetype-generic");
+        options.template =  "systems/wrath-and-glory/template/apps/archetype-generic.html";
+        options.height =  "auto";
+        options.width =  285;
+        options.title =  "Archetype Item Generic";
+        options.resizable =  true;
+        return options;
     }
 
     getData() {

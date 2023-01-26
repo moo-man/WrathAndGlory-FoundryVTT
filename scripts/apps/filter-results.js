@@ -5,14 +5,14 @@ export default class FilterResults extends FormApplication {
     }
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            id: "filter-results",
-            title: "Filter Results",
-            template: "systems/wrath-and-glory/template/apps/filter-results.html",
-            width: 300,
-            height: 800,
-            resizable: true
-        })
+        let options = super.defaultOptions;
+        options.classes.push("filter-results");
+        options.title = "Filter Results";
+        options.template = "systems/wrath-and-glory/template/apps/filter-results.html",
+        options.width = 300,
+        options.height = 800,
+        options.resizable = true
+        return options;
     }
 
     async getData() {
