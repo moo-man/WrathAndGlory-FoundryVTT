@@ -166,7 +166,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     }
 
 
-    async _onDrop(ev) {
+    _onDrop(ev) {
         let data = ev.dataTransfer.getData("text/plain")
         if (data) {
             data = JSON.parse(data)
@@ -178,17 +178,17 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                 return this.actor.createEmbeddedDocuments("Item", [item.toObject()])
             }
             else if (data.type == "Item") {
-                let item = await Item.implementation.fromDropData(data);
-
-                if (item.type == "archetype")
-                {
-                    Dialog.confirm({
-                        title: this.actor.type == "agent" ? "Character Creation" : "Apply Archetype",
-                        content: `<p>${this.actor.type == "agent" ? "Begin Character Creation?" : "Apply Archetype data to this Actor?"}</p>`,
-                        yes: () => this.actor.applyArchetype(item, true),
-                        no: () => this.actor.applyArchetype(item, false)
-                    })
-                }
+                Item.implementation.fromDropData(data).then(item => {
+                    if (item.type == "archetype")
+                    {
+                        Dialog.confirm({
+                            title: this.actor.type == "agent" ? "Character Creation" : "Apply Archetype",
+                            content: `<p>${this.actor.type == "agent" ? "Begin Character Creation?" : "Apply Archetype data to this Actor?"}</p>`,
+                            yes: () => this.actor.applyArchetype(item, true),
+                            no: () => this.actor.applyArchetype(item, false)
+                        })
+                    }
+                });
             }
         }
         super._onDrop(ev)
@@ -235,7 +235,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
         html.find(".show-adv").mouseleave(this._onAdvLeave.bind(this))
         html.find(".adv-buttons button").click(this._onAdvButtonClick.bind(this))
         html.find(".condition-toggle").click(this._onConditionToggle.bind(this))
-        html.find(".condition-click").click(this._onConditionClick.bind(this));
+        html.find(".condition-click").mousedown(this._onConditionClick.bind(this));
         html.find(".item-trait").mousedown(this._onItemTraitClick.bind(this))
         html.find(".effect-select").change(this._onEffectSelect.bind(this))
         html.find(".item-label").click(this._onItemLabelClick.bind(this))
@@ -743,10 +743,19 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _onConditionClick(ev) {
         let key = $(ev.currentTarget).parents(".condition").data("key")
         let effect = CONFIG.statusEffects.find(i => i.id == key)
-        if (effect) {
-            let journal = game.journal.getName(effect.label)
-            if (journal)
-                journal.sheet.render(true)
+        if (ev.button == 0) { // Left click
+
+            if (effect) {
+                let journal = game.journal.get("FWVnJvg0Gy7IMzO7")
+                let page = journal.pages.getName(effect.label)
+                if (journal)
+                    journal.sheet.render(true, {pageId : page.id})
+            }
+        }
+        else if (ev.button == 2) // Right click
+        {
+            let effect = this.actor.hasCondition(key);
+            effect?.sheet.render(true);
         }
     }
 

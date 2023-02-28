@@ -318,8 +318,12 @@ export class WrathAndGloryItem extends Item {
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get Range() {
         if (this.isRanged) {
-            if (this.category == "launcher" || this.category == "grenade-missile") {
-                return this.range.thrown * this.actor.attributes.strength.total
+            if (this.category == "launcher" || this.category == "grenade-missile") 
+            {
+                if (this.actor)
+                    return this.range.thrown * this.actor.attributes.strength.total
+                else 
+                    return `S x ${this.range.thrown}`
             }
             else {
                 const short = this.range.short < 1 ? "-" : this.range.short;
@@ -531,7 +535,17 @@ export class WrathAndGloryItem extends Item {
     }
 
     get Journal() {
-        return game.wng.utility.findItem(this.journal)
+        return fromUuid(this.journal)
+    }
+
+    async showInJournal() {
+        let journal = await this.Journal
+
+        if (journal instanceof JournalEntry)
+            return journal.sheet.render(true)
+        else if (journal instanceof JournalEntryPage) 
+            return journal.showInJournal()
+
     }
 
     get AbilityType() {

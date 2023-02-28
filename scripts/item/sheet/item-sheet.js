@@ -48,7 +48,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
         label : game.i18n.localize("BUTTON.JOURNAL"),
         class: "item-journal",
         icon : "fas fa-book",
-        onclick: async ev => (await this.item.Journal)?.sheet?.render(true)
+        onclick: async ev => this.item.showInJournal()
       })
     }
 
@@ -118,9 +118,9 @@ async _handleEnrichment()
     if (!dropDocument)
       return
 
-    if (["archetype", "species", "faction"].includes(this.item.type) && ["JournalPage", "JournalEntry"].includes(dropDocument.documentName))
+    if (["archetype", "species", "faction"].includes(this.item.type) && ["JournalEntryPage", "JournalEntry"].includes(dropDocument.documentName))
     {
-      return this.item.update({"data.journal" : dropDocument.uuid})
+      return this.item.update({"system.journal" : dropDocument.uuid})
     }
 
     if (this.item.type === "weapon" && dropDocument.type === "weaponUpgrade")
@@ -129,7 +129,7 @@ async _handleEnrichment()
       let upgrade = dropDocument.toObject();
       upgrade._id = randomID()
       upgrades.push(upgrade)
-      this.item.update({"data.upgrades" : upgrades})
+      this.item.update({"system.upgrades" : upgrades})
       ui.notifications.notify("Upgrade applied to " + this.item.name)
     } 
     else if (this.item.type == "archetype" && dropDocument.documentName == "Item")
@@ -288,12 +288,12 @@ async _handleEnrichment()
       {
         index = parseInt(index);
         let innerTarget = ev.currentTarget.dataset.innerTarget
-        let array = duplicate(getProperty(this.item.data, target))
+        let array = duplicate(getProperty(this.item, target))
         array[index][innerTarget] = !array[index][innerTarget]
         this.item.update({[target] : array})
       }
       else
-        this.item.update({ [target]: !getProperty(this.item.data, target) })
+        this.item.update({ [target]: !getProperty(this.item, target) })
     })
 
     html.find(".add-potency").click(ev => {
@@ -312,7 +312,7 @@ async _handleEnrichment()
     
     html.find(".add-background").click(ev => {
       let path = $(ev.currentTarget).parents(".backgrounds").attr("data-path")
-      let array = duplicate(getProperty(this.item.data, path))
+      let array = duplicate(getProperty(this.item, path))
 
       if (path.includes("backgrounds"))
       {
@@ -353,7 +353,7 @@ async _handleEnrichment()
       let innerPath = ev.currentTarget.dataset.path;
       let value = ev.target.value
 
-      let array = duplicate(getProperty(this.item.data, path))
+      let array = duplicate(getProperty(this.item, path))
       array[index][innerPath] = value;
 
       this.item.update({[path] : array})

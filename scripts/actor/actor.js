@@ -72,6 +72,10 @@ export class WrathAndGloryActor extends Actor {
 
     prepareAgent() {
         this._computeExperience();
+
+        this.system.bio.origin.value = this.system.bio.origin.value || this.faction?.backgrounds.origin.find(b => b.active)?.description
+        this.system.bio.accomplishment.value = this.system.bio.accomplishment.value || this.faction?.backgrounds.accomplishment.find(b => b.active)?.description
+        this.system.bio.goal.value = this.system.bio.goal.value || this.faction?.backgrounds.goal.find(b => b.active)?.description
     }
 
     prepareThreat() {
@@ -139,6 +143,11 @@ export class WrathAndGloryActor extends Actor {
             this.combat.determination.total = this._setDefault(this.attributes[this.combat.determination.attribute || "toughness"].total + this.combat.determination.bonus, 1);
         if (autoCalc.shock && this.type == "agent")
             this.combat.shock.max = this._setDefault(this.attributes.willpower.total + this.advances.tier + this.combat.shock.bonus, 1);
+
+        if (autoCalc.defence)
+        {
+            this._applySizeModifiers();
+        }
     }
 
 
@@ -151,6 +160,18 @@ export class WrathAndGloryActor extends Actor {
             change.effect.fillDerivedData(this, change)
             change.effect.apply(this, change);
         })
+    }
+
+    _applySizeModifiers()
+    {
+        if (this.combat.size == "small")
+        {
+            this.combat.defence.total += 1
+        }
+        else if (this.combat.size == "tiny")
+        {
+            this.combat.defence.total += 2  
+        }
     }
 
     //#region Rolling
@@ -414,6 +435,26 @@ export class WrathAndGloryActor extends Actor {
             if (token)
                 dialogData.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
 
+            if (target.actor.system.combat.size == "large")
+            {
+                dialogData.pool.bonus += 1;
+            }
+            else if (target.actor.system.combat.size == "huge")
+            {
+                dialogData.pool.bonus += 2;
+            }
+            else if (target.actor.system.combat.size == "gargantuan")
+            {
+                dialogData.pool.bonus += 3;
+            }
+
+
+        // If using melee and target has parry weapon equipped, increase difficulty
+        if (weapon.system.category == "melee" && target.actor.getItemTypes("weapon").find(i => i.equipped && i.traitList["parry"]))
+        {
+            dialogData.difficulty.penalty += 1;
+        }
+
         }
         dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
 
@@ -587,20 +628,6 @@ export class WrathAndGloryActor extends Actor {
         return this.type == "threat" && this.mob > 1
     }
 
-    get activeBackground() {
-        let background = {
-            origin: "",
-            accomplishment: "",
-            goal: ""
-        }
-        if (!this.faction)
-            return background
-
-        background.origin = this.faction.backgrounds.origin.find(b => b.active)?.description
-        background.accomplishment = this.faction.backgrounds.accomplishment.find(b => b.active)?.description
-        background.goal = this.faction.backgrounds.goal.find(b => b.active)?.description
-        return background
-    }
 
     async addCondition(effect, flags = {}) {
         if (typeof (effect) === "string")

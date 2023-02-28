@@ -18,6 +18,15 @@ export class AgentSheet extends WrathAndGloryActorSheet {
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-cost").focusout(async (ev) => { await this._onItemCostFocusOut(ev); });
+
+        html.find(".roll-objective").on("click", ev =>  {
+            if (this.actor.faction)
+            {
+                let objectives = this.actor.faction.system.objectives;
+                let rolled = objectives[Math.floor(CONFIG.Dice.randomUniform() * objectives.length)];
+                this.actor.update({"system.bio.objective" : rolled});
+            }
+        })
     }
 
     _getHeaderButtons() {

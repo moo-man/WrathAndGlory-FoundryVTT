@@ -23,8 +23,6 @@ jobs:
         
       - name: Build Project
         run: npm run release
-      - name: Build SCSS
-        run: npm run gulp_release
         
       - name: Get System ID
         id: systemID
@@ -49,12 +47,16 @@ jobs:
           field: 'download'
           value: "https://github.com/${{github.repository}}/releases/download/${{steps.tag.outputs.tag}}/${{steps.systemID.outputs.prop}}.zip"
           
+      # - name: Generate Changelog
+      #   id: changelog
+      #   uses: mikepenz/release-changelog-builder-action@v2
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PAT }}
           
       - name: Create Release
         uses: ncipollo/release-action@v1.9.0
         with:
           token: ${{ secrets.PAT }}
           artifacts: "./system.json, ./${{steps.systemID.outputs.prop}}.zip"
-          prerelease : true
           draft : true
           generateReleaseNotes : true

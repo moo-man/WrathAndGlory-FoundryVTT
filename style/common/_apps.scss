@@ -308,13 +308,13 @@
   height: calc(100% - 30px);
 }
 
-#filter-results form ,
+.filter-results form ,
   .filter-results .directory .directory-list,
   .filter-results .directory{
   height: 100%
 }
 
-#filter-results .document.active {
+.filter-results .document.active {
   box-shadow: inset 0 0 10px var(--color-imperium);
 }
 

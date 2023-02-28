@@ -24,6 +24,8 @@ export default class RuinGloryCounter extends Application {
     render(force=false, options={})
     {
       let userPosition = game.settings.get("wrath-and-glory", "counterPosition")
+      if (userPosition.hide)
+        return
       options.top = userPosition.top || window.innerHeight - 200
       options.left = userPosition.left || 250
       super.render(force, options)
@@ -40,9 +42,9 @@ export default class RuinGloryCounter extends Application {
       game.settings.set("wrath-and-glory", "counterPosition", this.position)
     }
 
-    close(){
-      return
-    }
+    // close(){
+    //   return
+    // }
   
     activateListeners(html) {
       super.activateListeners(html);
@@ -124,3 +126,18 @@ export default class RuinGloryCounter extends Application {
     }
   
   }
+
+
+  Hooks.on("renderSceneControls", (app, html, options) => {
+    let button = $(`<li class='scene-controls' data-tooltip="${game.i18n.localize("CONTROLS.WNGCounterToggle")}"><i class="fa-solid fa-input-numeric"></i></li>`)
+    button.on("click", () => {
+
+      // Retain show/hide on refresh by storing in settings
+      position = game.settings.get("wrath-and-glory", "counterPosition")
+      position.hide = game.counter.rendered;
+      game.settings.set("wrath-and-glory", "counterPosition", position);
+      
+      game.counter.rendered ? game.counter.close() : game.counter.render(true);
+    })
+    html.find("ol.main-controls").append(button)
+  })

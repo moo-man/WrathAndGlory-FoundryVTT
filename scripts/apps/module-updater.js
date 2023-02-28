@@ -6,7 +6,7 @@ export default class ModuleUpdater extends Dialog {
     {
 
         super({
-            title: `${game.i18n.localize("UpdaterTitle1")} ${module.da.title} ${game.i18n.localize("UpdaterTitle2")}`,
+            title: `${game.i18n.localize("UpdaterTitle1")} ${module.title} ${game.i18n.localize("UpdaterTitle2")}`,
             content: html,
             module,
             buttons:
@@ -15,7 +15,7 @@ export default class ModuleUpdater extends Dialog {
               {
                 label: game.i18n.localize("Update"),
                 callback: html => {
-                    if (!game.settings.get(module.name, "initialized"))
+                    if (!game.settings.get(module.id, "initialized"))
                         return ui.notifications.notify(game.i18n.localize("UPDATER.Error"))
                     let settings = this.getUpdateSettings(html)
                     this.updateImportedContent(settings)
@@ -53,7 +53,7 @@ export default class ModuleUpdater extends Dialog {
             if (type != "excludeNameChange" && settings[type])
                 await this.updateDocuments(documents[type], settings)
         }
-        ui.notifications.notify(`${game.i18n.format("UPDATER.Notification", { created: this.count.created,  updated: this.count.updated,  name: this.data.module.name, version: this.data.module.version })}`)
+        ui.notifications.notify(`${game.i18n.format("UPDATER.Notification", { created: this.count.created,  updated: this.count.updated,  name: this.data.module.id, version: this.data.module.version })}`)
 
     }
 
@@ -86,7 +86,7 @@ export default class ModuleUpdater extends Dialog {
             }
             else 
             {
-                let folder = document.getFlag(this.data.module.name, "initialization-folder")
+                let folder = document.getFlag(this.data.module.id, "initialization-folder")
                 folder = game.folders.getName(folder)
                 let newDoc = document.toObject()
                 if (folder)
@@ -122,7 +122,7 @@ export default class ModuleUpdater extends Dialog {
         for (let pack of packs)
         {
             let docs = await pack.getDocuments();
-            switch (pack.metadata.entity)
+            switch (pack.metadata.type)
             {
                 case "Actor": documents.actors = documents.actors.concat(docs)
                     break;

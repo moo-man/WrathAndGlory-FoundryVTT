@@ -450,6 +450,7 @@
   "WEAPON_UPGRADE.RARITY": "Rarity",
   "WEAPON_UPGRADE.KEYWORDS": "Keywords",
 
+  "CONTROLS.WNGCounterToggle" : "Glory and Ruin Counter",
   "COUNTER.GLORY_CHANGED" : "Glory changed by {change}",
   "COUNTER.RUIN_CHANGED" : "Ruin changed by {change}",
 
@@ -537,7 +538,4 @@
   "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
   "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
   "BUTTON.PostBug" : "W&G Bug Report"
-
-
-
 }
