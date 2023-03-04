@@ -47,112 +47,20 @@ export class WrathAndGloryActor extends Actor {
         this.updateSource(initData)
     }
 
-
     prepareBaseData() {
+        this.itemCategories = this.itemTypes
+        this.itemCategories.all = this.items;
+        this.derivedEffects = []
+        this.system.computeBase();
     }
 
     prepareDerivedData() {
-        this._applyDerivedEffects()
-        this._computeAttributes();
-        this._computeItems();
-        this._computeSkills();
-        this._computeCombat();
-    }
-
-    prepareData() {
-        this.itemCategories = this.itemTypes
-        this.derivedEffects = []
-        super.prepareData();
-        if (this.type === "agent")
-            this.prepareAgent();
-        else if (this.type === "threat")
-            this.prepareThreat();
-    }
-
-
-    prepareAgent() {
-        this._computeExperience();
-
-        this.system.bio.origin.value = this.system.bio.origin.value || this.faction?.backgrounds.origin.find(b => b.active)?.description
-        this.system.bio.accomplishment.value = this.system.bio.accomplishment.value || this.faction?.backgrounds.accomplishment.find(b => b.active)?.description
-        this.system.bio.goal.value = this.system.bio.goal.value || this.faction?.backgrounds.goal.find(b => b.active)?.description
-    }
-
-    prepareThreat() {
-
-    }
-
-    _computeItems() {
-        let armour = []
-        for (let item of this.items) {
-            item.prepareOwnedData()
-            if (item.isArmour && item.equipped) {
-                armour.push(item)
-            }
-            if (this.advances && item.cost && item.type != "species") { // Species is included in archetype
-                this.experience.spent = this.experience.spent + item.cost;
-            }
-        }
-        this._computeArmour(armour);
-    }
-
-    _computeArmour(armour) {
-        this.combat.resilience.armour = 0;
-        let highestRes = 0
-        for (let item of armour) {
-            if (item.rating)
-
-                if (item.traitList.powered)
-                    this.attributes.strength.total += item.traitList.powered.rating
-
-            if (item.traitList.bulk)
-                this.combat.speed -= item.traitList.bulk.rating
-
-            if (item.traitList.shield)
-            {
-                this.combat.resilience.armour += item.rating;
-                this.combat.defence.bonus += item.rating
-            }
-            else if (item.rating > highestRes)
-                highestRes = item.rating
-
-
-            if (item.traitList.invulnerable)
-                this.combat.resilience.invulnerable = true
-        }
-        this.combat.resilience.armour += highestRes
-
-    }
-
-    _computeCombat() {
-        let autoCalc = this.getFlag("wrath-and-glory", "autoCalc") || {}
-
-        if (autoCalc.awareness)
-            this.combat.passiveAwareness.total = this._setDefault(Math.ceil(this.skills.awareness.total / 2) + this.combat.passiveAwareness.bonus, 1);
-        if (autoCalc.defence)
-            this.combat.defence.total = this._setDefault(this.attributes.initiative.total - 1 + this.combat.defence.bonus, 1);
-        if (autoCalc.resolve)
-            this.combat.resolve.total = this._setDefault(this.attributes.willpower.total - 1, 1) + this.combat.resolve.bonus;
-        if (autoCalc.conviction)
-            this.combat.conviction.total = this._setDefault(this.attributes.willpower.total + this.combat.conviction.bonus, 1);
-        if (autoCalc.resilience)
-            this.combat.resilience.total = this._setDefault(this.attributes.toughness.total + 1 + this.combat.resilience.bonus + this.combat.resilience.armour, 1);
-        if (autoCalc.wounds && this.type == "agent")
-            this.combat.wounds.max = this._setDefault((this.advances.tier * 2) + this.attributes.toughness.total + this.combat.wounds.bonus, 1);
-        if (autoCalc.determination)
-            this.combat.determination.total = this._setDefault(this.attributes[this.combat.determination.attribute || "toughness"].total + this.combat.determination.bonus, 1);
-        if (autoCalc.shock && this.type == "agent")
-            this.combat.shock.max = this._setDefault(this.attributes.willpower.total + this.advances.tier + this.combat.shock.bonus, 1);
-
-        if (autoCalc.defence)
+        for (let item of this.items)
         {
-            this._applySizeModifiers();
+            item.prepareOwnedData();
         }
-    }
-
-
-    _computeExperience() {
-        this.experience.current = this.experience.total - this.experience.spent;
+        this._applyDerivedEffects()
+        this.system.computeDerived(this.itemCategories, this.getFlag("wrath-and-glory", "autoCalc"));
     }
 
     _applyDerivedEffects() {
@@ -160,18 +68,6 @@ export class WrathAndGloryActor extends Actor {
             change.effect.fillDerivedData(this, change)
             change.effect.apply(this, change);
         })
-    }
-
-    _applySizeModifiers()
-    {
-        if (this.combat.size == "small")
-        {
-            this.combat.defence.total += 1
-        }
-        else if (this.combat.size == "tiny")
-        {
-            this.combat.defence.total += 2  
-        }
     }
 
     //#region Rolling

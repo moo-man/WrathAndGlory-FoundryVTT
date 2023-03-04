@@ -28,8 +28,9 @@ import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./common/combat.js"
 import WrathANdGloryCombatTracker from "./apps/combat-tracker.js";
 import { WrathAndGloryOptionalCombat } from "./common/combat-optional.js";
 import settings from "./hooks/settings.js";
-import { AgentData } from "./actor/data/agent.js";
 import { Level4TextPageSheet } from "./apps/journal-sheet.js";
+import { AgentModel } from "./actor/model/agent.js";
+import { ThreatModel } from "./actor/model/threat.js";
 
 
 
@@ -54,7 +55,8 @@ Hooks.once("init", () => {
     CONFIG.Combatant.documentClass = WrathAndGloryCombatant
   }
 
-  CONFIG.Actor.systemDataModels["agent"] = AgentData
+  CONFIG.Actor.systemDataModels["agent"] = AgentModel
+  CONFIG.Actor.systemDataModels["threat"] = ThreatModel
 
 
   game.wng = {

@@ -16,35 +16,15 @@ export class AttributeModel extends foundry.abstract.DataModel {
     }
     
     compute() {
-        this.computeTotal();
-    }
-
-    computeTotal() {
         this.total = this.rating + this.bonus + this.base
     }
 }
 
 
 /**
- * Agent Attribute - Adds experience calculation to compute method
- */
-export class AgentAttributeModel extends AttributeModel {
-    compute() {
-        super.compute();
-        this.computeCost();
-    }
-
-    computeCost() {
-        this.cost = game.wng.utility.getAttributeCostTotal(this.rating + this.base, this.base);
-        this.parent.experience.spent += this.cost;
-    }
-
-}
-
-/**
  * Default Attributes used by common actors
  */
-export class DefaultAttributesModel extends foundry.abstract.DataModel {
+export class AttributesModel extends foundry.abstract.DataModel {
     static defineSchema() {
         return {
             strength: new foundry.data.fields.EmbeddedDataField(AttributeModel),
@@ -59,23 +39,22 @@ export class DefaultAttributesModel extends foundry.abstract.DataModel {
 
     compute() {
         for(let attribute in this)
-            attribute.compute();
+            this[attribute].compute();
     }
 }
 
 /**
- * Agent Attributes should compute experience: use AgentAttributesModel
+ * Agent Attributes should compute experience
  */
-export class AgentAttributesModel extends DefaultAttributesModel {
-    static defineSchema() {
-        return {
-            strength: new foundry.data.fields.EmbeddedDataField(AgentAttributeModel),
-            toughness: new foundry.data.fields.EmbeddedDataField(AgentAttributeModel),
-            agility: new foundry.data.fields.EmbeddedDataField(AgentAttributeModel),
-            initiative: new foundry.data.fields.EmbeddedDataField(AgentAttributeModel),
-            willpower: new foundry.data.fields.EmbeddedDataField(AgentAttributeModel),
-            intellect: new foundry.data.fields.EmbeddedDataField(AgentAttributeModel),
-            fellowship: new foundry.data.fields.EmbeddedDataField(AgentAttributeModel)
+export class AgentAttributesModel extends AttributesModel {
+
+    computeCosts(experience) {
+        for (let attr in this)
+        {
+            let attribute = this[attr];
+            attribute.cost = game.wng.utility.getAttributeCostTotal(attribute.rating + attribute.base, attribute.base);
+            experience.spent += attribute.cost;
         }
     }
+
 }
