@@ -28,7 +28,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
   }
 
   get template() {
-    return `systems/wrath-and-glory/template/item/${this.item.type}.html`
+    return `systems/wrath-and-glory/template/item/${this.item.type}.hbs`
   }
 
   _getHeaderButtons() {
@@ -214,7 +214,7 @@ async _handleEnrichment()
         ui.notifications.error("Effects can only be added to world items or actors directly")
       let effectData = { label: this.item.name, icon: this.item.img }
 
-        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.html", effectData)
+        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.hbs", effectData)
         let dialog = new Dialog({
             title : "Quick Effect",
             content : html,

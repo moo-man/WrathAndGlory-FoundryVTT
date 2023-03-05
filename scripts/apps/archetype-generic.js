@@ -10,7 +10,7 @@ export default class ArchetypeGeneric extends FormApplication {
     static get defaultOptions() {
         let options = super.defaultOptions;
         options.classes.push("archetype-generic");
-        options.template =  "systems/wrath-and-glory/template/apps/archetype-generic.html";
+        options.template =  "systems/wrath-and-glory/template/apps/archetype-generic.hbs";
         options.height =  "auto";
         options.width =  285;
         options.title =  "Archetype Item Generic";

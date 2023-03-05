@@ -3,7 +3,7 @@ import { RollDialog } from "./base-dialog.js";
 export class PowerDialog extends RollDialog {
 
   static async create(data) {
-    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/psychic-roll.html", data);
+    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/psychic-roll.hbs", data);
     return new Promise((resolve) => {
       new this({
         title: game.i18n.localize(data.title),

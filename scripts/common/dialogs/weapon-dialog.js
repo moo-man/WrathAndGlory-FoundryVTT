@@ -11,7 +11,7 @@ export class WeaponDialog extends RollDialog {
 
 
   static async create(data) {
-    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/weapon-roll.html", data);
+    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/weapon-roll.hbs", data);
     return new Promise((resolve) => {
       new this({
         title: game.i18n.localize(data.title),

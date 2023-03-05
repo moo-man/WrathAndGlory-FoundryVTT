@@ -18,7 +18,7 @@ export default class WeaponTest extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/weapon/weapon-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/weapon/weapon-roll.hbs"
   }
 
 

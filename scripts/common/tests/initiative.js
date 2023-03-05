@@ -8,7 +8,7 @@ export default class InitiativeRoll extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/initiative/initiative-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/initiative/initiative-roll.hbs"
   }
 
   async rollTest() {

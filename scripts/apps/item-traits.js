@@ -3,7 +3,7 @@ export default class ItemTraits extends FormApplication
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "item-traits",
-            template : "systems/wrath-and-glory/template/apps/item-traits.html",
+            template : "systems/wrath-and-glory/template/apps/item-traits.hbs",
             height : "auto",
             width : "auto",
             title : "Item Traits",

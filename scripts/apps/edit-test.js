@@ -3,7 +3,7 @@ export default class EditTestForm extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "edit-test",
             title: game.i18n.localize("BUTTON.EDIT"),
-            template: "systems/wrath-and-glory/template/apps/edit-test.html",
+            template: "systems/wrath-and-glory/template/apps/edit-test.hbs",
         })
     }
 

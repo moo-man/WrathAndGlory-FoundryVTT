@@ -12,7 +12,7 @@ export default class DeterminationRoll extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/determination/determination-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/determination/determination-roll.hbs"
   }
 
   async rollTest() {

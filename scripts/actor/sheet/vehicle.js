@@ -6,7 +6,7 @@ export class VehicleSheet extends BaseWnGActorSheet {
         let options = super.defaultOptions
 
         options.classes.push("vehicle");
-        options.template = "systems/wrath-and-glory/template/actor/vehicle.html";
+        options.template = "systems/wrath-and-glory/template/actor/vehicle.hbs";
         options.width = 700;
         options.height = 1000;
         options.resizable = true;

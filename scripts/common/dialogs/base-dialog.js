@@ -28,7 +28,7 @@ export class RollDialog extends Dialog {
     }
   
     static async create(data) {
-      const html = await renderTemplate("systems/wrath-and-glory/template/dialog/common-roll.html", data);
+      const html = await renderTemplate("systems/wrath-and-glory/template/dialog/common-roll.hbs", data);
       return new Promise((resolve) => {
         new this({
           title: game.i18n.localize(data.title),

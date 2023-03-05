@@ -33,7 +33,7 @@ export default class BugReportFormWNG extends Application {
     static get defaultOptions() {
         const options = super.defaultOptions;
         options.id = "bug-report";
-        options.template = "systems/wrath-and-glory/template/apps/bug-report.html"
+        options.template = "systems/wrath-and-glory/template/apps/bug-report.hbs"
         options.classes.push("wrath-and-glory", "wng-bug-report");
         options.resizable = true;
         options.width = 600;
@@ -68,7 +68,7 @@ export default class BugReportFormWNG extends Application {
             {
                 ui.notifications.notify(game.i18n.localize("ImperialPost"))
                 res.json().then(json => {
-                    console.log("%c%s%c%s", 'color: #8a2e2a', `ADEPTUS ADMINISTRATUM:`, 'color: unset', ` Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: ${json.html_url}`)
+                    console.log("%c%s%c%s", 'color: #8a2e2a', `ADEPTUS ADMINISTRATUM:`, 'color: unset', ` Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: ${json.hbs_url}`)
                 })
             }
             else 

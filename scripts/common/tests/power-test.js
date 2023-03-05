@@ -26,7 +26,7 @@ export default class PowerTest extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/power/power-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/power/power-roll.hbs"
   }
 
 

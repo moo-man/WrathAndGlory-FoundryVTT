@@ -1,6 +1,6 @@
 
 export default class ItemDialog extends Dialog {
-    static template = "systems/wrath-and-glory/template/apps/item-dialog.html"
+    static template = "systems/wrath-and-glory/template/apps/item-dialog.hbs"
 
     static get defaultOptions() {
         let options = super.defaultOptions

@@ -15,7 +15,7 @@ export class BaseWnGActorSheet extends ActorSheet {
     }
 
     get template() {
-        return `systems/wrath-and-glory/template/actor/${this.actor.type}.html`
+        return `systems/wrath-and-glory/template/actor/${this.actor.type}.hbs`
     }
 
     async getData() {
@@ -164,7 +164,7 @@ export class BaseWnGActorSheet extends ActorSheet {
             effectData["duration.rounds"] = 1;
         }
 
-        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.html")
+        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.hbs")
         let dialog = new Dialog({
             title: "Quick Effect",
             content: html,
