@@ -1,6 +1,6 @@
-import { WrathAndGloryActorSheet } from "./actor.js";
+import { StandardActorSheet } from "./standard.js";
 
-export class AgentSheet extends WrathAndGloryActorSheet {
+export class AgentSheet extends StandardActorSheet {
 
 
     static get defaultOptions() {
@@ -13,6 +13,17 @@ export class AgentSheet extends WrathAndGloryActorSheet {
         let sheetData = await super.getData()
         this._attributeAndSkillTooltips(sheetData)
         return sheetData
+    }
+
+    _attributeAndSkillTooltips(sheetData) {
+
+        for (let attribute of Object.values(sheetData.system.attributes)) {
+            attribute.tooltip = `Rating: ${attribute.rating} | Advance Cost: ${game.wng.utility.getAttributeCostIncrement(attribute.rating + 1)} | Current XP: ${this.actor.experience.current}`
+        }
+
+        for (let skill of Object.values(sheetData.system.skills)) {
+            skill.tooltip = `Rating: ${skill.rating} | Advance Cost: ${game.wng.utility.getSkillCostIncrement(skill.rating + 1)} | Current XP: ${this.actor.experience.current}`
+        }
     }
 
     activateListeners(html) {

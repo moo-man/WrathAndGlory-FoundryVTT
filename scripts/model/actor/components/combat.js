@@ -1,12 +1,7 @@
-import { AgentAttributesModel, AttributesModel } from "./attributes";
 
 export class CombatModel extends foundry.abstract.DataModel {
     static defineSchema() {
         return {
-            defense: new foundry.data.fields.SchemaField({
-                bonus: new foundry.data.fields.NumberField(),
-                total: new foundry.data.fields.NumberField()
-            }),
             defence: new foundry.data.fields.SchemaField({
                 bonus: new foundry.data.fields.NumberField(),
                 total: new foundry.data.fields.NumberField()

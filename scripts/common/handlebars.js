@@ -15,6 +15,8 @@ function preloadHandlebarsTemplates() {
     "systems/wrath-and-glory/template/actor/tab/settings.html",
     "systems/wrath-and-glory/template/actor/tab/stats.html",
     "systems/wrath-and-glory/template/actor/tab/talents.html",
+    "systems/wrath-and-glory/template/actor/tab/vehicle/main.html",
+    "systems/wrath-and-glory/template/actor/tab/vehicle/gear.html",
     "systems/wrath-and-glory/template/chat/roll/base/dice-container.html",
     "systems/wrath-and-glory/template/chat/roll/base/base-result.html",
     "systems/wrath-and-glory/template/chat/roll/base/base-roll.html",

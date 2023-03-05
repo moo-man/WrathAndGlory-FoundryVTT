@@ -238,6 +238,13 @@ WNG.attributeCosts = [0, 0, 4, 6, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 WNG.skillCosts = [0, 2, 4, 6, 8, 10, 12, 14, 16]
 
 
+WNG.vehicleRoles = {
+    "pilot" : "VEHICLRE.Pilot",
+    "crew" : "VEHICLRE.Crew",
+    "passenger" : "VEHICLRE.Passenger"
+}
+
+
 WNG.systemEffects = {
     "wounded" : {
         id : "wounded",

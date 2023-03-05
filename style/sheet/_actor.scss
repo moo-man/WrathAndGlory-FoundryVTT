@@ -1,0 +1,89 @@
+@import "./agent";
+@import "./threat";
+@import "./vehicle";
+
+.wrath-and-glory.sheet.actor {
+  width: 100%;
+  height: 100%;
+
+  .sheet-header {
+    display: grid;
+    grid-template-columns: 100px auto;
+    grid-template-rows: 100px;
+    column-gap: 8px;
+    row-gap: 0;
+    width: 100%;
+    height: 100px;
+
+    .avatar {
+      grid-column: 1 / 1;
+      grid-row: 1 / 1;
+      border: 8px solid transparent;
+      border-image: var(--image-border) 8 8 8 8 repeat repeat;
+
+      img {
+        border: 0 none;
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .details {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      flex-grow: 1;
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        flex-basis: 100%;
+
+        > * {
+          display: flex;
+          flex-direction: row;
+          flex-basis: calc(50% - 1px);
+          margin-right: 1px;
+        }
+      }
+
+      label {
+        min-width: 100px;
+        max-width: 100px;
+        height: 31px;
+      }
+
+      input {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .sheet-tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-basis: 100%;
+    font-size: 18px;
+    font-family: var(--font-text);
+    font-weight: bold;
+    margin: 8px 0;
+    border: 8px solid transparent;
+    border-image: var(--image-border) 8 8 8 8 repeat repeat;
+
+    .item {
+      color: var(--color-white);
+      background-color: var(--color-black);
+      cursor: pointer;
+      padding: 5px 0;
+      flex : 1;
+    }
+
+    .item.active  {
+      background-color: var(--color-red);
+      text-shadow: none;
+    }
+  }
+  
+}

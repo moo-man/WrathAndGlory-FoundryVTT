@@ -1,4 +1,5 @@
-import { StandardWNGActorModel } from "./standard";
+import { StandardWNGActorModel } from "./components/standard";
+
 let fields = foundry.data.fields;
 
 export class ThreatModel extends StandardWNGActorModel {
@@ -13,7 +14,9 @@ export class ThreatModel extends StandardWNGActorModel {
                 second: new fields.StringField({ default: "T" }),
                 third: new fields.StringField({ default: "T" }),
                 fourth: new fields.StringField({ default: "T" })
-            })
+            }),
+            mob : new fields.NumberField(),
+            notes : new fields.StringField()
         })
         return schema;
     }

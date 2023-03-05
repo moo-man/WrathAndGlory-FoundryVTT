@@ -29,8 +29,10 @@ import WrathANdGloryCombatTracker from "./apps/combat-tracker.js";
 import { WrathAndGloryOptionalCombat } from "./common/combat-optional.js";
 import settings from "./hooks/settings.js";
 import { Level4TextPageSheet } from "./apps/journal-sheet.js";
-import { AgentModel } from "./actor/model/agent.js";
-import { ThreatModel } from "./actor/model/threat.js";
+import { AgentModel } from "./model/actor/agent.js"
+import { ThreatModel } from "./model/actor/threat.js";
+import { VehicleModel } from "./model/actor/vehicle.js";
+import { VehicleSheet } from "./actor/sheet/vehicle.js";
 
 
 
@@ -57,6 +59,7 @@ Hooks.once("init", () => {
 
   CONFIG.Actor.systemDataModels["agent"] = AgentModel
   CONFIG.Actor.systemDataModels["threat"] = ThreatModel
+  CONFIG.Actor.systemDataModels["vehicle"] = VehicleModel
 
 
   game.wng = {
@@ -95,6 +98,7 @@ Hooks.once("init", () => {
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("wrath-and-glory", AgentSheet, { types: ["agent"], makeDefault: true });
   Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
+  Actors.registerSheet("wrath-and-glory", VehicleSheet, { types: ["vehicle"], makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
   DocumentSheetConfig.registerSheet(ActiveEffect, "wrath-and-glory", WrathAndGloryEffectSheet, {makeDefault: true, label : "Wrath & Glory Active Effect Config"})

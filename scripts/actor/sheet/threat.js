@@ -1,6 +1,6 @@
-import { WrathAndGloryActorSheet } from "./actor.js";
+import { StandardActorSheet } from "./standard.js";
 
-export class ThreatSheet extends WrathAndGloryActorSheet {
+export class ThreatSheet extends StandardActorSheet {
 
     static get defaultOptions() {
         let options = super.defaultOptions
@@ -8,19 +8,19 @@ export class ThreatSheet extends WrathAndGloryActorSheet {
         return options
     }
 
+    async getData() {
+        const sheetData = await super.getData();
+        sheetData.autoCalc.wounds = false;
+        sheetData.autoCalc.shock = false;
+
+        return sheetData;
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-cost").focusout(async (ev) => { await this._onItemCostFocusOut(ev); });
     }
 
-    _getHeaderButtons() {
-        let buttons = super._getHeaderButtons();
-        if (this.actor.owner) {
-            buttons = [
-            ].concat(buttons);
-        }
-        return buttons;
-    }
 
     async _onItemCostFocusOut(event) {
         event.preventDefault();

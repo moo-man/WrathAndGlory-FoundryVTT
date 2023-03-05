@@ -1,7 +1,7 @@
-import { AgentAttributesModel } from "./attributes";
-import { StandardWNGActorModel } from "./standard";
-import { AgentCombatModel } from "./combat";
-import { AgentSkillsModel } from "./skills";
+import { StandardWNGActorModel } from "./components/standard";
+import { AgentCombatModel } from "./components/combat";
+import { AgentSkillsModel } from "./components/skills";
+import { AgentAttributesModel } from "./components/attributes";
 const fields = foundry.data.fields;
 
 export class AgentModel extends StandardWNGActorModel {
@@ -38,6 +38,8 @@ export class AgentModel extends StandardWNGActorModel {
             }),
             objective  : new fields.StringField()
         })
+
+        schema.notes = new fields.StringField();
 
         return schema;
     }

@@ -1,9 +1,9 @@
 import { AttributesModel } from "./attributes";
-import { BaseWNGActorModel } from "./base";
+import { BaseWnGActorModel } from "./base";
 import { CombatModel } from "./combat";
 import { SkillsModel } from "./skills";
 
-export class StandardWNGActorModel extends BaseWNGActorModel {
+export class StandardWNGActorModel extends BaseWnGActorModel {
     static defineSchema() {
         return {
             attributes: new foundry.data.fields.EmbeddedDataField(AttributesModel),

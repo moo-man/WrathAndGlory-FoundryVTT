@@ -2,7 +2,8 @@
   "Actor": {
     "types": [
       "agent",
-      "threat"
+      "threat",
+      "vehicle"
     ],
     "templates": {
       "attributes": {
@@ -233,10 +234,6 @@
       },
       "combat": {
         "combat": {
-          "defense": {
-            "bonus": 0,
-            "total": 0
-          },
           "defence": {
             "bonus": 0,
             "total": 0
@@ -353,6 +350,32 @@
         "current": 0
       },
       "mob" : null,
+      "notes": ""
+    },
+    "vehicle" : {
+      "complement" : {
+        "pilot" : 0,
+        "crew" : 0,
+        "passenger" : 0,
+        "list" : []
+      },
+      "mnvr" : 0,
+      "rarity" : "",
+      "value" : 0,
+      "traits" : [],
+      "combat" : {
+        "size": "average",
+        "speed": 6,
+        "wounds" : {
+          "value": 0,
+          "bonus": 0,
+          "max": 0
+        },
+        "resilience": {
+          "bonus": 0,
+          "total": 0
+        }
+      },
       "notes": ""
     }
   },
