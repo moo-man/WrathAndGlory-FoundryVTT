@@ -51,6 +51,29 @@ export class DocumentListModel extends ListModel
         return schema;
     }
 
+    addDocument(document)
+    {
+        if (document.prototypeToken?.actorLink && this.has(id))
+        {
+            return this.list
+        }
+        else 
+        {
+            return this.list.concat([{id : document.id}])
+        }
+    }
+
+    editId(id, value)
+    {
+        let index = this.list.findIndex(i => i.id == id);
+        return this.edit(index, value);
+    }
+
+    has(id)
+    {
+        return !!this.list.find(i => i.id == id)
+    }
+
     removeId(id) 
     {
         let index = this.list.findIndex(i => i.id == id);

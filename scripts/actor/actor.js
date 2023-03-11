@@ -593,6 +593,11 @@ export class WrathAndGloryActor extends Actor {
     get notes() { return this.system.notes }
     get mob() { return this.system.mob }
 
+    get traitsAvailable() {
+        if (this.type == "vehicle")
+            return game.wng.config.vehicleTraits
+    }
+
     getItemTypes(type) {
         return (this.itemCategories || this.itemTypes)[type]
     }

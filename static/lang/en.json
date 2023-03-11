@@ -260,6 +260,14 @@
   "HEADER.DISABLED_EFFECTS" : "Disabled Effects",
   "HEADER.DESCRIPTION" : "Description",
   "HEADER.UPGRADES" : "Upgrades",
+  "HEADER.COMPLEMENT" : "Pilot",
+  "HEADER.PILOT" : "Pilot",
+  "HEADER.CREW" : "Crew",
+  "HEADER.PASSENGER" : "Passenger",
+  "HEADER.PILOTS" : "Pilots",
+  "HEADER.PASSENGERS" : "Passengers",
+  "HEADER.UNASSIGNED" : "Unassigned",
+  "HEADER.MAN" : "Man.",
 
   "KEYWORD.NAME": "Name",
   "KEYWORD.DESCRIPTION": "Description",
@@ -411,6 +419,7 @@
   "TITLE.UPGRADES": "UPGRADES",
   "TITLE.ADVANCES": "ADVANCES",
   "TITLE.DETAILS": "DETAILS",
+  "TITLE.COMPLEMENT": "COMPLEMENT",
 
   "TRAUMATIC_INJURY.NAME": "Name",
   "TRAUMATIC_INJURY.DESCRIPTION": "Description",
@@ -483,6 +492,10 @@
   "AUTOCALC.AUTO_WOUNDED" : "Automatic Wounded",
   "AUTOCALC.AUTO_EXHAUSTED" : "Automatic Exhausted",
   "CONFIGURE.GenerateMetaCurrencies" : "Generate Meta Currencies",
+
+
+  "VEHICLE.TRAITS" : "Traits",
+  "VEHICLE.MAN" : "Man.",
 
   "CONDITION.Bleeding" : "Bleeding",
   "CONDITION.Blinded" : "Blinded",

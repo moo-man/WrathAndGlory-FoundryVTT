@@ -9,6 +9,32 @@
           <label>{{localize "Name"}}</label>
           <input name="name" type="text" value="{{actor.name}}" />
         </div>
+      </div>
+      <div class="row">
+
+        <div class="man">
+          <label>{{localize "HEADER.MAN"}}</label>
+          <input type="number" value="{{system.combat.mnvr}}" name="system.combat.mnvr" />
+        </div>
+        <div class="resilience">
+          <label>{{localize "HEADER.RESILIENCE"}}</label>
+          <input type="number" value="{{system.combat.resilience.total}}" name="system.combat.resilience.total" />
+        </div>
+        <div class="defence">
+          <label>{{localize "HEADER.DEFENCE"}}</label>
+          <input type="number" name="system.defence.total" value="{{system.defence.total}}" />
+        </div>
+        <div class="speed">
+          <label>{{localize "HEADER.SPEED"}}</label>
+          <input type="number" value="{{system.combat.speed}}" name="system.combat.speed" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="wounds">
+          <label>{{localize "HEADER.WOUNDS"}}</label>
+          <input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}" />
+          <input type="number" name="system.combat.wounds.max" value="{{system.combat.wounds.max}}" />
+        </div>
         <div class="size">
           <label class="item-label">{{localize "HEADER.SIZE"}}</label>
           <select name="system.combat.size">
@@ -18,27 +44,6 @@
               {{/each}}
             {{/select}}
           </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="speed">
-          <label>{{localize "HEADER.SPEED"}}</label>
-          <input type="number" value="{{system.combat.speed}}" name="system.combat.speed" />
-        </div>
-        <div class="resilience">
-          <label>{{localize "HEADER.RESILIENCE"}}</label>
-          <input type="number" value="{{system.combat.resilience.total}}" name="system.combat.resilience.total" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="defence">
-          <label>{{localize "HEADER.DEFENCE"}}</label>
-          <input type="number" value="{{system.defence.total}}" />
-        </div>
-        <div class="wounds">
-          <label>{{localize "HEADER.WOUNDS"}}</label>
-          <input type="number" value="{{system.combat.wounds.value}}" />
-          <input type="number" value="{{system.combat.wounds.max}}" />
         </div>
       </div>
     </div>
@@ -52,16 +57,16 @@
   </div>
 
   <div class="sheet-body">
-    <div class="tab" data-group="primary" data-tab="stats">
+    <div class="main tab" data-group="primary" data-tab="main">
       {{> systems/wrath-and-glory/template/actor/tab/vehicle/main.hbs}}
     </div>
-    <div class="tab" data-group="primary" data-tab="gear">
+    <div class="gear tab" data-group="primary" data-tab="gear">
       {{> systems/wrath-and-glory/template/actor/tab/vehicle/gear.hbs}}
     </div>
-    <div class="tab" data-group="primary" data-tab="effects">
+    <div class="effects tab" data-group="primary" data-tab="effects">
       {{> systems/wrath-and-glory/template/actor/tab/effects.hbs}}
     </div>
-    <div class="tab" data-group="primary" data-tab="notes">
+    <div class="notes tab" data-1group="primary" data-tab="notes">
       {{> systems/wrath-and-glory/template/actor/tab/notes-threat.hbs}}
     </div>
   </div>

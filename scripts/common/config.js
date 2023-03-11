@@ -111,6 +111,21 @@ WNG.armourTraits = {
     "shield": "Shield"
 }
 
+WNG.vehicleTraits = {
+    "allTerrain": "All-Terrain",
+    "amphibious": "Amphibious",
+    "bike": "Bike",
+    "flyer": "Flyer",
+    "gunPorts": "Gun Ports",
+    "gyroStabilised": "Gyro-Stabilised",
+    "hover": "Hover",
+    "openTopped": "Open Topped",
+    "reliable": "Reliable",
+    "sealed": "Sealed",
+    "turboBoost": "Turbo Boost",
+    "walker": "Walker",
+}
+
 
 WNG.traitHasRating = {
     "agonising": false,
@@ -142,7 +157,19 @@ WNG.traitHasRating = {
     "ereWeGo": false,
     "powerField": false,
     "powered": true,
-    "shield": false
+    "shield": false,
+    "allTerrain": false,
+    "amphibious": false,
+    "bike": false,
+    "flyer": false,
+    "gunPorts": false,
+    "gyroStabilised": false,
+    "hover": false,
+    "openTopped": false,
+    "reliable": false,
+    "sealed": false,
+    "turboBoost": true,
+    "walker": false
 }
 
 WNG.ranges = {

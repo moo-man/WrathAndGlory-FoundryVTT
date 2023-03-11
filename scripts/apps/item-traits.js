@@ -14,13 +14,13 @@ export default class ItemTraits extends FormApplication
 
     getData() {
         let data = super.getData(); 
-        data.custom = this.constructCustomString(this.object.traits);
+        data.custom = this.constructCustomString(this.object.system.traits);
         try {
 
             data.traits = Object.keys(this.object.traitsAvailable).map(i => {
                 let existing = this.object._source.system.traits.find(t => t.name == i)
                 if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
-                existing = this.object.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
+                existing = this.object.system.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
                 return  {
                     display : this.object.traitsAvailable[i],
                     key : i,
@@ -44,7 +44,7 @@ export default class ItemTraits extends FormApplication
         let newTraits = []
         if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
         {
-            newTraits = this.object.traits.filter(i => i.type != this.options.type) // Retain traits from the other type
+            newTraits = this.object.system.traits.filter(i => i.type != this.options.type) // Retain traits from the other type
         }
         for (let key in formData)
         {
@@ -63,7 +63,7 @@ export default class ItemTraits extends FormApplication
                 newTraits.push(traitObj)
             }
         }
-        this.object.update({"data.traits" : newTraits})
+        this.object.update({"system.traits" : newTraits})
     }
 
     parseCustomTraits(string)

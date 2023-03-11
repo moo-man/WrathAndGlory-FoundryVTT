@@ -20,7 +20,7 @@ export class VehicleCrew extends DocumentReferenceModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.type = new fields.StringField();
+        schema.type = new fields.StringField({default: ""});
         return schema;
     }
 }

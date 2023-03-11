@@ -21,7 +21,7 @@ export class BaseWnGActorSheet extends ActorSheet {
     async getData() {
         const sheetData = await super.getData();
         sheetData.enrichment = {};
-        sheetData.system = sheetData.data.system // project system data so that handlebars has the same name and value paths
+        sheetData.system = sheetData.document.system // project system data so that handlebars has the same name and value paths
         this.constructEffectLists(sheetData)
 
         sheetData.enrichment = await this._handleEnrichment()
@@ -333,16 +333,6 @@ export class BaseWnGActorSheet extends ActorSheet {
             div.slideDown(200);
         }
         li.toggleClass("expanded");
-    }
-    _onAdvButtonClick(event) {
-        let amt
-        if (event.currentTarget.classList.contains("incr")) amt = 1
-        else if (event.currentTarget.classList.contains("decr")) amt = -1
-
-        let type = $(event.currentTarget).parents(".adv-buttons").attr("data-type").split("-")
-        let target = `data.${type[0]}s.${type[1]}.rating` // Only slightly disgusting
-
-        this.actor.update({ [`${target}`]: getProperty(this.actor._source, target) + amt })
     }
 
     _onConditionClick(ev) {

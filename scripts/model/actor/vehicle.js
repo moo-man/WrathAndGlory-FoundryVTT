@@ -20,11 +20,24 @@ export class VehicleModel extends BaseWnGActorModel {
 
     computeBase() {
         super.computeBase();
-        this.complement.findDocuments(game.actors);        
+        this.complement.findDocuments(game.actors);     
+        
+        this.traits.forEach(i => {
+                i.display = game.wng.config.vehicleTraits[i.name];
+                if (game.wng.config.traitHasRating[i.name]) {
+                    traits[i.name].display += ` (${i.rating})`
+                }
+            }
+        )
     }
 
     computeDerived(items, autoCalc)
     {
 
+    }
+
+    
+    get displayTraits() {
+        return Object.values(this.traits).map(i => i.display).join(", ")
     }
 }
