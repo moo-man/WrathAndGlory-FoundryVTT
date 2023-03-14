@@ -162,7 +162,7 @@ export class WNGTest {
     this.testData.rerolls.push(diceIndices)
     if (!this.rerolledTests)
       this.rerolledTests = []
-    this.rerolledTests.push(await this.roll.reroll())
+    this.rerolledTests.push(await this.roll.reroll({async: true}))
     this._computeResult();
 
     if (game.dice3d) {
@@ -339,11 +339,8 @@ export class WNGTest {
       speaker: this.context.speaker
     };
     chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.prototypeToken.name
-    if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
-      chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-    } else if (chatData.rollMode === "selfroll") {
-      chatData.whisper = [game.user];
-    }
+    ChatMessage.applyRollMode(chatData, chatData.rollMode);
+
     if (newMessage || !this.message) {
       return ChatMessage.create(chatData).then(msg => {
         msg.update({ "flags.wrath-and-glory.testData.context.messageId": msg.id })
@@ -486,11 +483,8 @@ export class WNGTest {
       content: html,
       speaker: this.context.speaker
     };
-    if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
-      chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-    } else if (chatData.rollMode === "selfroll") {
-      chatData.whisper = [game.user];
-    }
+
+    ChatMessage.applyRollMode(chatData, chatData.rollMode);
     return ChatMessage.create(chatData);
   }
 

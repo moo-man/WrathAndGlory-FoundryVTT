@@ -66,11 +66,8 @@ export class WrathAndGloryItem extends Item {
             content: html,
             "flags.wrath-and-glory.itemData": this.toObject()
         };
-        if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
-            chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-        } else if (chatData.rollMode === "selfroll") {
-            chatData.whisper = [game.user];
-        }
+
+        ChatMessage.applyRollMode(chatData, chatData.rollMode);
         ChatMessage.create(chatData);
     }
 

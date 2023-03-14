@@ -16,7 +16,17 @@ export class ThreatModel extends StandardWNGActorModel {
                 fourth: new fields.StringField({ default: "T" })
             }),
             mob : new fields.NumberField(),
-            notes : new fields.StringField()
+            notes : new fields.StringField(),
+
+            resources : new fields.SchemaField({
+                wrath : new fields.NumberField({min : 0}),
+                faith: new fields.SchemaField({
+                  current: new fields.NumberField({min : 0}),
+                  total: new fields.NumberField({min : 0}),
+                }),
+                wealth : new fields.NumberField({min : 0}),
+                influence : new fields.NumberField({min : 0}),
+            })
         })
         return schema;
     }

@@ -39,6 +39,10 @@ export class AgentModel extends StandardWNGActorModel {
             objective  : new fields.StringField()
         })
 
+        schema.resources = new fields.SchemaField({
+            ruin : new fields.NumberField({min : 0}),
+        })
+
         schema.notes = new fields.StringField();
 
         return schema;
