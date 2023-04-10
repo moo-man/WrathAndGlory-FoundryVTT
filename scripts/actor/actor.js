@@ -612,8 +612,7 @@ export class WrathAndGloryActor extends Actor {
 
             actorData.name = archetype.name;
             actorData.img = archetype.img;
-            actorData.prototypeToken.texture.src = archetype.img.replace("images", "tokens")
-            actorData.prototypeToken.texture.src = archetype.img.replace("actors", "tokens")
+            actorData.prototypeToken.texture.src = archetype.img.replace("images", "tokens").replace("actors", "tokens")
 
             await this.update(actorData)
 

@@ -59,4 +59,13 @@ export default function () {
     default: "",
     type: String,
   });
+
+  game.settings.register('wrath-and-glory', 'advancedArmour', {
+    name: 'Advanced Armour',
+    hint: 'Handle Armour and Armour Penetration as described on page 232.',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
 }
