@@ -421,7 +421,7 @@ export class WrathAndGloryItem extends Item {
     async GetArchetypeItems() {
         let items = [];
 
-        let species = game.wng.utility.findItem(this.species.id, "species")
+        let species = await game.wng.utility.findItem(this.species.id, "species")
         let faction = game.wng.utility.findItem(this.faction.id, "faction")
 
         let speciesAbilities = species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
@@ -430,7 +430,7 @@ export class WrathAndGloryItem extends Item {
 
 
         // Get all archetype talents/wargear, merge with diff
-        for (let i of this.suggested.talents.concat(this.wargear))
+        for (let i of this.suggested.talents.concat(this.wargear.filter(k => k.id)))
         {
             let item = await game.wng.utility.findItem(i.id)
             if (item)
@@ -440,15 +440,17 @@ export class WrathAndGloryItem extends Item {
             }
         }
 
-        items = await Promise.all(items.concat(
+        items = (await Promise.all(items.concat(
             [species], 
             [this],
             [faction],
             [archetypeAbility],
             speciesAbilities,
-            keywords))
+            keywords)))
             .filter(i => i)
             .map(i => i instanceof Item ? i.toObject() : i)
+
+        items.filter(i => ["weapon", "armour"].includes(i.type)).forEach(i => i.system.equipped = true)
 
         return items
     }

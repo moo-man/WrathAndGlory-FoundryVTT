@@ -610,9 +610,10 @@ export class WrathAndGloryActor extends Actor {
             // Remove IDs so items work within the update method
             items.forEach(i => delete i._id)
 
-            actorData.img = archetype.img
-            actorData.token.img = archetype.img.replace("images", "tokens")
-            actorData.token.img = archetype.img.replace("actors", "tokens")
+            actorData.name = archetype.name;
+            actorData.img = archetype.img;
+            actorData.prototypeToken.texture.src = archetype.img.replace("images", "tokens")
+            actorData.prototypeToken.texture.src = archetype.img.replace("actors", "tokens")
 
             await this.update(actorData)
 
