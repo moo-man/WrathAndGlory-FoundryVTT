@@ -108,6 +108,11 @@ async _handleEnrichment()
     let enrichment = {}
     enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true})
 
+    if (this.item.type == "ascension")
+    {
+      enrichment["system.benefits"] = await TextEditor.enrichHTML(this.item.system.benefits, {async: true})
+    }
+
     return expandObject(enrichment)
 }
 
