@@ -257,7 +257,7 @@ WNG.systemEffects = {
         label : "EFFECT.FullDefence",
         icon : "systems/wrath-and-glory/asset/icons/full-defence.svg",
         changes : [
-            {key: "data.combat.defence.bonus", mode : 2, value : 1},
+            {key: "system.combat.defence.bonus", mode : 2, value : 1},
         ],
     },
     "all-out-attack" : {
@@ -266,13 +266,29 @@ WNG.systemEffects = {
         icon : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
         changes : [
             {key: "pool.bonus", mode : 6, value : 2},
-            {key: "data.combat.defence.bonus", mode : 2, value : -2},
+            {key: "system.combat.defence.bonus", mode : 2, value : -2},
         ],
         flags : { 
             "wrath-and-glory.changeCondition" : { 
                 0 : {description : "+2 bonus dice to melee", script : "return data.weapon && data.weapon.isMelee"}
             }
         }
+    },
+    "halfCover" : {
+        id : "halfCover",
+        label : "EFFECT.HalfCover",
+        icon : "systems/wrath-and-glory/asset/icons/half-cover.svg",
+        changes : [
+            {key: "system.combat.defence.bonus", mode : 2, value : 1},
+        ]
+    },
+    "fullCover" : {
+        id : "fullCover",
+        label : "EFFECT.FullCover",
+        icon : "systems/wrath-and-glory/asset/icons/full-cover.svg",
+        changes : [
+            {key: "system.combat.defence.bonus", mode : 2, value : 2},
+        ]
     }
 }
 
@@ -369,13 +385,13 @@ CONFIG.statusEffects = [
         id : "restrained",
         label : "CONDITION.Restrained",
         icon : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
-        changes : [{key: "data.combat.defence.bonus", mode : 2, value : -2},{key: "data.combat.speed", mode : 5, value : "0"} ]
+        changes : [{key: "system.combat.defence.bonus", mode : 2, value : -2},{key: "system.combat.speed", mode : 5, value : "0"} ]
     },
     {
         id : "staggered",
         label : "CONDITION.Staggered",
         icon : "systems/wrath-and-glory/asset/icons/conditions/staggered.svg",
-        changes : [{key: "data.combat.speed", mode : 1, value : 0.5} ]
+        changes : [{key: "system.combat.speed", mode : 1, value : 0.5} ]
     },
     {
         id : "terror",
@@ -392,7 +408,7 @@ CONFIG.statusEffects = [
         id : "vulnerable",
         label : "CONDITION.Vulnerable",
         icon : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
-        changes : [{key: "data.combat.defence.bonus", mode : 2, value : -1}]
+        changes : [{key: "system.combat.defence.bonus", mode : 2, value : -1}]
     },
     {
         id : "dying",
