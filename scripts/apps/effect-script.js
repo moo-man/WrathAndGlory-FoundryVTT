@@ -14,15 +14,57 @@ export default class EffectScriptConfig extends FormApplication {
 
     getData() {
         let data = super.getData()
-        data.script = this.object.effect.changeConditionals[this.object.index]?.script
-        data.description = this.object.effect.changeConditionals[this.object.index]?.description
+        data.script = this.change?.script
+        data.description = this.change?.description
+        data.hide = this.change?.hide
+        data.aceActive = game.modules.get("acelib")?.active;
         return data
     }
 
     _updateObject(event, formData) {
-        let script = formData.script
-        let description = formData.description;
 
-        return this.object.effect.update({[`flags.wrath-and-glory.changeCondition.${this.object.index}`] : {script, description}})
+        if (this.scriptEditor)
+        {
+            formData.script = this.scriptEditor.getValue();
+        }
+
+        if (this.hideEditor)
+        {
+            formData.hide = this.hideEditor.getValue();
+        }
+
+        let script = formData.script || "";
+        let description = formData.description || "";
+        let hide = formData.hide || "";
+
+        return this.object.effect.update({[`flags.wrath-and-glory.changeCondition.${this.object.index}`] : {script, description, hide}})
+    }
+
+    activateListeners(html)
+    {
+        super.activateListeners(html);
+
+        try 
+        {
+            if (game.modules.get("acelib")?.active)
+            {
+                this.scriptEditor = ace.edit(html.find(".ace-editor.script input")[0]);
+                this.scriptEditor.setOptions(mergeObject(ace.userSettings, {mode : "ace/mode/js", keyboardHandler : "ace/mode/vscode"}))
+                this.scriptEditor.setValue(this.change?.script);
+
+                this.hideEditor = ace.edit(html.find(".ace-editor.hide input")[0]);
+                this.hideEditor.setOptions(mergeObject(ace.userSettings, {mode : "ace/mode/js", keyboardHandler : "ace/mode/vscode"}))
+                this.hideEditor.setValue(this.change?.hide);
+            }
+        }
+        catch(e)
+        {
+            console.error("Error initializing ACE Editor: " + e)
+        }
+    }
+
+    get change()
+    {
+        return this.object.effect.changeConditionals[this.object.index]
     }
 } 
