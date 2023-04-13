@@ -11,6 +11,9 @@ export class WeaponDialog extends RollDialog {
 
 
   static async create(data) {
+    let hide = this.runConditional("hide", data)
+    this.removeHiddenChanges(hide, data);
+    data.condensedChanges = this.condenseChanges(data.changes);
     const html = await renderTemplate("systems/wrath-and-glory/template/dialog/weapon-roll.html", data);
     return new Promise((resolve) => {
       new this({

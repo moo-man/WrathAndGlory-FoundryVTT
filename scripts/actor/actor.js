@@ -402,8 +402,7 @@ export class WrathAndGloryActor extends Actor {
             wrath: {
                 base: this.hasCondition("dying") ? 1 + this.itemCategories["traumaticInjury"].length : 1
             },
-            changeList: this.getDialogChanges({ condense: true }),
-            changes: this.getDialogChanges(),
+            changes: this.allDialogChanges( {targets : Array.from(game.user.targets).map(t => t.actor)}),
             actor: this,
             targets: Array.from(game.user.targets)
         };
@@ -414,12 +413,17 @@ export class WrathAndGloryActor extends Actor {
 
         let dialogData = this._baseDialogData()
         if (options.targets)
+        {
             dialogData.targets = options.targets;
+            dialogData.changes = this.allDialogChanges({targets: options.targets.map(i => i.actor)});
+            // Weapon dialogs need to get dialog changes separately because of special target handling
+        }
 
         if (weapon.Ammo) {
             // Add ammo dialog changes if any exist
-            dialogData.changeList = this.getDialogChanges({ condense: true, add: weapon.Ammo.ammoDialogEffects, targets : dialogData.targets })
-            dialogData.changes = this.getDialogChanges({ add: weapon.Ammo.ammoDialogEffects, targets : dialogData.targets })
+            weapon.Ammo.effects.forEach(e => {
+                mergeObject(dialogData.changes, e.getDialogChanges())
+            })
         }
         dialogData.weapon = weapon
         dialogData.pool.size = weapon.skill.total;
@@ -538,15 +542,15 @@ export class WrathAndGloryActor extends Actor {
         }
     }
 
-    getDialogChanges({ condense = false, add = [], targets=[] } = {}) {
-        let effects = Array.from(this.effects).concat(add);
+    allDialogChanges({targets=[]} = {}) {
+        let effects = this.effects.contents
         // Aggregate dialog changes from each effect
-        let changes = effects.filter(i => !i.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({ condense, indexOffset: prev.length })), [])
+        let changes = effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges()), {})
 
         if (targets.length) {
-            let target = targets[0].actor
-            let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({ target, condense, indexOffset: changes.length })), [])
-            changes = changes.concat(targetChanges)
+            let target = targets[0]
+            let targetChanges = target.effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges({target : true})), {})
+            mergeObject(changes, targetChanges);
         }
 
         return changes
