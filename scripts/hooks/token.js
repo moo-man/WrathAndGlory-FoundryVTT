@@ -1,5 +1,4 @@
 export default function() {
-    Hooks.on("updateToken", (token) => {
-        token.object.drawMobNumber()
-    })
+    Hooks.on("createToken", (token) => token.object.drawMobNumber())
+    Hooks.on("updateToken", (token) => token.object.drawMobNumber())
 }
