@@ -1,101 +1,131 @@
 <div class="notes-tab">
-  <div class="wrapper advances">
-    <h1 style="margin-bottom: 8px;">{{localize "TITLE.ADVANCES"}}</h1>
-    <div class="advances-fields">
-      <div class="tier">
-        <label>{{localize "ADVANCE.TIER"}}</label>
-        <input class="current" name="system.advances.tier" type="number" value="{{system.advances.tier}}" min="1" max="5"
-          data-dtype="Number" />
+	<div class="wrapper advances">
+		<h1 style="margin-bottom: 8px;">{{localize "TITLE.ADVANCES"}}</h1>
+		<div class="advances-fields">
+			<div class="tier">
+				<label>{{localize "ADVANCE.TIER"}}</label>
+				<input class="current" name="system.advances.tier" type="number" value="{{system.advances.tier}}"
+					min="1" max="5" data-dtype="Number" />
 
-      </div>
-      <div class="rank">
-        <label>{{localize "ADVANCE.RANK"}}</label>
-        <input class="current" name="system.advances.rank" type="number" value="{{system.advances.rank}}" min="1" max="4"
-          data-dtype="Number" />
-      </div>
-      <div class="archetype">
-        <label>{{localize "BIO.ARCHETYPE"}}</label>
-        <input class="cost" type="number" value="{{actor.archetype.cost}}" disabled data-dtype="Number" />
-      </div>
-      <div class="experience">
-        <div class="header">
-          <b></b>
-          <b class="current">{{localize "HEADER.CURRENT"}}</b>
-          <b class="spent">{{localize "HEADER.SPENT"}}</b>
-          <b class="total">{{localize "HEADER.TOTAL"}}</b>
-        </div>
-        <div class="data">
-          <label>{{localize "RESOURCE.EXPERIENCE"}}</label>
-          <input class="current" type="number" value="{{system.experience.current}}" data-dtype="Number" disabled/>
-          <input class="spent" type="number" value="{{system.experience.spent}}" data-dtype="Number" disabled />
-          <input class="total" type="number" name="system.experience.total" value="{{system.experience.total}}" data-dtype="Number" />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="wrapper details">
-    <h1 style="margin-bottom: 8px;">{{localize "TITLE.DETAILS"}}</h1>
-    <div class="form-row cosmetic">
-      <div class="form-field">
-        <label>{{localize "BIO.HEIGHT"}}</label>
-        <input name="system.bio.height" type="text" value="{{system.bio.height}}" />
-      </div>
-      <div class="form-field">
-        <label>{{localize "BIO.EYE_COLOUR"}}</label>
-        <input name="system.bio.eye" type="text" value="{{system.bio.eye}}" />
-      </div>
-      <div class="form-field">
-        <label>{{localize "BIO.HAIR_COLOUR"}}</label>
-        <input name="system.bio.hair" type="text" value="{{system.bio.hair}}" />
-      </div>
-    </div>
-  <div class="form-row background">
-    <div class="form-field">
-      <label>{{localize "BIO.ORIGIN"}}</label>
-      <input type="text" name="system.bio.origin.value" value="{{system.bio.origin.value}}" />
-    </div>
-  </div>
-  <div class="form-row background">
-    <div class="form-field">
-      <label>{{localize "BIO.ACCOMPLISHMENT"}}</label>
-      <input type="text" name="system.bio.accomplishment.value" value="{{system.bio.accomplishment.value}}" />
-    </div>
-  </div>
-  <div class="form-row background">
-    <div class="form-field">
-      <label>{{localize "BIO.GOAL"}}</label>
-      <input type="text" name="system.bio.goal.value" value="{{system.bio.goal.value}}" />
-    </div>
+			</div>
+			<div class="rank">
+				<label>{{localize "ADVANCE.RANK"}}</label>
+				<input class="current" name="system.advances.rank" type="number" value="{{system.advances.rank}}"
+					min="1" max="4" data-dtype="Number" />
+			</div>
+			<div class="archetype">
+				<label>{{localize "BIO.ARCHETYPE"}}</label>
+				<input class="cost" type="number" value="{{actor.archetype.cost}}" disabled data-dtype="Number" />
+			</div>
+			<div class="experience">
+				<div class="header">
+					<b></b>
+					<b class="current">{{localize "HEADER.CURRENT"}}</b>
+					<b class="spent">{{localize "HEADER.SPENT"}}</b>
+					<b class="total">{{localize "HEADER.TOTAL"}}</b>
+				</div>
+				<div class="data">
+					<label>{{localize "RESOURCE.EXPERIENCE"}}</label>
+					<input id="currentExperience" class="current" type="number" value="{{system.experience.current}}"
+						data-dtype="Number" />
+					<input id="spentExperience" class="spent" type="number" value="{{system.experience.spent}}"
+						data-dtype="Number" />
+					<input id="totalExperience" class="total" type="number" name="system.experience.total"
+						value="{{system.experience.total}}" data-dtype="Number" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper details">
+		<h1 style="margin-bottom: 8px;">{{localize "TITLE.DETAILS"}}</h1>
+		<div class="form-row cosmetic">
+			<div class="form-field">
+				<label>{{localize "BIO.HEIGHT"}}</label>
+				<input name="system.bio.height" type="text" value="{{system.bio.height}}" />
+			</div>
+			<div class="form-field">
+				<label>{{localize "BIO.EYE_COLOUR"}}</label>
+				<input name="system.bio.eye" type="text" value="{{system.bio.eye}}" />
+			</div>
+			<div class="form-field">
+				<label>{{localize "BIO.HAIR_COLOUR"}}</label>
+				<input name="system.bio.hair" type="text" value="{{system.bio.hair}}" />
+			</div>
+		</div>
+		<div class="form-row background">
+			<div class="form-field">
+				<label>{{localize "BIO.ORIGIN"}}</label>
+				<input type="text" name="system.bio.origin.value" value="{{system.bio.origin.value}}" />
+			</div>
+		</div>
+		<div class="form-row background">
+			<div class="form-field">
+				<label>{{localize "BIO.ACCOMPLISHMENT"}}</label>
+				<input type="text" name="system.bio.accomplishment.value" value="{{system.bio.accomplishment.value}}" />
+			</div>
+		</div>
+		<div class="form-row background">
+			<div class="form-field">
+				<label>{{localize "BIO.GOAL"}}</label>
+				<input type="text" name="system.bio.goal.value" value="{{system.bio.goal.value}}" />
+			</div>
+		</div>
+		<hr>
+		<div class="form-row objective">
+			<div class="form-field">
+				<label>{{localize "BIO.OBJECTIVE"}}<a class="roll-objective"><i
+							class="fa-solid fa-dice"></i></a></label>
+				<input name="system.bio.objective" type="text" value="{{system.bio.objective}}" />
+			</div>
+		</div>
+	</div>
+	<div class="wrapper" style="margin-top: 8px;">
+		<h1>{{localize "TITLE.ASCENSION"}}</h1>
+		<div class="item-row">
+			<div class="button">
+				<button class="item-create" title="Add Ascension" data-type="ascension">+</a>
+			</div>
+			{{#each items.ascensions as |item|}}
+			<div class="item" data-item-id="{{item.id}}">
+				<div class="wrapper-hover">
+					<div class="avatar" style="background-image: url('{{item.img}}')"></div>
+					<div class="name item-edit">{{item.name}}</div>
+				</div>
+				<div class="button item-control item-delete" title="Delete Ascension Package">
+					<a><i class="fas fa-times"></i></a>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</div>
+	<div class="wrapper notes">
+		<h1 style="margin-bottom: 8px;">{{localize "TITLE.NOTES"}}</h1>
+		{{editor enrichment.system.notes target="system.notes" engine="prosemirror" button=true owner=owner
+		editable=editable}}
+	</div>
 </div>
-<hr>
-<div class="form-row objective">
-  <div class="form-field">
-    <label>{{localize "BIO.OBJECTIVE"}}<a class="roll-objective"><i class="fa-solid fa-dice"></i></a></label>
-    <input name="system.bio.objective" type="text" value="{{system.bio.objective}}" />
-  </div>
-</div>
-</div>
-<div class="wrapper" style="margin-top: 8px;">
-  <h1>{{localize "TITLE.ASCENSION"}}</h1>
-  <div class="item-row">
-    <div class="button">
-      <button class="item-create" title="Add Ascension" data-type="ascension">+</a>
-    </div>
-    {{#each items.ascensions as |item|}}
-    <div class="item" data-item-id="{{item.id}}">
-      <div class="wrapper-hover">
-        <div class="avatar" style="background-image: url('{{item.img}}')"></div>
-        <div class="name item-edit">{{item.name}}</div>
-      </div>
-      <div class="button item-control item-delete" title="Delete Ascension Package">
-      <a><i class="fas fa-times"></i></a>
-      </div>
-    </div>
-    {{/each}}
-  </div>
-</div>
-<div class="wrapper notes">
-  <h1 style="margin-bottom: 8px;">{{localize "TITLE.NOTES"}}</h1>
-  {{editor enrichment.system.notes target="system.notes" engine="prosemirror" button=true owner=owner editable=editable}}
-</div>
-</div>
+<script>
+	// Check if the current user is NOT a GM
+	if (!game.user.isGM) {
+		// User is NOT GM, disable the input field
+		disableInputField("currentExperience");
+		disableInputField("totalExperience");
+		disableInputField("spentExperience");
+
+	}
+	// Function to disable an input field by class
+	function disableInputField(inputClass) {
+		const inputElements = document.getElementById(inputClass);
+		console.log(inputElements, 'InputElements')
+		inputElements.disabled = true;
+		console.log(inputElements, 'InputElements')
+		for (let i = 0; i < inputElements.length; i++) {
+			console.log("inside of the for loop")
+			console.log(inputElements[i], 'InputElements[i]')
+			inputElements[i].disabled = true;
+			console.log(inputElements[i], 'InputElements[i]')
+
+		}
+	}
+
+</script>
