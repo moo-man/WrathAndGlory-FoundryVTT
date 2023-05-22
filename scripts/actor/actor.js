@@ -193,7 +193,7 @@ export class WrathAndGloryActor extends Actor {
         }
         else if (this.combat.size == "tiny")
         {
-            this.combat.defence.total += 2  
+            this.combat.defence.total += 2
         }
     }
 
