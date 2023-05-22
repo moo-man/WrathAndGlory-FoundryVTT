@@ -42,12 +42,12 @@ Hooks.once("init", () => {
   CONFIG.ActiveEffect.sheetClass = WrathAndGloryEffectSheet;
   DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", Level4TextPageSheet, { types : ["text"], makeDefault: true, label : "W&G Journal Sheet" });
 
-
+  
   if (game.settings.get("wrath-and-glory", "initiativeRollOption"))
   {
     CONFIG.Combat.documentClass = WrathAndGloryOptionalCombat;
   }
-  else
+  else 
   {
     CONFIG.Combat.documentClass = WrathAndGloryCombat;
     CONFIG.ui.combat = WrathANdGloryCombatTracker
