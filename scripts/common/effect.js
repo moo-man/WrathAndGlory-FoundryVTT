@@ -124,10 +124,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     get changeConditionals() {
         return (getProperty(this, "flags.wrath-and-glory.changeCondition") || {})
     }
-    get description() {
-        return getProperty(this, "flags.wrath-and-glory.description")
-    }
-
+    
     get hasRollEffect() {
         return this.changes.some(c => c.mode == 0)
     }

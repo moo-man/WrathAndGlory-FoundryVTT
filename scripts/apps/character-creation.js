@@ -178,7 +178,8 @@ export default class CharacterCreation extends FormApplication {
                 else 
                 {
                     faction.effects[0].transfer = true;
-                    faction.effects[0].label = $(ev.currentTarget).find(".background-bonus").children("option").filter(":selected").text()
+                    faction.effects[0].label = $(ev.target).find(".background-bonus").children("option").filter(":selected").text()
+                    faction.effects[0].name = faction.effects[0].label // V11 uses name instead
                     // Gross but whatever, uses the selected text (with background name appended) as the effect name
                 }
             }

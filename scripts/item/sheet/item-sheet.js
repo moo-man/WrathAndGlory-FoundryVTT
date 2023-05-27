@@ -393,7 +393,8 @@ async _handleEnrichment()
       let id = ev.currentTarget.dataset.id;
       if (ev.button == 0)
       {
-        let item = game.items.get(id)
+        
+        let item = await game.wng.utility.findItem(id)
         if (!item)
           item = await fromUuid(id)
         
