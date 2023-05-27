@@ -2,8 +2,8 @@
 import EffectScriptConfig from "./effect-script.js"
 
 export default class WrathAndGloryEffectSheet extends ActiveEffectConfig {
-    getData() {
-        let data = super.getData()
+    async getData() {
+        let data = await super.getData()
         data.modes[6] = "Dialog Effect"
         data.modes[7] = "Targeter's Dialog Effect"
         return data
