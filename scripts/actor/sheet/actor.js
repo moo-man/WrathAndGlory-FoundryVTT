@@ -45,7 +45,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     async _handleEnrichment()
     {
         let enrichment = {}
-        enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true})
+        enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
 
         return expandObject(enrichment)
     }

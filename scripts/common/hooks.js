@@ -13,6 +13,7 @@ import sidebar from "../hooks/sidebar.js";
 import item from "../hooks/item.js";
 import hotbar from "../hooks/hotbar.js";
 import setting from "../hooks/setting.js";
+import i18n from "../hooks/i18n.js";
 
 export default function() {
     entryContextHooks();
@@ -28,6 +29,7 @@ export default function() {
     sidebar();
     hotbar();
     setting();
+    i18n();
 
     Hooks.on("preCreateJournalEntry", _keepID)
     Hooks.on("preCreateScene", _keepID)

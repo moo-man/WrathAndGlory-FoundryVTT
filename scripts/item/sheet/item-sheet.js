@@ -106,11 +106,11 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 async _handleEnrichment()
 {
     let enrichment = {}
-    enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true})
+    enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
 
     if (this.item.type == "ascension")
     {
-      enrichment["system.benefits"] = await TextEditor.enrichHTML(this.item.system.benefits, {async: true})
+      enrichment["system.benefits"] = await TextEditor.enrichHTML(this.item.system.benefits, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
     }
 
     return expandObject(enrichment)

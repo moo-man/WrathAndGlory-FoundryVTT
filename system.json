@@ -3,11 +3,11 @@
   "name" : "wrath-and-glory",
   "title": "Wrath & Glory",
   "description": "The official system for Warhammer 40k Roleplay: Wrath & Glory! Time is running out in the 41st Millennium. This accursed age needs heroes more than ever before. Will you answer the call?",
-  "version": "4.2.1",
-  "minimumCoreVersion" : 10,
+  "version": "5.0.0",
+  "minimumCoreVersion" : 11,
   "compatibility" : {
-    "minimum" : 10,
-    "verified" : 10,
+    "minimum" : 11,
+    "verified" : 11,
     "maximum" : 11    
   },
   "templateVersion": 2,
@@ -15,7 +15,7 @@
     {
       "name": "Moo Man",
       "email": "russellt@cubicle7games.com",
-      "discord": "Moo Man#7518",
+      "discord": "moo.man",
       "reddit": "u/mooman10"
     },
     {
@@ -50,7 +50,7 @@
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/4.2.1/wrath-and-glory.zip",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/5.0.0/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 
