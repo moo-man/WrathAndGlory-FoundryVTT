@@ -152,7 +152,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
         effects.conditions = CONFIG.statusEffects.map(i => {
             return {
-                label: i.label,
+                label: i.name,
                 key: i.id,
                 img: i.icon,
                 existing: this.actor.hasCondition(i.id)
@@ -329,7 +329,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
                         let label = html.find(".label").val()
                         let key = html.find(".key").val()
                         let value = parseInt(html.find(".modifier").val())
-                        effectData.label = label
+                        effectData.name = label
                         effectData.changes = [{ key, mode, value }]
                         this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
                     }
@@ -747,7 +747,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
 
             if (effect) {
                 let journal = game.journal.get("FWVnJvg0Gy7IMzO7")
-                let page = journal.pages.getName(effect.label)
+                let page = journal.pages.getName(effect.name)
                 if (journal)
                     journal.sheet.render(true, {pageId : page.id})
             }

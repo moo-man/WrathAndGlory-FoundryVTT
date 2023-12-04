@@ -1,7 +1,7 @@
 <div class="effects">
   <div class="condition-list">
     {{#each conditions as |effect e|}}
-    <div class="condition" title={{effect.label}} data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
+    <div class="condition" title={{effect.name}} data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
         <img src="{{effect.img}}"/>
         <a class="condition-toggle">
           {{#if effect.existing}}
@@ -25,7 +25,7 @@
     <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content">
           <img class="item-property item-image" src="{{effect.icon}}"></img>
-          <div class="item-property item-name effect-edit">{{effect.label}}</div>
+          <div class="item-property item-name effect-edit">{{effect.name}}</div>
           
           <div class="item-controls">
             <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>

@@ -51,7 +51,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
 
             if (!dialogChange.conditional.description)
             {
-                dialogChange.conditional.description = this.label;
+                dialogChange.conditional.description = this.name;
             }
 
             if (target)
@@ -78,7 +78,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
         effectData.origin = test.actor.uuid
 
         // Set statusId so that the icon shows on the token
-        setProperty(effectData, "flags.core.statusId", getProperty(effectData, "flags.core.statusId") || effectData.label.slugify())
+        setProperty(effectData, "flags.core.statusId", getProperty(effectData, "flags.core.statusId") || effectData.name.slugify())
         
         if(!item)  
             item = test.item

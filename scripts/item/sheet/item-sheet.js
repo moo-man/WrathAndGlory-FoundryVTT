@@ -73,7 +73,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     data.conditions = CONFIG.statusEffects.map(i => {
       return {
-          label : i.label,
+          name : i.name,
           key : i.id,
           img : i.icon,
           existing : this.item.hasCondition(i.id)
@@ -106,11 +106,11 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 async _handleEnrichment()
 {
     let enrichment = {}
-    enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+    enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true, secrets: this.item.isOwner, relativeTo: this.actor})
 
     if (this.item.type == "ascension")
     {
-      enrichment["system.benefits"] = await TextEditor.enrichHTML(this.item.system.benefits, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+      enrichment["system.benefits"] = await TextEditor.enrichHTML(this.item.system.benefits, {async: true, secrets: this.item.isOwner, relativeTo: this.actor})
     }
 
     return expandObject(enrichment)
@@ -231,7 +231,7 @@ async _handleEnrichment()
                         let label = html.find(".label").val()
                         let key = html.find(".key").val()
                         let value = parseInt(html.find(".modifier").val())
-                        effectData.label = label
+                        effectData.name = label
                         effectData.changes = [{key, mode, value}]
                         this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
                     }

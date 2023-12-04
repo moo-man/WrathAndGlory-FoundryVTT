@@ -178,8 +178,7 @@ export default class CharacterCreation extends FormApplication {
                 else 
                 {
                     faction.effects[0].transfer = true;
-                    faction.effects[0].label = $(ev.target).find(".background-bonus").children("option").filter(":selected").text()
-                    faction.effects[0].name = faction.effects[0].label // V11 uses name instead
+                    faction.effects[0].name = $(ev.target).find(".background-bonus").children("option").filter(":selected").text()
                     // Gross but whatever, uses the selected text (with background name appended) as the effect name
                 }
             }
@@ -525,7 +524,7 @@ export default class CharacterCreation extends FormApplication {
         let html = "<option value=''>-</option>"
 
         backgroundsChosen.forEach(bg => {
-            html += `<option value=${bg.id}>${bg.effect.label} (${this.faction.backgrounds[bg.type][bg.index]?.name})</option>`
+            html += `<option value=${bg.id}>${bg.effect.name} (${this.faction.backgrounds[bg.type][bg.index]?.name})</option>`
         })
         return html
     }

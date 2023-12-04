@@ -3,7 +3,7 @@
 
   <div class="condition-list">
     {{#each effects.conditions as |effect e|}}
-    <div class="condition" title="{{effect.label}}" data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
+    <div class="condition" title="{{effect.name}}" data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
         <a class="condition-click"><img src="{{effect.img}}"/></a>
         <a class="condition-toggle">
           {{#if effect.existing}}
@@ -30,7 +30,7 @@
     <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content">
           <img class="item-property item-image" src="{{effect.icon}}"></img>
-          <div class="item-property item-name effect-edit">{{effect.label}}</div>
+          <div class="item-property item-name effect-edit">{{effect.name}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>
           <div class="item-controls">
@@ -57,7 +57,7 @@
     <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content">
           <img class="item-property item-image" src="{{effect.icon}}"></img>
-          <div class="item-property item-name effect-edit">{{effect.label}}</div>
+          <div class="item-property item-name effect-edit">{{effect.name}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>
           <div class="item-controls">
@@ -83,7 +83,7 @@
     <div class="item" data-effect-id="{{effect.id}}">
       <div class="item-content" style="opacity : 0.5">
           <img class="item-property item-image" src="{{effect.icon}}"></img>
-          <div class="item-property item-name effect-edit">{{effect.label}}</div>
+          <div class="item-property item-name effect-edit">{{effect.name}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>
           <div class="item-controls">
@@ -102,7 +102,7 @@
   <select class="effect-select">
     <option value="">-</option>
     {{#each (config "systemEffects") as |effect e|}}
-    <option value="{{e}}">{{effect.label}}</option>
+    <option value="{{e}}">{{effect.name}}</option>
     {{/each}}
   </select>
 </div>

@@ -676,7 +676,7 @@ export class WrathAndGloryActor extends Actor {
             await this.addCondition("prone")
 
         if (!existing) {
-            effect.label = game.i18n.localize(effect.label)
+            effect.name = game.i18n.localize(effect.name)
             effect["flags.core.statusId"] = effect.id;
             delete effect.id
             return this.createEmbeddedDocuments("ActiveEffect", [effect])

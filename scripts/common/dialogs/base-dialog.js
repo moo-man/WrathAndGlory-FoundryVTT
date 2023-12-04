@@ -141,7 +141,7 @@ export class RollDialog extends Dialog {
       }
 
       condensed.forEach(i => {
-        i.tooltip = `From: ${i.tooltip.map(i => i.label).join(", ")}`
+        i.tooltip = `From: ${i.tooltip.map(i => i.name).join(", ")}`
       })
       return condensed
     }

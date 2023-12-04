@@ -10,12 +10,12 @@ export default function()
         }
         
         for (let effect of CONFIG.statusEffects) {
-            effect.label = game.i18n.localize(effect.label)
+            effect.name = game.i18n.localize(effect.name)
         }
         
         for (let e in game.wng.config.systemEffects) {
             let effect = game.wng.config.systemEffects[e]
-            effect.label = game.i18n.localize(effect.label)
+            effect.name = game.i18n.localize(effect.name)
         }
     })
 }
