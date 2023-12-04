@@ -22,7 +22,7 @@ export default function() {
     }
 
     // Eliminate some fields that should never be preserved
-    const deleteKeys = ["folder"];
+    const deleteKeys = [];
     for ( let k of deleteKeys ) {
       delete data[k];
     }
