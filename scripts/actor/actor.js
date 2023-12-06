@@ -42,6 +42,8 @@ export class WrathAndGloryActor extends Actor {
         }
         if (data.type === "agent") {
             initData["prototypeToken.sight.enabled"] = true;
+            initData["prototypeToken.sight.range"] = 5;
+            initData["prototypeToken.sight.visionMode"] = "basic";
             initData["prototypeToken.actorLink"] = true;
         }
         this.updateSource(initData)
