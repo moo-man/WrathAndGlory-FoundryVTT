@@ -704,7 +704,7 @@ export class WrathAndGloryActor extends Actor {
     get faction() { return this.getItemTypes("faction")[0] }
 
     hasCondition(conditionKey) {
-        let existing = this.effects.statuses.has(conditionKey)
+        let existing = this.effects.find(e => e.statuses.has(conditionKey))
         return existing
     }
 
