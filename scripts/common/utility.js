@@ -162,7 +162,7 @@ export default class WNGUtility {
     let tokenId = li.dataset.tokenId
     const token = canvas.tokens.get(tokenId);
     if (token?.isVisible) {
-      if (!token._controlled) token._onHoverIn();
+      if (!token._controlled) token._onHoverIn(ev);
       this._highlighted = token;
     }
   }
@@ -170,7 +170,7 @@ export default class WNGUtility {
   static unhighlightToken(ev) {
     const li = ev.target;
     let tokenId = li.dataset.tokenId
-    if (this._highlighted) this._highlighted._onHoverOut();
+    if (this._highlighted) this._highlighted._onHoverOut(ev);
     this._highlighted = null;
   }
 
