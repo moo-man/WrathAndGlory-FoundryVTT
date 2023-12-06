@@ -6,7 +6,7 @@ export async function migrateWorld() {
             for (let actor of game.actors.contents) {
                 try {
                     const update = migrateActorData(actor);
-                    if (!isObjectEmpty(update)) {
+                    if (!isEmpty(update)) {
                         console.log(`Migrating ${actor.name}`)
                         await actor.update(update);
                     }
@@ -18,7 +18,7 @@ export async function migrateWorld() {
                 try {
                     console.log(`Migrating ${item.name}`)
                     const update = migrateItemData(item);
-                    if (!isObjectEmpty(update)) {
+                    if (!isEmpty(update)) {
                         console.log(`Migrating ${item.name}`)
                         await item.update(update);
                     }
@@ -30,7 +30,7 @@ export async function migrateWorld() {
               try {
                   console.log(`Migrating ${journal.name}`)
                   const update = migrateJournalData(journal);
-                  if (!isObjectEmpty(update)) {
+                  if (!isEmpty(update)) {
                       console.log(`Migrating ${journal.name}`)
                       await journal.update(update);
                   }
@@ -42,7 +42,7 @@ export async function migrateWorld() {
               try {
                   console.log(`Migrating ${table.name}`)
                   const update = migrateTableData(table);
-                  if (!isObjectEmpty(update)) {
+                  if (!isEmpty(update)) {
                       console.log(`Migrating ${table.name}`)
                       await table.update(update);
                   }
