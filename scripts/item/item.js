@@ -275,7 +275,7 @@ export class WrathAndGloryItem extends Item {
 
 
     hasCondition(conditionKey) {
-        let existing = this.effects.statuses.has(conditionKey)
+        let existing = this.effects.find(e => e.statuses.has(conditionKey))
         return existing
     }
 
