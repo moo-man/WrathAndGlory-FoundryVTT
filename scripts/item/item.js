@@ -536,18 +536,15 @@ export class WrathAndGloryItem extends Item {
             return []
     }
 
-    get Journal() {
-        return fromUuid(this.journal)
-    }
-
     async showInJournal() {
-        let journal = await this.Journal
-
-        if (journal instanceof JournalEntry)
-            return journal.sheet.render(true)
-        else if (journal instanceof JournalEntryPage) 
-            return journal.showInJournal()
-
+        let journal = await fromUuid(this.journal)
+        let page;
+        if (journal instanceof JournalEntryPage)
+        {
+            page = journal;
+            journal = journal.parent;
+        }
+        journal.sheet.render(true, {pageId : page?.id})
     }
 
     get AbilityType() {

@@ -1,11 +1,5 @@
 export default function() {
 
-  
-  JournalEntryPage.prototype.showInJournal = function() {
-    let journal = this.parent;
-    journal.sheet.goToPage(this.id)
-  }
-
 
   // Convert functions that move data between world and compendium to retain ID
   Actors.prototype.fromCompendium = keepID(Actors.prototype.fromCompendium);
