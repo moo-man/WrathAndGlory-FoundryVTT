@@ -677,7 +677,7 @@ export class WrathAndGloryActor extends Actor {
 
         if (!existing) {
             effect.name = game.i18n.localize(effect.name)
-            effect["flags.core.statusId"] = effect.id;
+            effect.statuses = [effect.id];
             delete effect.id
             return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
@@ -704,7 +704,7 @@ export class WrathAndGloryActor extends Actor {
     get faction() { return this.getItemTypes("faction")[0] }
 
     hasCondition(conditionKey) {
-        let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
+        let existing = this.effects.statuses.has(conditionKey)
         return existing
     }
 

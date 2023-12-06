@@ -77,8 +77,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     {
         effectData.origin = test.actor.uuid
 
-        // Set statusId so that the icon shows on the token
-        setProperty(effectData, "flags.core.statusId", getProperty(effectData, "flags.core.statusId") || effectData.name.slugify())
+        effectData.statuses = effectData.statuses || effectData.name.slugify()
         
         if(!item)  
             item = test.item
@@ -145,7 +144,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     }
 
     get isCondition() {
-        return CONFIG.statusEffects.map(i => i.id).includes(this.getFlag("core", "statusId"))
+        return CONFIG.statusEffects.map(i => i.id).includes(Array.from(this.statuses)[0])
     }
 
     static get numericTypes() {

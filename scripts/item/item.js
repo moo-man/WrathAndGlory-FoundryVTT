@@ -251,7 +251,7 @@ export class WrathAndGloryItem extends Item {
 
         if (!existing) {
             effect.name = game.i18n.localize(effect.name)
-            effect["flags.core.statusId"] = effect.id;
+            effect.statuses = [effect.id];
             delete effect.id
             return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
@@ -275,7 +275,7 @@ export class WrathAndGloryItem extends Item {
 
 
     hasCondition(conditionKey) {
-        let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
+        let existing = this.effects.statuses.has(conditionKey)
         return existing
     }
 
