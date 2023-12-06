@@ -41,7 +41,7 @@ export class WrathAndGloryActor extends Actor {
             "flags.wrath-and-glory.generateMetaCurrencies": true
         }
         if (data.type === "agent") {
-            initData["prototypeToken.vision"] = true;
+            initData["prototypeToken.sight.enabled"] = true;
             initData["prototypeToken.actorLink"] = true;
         }
         this.updateSource(initData)
