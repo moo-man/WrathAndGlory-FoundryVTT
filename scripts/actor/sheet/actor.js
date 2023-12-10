@@ -784,7 +784,7 @@ export class WrathAndGloryActorSheet extends ActorSheet {
     _onItemLabelClick(ev) {
         if (this.actor[ev.currentTarget.dataset.type])
             this.actor[ev.currentTarget.dataset.type]?.sheet?.render(true);
-        else ui.notifications.error(`No Item of type ${ev.currentTarget.dataset.type} found`)
+        else ui.notifications.error(`No Item of type ${ev.currentTarget.dataset.type} found on this Actor. Add one from the world or compendium and it will be auto-filled here.`)
     }
 
 

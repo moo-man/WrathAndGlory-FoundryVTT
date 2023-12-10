@@ -113,7 +113,7 @@ export default class BugReportFormWNG extends Application {
 
             game.settings.set("wrath-and-glory", "bugReportName", data.issuer);
 
-            let officialModules = Array.from(game.modules).filter(m => this.domainKeys.includes(m[0]))
+            let officialModules = Array.from(game.modules).filter(m => this.domainKeys.includes(m.id))
             
             let versions = `<br/>wrath-and-glory: ${game.system.version}`
 

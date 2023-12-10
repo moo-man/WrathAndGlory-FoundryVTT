@@ -323,17 +323,52 @@
   box-shadow: inset 0 0 10px var(--color-imperium);
 }
 
-blockquote.foundry-note {
-  border-left: none;
-  font-style: normal;
-  border-radius: 20px;
-  padding: 5px;
-  background: radial-gradient(circle, rgba(255, 143, 32, 0.76) 0%, rgba(255, 77, 30, 0.75) 100%);
+  blockquote.foundry-note {
+    border-left: none;
+    font-style: normal;
+    border-radius: 20px;
+    padding: 5px;
+    background: linear-gradient(rgba(255, 143, 32, 0.76) 0%, rgba(255, 77, 30, 0.75) 100%);
+    box-shadow: 0 0 7px black;
+    font-style: normal;
+  
+  }
+  
+  blockquote.foundry-note::before {
+    content: url(/icons/vtt.png);
+    float: left;
+    margin-right: 5px;
+  }
+
+.document-resolver form {
+  height: 100%
+}
+
+.document-resolver form > div {
+  height: calc(100% - 45px);
+  overflow: auto;
+  color: #CCC
+}
+
+.document-resolver .document {
+  height: 100px;
   display: flex;
-  box-shadow: 0 0 7px black;
+  align-items: center;
 
 }
 
-blockquote.foundry-note::before {
-  content:url(/icons/vtt.png)
+.document-resolver .document img {
+  object-fit: contain;
+  flex: 0 0 100px;
+  width:100px;
+  height:100px;
+  padding: 10px;
+}
+
+.document-resolver .document a {
+  flex : 1
+}
+
+.document-resolver .document input {
+  flex : 0 0 20px
 }
