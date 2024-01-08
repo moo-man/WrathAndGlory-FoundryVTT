@@ -76,39 +76,39 @@ WNG.size = {
 
 
 WNG.weaponTraits = {
-    "agonising": "Agonising",
-    "arc": "Arc",
-    "assault": "Assault",
-    "blast": "Blast",
-    "brutal": "Brutal",
-    "force": "Force",
-    "flamer": "Flamer",
-    "heavy": "Heavy",
-    "inflict": "Inflict",
-    "kustom": "Kustom",
-    "melta": "Melta",
-    "parry": "Parry",
-    "pistol": "Pistol",
-    "rad": "Rad",
-    "rapidFire": "Rapid Fire",
-    "reliable": "Reliable",
-    "rending": "Rending",
-    "silent": "Silent",
-    "sniper": "Sniper",
-    "spread": "Spread",
-    "supercharge": "Supercharge",
-    "unwieldy": "Unwieldy",
-    "waaagh!": "Waaagh!",
-    "warpWeapons": "Warp Weapon"
+    "agonising": "TRAIT.Agonising",
+    "arc": "TRAIT.Arc",
+    "assault": "TRAIT.Assault",
+    "blast": "TRAIT.Blast",
+    "brutal": "TRAIT.Brutal",
+    "force": "TRAIT.Force",
+    "flamer": "TRAIT.Flamer",
+    "heavy": "TRAIT.Heavy",
+    "inflict": "TRAIT.Inflict",
+    "kustom": "TRAIT.Kustom",
+    "melta": "TRAIT.Melta",
+    "parry": "TRAIT.Parry",
+    "pistol": "TRAIT.Pistol",
+    "rad": "TRAIT.Rad",
+    "rapidFire": "TRAIT.RapidFire",
+    "reliable": "TRAIT.Reliable",
+    "rending": "TRAIT.Rending",
+    "silent": "TRAIT.Silent",
+    "sniper": "TRAIT.Sniper",
+    "spread": "TRAIT.Spread",
+    "supercharge": "TRAIT.Supercharge",
+    "unwieldy": "TRAIT.Unwieldy",
+    "waaagh!": "TRAIT.Waaagh",
+    "warpWeapons": "TRAIT.WarpWeapon"
 }
 
 WNG.armourTraits = {
-    "bulk": "Bulk",
-    "cumbersome": "Cumbersome",
-    "ereWeGo": "'Ere We Go!",
-    "powerField": "Power Field",
-    "powered": "Powered",
-    "shield": "Shield"
+    "bulk": "TRAIT.Bulk",
+    "cumbersome": "TRAIT.Cumbersome",
+    "ereWeGo": "TRAIT.EreWeGo",
+    "powerField": "TRAIT.PowerField",
+    "powered": "TRAIT.Powered",
+    "shield": "TRAIT.Shield"
 }
 
 
