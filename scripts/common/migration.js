@@ -65,6 +65,7 @@ let v10Conversions = {
   "wng-core.species-factions" : "wng-core.items",
   "wng-core.spells" : "wng-core.items",
   "wng-core.talents" : "wng-core.items",
+  "wng-core.mutations" : "wng-core.items",
   "wng-forsaken.archetypes" : "wng-forsaken.items",
   "wng-forsaken.species-factions" : "wng-forsaken.items",
   "wng-forsaken.equipment" : "wng-forsaken.items",
