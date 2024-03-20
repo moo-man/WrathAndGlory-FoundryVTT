@@ -32,7 +32,7 @@ export class BaseWnGActorSheet extends ActorSheet {
     async _handleEnrichment()
     {
         let enrichment = {}
-        enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true})
+        enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
 
         return expandObject(enrichment)
     }
@@ -49,7 +49,7 @@ export class BaseWnGActorSheet extends ActorSheet {
 
         effects.conditions = CONFIG.statusEffects.map(i => {
             return {
-                label: i.label,
+                label: i.name,
                 key: i.id,
                 img: i.icon,
                 existing: this.actor.hasCondition(i.id)
@@ -159,7 +159,7 @@ export class BaseWnGActorSheet extends ActorSheet {
 
     async _onEffectCreate(ev) {
         let type = ev.currentTarget.attributes["data-type"].value
-        let effectData = { label: "New Effect", icon: "icons/svg/aura.svg" }
+        let effectData = { name: "New Effect", icon: "icons/svg/aura.svg" }
         if (type == "temporary") {
             effectData["duration.rounds"] = 1;
         }
@@ -176,7 +176,7 @@ export class BaseWnGActorSheet extends ActorSheet {
                         let label = html.find(".label").val()
                         let key = html.find(".key").val()
                         let value = parseInt(html.find(".modifier").val())
-                        effectData.label = label
+                        effectData.name = label
                         effectData.changes = [{ key, mode, value }]
                         this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
                     }
@@ -342,7 +342,7 @@ export class BaseWnGActorSheet extends ActorSheet {
 
             if (effect) {
                 let journal = game.journal.get("FWVnJvg0Gy7IMzO7")
-                let page = journal.pages.getName(effect.label)
+                let page = journal.pages.getName(effect.name)
                 if (journal)
                     journal.sheet.render(true, {pageId : page.id})
             }
@@ -379,7 +379,7 @@ export class BaseWnGActorSheet extends ActorSheet {
     _onItemLabelClick(ev) {
         if (this.actor[ev.currentTarget.dataset.type])
             this.actor[ev.currentTarget.dataset.type]?.sheet?.render(true);
-        else ui.notifications.error(`No Item of type ${ev.currentTarget.dataset.type} found`)
+        else ui.notifications.error(`No Item of type ${ev.currentTarget.dataset.type} found on this Actor. Add one from the world or compendium and it will be auto-filled here.`)
     }
 
 
