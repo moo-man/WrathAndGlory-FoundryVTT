@@ -1,7 +1,7 @@
-import ArchetypeGeneric from "../../apps/archetype-generic.js";
-import ArchetypeGroups from "../../apps/archetype-groups.js";
-import ItemTraits from "../../apps/item-traits.js";
-import { WrathAndGloryItem } from "../item.js";
+import ArchetypeGeneric from "../apps/archetype-generic.js";
+import ArchetypeGroups from "../apps/archetype-groups.js";
+import ItemTraits from "../apps/item-traits.js";
+import { WrathAndGloryItem } from "../document/item.js";
 
 export class WrathAndGloryItemSheet extends ItemSheet {
   static get defaultOptions() {
@@ -455,7 +455,7 @@ async _handleEnrichment()
             if (!item) 
               throw new Error("Could not find Item with ID " + obj.id)
 
-            new WrathAndGloryItem(item.toObject(), { archetype: { item: this.item, index, path: "data.wargear" } }).sheet.render(true)
+            new CONFIG.Item.implementation(item.toObject(), { archetype: { item: this.item, index, path: "data.wargear" } }).sheet.render(true)
 
           }
         }

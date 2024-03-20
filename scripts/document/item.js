@@ -490,9 +490,9 @@ export class WrathAndGloryItem extends Item {
         if (!this.isOwned)
             return
         if (this.category == "ranged")
-            return this.actor.getItemTypes("ammo")
+            return this.actor.itemTypes.ammo
         else if (this.category == "launcher")
-            return this.actor.getItemTypes("weapon").filter(i => i.category == "grenade-missile")
+            return this.actor.itemTypes.weapon.filter(i => i.category == "grenade-missile")
         else if (this.category == "grenade-missile")
             return [this]
 

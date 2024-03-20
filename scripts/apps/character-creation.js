@@ -1,6 +1,5 @@
-import { WrathAndGloryActor } from "../actor/actor.js";
 import WNGUtility from "../common/utility.js";
-import { WrathAndGloryItem } from "../item/item.js";
+import { WrathAndGloryItem } from "../document/item.js";
 import ArchetypeGroups from "./archetype-groups.js";
 import FilterResults from "./filter-results.js";
 
@@ -32,7 +31,7 @@ export default class CharacterCreation extends FormApplication {
 
     initializeCharacter()
     {
-        this.character = new WrathAndGloryActor({type: "agent", name : this.object.actor.name}) // Temporary actor 
+        this.character = new CONFIG.Actor.implementation({type: "agent", name : this.object.actor.name}) // Temporary actor 
 
         // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
         for (let attribute in this.character.attributes)

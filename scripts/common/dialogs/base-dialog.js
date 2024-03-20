@@ -1,4 +1,3 @@
-import WrathAndGloryEffect from "../effect.js";
 
 export class RollDialog extends Dialog {
 
@@ -232,7 +231,7 @@ export class RollDialog extends Dialog {
       .map(id => this.data.dialogData.changes[id])                // Turn ids into changes
 
       for (let c of changes) {
-        if (WrathAndGloryEffect.numericTypes.includes(c.key))
+        if (CONFIG.ActiveEffect.implementation.numericTypes.includes(c.key))
           this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)
         else if (Object.keys(game.wng.config.rankTypes).concat(Object.keys(game.wng.config.difficultyRankTypes)).includes(c.value))
           this.effectValues[c.key] = c.value

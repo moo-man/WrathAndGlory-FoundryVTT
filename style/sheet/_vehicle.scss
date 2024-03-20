@@ -56,4 +56,15 @@
       }
     }
   }
+
+  .tab[data-tab=notes].active
+  {
+    height: calc(100% - 10px);
+    .notes-tab .editor{
+      height: calc(100% - 50px);
+    }
+    .notes-tab .editor-content {
+      height: calc(100%);
+    }
+  }
 }

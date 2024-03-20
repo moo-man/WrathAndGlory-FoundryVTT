@@ -42,10 +42,10 @@ export class VehicleSheet extends BaseWnGActorSheet {
     constructItemLists(sheetData) {
         let items = {}
 
-        items.ammo = this.actor.getItemTypes("ammo")
-        items.gear = this.actor.getItemTypes("gear")
-        items.keywords = this.actor.getItemTypes("keyword")
-        items.weapons = this.actor.getItemTypes("weapon")
+        items.ammo = this.actor.itemTypes.ammo
+        items.gear = this.actor.itemTypes.gear
+        items.keywords = this.actor.itemTypes.keyword
+        items.weapons = this.actor.itemTypes.weapon
 
         sheetData.items = items;
 
@@ -56,21 +56,21 @@ export class VehicleSheet extends BaseWnGActorSheet {
         sheetData.inventory = {
             weapons: {
                 header: "HEADER.WEAPON",
-                items: this.actor.getItemTypes("weapon"),
+                items: this.actor.itemTypes.weapon,
                 equippable: true,
                 quantity: true,
                 type: "weapon"
             },
             gear: {
                 header: "HEADER.GEAR",
-                items: this.actor.getItemTypes("gear"),
+                items: this.actor.itemTypes.gear,
                 equippable: false,
                 quantity: true,
                 type: "gear"
             },
             ammo: {
                 header: "HEADER.AMMO",
-                items: this.actor.getItemTypes("ammo"),
+                items: this.actor.itemTypes.ammo,
                 equippable: false,
                 quantity: true,
                 type: "ammo"

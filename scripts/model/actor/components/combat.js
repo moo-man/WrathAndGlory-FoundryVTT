@@ -43,26 +43,27 @@ export class CombatModel extends foundry.abstract.DataModel {
         }
     }
 
-    /**
-     * 
-     * @param {AttributesModel} attributes 
-     */
-    compute(attributes, skills, items, autoCalc) {
+    compute() 
+    {
+        let actor = this.parent.parent;
+        let attributes = actor.system.attributes;
+        let skills = actor.system.skills;
+        let autoCalc = actor.getFlag("wrath-and-glory", "autoCalc");
 
-        this.computeArmour(items.armour, attributes);
+        this.computeArmour(actor.itemTypes.armour, attributes);
 
         if (autoCalc.awareness)
-            this.passiveAwareness.total = Math.min(Math.ceil(skills.awareness.total / 2) + this.passiveAwareness.bonus, 1);
+            this.passiveAwareness.total = Math.max(Math.ceil(skills.awareness.total / 2) + this.passiveAwareness.bonus, 1);
         if (autoCalc.defence)
-            this.defence.total = Math.min(attributes.initiative.total - 1 + this.defence.bonus, 1);
+            this.defence.total = Math.max(attributes.initiative.total - 1 + this.defence.bonus, 1);
         if (autoCalc.resolve)
-            this.resolve.total = Math.min(attributes.willpower.total - 1, 1) + this.resolve.bonus;
+            this.resolve.total = Math.max(attributes.willpower.total - 1, 1) + this.resolve.bonus;
         if (autoCalc.conviction)
-            this.conviction.total = Math.min(attributes.willpower.total + this.conviction.bonus, 1);
+            this.conviction.total = Math.max(attributes.willpower.total + this.conviction.bonus, 1);
         if (autoCalc.resilience)
-            this.resilience.total = Math.min(attributes.toughness.total + 1 + this.resilience.bonus + this.resilience.armour, 1);
+            this.resilience.total = Math.max(attributes.toughness.total + 1 + this.resilience.bonus + this.resilience.armour, 1);
         if (autoCalc.determination)
-            this.determination.total = Math.min(attributes[this.determination.attribute || "toughness"].total + this.determination.bonus, 1);
+            this.determination.total = Math.max(attributes[this.determination.attribute || "toughness"].total + this.determination.bonus, 1);
 
 
         if (autoCalc.defence) {
@@ -121,8 +122,8 @@ export class AgentCombatModel extends CombatModel {
         super.compute(attributes, autoCalc);
 
         if (autoCalc.wounds)
-            this.wounds.max = Math.min((this.advances.tier * 2) + attributes.toughness.total + this.wounds.bonus, 1);
+            this.wounds.max = Math.max((this.advances.tier * 2) + attributes.toughness.total + this.wounds.bonus, 1);
         if (autoCalc.shock)
-            this.shock.max = Math.min(attributes.willpower.total + this.advances.tier + this.shock.bonus, 1);
+            this.shock.max = Math.max(attributes.willpower.total + this.advances.tier + this.shock.bonus, 1);
     }
 }

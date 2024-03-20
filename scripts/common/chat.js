@@ -1,5 +1,3 @@
-import WrathAndGloryEffect from "./effect.js"
-
 export default class WNGChat {
   static chatListeners(html) {
     html.on("click", ".roll-damage", this._onDamageClick.bind(this))
@@ -95,7 +93,7 @@ export default class WNGChat {
       let item = test.item
       let effect = test.getEffect(effectId).toObject()
 
-      WrathAndGloryEffect.populateEffectData(effect, test, item);
+      CONFIG.ActiveEffect.implementation.populateEffectData(effect, test, item);
       
       if (canvas.tokens.controlled.length)
       {
@@ -107,8 +105,6 @@ export default class WNGChat {
 
       else
           return ui.notifications.warn(game.i18n.localize("WARN.NoActorsToApply"))
-
- 
   }
 
   static async _onTestClick(ev)

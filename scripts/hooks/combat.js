@@ -9,7 +9,7 @@ export default function() {
             let postMessage = false
             for(let combatant of combat.combatants)
             {
-                let battlecries = combatant.actor.getItemTypes("ability").filter(i => i.abilityType == "battlecry")
+                let battlecries = combatant.actor.itemTypes.ability.filter(i => i.abilityType == "battlecry")
                 if (battlecries.length)
                 {
                     chatData.content += `<br><b>${combatant.name}</b> - ${battlecries.map(i => i.name).join(", ")}`

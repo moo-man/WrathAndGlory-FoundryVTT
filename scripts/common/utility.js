@@ -1,4 +1,4 @@
-import { WrathAndGloryItem } from "../item/item.js";
+import { WrathAndGloryItem } from "../document/item.js";
 
 export default class WNGUtility {
   /**
@@ -191,7 +191,7 @@ export default class WNGUtility {
 
     let item
     if (["weapon", "psychicPower", "ability"].includes(itemType)) {
-      item = actor ? actor.getItemTypes(itemType).find(i => i.name === itemName) : null;
+      item = actor ? actor.itemTypes[itemType].find(i => i.name === itemName) : null;
       if (!item) return ui.notifications.warn(`${game.i18n.localize("ERROR.MacroItemMissing")} ${itemName}`);
     }
 

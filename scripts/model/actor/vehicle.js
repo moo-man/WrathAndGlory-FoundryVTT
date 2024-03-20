@@ -31,7 +31,7 @@ export class VehicleModel extends BaseWnGActorModel {
         )
     }
 
-    computeDerived(items, autoCalc)
+    computeDerived()
     {
 
     }

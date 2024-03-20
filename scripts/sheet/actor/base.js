@@ -112,7 +112,7 @@ export class BaseWnGActorSheet extends ActorSheet {
         let header = event.currentTarget.dataset
 
         let data = {
-            name: `New ${game.i18n.localize("ITEM.Type" + header.type.toLowerCase().capitalize())}`,
+            name: `New ${game.i18n.localize("TYPES.Item." + header.type)}`,
             type: header.type
         };
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
