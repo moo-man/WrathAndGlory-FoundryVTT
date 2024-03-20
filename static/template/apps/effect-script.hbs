@@ -5,7 +5,20 @@
             <input name="description" type="text" class="script-condition" value="{{description}}">
         </div>
     </div>
-    <h3>Function</h3>
+
+
+    {{#if aceActive}}
+    <h3>Activate if</h3>
+    <div class="ace-editor script"><input></div>
+    <h3>Hide if</h3>
+    <div class="ace-editor hide"><input></div>
+    {{else}}
+    <h3>Activate if</h3>
     <textarea name="script" class="script-code" placeholder="Function must return true for automatic activation. Leave blank for manual selection.">{{script}}</textarea>
+    <h3>Hide if</h3>
+    <textarea name="hide" class="script-code" placeholder="Function must return true to prevent the effect script from showing in the dialog.">{{hide}}</textarea>
+    {{/if}}
+
+
     <button>Submit</button>
 </form>

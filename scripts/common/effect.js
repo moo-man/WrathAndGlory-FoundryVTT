@@ -37,35 +37,35 @@ export default class WrathAndGloryEffect extends ActiveEffect {
         }
     }
 
-    getDialogChanges({target = false, condense = false, indexOffset = 0}={}) {
-        let allChanges = this.changes.map(c => foundry.utils.deepClone(c))
-        allChanges.forEach((c, i) => {
-            c.conditional = this.changeConditionals[i] || {}
-            c.document = this
-        })
-        let dialogChanges = allChanges.filter((c) => c.mode == (target ? 7 : 6)) // Targeter dialog is 7, self dialog is 6
-        dialogChanges.forEach((c, i) => {
-            c.target = !!target
-            c.index = [i + indexOffset]
-            if (this.parent?.documentName == "Actor")
-                this.fillDerivedData(this.parent, c)
-        })
-
-        // changes with the same description as under the same condition (use the first ones' script)
-        if (condense)
+    getDialogChanges({target = false}={}) {
+        let allChanges = {}
+        this.changes
+        .filter((c) => c.mode == (target ? 7 : 6))
+        .forEach((c, i) => 
         {
-            let uniqueChanges = []
-            dialogChanges.forEach(c => {
-                let existing = uniqueChanges.find(unique => unique.conditional.description == c.conditional.description)
-                if (existing)
-                    existing.index = existing.index.concat(c.index)
-                else
-                    uniqueChanges.push(c)
+            let dialogChange = mergeObject(foundry.utils.deepClone(c), {
+                conditional : this.changeConditionals[i] || {},
+                target : !!target, 
+                document: this
             })
-            dialogChanges = uniqueChanges
-        }
 
-        return dialogChanges
+            if (!dialogChange.conditional.description)
+            {
+                dialogChange.conditional.description = this.name;
+            }
+
+            if (target)
+            {
+                dialogChange.conditional.description = `Target: ${dialogChange.conditional.description}`;
+            }
+
+            if (this.parent?.documentName == "Actor")
+                this.fillDerivedData(this.parent, dialogChange)
+
+            allChanges[randomID()] = dialogChange
+        })
+
+        return allChanges
     }
 
      /**
@@ -77,8 +77,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     {
         effectData.origin = test.actor.uuid
 
-        // Set statusId so that the icon shows on the token
-        setProperty(effectData, "flags.core.statusId", getProperty(effectData, "flags.core.statusId") || effectData.label.slugify())
+        effectData.statuses = effectData.statuses || effectData.name.slugify()
         
         if(!item)  
             item = test.item
@@ -124,10 +123,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     get changeConditionals() {
         return (getProperty(this, "flags.wrath-and-glory.changeCondition") || {})
     }
-    get description() {
-        return getProperty(this, "flags.wrath-and-glory.description")
-    }
-
+    
     get hasRollEffect() {
         return this.changes.some(c => c.mode == 0)
     }
@@ -148,7 +144,7 @@ export default class WrathAndGloryEffect extends ActiveEffect {
     }
 
     get isCondition() {
-        return CONFIG.statusEffects.map(i => i.id).includes(this.getFlag("core", "statusId"))
+        return CONFIG.statusEffects.map(i => i.id).includes(Array.from(this.statuses)[0])
     }
 
     static get numericTypes() {

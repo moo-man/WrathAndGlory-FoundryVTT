@@ -9,8 +9,8 @@ export default class BugReportFormWNG extends Application {
             "Wrath & Glory System",
             "Wrath & Glory: Core Module",
             "Wrath & Glory: Forsaken System Module",
-            "WRath & Glory: Litanies of the Lost",
-            "WRath & Glory: Redacted Records I"
+            "Wrath & Glory: Litanies of the Lost",
+            "Wrath & Glory: Redacted Records I"
         ]
 
         this.domainKeys = [
@@ -85,6 +85,7 @@ export default class BugReportFormWNG extends Application {
     }
 
     activateListeners(html) {
+
         html.find(".bug-submit").click(ev => {
             let data = {};
             let form = $(ev.currentTarget).parents(".bug-report")[0];
@@ -94,14 +95,10 @@ export default class BugReportFormWNG extends Application {
             data.issuer = $(form).find(".issuer")[0].value
             let label = $(form).find(".issue-label")[0].value;
 
-
             if (!data.domain || !data.title || !data.description)
                 return ui.notifications.error(game.i18n.localize("BugReport.ErrorForm"))
             if (!data.issuer)
                 return ui.notifications.error(game.i18n.localize("BugReport.ErrorName1"))
-
-            if (!data.issuer.includes("@") && !data.issuer.includes("#"))
-                return ui.notifications.notify(game.i18n.localize("BugReport.ErrorName2"))
 
             data.title = `[${this.domains[Number(data.domain)]}] ${data.title}`
             data.description = data.description + `<br/>**From**: ${data.issuer}`
@@ -113,18 +110,18 @@ export default class BugReportFormWNG extends Application {
 
             game.settings.set("wrath-and-glory", "bugReportName", data.issuer);
 
-            let officialModules = Array.from(game.modules).filter(m => this.domainKeys.includes(m[0]))
+            let officialModules = Array.from(game.modules).filter(m => this.domainKeys.includes(m.id))
             
             let versions = `<br/>wrath-and-glory: ${game.system.version}`
 
             for (let mod of officialModules)
             {
-                let modData = game.modules.get(mod[0]);
-                if (modData.active)
-                    versions = versions.concat(`<br/>${mod[0]}: ${modData.version}`)
+                if (mod.active)
+                    versions = versions.concat(`<br/>${mod.id}: ${mod.version}`)
             }
 
             data.description = data.description.concat(versions);
+            data.description += `<br/>Active Modules: ${game.modules.contents.filter(i => i.active).map(i => i.id).filter(i => !this.domainKeys.includes(i)).join(", ")}`
 
             this.submit(data)
             this.close()

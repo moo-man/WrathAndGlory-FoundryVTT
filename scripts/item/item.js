@@ -250,8 +250,8 @@ export class WrathAndGloryItem extends Item {
         let existing = this.hasCondition(effect.id)
 
         if (!existing) {
-            effect.label = game.i18n.localize(effect.label)
-            effect["flags.core.statusId"] = effect.id;
+            effect.name = game.i18n.localize(effect.name)
+            effect.statuses = [effect.id];
             delete effect.id
             return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
@@ -275,7 +275,7 @@ export class WrathAndGloryItem extends Item {
 
 
     hasCondition(conditionKey) {
-        let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
+        let existing = this.effects.find(e => e.statuses.has(conditionKey))
         return existing
     }
 
@@ -421,7 +421,7 @@ export class WrathAndGloryItem extends Item {
     async GetArchetypeItems() {
         let items = [];
 
-        let species = game.wng.utility.findItem(this.species.id, "species")
+        let species = await game.wng.utility.findItem(this.species.id, "species")
         let faction = game.wng.utility.findItem(this.faction.id, "faction")
 
         let speciesAbilities = species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
@@ -430,7 +430,7 @@ export class WrathAndGloryItem extends Item {
 
 
         // Get all archetype talents/wargear, merge with diff
-        for (let i of this.suggested.talents.concat(this.wargear))
+        for (let i of this.suggested.talents.concat(this.wargear.filter(k => k.id)))
         {
             let item = await game.wng.utility.findItem(i.id)
             if (item)
@@ -440,15 +440,17 @@ export class WrathAndGloryItem extends Item {
             }
         }
 
-        items = await Promise.all(items.concat(
+        items = (await Promise.all(items.concat(
             [species], 
             [this],
             [faction],
             [archetypeAbility],
             speciesAbilities,
-            keywords))
+            keywords)))
             .filter(i => i)
             .map(i => i instanceof Item ? i.toObject() : i)
+
+        items.filter(i => ["weapon", "armour"].includes(i.type)).forEach(i => i.system.equipped = true)
 
         return items
     }
@@ -534,18 +536,15 @@ export class WrathAndGloryItem extends Item {
             return []
     }
 
-    get Journal() {
-        return fromUuid(this.journal)
-    }
-
     async showInJournal() {
-        let journal = await this.Journal
-
-        if (journal instanceof JournalEntry)
-            return journal.sheet.render(true)
-        else if (journal instanceof JournalEntryPage) 
-            return journal.showInJournal()
-
+        let journal = await fromUuid(this.journal)
+        let page;
+        if (journal instanceof JournalEntryPage)
+        {
+            page = journal;
+            journal = journal.parent;
+        }
+        journal.sheet.render(true, {pageId : page?.id})
     }
 
     get AbilityType() {
