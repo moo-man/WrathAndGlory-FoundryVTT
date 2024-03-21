@@ -1,6 +1,7 @@
 {
   "TYPES.Actor.agent" : "Agent",
   "TYPES.Actor.threat" : "Threat",
+  "TYPES.Actor.vehicle" : "Vehicle",
 
   "TYPES.Item.ability" : "Ability",
   "TYPES.Item.ammo" : "Ammo",
@@ -11,7 +12,7 @@
   "TYPES.Item.keyword" : "Keyword",
   "TYPES.Item.memorableInjury" : "Memorable Injury",
   "TYPES.Item.mutation" : "Mutation",
-  "TYPES.Item.psychicpower" : "Psychic Power",
+  "TYPES.Item.psychicPower" : "Psychic Power",
   "TYPES.Item.talent" : "Talent",
   "TYPES.Item.traumaticInjury" : "Traumatic Injury",
   "TYPES.Item.weapon" : "Weapon",
