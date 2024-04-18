@@ -9,6 +9,20 @@
           <label>{{localize "Name"}}</label>
           <input name="name" type="text" value="{{actor.name}}" />
         </div>
+                  <div class="rarity">
+          <label class="item-label">{{localize "HEADER.RARITY"}}</label>
+          <select name="system.rarity">
+            {{#select system.rarity}}
+              {{#each (config "rarity")}}
+                <option value="{{@key}}">{{this}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+        </div>
+        <div class="value">
+          <label>{{localize "HEADER.VALUE"}}</label>
+          <input type="number" value="{{system.value}}" name="system.value" />
+        </div>
       </div>
       <div class="row">
 

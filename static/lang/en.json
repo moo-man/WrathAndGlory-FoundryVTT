@@ -269,6 +269,8 @@
   "HEADER.PASSENGERS" : "Passengers",
   "HEADER.UNASSIGNED" : "Unassigned",
   "HEADER.MAN" : "Man.",
+  "HEADER.RARITY" : "Rarity",
+  "HEADER.VALUE" : "Value",
 
   "KEYWORD.NAME": "Name",
   "KEYWORD.DESCRIPTION": "Description",

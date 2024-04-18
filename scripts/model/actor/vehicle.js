@@ -25,7 +25,7 @@ export class VehicleModel extends BaseWnGActorModel {
         this.traits.forEach(i => {
                 i.display = game.wng.config.vehicleTraits[i.name];
                 if (game.wng.config.traitHasRating[i.name]) {
-                    traits[i.name].display += ` (${i.rating})`
+                    i.display += ` (${i.rating})`
                 }
             }
         )
