@@ -178,31 +178,31 @@ export class WrathAndGloryItem extends Item {
                 diff : {}
             })
             let groups = this.addToGroup({index: wargear.length - 1, type : "item"})
-            return this.update({"data.wargear" : wargear, "data.groups" : groups})
+            return this.update({"system.wargear" : wargear, "system.groups" : groups})
         }
         if(item.type == "ability")
         {
-            return this.update({"data.ability.id" : item.uuid, "data.ability.name" : item.name})
+            return this.update({"system.ability.id" : item.uuid, "system.ability.name" : item.name})
         }
         if(item.type == "faction")
         {
-            return this.update({"data.faction.id" : item.uuid, "data.faction.name" : item.name})
+            return this.update({"system.faction.id" : item.uuid, "system.faction.name" : item.name})
         }
         if(item.type == "species")
         {
-            return this.update({"data.species.id" : item.uuid, "data.species.name" : item.name})
+            return this.update({"system.species.id" : item.uuid, "system.species.name" : item.name})
         }
         if (item.type == "talent")
         {   
             let talents = duplicate(this.suggested.talents)
             talents.push({"id" : item.id, "name" : item.name})
-            this.update({"data.suggested.talents" : talents})
+            this.update({"system.suggested.talents" : talents})
         }
         if (item.type == "keyword")
         {
             let keywords = duplicate(this.keywords)
             keywords.push(item.name)
-            this.update({"data.keywords" : keywords})
+            this.update({"system.keywords" : keywords})
         }
     }
 
@@ -212,7 +212,7 @@ export class WrathAndGloryItem extends Item {
         {
             let abilities = duplicate(this.abilities);
             abilities.push({id : item.uuid, name : item.name})
-            return this.update({"data.abilities" : abilities})
+            return this.update({"system.abilities" : abilities})
         }
     }
     
@@ -226,7 +226,7 @@ export class WrathAndGloryItem extends Item {
 
     resetGroups()
     {
-        this.update({ "data.groups": {type: "and", groupId: "root", items : Array.fromRange(this.wargear.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
+        this.update({ "system.groups": {type: "and", groupId: "root", items : Array.fromRange(this.wargear.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
     }
 
     _deleteIndex(index, path)

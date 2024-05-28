@@ -43,7 +43,7 @@ export class AgentSheet extends WrathAndGloryActorSheet {
         const div = $(event.currentTarget).parents(".item");
         let item  = this.actor.items.get(div.data("itemId"));
         const value = parseInt($(event.currentTarget)[0].value, 10);
-        let data = { _id: item.id, "data.cost": value };
+        let data = { _id: item.id, "system.cost": value };
         await this.actor.updateEmbeddedDocument("Item", data);
         this._render(true);
     }

@@ -75,7 +75,7 @@ export class WNGTest {
       new WrathDie({ number: this.result.wrathSize, faces: 6 })
     ])
 
-    return this.roll.evaluate({ async: true });
+    return this.roll.evaluate();
   }
 
   _computeResult() {
@@ -331,7 +331,7 @@ export class WNGTest {
     const html = await renderTemplate(this.template, this);
     let chatData = {
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      roll: this.roll,
+      rolls: [this.roll],
       flags: { "wrath-and-glory.testData": this.data },
       user: game.user.id,
       rollMode: game.settings.get("core", "rollMode"),
@@ -565,8 +565,8 @@ export class PoolDie extends Die {
   static DENOMINATION = "p"
 
   /**@overide */
-  roll(...args) {
-    let roll = super.roll(...args)
+  async roll(...args) {
+    let roll = await super.roll(...args)
     roll.value = this.options.values[Math.min(roll.result + this.options.add, 6)]
     if (roll.result === 6) {
       roll.name = "icon",
@@ -627,8 +627,8 @@ export class WrathDie extends Die {
   static DENOMINATION = "w"
 
   /**@overide */
-  roll(...args) {
-    let roll = super.roll(...args)
+  async roll(...args) {
+    let roll = await super.roll(...args)
     if (roll.result === 6) {
       roll.name = "wrath-critical",
         roll.canShift = true,

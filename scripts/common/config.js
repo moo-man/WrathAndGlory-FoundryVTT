@@ -334,7 +334,7 @@ CONFIG.statusEffects = [
         id : "frenzied",
         name : "CONDITION.Frenzied",
         icon : "systems/wrath-and-glory/asset/icons/conditions/frenzied.svg",
-        changes : [{key: "data.attributes.strength.bonus", mode : 2, value : 1}]
+        changes : [{key: "system.attributes.strength.bonus", mode : 2, value : 1}]
     },
     {
         id : "hindered",

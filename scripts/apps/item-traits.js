@@ -63,7 +63,7 @@ export default class ItemTraits extends FormApplication
                 newTraits.push(traitObj)
             }
         }
-        this.object.update({"data.traits" : newTraits})
+        this.object.update({"system.traits" : newTraits})
     }
 
     parseCustomTraits(string)

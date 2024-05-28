@@ -77,7 +77,7 @@ export default function() {
                         return ui.notifications.error(game.i18n.localize("ERROR.NoMoreWrath"))
                       else
                       {
-                        actor.update({"data.resources.wrath" : actor.resources.wrath - 1})
+                        actor.update({"system.resources.wrath" : actor.resources.wrath - 1})
                         ui.notifications.notify(game.i18n.localize("NOTE.WrathSubtracted"))
                       }
                     }
@@ -268,12 +268,12 @@ function _dealDamageToTarget(test, target) {
     let updateObj = {}
     if (addShock)
     {
-        updateObj["data.combat.shock.value"] = target.combat.shock.value + 1
+        updateObj["system.combat.shock.value"] = target.combat.shock.value + 1
         ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_SHOCK", {name : target.prototypeToken.name}));
 }
     if (addWounds)
     {
-        updateObj["data.combat.wounds.value"] = target.combat.wounds.value + addWounds;
+        updateObj["system.combat.wounds.value"] = target.combat.wounds.value + addWounds;
         ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE", {damage : addWounds, name : target.prototypeToken.name}));
     }
 

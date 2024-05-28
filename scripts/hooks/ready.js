@@ -6,6 +6,11 @@ export default function() {
         migrateWorld();
         game.counter.render(true)
         game.wng.tags.createTags();
+
+        if (game.release.generation == 12)
+        {
+            ui.notifications.warn("Please note that the <strong>Wrath & Glory</strong> system has not been made fully compatible with V12 and issues may occur.")
+        }
     });
     
     CONFIG.ChatMessage.documentClass.prototype.getTest = function () {

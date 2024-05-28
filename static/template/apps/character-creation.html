@@ -51,7 +51,7 @@
                             <label>{{ability.name}}</label>
                         </div>
                         <div class="ability-description">
-                            {{{enrich ability.description}}}
+                            {{{lookup ../enrichment ability.id}}}
                         </div>
                     </div>
                     {{/each}}
@@ -102,7 +102,7 @@
                         <label>{{archetypeAbility.name}}</label>
                     </div>
                     <div class="ability-description">
-                        {{{enrich archetypeAbility.description}}}
+                        {{{lookup enrichment archetypeAbility.id}}}
                     </div>
                 </div>
 
