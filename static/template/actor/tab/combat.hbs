@@ -270,7 +270,7 @@
               {{/if}}
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name {{#if item.rollable}}rollable{{else}}item-dropdown{{/if}}">{{item.name}}</div>
-          <span class="item-property item-dropdown flex large long-text">{{{enrich item.description}}}</span>
+          <span class="item-property item-dropdown flex large long-text">{{{lookup ../enrichment item.id}}}</span>
         </div>
         </div>
         {{/if}}

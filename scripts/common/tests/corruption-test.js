@@ -39,7 +39,7 @@ export default class CorruptionTest  extends WNGTest {
 
       let prevLevel = this.actor.corruptionLevel;
 
-      await this.actor.update({"data.corruption.current": this.actor.corruption.current + corruption})
+      await this.actor.update({"system.corruption.current": this.actor.corruption.current + corruption})
 
       let newLevel = this.actor.corruptionLevel;
 
@@ -65,7 +65,7 @@ export default class CorruptionTest  extends WNGTest {
 
   revertPoints()
   {
-    this.actor.update({"data.corruption.current" : this.actor.corruption.current - this.context.corruptionAdded})
+    this.actor.update({"system.corruption.current" : this.actor.corruption.current - this.context.corruptionAdded})
     ui.notifications.notify(game.i18n.localize("ROLL.CORRUPTION_REVERTED"))
     game.wng.RuinGloryCounter.changeCounter(-1,  "ruin").then(() => {
       game.counter.render(true)

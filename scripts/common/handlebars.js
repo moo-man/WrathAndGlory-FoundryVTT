@@ -63,11 +63,6 @@ function registerHandlebarsHelpers() {
   })
 
 
-  Handlebars.registerHelper("enrich", function (string) {
-    return TextEditor.enrichHTML(string, { async: false })
-  })
-
-
   Handlebars.registerHelper("array", function (array, cls) {
     if (typeof cls == "string")
       return array.map(i => `<a class="${cls}">${i}</a>`).join(`,`)

@@ -61,9 +61,9 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     // If this is a temp item with an archetype parent
     if (this.item.archetype) {
-      let list = duplicate(getProperty(this.item.archetype.data, this.item.archetypeItemPath))
+      let list = duplicate(getProperty(this.item.archetype, this.item.archetypeItemPath))
       let wargearObj = list[this.item.archetypeItemIndex];
-      mergeObject(data.data, wargearObj.diff, { overwrite: true }) // Merge archetype diff with item data
+      mergeObject(data.system, wargearObj.diff, { overwrite: true }) // Merge archetype diff with item data
       data.name = wargearObj.diff.name || data.item.name
     }
     else
@@ -169,7 +169,7 @@ async _handleEnrichment()
     if ( li.dataset.effectId ) {
       const effect = this.item.effects.get(li.dataset.effectId);
       dragData.type = "ActiveEffect";
-      dragData.data = effect.data;
+      dragData.data = effect.toObject();
     }
 
     // Set data transfer
@@ -184,7 +184,7 @@ async _handleEnrichment()
 
     setProperty(potency[index], path, value)
 
-    this.item.update({ "data.potency": potency })
+    this.item.update({ "system.potency": potency })
   }
 
     // Prevent upgrades from stacking
@@ -261,7 +261,7 @@ async _handleEnrichment()
       let index = parseInt($(ev.currentTarget).parents(".item").attr("data-index"))
       let upgrades = duplicate(this.item.upgrades)
       upgrades.splice(index, 1)
-      return this.item.update({ "data.upgrades": upgrades })
+      return this.item.update({ "system.upgrades": upgrades })
     })
 
     html.find(".upgrade-name").click(ev => {
@@ -311,7 +311,7 @@ async _handleEnrichment()
         "value": "",
         "single" : false
       })
-      this.item.update({ "data.potency": potency })
+      this.item.update({ "system.potency": potency })
     })
 
     
@@ -337,7 +337,7 @@ async _handleEnrichment()
 
     html.find(".potency-delete").click(ev => {
       let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
-      this.item._deleteIndex(index, "data.potency")
+      this.item._deleteIndex(index, "system.potency")
     })
 
     html.find(".background-delete").click(ev => {
@@ -372,7 +372,7 @@ async _handleEnrichment()
       array[index] = value;
       array = array.filter(i => i) // Objectives are deleted if blank (instead of X button like backgrounds)
 
-      this.item.update({"data.objectives" : array})
+      this.item.update({"system.objectives" : array})
     })
 
 
@@ -409,29 +409,29 @@ async _handleEnrichment()
       {
        if (ev.currentTarget.classList.contains("archetype-ability")) 
        {
-         this.item.update({"data.ability" : {id: "", name: ""}})
+         this.item.update({"system.ability" : {id: "", name: ""}})
        }
        if (ev.currentTarget.classList.contains("archetype-faction")) 
        {
-         this.item.update({"data.faction" : {id: "", name: ""}})
+         this.item.update({"system.faction" : {id: "", name: ""}})
        }
        if (ev.currentTarget.classList.contains("archetype-species")) 
        {
-         this.item.update({"data.species" : {id: "", name: ""}})
+         this.item.update({"system.species" : {id: "", name: ""}})
        }
        else if (this.item.type == "archetype") // Is archetype talent
        {
          let index = this.item.suggested.talents.findIndex(t => t.id == id)
          let array = duplicate(this.item.suggested.talents)
          array.splice(index, 1);
-         this.item.update({"data.suggested.talents" : array})
+         this.item.update({"system.suggested.talents" : array})
        }
        else if (this.item.type == "species") // TODO Combine these if statements
        {
           let index = this.item.abilities.findIndex(t => t.id == id)
           let array = duplicate(this.item.abilities)
           array.splice(index, 1);
-          this.item.update({"data.abilities" : array})
+          this.item.update({"system.abilities" : array})
        }
       }
     })
@@ -455,7 +455,7 @@ async _handleEnrichment()
             if (!item) 
               throw new Error("Could not find Item with ID " + obj.id)
 
-            new CONFIG.Item.implementation(item.toObject(), { archetype: { item: this.item, index, path: "data.wargear" } }).sheet.render(true)
+            new CONFIG.Item.implementation(item.toObject(), { archetype: { item: this.item, index, path: "system.wargear" } }).sheet.render(true)
 
           }
         }
@@ -468,7 +468,7 @@ async _handleEnrichment()
                 label: "Yes",
                 callback: async () => {
                   array.splice(index, 1)
-                  await this.item.update({ "data.wargear" : array })
+                  await this.item.update({ "system.wargear" : array })
                   this.item.resetGroups();
                 }
               },

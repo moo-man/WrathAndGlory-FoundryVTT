@@ -135,7 +135,7 @@ export default class ArchetypeGroups extends Application {
                 html += `</div>`
             }
             else
-                html += `<div class="wargear" draggable=${draggable} data-path="data.wargear" data-index="${groupObject.index}" data-id="${groupObject.groupId}">${groupObject.name}</div>`
+                html += `<div class="wargear" draggable=${draggable} data-path="system.wargear" data-index="${groupObject.index}" data-id="${groupObject.groupId}">${groupObject.name}</div>`
             return html
         }
 
@@ -174,7 +174,7 @@ export default class ArchetypeGroups extends Application {
         this.delete(moveID, groups)
         this.insert(objectToMove, destID, groups)
         this.clean(groups)
-        await this.object.update({"data.groups" : groups})
+        await this.object.update({"system.groups" : groups})
         this.render(true)
 
     }
@@ -282,7 +282,7 @@ export default class ArchetypeGroups extends Application {
             let groups = duplicate(this.object.groups);
             let obj = ArchetypeGroups.search(id, groups);
             obj.type = obj.type == "and" ? "or" : "and"; // flip and/or
-            await this.object.update({"data.groups" : groups})
+            await this.object.update({"system.groups" : groups})
             this.render(true);
         })
 

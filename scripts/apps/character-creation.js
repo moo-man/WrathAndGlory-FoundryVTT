@@ -73,8 +73,24 @@ export default class CharacterCreation extends FormApplication {
         data.faction = this.faction;
         data.archetypeAbility = this.archetypeAbility
         data.speciesAbilities = this.speciesAbilities
+        data.enrichment = await this._handleEnrichment(data)
         data.wargearHTML = this.constructWargearHTML();
         return data
+    }
+
+    async _handleEnrichment(data)
+    {   
+        let enrichment = {};
+
+        if (data.archetypeAbility)
+        {
+            enrichment[data.archetypeAbility.id] = await TextEditor.enrichHTML(data.archetypeAbility.description);
+        }
+        for(let ability of data.speciesAbilities)
+        {
+            enrichment[ability.id] = await TextEditor.enrichHTML(ability.description);
+        }
+        return enrichment
     }
 
 

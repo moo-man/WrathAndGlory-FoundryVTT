@@ -34,6 +34,11 @@ export class BaseWnGActorSheet extends ActorSheet {
         let enrichment = {}
         enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
 
+        for(let item of this.actor.items.contents)
+        {
+            enrichment[item.id] = await TextEditor.enrichHTML(item.description);
+        }
+
         return expandObject(enrichment)
     }
 
@@ -260,10 +265,10 @@ export class BaseWnGActorSheet extends ActorSheet {
         if (target == "item") {
             target = $(event.currentTarget).attr("data-item-target")
             let item = this.actor.items.get($(event.currentTarget).parents(".item").attr("data-item-id"))
-            return item.update({ [`${target}`]: !getProperty(item.data, target) })
+            return item.update({ [`${target}`]: !getProperty(item, target) })
         }
         if (target)
-            return this.actor.update({ [`${target}`]: !getProperty(this.actor.data, target) });
+            return this.actor.update({ [`${target}`]: !getProperty(this.actor, target) });
     }
 
     _onSelectChange(event) {
@@ -286,7 +291,7 @@ export class BaseWnGActorSheet extends ActorSheet {
             multiplier = event.button == 0 ? 1 : -1
 
         multiplier = event.ctrlKey ? multiplier * 10 : multiplier
-        item.update({ "data.quantity": item.quantity + 1 * multiplier })
+        item.update({ "system.quantity": item.quantity + 1 * multiplier })
     }
 
     _dropdownRightClick(event) {
