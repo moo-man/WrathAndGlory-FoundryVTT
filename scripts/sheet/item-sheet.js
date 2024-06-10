@@ -455,7 +455,7 @@ async _handleEnrichment()
             if (!item) 
               throw new Error("Could not find Item with ID " + obj.id)
 
-            new CONFIG.Item.implementation(item.toObject(), { archetype: { item: this.item, index, path: "system.wargear" } }).sheet.render(true)
+            new Item.implementation(item.toObject(), { archetype: { item: this.item, index, path: "system.wargear" } }).sheet.render(true)
 
           }
         }

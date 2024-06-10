@@ -121,9 +121,11 @@ export class AgentCombatModel extends CombatModel {
     compute(attributes, autoCalc) {
         super.compute(attributes, autoCalc);
 
+        let advances = this.parent.advances;
+
         if (autoCalc.wounds)
-            this.wounds.max = Math.max((this.advances.tier * 2) + attributes.toughness.total + this.wounds.bonus, 1);
+            this.wounds.max = Math.max((advances.tier * 2) + attributes.toughness.total + this.wounds.bonus, 1);
         if (autoCalc.shock)
-            this.shock.max = Math.max(attributes.willpower.total + this.advances.tier + this.shock.bonus, 1);
+            this.shock.max = Math.max(attributes.willpower.total + advances.tier + this.shock.bonus, 1);
     }
 }

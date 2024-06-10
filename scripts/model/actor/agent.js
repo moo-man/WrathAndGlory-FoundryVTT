@@ -16,6 +16,11 @@ export class AgentModel extends StandardWNGActorModel {
             total: new fields.NumberField()
         })
 
+        schema.advances = new fields.SchemaField({
+            tier: new fields.NumberField(),
+            rank: new fields.NumberField()
+          });
+
         schema.bio = new fields.SchemaField({
             species : new fields.StringField(),
             faction : new fields.StringField(),

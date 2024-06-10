@@ -66,7 +66,7 @@ export class AgentSkillsModel extends SkillsModel{
         {
             let skill = this[sk]
             skill.cost = game.wng.utility.getSkillCostTotal(skill.rating + skill.base, skill.base);
-            experience.spent += this.cost;
+            experience.spent += skill.cost;
         }
     }
 }

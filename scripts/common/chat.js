@@ -93,7 +93,7 @@ export default class WNGChat {
       let item = test.item
       let effect = test.getEffect(effectId).toObject()
 
-      CONFIG.ActiveEffect.implementation.populateEffectData(effect, test, item);
+      ActiveEffect.implementation.populateEffectData(effect, test, item);
       
       if (canvas.tokens.controlled.length)
       {
