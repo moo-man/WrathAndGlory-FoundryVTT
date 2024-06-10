@@ -478,6 +478,7 @@
   "NOTE.APPLY_DAMAGE" : "{damage} Wounds applied to {name}",
   "ERROR.MacroItemMissing" : "Your controlled Actor does not have an item named",
   "ROLL.CannotFindTable" : "Cannot find table. Either import it from the Compendium or create your own. It must have the name {name}",
+  "ERROR.NoAvailableActors" : "No available owned Actors to choose!",
 
   "TABLE.COMBAT_COMPLICATIONS" : "Combat Complications",
   "TABLE.PERILS_OF_THE_WARP" : "Perils of the Warp",

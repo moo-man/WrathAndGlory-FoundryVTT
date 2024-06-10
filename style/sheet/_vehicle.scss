@@ -23,29 +23,37 @@
 }
 
   .main.tab {
-    .crew-list {
+    .main-lists {
       height: calc(100% - 120px);
       overflow: auto;
       margin-bottom: 10px;
       padding-right: 5px;
-      .complement-list {
-        .header {
-          input {
-            height: 100%;
-            width: 25px;
-            border: none;
-            background: #444;
-            color: white;
-            box-shadow: none;
-          }
-        }
+      width: 100%;
 
-        .item {
-          flex: 0 0 25px;
+
+    }
+  }
+
+  .crew-list
+  {
+    .complement-list {
+      .header {
+        input {
+          height: 100%;
+          width: 25px;
+          border: none;
+          background: #444;
+          color: white;
+          box-shadow: none;
         }
+      }
+
+      .item {
+        flex: 0 0 25px;
       }
     }
   }
+
 
   .wrapper.traits {
     .wrapper-item {

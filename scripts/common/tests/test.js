@@ -500,7 +500,7 @@ export class WNGTest {
 
   get testEffects() {
     if (this.item) {
-      let effects = this.item.effects.filter(e => !e.data.transfer)
+      let effects = this.item.effects.filter(e => !e.transfer)
       if (this.item.isRanged && this.item.Ammo)
         effects = effects.concat(this.item.Ammo.ammoEffects)
       return effects
@@ -534,9 +534,9 @@ export class WNGTest {
   get context() { return this.data.context; }
   get result() { return this.data.result; }
   get attribute() { return this.actor.attributes[this.data.testData.attribute] }
-  get skill() { return this.actor.skills[this.data.testData.skill] }
+  get skill() { return this.actor.system.skills[this.data.testData.skill] }
 
-  get item() { return this.actor.items.get(this.testData.itemId) }
+  get item() { return fromUuidSync(this.testData.itemId) }
   get actor() { return game.wng.utility.getSpeaker(this.context.speaker) }
   get message() { return game.messages.get(this.context.messageId) }
 

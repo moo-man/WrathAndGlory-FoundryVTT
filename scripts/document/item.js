@@ -465,13 +465,19 @@ export class WrathAndGloryItem extends Item {
 
 
     get skill() {
-        if (this.isOwned) {
+        return this.getSkillFor(this.actor);
+    }
+
+    getSkillFor(actor)
+    {
+        if (actor)
+        {
             if (this.type == "psychicPower")
-                return this.actor.skills.psychicMastery
+                return actor.system.skills.psychicMastery
             else if (this.isMelee)
-                return this.actor.skills.weaponSkill
+                return actor.system.skills.weaponSkill
             else
-                return this.actor.skills.ballisticSkill
+                return actor.system.skills.ballisticSkill
         }
         else {
             if (this.type == "psychicPower")

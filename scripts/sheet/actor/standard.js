@@ -338,7 +338,7 @@ export class StandardActorSheet extends BaseWnGActorSheet {
         this._resetRollData();
         const div = $(event.currentTarget).parents(".item");
         const psychicPower = this.actor.items.get(div.data("itemId"));
-        const skill = this.actor.skills.psychicMastery;
+        const skill = this.actor.system.skills.psychicMastery;
         this.rollData.difficulty.target = psychicPower.dn;
         this.rollData.name = psychicPower.name;
         this.rollData.weapon = {

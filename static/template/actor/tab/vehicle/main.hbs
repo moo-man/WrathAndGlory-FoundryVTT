@@ -1,5 +1,7 @@
+<div class="main-lists">
+<div class="wrapper">
+<h1>{{localize "TITLE.COMPLEMENT"}}</h1>
 <div class="crew-list">
-
     <div class="item-list complement-list" data-type="pilot">
         <div class="header">
             <div class="item-property item-image"></div>
@@ -87,7 +89,79 @@
         {{/each}}
     </div>
 </div>
+</div>
 
+<div class="wrapper">
+<h1>{{localize "TITLE.WARGEAR"}}</h1>
+<div class="item-list weapon-list">
+        <div class="weapon-list">
+        <div class="header">
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.WEAPON"}}</span>
+          <span class="item-property">{{localize "WEAPON.DAMAGE"}}</span>
+          <span class="item-property small">{{localize "WEAPON.ED"}}</span>
+          <span class="item-property small">{{localize "WEAPON.AP"}}</span>
+          <span class="item-property">{{localize "WEAPON.RANGE"}}</span>
+          <span class="item-property flex">{{localize "HEADER.AMMO"}}</span>
+        </div>
+        {{#each items.equipped.weapons as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content roll-weapon item-dropdown-right">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name">{{item.name}}</div>
+
+              <div class="item-property">{{item.Damage}}</div>
+              <div class="item-property small">{{item.ED}}</div>
+              <div class="item-property small">{{item.AP}}</div>
+              <div class="item-property">{{item.Range}}</div>
+              <div class="item-property flex">
+                {{#if item.isRanged}}
+                <select class="property-edit" data-target="system.ammo">
+                  {{#select item.ammo}}
+                  <option value="">-</option>
+                  {{#each item.ammoList as |item|}}
+                  <option value="{{item.id}}">{{item.name}} ({{item.quantity}})</option>
+                  {{/each}}
+                  {{/select}}
+                </select>
+                {{/if}}
+              </div>
+          </div>
+          {{#if item.traits.length}}
+          <div class="item-content-extra">
+            <span class="item-traits"><b>Traits:</b> {{{array item.Traits "item-trait"}}}</span>
+          </div>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+
+      {{#if items.equipped.ammo.length}}
+      <div class="item-list">
+        <div class="header">
+          <div class="item-property item-image"></div>
+          <span class="item-property item-name">{{localize "HEADER.AMMO"}}</span>
+          <span class="item-property">{{localize "ITEM.QTY"}}</span>
+        </div>
+        {{#each items.equipped.ammo as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+          <div class="item-content">
+              <img class="item-property item-image" src="{{item.img}}"></img>
+              <div class="item-property item-name item-dropdown">{{item.name}}</div>
+              <div class="item-property qty-click">
+                <button type="button" class="qty-click" data-type="decrement">-</button>
+                {{item.quantity}}
+                <button type="button" class="qty-click" data-type="increment">+</button>
+              </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+</div>
+</div>
+
+</div>
 
 <div class="wrapper traits">
     <div class="wrapper-item">

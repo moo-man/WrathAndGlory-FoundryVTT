@@ -152,7 +152,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
     async setupWeaponTest(weapon, options={})
     {
         if (typeof weapon == "string")
-            weapon = this.items.get(weapon)
+            weapon = this.items.get(weapon) || await fromUuid(weapon)
 
         let tests = []
         // If targets, call this function again with single target option
@@ -174,12 +174,12 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
             this._addOptions(dialogData, options)
             dialogData.type = "weapon"
             dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
-            dialogData.attribute = weapon.skill.attribute
+            dialogData.attribute = weapon.getSkillFor(this.actor).attribute
             let testData = await WeaponDialog.create(dialogData)
             testData.targets = dialogData.targets
             testData.title = dialogData.title
             testData.speaker = this.speakerData();
-            testData.itemId = weapon.id
+            testData.itemId = weapon.uuid
             testData.skill = dialogData.skill
             testData.attribute = dialogData.attribute
             ui.sidebar.activateTab("chat")
@@ -190,7 +190,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
 
     async setupPowerTest(power, options = {}) {
         if (typeof power == "string")
-            power = this.items.get(power)
+            power = this.items.get(power) || await fromUuid(power)
 
         let dialogData = this._powerDialogData(power);
         dialogData.title = `${power.name}`
@@ -202,7 +202,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         testData.targets = dialogData.targets
         testData.title = dialogData.title
         testData.speaker = this.speakerData();
-        testData.itemId = power.id
+        testData.itemId = power.uuid
         testData.skill = dialogData.skill
         testData.attribute = dialogData.attribute
         ui.sidebar.activateTab("chat")
@@ -278,7 +278,8 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
             })
         }
         dialogData.weapon = weapon
-        dialogData.pool.size = weapon.skill.total;
+        dialogData.skill = weapon.getSkillFor(this)
+        dialogData.pool.size = dialogData.skill.total;
         dialogData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
         if (this.isMob)
             dialogData.pool.bonus += Math.ceil(this.mob / 2)

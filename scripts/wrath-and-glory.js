@@ -33,6 +33,7 @@ import { VehicleSheet } from "./sheet/actor/vehicle.js";
 import { WrathAndGloryItemSheet } from "./sheet/item-sheet.js";
 import { WrathAndGloryItem } from "./document/item.js";
 import WrathAndGloryEffect from "./document/effect.js";
+import { DataslatePageSheet } from "./apps/dataslate.js";
 
 Hooks.once("init", () => {
 
@@ -42,6 +43,7 @@ Hooks.once("init", () => {
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
   CONFIG.ActiveEffect.sheetClass = WrathAndGloryEffectSheet;
   DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", Level4TextPageSheet, { types : ["text"], makeDefault: true, label : "W&G Journal Sheet" });
+  DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", DataslatePageSheet, { types : ["text"], makeDefault: false, label : "Data Slate" });
 
   
   if (game.settings.get("wrath-and-glory", "initiativeRollOption"))

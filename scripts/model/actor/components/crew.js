@@ -1,3 +1,4 @@
+import ItemDialog from "../../../apps/item-dialog";
 import { DocumentListModel } from "../../shared/list";
 import { DocumentReferenceModel } from "../../shared/reference";
 let fields = foundry.data.fields
@@ -12,6 +13,28 @@ export class VehicleComplement extends DocumentListModel {
         schema.passenger = new fields.NumberField()
         schema.list = new fields.ArrayField(new fields.EmbeddedDataField(VehicleCrew));
         return schema;
+    }
+
+    async choose(filter)
+    {
+        let list = this.list.map(i => i.document).filter(i => i).filter(i => i.isOwner);
+        if (filter)
+        {
+            list = list.filter(filter);
+        }
+        
+        if (list.length == 0)
+        {
+            ui.notifications.error("ERROR.NoAvailableActors", {localize: true})
+            return
+        }
+
+        if (list.length == 1)
+        {
+            return list[0];    
+        }
+
+        return (await ItemDialog.create(list, 1, {title : game.i18n.localize("DIALOG.ChooseActor")}))[0]
     }
 }
 

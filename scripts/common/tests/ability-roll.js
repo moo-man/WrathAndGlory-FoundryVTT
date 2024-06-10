@@ -43,7 +43,7 @@ export default class AbilityRoll extends WNGTest {
 
   get testEffects() {
     if(this.item)
-      return this.item.effects.filter(e => !e.data.transfer)
+      return this.item.effects.filter(e => !e.transfer)
     else 
       return []
   }

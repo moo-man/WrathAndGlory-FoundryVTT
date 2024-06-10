@@ -46,6 +46,12 @@ export class VehicleSheet extends BaseWnGActorSheet {
         items.gear = this.actor.itemTypes.gear
         items.keywords = this.actor.itemTypes.keyword
         items.weapons = this.actor.itemTypes.weapon
+        items.equipped = {
+            weapons : items.weapons.filter(i => i.system.equipped),    
+        }
+
+        items.equipped.ammo = items.equipped.weapons.map(i => this.actor.items.get(i.ammo)).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
+        
 
         sheetData.items = items;
 
@@ -124,9 +130,24 @@ export class VehicleSheet extends BaseWnGActorSheet {
         })
 
         html.find(".vehicle-traits").click(ev => {
-              new ItemTraits(this.object).render(true)
-          })
-      
+            new ItemTraits(this.object).render(true)
+        })
+
+        html.find(".roll-weapon").click(async ev => {
+            let actor = await this.actor.system.complement.choose();
+            const div = $(ev.currentTarget).parents(".item");
+            let id = div.data("itemId");
+            let weapon = this.actor.items.get(id);
+            if (weapon)
+            {
+                let tests = await actor.setupWeaponTest(weapon);
+                for(let test of tests)
+                {
+                    await test.rollTest();
+                    test.sendToChat();
+                }
+            }
+        });
     }
 
 }
