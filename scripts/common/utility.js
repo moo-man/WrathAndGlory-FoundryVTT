@@ -1,4 +1,4 @@
-import { WrathAndGloryItem } from "../item/item.js";
+import { WrathAndGloryItem } from "../document/item.js";
 
 export default class WNGUtility {
   /**
@@ -162,7 +162,7 @@ export default class WNGUtility {
     let tokenId = li.dataset.tokenId
     const token = canvas.tokens.get(tokenId);
     if (token?.isVisible) {
-      if (!token._controlled) token._onHoverIn();
+      if (!token._controlled) token._onHoverIn(ev);
       this._highlighted = token;
     }
   }
@@ -170,7 +170,7 @@ export default class WNGUtility {
   static unhighlightToken(ev) {
     const li = ev.target;
     let tokenId = li.dataset.tokenId
-    if (this._highlighted) this._highlighted._onHoverOut();
+    if (this._highlighted) this._highlighted._onHoverOut(ev);
     this._highlighted = null;
   }
 
@@ -191,7 +191,7 @@ export default class WNGUtility {
 
     let item
     if (["weapon", "psychicPower", "ability"].includes(itemType)) {
-      item = actor ? actor.getItemTypes(itemType).find(i => i.name === itemName) : null;
+      item = actor ? actor.itemTypes[itemType].find(i => i.name === itemName) : null;
       if (!item) return ui.notifications.warn(`${game.i18n.localize("ERROR.MacroItemMissing")} ${itemName}`);
     }
 

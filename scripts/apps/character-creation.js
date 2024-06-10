@@ -1,6 +1,5 @@
-import { WrathAndGloryActor } from "../actor/actor.js";
 import WNGUtility from "../common/utility.js";
-import { WrathAndGloryItem } from "../item/item.js";
+import { WrathAndGloryItem } from "../document/item.js";
 import ArchetypeGroups from "./archetype-groups.js";
 import FilterResults from "./filter-results.js";
 
@@ -32,7 +31,7 @@ export default class CharacterCreation extends FormApplication {
 
     initializeCharacter()
     {
-        this.character = new WrathAndGloryActor({type: "agent", name : this.object.actor.name}) // Temporary actor 
+        this.character = new CONFIG.Actor.implementation({type: "agent", name : this.object.actor.name}) // Temporary actor 
 
         // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
         for (let attribute in this.character.attributes)
@@ -178,7 +177,7 @@ export default class CharacterCreation extends FormApplication {
                 else 
                 {
                     faction.effects[0].transfer = true;
-                    faction.effects[0].label = $(ev.currentTarget).find(".background-bonus").children("option").filter(":selected").text()
+                    faction.effects[0].name = $(ev.target).find(".background-bonus").children("option").filter(":selected").text()
                     // Gross but whatever, uses the selected text (with background name appended) as the effect name
                 }
             }
@@ -524,7 +523,7 @@ export default class CharacterCreation extends FormApplication {
         let html = "<option value=''>-</option>"
 
         backgroundsChosen.forEach(bg => {
-            html += `<option value=${bg.id}>${bg.effect.label} (${this.faction.backgrounds[bg.type][bg.index]?.name})</option>`
+            html += `<option value=${bg.id}>${bg.effect.name} (${this.faction.backgrounds[bg.type][bg.index]?.name})</option>`
         })
         return html
     }

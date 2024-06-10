@@ -48,6 +48,15 @@ export class AgentModel extends StandardWNGActorModel {
         return schema;
     }
 
+    async _preCreate(data, options, user) 
+    {
+        await super._preCreate(data, options, user);
+        this.parent.updateSource({
+                "prototypeToken.sight.enabled" : true,
+                "prototypeToken.actorLink" : true
+        })
+    }
+
     computeBase() {
         super.computeBase();
         this.attributes.computeCosts(this.experience)
@@ -55,10 +64,11 @@ export class AgentModel extends StandardWNGActorModel {
         
     }
 
-    computeDerived(items, autoCalc)
+    computeDerived()
     {
-        super.computeDerived(items, autoCalc);
-        for(let item of items.talent.concat(items.psychicPower, items.archetype, items.ability)) // Don't include species, already included in archetye
+        let itemTypes = this.parent.itemTypes;
+        super.computeDerived();
+        for(let item of itemTypes.talent.concat(itemTypes.psychicPower, itemTypes.archetype, itemTypes.ability)) // Don't include species, already included in archetye
         {
             this.experience.spent += item.cost;
         }
@@ -67,9 +77,9 @@ export class AgentModel extends StandardWNGActorModel {
 
 
         //SINGETON TYPES
-        this.system.bio.origin.value = this.system.bio.origin.value || this.faction?.backgrounds.origin.find(b => b.active)?.description
-        this.system.bio.accomplishment.value = this.system.bio.accomplishment.value || this.faction?.backgrounds.accomplishment.find(b => b.active)?.description
-        this.system.bio.goal.value = this.system.bio.goal.value || this.faction?.backgrounds.goal.find(b => b.active)?.description
+        this.bio.origin.value = this.bio.origin.value || this.faction?.backgrounds.origin.find(b => b.active)?.description
+        this.bio.accomplishment.value = this.bio.accomplishment.value || this.faction?.backgrounds.accomplishment.find(b => b.active)?.description
+        this.bio.goal.value = this.bio.goal.value || this.faction?.backgrounds.goal.find(b => b.active)?.description
 
     }
 }

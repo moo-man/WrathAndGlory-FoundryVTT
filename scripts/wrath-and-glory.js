@@ -1,17 +1,11 @@
-import { WrathAndGloryActor } from "./actor/actor.js";
-import { WrathAndGloryItem } from "./item/item.js";
-import { AgentSheet } from "./actor/sheet/agent.js";
-import { ThreatSheet } from "./actor/sheet/threat.js";
 import { initializeHandlebars } from "./common/handlebars.js";
 import hooks from "./common/hooks.js"
 import RuinGloryCounter from "./apps/counter.js"
 import ItemTraits from "./apps/item-traits.js"
 import WNG from "./common/config.js"
-import { WrathAndGloryItemSheet } from "./item/sheet/item-sheet.js";
 import WNGUtility from "./common/utility.js"
 import { WNGTest, WrathDie, PoolDie } from "./common/tests/test.js";
 import WeaponTest from "./common/tests/weapon-test.js";
-import WrathAndGloryEffect from "./common/effect.js";
 import WrathAndGloryEffectSheet from "./apps/active-effect-config.js";
 import PowerTest from "./common/tests/power-test.js";
 import CorruptionTest from "./common/tests/corruption-test.js";
@@ -32,9 +26,13 @@ import { Level4TextPageSheet } from "./apps/journal-sheet.js";
 import { AgentModel } from "./model/actor/agent.js"
 import { ThreatModel } from "./model/actor/threat.js";
 import { VehicleModel } from "./model/actor/vehicle.js";
-import { VehicleSheet } from "./actor/sheet/vehicle.js";
-
-
+import { WrathAndGloryActor } from "./document/actor.js";
+import { AgentSheet } from "./sheet/actor/agent.js";
+import { ThreatSheet } from "./sheet/actor/threat.js";
+import { VehicleSheet } from "./sheet/actor/vehicle.js";
+import { WrathAndGloryItemSheet } from "./sheet/item-sheet.js";
+import { WrathAndGloryItem } from "./document/item.js";
+import WrathAndGloryEffect from "./document/effect.js";
 
 Hooks.once("init", () => {
 

@@ -131,8 +131,8 @@
     <div class="wrapper">
         <h1>{{localize "HEADER.EFFECTS"}}</h1>
         <select class="effect-select" multiple>
-            {{#each changeList as |change c|}}
-            <option title="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">&#8226; {{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
+            {{#each condensedChanges as |change c|}}
+            <option value={{c}} title="{{change.tooltip}}">&#8226; {{change.description}}</option>
             {{/each}}
         </select>
     </div>

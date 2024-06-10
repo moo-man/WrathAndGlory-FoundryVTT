@@ -443,8 +443,17 @@ a.content-link:hover, a.inline-roll:hover {
   text-shadow: 0 0 8px var(--color-imperium)
 }
 
+#tooltip.link-matches a.content-link[data-uuid^="Compendium"]::before, .locked-tooltip.link-matches a.content-link[data-uuid^="Compendium"]::before
+{
+  color: var(--color-imperium);
+}
 
+#tooltip.link-matches a.content-link, .locked-tooltip.link-matches a.content-link {
+  color: var(--color-imperium);
+}
 
+#tooltip.link-matches a.content-link i, 
+.locked-tooltip.link-matches a.content-link i,
 a.content-link i, a.inline-roll i {
     color: var(--color-imperium);
 }
@@ -458,7 +467,6 @@ a.content-link i, a.inline-roll i {
 
 #settings h2,
 #compendium h3 {
-  background: rgba(138, 46, 42, 0.4);
   font-family: var(--font-header);
   font-size: 20px;
 }

@@ -3,7 +3,10 @@ import { RollDialog } from "./base-dialog.js";
 export class PowerDialog extends RollDialog {
 
   static async create(data) {
-    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/psychic-roll.hbs", data);
+    let hide = this.runConditional("hide", data)
+    this.removeHiddenChanges(hide, data);
+    data.condensedChanges = this.condenseChanges(data.changes);
+    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/psychic-roll.html", data);
     return new Promise((resolve) => {
       new this({
         title: game.i18n.localize(data.title),
