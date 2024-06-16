@@ -1,0 +1,14 @@
+import { StandardItemModel } from "./components/standard";
+
+let fields = foundry.data.fields;
+
+export class MemorableInjuryModel extends StandardItemModel
+{
+
+    static defineSchema() 
+    {
+        let schema = super.defineSchema();
+        return schema;
+    }
+
+}

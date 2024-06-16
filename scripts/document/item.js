@@ -392,7 +392,7 @@ export class WrathAndGloryItem extends Item {
 
     get traitList() {
         let traits = {}
-        this.system.traits.forEach(i => {
+        this.system.traits.list.forEach(i => {
 
             if (i.custom) 
             {

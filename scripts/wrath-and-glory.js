@@ -34,6 +34,23 @@ import { WrathAndGloryItemSheet } from "./sheet/item-sheet.js";
 import { WrathAndGloryItem } from "./document/item.js";
 import WrathAndGloryEffect from "./document/effect.js";
 import { DataslatePageSheet } from "./apps/dataslate.js";
+import { AbilityModel } from "./model/item/ability.js";
+import { AmmoModel } from "./model/item/ammo.js";
+import { ArmourModel } from "./model/item/armour.js";
+import { AscensionModel } from "./model/item/ascension.js";
+import { AugmeticModel } from "./model/item/augmetic.js";
+import { GearModel } from "./model/item/gear.js";
+import { KeywordModel } from "./model/item/keyword.js";
+import { MemorableInjuryModel } from "./model/item/memorableInjury.js";
+import { MutationModel } from "./model/item/mutation.js";
+import { PsychicPowerModel } from "./model/item/psychicPower.js";
+import { SpeciesModel } from "./model/item/species.js";
+import { TalentModel } from "./model/item/talent.js";
+import { TraumaticInjuryModel } from "./model/item/traumaticInjury.js";
+import { WeaponModel } from "./model/item/weapon.js";
+import { WeaponUpgradeModel } from "./model/item/weaponUpgrade.js";
+import { ArchetypeModel } from "./model/item/archetype.js";
+import { FactionModel } from "./model/item/faction.js";
 
 Hooks.once("init", () => {
 
@@ -57,9 +74,27 @@ Hooks.once("init", () => {
     CONFIG.Combatant.documentClass = WrathAndGloryCombatant
   }
 
-  CONFIG.Actor.systemDataModels["agent"] = AgentModel
-  CONFIG.Actor.systemDataModels["threat"] = ThreatModel
-  CONFIG.Actor.systemDataModels["vehicle"] = VehicleModel
+  CONFIG.Actor.dataModels["agent"] = AgentModel
+  CONFIG.Actor.dataModels["threat"] = ThreatModel
+  CONFIG.Actor.dataModels["vehicle"] = VehicleModel
+
+  CONFIG.Item.dataModels["ability"] = AbilityModel
+  CONFIG.Item.dataModels["ammo"] = AmmoModel
+  CONFIG.Item.dataModels["armour"] = ArmourModel
+  CONFIG.Item.dataModels["ascension"] = AscensionModel
+  CONFIG.Item.dataModels["augmentic"] = AugmeticModel
+  CONFIG.Item.dataModels["gear"] = GearModel
+  CONFIG.Item.dataModels["keyword"] = KeywordModel
+  CONFIG.Item.dataModels["memorableInjury"] = MemorableInjuryModel
+  CONFIG.Item.dataModels["mutation"] = MutationModel
+  CONFIG.Item.dataModels["psychicPower"] = PsychicPowerModel
+  CONFIG.Item.dataModels["talent"] = TalentModel
+  CONFIG.Item.dataModels["traumaticInjury"] = TraumaticInjuryModel
+  CONFIG.Item.dataModels["weapon"] = WeaponModel
+  CONFIG.Item.dataModels["weaponUpgrade"] = WeaponUpgradeModel
+  CONFIG.Item.dataModels["archetype"] = ArchetypeModel
+  CONFIG.Item.dataModels["species"] = SpeciesModel
+  CONFIG.Item.dataModels["faction"] = FactionModel
 
 
   game.wng = {

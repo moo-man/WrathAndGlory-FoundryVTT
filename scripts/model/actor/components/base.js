@@ -1,5 +1,5 @@
 
-export class BaseWnGActorModel extends foundry.abstract.DataModel {
+export class BaseActorModel extends foundry.abstract.DataModel {
 
     static defineSchema() 
     {

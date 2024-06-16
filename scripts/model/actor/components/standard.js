@@ -1,9 +1,9 @@
 import { AttributesModel } from "./attributes";
-import { BaseWnGActorModel } from "./base";
+import { BaseActorModel } from "./base";
 import { CombatModel } from "./combat";
 import { SkillsModel } from "./skills";
 
-export class StandardWNGActorModel extends BaseWnGActorModel {
+export class StandardWNGActorModel extends BaseActorModel {
 
         
     async _preCreate(data, options, user) 
