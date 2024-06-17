@@ -30,8 +30,8 @@
         <p><strong title="{{result.damage.other.shock.value}} + {{result.damage.other.shock.bonus}}">{{localize "CHAT.SHOCK"}}: {{result.damage.other.shock.total}}</strong></p>
         {{/if}}
         
-        {{#if item.traits}}
-        <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.Traits}}</strong></p>
+        {{#if item.system.traits}}
+        <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.system.traits.formatted}}</strong></p>
         {{/if}}
     </div>
     {{/if}}

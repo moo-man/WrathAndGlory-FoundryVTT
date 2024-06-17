@@ -52,7 +52,7 @@
           <div class="item-form-group stacked">
             <label>{{localize "WEAPON_UPGRADE.TRAITS_ADD"}}<a class="item-traits add"><i class="fas fa-cog"></i></a></label>
             <div class="item-form-inputs">
-              <input disabled type="text" value="{{item.TraitsAdd}}" />
+              <input disabled type="text" value="{{item.system.traits.added}}" />
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
           <div class="item-form-group stacked">
             <label>{{localize "WEAPON_UPGRADE.TRAITS_REMOVE"}}<a class="item-traits remove"><i class="fas fa-cog"></i></a></label>
             <div class="item-form-inputs">
-              <input disabled type="text" value="{{item.TraitsRemove}}" />
+              <input disabled type="text" value="{{item.system.traits.removed}}" />
             </div>
           </div>
         </div>

@@ -8,6 +8,10 @@ let fields = foundry.data.fields;
 export class AbilityModel extends StandardItemModel
 {
 
+    get traitsAvailable() {
+        return game.wng.config.weaponTraits
+    }
+
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -20,5 +24,9 @@ export class AbilityModel extends StandardItemModel
         schema.traits = new fields.EmbeddedDataField(TraitsModel),
         schema.damage =  new fields.EmbeddedDataField(DamageModel)
         return schema;
+    }
+
+    get AbilityType() {
+        return game.wng.config.abilityTypes[this.abilityType]
     }
 }

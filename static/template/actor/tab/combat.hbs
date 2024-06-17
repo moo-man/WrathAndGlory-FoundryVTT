@@ -155,9 +155,9 @@
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
 
-              <div class="item-property">{{item.Damage}}</div>
-              <div class="item-property small">{{item.ED}}</div>
-              <div class="item-property small">{{item.AP}}</div>
+              <div class="item-property">{{item.system.damage.formatted}}</div>
+              <div class="item-property small">{{item.system.damage.ED}}</div>
+              <div class="item-property small">{{item.system.damage.AP}}</div>
               <div class="item-property">{{item.Range}}</div>
               <div class="item-property flex">
                 {{#if item.isRanged}}
@@ -172,9 +172,9 @@
                 {{/if}}
               </div>
           </div>
-          {{#if item.traits.length}}
+          {{#if item.system.traits.list.length}}
           <div class="item-content-extra">
-            <span class="item-traits"><b>Traits:</b> {{{array item.Traits "item-trait"}}}</span>
+            <span class="item-traits"><b>Traits:</b> {{{array item.system.traits.formatted "item-trait"}}}</span>
           </div>
           {{/if}}
         </div>
@@ -220,7 +220,7 @@
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
               <div class="item-property">{{item.rating}}</div>
-              <div class="item-property flex large">{{{array item.Traits "item-trait"}}}</div>
+              <div class="item-property flex large">{{{array item.system.traits.formatted "item-trait"}}}</div>
           </div>
         </div>
         {{/each}}
@@ -244,7 +244,7 @@
               <img class="item-property item-image" src="{{item.img}}"></img>
               <div class="item-property item-name">{{item.name}}</div>
               <div class="item-property small">{{item.DN}}</div>
-              <div class="item-property">{{item.Activation}}</div>
+              <div class="item-property">{{item.system.Activation}}</div>
               <div class="item-property">{{item.duration}}</div>
               <div class="item-property">{{item.range}}</div>
               <div class="item-property">{{item.MultiTarget}}</div>

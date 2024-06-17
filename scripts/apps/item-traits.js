@@ -17,12 +17,12 @@ export default class ItemTraits extends FormApplication
         data.custom = this.constructCustomString(this.object.system.traits);
         try {
 
-            data.traits = Object.keys(this.object.traitsAvailable).map(i => {
-                let existing = this.object._source.system.traits.find(t => t.name == i)
+            data.traits = Object.keys(this.object.system.traitsAvailable).map(i => {
+                let existing = this.object._source.system.traits.list.find(t => t.name == i)
                 if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
                 existing = this.object.system.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
                 return  {
-                    display : this.object.traitsAvailable[i],
+                    display : this.object.system.traitsAvailable[i],
                     key : i,
                     existingTrait : existing,
                     hasRating : game.wng.config.traitHasRating[i],

@@ -4,7 +4,7 @@
     <div class="attributes">
       {{#each system.attributes as |attribute key|}}
       <div class="attribute">
-        <label class="roll-attribute hover" data-attribute="{{key}}">{{localize attribute.label}}</label>
+        <label class="roll-attribute hover" data-attribute="{{key}}">{{configLookup "attributes" key}}</label>
           <div class="attribute-inputs">
             <div class="attribute-input-stack">
               <input type="number" title="Base" name="system.attributes.{{key}}.base" value="{{attribute.base}}" data-dtype="Number">
@@ -23,7 +23,7 @@
         {{#each system.skills as |skill key|}}
         {{#if skill.isLeft}}
         <div class="skill">
-          <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{localize skill.label}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
+          <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{configLookup "skills" key}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
           <div class="skill-inputs">
             <input type="number" title="Base" name="system.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
             <input type="number" tabindex="1" title="Advances" name="system.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
@@ -37,7 +37,7 @@
         {{#each system.skills as |skill key|}}
         {{#if skill.isRight}}
         <div class="skill">
-          <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{localize skill.label}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
+          <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{configLookup "skills" key}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
           <div class="skill-inputs">
             <input type="number" title="Base" name="system.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
             <input type="number" tabindex="1" title="Advances" name="system.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">

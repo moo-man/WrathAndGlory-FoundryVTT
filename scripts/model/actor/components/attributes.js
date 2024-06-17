@@ -8,7 +8,7 @@ export class AttributeModel extends foundry.abstract.DataModel {
         return {
             label:  new foundry.data.fields.StringField({ required: true, initial: "" }),
             rating:  new foundry.data.fields.NumberField({ required: true, initial: 0 }),
-            base:  new foundry.data.fields.NumberField({ required: true, initial: 0 }),
+            base:  new foundry.data.fields.NumberField({ required: true, initial: 1 }),
             bonus:  new foundry.data.fields.NumberField({ required: true, initial: 0 }),
             cost:  new foundry.data.fields.NumberField({ required: true, initial: 0 }),
             total:  new foundry.data.fields.NumberField({ required: true, initial: 0 }),

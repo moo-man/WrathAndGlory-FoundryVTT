@@ -54,6 +54,11 @@ export class BaseItemModel extends foundry.abstract.DataModel
         
     }
 
+    computeOwned()
+    {
+        
+    }
+
     async allowCreation(data, options, user)
     {
         if (this.parent.actor)

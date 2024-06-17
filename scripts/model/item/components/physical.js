@@ -4,6 +4,10 @@ let fields = foundry.data.fields;
 export class PhysicalItemModel extends StandardItemModel
 {
 
+    get traitsAvailable() {
+        return game.wng.config.weaponTraits
+    }
+
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -12,6 +16,10 @@ export class PhysicalItemModel extends StandardItemModel
         schema.keywords = new fields.StringField();
         schema.rarity = new fields.StringField({initial : "common"});
         return schema;
+    }
+
+    get Rarity() {
+        return game.wng.config.rarity[this.rarity]
     }
 
 }

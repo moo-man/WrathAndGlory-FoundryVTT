@@ -5,6 +5,10 @@ let fields = foundry.data.fields;
 
 export class ArmourModel extends EquippedItemModel
 {
+    get traitsAvailable()
+    {
+        return game.wng.config.armourTraits;
+    }
 
     static defineSchema() 
     {

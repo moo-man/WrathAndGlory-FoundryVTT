@@ -1,4 +1,5 @@
 import { PhysicalItemModel } from "./components/physical";
+import { TraitsModel } from "./components/traits";
 
 let fields = foundry.data.fields;
 
@@ -9,6 +10,7 @@ export class AmmoModel extends PhysicalItemModel
     {
         let schema = super.defineSchema();
         schema.effect = new fields.StringField({});
+        schema.traits = new fields.EmbeddedDataField(TraitsModel);
         return schema;
     }
 

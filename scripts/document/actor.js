@@ -174,7 +174,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
             this._addOptions(dialogData, options)
             dialogData.type = "weapon"
             dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
-            dialogData.attribute = weapon.getSkillFor(this.actor).attribute
+            dialogData.attribute = weapon.getSkillFor(this).attribute
             let testData = await WeaponDialog.create(dialogData)
             testData.targets = dialogData.targets
             testData.title = dialogData.title
@@ -357,7 +357,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
     _powerDialogData(power) {
         let dialogData = this._baseDialogData()
         dialogData.power = power
-        dialogData.difficulty.target = power.DN
+        dialogData.difficulty.target = power.system.DN
         if (!Number.isNumeric(dialogData.difficulty.target)) {
             ui.notifications.warn(game.i18n.localize("DIALOG.TARGET_DEFENSE_WARNING"))
         }

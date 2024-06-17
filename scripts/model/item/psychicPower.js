@@ -25,4 +25,22 @@ export class PsychicPowerModel extends StandardItemModel
         return schema;
     }
 
+    
+    get DN() {
+        if (!this.dn)
+            return "?"
+        if (Number.isNumeric(this.dn))
+            return parseInt(this.dn)
+        else if (this.dn.includes("@") && game.user.targets.size)
+        {
+            let target = Array.from(game.user.targets)[0]
+            return (0, eval)(Roll.replaceFormulaData(this.dn, target.actor.getRollData()))
+        }
+        else return "?"
+    }
+
+    get Activation() {
+        return game.wng.config.powerActivations[this.activation]
+    }
+
 }

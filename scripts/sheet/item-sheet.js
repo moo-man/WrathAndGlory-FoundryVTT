@@ -266,7 +266,7 @@ async _handleEnrichment()
 
     html.find(".upgrade-name").click(ev => {
       let index = parseInt($(ev.currentTarget).parents(".item").attr("data-index"))
-      this.item.Upgrades[index].sheet.render(true)
+      this.item.system.upgradeItems[index].sheet.render(true)
       ui.notifications.warn("Changes made to an upgrade will not be saved")
     })
 

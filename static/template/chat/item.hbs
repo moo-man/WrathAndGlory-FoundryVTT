@@ -26,7 +26,7 @@
             <p><strong>{{localize "PSYCHIC_POWER.PREREQUISITES"}}:</strong> {{item.prerequisites}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.COST"}}:</strong> {{item.cost}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.DN"}}:</strong> {{item.dn}}</p>
-            <p><strong>{{localize "PSYCHIC_POWER.ACTIVATION"}}:</strong> {{item.Activation}}</p>
+            <p><strong>{{localize "PSYCHIC_POWER.ACTIVATION"}}:</strong> {{item.system.Activation}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.DURATION"}}:</strong> {{item.duration}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.RANGE"}}:</strong> {{item.range}}</p>
             <p><strong>{{localize "PSYCHIC_POWER.MULTI_TARGET"}}:</strong> {{item.MultiTarget}}</p>
@@ -37,36 +37,36 @@
 
             {{#if item.isArmour}}
             <p><strong>{{localize "ARMOUR.RATING"}}:</strong> {{item.rating}}</p>
-            <p><strong>{{localize "ARMOUR.TRAITS"}}:</strong> {{item.Traits}}</p>
+            <p><strong>{{localize "ARMOUR.TRAITS"}}:</strong> {{item.system.traits.formatted}}</p>
             <p><strong>{{localize "ARMOUR.VALUE"}}:</strong> {{item.value}}</p>
-            <p><strong>{{localize "ARMOUR.RARITY"}}:</strong> {{item.Rarity}}</p>
+            <p><strong>{{localize "ARMOUR.RARITY"}}:</strong> {{item.system.Rarity}}</p>
             <p><strong>{{localize "ARMOUR.KEYWORDS"}}:</strong> {{item.keywords}}</p>
             <p><strong>{{localize "ARMOUR.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
             {{/if}}
 
             {{#if item.isWeapon}}
-            <p><strong>{{localize "WEAPON.CATEGORY"}}:</strong> {{item.Category}}</p>
-            <p><strong>{{localize "WEAPON.DAMAGE"}}:</strong> {{item.Damage}}</p>
-            <p><strong>{{localize "WEAPON.AP"}}:</strong> {{item.AP}}</p>
-            <p><strong>{{localize "WEAPON.ED"}}:</strong> {{item.ED}}</p>
+            <p><strong>{{localize "WEAPON.CATEGORY"}}:</strong> {{item.system.Category}}</p>
+            <p><strong>{{localize "WEAPON.DAMAGE"}}:</strong> {{itemsystem.damage.formatted}}</p>
+            <p><strong>{{localize "WEAPON.AP"}}:</strong> {{item.system.damage.AP}}</p>
+            <p><strong>{{localize "WEAPON.ED"}}:</strong> {{item.system.damage.ED}}</p>
             <p><strong>{{localize "WEAPON.RANGE"}}:</strong> {{item.Range}}</p>
-            <p><strong>{{localize "WEAPON.TRAITS"}}:</strong> {{item.Traits}}</p>
+            <p><strong>{{localize "WEAPON.TRAITS"}}:</strong> {{item.system.traits.formatted}}</p>
             <p><strong>{{localize "WEAPON.VALUE"}}:</strong> {{item.value}}</p>
-            <p><strong>{{localize "WEAPON.RARITY"}}:</strong> {{item.Rarity}}</p1>
+            <p><strong>{{localize "WEAPON.RARITY"}}:</strong> {{item.system.Rarity}}</p1>
             <p><strong>{{localize "WEAPON.KEYWORDS"}}:</strong> {{item.keywords}}</p>
             <p><strong>{{localize "WEAPON.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
             {{/if}}
 
             {{#if item.isWeaponUpgrade}}
             <p><strong>{{localize "WEAPON_UPGRADE.VALUE"}}:</strong> {{item.value}}</p>
-            <p><strong>{{localize "WEAPON_UPGRADE.RARITY"}}:</strong> {{item.Rarity}}</p1>
+            <p><strong>{{localize "WEAPON_UPGRADE.RARITY"}}:</strong> {{item.system.Rarity}}</p1>
             <p><strong>{{localize "WEAPON_UPGRADE.KEYWORDS"}}:</strong> {{item.keywords}}</p>
             <p><strong>{{localize "WEAPON_UPGRADE.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
             {{/if}}
 
             {{#if item.isGear}}
             <p><strong>{{localize "GEAR.VALUE"}}:</strong> {{item.value}}</p>
-            <p><strong>{{localize "GEAR.RARITY"}}:</strong> {{item.Rarity}}</p1>
+            <p><strong>{{localize "GEAR.RARITY"}}:</strong> {{item.system.Rarity}}</p1>
             <p><strong>{{localize "GEAR.KEYWORDS"}}:</strong> {{item.keywords}}</p>
             <p><strong>{{localize "GEAR.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
             {{/if}}
@@ -94,14 +94,14 @@
             {{#if item.isAmmo}}
             <p><strong>{{localize "AMMO.QUANTITY"}}:</strong> {{item.quantity}}</p>
             <p><strong>{{localize "AMMO.VALUE"}}:</strong> {{item.value}}</p>
-            <p><strong>{{localize "AMMO.RARITY"}}:</strong> {{item.Rarity}}</p1>
+            <p><strong>{{localize "AMMO.RARITY"}}:</strong> {{item.system.Rarity}}</p1>
             <p><strong>{{localize "AMMO.KEYWORDS"}}:</strong> {{item.keywords}}</p>
             <p><strong>{{localize "AMMO.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
             {{/if}}
 
             {{#if item.isAugmentic}}
             <p><strong>{{localize "AUGMENTIC.VALUE"}}:</strong> {{item.value}}</p>
-            <p><strong>{{localize "AUGMENTIC.RARITY"}}:</strong> {{item.Rarity}}</p1>
+            <p><strong>{{localize "AUGMENTIC.RARITY"}}:</strong> {{item.system.Rarity}}</p1>
             <p><strong>{{localize "AUGMENTIC.KEYWORDS"}}:</strong> {{item.keywords}}</p>
             <p><strong>{{localize "AUGMENTIC.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
             {{/if}}

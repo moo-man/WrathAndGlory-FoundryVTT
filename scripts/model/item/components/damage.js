@@ -29,4 +29,30 @@ export class DamageModel extends foundry.abstract.DataModel
         })
         return schema;
     }
+
+    get formatted() {
+        let damage = Number(this._dataWithRank("damage"));
+        if (this.isMelee && this.isOwned)
+            damage += this.actor.attributes.strength.total
+        return damage
+    }
+    get ED() {
+        return this._dataWithRank("ed");
+    }
+    get AP() {
+        return this._dataWithRank("ap");
+    }
+
+    
+    _dataWithRank(type) {
+        let data = type != "damage" ? this[type] : this;
+        let damage = data.base + data.bonus;
+        let rank = "";
+        if (data.rank === "single") {
+            rank = " + R";
+        } else if (data.rank === "double") {
+            rank = " + DR";
+        }
+        return `${damage}${rank}`;
+    }
 }
