@@ -154,38 +154,58 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         if (typeof weapon == "string")
             weapon = this.items.get(weapon) || await fromUuid(weapon)
 
+        options.combi = weapon.system.combi.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
+
         let tests = []
+        let multi = options.combi ? 2 : 0;
+
         // If targets, call this function again with single target option
         if (game.user.targets.size)
         {
             let targets = Array.from(game.user.targets)
             game.user.updateTokenTargets([])
+            options.multi = targets.length + multi;
             // Function needs to return an array of WeaponTests so need to do some funky stuff to convert
-            targets.forEach(target => tests.push(this.setupWeaponTest(weapon, {target, multi : targets.length})))
-
+            targets.forEach(target => {
+                options.target = target;
+                tests.push(this._promptWeaponDialog(weapon, options))
+                if (options.combi)
+                {
+                    tests.push(this._promptWeaponDialog(weapon.system.combi.document, options))
+                }
+            })
             tests = await Promise.all(tests)
-            tests = tests.map(t => t[0])
+        }
+        else 
+        {
+            options.multi = multi;
+            tests = [await this._promptWeaponDialog(weapon, options)];
+            if (options.combi)
+            {
+                tests.push(await this._promptWeaponDialog(weapon.system.combi.document, options))
+            }
         }
 
-        else // If no target or target supplied in options
-        {
-            let dialogData = this._weaponDialogData(weapon, {multi : options.multi, targets : [options.target].filter(t => t)});
-            dialogData.title = `${weapon.name} Test`
-            this._addOptions(dialogData, options)
-            dialogData.type = "weapon"
-            dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
-            dialogData.attribute = weapon.getSkillFor(this).attribute
-            let testData = await WeaponDialog.create(dialogData)
-            testData.targets = dialogData.targets
-            testData.title = dialogData.title
-            testData.speaker = this.speakerData();
-            testData.itemId = weapon.uuid
-            testData.skill = dialogData.skill
-            testData.attribute = dialogData.attribute
-            ui.sidebar.activateTab("chat")
-            tests =  [new WeaponTest(testData)]
-        }
+
         return tests
+    }
+
+    async _promptWeaponDialog(weapon, options)
+    {
+        let dialogData = this._weaponDialogData(weapon, {multi : options.multi, targets : [options.target].filter(t => t)});
+        dialogData.title = `${weapon.name} Test`
+        this._addOptions(dialogData, options)
+        dialogData.type = "weapon"
+        dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
+        dialogData.attribute = weapon.getSkillFor(this).attribute
+        let testData = await WeaponDialog.create(dialogData)
+        testData.targets = dialogData.targets
+        testData.title = dialogData.title
+        testData.speaker = this.speakerData();
+        testData.itemId = weapon.uuid
+        testData.skill = dialogData.skill
+        testData.attribute = dialogData.attribute
+        return new WeaponTest(testData);
     }
 
     async setupPowerTest(power, options = {}) {

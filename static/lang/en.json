@@ -445,6 +445,7 @@
   "WEAPON.QUANTITY": "Quantity",
   "WEAPON.AIM": "Aim",
   "WEAPON.AIMED": "Aimed",
+  "WEAPON.COMBIWEAPON": "Combi-Weapon",
   "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
   "WEAPON_UPGRADE.TRAITS_REMOVE" : "Traits Removed",
 

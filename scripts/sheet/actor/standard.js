@@ -319,6 +319,7 @@ export class StandardActorSheet extends BaseWnGActorSheet {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         let tests = await this.actor.setupWeaponTest(div.data("itemId"))
+        ui.sidebar.activateTab("chat")
         await Promise.all(tests.map(t => t.rollTest()));
         tests.forEach(t => {
             t.sendToChat()

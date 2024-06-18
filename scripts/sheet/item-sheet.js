@@ -97,7 +97,10 @@ export class WrathAndGloryItemSheet extends ItemSheet {
     {
       data.abilities = this.item.abilities.map(i => `<a class="species-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
     }
-
+    else if (this.item.type == "weapon" && this.item.isOwned)
+    {
+      data.ownedWeapons = this.item.actor.itemTypes.weapon.filter(i => i.id != this.item.id);
+    }
     data.enrichment = await this._handleEnrichment()
         
     return data;

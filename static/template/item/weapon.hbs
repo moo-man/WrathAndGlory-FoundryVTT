@@ -146,6 +146,22 @@
         </div>
 
         <div class="wrapper">
+          <div class="item-form-group">
+            <label>{{localize "WEAPON.COMBIWEAPON"}}</label>            
+            <div class="item-form-inputs">
+              <select name="system.combi.id" {{#unless item.isOwned}}disabled data-tooltip="This can only be configured when this Item is Owned by an Actor"{{/unless}}>
+                {{#select system.combi.id}}
+                <option value=""> - </option>
+                {{#each ownedWeapons}}
+                  <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper">
           <div class="item-form-group static">
             <label>{{localize "WEAPON.VALUE"}}</label>
             <div class="item-form-inputs small">
