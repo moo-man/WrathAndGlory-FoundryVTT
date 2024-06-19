@@ -108,7 +108,7 @@
         <div class="item" data-item-id="{{item.id}}">
           <div class="item-content roll-weapon item-dropdown-right">
               <img class="item-property item-image" src="{{item.img}}"></img>
-              <div class="item-property item-name">{{item.name}}</div>
+              <div class="item-property item-name">{{#if item.system.twinned}}{{localize "WEAPON.TWINNED"}}{{/if}} {{item.name}}</div>
 
               <div class="item-property">{{itemsystem.damage.formatted}}</div>
               <div class="item-property small">{{item.system.damage.ED}}</div>

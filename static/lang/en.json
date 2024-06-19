@@ -446,6 +446,7 @@
   "WEAPON.AIM": "Aim",
   "WEAPON.AIMED": "Aimed",
   "WEAPON.COMBIWEAPON": "Combi-Weapon",
+  "WEAPON.TWINNED": "Twinned",
   "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
   "WEAPON_UPGRADE.TRAITS_REMOVE" : "Traits Removed",
 

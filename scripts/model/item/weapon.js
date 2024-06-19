@@ -32,6 +32,7 @@ export class WeaponModel extends EquippedItemModel
         schema.combi = new fields.SchemaField({
             id : new fields.StringField(),
         })
+        schema.twinned = new fields.BooleanField();
         return schema;
     }
 
