@@ -287,7 +287,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         if (options.targets)
         {
             dialogData.targets = options.targets;
-            dialogData.changes = this.allDialogChanges({targets: options.targets.map(i => i.actor)});
+            dialogData.changes = this.allDialogChanges({targets: options.targets.map(i => i.actor), vehicle : weapon.actor?.type == "vehicle" ? weapon.actor : null});
             // Weapon dialogs need to get dialog changes separately because of special target handling
         }
 
@@ -415,8 +415,8 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         }
     }
 
-    allDialogChanges({targets=[]} = {}) {
-        let effects = this.effects.contents
+    allDialogChanges({targets=[], vehicle} = {}) {
+        let effects = this.effects.contents.concat(vehicle?.effects.contents || []);
         // Aggregate dialog changes from each effect
         let changes = effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges()), {})
 
