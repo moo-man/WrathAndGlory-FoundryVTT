@@ -182,6 +182,41 @@ export default class WNGUtility {
     canvas.animatePan({ x: token.center.x, y: token.center.y, duration: 250 });
   }
 
+  static async tableToHTML(table, label, options=[]) 
+  {
+      let noCenter = options.includes("no-center");
+      return await TextEditor.enrichHTML(`<table> 
+      <thead>
+      <tr class="table-header"><td colspan="2">${table.name}</td></tr>
+      <tr class="table-col-header">
+          <td class="formula">${table.formula.replaceAll(" ", "") == "1d6*10+1d6" ? "1d66" : table.formula}</td>
+          <td class="label">${label}</td>
+      </tr>
+      </thead>
+      <tbody class="${noCenter ? "no-center" : ""}">
+  ${table.results.map(r => 
+  {
+      let uuid;
+
+      if (r.type == 1)
+      {
+          uuid = `${r.documentCollection}.${r.documentId}`;
+      }
+      else if (r.type == 2)
+      {
+          uuid = `Compendium.${r.documentCollection}.${r.documentId}`;
+      }
+
+      return `<tr>
+          <td>${r.range[0] == r.range[1] ? r.range[0] : `${r.range[0]}–${r.range[1]}`}</td>
+          <td>${[1,2].includes(r.type) ? `@UUID[${uuid}]` : r.text}</td>
+          </tr>`;
+  }).join("")}
+
+      </tbody>
+  </table>`, {relativeTo : table, async: true});
+  }
+
 
   static async rollItemMacro(itemName, itemType) {
     const speaker = ChatMessage.getSpeaker();

@@ -457,4 +457,23 @@ CONFIG.statusEffects = [
     
 ]
 
+CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
+    {
+        pattern : /@TableHTML\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : async (match) => 
+        {
+            let table = await fromUuid(match[1]);
+            let options = match[2].split(",").map(i => i.trim());
+            let label = options[0];
+            if (table)
+            {
+                return $(await game.wng.utility.tableToHTML(table, label, options))[0];
+            }
+            else 
+            {
+                return `Error - Table ${match[0]} not Found`;
+            }
+        }
+    }])
+
 export default WNG
