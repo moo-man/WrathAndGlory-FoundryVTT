@@ -185,9 +185,9 @@ export default class WNGUtility {
   static async tableToHTML(table, label, options=[]) 
   {
       let noCenter = options.includes("no-center");
-      return await TextEditor.enrichHTML(`<table> 
+      return await TextEditor.enrichHTML(`<table class="wng-generated" border="1"> 
       <thead>
-      <tr class="table-header"><td colspan="2">${table.name}</td></tr>
+      <tr class="table-header"><td colspan="2">@UUID[${table.uuid}]{${table.name}}</td></tr>
       <tr class="table-col-header">
           <td class="formula">${table.formula.replaceAll(" ", "") == "1d6*10+1d6" ? "1d66" : table.formula}</td>
           <td class="label">${label}</td>

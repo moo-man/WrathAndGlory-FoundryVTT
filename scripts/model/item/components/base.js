@@ -110,10 +110,12 @@ export class BaseItemModel extends foundry.abstract.DataModel
             }
         }
 
-        if (hasProperty(data, "damage") && hasProperty(data, "ed") && hasProperty(data, "ap"))
-        {
-            data.damage = mergeObject(data.damage, {ed : data.ed, ap : data.ap, otherDamage : data.otherDamage});
-        }
+        // if (hasProperty(data, "damage") && hasProperty(data, "ed") && hasProperty(data, "ap"))
+        // {
+        //     data.damage = mergeObject(data.damage, {ed : data.ed, ap : data.ap, otherDamage : data.otherDamage});
+        //     delete data.ed;
+        //     delete data.ap;
+        // }
     }
 
 }

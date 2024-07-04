@@ -94,8 +94,8 @@ export class WeaponModel extends EquippedItemModel
     {
         if (this.isRanged && this.category == "launcher" && this.Ammo) {
             this.system.damage = this.Ammo.damage
-            this.system.ap = this.Ammo.ap
-            this.system.ed = this.Ammo.ed
+            this.system.damage.ap = this.Ammo.damage.ap
+            this.system.damage.ed = this.Ammo.damage.ed
         }
         if (this.isRanged && this.Ammo) {
             this.applyAmmo()
