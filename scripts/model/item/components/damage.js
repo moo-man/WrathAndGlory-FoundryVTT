@@ -6,22 +6,22 @@ export class DamageModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.base = new fields.NumberField();
-        schema.bonus = new fields.NumberField();
-        schema.dice = new fields.NumberField({min: 0});
+        schema.base = new fields.NumberField({initial: 0, nullable: false});
+        schema.bonus = new fields.NumberField({initial: 0, nullable: false});
+        schema.dice = new fields.NumberField({min: 0, initial: 0, nullable: false});
         schema.rank = new fields.StringField({initial : "none"});
 
         schema.ed = new fields.SchemaField({
-            base: new fields.NumberField(),
-            bonus: new fields.NumberField(),
-            dice : new fields.NumberField({min: 0}),
+            base: new fields.NumberField({initial: 0, nullable: false}),
+            bonus: new fields.NumberField({initial: 0, nullable: false}),
+            dice : new fields.NumberField({min: 0, initial: 0, nullable: false}),
             rank: new fields.StringField({initial : "none"})
         })
         
         schema.ap = new fields.SchemaField({
-            base: new fields.NumberField(),
-            bonus: new fields.NumberField(),
-            dice : new fields.NumberField({min: 0}),
+            base: new fields.NumberField({initial: 0, nullable: false}),
+            bonus: new fields.NumberField({initial: 0, nullable: false}),
+            dice : new fields.NumberField({min: 0, initial: 0, nullable: false}),
             rank: new fields.StringField({initial : "none"})
         })
         

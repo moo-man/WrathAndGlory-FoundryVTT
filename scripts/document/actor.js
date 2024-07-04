@@ -306,9 +306,9 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         dialogData.pool.rank = weapon.attack.rank;
         dialogData.damageValues = weapon.damageValues
 
-        dialogData.damage = duplicate(weapon.damage)
-        dialogData.ed = duplicate(weapon.ed)
-        dialogData.ap = duplicate(weapon.ap)
+        dialogData.damage = duplicate(weapon.system.damage)
+        dialogData.ed = duplicate(weapon.system.damage.ed)
+        dialogData.ap = duplicate(weapon.system.damage.ap)
 
         if (weapon.isMelee) {
             dialogData.damage.base += this.attributes.strength.total

@@ -69,15 +69,15 @@ export class WeaponDialog extends RollDialog {
     testData.damage.base = parseInt(html.find("#damage-base")[0].value);
     testData.damage.bonus = parseInt(html.find("#damage-bonus")[0].value);
     testData.damage.rank = html.find("#damage-rank")[0].value;
-    testData.damage.dice = html.find("#damage-dice")[0].value;
+    testData.damage.dice = Number(html.find("#damage-dice")[0].value);
     testData.ed.base = parseInt(html.find("#ed-base")[0].value);
     testData.ed.bonus = parseInt(html.find("#ed-bonus")[0].value);
     testData.ed.rank = html.find("#ed-rank")[0].value;
-    testData.ed.dice = html.find("#ed-dice")[0].value;
+    testData.ed.dice = Number(html.find("#ed-dice")[0].value);
     testData.ap.base = parseInt(html.find("#ap-base")[0].value);
     testData.ap.bonus = parseInt(html.find("#ap-bonus")[0].value);
     testData.ap.rank = html.find("#ap-rank")[0].value;
-    testData.ap.dice = html.find("#ap-dice")[0].value;
+    testData.ap.dice = Number(html.find("#ap-dice")[0].value);
     testData.ed.damageValues[1] = parseInt(html.find("#die-one")[0].value);
     testData.ed.damageValues[2] = parseInt(html.find("#die-two")[0].value);
     testData.ed.damageValues[3] = parseInt(html.find("#die-three")[0].value);
@@ -168,12 +168,15 @@ export class WeaponDialog extends RollDialog {
       "damage.base": null,
       "damage.rank": null,
       "damage.bonus": null,
+      "damage.dice": null,
       "ed.base": null,
       "ed.rank": null,
       "ed.bonus": null,
+      "ed.dice": null,
       "ap.base": null,
       "ap.rank": null,
       "ap.bonus": null,
+      "ap.dice": null,
     }))
 
 
@@ -241,12 +244,15 @@ export class WeaponDialog extends RollDialog {
       "damage.base": parseInt(this.inputs["damage.base"].value),
       "damage.rank": this.inputs["damage.rank"].value,
       "damage.bonus": parseInt(this.inputs["damage.bonus"].value),
+      "damage.dice": parseInt(this.inputs["damage.dice"].value),
       "ed.base": parseInt(this.inputs["ed.base"].value),
       "ed.rank": this.inputs["ed.rank"].value,
       "ed.bonus": parseInt(this.inputs["ed.bonus"].value),
+      "ed.dice": parseInt(this.inputs["ed.dice"].value),
       "ap.base": parseInt(this.inputs["ap.base"].value),
       "ap.rank": this.inputs["ap.rank"].value,
       "ap.bonus": parseInt(this.inputs["ap.bonus"].value),
+      "ap.dice": parseInt(this.inputs["ap.dice"].value),
       "aim" : false
     }))
   }

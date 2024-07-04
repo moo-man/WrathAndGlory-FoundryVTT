@@ -86,6 +86,7 @@
             <b class="base">{{localize "DIALOG.BASE"}}</b>
             <b class="rank">{{localize "DIALOG.RANK"}}</b>
             <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
+            <b class="modifier">{{localize "DIALOG.DICE"}}</b>
           </div>
           <div class="item-form-group fixed">
             <label>{{localize "WEAPON.DAMAGE"}}</label>
@@ -99,8 +100,8 @@
                   <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
               </select>
-              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}"
-                data-dtype="Number" />
+              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" data-dtype="Number" />
+              <input name="system.damage.dice" class="modifier" type="number" value="{{system.damage.dice}}" />
             </div>
           </div>
         </div>
@@ -117,8 +118,8 @@
                   <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
               </select>
-              <input name="system.damage.ed.bonus" class="modifier" type="number" value="{{system.damage.ed.bonus}}"
-                data-dtype="Number" />
+              <input name="system.damage.ed.bonus" class="modifier" type="number" value="{{system.damage.ed.bonus}}" data-dtype="Number" />
+              <input name="system.damage.ed.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
             </div>
           </div>
         </div>
@@ -135,8 +136,8 @@
                   <option value="double">{{localize "RANK.DOUBLE"}}</option>
                 {{/select}}
               </select>
-              <input name="system.damage.ap.bonus" class="modifier" type="number" value="{{system.damage.ap.bonus}}"
-                data-dtype="Number" />
+              <input name="system.damage.ap.bonus" class="modifier" type="number" value="{{system.damage.ap.bonus}}" data-dtype="Number" />
+              <input name="system.damage.ap.dice" class="modifier" type="number" value="{{system.damage.ap.dice}}" />
             </div>
           </div>
         </div>
