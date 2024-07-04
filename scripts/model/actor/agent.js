@@ -75,15 +75,14 @@ export class AgentModel extends StandardWNGActorModel {
 
     computeBase() {
         super.computeBase();
-        this.attributes.computeCosts(this.experience)
-        this.skills.computeCosts(this.experience)
-        
     }
 
     computeDerived()
     {
         let itemTypes = this.parent.itemTypes;
         super.computeDerived();
+        this.attributes.computeCosts(this.experience)
+        this.skills.computeCosts(this.experience)
         for(let item of itemTypes.talent.concat(itemTypes.psychicPower, itemTypes.archetype, itemTypes.ability)) // Don't include species, already included in archetye
         {
             this.experience.spent += item.cost;

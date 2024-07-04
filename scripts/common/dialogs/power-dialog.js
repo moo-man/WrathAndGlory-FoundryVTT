@@ -6,7 +6,7 @@ export class PowerDialog extends RollDialog {
     let hide = this.runConditional("hide", data)
     this.removeHiddenChanges(hide, data);
     data.condensedChanges = this.condenseChanges(data.changes);
-    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/psychic-roll.html", data);
+    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/psychic-roll.hbs", data);
     return new Promise((resolve) => {
       new this({
         title: game.i18n.localize(data.title),
