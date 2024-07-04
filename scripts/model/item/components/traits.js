@@ -9,7 +9,11 @@ export class TraitsModel extends foundry.abstract.DataModel
         schema.list = new fields.ArrayField(new fields.SchemaField({
             name : new fields.StringField({}),
             rating : new fields.StringField({}),
-            type : new fields.StringField({})
+            type : new fields.StringField({}),
+
+            custom : new fields.StringField({}),
+            display : new fields.StringField({}),
+            description : new fields.StringField({}),
         }))
         return schema;
     }
