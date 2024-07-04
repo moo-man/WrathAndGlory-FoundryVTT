@@ -11,7 +11,9 @@ export class VehicleSheet extends BaseWnGActorSheet {
         options.resizable = true;
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main", }]
         options.dragDrop.concat([{dragSelector: ".actor-list .actor"}, {}])
-      return options
+        options.scrollY.push(".main-lists");
+
+        return options
     }
 
     async getData() {

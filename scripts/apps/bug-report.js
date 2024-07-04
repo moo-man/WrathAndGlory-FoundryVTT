@@ -7,10 +7,11 @@ export default class BugReportFormWNG extends Application {
 
         this.domains = [
             "Wrath & Glory System",
-            "Wrath & Glory: Core Module",
-            "Wrath & Glory: Forsaken System Module",
-            "Wrath & Glory: Litanies of the Lost",
-            "Wrath & Glory: Redacted Records I"
+            "Core Module",
+            "Forsaken System Module",
+            "Litanies of the Lost",
+            "Redacted Records I",
+            "Church of Steel",
         ]
 
         this.domainKeys = [
@@ -18,7 +19,8 @@ export default class BugReportFormWNG extends Application {
             "wng-core",
             "wng-forsaken",
             "wng-litanies",
-            "wng-records1"
+            "wng-records1",
+            "wng-cos",
         ]
 
         this.domainKeysToLabel = {
@@ -26,7 +28,8 @@ export default class BugReportFormWNG extends Application {
             "wng-core" : "core",
             "wng-forsaken" : "forsaken",
             "wng-litanies" : "litanies",
-            "wng-records1" : "records1"
+            "wng-records1" : "records1",
+            "wng-cos" : "cos"
         }
     }
 

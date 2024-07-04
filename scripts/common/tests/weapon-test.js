@@ -41,7 +41,7 @@ export default class WeaponTest extends WNGTest {
       this.computeDamage() 
   }
 
-  get weapon() {return this.actor.items.get(this.testData.itemId)}
+  get weapon() {return fromUuidSync(this.testData.itemId)}
   
 }
 

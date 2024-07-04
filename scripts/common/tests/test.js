@@ -440,6 +440,17 @@ export class WNGTest {
         5: 2,
         6: 2
       }
+      if (game.actors.get(this.data.context.targets[0]?.actorId)?.type == "vehicle")
+      {
+        damage.ed.values = {
+          1: 1,
+          2: 1,
+          3: 1,
+          4: 2,
+          5: 2,
+          6: 2
+        }
+      }
     }
 
     let r = Roll.fromTerms([

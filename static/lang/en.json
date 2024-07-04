@@ -499,6 +499,7 @@
   "AUTOCALC.AUTO_WOUNDED" : "Automatic Wounded",
   "AUTOCALC.AUTO_EXHAUSTED" : "Automatic Exhausted",
   "CONFIGURE.GenerateMetaCurrencies" : "Generate Meta Currencies",
+  "CONFIGURE.HidePassengers" : "Hide Passengers",
 
 
   "VEHICLE.TRAITS" : "Traits",

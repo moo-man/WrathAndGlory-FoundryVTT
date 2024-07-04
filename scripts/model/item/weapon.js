@@ -15,6 +15,11 @@ export class WeaponModel extends EquippedItemModel
             bonus : new fields.NumberField({}),
             rank : new fields.StringField({initial : "none"}),
         })
+
+        schema.ed = new fields.ObjectField({deprecated : true})
+        schema.ap = new fields.ObjectField({deprecated : true})
+        schema.otherDamage = new fields.ObjectField({deprecated : true})
+
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.category = new fields.StringField({initial : "melee"});
         schema.range = new fields.SchemaField({
@@ -93,9 +98,9 @@ export class WeaponModel extends EquippedItemModel
     computeOwned()
     {
         if (this.isRanged && this.category == "launcher" && this.Ammo) {
-            this.system.damage = this.Ammo.damage
-            this.system.damage.ap = this.Ammo.damage.ap
-            this.system.damage.ed = this.Ammo.damage.ed
+            this.system = this.Ammo.system.damage
+            this.system.ap = this.Ammo.system.damage.ap
+            this.system.ed = this.Ammo.system.damage.ed
         }
         if (this.isRanged && this.Ammo) {
             this.applyAmmo()
@@ -181,13 +186,4 @@ export class WeaponModel extends EquippedItemModel
             return this.parent.actor.items.get(this.ammo)
     }
 
-    get ed () 
-    {
-        return this.damage.ed;
-    }
-
-    get ap ()
-    {
-        return this.damage.ap;
-    }
 }
