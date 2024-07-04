@@ -428,22 +428,22 @@
       "damage": {
         "base": 0,
         "bonus": 0,
-        "rank": "none"
-      },
-      "ed": {
-        "base": 0,
-        "bonus": 0,
-        "rank": "none"
-      },
-      "ap": {
-        "base": 0,
-        "bonus": 0,
-        "rank": "none"
-      },
-      "otherDamage" : {
-        "mortalWounds" : "",
-        "wounds" : "",
-        "shock" : ""
+        "rank": "none",
+        "ed": {
+          "base": 0,
+          "bonus": 0,
+          "rank": "none"
+        },
+        "ap": {
+          "base": 0,
+          "bonus": 0,
+          "rank": "none"
+        },
+        "otherDamage" : {
+          "mortalWounds" : "",
+          "wounds" : "",
+          "shock" : ""
+        }
       }
     },
     "ammo": {
@@ -502,17 +502,17 @@
       "damage": {
         "base": 0,
         "bonus": 0,
-        "rank": "none"
-      },
-      "ed": {
-        "base": 0,
-        "bonus": 0,
-        "rank": "none"
-      },
-      "otherDamage" : {
-        "mortalWounds" : "",
-        "wounds" : "",
-        "shock" : ""
+        "rank": "none",
+        "ed": {
+          "base": 0,
+          "bonus": 0,
+          "rank": "none"
+        },
+        "other" : {
+          "mortalWounds" : "",
+          "wounds" : "",
+          "shock" : ""
+        }
       },
       "potency" : []
     },

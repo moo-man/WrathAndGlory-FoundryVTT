@@ -6,19 +6,22 @@ export class DamageModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.base = new fields.NumberField({min : 0});
-        schema.bonus = new fields.NumberField({min : 0});
+        schema.base = new fields.NumberField();
+        schema.bonus = new fields.NumberField();
+        schema.dice = new fields.NumberField({min: 0});
         schema.rank = new fields.StringField({initial : "none"});
 
         schema.ed = new fields.SchemaField({
-            base: new fields.NumberField({min : 0}),
-            bonus: new fields.NumberField({min : 0}),
+            base: new fields.NumberField(),
+            bonus: new fields.NumberField(),
+            dice : new fields.NumberField({min: 0}),
             rank: new fields.StringField({initial : "none"})
         })
         
         schema.ap = new fields.SchemaField({
-            base: new fields.NumberField({min : 0}),
-            bonus: new fields.NumberField({min : 0}),
+            base: new fields.NumberField(),
+            bonus: new fields.NumberField(),
+            dice : new fields.NumberField({min: 0}),
             rank: new fields.StringField({initial : "none"})
         })
         
@@ -47,6 +50,10 @@ export class DamageModel extends foundry.abstract.DataModel
     _dataWithRank(type) {
         let data = type != "damage" ? this[type] : this;
         let damage = data.base + data.bonus;
+        if (data.dice)
+        {
+            damage = damage ? damage + ` + ${data.dice}` : data.dice
+        }
         let rank = "";
         if (data.rank === "single") {
             rank = " + R";

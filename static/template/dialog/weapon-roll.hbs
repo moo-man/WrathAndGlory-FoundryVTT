@@ -19,7 +19,7 @@
         </div>
         <div class="wrapper">
             <label class="name">{{localize "DIALOG.DN"}}</label>
-            <input id="difficulty-target" class="difficulty base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
+            <input id="difficulty-target" class="difficulty base" type="number" data-dtype="Number" value="{{difficulty.target}}" />
             <select id="difficulty-rank" class="difficulty rank">
                 {{#select weapon.ed.rank}}
                 {{#each (config "difficultyRankTypes" )as |rank r|}}
@@ -27,11 +27,11 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <input id="difficulty-penalty" class="difficulty bonus" type="number" value="{{difficulty.penalty}}" data-dtype="Number" />
+            <input id="difficulty-penalty" class="difficulty bonus" type="number" data-dtype="Number" value="{{difficulty.penalty}}" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "DIALOG.DICE_POOL"}}</label>
-            <input id="pool-size" class="pool base" type="number" value="{{pool.size}}" data-dtype="Number" />
+            <input id="pool-size" class="pool base" type="number" data-dtype="Number" value="{{pool.size}}" />
             <select id="pool-rank" class="pool rank">
                 {{#select pool.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
@@ -39,12 +39,12 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <input id="pool-bonus" class="pool bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
+            <input id="pool-bonus" class="pool bonus" type="number" data-dtype="Number" value="{{pool.bonus}}" />
         </div>
     </div>
     <div class="wrapper">
         <label class="name">{{localize "DIALOG.WRATH"}}</label>
-        <input id="wrath-base" class="base" type="number" value="{{wrath.base}}" data-dtype="Number" />
+        <input id="wrath-base" class="base" type="number" data-dtype="Number" value="{{wrath.base}}" />
     </div>
     <div class="wrapper-right">
         <h1 style="margin-top: 8px;">{{weapon.name}}</h1>
@@ -53,10 +53,11 @@
             <b class="base">{{localize "DIALOG.BASE"}}</b>
             <b class="rank">{{localize "DIALOG.RANK"}}</b>
             <b class="bonus">{{localize "DIALOG.BONUS"}}</b>
+            <b class="dice">{{localize "DIALOG.DICE"}}</b>
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.DAMAGE"}}</label>
-            <input id="damage-base" class="damage base" type="number" value="{{damage.base}}" data-dtype="Number" />
+            <input id="damage-base" class="damage base" type="number" data-dtype="Number" value="{{damage.base}}" />
             <select id="damage-rank" class="damage rank">
                 {{#select weapon.damage.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
@@ -64,11 +65,12 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <input id="damage-bonus" class="damage bonus" type="number" value="{{damage.bonus}}" data-dtype="Number" />
+            <input id="damage-bonus" class="damage bonus" type="number" data-dtype="Number" value="{{damage.bonus}}" />
+            <input id="damage-dice" class="damage dice" type="text" value="{{damage.dice}}" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.ED"}}</label>
-            <input id="ed-base" class="ed base" type="number" value="{{ed.base}}" data-dtype="Number" />
+            <input id="ed-base" class="ed base" type="number" data-dtype="Number" value="{{ed.base}}" />
             <select id="ed-rank" class="ed rank">
                 {{#select weapon.ed.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
@@ -76,11 +78,12 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <input id="ed-bonus" class="ed bonus" type="number" value="{{ed.bonus}}" data-dtype="Number" />
+            <input id="ed-bonus" class="ed bonus" type="number" data-dtype="Number" value="{{ed.bonus}}" />
+            <input id="ed-dice" class="ed dice" type="text" value="{{ed.dice}}" />
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.AP"}}</label>
-            <input id="ap-base" class="ap base" type="number" value="{{ap.base}}" data-dtype="Number" />
+            <input id="ap-base" class="ap base" type="number" data-dtype="Number" value="{{ap.base}}" />
             <select id="ap-rank" class="ap rank">
                 {{#select weapon.ap.rank}}
                 {{#each (config "rankTypes") as |rank r|}}
@@ -88,12 +91,13 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <input id="ap-bonus" class="ap bonus" type="number" value="{{ap.bonus}}" data-dtype="Number" />
+            <input id="ap-bonus" class="ap bonus" type="number" data-dtype="Number" value="{{ap.bonus}}" />
+            <input id="ap-dice" class="ap dice" type="text" value="{{ap.dice}}"/>
         </div>
         {{#if weapon.isRanged}}
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.RANGE"}}</label>
-            <input id="distance" class="distance" type="number" value="{{distance}}" data-dtype="Number" />
+            <input id="distance" class="distance" type="number" data-dtype="Number" value="{{distance}}" />
             <select id="range" class="range">
                 {{#select range}}
                 <option value=""></option>
@@ -118,12 +122,12 @@
         </div>
         <div class="wrapper">
             <label class="name">{{localize "WEAPON.DIE_VALUE"}}</label>
-            <input id="die-one" class="die" type="number" value="{{lookup damageValues '1'}}" data-dtype="Number" />
-            <input id="die-two" class="die" type="number" value="{{lookup damageValues '2'}}" data-dtype="Number" />
-            <input id="die-three" class="die" type="number" value="{{lookup damageValues '3'}}" data-dtype="Number" />
-            <input id="die-four" class="die" type="number" value="{{lookup damageValues '4'}}" data-dtype="Number" />
-            <input id="die-five" class="die" type="number" value="{{lookup damageValues '5'}}" data-dtype="Number" />
-            <input id="die-six" class="die" type="number" value="{{lookup damageValues '6'}}" data-dtype="Number" />
+            <input id="die-one" class="die" type="number" data-dtype="Number" value="{{lookup damageValues '1'}}" />
+            <input id="die-two" class="die" type="number" data-dtype="Number" value="{{lookup damageValues '2'}}" />
+            <input id="die-three" class="die" type="number" data-dtype="Number" value="{{lookup damageValues '3'}}" />
+            <input id="die-four" class="die" type="number" data-dtype="Number" value="{{lookup damageValues '4'}}" />
+            <input id="die-five" class="die" type="number" data-dtype="Number" value="{{lookup damageValues '5'}}" />
+            <input id="die-six" class="die" type="number" data-dtype="Number" value="{{lookup damageValues '6'}}" />
         </div>
     </div>
 </div>

@@ -413,7 +413,7 @@ export class WNGTest {
       other: duplicate(this.testData.otherDamage || {})
     }
     this.result.damage.total = this.result.damage.flat + this.context.edit.damage
-    this.result.damage.ed = { number: this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length + this.context.edit.ed };
+    this.result.damage.ed = { number: this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length + this.context.edit.ed};
     this.result.damage.ed.values = this.testData.ed.damageValues
   }
 
