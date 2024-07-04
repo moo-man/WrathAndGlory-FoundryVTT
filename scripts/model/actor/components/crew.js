@@ -36,6 +36,11 @@ export class VehicleComplement extends DocumentListModel {
 
         return (await ItemDialog.create(list, 1, {title : game.i18n.localize("DIALOG.ChooseActor")}))[0]
     }
+
+    get activePilot() 
+    {
+        return this.list.find(i => i.type == "pilot")?.document;
+    }
 }
 
 export class VehicleCrew extends DocumentReferenceModel 

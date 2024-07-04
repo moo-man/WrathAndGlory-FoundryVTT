@@ -26,7 +26,9 @@ export class VehicleModel extends BaseActorModel {
 
     computeDerived()
     {
-
+        let pilot = this.complement.activePilot
+        let pilotInit = (pilot?.system.attributes.initiative.total || 0)
+        this.combat.defence.total = Math.min(pilotInit, this.mnvr) + this.combat.defence.bonus;
     }
 
     get traitsAvailable() {

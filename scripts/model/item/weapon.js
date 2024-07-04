@@ -148,9 +148,29 @@ export class WeaponModel extends EquippedItemModel
         changes.sort((a, b) => a.priority - b.priority);
 
         // Apply all changes
-        for (let change of changes) {
-            const result = change.effect.apply(this, change);
-            if (result !== null) overrides[change.key] = result;
+        for (let change of changes) 
+        {
+            let key = change.key.replace("system.ed", "system.damage.ed").replace("system.ap", "system.damage.ap");
+
+            if (hasProperty(this.parent, key)) 
+            {
+
+                if (change.mode == CONST.ACTIVE_EFFECT_MODES.ADD) 
+                {
+                    setProperty(this.parent, key, getProperty(this.parent, key) + Number(change.value))
+                }
+                else if (change.mode == CONST.ACTIVE_EFFECT_MODES.OVERRIDE) 
+                {
+                    setProperty(this.parent, key, change.value)
+                }
+                else if (change.mode == CONST.ACTIVE_EFFECT_MODES.UPGRADE) 
+                {
+                    if (change.value > getProperty(this.parent, key))
+                    {
+                        setProperty(this.parent, key, change.value)
+                    }
+                }
+            }
         }
 
     }
@@ -159,5 +179,15 @@ export class WeaponModel extends EquippedItemModel
     get Ammo() {
         if (this.parent.isOwned)
             return this.parent.actor.items.get(this.ammo)
+    }
+
+    get ed () 
+    {
+        return this.damage.ed;
+    }
+
+    get ap ()
+    {
+        return this.damage.ap;
     }
 }
