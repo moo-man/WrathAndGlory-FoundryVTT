@@ -110,13 +110,33 @@ export class BaseItemModel extends foundry.abstract.DataModel
             }
         }
 
-        if (data.damage && (!data.damage.ap || !data.damage.ed || !data.otherDamage))
+        if (data.damage)
         {
-            data.damage.ap = data.ap;
-            data.damage.ed = data.ed;
-            data.damage.otherDamage = data.otherDamage;
+            if (!data.damage.ap && data.ap)
+            {
+                data.damage.ap = data.ap;
+                delete data.ap;
+            }
+
+            if (!data.damage.ed && data.ed)
+            {
+                data.damage.ed = data.ed;
+                delete data.ed;
+            }
+
+            if (!data.damage.other && data.other)
+            {
+                data.damage.other = data.other;
+                delete data.other;
+            }
+
+            if (!data.damage.otherDamage && data.otherDamage)
+            {
+                data.damage.otherDamage = data.otherDamage;
+                delete data.otherDamage;
+            }
+
             delete data.ed;
-            delete data.ap;
         }
     }
 
