@@ -1,58 +1,38 @@
-.wrath-and-glory.sheet.actor .tab[data-tab="gear"] {
-  height: 100%
-}
-
-.wrath-and-glory.sheet.actor .gear {
+.wrath-and-glory.sheet.actor .gear.active {
   display: flex;
   flex-direction: column;
-  height:100%
-}
+  height: 100%;
 
-.wrath-and-glory.sheet.actor .gear .wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: start;
-}
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: start;
 
-.wrath-and-glory.sheet.actor .gear .wrapper.influence-wealth {
-  margin-bottom: -30px;
-  justify-content: space-between;
-  flex-basis: unset;
-}
+    .wealth,
+    .influence {
+      display: flex;
+      flex-direction: row;
 
-.wrath-and-glory.sheet.actor .gear .wrapper .influence {
-  display: flex;
-  flex-direction: row;
-}
-.wrath-and-glory.sheet.actor .gear .wrapper .wealth {
-  display: flex;
-  flex-direction: row;
-}
+      label {
+        width: 70px;
+      }
 
-.wrath-and-glory.sheet.actor .gear .wrapper .influence label,
-.wrath-and-glory.sheet.actor .gear .wrapper .wealth label {
-  width: 70px;
-}
+      input {
+        width: 50px;
+      }
+    }
 
-.wrath-and-glory.sheet.actor .gear .wrapper .wealth label {
-  cursor: default;
-}
+    .gear-list {
+      pointer-events: none;
+    }
 
-.wrath-and-glory.sheet.actor .gear .wrapper .influence input,
-.wrath-and-glory.sheet.actor .gear .wrapper .wealth input {
-  width: 50px;
-}
+  }
 
-.wrath-and-glory.sheet.actor .gear .wrapper.gear-list {
-  pointer-events: none;
-}
-
-.wrath-and-glory.sheet.actor .pointer-enable-wrapper {
-  pointer-events: all;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
+  .wrapper.influence-wealth {
+    margin-bottom: -30px;
+    justify-content: space-between;
+    flex-basis: unset;
+  }
 }

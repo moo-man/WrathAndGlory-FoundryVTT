@@ -18,11 +18,11 @@ export default class AbilityRoll extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.hbs"
   }
 
   get damageTemplate() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.hbs"
   }
 
   async rollTest() {
@@ -43,7 +43,7 @@ export default class AbilityRoll extends WNGTest {
 
   get testEffects() {
     if(this.item)
-      return this.item.effects.filter(e => !e.data.transfer)
+      return this.item.effects.filter(e => !e.transfer)
     else 
       return []
   }

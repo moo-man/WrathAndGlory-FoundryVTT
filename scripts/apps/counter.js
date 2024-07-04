@@ -3,7 +3,7 @@ export default class RuinGloryCounter extends Application {
       const options = super.defaultOptions;
       options.title = "Glory & Ruin Counter";
       options.id = 'counter';
-      options.template = 'systems/wrath-and-glory/template/apps/counter.html';
+      options.template = 'systems/wrath-and-glory/template/apps/counter.hbs';
       return options;
     }
     /* -------------------------------------------- */

@@ -111,6 +111,21 @@ WNG.armourTraits = {
     "shield": "TRAIT.Shield"
 }
 
+WNG.vehicleTraits = {
+    "allTerrain": "All-Terrain",
+    "amphibious": "Amphibious",
+    "bike": "Bike",
+    "flyer": "Flyer",
+    "gunPorts": "Gun Ports",
+    "gyroStabilised": "Gyro-Stabilised",
+    "hover": "Hover",
+    "openTopped": "Open Topped",
+    "reliable": "Reliable",
+    "sealed": "Sealed",
+    "turboBoost": "Turbo Boost",
+    "walker": "Walker",
+}
+
 
 WNG.traitHasRating = {
     "agonising": false,
@@ -142,7 +157,19 @@ WNG.traitHasRating = {
     "ereWeGo": false,
     "powerField": false,
     "powered": true,
-    "shield": false
+    "shield": false,
+    "allTerrain": false,
+    "amphibious": false,
+    "bike": false,
+    "flyer": false,
+    "gunPorts": false,
+    "gyroStabilised": false,
+    "hover": false,
+    "openTopped": false,
+    "reliable": false,
+    "sealed": false,
+    "turboBoost": true,
+    "walker": false
 }
 
 WNG.ranges = {
@@ -236,6 +263,13 @@ WNG.corruptionLevels = {
 WNG.attributeCosts = [0, 0, 4, 6, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 
 WNG.skillCosts = [0, 2, 4, 6, 8, 10, 12, 14, 16]
+
+
+WNG.vehicleRoles = {
+    "pilot" : "VEHICLRE.Pilot",
+    "crew" : "VEHICLRE.Crew",
+    "passenger" : "VEHICLRE.Passenger"
+}
 
 
 WNG.systemEffects = {
@@ -422,5 +456,24 @@ CONFIG.statusEffects = [
     }
     
 ]
+
+CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
+    {
+        pattern : /@TableHTML\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : async (match) => 
+        {
+            let table = await fromUuid(match[1]);
+            let options = match[2].split(",").map(i => i.trim());
+            let label = options[0];
+            if (table)
+            {
+                return $(await game.wng.utility.tableToHTML(table, label, options))[0];
+            }
+            else 
+            {
+                return `Error - Table ${match[0]} not Found`;
+            }
+        }
+    }])
 
 export default WNG

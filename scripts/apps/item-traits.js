@@ -3,7 +3,7 @@ export default class ItemTraits extends FormApplication
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "item-traits",
-            template : "systems/wrath-and-glory/template/apps/item-traits.html",
+            template : "systems/wrath-and-glory/template/apps/item-traits.hbs",
             height : "auto",
             width : "auto",
             title : "Item Traits",
@@ -14,15 +14,15 @@ export default class ItemTraits extends FormApplication
 
     getData() {
         let data = super.getData(); 
-        data.custom = this.constructCustomString(this.object.traits);
+        data.custom = this.constructCustomString(this.object.system.traits);
         try {
 
-            data.traits = Object.keys(this.object.traitsAvailable).map(i => {
-                let existing = this.object._source.system.traits.find(t => t.name == i)
+            data.traits = Object.keys(this.object.system.traitsAvailable).map(i => {
+                let existing = this.object._source.system.traits.list.find(t => t.name == i)
                 if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
-                existing = this.object.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
+                existing = this.object.system.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
                 return  {
-                    display : this.object.traitsAvailable[i],
+                    display : this.object.system.traitsAvailable[i],
                     key : i,
                     existingTrait : existing,
                     hasRating : game.wng.config.traitHasRating[i],
@@ -44,7 +44,7 @@ export default class ItemTraits extends FormApplication
         let newTraits = []
         if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
         {
-            newTraits = this.object.traits.filter(i => i.type != this.options.type) // Retain traits from the other type
+            newTraits = this.object.system.traits.filter(i => i.type != this.options.type) // Retain traits from the other type
         }
         for (let key in formData)
         {

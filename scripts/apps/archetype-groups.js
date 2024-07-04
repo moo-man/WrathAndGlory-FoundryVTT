@@ -51,7 +51,7 @@ export default class ArchetypeGroups extends Application {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "archetype-groups",
-            template: "systems/wrath-and-glory/template/apps/archetype-groups.html",
+            template: "systems/wrath-and-glory/template/apps/archetype-groups.hbs",
             height: "auto",
             width: 285,
             title: "Archetype Groups",

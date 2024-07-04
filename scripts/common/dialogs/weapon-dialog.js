@@ -14,7 +14,7 @@ export class WeaponDialog extends RollDialog {
     let hide = this.runConditional("hide", data)
     this.removeHiddenChanges(hide, data);
     data.condensedChanges = this.condenseChanges(data.changes);
-    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/weapon-roll.html", data);
+    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/weapon-roll.hbs", data);
     return new Promise((resolve) => {
       new this({
         title: game.i18n.localize(data.title),
@@ -27,7 +27,34 @@ export class WeaponDialog extends RollDialog {
             icon: '<i class="fas fa-check"></i>',
             label: game.i18n.localize("BUTTON.ROLL"),
             callback: async (html) => {
-              let data = this.dialogCallback(html)
+              let data = await this.dialogCallback(html)
+          
+              if (data.damage.dice)
+              {
+                let damageRoll = new Roll(`${data.damage.dice}d6`);
+                await damageRoll.roll();
+                damageRoll.toMessage({speaker : ChatMessage.getSpeaker({actor : data.actor}), flavor : "Damage Dice Roll"})
+                data.damage.bonus += damageRoll.total;
+              }
+
+              if (data.ed.dice)
+              {
+                let edRoll = new Roll(`${data.ed.dice}d6`);
+                await edRoll.roll();
+                edRoll.toMessage({speaker : ChatMessage.getSpeaker({actor : data.actor}), flavor : "ED Dice Roll"})
+                data.ed.bonus += edRoll.total;
+              }
+
+                
+              if (data.ap.dice)
+              {
+                let apRoll = new Roll(`${data.ap.dice}d6`);
+                await apRoll.roll();
+                apRoll.toMessage({speaker : ChatMessage.getSpeaker({actor : data.actor}), flavor : "AP Dice Roll"})
+                data.ap.bonus += apRoll.total;
+              }
+    
+
               resolve(data)
             },
           }
@@ -42,12 +69,15 @@ export class WeaponDialog extends RollDialog {
     testData.damage.base = parseInt(html.find("#damage-base")[0].value);
     testData.damage.bonus = parseInt(html.find("#damage-bonus")[0].value);
     testData.damage.rank = html.find("#damage-rank")[0].value;
+    testData.damage.dice = Number(html.find("#damage-dice")[0].value);
     testData.ed.base = parseInt(html.find("#ed-base")[0].value);
     testData.ed.bonus = parseInt(html.find("#ed-bonus")[0].value);
     testData.ed.rank = html.find("#ed-rank")[0].value;
+    testData.ed.dice = Number(html.find("#ed-dice")[0].value);
     testData.ap.base = parseInt(html.find("#ap-base")[0].value);
     testData.ap.bonus = parseInt(html.find("#ap-bonus")[0].value);
     testData.ap.rank = html.find("#ap-rank")[0].value;
+    testData.ap.dice = Number(html.find("#ap-dice")[0].value);
     testData.ed.damageValues[1] = parseInt(html.find("#die-one")[0].value);
     testData.ed.damageValues[2] = parseInt(html.find("#die-two")[0].value);
     testData.ed.damageValues[3] = parseInt(html.find("#die-three")[0].value);
@@ -57,6 +87,7 @@ export class WeaponDialog extends RollDialog {
     testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
     testData.range = html.find(".range")[0]?.value
     testData.aim = !!html.find(".aim.checked")[0]
+
     return testData
   }
 
@@ -137,12 +168,15 @@ export class WeaponDialog extends RollDialog {
       "damage.base": null,
       "damage.rank": null,
       "damage.bonus": null,
+      "damage.dice": null,
       "ed.base": null,
       "ed.rank": null,
       "ed.bonus": null,
+      "ed.dice": null,
       "ap.base": null,
       "ap.rank": null,
       "ap.bonus": null,
+      "ap.dice": null,
     }))
 
 
@@ -210,12 +244,15 @@ export class WeaponDialog extends RollDialog {
       "damage.base": parseInt(this.inputs["damage.base"].value),
       "damage.rank": this.inputs["damage.rank"].value,
       "damage.bonus": parseInt(this.inputs["damage.bonus"].value),
+      "damage.dice": parseInt(this.inputs["damage.dice"].value),
       "ed.base": parseInt(this.inputs["ed.base"].value),
       "ed.rank": this.inputs["ed.rank"].value,
       "ed.bonus": parseInt(this.inputs["ed.bonus"].value),
+      "ed.dice": parseInt(this.inputs["ed.dice"].value),
       "ap.base": parseInt(this.inputs["ap.base"].value),
       "ap.rank": this.inputs["ap.rank"].value,
       "ap.bonus": parseInt(this.inputs["ap.bonus"].value),
+      "ap.dice": parseInt(this.inputs["ap.dice"].value),
       "aim" : false
     }))
   }

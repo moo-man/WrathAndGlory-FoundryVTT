@@ -1,6 +1,7 @@
 {
   "TYPES.Actor.agent" : "Agent",
   "TYPES.Actor.threat" : "Threat",
+  "TYPES.Actor.vehicle" : "Vehicle",
 
   "TYPES.Item.ability" : "Ability",
   "TYPES.Item.ammo" : "Ammo",
@@ -11,7 +12,7 @@
   "TYPES.Item.keyword" : "Keyword",
   "TYPES.Item.memorableInjury" : "Memorable Injury",
   "TYPES.Item.mutation" : "Mutation",
-  "TYPES.Item.psychicpower" : "Psychic Power",
+  "TYPES.Item.psychicPower" : "Psychic Power",
   "TYPES.Item.talent" : "Talent",
   "TYPES.Item.traumaticInjury" : "Traumatic Injury",
   "TYPES.Item.weapon" : "Weapon",
@@ -202,6 +203,7 @@
   "DIALOG.PENALTY": "Penalty",
   "DIALOG.CUSTOM_ROLL": "Custom Roll",
   "DIALOG.RANK": "Rank",
+  "DIALOG.DICE": "Dice",
   "DIALOG.BASE": "Base",
   "DIALOG.WRATH": "Wrath",
   "DIALOG.WOUNDS": "Wounds",
@@ -260,6 +262,16 @@
   "HEADER.DISABLED_EFFECTS" : "Disabled Effects",
   "HEADER.DESCRIPTION" : "Description",
   "HEADER.UPGRADES" : "Upgrades",
+  "HEADER.COMPLEMENT" : "Pilot",
+  "HEADER.PILOT" : "Pilot",
+  "HEADER.CREW" : "Crew",
+  "HEADER.PASSENGER" : "Passenger",
+  "HEADER.PILOTS" : "Pilots",
+  "HEADER.PASSENGERS" : "Passengers",
+  "HEADER.UNASSIGNED" : "Unassigned",
+  "HEADER.MAN" : "Man.",
+  "HEADER.RARITY" : "Rarity",
+  "HEADER.VALUE" : "Value",
 
   "KEYWORD.NAME": "Name",
   "KEYWORD.DESCRIPTION": "Description",
@@ -411,6 +423,7 @@
   "TITLE.UPGRADES": "UPGRADES",
   "TITLE.ADVANCES": "ADVANCES",
   "TITLE.DETAILS": "DETAILS",
+  "TITLE.COMPLEMENT": "COMPLEMENT",
 
   "TRAUMATIC_INJURY.NAME": "Name",
   "TRAUMATIC_INJURY.DESCRIPTION": "Description",
@@ -433,6 +446,8 @@
   "WEAPON.QUANTITY": "Quantity",
   "WEAPON.AIM": "Aim",
   "WEAPON.AIMED": "Aimed",
+  "WEAPON.COMBIWEAPON": "Combi-Weapon",
+  "WEAPON.TWINNED": "Twinned",
   "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
   "WEAPON_UPGRADE.TRAITS_REMOVE" : "Traits Removed",
 
@@ -466,6 +481,7 @@
   "NOTE.APPLY_DAMAGE" : "{damage} Wounds applied to {name}",
   "ERROR.MacroItemMissing" : "Your controlled Actor does not have an item named",
   "ROLL.CannotFindTable" : "Cannot find table. Either import it from the Compendium or create your own. It must have the name {name}",
+  "ERROR.NoAvailableActors" : "No available owned Actors to choose!",
 
   "TABLE.COMBAT_COMPLICATIONS" : "Combat Complications",
   "TABLE.PERILS_OF_THE_WARP" : "Perils of the Warp",
@@ -483,6 +499,11 @@
   "AUTOCALC.AUTO_WOUNDED" : "Automatic Wounded",
   "AUTOCALC.AUTO_EXHAUSTED" : "Automatic Exhausted",
   "CONFIGURE.GenerateMetaCurrencies" : "Generate Meta Currencies",
+  "CONFIGURE.HidePassengers" : "Hide Passengers",
+
+
+  "VEHICLE.TRAITS" : "Traits",
+  "VEHICLE.MAN" : "Man.",
 
   "CONDITION.Bleeding" : "Bleeding",
   "CONDITION.Blinded" : "Blinded",

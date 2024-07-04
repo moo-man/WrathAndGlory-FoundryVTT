@@ -225,11 +225,46 @@ textarea:focus {
   background-color: var(--color-chaos); 
 }
 
+.editor table .table-header.necron,
+.journal-entry-page.text table .table-header.necron {
+  background-color: black
+}
+
+.editor table .table-header.drukhari,
+.journal-entry-page.text table .table-header.drukhari {
+  background-color: #3a002c
+}
+
+
 .editor table .table-col-header,
 .journal-entry-page.text table .table-col-header {
   background-color: #484746; 
   color: #ddd;
 }
+
+.table-header {
+  text-transform: uppercase;
+    font-weight: bold;
+    a.content-link {
+    color: #ddd;
+    i {
+      color: #ddd;
+    }
+  }
+}
+
+.wng-generated {
+  .formula {
+      text-align: center;
+    }
+
+    td {
+      &:first-of-type {
+        width: 3rem;
+        text-align: center;
+      }
+    }
+  }
 
 .chat-message { 
   background: url(./asset/image/journal-sidebar.webp) repeat;
@@ -356,7 +391,8 @@ textarea:focus {
 }
 
 .journal-image img{
-  border: none
+  border: none;
+  object-fit:contain;
 } 
 .journal-image {
   display: flex; 

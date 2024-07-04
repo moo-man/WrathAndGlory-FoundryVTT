@@ -1,0 +1,103 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="armour">
+    <div class="sheet-header">
+      <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{name}}" />
+      </div>
+      <div class="bio">
+        <div class="wrapper-row">
+          <div class="name">
+            <label>{{localize "ARMOUR.NAME"}}</label>
+            <input name="name" type="text" value="{{name}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+      <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+
+      <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+    </div>
+
+    <div class="sheet-body">
+      <div class="tab" data-group="primary" data-tab="description">
+        <div class="description">
+          {{editor enrichment.system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="stats">
+
+        <div class="wrapper">
+          <div class="item-form-group static">
+            <label>{{localize "ARMOUR.QUANTITY"}}</label>
+            <div class="item-form-inputs small">
+              <input name="system.quantity" type="number" value="{{system.quantity}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "ARMOUR.VALUE"}}</label>
+            <div class="item-form-inputs small">
+              <input name="system.value" type="number" value="{{system.value}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "ARMOUR.RARITY"}}</label>
+            <div class="item-form-inputs">
+              <select name="system.rarity">
+                {{#select system.rarity}}
+                <option value=""> - </option>
+                {{#each (config "rarity") as |rarity r|}}
+                <option value="{{r}}">{{rarity}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper">
+          <div class="item-form-group static">
+            <label>{{localize "ARMOUR.RATING"}}</label>
+            <div class="item-form-inputs small">
+              <input name="system.rating" type="number" value="{{system.rating}}" data-dtype="Number" />
+            </div>
+          </div>
+          <div class="item-form-group static">
+            <label>{{localize "ARMOUR.INVULNERABLE"}}</label>
+            <div class="item-form-inputs">
+              <div class="wng-checkbox {{#if system.invulnerable}}checked{{else}}unchecked{{/if}}" data-target="system.invulnerable">
+              {{#if system.invulnerable}}
+                <i class="fas fa-check"></i>
+              {{/if}}
+              </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="wrapper">
+          <div class="item-form-group stacked">
+            <label>{{localize "ARMOUR.TRAITS"}}<a class="item-traits"><i class="fas fa-cog"></i></a></label>            
+            <div class="item-form-inputs">
+              <input disabled type="text" value="{{item.system.traits.formatted}}" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wrapper">
+          <div class="item-form-group">
+            <label>{{localize "ARMOUR.KEYWORDS"}}</label>
+            <div class="item-form-inputs">
+              <input name="system.keywords" type="text" value="{{system.keywords}}" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab" data-group="primary" data-tab="effects">
+        {{> systems/wrath-and-glory/template/item/tab/effects.hbs}}
+      </div>
+    </div>
+  </div>
+</form>

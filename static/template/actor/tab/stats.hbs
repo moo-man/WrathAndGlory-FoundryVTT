@@ -1,0 +1,71 @@
+<div class="stats">
+  <div class="wrapper">
+    <h1>{{localize "TITLE.ATTRIBUTES"}}</h1>
+    <div class="attributes">
+      {{#each system.attributes as |attribute key|}}
+      <div class="attribute">
+        <label class="roll-attribute hover" data-attribute="{{key}}">{{configLookup "attributes" key}}</label>
+          <div class="attribute-inputs">
+            <div class="attribute-input-stack">
+              <input type="number" title="Base" name="system.attributes.{{key}}.base" value="{{attribute.base}}" data-dtype="Number">
+              <input type="number" tabindex="1" title="Advances" name="system.attributes.{{key}}.rating" value="{{attribute.rating}}" data-dtype="Number">
+            </div>
+            <input type="number" title="Total" class="total" disabled value="{{attribute.total}}">
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="wrapper" style="margin-top: 8px;">
+    <h1>{{localize "TITLE.SKILLS"}}</h1>
+    <div class="skills">
+      <div class="left">
+        {{#each system.skills as |skill key|}}
+        {{#if skill.isLeft}}
+        <div class="skill">
+          <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{configLookup "skills" key}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
+          <div class="skill-inputs">
+            <input type="number" title="Base" name="system.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
+            <input type="number" tabindex="1" title="Advances" name="system.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
+            <input type="number" title="Total" class="total" disabled value="{{skill.total}}">
+          </div>
+        </div>
+        {{/if}}
+        {{/each}}
+      </div>
+      <div class="right">
+        {{#each system.skills as |skill key|}}
+        {{#if skill.isRight}}
+        <div class="skill">
+          <label class="roll-skill hover" data-skill="{{key}}"><span></span> {{configLookup "skills" key}} <span>({{localize (configLookup "attributeAbbrev" skill.attribute)}})</span></label>
+          <div class="skill-inputs">
+            <input type="number" title="Base" name="system.skills.{{key}}.base" value="{{skill.base}}" data-dtype="Number">
+            <input type="number" tabindex="1" title="Advances" name="system.skills.{{key}}.rating" value="{{skill.rating}}" data-dtype="Number">
+            <input type="number" title="Total" class="total" disabled value="{{skill.total}}">
+          </div>
+        </div>
+        {{/if}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="wrapper" style="margin-top: 8px;">
+    <h1>{{localize "TITLE.KEYWORDS"}}</h1>
+    <div class="item-row">
+      <div class="button">
+        <button class="item-create" title="Add Keyword" data-type="keyword">+</a>
+      </div>
+      {{#each items.keywords as |item|}}
+      <div class="item" data-item-id="{{item.id}}">
+        <div class="wrapper-hover">
+          <div class="avatar" style="background-image: url('{{item.img}}')"></div>
+          <div class="name item-edit">{{item.name}}</div>
+        </div>
+        <div class="button item-control item-delete" title="Delete Keyword">
+          <a><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

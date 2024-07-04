@@ -3,7 +3,7 @@ The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT
 
 ![](https://img.shields.io/github/v/release/moo-man/WrathAndGlory-FoundryVTT?label=Latest%20Version)
 ![](https://img.shields.io/github/downloads/moo-man/WrathAndGlory-FoundryVTT/latest/wrath-and-glory.zip?label=Downloads%20%28Latest%20Version%29)
-![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V10-orange)
+![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V11-orange)
 
 ![repo-cover-wng](https://user-images.githubusercontent.com/28637157/146312294-3568bd17-9556-4a66-8072-905b42d3cff7.png)
 
@@ -17,6 +17,7 @@ The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT
 - [Wrath & Glory - Forsaken System](https://foundryvtt.com/packages/wng-forsaken) - Expanded lore on the worlds of the Gilead System and its factions and patrons, as well as new playable species, archetypes, and optional rules for downtime activities and endeavours
 - [Wrath & Glory - Litanies of the Lost](https://foundryvtt.com/packages/wng-litanies) - Four exciting scenarios suitable for Wrath & Glory characters of Tiers 1 and 2
 - [Wrath & Glory - Redacted Records I](https://foundryvtt.com/packages/wng-records1) - This magazine-style collection of articles uncovers numerous secrets of the Gilead System, opening up new settings and antagonists for players to explore and confront, and new character options to increase Agents’ chance of surviving these new and perilous situations.
+- [Wrath & Glory - Church of Steel](https://foundryvtt.com/packages/wng-cos) - Unveil the mysteries of the Machine Spirit and unleash the massive power of machines of war with this comprehensive guide to vehicles.
 
 
 ## Special Thanks

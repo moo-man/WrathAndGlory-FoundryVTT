@@ -18,7 +18,7 @@ export default class WeaponTest extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/weapon/weapon-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/weapon/weapon-roll.hbs"
   }
 
 
@@ -41,7 +41,7 @@ export default class WeaponTest extends WNGTest {
       this.computeDamage() 
   }
 
-  get weapon() {return this.actor.items.get(this.testData.itemId)}
+  get weapon() {return fromUuidSync(this.testData.itemId)}
   
 }
 

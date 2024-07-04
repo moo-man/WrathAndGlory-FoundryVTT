@@ -25,11 +25,11 @@ export class WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/common/common-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/common/common-roll.hbs"
   }
 
   get damageTemplate() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/damage-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/damage/damage-roll.hbs"
   }
 
   static recreate(data) {
@@ -162,7 +162,7 @@ export class WNGTest {
     this.testData.rerolls.push(diceIndices)
     if (!this.rerolledTests)
       this.rerolledTests = []
-    this.rerolledTests.push(await this.roll.reroll())
+    this.rerolledTests.push(await this.roll.reroll({async: true}))
     this._computeResult();
 
     if (game.dice3d) {
@@ -339,11 +339,8 @@ export class WNGTest {
       speaker: this.context.speaker
     };
     chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.prototypeToken.name
-    if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
-      chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-    } else if (chatData.rollMode === "selfroll") {
-      chatData.whisper = [game.user];
-    }
+    ChatMessage.applyRollMode(chatData, chatData.rollMode);
+
     if (newMessage || !this.message) {
       return ChatMessage.create(chatData).then(msg => {
         msg.update({ "flags.wrath-and-glory.testData.context.messageId": msg.id })
@@ -416,7 +413,7 @@ export class WNGTest {
       other: duplicate(this.testData.otherDamage || {})
     }
     this.result.damage.total = this.result.damage.flat + this.context.edit.damage
-    this.result.damage.ed = { number: this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length + this.context.edit.ed };
+    this.result.damage.ed = { number: this.testData.ed.base + this.testData.ed.bonus + this.getRankNum(this.testData.ed.rank) + this.testData.shifted.damage.length + this.context.edit.ed};
     this.result.damage.ed.values = this.testData.ed.damageValues
   }
 
@@ -442,6 +439,17 @@ export class WNGTest {
         4: 1,
         5: 2,
         6: 2
+      }
+      if (game.actors.get(this.data.context.targets[0]?.actorId)?.type == "vehicle")
+      {
+        damage.ed.values = {
+          1: 1,
+          2: 1,
+          3: 1,
+          4: 2,
+          5: 2,
+          6: 2
+        }
       }
     }
 
@@ -486,11 +494,8 @@ export class WNGTest {
       content: html,
       speaker: this.context.speaker
     };
-    if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
-      chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-    } else if (chatData.rollMode === "selfroll") {
-      chatData.whisper = [game.user];
-    }
+
+    ChatMessage.applyRollMode(chatData, chatData.rollMode);
     return ChatMessage.create(chatData);
   }
 
@@ -506,7 +511,7 @@ export class WNGTest {
 
   get testEffects() {
     if (this.item) {
-      let effects = this.item.effects.filter(e => !e.data.transfer)
+      let effects = this.item.effects.filter(e => !e.transfer)
       if (this.item.isRanged && this.item.Ammo)
         effects = effects.concat(this.item.Ammo.ammoEffects)
       return effects
@@ -540,9 +545,9 @@ export class WNGTest {
   get context() { return this.data.context; }
   get result() { return this.data.result; }
   get attribute() { return this.actor.attributes[this.data.testData.attribute] }
-  get skill() { return this.actor.skills[this.data.testData.skill] }
+  get skill() { return this.actor.system.skills[this.data.testData.skill] }
 
-  get item() { return this.actor.items.get(this.testData.itemId) }
+  get item() { return fromUuidSync(this.testData.itemId) }
   get actor() { return game.wng.utility.getSpeaker(this.context.speaker) }
   get message() { return game.messages.get(this.context.messageId) }
 

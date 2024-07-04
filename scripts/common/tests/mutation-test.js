@@ -7,7 +7,7 @@ export default class MutationTest  extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/mutation/mutation-roll.html"
+    return "systems/wrath-and-glory/template/chat/roll/mutation/mutation-roll.hbs"
   }
 
 

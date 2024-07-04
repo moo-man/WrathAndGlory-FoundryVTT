@@ -3,7 +3,7 @@ export default class EffectScriptConfig extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "effect-script-config",
-            template: "systems/wrath-and-glory/template/apps/effect-script.html",
+            template: "systems/wrath-and-glory/template/apps/effect-script.hbs",
             height: 400,
             width: 500,
             title: "Effect Script Config",

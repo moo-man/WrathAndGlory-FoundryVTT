@@ -1,6 +1,5 @@
-import { WrathAndGloryActor } from "../actor/actor.js";
 import WNGUtility from "../common/utility.js";
-import { WrathAndGloryItem } from "../item/item.js";
+import { WrathAndGloryItem } from "../document/item.js";
 import ArchetypeGroups from "./archetype-groups.js";
 import FilterResults from "./filter-results.js";
 
@@ -20,7 +19,7 @@ export default class CharacterCreation extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "character-creation",
             title: "Character Creation",
-            template: "systems/wrath-and-glory/template/apps/character-creation.html",
+            template: "systems/wrath-and-glory/template/apps/character-creation.hbs",
             width: 1400,
             closeOnSubmit: false,
             height: 800,
@@ -30,9 +29,9 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-    initializeCharacter()
+    async initializeCharacter()
     {
-        this.character = new WrathAndGloryActor({type: "agent", name : this.object.actor.name}) // Temporary actor 
+        this.character = await Actor.create({type: "agent", name : this.object.actor.name, system : game.system.model.Actor.agent}, {temporary : true}) // Temporary actor 
 
         // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
         for (let attribute in this.character.attributes)
@@ -65,7 +64,7 @@ export default class CharacterCreation extends FormApplication {
         this.archetypeAbility = await this.archetypeAbility
         this.speciesAbilities = await Promise.all(this.species.abilities.map(i => game.wng.utility.findItem(i.id, "ability")))
 
-        this.initializeCharacter()
+        await this.initializeCharacter()
 
         data.actor = this.actor;
         data.character = this.character
@@ -414,7 +413,7 @@ export default class CharacterCreation extends FormApplication {
             else 
                 stat = parent.attr("data-skill")
             
-            let statObj = duplicate(getProperty(this.character, `${target}.${stat}`))
+            let statObj = getProperty(this.character.toObject(false), `system.${target}.${stat}`)
 
             if (ev.target.classList.contains("inc"))
             {

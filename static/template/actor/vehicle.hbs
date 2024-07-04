@@ -1,0 +1,87 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="sheet-header">
+    <div class="avatar">
+      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+    </div>
+    <div class="details">
+      <div class="row">
+        <div class="name">
+          <label>{{localize "Name"}}</label>
+          <input name="name" type="text" value="{{actor.name}}" />
+        </div>
+                  <div class="rarity">
+          <label class="item-label">{{localize "HEADER.RARITY"}}</label>
+          <select name="system.rarity">
+            {{#select system.rarity}}
+              {{#each (config "rarity")}}
+                <option value="{{@key}}">{{this}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+        </div>
+        <div class="value">
+          <label>{{localize "HEADER.VALUE"}}</label>
+          <input type="number" value="{{system.value}}" name="system.value" />
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="man">
+          <label>{{localize "HEADER.MAN"}}</label>
+          <input type="number" value="{{system.mnvr}}" name="system.combat.mnvr" />
+        </div>
+        <div class="resilience">
+          <label>{{localize "HEADER.RESILIENCE"}}</label>
+          <input type="number" value="{{system.combat.resilience.total}}" name="system.combat.resilience.total" />
+        </div>
+        <div class="defence">
+          <label>{{localize "HEADER.DEFENCE"}}</label>
+          <input type="number"  value="{{system.combat.defence.total}}" readonly />
+        </div>
+        <div class="speed">
+          <label>{{localize "HEADER.SPEED"}}</label>
+          <input type="number" value="{{system.combat.speed}}" name="system.combat.speed" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="wounds">
+          <label>{{localize "HEADER.WOUNDS"}}</label>
+          <input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}" />
+          <input type="number" name="system.combat.wounds.max" value="{{system.combat.wounds.max}}" />
+        </div>
+        <div class="size">
+          <label class="item-label">{{localize "HEADER.SIZE"}}</label>
+          <select name="system.combat.size">
+            {{#select system.combat.size}}
+              {{#each (config "size")}}
+                <option value="{{@key}}">{{this}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-tabs tabs" data-group="primary">
+    <b class="item" data-tab="main">{{localize "TAB.MAIN"}}</b>
+    <b class="item" data-tab="gear">{{localize "TAB.GEAR"}}</b>
+    <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+    <b class="item" data-tab="notes">{{localize "TAB.NOTES"}}</b>
+  </div>
+
+  <div class="sheet-body">
+    <div class="main tab" data-group="primary" data-tab="main">
+      {{> systems/wrath-and-glory/template/actor/tab/vehicle/main.hbs}}
+    </div>
+    <div class="gear tab" data-group="primary" data-tab="gear">
+      {{> systems/wrath-and-glory/template/actor/tab/vehicle/gear.hbs}}
+    </div>
+    <div class="effects tab" data-group="primary" data-tab="effects">
+      {{> systems/wrath-and-glory/template/actor/tab/effects.hbs}}
+    </div>
+    <div class="notes tab" data-1group="primary" data-tab="notes">
+      {{> systems/wrath-and-glory/template/actor/tab/notes-threat.hbs}}
+    </div>
+  </div>
+</form>

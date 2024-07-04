@@ -4,7 +4,7 @@ export default class ActorConfigure extends FormApplication
         return mergeObject(super.defaultOptions, {
             id: "actor-configure",
             title: "Configure Actor",
-            template : "systems/wrath-and-glory/template/apps/actor-configure.html",
+            template : "systems/wrath-and-glory/template/apps/actor-configure.hbs",
             width:300
         })
     }
@@ -12,6 +12,7 @@ export default class ActorConfigure extends FormApplication
     getData() {
         let data = super.getData();
         data.isAgent = this.object.type == "agent"
+        data.isVehicle = this.object.type == "vehicle"
         return data
     }
 

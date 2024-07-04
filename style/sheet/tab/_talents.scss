@@ -1,23 +1,17 @@
-.wrath-and-glory.sheet.actor .tab[data-tab="talents"] {
-  height: 100%
-}
-
-.wrath-and-glory.sheet.actor .talents {
+.wrath-and-glory.sheet.actor .talents.active {
+  height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.wrath-and-glory.sheet.actor .tab[data-tab="talents"] h1 {
-  width: 280px;
-}
-
-.wrath-and-glory.sheet.actor .talents .wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.wrath-and-glory.sheet.actor .talents .wrapper.powers {
-  margin-top: 8px
+  h1 {
+    width: 280px;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .wrapper.powers {
+    margin-top: 8px
+  }
 }
