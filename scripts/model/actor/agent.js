@@ -45,7 +45,18 @@ export class AgentModel extends StandardWNGActorModel {
         })
 
         schema.resources = new fields.SchemaField({
-            ruin : new fields.NumberField({min : 0}),
+            wrath : new fields.NumberField({min : 0}),
+            faith: new fields.SchemaField({
+              current: new fields.NumberField({min : 0}),
+              total: new fields.NumberField({min : 0}),
+            }),
+            wealth : new fields.NumberField({min : 0}),
+            influence : new fields.NumberField({min : 0}),
+        })
+
+        
+        schema.corruption = new fields.SchemaField({
+            current : new fields.NumberField({min : 0}),
         })
 
         schema.notes = new fields.StringField();
