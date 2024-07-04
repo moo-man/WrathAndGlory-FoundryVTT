@@ -12,6 +12,7 @@ export default class ActorConfigure extends FormApplication
     getData() {
         let data = super.getData();
         data.isAgent = this.object.type == "agent"
+        data.isVehicle = this.object.type == "vehicle"
         return data
     }
 

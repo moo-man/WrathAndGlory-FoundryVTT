@@ -1,4 +1,5 @@
 <form autocomplete="off">
+    {{#unless isVehicle}}
     <div class="form-group">
         <label>{{localize "AUTOCALC.DEFENCE"}}</label>
         <input type="checkbox" name="flags.wrath-and-glory.autoCalc.defence" {{checked object.flags.wrath-and-glory.autoCalc.defence}}>            
@@ -62,6 +63,12 @@
         <label>{{localize "CONFIGURE.GenerateMetaCurrencies"}}</label>
         <input type="checkbox" name="flags.wrath-and-glory.generateMetaCurrencies" {{checked object.flags.wrath-and-glory.generateMetaCurrencies}}>            
     </div>
+    {{else}}
+    <div class="form-group">
+        <label>{{localize "CONFIGURE.HidePassengers"}}</label>
+        <input type="checkbox" name="flags.wrath-and-glory.hidePassengers" {{checked object.flags.wrath-and-glory.hidePassengers}}>            
+    </div>
+    {{/unless}}
 
     <button type="submit">{{localize "Submit"}}</button>
 </form>
