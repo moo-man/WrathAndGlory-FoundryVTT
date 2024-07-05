@@ -51,10 +51,10 @@ export class WeaponModel extends EquippedItemModel
 
     get Range() {
         if (this.isRanged) {
-            if (this.category == "launcher" || this.category == "grenade-missile") 
+            if (this.category == "grenade-missile") 
             {
-                if (this.actor)
-                    return this.range.thrown * this.actor.attributes.strength.total
+                if (this.parent.actor)
+                    return this.range.thrown * this.parent.actor.attributes.strength.total
                 else 
                     return `S x ${this.range.thrown}`
             }
@@ -98,9 +98,7 @@ export class WeaponModel extends EquippedItemModel
     computeOwned()
     {
         if (this.isRanged && this.category == "launcher" && this.Ammo) {
-            this.system = this.Ammo.system.damage
-            this.system.ap = this.Ammo.system.damage.ap
-            this.system.ed = this.Ammo.system.damage.ed
+            this.damage = this.Ammo.system.damage
         }
         if (this.isRanged && this.Ammo) {
             this.applyAmmo()

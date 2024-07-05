@@ -47,6 +47,6 @@ export class StandardWNGActorModel extends BaseActorModel {
     computeDerived() {
         this.attributes.compute();
         this.skills.compute(this.attributes);
-        this.combat.compute(this.attributes, this.parent.getFlag("wrath-and-glory", "autoCalc"));
+        this.combat.compute(this.attributes, this.parent.getFlag("wrath-and-glory", "autoCalc") || {});
     }
 }

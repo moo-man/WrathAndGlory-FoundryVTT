@@ -31,7 +31,7 @@ export default class CharacterCreation extends FormApplication {
 
     async initializeCharacter()
     {
-        this.character = await Actor.create({type: "agent", name : this.object.actor.name, system : game.system.model.Actor.agent}, {temporary : true}) // Temporary actor 
+        this.character = await Actor.create({type: "agent", name : this.object.actor.name, system: foundry.utils.deepClone(game.release.generation == 12 ? game.system.template.Actor.agent : game.system.model.Actor.agent)}, {temporary : true}) // Temporary actor 
 
         // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
         for (let attribute in this.character.attributes)
@@ -130,7 +130,7 @@ export default class CharacterCreation extends FormApplication {
             }
         }
 
-        html += groupToHTML(ArchetypeGroups.groupIndexToObjects(this.archetype.groups, this.archetype), html)
+        html += groupToHTML(ArchetypeGroups.groupIndexToObjects(this.archetype.system.groups, this.archetype), html)
         return html;
     }
 
@@ -143,7 +143,7 @@ export default class CharacterCreation extends FormApplication {
     async chooseWargear(filter, id)
     {
         let element = this.element.find(`.generic[data-id=${filter.groupId}]`)[0]
-        let group = ArchetypeGroups.search(filter.groupId, this.archetype.groups)
+        let group = ArchetypeGroups.search(filter.groupId, this.archetype.system.groups)
         let wargearObject = this.archetype.wargear[group.index]
         let item = await game.wng.utility.findItem(id)
         
@@ -256,7 +256,7 @@ export default class CharacterCreation extends FormApplication {
             this.element.find(".wargear-item.generic").each((i, e) => {
                 if (!this.isDisabled(e)) {
                     let id = e.dataset.id
-                    let group = ArchetypeGroups.search(id, this.archetype.groups)
+                    let group = ArchetypeGroups.search(id, this.archetype.system.groups)
                     let wargear = this.archetype.wargear[group.index]
                     if (wargear.filters.length)
                         unresolvedGenerics = true;
@@ -371,7 +371,7 @@ export default class CharacterCreation extends FormApplication {
 
         html.find(".wargear-item").click(async ev => {
             let id = ev.currentTarget.dataset.id
-            let group = ArchetypeGroups.search(id, this.archetype.groups)
+            let group = ArchetypeGroups.search(id, this.archetype.system.groups)
             let wargear = this.archetype.wargear[group.index]
 
             if (wargear.type == "generic" && wargear.filters.length)

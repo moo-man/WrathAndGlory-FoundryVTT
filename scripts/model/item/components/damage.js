@@ -35,8 +35,8 @@ export class DamageModel extends foundry.abstract.DataModel
 
     get formatted() {
         let damage = Number(this._dataWithRank("damage"));
-        if (this.isMelee && this.isOwned)
-            damage += this.actor.attributes.strength.total
+        if (this.parent.isMelee && this.parent.parent.isOwned)
+            damage += this.parent.parent.actor?.attributes.strength.total || 0
         return damage
     }
     get ED() {

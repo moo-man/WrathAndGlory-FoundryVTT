@@ -20,7 +20,7 @@ export class ArchetypeModel extends BaseItemModel
         schema.attributes = Attributes();
         schema.skills = Skills();
         schema.ability = new fields.EmbeddedDataField(DeferredDocumentReferenceModel)
-        schema.wargear = new fields.ArrayField(new fields.EmbeddedDataField(DeferredDocumentReferenceModel))
+        schema.wargear = new fields.ArrayField(new fields.EmbeddedDataField(ArchetypeWargearModel))
         schema.groups = new fields.SchemaField({
             type : new fields.StringField({initial : "and"}),
             groupId : new fields.StringField({initial : "root"}),
@@ -33,5 +33,20 @@ export class ArchetypeModel extends BaseItemModel
         })
         return schema;
     }
+}
 
+
+class ArchetypeWargearModel extends DeferredDocumentReferenceModel 
+{
+    static defineSchema()
+    {
+        let schema = super.defineSchema();
+        schema.type = new fields.StringField();
+        schema.filters = new fields.ArrayField(new fields.SchemaField({
+            test : new fields.StringField(),
+            property : new fields.StringField(),
+            value : new fields.StringField(),
+        }))
+        return schema;
+    }
 }
