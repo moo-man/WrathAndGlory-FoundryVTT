@@ -53,9 +53,9 @@ export class WeaponModel extends EquippedItemModel
         if (this.isRanged) {
             if (this.category == "grenade-missile") 
             {
-                if (this.parent.actor)
+                if (this.parent.actor && this.parent.actor.type != "vehicle")
                     return this.range.thrown * this.parent.actor.attributes.strength.total
-                else 
+                else if (this.range.thrown)
                     return `S x ${this.range.thrown}`
             }
             else {
