@@ -84,7 +84,7 @@ export class CombatModel extends foundry.abstract.DataModel {
             if (item.rating)
             {
                 if (item.traitList.powered)
-                    attributes.strength.total += item.traitList.powered.rating
+                    attributes.strength.total += parseInt(item.traitList.powered.rating);
             }
 
             if (item.traitList.bulk)
