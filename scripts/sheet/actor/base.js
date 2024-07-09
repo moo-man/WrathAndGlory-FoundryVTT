@@ -231,7 +231,6 @@ export class BaseWnGActorSheet extends ActorSheet {
                 test = await this.actor.setupAbilityRoll(item)
 
             await test.rollTest();
-            test.sendToChat()
         }
         else
             this._dropdownRightClick(ev)

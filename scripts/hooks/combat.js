@@ -1,6 +1,6 @@
 export default function() {
     Hooks.on("updateCombat", (combat, data) => {
-        if (combat.current.round == 1 && combat.current.turn == 0)
+        if (combat.current.round == 1 && !combat.current.turn)
         {
             let chatData = {
                 content : `<div class="wrath-and-glory chat"><h3>New Combat - Battlecries</h3>`
@@ -15,6 +15,16 @@ export default function() {
                     chatData.content += `<br><b>${combatant.name}</b> - ${battlecries.map(i => i.name).join(", ")}`
                     postMessage = true;
                 }
+                battlecries.forEach(async b => {
+                    if (b.hasTest)
+                    {
+                        let test = await combatant.actor.setupAbilityRoll(b);
+                        if (test)
+                        {
+                            test.rollTest();
+                        }
+                    }
+                })
             }
 
             chatData.content += "</div>"

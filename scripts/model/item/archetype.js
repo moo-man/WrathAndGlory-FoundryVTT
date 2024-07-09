@@ -14,7 +14,7 @@ export class ArchetypeModel extends BaseItemModel
         schema.journal = new fields.StringField({});
         schema.species = new fields.EmbeddedDataField(SingletonItemModel);
         schema.faction = new fields.EmbeddedDataField(SingletonItemModel);
-        schema.influence = new fields.NumberField({min : 0, initial : 0});
+        schema.influence = new fields.NumberField({initial : 0});
         schema.cost = new fields.NumberField({min : 0, initial : 0});
         schema.keywords = new fields.ArrayField(new fields.StringField());
         schema.attributes = Attributes();

@@ -101,7 +101,7 @@ export class BaseItemModel extends foundry.abstract.DataModel
             data.traits = {list : data.traits};
         }
 
-        if (hasProperty(data, "dn") && hasProperty(data, "type") && hasProperty(data, "specification"))
+        if (!data.test && hasProperty(data, "dn") && hasProperty(data, "type") && hasProperty(data, "specification"))
         {
             data.test = {
                 dn : data.dn,
@@ -135,8 +135,6 @@ export class BaseItemModel extends foundry.abstract.DataModel
                 data.damage.otherDamage = data.otherDamage;
                 delete data.otherDamage;
             }
-
-            delete data.ed;
         }
     }
 

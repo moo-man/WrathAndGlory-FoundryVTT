@@ -233,7 +233,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         let testData = {
             title: ability.name,
             speaker: this.speakerData(),
-            itemId: ability.id,
+            itemId: ability.uuid,
             damage: {},
             ed: {},
             ap: {}
