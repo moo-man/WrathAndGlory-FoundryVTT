@@ -13,7 +13,8 @@ export class ThreatModel extends StandardWNGActorModel {
                 first: new fields.StringField({ default: "T" }),
                 second: new fields.StringField({ default: "T" }),
                 third: new fields.StringField({ default: "T" }),
-                fourth: new fields.StringField({ default: "T" })
+                fourth: new fields.StringField({ default: "T" }),
+                fifth: new fields.StringField({ default: "T" })
             }),
             
         })
