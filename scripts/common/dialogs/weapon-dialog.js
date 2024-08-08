@@ -126,7 +126,7 @@ export class WeaponDialog extends RollDialog {
     {
       this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 1
       if (weapon.traitList.rapidFire)
-        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (weapon.traitList.rapidFire.rating || 0)
+        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (parseInt(weapon.traitList.rapidFire.rating) || 0)
 
     }
     else if (range == "long")
@@ -142,7 +142,7 @@ export class WeaponDialog extends RollDialog {
       if (weapon.traitList.sniper)
       {
         this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 2
-        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (weapon.traitList.sniper.rating || 0)
+        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (parseInt(weapon.traitList.sniper.rating) || 0)
       }
       else 
       {
