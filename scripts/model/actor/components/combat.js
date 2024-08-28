@@ -11,7 +11,7 @@ export class CombatModel extends foundry.abstract.DataModel {
                 total: new foundry.data.fields.NumberField()
             }),
             wounds: new foundry.data.fields.SchemaField({
-                value: new foundry.data.fields.NumberField(),
+                value: new foundry.data.fields.NumberField({min : 0, initial : 0}),
                 bonus: new foundry.data.fields.NumberField(),
                 max: new foundry.data.fields.NumberField()
             }),
@@ -20,9 +20,9 @@ export class CombatModel extends foundry.abstract.DataModel {
                 total: new foundry.data.fields.NumberField()
             }),
             shock: new foundry.data.fields.SchemaField({
-                value: new foundry.data.fields.NumberField(),
+                value: new foundry.data.fields.NumberField({initial : 0, min : 0}),
                 bonus: new foundry.data.fields.NumberField(),
-                max: new foundry.data.fields.NumberField()
+                max: new foundry.data.fields.NumberField({nullable : true, initial : 0})
             }),
             resolve: new foundry.data.fields.SchemaField({
                 bonus: new foundry.data.fields.NumberField(),
