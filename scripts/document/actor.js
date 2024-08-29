@@ -34,8 +34,8 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
 
     prepareDerivedData() {
         // this.runScripts("prePrepareDerivedData", this);
-        this.system.computeDerived();
         this._applyDerivedEffects()
+        this.system.computeDerived();
         this.items.forEach(i => i.prepareOwnedData());
         // this.runScripts("prepareOwnedItems", this);
         // this.system.computeDerived();
