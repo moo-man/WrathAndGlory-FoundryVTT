@@ -187,7 +187,7 @@ export default class CharacterCreation extends FormApplication {
                 {
                     let key = faction.effects[0].changes[0].key
                     // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
-                    this.character.updateSource({[key] : getProperty(this.character.data, key) + 1})
+                    this.character.updateSource({[key] : getProperty(this.character, key) + 1})
                     faction.effects = [];
                 }
                 else 
