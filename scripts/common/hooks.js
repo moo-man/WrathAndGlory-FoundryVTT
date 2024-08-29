@@ -7,7 +7,6 @@ import chat from "../hooks/chat.js";
 import combat from "../hooks/combat.js";
 import actor from "../hooks/actor.js";
 import token from "../hooks/token.js";
-import canvas from "../hooks/canvas.js";
 import WNGUtility from "./utility.js";
 import sidebar from "../hooks/sidebar.js";
 import item from "../hooks/item.js";
@@ -25,7 +24,6 @@ export default function() {
     combat();
     actor();
     token();
-    canvas();
     sidebar();
     hotbar();
     setting();
