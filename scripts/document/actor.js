@@ -356,7 +356,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         }
 
         }
-        dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
+        dialogData.difficulty.penalty += weapon.traitList.unwieldy ? parseInt(weapon.traitList.unwieldy.rating) : 0
 
         if (this.hasKeyword("ORK") && weapon.traitList["waaagh!"])
         {

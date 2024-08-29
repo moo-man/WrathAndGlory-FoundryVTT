@@ -91,6 +91,7 @@ export class BaseWnGActorSheet extends ActorSheet {
         html.find(".condition-toggle").click(this._onConditionToggle.bind(this))
         html.find(".condition-click").mousedown(this._onConditionClick.bind(this));
         html.find(".item-trait").mousedown(this._onItemTraitClick.bind(this))
+        html.find(".effect-select").change(this._onEffectSelect.bind(this))
 
         html.find(".items .item").each((i, e) => {
             e.draggable = true;
