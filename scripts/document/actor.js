@@ -272,7 +272,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
                 rank: "none"
             },
             wrath: {
-                base: this.hasCondition("dying") ? 1 + this.itemCategories["traumaticInjury"].length : 1
+                base: this.hasCondition("dying") ? 1 + this.itemTypes["traumaticInjury"].length : 1
             },
             changes: this.allDialogChanges( {targets : Array.from(game.user.targets).map(t => t.actor)}),
             actor: this,
