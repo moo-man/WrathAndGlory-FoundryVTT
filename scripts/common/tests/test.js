@@ -423,12 +423,11 @@ export class WNGTest {
     this.result.damage.dice = [];
 
     let add = 0
+    let rad = 0
     if (this.weapon && this.weapon.traitList.rad)
-      add = this.weapon.traitList.rad.rating
-
+      rad_val = this.weapon.traitList.rad.rating
 
     let damage = this.result.damage
-
 
     // Don't like this but will work for now
     if (this.weapon && this.weapon.traitList.melta && this.result.range == "short") {
@@ -454,7 +453,7 @@ export class WNGTest {
     }
 
     let r = Roll.fromTerms([
-      new PoolDie({ number: damage.ed.number, faces: 6, options: { values: damage.ed.values, add } }),
+      new PoolDie({ number: damage.ed.number, faces: 6, options: { values: damage.ed.values, add : add, rad : rad_val } }),
     ])
 
     await r.evaluate({ async: true });
@@ -562,6 +561,8 @@ export class PoolDie extends Die {
       setProperty(termData, "options.values", { 1: 0, 2: 0, 3: 0, 4: 1, 5: 1, 6: 2 })
     if (!termData.options || !termData.options.add)
       setProperty(termData, "options.add", 0)
+      if (!termData.options || !termData.options.rad)
+      setProperty(termData, "options.rad", 0)
     super(termData);
   }
 
@@ -572,6 +573,7 @@ export class PoolDie extends Die {
   /**@overide */
   async roll(...args) {
     let roll = await super.roll(...args)
+    roll.result = Math.min(roll.result + this.options.rad, 6)
     roll.value = this.options.values[Math.min(roll.result + this.options.add, 6)]
     if (roll.result === 6) {
       roll.name = "icon",
