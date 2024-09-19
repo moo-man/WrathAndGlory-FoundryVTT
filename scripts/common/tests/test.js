@@ -423,7 +423,7 @@ export class WNGTest {
     this.result.damage.dice = [];
 
     let add = 0
-    let rad = 0
+    let rad_val = 0
     if (this.weapon && this.weapon.traitList.rad)
       rad_val = this.weapon.traitList.rad.rating
 
@@ -552,8 +552,6 @@ export class WNGTest {
 
 }
 
-
-
 export class PoolDie extends Die {
   constructor(termData) {
     termData.faces = 6;
@@ -561,7 +559,7 @@ export class PoolDie extends Die {
       setProperty(termData, "options.values", { 1: 0, 2: 0, 3: 0, 4: 1, 5: 1, 6: 2 })
     if (!termData.options || !termData.options.add)
       setProperty(termData, "options.add", 0)
-      if (!termData.options || !termData.options.rad)
+    if (!termData.options || !termData.options.rad)
       setProperty(termData, "options.rad", 0)
     super(termData);
   }
@@ -573,7 +571,7 @@ export class PoolDie extends Die {
   /**@overide */
   async roll(...args) {
     let roll = await super.roll(...args)
-    roll.result = Math.min(roll.result + this.options.rad, 6)
+    roll.result = Math.min(roll.result + Number(this.options.rad), 6)
     roll.value = this.options.values[Math.min(roll.result + this.options.add, 6)]
     if (roll.result === 6) {
       roll.name = "icon",
