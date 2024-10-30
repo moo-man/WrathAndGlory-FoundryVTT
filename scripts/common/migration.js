@@ -1,204 +1,398 @@
-export async function migrateWorld() {
-    const schemaVersion = 8;
-    const worldSchemaVersion = Number(game.settings.get("wrath-and-glory", "worldSchemaVersion"));
-    if (worldSchemaVersion !== schemaVersion && game.user.isGM) {
-        ui.notifications.info("Upgrading the world, please wait...");
-            for (let actor of game.actors.contents) {
-                try {
-                    const update = migrateActorData(actor);
-                    if (!isEmpty(update)) {
-                        console.log(`Migrating ${actor.name}`)
-                        await actor.update(update);
-                    }
-                } catch (e) {
-                    console.error(e);
-                }
+export default class Migration {
+    static stats = {};
+    static MIGRATION_VERSION = "6.0.0"
+
+    // #region High Level Migration Handling
+    static async migrateWorld(update=false, updateVersion=false) {
+        this.stats = {
+            actors : {
+                updated : 0,
+                skipped : 0,
+                error : [],
+                total : 0,
+                items : 0,
+                effects : 0,
+                itemEffects : 0
+            },
+            items : {
+                updated : 0,
+                skipped : 0,
+                error : [],
+                total : 0,
+                effects : 0
             }
-            for (let item of game.items.contents) {
-                try {
-                    console.log(`Migrating ${item.name}`)
-                    const update = migrateItemData(item);
-                    if (!isEmpty(update)) {
-                        console.log(`Migrating ${item.name}`)
-                        await item.update(update);
-                    }
-                } catch (e) {
-                    console.error(e);
-                }
-            }
-            for (let journal of game.journal.contents) {
-              try {
-                  console.log(`Migrating ${journal.name}`)
-                  const update = migrateJournalData(journal);
-                  if (!isEmpty(update)) {
-                      console.log(`Migrating ${journal.name}`)
-                      await journal.update(update);
-                  }
-              } catch (e) {
-                  console.error(e);
-              }
-            }
-            for (let table of game.tables.contents) {
-              try {
-                  console.log(`Migrating ${table.name}`)
-                  const update = migrateTableData(table);
-                  if (!isEmpty(update)) {
-                      console.log(`Migrating ${table.name}`)
-                      await table.update(update);
-                  }
-              } catch (e) {
-                  console.error(e);
-              }
-            }
-        game.settings.set("wrath-and-glory", "worldSchemaVersion", schemaVersion);
-        ui.notifications.info("Upgrade complete!");
-    }
-};
-
-
-let v10Conversions = {
-  "wng-core.bestiary" : "wng-core.actors",
-  "wng-core.abilities" : "wng-core.items",
-  "wng-core.archetypes" : "wng-core.items",
-  "wng-core.equipment" : "wng-core.items",
-  "wng-core.keywords" : "wng-core.items",
-  "wng-core.species-factions" : "wng-core.items",
-  "wng-core.spells" : "wng-core.items",
-  "wng-core.talents" : "wng-core.items",
-  "wng-core.mutations" : "wng-core.items",
-  "wng-forsaken.archetypes" : "wng-forsaken.items",
-  "wng-forsaken.species-factions" : "wng-forsaken.items",
-  "wng-forsaken.equipment" : "wng-forsaken.items",
-  "wng-forsaken.abilities" : "wng-forsaken.items",
- }
-
-
-function migrateActorData(actor) {
-    const updateData = {
-      items : []
-    }
-
-    let html = _migrateV10Links(actor.system.notes)
-    if (html != actor.system.notes)
-    {
-      updateData["system.notes"] = html;
-    }
-
-    for(let item of actor.items)
-    {
-        let itemData = migrateItemData(item);
-        if (!foundry.utils.isEmpty(itemData))
+        }
+        ui.notifications.notify(`>>> Initiated <strong>Wrath & Glory</strong> Version ${game.system.version} Migration <<<`);
+        console.log(`%c+++++++++++++++++| Begin Migration of World Actors |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        for (let doc of game.actors.contents) 
         {
-            itemData._id = item.id;
-            updateData.items.push(itemData);
+            this.stats.actors.total++;
+            warhammer.utility.log(`+++| Actor: ${doc.name} |+++`, true, null, {groupCollapsed : true})
+            try {
+                let migration = await this.migrateActor(doc);
+                if (!isEmpty(migration)) 
+                {
+                    this.stats.actors.updated++;
+                    if (update)
+                    {
+                        await doc.update(migration);
+                    }
+                    warhammer.utility.log(`+++| Migration Data: `, true, migration)
+                }
+                else 
+                {
+                    this.stats.actors.skipped++;
+                    warhammer.utility.log(`+++| Nothing to migrate for ${doc.name} |+++`, true)
+                }
+            }
+            catch (e) {
+                this.stats.actors.error.push(doc.name);
+                warhammer.utility.error("+++| MIGRATION FAILED |+++ Error: " + e.stack, true, doc)
+            }
+            finally
+            {
+                console.groupEnd();
+            }
+        }
+
+        console.log(`%c+++++++++++++++++| Begin Migration of World Items |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        for (let doc of game.items.contents) 
+        {
+            this.stats.items.total++;
+            warhammer.utility.log(`+++| Item: ${doc.name} |+++`, true, null, {groupCollapsed : true})
+            try {
+                let migration = await this.migrateItem(doc);
+                if (!isEmpty(migration)) 
+                {
+                    this.stats.items.updated++;
+                    if (update)
+                    {
+                        await doc.update(migration);
+                    }
+                    warhammer.utility.log(`+++| Migration Data: `, true, migration)
+                }
+                else 
+                {
+                    this.stats.items.skipped++;
+                    warhammer.utility.log(`+++| Nothing to migrate for ${doc.name} |+++`, true)
+                }
+            }
+            catch (e) {
+                this.stats.actors.error.push(doc.name);
+                warhammer.utility.error("+++| MIGRATION FAILED |+++ Error: " + e, true, doc)
+            }
+            finally
+            {
+                console.groupEnd();
+            }
+        }
+
+        console.log(`%c+++++++++++++++++| ${game.system.version} Migration Complete |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        this._printStatistics(this.stats)
+        if (this.stats.actors.error.length || this.stats.items.error.length)
+        {
+            ui.notifications.warn(`>>> Migration Complete with ${this.stats.actors.error.length + this.stats.items.error.length} errors — See Console for details <<<`)
+        }
+        else 
+        {
+            ui.notifications.notify(`>>> Migration Complete — See Console for details <<<`)
+        }
+        if (updateVersion)
+        {
+            game.settings.set("wrath-and-glory", "systemMigrationVersion", game.system.version)
         }
     }
 
-    if (updateData.items.length == 0)
+    static async migratePacks(update=false, {world=true, compendium=false}={})
     {
-        delete updateData.items;
-    }
-
-
-    return updateData;
-}
-
-function migrateJournalData(journal)
-{
-  let updateData = {_id : journal.id, pages : []};
-
-  for(let page of journal.pages)
-  {
-    let html = page.text.content;
-    console.log(`Checking Journal Page HTML ${journal.name}.${page.name}`)
-    let newHTML = _migrateV10Links(html)
-
-    if (html != newHTML)
-    {
-      updateData.pages.push({_id : page.id, "text.content" : newHTML});
-    }
-  }
-  return updateData;
-}
-
-function migrateTableData(table)
-{
-  let updateData = {_id : table.id, results : []};
-
-  for(let result of table.results)
-  {
-    if (result.type == 0)
-    {
-      let html = result.text;
-      let newHTML = _migrateV10Links(html)
-
-      if (html != newHTML)
-      {
-        updateData.results.push({_id : result.id, text : newHTML});
-      }
-    }
-
-    else if (result.type == 2 && v10Conversions[result.documentCollection])
-    {
-      updateData.results.push({_id : result.id, documentCollection : v10Conversions[result.documentCollection]});
-    }
-  }
-  return updateData;
-}
-
-
-function migrateItemData(item) {
-    let updateData
-    
-    let newDescription = _migrateV10Links(item.system.description);
-    let newBenefits = _migrateV10Links(item.system.benefits);
-
-    if (item.system.description != newDescription)
-    {
-      updateData["system.description"] = newDescription
-    }
-
-    if (item.system.benefits != newBenefits)
-    {
-      updateData["system.benefits"] = newBenefits
-    }
-
-    return updateData;
-}
-
-function migrateEffectData(effect)
-{
-    let effectData = effect.toObject()
-    let description = getProperty(effectData, "flags.wrath-and-glory.description")
-    effectData.changes.forEach((change, i) => {
-        if (change.mode == 0)
-        {
-            change.mode = 6
-            setProperty(effectData, `flags.wrath-and-glory.changeCondition.${i}`, {description, script:""})
+        this.stats = {
+            actors : {
+                updated : 0,
+                skipped : 0,
+                error : [],
+                total : 0,
+                items : 0,
+                effects : 0,
+                itemEffects : 0
+            },
+            items : {
+                updated : 0,
+                skipped : 0,
+                error : [],
+                total : 0,
+                effects : 0
+            }
         }
-    })
-    return effectData
+
+        for(let pack of game.packs)
+        {
+            if (world && pack.metadata.package == "world")
+            {
+                await this.migratePack(pack, update);
+            }
+            else if (compendium && pack.metadata.package != "world")
+            {
+                await this.migratePack(pack, update);
+            }
+        }
+
+        this._printStatistics(this.stats)
+    }
+
+    static async migratePack(pack, update)
+    {
+        if (typeof pack == "string")
+        {
+            pack = game.packs.get(pack);
+        }
+        if (!["Actor", "Item"].includes(pack.metadata.type))
+        {
+            return
+        }
+
+        if (update && pack.locked)
+        {
+            console.error(`Skipping ${pack.metadata.label} - Locked`);
+            return;
+        }
+
+        console.log(`%c+++++++++++++++++| Begin Migration of ${pack.metadata.label} |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        let documents = await pack.getDocuments();
+        for(let doc of documents)
+        {
+            if (doc.documentName == "Actor")
+            {
+                this.stats.actors.total++;
+                warhammer.utility.log(`+++| Actor: ${doc.name} |+++`, true, null, {groupCollapsed : true})
+                try {
+                    let migration = await this.migrateActor(doc);
+                    if (!isEmpty(migration)) 
+                    {
+                        this.stats.actors.updated++;
+                        if (update)
+                        {
+                            await doc.update(migration);
+                        }
+                        warhammer.utility.log(`+++| Migration Data: `, true, migration)
+                    }
+                    else 
+                    {
+                        this.stats.actors.skipped++;
+                        warhammer.utility.log(`+++| Nothing to migrate for ${doc.name} |+++`, true)
+                    }
+                }
+                catch (e) {
+                    this.stats.actors.error.push(doc.name);
+                    warhammer.utility.error("+++| MIGRATION FAILED |+++ Error: " + e.stack, true, doc)
+                }
+                finally
+                {
+                    console.groupEnd();
+                }
+            }
+            if (doc.documentName == "Item")
+            {
+                this.stats.items.total++;
+                warhammer.utility.log(`+++| Item: ${doc.name} |+++`, true, null, {groupCollapsed : true})
+                try {
+                    let migration = await this.migrateItem(doc);
+                    if (!isEmpty(migration)) 
+                    {
+                        this.stats.items.updated++;
+                        if (update)
+                        {
+                            await doc.update(migration);
+                        }
+                        warhammer.utility.log(`+++| Migration Data: `, true, migration)
+                    }
+                    else 
+                    {
+                        this.stats.items.skipped++;
+                        warhammer.utility.log(`+++| Nothing to migrate for ${doc.name} |+++`, true)
+                    }
+                }
+                catch (e) {
+                    this.stats.actors.error.push(doc.name);
+                    warhammer.utility.error("+++| MIGRATION FAILED |+++ Error: " + e, true, doc)
+                }
+                finally
+                {
+                    console.groupEnd();
+                }
+            }
+        }
+        console.log(`%c+++++++++++++++++| ${pack.metadata.label} Migration Complete |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+    }
+
+    static async migrateActor(actor) {
+        let migration = {
+            items : (await Promise.all(actor.items.map(i => this.migrateItem(i, actor)))).filter(i => !isEmpty(i)),
+            effects: (await Promise.all(actor.effects.map(e => this.migrateEffect(e, actor)))).filter(i => !isEmpty(i))
+        };
+
+        foundry.utils.mergeObject(migration, await this.actorDataMigration(actor))
+
+        this.stats.actors.items += migration.items.length;
+        this.stats.actors.effects += migration.effects.length;
+
+        if (actor.effects.size)
+        {
+            warhammer.utility.log(`\t|--- Migrated ${migration.effects.length} / ${actor.effects.size} Embedded Effects`, true)
+        }
+        if (actor.items.size)
+        {
+            warhammer.utility.log(`\t|--- Migrated ${migration.items.length} / ${actor.items.size} Embedded Items`, true)
+        }
+
+        if (migration.items.length == 0)
+        {
+            delete migration.items;
+        }
+        if (migration.effects.length == 0)
+        {
+            delete migration.effects;
+        }
+        if (!isEmpty(migration))
+        {
+            migration._id = actor._id;
+        }
+        return migration;
+    }
+
+    static async migrateItem(item, parent) {
+        if (parent)
+        {
+            warhammer.utility.log(`\t|--- Embedded Item: ${item.name}`, true)
+        }
+
+        let migration = {
+            effects: (await Promise.all(item.effects.map(e => this.migrateEffect(e, item)))).filter(e => !isEmpty(e))
+        };
+
+        if (parent)
+        {
+            this.stats.actors.itemEffects += migration.effects.length;
+        }
+        else 
+        {
+            this.stats.items.effects += migration.effects.length;
+        }
+
+        if (migration.effects.size)
+        {
+            warhammer.utility.log(`${parent ? '\t' : ""}\t|--- Migrated ${migration.effects.length} / ${actor.effects.size} Embedded Effects`, true)
+        }
+
+        foundry.utils.mergeObject(migration, await this.itemDataMigration(item))
+
+        if (migration.effects.length == 0)
+        {
+            delete migration.effects;
+        }
+
+        if (!isEmpty(migration))
+        {
+            migration._id = item._id;
+        }
+        return migration;
+    }
+
+    static async migrateEffect(effect, parent) {
+        warhammer.utility.log(`\t${parent.parent ? "\t" : ""}|--- Active Effect: ${effect.name}`, true)
+        let migration = {};
+
+        foundry.utils.mergeObject(migration, await this.effectDataMigration(effect))
+
+        if (!isEmpty(migration))
+        {
+            migration._id = effect._id;
+        }
+        return migration;
+    }
+    //#endregion
+
+
+    // #region Data Migrations
+    static async actorDataMigration(actor)
+    {
+        let migrated = {}
+
+        return migrated;
+    }
+    static async itemDataMigration(item)
+    {
+        let migrated = {}
+
+
+        return migrated;
+    }  
+    static async effectDataMigration(effect)
+    {
+        let migrated = {}
+        let applicationData = effect.getFlag("wrath-and-glory", "applicationData")
+        if (applicationData)
+        {
+            let transferData = {
+                type : applicationData.type,
+                documentType : applicationData.documentType,
+                avoidTest : applicationData.avoidTest,
+                testIndependent : applicationData.testIndependent,
+                preApplyScript : applicationData.preApplyScript,
+                equipTransfer : applicationData.equipTransfer,
+                enableConditionScript : applicationData.enableConditionScript,
+                filter : applicationData.filter,
+                prompt : applicationData.prompt,
+
+                zone : {
+                    type : applicationData.zoneType,
+                    keep : applicationData.keep,
+                    tarits : applicationData.traits
+                }
+            };
+            setProperty(migrated, "system.transferData", transferData);
+            migrated["flags.wrath-a.-=applicationData"] = null;
+        }
+        let scriptData = effect.getFlag("wrath-and-glory", "scriptData")
+        if (scriptData)
+        {
+            setProperty(migrated, "system.scriptData", scriptData);
+            migrated.system.scriptData.forEach(s => {
+                s.script = s.script || s.string;
+                s.options = s.options || {};
+                foundry.utils.mergeObject(s.options, s.options.dialog)
+                foundry.utils.mergeObject(s.options, s.options.immediate)
+            })
+            migrated["flags.impmal.-=scriptData"] = null;
+        }
+        return migrated;
+    }  
+
+    //#endregion
+
+    //#region Utilities
+    static shouldMigrate()
+    {
+        return false;
+        let systemMigrationVersion = game.settings.get("wrath-and-glory", "systemMigrationVersion")
+
+        return foundry.utils.isNewerVersion(this.MIGRATION_VERSION, systemMigrationVersion);
+    }
+
+    static _printStatistics(stats)
+    {
+        let errors = stats.actors.error.length + stats.items.error.length;
+        warhammer.utility.log(`Migration Statistics ${errors > 0 ? "(" + errors + " Errors)" : ""}`, true, stats, {groupCollapsed : true})
+        warhammer.utility.log(`Actors - Updated: ${stats.actors.updated}; Skipped: ${stats.actors.skipped}; Error: ${stats.actors.error.length} ${stats.actors.error.length ? "(" + stats.actors.error.join(", ") + ")" : ""}`, true)
+        warhammer.utility.log(`Items - Updated: ${stats.items.updated}; Skipped: ${stats.items.skipped}; Error: ${stats.items.error.length} ${stats.items.error.length ? "(" + stats.items.error.join(", ") + ")" : ""}`, true)
+        console.groupEnd();
+    }
+    //#endregion
 }
 
-function _migrateV10Links(html)
+Hooks.on("ready", () => 
 {
-  try 
-  {
-    if (!html) return 
-    
-    for(let key in v10Conversions)
+    if(game.wng.migration.shouldMigrate())
     {
-      let priorHTML = html
-      html = html.replaceAll(key, v10Conversions[key])
-      if (html != priorHTML)
-      {
-        console.log(`Replacing ${key} with ${v10Conversions[key]}`)
-      }
+        game.wng.migration.migrateWorld(true, true);
     }
-    return html;
-  }
-  catch (e)
-  {
-    console.error("Error replacing links: " + e);
-  }
-}
+});

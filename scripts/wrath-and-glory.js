@@ -16,7 +16,7 @@ import StealthRoll from "./common/tests/stealth.js";
 import AbilityRoll from "./common/tests/ability-roll.js";
 import ModuleInitializer from "./apps/module-initialization.js"
 import ModuleUpdater from "./apps/module-updater.js"
-import {migrateWorld} from "./common/migration.js"
+import Migration from "./common/migration.js"
 import TagManager from "./common/tag-manager.js";
 import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./common/combat.js";
 import WrathANdGloryCombatTracker from "./apps/combat-tracker.js";
@@ -120,7 +120,7 @@ Hooks.once("init", () => {
     ItemTraits,
     RuinGloryCounter,
     utility : WNGUtility,
-    migration : {migrateWorld},
+    migration : Migration,
     tags: new TagManager()
   };
 
