@@ -34,8 +34,8 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
 
     prepareDerivedData() {
         // this.runScripts("prePrepareDerivedData", this);
-        this.system.computeDerived();
         this._applyDerivedEffects()
+        this.system.computeDerived();
         this.items.forEach(i => i.prepareOwnedData());
         // this.runScripts("prepareOwnedItems", this);
         // this.system.computeDerived();
@@ -272,7 +272,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
                 rank: "none"
             },
             wrath: {
-                base: this.hasCondition("dying") ? 1 + this.itemCategories["traumaticInjury"].length : 1
+                base: this.hasCondition("dying") ? 1 + this.itemTypes["traumaticInjury"].length : 1
             },
             changes: this.allDialogChanges( {targets : Array.from(game.user.targets).map(t => t.actor)}),
             actor: this,
@@ -356,7 +356,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         }
 
         }
-        dialogData.difficulty.penalty += weapon.traitList.unwieldy ? weapon.traitList.unwieldy.rating : 0
+        dialogData.difficulty.penalty += weapon.traitList.unwieldy ? parseInt(weapon.traitList.unwieldy.rating) : 0
 
         if (this.hasKeyword("ORK") && weapon.traitList["waaagh!"])
         {
