@@ -25,6 +25,7 @@ function backgroundData()
     return new fields.ArrayField(new fields.SchemaField({
         name : new fields.StringField(),
         description : new fields.StringField(),
-        effect : new fields.StringField()
+        effect : new fields.StringField(),
+        active : new fields.BooleanField()
     }));
 }
