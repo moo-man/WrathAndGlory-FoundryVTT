@@ -424,7 +424,7 @@ export class WNGTest {
 
     let add = 0
     if (this.weapon && this.weapon.traitList.rad)
-      add = this.weapon.traitList.rad.rating
+      add = Number(this.weapon.traitList.rad.rating) || 0;
 
 
     let damage = this.result.damage
