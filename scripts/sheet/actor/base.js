@@ -1,6 +1,6 @@
 import ActorConfigure from "../../apps/actor-configure.js";
 
-export class BaseWnGActorSheet extends ActorSheet {
+export class BaseWnGActorSheet extends WarhammerActorSheet {
     rollData = {};
 
     static get defaultOptions() {
@@ -173,20 +173,21 @@ export class BaseWnGActorSheet extends ActorSheet {
         this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
     }
 
-    _onEffectEdit(ev) {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        this.object.effects.get(id).sheet.render(true)
+    async _onEffectEdit(ev) {
+        let uuid = $(ev.currentTarget).parents(".item").attr("data-uuid")
+        let effect = await fromUuid(uuid)
+        effect.sheet.render(true);
     }
 
-    _onEffectDelete(ev) {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
-    }
+    async _onEffectDelete(ev) {
+        let uuid = $(ev.currentTarget).parents(".item").attr("data-uuid")
+        let effect = await fromUuid(uuid)
+        effect.delete();
+    }   
 
-    _onEffectToggle(ev) {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        let effect = this.object.effects.get(id)
-
+    async _onEffectToggle(ev) {
+        let uuid = $(ev.currentTarget).parents(".item").attr("data-uuid")
+        let effect = await fromUuid(uuid)
         effect.update({ "disabled": !effect.disabled })
     }
 

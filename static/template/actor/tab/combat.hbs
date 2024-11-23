@@ -135,6 +135,8 @@
       </div>
     {{/if}}
   </div>
+</div>
+<div class="combat">
   <div class="wargear wrapper">
     <h1>{{localize "TITLE.WARGEAR"}}</h1>
     <div class="pointer-enable wrapper">
@@ -177,6 +179,7 @@
             <span class="item-traits"><b>Traits:</b> {{{array item.system.traits.formatted "item-trait"}}}</span>
           </div>
           {{/if}}
+          {{> sheetButtonsV1 document=item}}
         </div>
         {{/each}}
       </div>
@@ -222,6 +225,8 @@
               <div class="item-property">{{item.rating}}</div>
               <div class="item-property flex large">{{{array item.system.traits.formatted "item-trait"}}}</div>
           </div>
+          {{> sheetButtonsV1 document=item}}
+
         </div>
         {{/each}}
       </div>
@@ -249,6 +254,7 @@
               <div class="item-property">{{item.range}}</div>
               <div class="item-property">{{item.MultiTarget}}</div>
           </div>
+          {{> sheetButtonsV1 document=item}}
         </div>
         {{/each}}
       </div>
@@ -272,6 +278,7 @@
               <div class="item-property item-name {{#if item.rollable}}rollable{{else}}item-dropdown{{/if}}">{{item.name}}</div>
           <span class="item-property item-dropdown flex large long-text">{{{lookup ../enrichment item.id}}}</span>
         </div>
+          {{> sheetButtonsV1 document=item}}
         </div>
         {{/if}}
         {{/each}}
@@ -279,4 +286,5 @@
       {{/if}}
     </div>
   </div>
+
 </div>

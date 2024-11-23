@@ -1,9 +1,10 @@
 import { DamageRoll } from "./damage";
 
-export class WNGTest {
+export class WNGTest extends WarhammerTestBase {
   static rollFunction = "rollTest";
 
   constructor(data = {}) {
+    super();
     this.data = {
       testData: {
         difficulty: data.difficulty,
@@ -18,7 +19,7 @@ export class WNGTest {
       },
       context: {
         title: data.options?.title,
-        targets: data.targets ? data.targets.map(i => i.document.toObject()) || [] : [],
+        targets: data.targets || [],
         type: data.type,
         speaker: data.speaker,
         rollClass: this.constructor.name,

@@ -144,20 +144,6 @@ export class WrathAndGloryActor extends WarhammerActor {
         return dialogData
     }
 
-    speakerData() {
-        if (this.isToken) {
-            return {
-                token: this.token.id,
-                scene: this.token.parent.id
-            }
-        }
-        else {
-            return {
-                actor: this.id
-            }
-        }
-    }
-
     characterCreation(archetype) {
         new Dialog({
             title: "Character Creation",

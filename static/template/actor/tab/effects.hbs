@@ -27,9 +27,9 @@
       </div>
     </div>
     {{#each effects.temporary as |effect|}}
-    <div class="item" data-effect-id="{{effect.id}}">
+    <div class="item" data-uuid="{{effect.uuid}}">
       <div class="item-content">
-          <img class="item-property item-image" src="{{effect.icon}}"></img>
+          <img class="item-property item-image" src="{{effect.img}}"></img>
           <div class="item-property item-name effect-edit">{{effect.name}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>
@@ -38,6 +38,8 @@
             <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>
           </div>
       </div>
+          {{> sheetButtonsV1 document=effect}}
+
     </div>
     {{/each}}
   </div>
@@ -54,9 +56,9 @@
       </div>
     </div>
     {{#each effects.passive as |effect|}}
-    <div class="item" data-effect-id="{{effect.id}}">
+    <div class="item" data-uuid="{{effect.uuid}}">
       <div class="item-content">
-          <img class="item-property item-image" src="{{effect.icon}}"></img>
+          <img class="item-property item-image" src="{{effect.img}}"></img>
           <div class="item-property item-name effect-edit">{{effect.name}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>
@@ -65,6 +67,8 @@
             <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>
           </div>
       </div>
+        {{> sheetButtonsV1 document=effect}}
+
     </div>
     {{/each}}
   </div>
@@ -80,9 +84,9 @@
       </div>
     </div>
     {{#each effects.disabled as |effect|}}
-    <div class="item" data-effect-id="{{effect.id}}">
+    <div class="item" data-uuid="{{effect.uuid}}">
       <div class="item-content" style="opacity : 0.5">
-          <img class="item-property item-image" src="{{effect.icon}}"></img>
+          <img class="item-property item-image" src="{{effect.img}}"></img>
           <div class="item-property item-name effect-edit">{{effect.name}}</div>
           
           <div class="item-property flex">{{effect.sourceName}}</div>

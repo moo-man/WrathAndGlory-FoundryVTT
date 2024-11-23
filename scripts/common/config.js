@@ -303,6 +303,15 @@ WNG.premiumModules = {
     "wng-cos" : "Church of Steel",
 }
 
+WNG.transferTypes = {
+    document : "WH.TransferType.Document",
+    damage : "WH.TransferType.Damage",
+    target : "WH.TransferType.Target",
+    area : "WH.TransferType.Area",
+    aura : "WH.TransferType.Aura",
+    other : "WH.TransferType.Other"
+},
+
 WNG.placeholderItemData = {
     type : "equipment",
     img : "modules/wng-core/assets/icons/equipment/equipment.webp"
