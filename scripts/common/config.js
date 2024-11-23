@@ -272,11 +272,48 @@ WNG.vehicleRoles = {
 }
 
 
+// mergeObject(scriptTriggers, {
+
+//     equipToggle : "WH.Trigger.EquipToggle",
+
+//     takeDamageMod : "WH.Trigger.TakeDamageMod",
+//     applyDamageMod : "WH.Trigger.ApplyDamageMod",
+
+//     preRollTest : "WH.Trigger.PreRollTest",
+//     preRollCombatTest : "WH.Trigger.PreRollCombatTest",
+//     preRollSpellTest : "WH.Trigger.PreRollSpellTest",
+
+//     rollTest : "WH.Trigger.RollTest",
+//     rollCombatTest : "WH.Trigger.RollCombatTest",
+//     rollSpellTest : "WH.Trigger.RollSpellTest",
+// }),
+
+WNG.avoidTestTemplate = "systems/wrath-and-glory/template/apps/effect-avoid-test.hbs",
+WNG.effectScripts = {},
+
+WNG.logFormat = [`%cW & G` + `%c @MESSAGE`, "color: #DDD;background: #8a2e2a;font-weight:bold", "color: unset"],
+WNG.rollClasses = {},
+
+WNG.premiumModules = {
+    "wrath-and-glory" : "Wrath & Glory System",
+    "wng-core" : "Core Rulebook",
+    "wng-forsaken" : "Forsaken System Player's Guide",
+    "wng-litanies" : "Litanies of the Lost",
+    "wng-records1" : "Redacted Records: Vol. I",
+    "wng-cos" : "Church of Steel",
+}
+
+WNG.placeholderItemData = {
+    type : "equipment",
+    img : "modules/wng-core/assets/icons/equipment/equipment.webp"
+},
+
+
 WNG.systemEffects = {
     "wounded" : {
         id : "wounded",
         name : "EFFECT.Wounded",
-        icon : "systems/wrath-and-glory/asset/icons/wounded.svg",
+        img : "systems/wrath-and-glory/asset/icons/wounded.svg",
         changes : [
             {key: "difficulty.base", mode : 6, value : 1}
         ],
@@ -289,7 +326,7 @@ WNG.systemEffects = {
     "full-defence" : {
         id : "full-defence",
         name : "EFFECT.FullDefence",
-        icon : "systems/wrath-and-glory/asset/icons/full-defence.svg",
+        img : "systems/wrath-and-glory/asset/icons/full-defence.svg",
         changes : [
             {key: "system.combat.defence.bonus", mode : 2, value : 1},
         ],
@@ -297,7 +334,7 @@ WNG.systemEffects = {
     "all-out-attack" : {
         id : "all-out-attack",
         name : "EFFECT.AllOutAttack",
-        icon : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
+        img : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
         changes : [
             {key: "pool.bonus", mode : 6, value : 2},
             {key: "system.combat.defence.bonus", mode : 2, value : -2},
@@ -311,7 +348,7 @@ WNG.systemEffects = {
     "halfCover" : {
         id : "halfCover",
         name : "EFFECT.HalfCover",
-        icon : "systems/wrath-and-glory/asset/icons/half-cover.svg",
+        img : "systems/wrath-and-glory/asset/icons/half-cover.svg",
         changes : [
             {key: "system.combat.defence.bonus", mode : 2, value : 1},
         ]
@@ -319,7 +356,7 @@ WNG.systemEffects = {
     "fullCover" : {
         id : "fullCover",
         name : "EFFECT.FullCover",
-        icon : "systems/wrath-and-glory/asset/icons/full-cover.svg",
+        img : "systems/wrath-and-glory/asset/icons/full-cover.svg",
         changes : [
             {key: "system.combat.defence.bonus", mode : 2, value : 2},
         ]
@@ -331,12 +368,12 @@ CONFIG.statusEffects = [
     {
         id : "bleeding",
         name : "CONDITION.Bleeding",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/bleeding.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/bleeding.svg",
     },
     {
         id : "blinded",
         name : "CONDITION.Blinded",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
         changes : [
             {key: "difficulty.base", mode : 6, value : 4}
         ],
@@ -349,12 +386,12 @@ CONFIG.statusEffects = [
     {
         id : "exhausted",
         name : "CONDITION.Exhausted",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/exhausted.svg"
+        img : "systems/wrath-and-glory/asset/icons/conditions/exhausted.svg"
     },
     {
         id : "fear",
         name : "CONDITION.Fear",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
         changes : [
             {key: "difficulty.base", mode : 6, value : 2}
         ],
@@ -367,13 +404,13 @@ CONFIG.statusEffects = [
     {
         id : "frenzied",
         name : "CONDITION.Frenzied",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/frenzied.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/frenzied.svg",
         changes : [{key: "system.attributes.strength.bonus", mode : 2, value : 1}]
     },
     {
         id : "hindered",
         name : "CONDITION.Hindered",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
         changes : [
             {key: "difficulty.base", mode : 6, value : 1}
         ],
@@ -386,12 +423,12 @@ CONFIG.statusEffects = [
     {
         id : "onfire",
         name : "CONDITION.OnFire",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/onfire.svg"
+        img : "systems/wrath-and-glory/asset/icons/conditions/onfire.svg"
     },
     {
         id : "pinned",
         name : "CONDITION.Pinned",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
         changes : [{key: "difficulty.base", mode : 6, value : 2}],
         flags : { 
             "wrath-and-glory.changeCondition" : { 
@@ -402,7 +439,7 @@ CONFIG.statusEffects = [
     {
         id : "poisoned",
         name : "CONDITION.Poisoned",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
         changes : [{key: "difficulty.base", mode : 6, value : 2}],
         flags : { 
             "wrath-and-glory.changeCondition" : { 
@@ -413,24 +450,24 @@ CONFIG.statusEffects = [
     {
         id : "prone",
         name : "CONDITION.Prone",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/prone.svg"
+        img : "systems/wrath-and-glory/asset/icons/conditions/prone.svg"
     },
     {
         id : "restrained",
         name : "CONDITION.Restrained",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
         changes : [{key: "system.combat.defence.bonus", mode : 2, value : -2},{key: "system.combat.speed", mode : 5, value : "0"} ]
     },
     {
         id : "staggered",
         name : "CONDITION.Staggered",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/staggered.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/staggered.svg",
         changes : [{key: "system.combat.speed", mode : 1, value : 0.5} ]
     },
     {
         id : "terror",
         name : "CONDITION.Terror",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
         changes : [{key: "difficulty.base", mode : 6, value : 2}],
         flags : { 
             "wrath-and-glory.changeCondition" : { 
@@ -441,18 +478,28 @@ CONFIG.statusEffects = [
     {
         id : "vulnerable",
         name : "CONDITION.Vulnerable",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
         changes : [{key: "system.combat.defence.bonus", mode : 2, value : -1}]
     },
     {
         id : "dying",
         name : "CONDITION.Dying",
-        icon : "systems/wrath-and-glory/asset/icons/dying.svg"
+        img : "systems/wrath-and-glory/asset/icons/dying.svg",
+        system : {
+            scriptData : [{
+                label : "Extra Wrath Die",
+                script : "args.fields.wrath++;",
+                trigger : "dialog",
+                options: {
+                    activateScript : "return true;"
+                }
+            }]
+        }
     },
     {
         id : "dead",
         name : "CONDITION.Dead",
-        icon : "systems/wrath-and-glory/asset/icons/dead.svg"
+        img : "systems/wrath-and-glory/asset/icons/dead.svg"
     }
     
 ]
@@ -476,4 +523,4 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         }
     }])
 
-export default WNG
+export default mergeObject(defaultWarhammerConfig, WNG);

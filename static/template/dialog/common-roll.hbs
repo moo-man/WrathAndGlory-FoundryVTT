@@ -1,66 +1,38 @@
-<div class="wrath-and-glory dialog">
+<form>
     <h1>{{title}}</h1>
-    {{#if targets.length}}
-    <div class="targets">
-            <a class="crosshair">
-                    <i class="fas fa-crosshairs"></i>
-            </a>
-            {{#each targets as |target t|}}
-                    <a class="target" data-token-id="{{target.id}}">{{target.name}}</a>
-            {{/each}}
-    </div>
-    {{/if}}
-    <div class="wrapper">
-        <b class="name"></b>
-        <b class="base">{{localize "DIALOG.BASE"}}</b>
-        <b class="rank">{{localize "DIALOG.RANK"}}</b>
-        <b class="bonus">{{localize "DIALOG.BONUS"}}</b>
+    {{log this}}
+    <div class="dialog-content">
+        <div class="dialog-fields">
+            {{#if data.targets.length}}
+                <div class="targets">
+                    <a class="crosshair">
+                        <i class="fas fa-crosshairs"></i>
+                    </a>
+                    {{#each data.targets as |target t|}}
+                        <a class="target" data-token-id="{{target.id}}">{{target.name}}</a>
+                    {{/each}}
+                </div>
+            {{/if}}
+            <div class="wrapper" {{#if noDn }}style="display: none" {{/if}} data-tooltip="{{tooltips.difficulty}}" data-tooltip-direction="LEFT">
+                <label>{{localize "DIALOG.DN"}}</label>
+                <input name="difficulty" type="number" value="{{fields.difficulty}}" />
+            </div>
+            <div class="wrapper" data-tooltip="{{tooltips.pool}}" data-tooltip-direction="LEFT">
+                <label>{{localize "DIALOG.DICE_POOL"}}</label>
+                <input name="pool" type="number" value="{{fields.pool}}" />
+            </div>
+            {{#unless noWrath}}
+                <div class="wrapper" data-tooltip="{{tooltips.wrath}}" data-tooltip-direction="LEFT">
+                    <label>{{localize "DIALOG.WRATH"}}</label>
+                    <input name="wrath" class="base" type="number" value="{{fields.wrath}}" />
+                </div>
+            {{/unless}}
+
+            {{{subTemplate}}}
+        </div>
+
+            {{> dialogModifiers}}
     </div>
 
-    <div class="wrapper" {{#if noDn }}style="display: none"{{/if}}>
-        <label class="name">{{localize "DIALOG.DN"}}</label>
-        <input id="difficulty-target" class="difficulty base" type="number" value="{{difficulty.target}}" data-dtype="Number" />
-        <select id="difficulty-rank" class="difficulty rank">
-            {{#select difficulty.rank}}
-            {{#each (config "difficultyRankTypes" )as |rank r|}}
-            <option value="{{r}}">{{rank}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-        <input id="difficulty-penalty" class="difficulty bonus" type="number" value="{{difficulty.penalty}}" data-dtype="Number" />
-    </div>
-    <div class="wrapper">
-        <label class="name">{{localize "DIALOG.DICE_POOL"}}</label>
-        <input id="pool-size" class="pool base" type="number" value="{{pool.size}}" data-dtype="Number" />
-        <select id="pool-rank" class="pool rank">
-            {{#select pool.rank}}
-            {{#each (config "rankTypes") as |rank r|}}
-            <option value="{{r}}">{{rank}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-        <input id="pool-bonus" class="pool bonus" type="number" value="{{pool.bonus}}" data-dtype="Number" />
-    </div>
-    {{#if determination}}
-    <div class="wrapper">
-        <label class="name">{{localize "DIALOG.WOUNDS"}}</label>
-        <input id="wounds" class="wounds" type="number" value="0" data-dtype="Number" />
-    </div>
-    {{else}}
-    <div class="wrapper">
-        <label class="name">{{localize "DIALOG.WRATH"}}</label>
-        <input id="wrath-base" class="base" type="number" value="{{wrath.base}}" data-dtype="Number" />
-    </div>
-    {{/if}}
-
-</div>
-<div class="dialog-effects">
-    <div class="wrapper">
-        <h1>{{localize "HEADER.EFFECTS"}}</h1>
-        <select class="effect-select" multiple>
-            {{#each condensedChanges as |change c|}}
-            <option value={{c}} title="{{change.tooltip}}">&#8226; {{change.description}}</option>
-            {{/each}}
-        </select>
-    </div>
-</div>
+    <button type="submit">{{localize "Roll"}}</button>
+</form>

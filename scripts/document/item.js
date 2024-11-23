@@ -1,6 +1,6 @@
 import WNGUtility from "../common/utility.js";
 
-export class WrathAndGloryItem extends Item {
+export class WrathAndGloryItem extends WarhammerItem {
 
     constructor(data, context)
     {
@@ -13,30 +13,10 @@ export class WrathAndGloryItem extends Item {
         }
     }
 
-    // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
-    async _preCreate(data, options, user) {
-        if (data._id && !this.isOwned)
-            options.keepId = WNGUtility._keepID(data._id, this)
-
-        await super._preCreate(data, options, user)
-    }
-
     _preUpdate(updateData, options, user) {
+        // TODO Move this to model
         if (getProperty(updateData, "system.type") == "corruption")
             setProperty(updateData, "system.specification", "corruption")
-    }
-
-    prepareBaseData()
-    {
-        this.system.computeBase();
-    }
-    prepareDerivedData()
-    {
-        this.system.computeDerived();
-    }
-    
-    prepareOwnedData() {
-        this.system.computeOwned()
     }
 
     async sendToChat() {
@@ -62,6 +42,7 @@ export class WrathAndGloryItem extends Item {
         return { text: this.description }
     }
 
+    // TODO move this to model
     handleArchetypeItem(item)
     {
         if (["weapon", "weaponUpgrade", "armour", "gear", "ammo", "augmentic"].includes(item.type))
@@ -102,6 +83,7 @@ export class WrathAndGloryItem extends Item {
         }
     }
 
+    // TODO move this to model
     handleSpeciesItem(item)
     {
         if(item.type == "ability")
@@ -111,27 +93,6 @@ export class WrathAndGloryItem extends Item {
             return this.update({"system.abilities" : abilities})
         }
     }
-
-    addToGroup(object)
-    {
-        let groups = duplicate(this.groups)
-        object.groupId = randomID()
-        groups.items.push(object)
-        return groups
-    }
-
-    resetGroups()
-    {
-        this.update({ "system.groups": {type: "and", groupId: "root", items : Array.fromRange(this.wargear.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
-    }
-
-    _deleteIndex(index, path)
-    {
-        let array = duplicate(getProperty(this, path))
-        array.splice(index, 1)
-        this.update({ [path]: array})
-    }
-
 
     async addCondition(effect) {
         if (typeof (effect) === "string")
@@ -227,6 +188,7 @@ export class WrathAndGloryItem extends Item {
         return this.system.traits.obj;
     }
 
+    // TODO move this to model
     async GetArchetypeItems() {
         let items = [];
 

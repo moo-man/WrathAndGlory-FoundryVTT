@@ -1,4 +1,6 @@
 export class WNGTest {
+  static rollFunction = "rollTest";
+
   constructor(data = {}) {
     this.data = {
       testData: {
@@ -12,7 +14,7 @@ export class WNGTest {
         useDN: true
       },
       context: {
-        title: data.title,
+        title: data.options.title,
         targets: data.targets ? data.targets.map(i => i.document.toObject()) || [] : [],
         type: data.type,
         speaker: data.speaker,
@@ -48,12 +50,17 @@ export class WNGTest {
     return test
   }
 
+  static fromData(data)
+  {
+    return new this(data);
+  }
+
   async rollTest() {
     // Total dice in the test
-    let diceNum = this.testData.pool.size + this.testData.pool.bonus + this.getRankNum(this.testData.pool.rank);
+    let diceNum = this.testData.pool
 
     // Wrath = wrath value inputted, but can't be above total number of dice, and can't be negative
-    this.result.wrathSize = this.testData.wrath.base < 0 ? 0 : Math.min(this.testData.wrath.base, diceNum);
+    this.result.wrathSize = this.testData.wrath < 0 ? 0 : Math.min(this.testData.wrath, diceNum);
 
     // Leftover, if any, is pool dice
     this.result.poolSize = Math.max(diceNum - this.result.wrathSize, 0)
@@ -80,7 +87,7 @@ export class WNGTest {
 
   _computeResult() {
     this.data.result = {}
-    this.result.dn = (this.testData.useDN) ? this.testData.difficulty.target + this.testData.difficulty.penalty - this.getRankNum(this.testData.difficulty.rank) : 0;
+    this.result.dn = (this.testData.useDN) && this.testData.difficulty
     this.result.roll = this.roll.toJSON();
     this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), []);
 

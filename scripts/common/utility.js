@@ -1,30 +1,6 @@
 import { WrathAndGloryItem } from "../document/item.js";
 
 export default class WNGUtility {
-  /**
-   * Searches an object for a key that matches the given value.
-   * 
-   * @param {String} value  value whose key is being searched for
-   * @param {Object} obj    object to be searched in
-   */
-  static findKey(value, obj, options = {}) {
-    if (!value || !obj)
-      return undefined;
-
-    if (options.caseInsensitive) {
-      for (let key in obj) {
-        if (obj[key].toLowerCase() == value.toLowerCase())
-          return key;
-      }
-    }
-    else {
-      for (let key in obj) {
-        if (obj[key] == value)
-          return key;
-      }
-    }
-  }
-
 
   static getAttributeCostTotal(rating, base = 0) {
     let total = 0
@@ -87,31 +63,6 @@ export default class WNGUtility {
       return new WrathAndGloryItem({ name, type: "keyword", img: "modules/wng-core/assets/ui/aquila-white.webp" })
   }
 
-  static _keepID(id, document) {
-    try {
-      let compendium = !!document.pack
-      let world = !compendium
-      let collection
-
-      if (compendium) {
-        let pack = game.packs.get(document.pack)
-        collection = pack.index
-      }
-      else if (world)
-        collection = document.collection
-
-      if (collection.has(id)) {
-        ui.notifications.notify(`${game.i18n.format("ERROR.ID", { name: document.name })}`)
-        return false
-      }
-      else return true
-    }
-    catch (e) {
-      console.error(e)
-      return false
-    }
-  }
-
   static _getTargetDefence() {
     const targets = game.user.targets.size;
     if (0 >= targets) {
@@ -154,32 +105,6 @@ export default class WNGUtility {
         return pack.getDocument(id)
       }
     }
-  }
-
-  static highlightToken(ev) {
-    if (!canvas.ready) return;
-    const li = ev.target;
-    let tokenId = li.dataset.tokenId
-    const token = canvas.tokens.get(tokenId);
-    if (token?.isVisible) {
-      if (!token._controlled) token._onHoverIn(ev);
-      this._highlighted = token;
-    }
-  }
-
-  static unhighlightToken(ev) {
-    const li = ev.target;
-    let tokenId = li.dataset.tokenId
-    if (this._highlighted) this._highlighted._onHoverOut(ev);
-    this._highlighted = null;
-  }
-
-
-  static focusToken(ev) {
-    const li = ev.target;
-    let tokenId = li.dataset.tokenId
-    const token = canvas.tokens.get(tokenId);
-    canvas.animatePan({ x: token.center.x, y: token.center.y, duration: 250 });
   }
 
   static async tableToHTML(table, label, options=[]) 
@@ -235,28 +160,24 @@ export default class WNGUtility {
     // Trigger the item roll
     switch (itemType) {
       case "attribute":
-        test = await actor.setupAttributeTest(itemName)
+        actor.setupAttributeTest(itemName)
         break;
       case "skill":
-        test = await actor.setupSkill(itemName)
+        actor.setupSkill(itemName)
         break;
       case "weapon":
-        test = await actor.setupWeaponTest(item)
+        actor.setupWeaponTest(item)
         break;
       case "psychicPower":
-        test = await actor.setupPowerTest(item)
+        actor.setupPowerTest(item)
         break;
       case "ability":
-        test = await actor.setupAbilityRoll(item)
+        actor.setupAbilityRoll(item)
         break;
       default:
-        test = await actor.setupGenericTest(itemType)
+        actor.setupGenericTest(itemType)
         break;
     }
-
-    return Array.isArray(test)
-      ? test.forEach(t => t.rollTest().then(roll => roll.sendToChat()))
-      : test.rollTest().then(roll => roll.sendToChat())
 
   }
 

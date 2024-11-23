@@ -165,38 +165,12 @@ export class BaseWnGActorSheet extends ActorSheet {
 
     async _onEffectCreate(ev) {
         let type = ev.currentTarget.attributes["data-type"].value
-        let effectData = { name: "New Effect", icon: "icons/svg/aura.svg" }
+        let effectData = { name: "New Effect", img: "icons/svg/aura.svg" }
         if (type == "temporary") {
             effectData["duration.rounds"] = 1;
         }
 
-        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.hbs")
-        let dialog = new Dialog({
-            title: "Quick Effect",
-            content: html,
-            buttons: {
-                "create": {
-                    label: "Create",
-                    callback: html => {
-                        let mode = 2
-                        let label = html.find(".label").val()
-                        let key = html.find(".key").val()
-                        let value = parseInt(html.find(".modifier").val())
-                        effectData.name = label
-                        effectData.changes = [{ key, mode, value }]
-                        this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
-                    }
-                },
-                "skip": {
-                    label: "Skip",
-                    callback: () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
-                }
-            }
-        })
-        await dialog._render(true)
-        dialog._element.find(".label").select()
-
-
+        this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
     }
 
     _onEffectEdit(ev) {

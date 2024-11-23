@@ -218,36 +218,9 @@ async _handleEnrichment()
     })
 
     html.find(".effect-create").click(async ev => {
-      if (this.item.isOwned)
-        ui.notifications.error("Effects can only be added to world items or actors directly")
-      let effectData = { label: this.item.name, icon: this.item.img }
 
-        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.hbs", effectData)
-        let dialog = new Dialog({
-            title : "Quick Effect",
-            content : html,
-            buttons : {
-                "create" : {
-                    label : "Create",
-                    callback : html => {
-                        let mode = 2
-                        let label = html.find(".label").val()
-                        let key = html.find(".key").val()
-                        let value = parseInt(html.find(".modifier").val())
-                        effectData.name = label
-                        effectData.changes = [{key, mode, value}]
-                        this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
-                    }
-                },
-                "skip" : {
-                    label : "Skip",
-                    callback : () => this.object.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
-                }
-            }
-        })
-        await dialog._render(true)
-        dialog._element.find(".label").select()
-
+      let effectData = { name: this.item.name, img: this.item.img }
+      this.object.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
     })
 
     html.find(".effect-edit").click(ev => {

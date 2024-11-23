@@ -1,4 +1,3 @@
-import WNGDocumentMixin from "./mixin.js";
 import { WNGTest } from "../common/tests/test.js";
 import WeaponTest from "../common/tests/weapon-test.js";
 import PowerTest from "../common/tests/power-test.js";
@@ -7,41 +6,21 @@ import MutationTest from "../common/tests/mutation-test.js";
 import ResolveTest from "../common/tests/resolve-test.js";
 import DeterminationRoll from "../common/tests/determination.js";
 import AbilityRoll from "../common/tests/ability-roll.js";
-import WNGUtility from "../common/utility.js";
 import StealthRoll from "../common/tests/stealth.js";
 import CharacterCreation from "../apps/character-creation.js";
 import { RollDialog } from "../common/dialogs/base-dialog.js";
 import { WeaponDialog } from "../common/dialogs/weapon-dialog.js";
 import { PowerDialog } from "../common/dialogs/power-dialog.js";
+import { CommonDialog } from "../common/dialogs/common-dialog.js";
 
-export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
+export class WrathAndGloryActor extends WarhammerActor {
 
     prepareBaseData() {
-        // this.propagateDataModels(this.system, "runScripts", this.runScripts.bind(this));
-        this._itemTypes = null; 
         this.derivedEffects = []
-        this.system.computeBase();
-        // this.runScripts("prepareBaseData", this);
+        super.prepareBaseData();
     }
 
-    prepareDerivedData()
-    {
-        this.runScripts("prePrepareDerivedData", this);
-        this.system.computeDerived();
-        this.items.forEach(i => i.prepareOwnedData());
-    }
-
-
-    prepareDerivedData() {
-        // this.runScripts("prePrepareDerivedData", this);
-        this._applyDerivedEffects()
-        this.system.computeDerived();
-        this.items.forEach(i => i.prepareOwnedData());
-        // this.runScripts("prepareOwnedItems", this);
-        // this.system.computeDerived();
-        // this.runScripts("postPrepareDerivedData", this);
-    }
-
+    
     _applyDerivedEffects() {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)
@@ -51,182 +30,84 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
 
     //#region Rolling
     async setupAttributeTest(attribute, options = {}) {
-        let attributeObject = this.attributes[attribute]
-
-        let dialogData = this._baseDialogData();
-        dialogData.title = `${game.i18n.localize(attributeObject.label)} Test`
-        dialogData.pool.size = attributeObject.total
-        this._addOptions(dialogData, options)
-        dialogData.type = "attribute"
-        dialogData.attribute = attribute
-        let testData = await RollDialog.create(dialogData)
-        testData.targets = dialogData.targets
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.attribute = attribute;
-        return new WNGTest(testData)
+        return this._setupTest(CommonDialog, WNGTest, {attribute}, options)
     }
 
     async setupSkillTest(skill, options = {}) {
-        let skillObject = this.skills[skill]
-
-        let dialogData = this._baseDialogData();
-        dialogData.title = `${game.i18n.localize(skillObject.label)} Test`
-        dialogData.pool.size = skillObject.total
-        this._addOptions(dialogData, options)
-        dialogData.type = "skill"
-        dialogData.skill = skill
-        let testData = await RollDialog.create(dialogData)
-        testData.targets = dialogData.targets
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.skill = skill
-        testData.attribute = skillObject.attribute
-        return new WNGTest(testData)
+        return this._setupTest(CommonDialog, WNGTest, {skill}, options)
     }
 
     async setupGenericTest(type, options = {}) {
-        let dialogData = this._baseDialogData();
-        let testClass = WNGTest
+        options = foundry.utils.mergeObject(options, {fields : {}, [type] : true})
+        
+        if (type == "conviction")
+        {
+            type = await Dialog.wait({
+                title : game.i18n.localize(`ROLL.CONVICTION`), 
+                buttons : {
+                    corruption : {
+                        label : game.i18n.localize(`ROLL.CORRUPTION`)
+                    },
+                    mutation : {
+                        label : game.i18n.localize(`ROLL.MUTATION`)
+                    }
+            }})
+        }
+
         switch (type) {
             case "stealth":
-                dialogData.pool.size = this.skills.stealth.total;
-                dialogData.title = game.i18n.localize(`ROLL.STEALTH`);
-                dialogData.noDn = true;
-                testClass = StealthRoll;
-                break;
+                options.title = game.i18n.localize(`ROLL.STEALTH`);
+                options.noDn = true;
+                options.noWrath = true;
+                return this._setupTest(CommonDialog, StealthRoll, {skill: "stealth"}, options)
             case "determination":
-                dialogData.pool.size = this.combat.determination.total
-                dialogData.title = game.i18n.localize(`ROLL.DETERMINATION`)
-                dialogData.determination = true;
-                dialogData.noDn = true;
-                testClass = DeterminationRoll;
-                break;
-            case "conviction":
-                dialogData.pool.size = this.combat.conviction.total
-                dialogData.title = game.i18n.localize(`ROLL.CONVICTION`)
-                break;
+                options.title = game.i18n.localize(`ROLL.DETERMINATION`)
+                options.noDn = true;
+                options.noWrath = true;
+                return this._setupTest(RollDialog, DeterminationRoll, {pool : this.combat.determination.total,}, options)
             case "corruption":
-                dialogData.pool.size = this.combat.conviction.total
-                dialogData.title = game.i18n.localize(`ROLL.CORRUPTION`)
-                this._addCorruptionData(dialogData)
-                testClass = CorruptionTest;
-                break;
+                options.title = game.i18n.localize(`ROLL.CORRUPTION`)
+                return this._setupTest(RollDialog, CorruptionTest, {pool : this.combat.conviction.total}, options)
             case "mutation":
-                dialogData.pool.size = this.combat.conviction.total
-                dialogData.title = game.i18n.localize(`ROLL.MUTATION`)
-                dialogData.difficulty.target = 3
-                testClass = MutationTest;
-                break;
+                options.title = game.i18n.localize(`ROLL.MUTATION`)
+                return this._setupTest(RollDialog, MutationTest, {pool : this.combat.conviction.total}, options)
             case "fear":
-                dialogData.pool.size = this.combat.resolve.total
-                dialogData.title = game.i18n.localize(`ROLL.FEAR`)
-                dialogData.type == "fear"
-                testClass = ResolveTest
-                break;
+                options.title = game.i18n.localize(`ROLL.FEAR`)
+                options.noWrath = true;
+                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
             case "terror":
-                dialogData.pool.size = this.combat.resolve.total
-                dialogData.title = game.i18n.localize(`ROLL.TERROR`)
-                dialogData.type == "terror"
-                testClass = ResolveTest
-                break;
+                options.title = game.i18n.localize(`ROLL.TERROR`)
+                options.noWrath = true;
+                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
             case "influence":
-                dialogData.pool.size = this.resources.influence
-                dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
-                break;
+                options.fields.pool = this.resources.influence
+                options.title = game.i18n.localize(`ROLL.INFLUENCE`)
+                options.noWrath = true;
+                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
             default:
                 throw new Error("Unknown roll type: " + type)
         }
-        this._addOptions(dialogData, options)
-        dialogData.type = type
-        let testData = await RollDialog.create(dialogData)
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.type = type
-        ui.sidebar.activateTab("chat")
-        return new testClass(testData)
     }
-
-
 
     async setupWeaponTest(weapon, options={})
     {
-        if (typeof weapon == "string")
-            weapon = this.items.get(weapon) || await fromUuid(weapon)
-
-        options.combi = weapon.system.combi.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
-
-        let tests = []
-        let multi = options.combi ? 2 : 0;
-
-        // If targets, call this function again with single target option
-        if (game.user.targets.size)
+        if (game.user.targets.size > 1)
         {
-            let targets = Array.from(game.user.targets)
-            game.user.updateTokenTargets([])
-            options.multi = targets.length + multi;
-            // Function needs to return an array of WeaponTests so need to do some funky stuff to convert
-            targets.forEach(target => {
-                options.target = target;
-                tests.push(this._promptWeaponDialog(weapon, options))
-                if (options.combi)
-                {
-                    tests.push(this._promptWeaponDialog(weapon.system.combi.document, options))
-                }
-            })
-            tests = await Promise.all(tests)
+            return Promise.all(game.user.targets.map(i => {
+                let optionsCopy = foundry.utils.deepClone(options);
+                optionsCopy.targets = [i];
+                optionsCopy.multi = game.user.targets.size;
+                return this._setupTest(WeaponDialog, WeaponTest, weapon, optionsCopy);
+            }))
         }
         else 
         {
-            options.multi = multi;
-            tests = [await this._promptWeaponDialog(weapon, options)];
-            if (options.combi)
-            {
-                tests.push(await this._promptWeaponDialog(weapon.system.combi.document, options))
-            }
+            return this._setupTest(WeaponDialog, WeaponTest, weapon, options);
         }
-
-
-        return tests
-    }
-
-    async _promptWeaponDialog(weapon, options)
-    {
-        let dialogData = this._weaponDialogData(weapon, {multi : options.multi, targets : [options.target].filter(t => t)});
-        dialogData.title = `${weapon.name} Test`
-        this._addOptions(dialogData, options)
-        dialogData.type = "weapon"
-        dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
-        dialogData.attribute = weapon.getSkillFor(this).attribute
-        let testData = await WeaponDialog.create(dialogData)
-        testData.targets = dialogData.targets
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.itemId = weapon.uuid
-        testData.skill = dialogData.skill
-        testData.attribute = dialogData.attribute
-        return new WeaponTest(testData);
     }
 
     async setupPowerTest(power, options = {}) {
-        if (typeof power == "string")
-            power = this.items.get(power) || await fromUuid(power)
-
-        let dialogData = this._powerDialogData(power);
-        dialogData.title = `${power.name}`
-        this._addOptions(dialogData, options)
-        dialogData.type = "power"
-        dialogData.skill = "psychicMastery"
-        dialogData.attribute = power.skill.attribute
-        let testData = await PowerDialog.create(dialogData)
-        testData.targets = dialogData.targets
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.itemId = power.uuid
-        testData.skill = dialogData.skill
-        testData.attribute = dialogData.attribute
-        ui.sidebar.activateTab("chat")
-        return new PowerTest(testData)
+        return this._setupTest(PowerDialog, PowerTest, power, options)
     }
 
     async setupAbilityRoll(ability, options = {}) {
@@ -257,148 +138,10 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         }
         ui.sidebar.activateTab("chat")
         return new AbilityRoll(testData)
-    }
+        
 
-    _baseDialogData() {
-        return {
-            difficulty: {
-                target: 3,
-                penalty: 0,
-                rank: "none"
-            },
-            pool: {
-                size: 1,
-                bonus: 0,
-                rank: "none"
-            },
-            wrath: {
-                base: this.hasCondition("dying") ? 1 + this.itemTypes["traumaticInjury"].length : 1
-            },
-            changes: this.allDialogChanges( {targets : Array.from(game.user.targets).map(t => t.actor)}),
-            actor: this,
-            targets: Array.from(game.user.targets)
-        };
-    }
-
-
-    _weaponDialogData(weapon, options={}) {
-
-        let dialogData = this._baseDialogData()
-        if (options.targets)
-        {
-            dialogData.targets = options.targets;
-            dialogData.changes = this.allDialogChanges({targets: options.targets.map(i => i.actor), vehicle : weapon.actor?.type == "vehicle" ? weapon.actor : null});
-            // Weapon dialogs need to get dialog changes separately because of special target handling
-        }
-
-        if (weapon.Ammo) {
-            // Add ammo dialog changes if any exist
-            weapon.Ammo.effects.forEach(e => {
-                mergeObject(dialogData.changes, e.getDialogChanges())
-            })
-        }
-        dialogData.weapon = weapon
-        dialogData.skill = weapon.getSkillFor(this)
-        dialogData.pool.size = dialogData.skill.total;
-        dialogData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
-        if (this.isMob)
-            dialogData.pool.bonus += Math.ceil(this.mob / 2)
-        dialogData.pool.rank = weapon.attack.rank;
-        dialogData.damageValues = weapon.damageValues
-
-        dialogData.damage = duplicate(weapon.system.damage)
-        dialogData.ed = duplicate(weapon.system.damage.ed)
-        dialogData.ap = duplicate(weapon.system.damage.ap)
-
-        if (weapon.isMelee) {
-            dialogData.damage.base += this.attributes.strength.total
-        }
-
-        if (weapon.traitList.force) {
-            if (this.hasKeyword("PSYKER"))
-                dialogData.damage.bonus += Math.ceil(this.attributes.willpower.total / 2)
-            else
-                dialogData.damage.bonus -= 2
-        }
-
-        if (dialogData.targets[0])
-        {
-            let target = dialogData.targets[0]
-            let token
-            dialogData.difficulty.target = target.actor.combat.defence.total
-
-            if (this.isToken)
-                token = this.token
-            else
-                token = this.getActiveTokens()[0]?.document
-
-            if (token)
-                dialogData.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
-
-            if (target.actor.system.combat.size == "large")
-            {
-                dialogData.pool.bonus += 1;
-            }
-            else if (target.actor.system.combat.size == "huge")
-            {
-                dialogData.pool.bonus += 2;
-            }
-            else if (target.actor.system.combat.size == "gargantuan")
-            {
-                dialogData.pool.bonus += 3;
-            }
-
-
-        // If using melee and target has parry weapon equipped, increase difficulty
-        if (weapon.system.category == "melee" && target.actor.itemTypes.weapon.find(i => i.equipped && i.traitList["parry"]))
-        {
-            dialogData.difficulty.penalty += 1;
-        }
-
-        }
-        dialogData.difficulty.penalty += weapon.traitList.unwieldy ? parseInt(weapon.traitList.unwieldy.rating) : 0
-
-        if (this.hasKeyword("ORK") && weapon.traitList["waaagh!"])
-        {
-            dialogData.pool.bonus += 1;
-            if (this.combat.wounds.value > 0)
-                dialogData.ed.bonus += 1
-        }
-
-        if (options.multi > 1)
-        {
-            dialogData.difficulty.penalty += (options.multi - 1) * 2;
-            dialogData.multi = options.multi
-        }
 
         return dialogData
-    }
-
-    _powerDialogData(power) {
-        let dialogData = this._baseDialogData()
-        dialogData.power = power
-        dialogData.difficulty.target = power.system.DN
-        if (!Number.isNumeric(dialogData.difficulty.target)) {
-            ui.notifications.warn(game.i18n.localize("DIALOG.TARGET_DEFENSE_WARNING"))
-        }
-        dialogData.pool.size = power.skill.total;
-        return dialogData
-    }
-
-    _addOptions(dialogData, options) {
-        dialogData.difficulty.target = options.dn || dialogData.difficulty.target
-        dialogData.pool.size = options.pool || dialogData.pool.size
-        dialogData.title = options.title || dialogData.title
-        delete options.title;
-        delete options.pool;
-        delete options.dn;
-
-        mergeObject(dialogData, options);
-    }
-
-    _addCorruptionData(dialogData) {
-        let level = game.wng.config.corruptionLevels[this.corruptionLevel]
-        dialogData.difficulty.penalty += level.dn
     }
 
     speakerData() {
@@ -414,21 +157,6 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
             }
         }
     }
-
-    allDialogChanges({targets=[], vehicle} = {}) {
-        let effects = this.effects.contents.concat(vehicle?.effects.contents || []);
-        // Aggregate dialog changes from each effect
-        let changes = effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges()), {})
-
-        if (targets.length) {
-            let target = targets[0]
-            let targetChanges = target.effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges({target : true})), {})
-            mergeObject(changes, targetChanges);
-        }
-
-        return changes
-    }
-
 
     characterCreation(archetype) {
         new Dialog({
@@ -551,7 +279,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
             effect.name = game.i18n.localize(effect.name)
             effect.statuses = [effect.id];
             delete effect.id
-            return this.createEmbeddedDocuments("ActiveEffect", [effect])
+            return this.createEmbeddedDocuments("ActiveEffect", [effect], {condition: true})
         }
     }
 

@@ -105,9 +105,9 @@ export class StandardActorSheet extends BaseWnGActorSheet {
 
         effects.conditions = CONFIG.statusEffects.map(i => {
             return {
-                label: i.label,
+                name: i.name,
                 key: i.id,
-                img: i.icon,
+                img: i.img,
                 existing: this.actor.hasCondition(i.id)
             }
         })
@@ -176,7 +176,6 @@ export class StandardActorSheet extends BaseWnGActorSheet {
             else
                 test = await this.actor.setupAbilityRoll(item)
 
-            await test.rollTest();
         }
         else
             this._dropdownRightClick(ev)
@@ -226,31 +225,23 @@ export class StandardActorSheet extends BaseWnGActorSheet {
     async _onAttributeClick(event) {
         event.preventDefault();
         const attribute = $(event.currentTarget).data("attribute");
-        let test = await this.actor.setupAttributeTest(attribute)
-        await test.rollTest();
-        test.sendToChat()
+         this.actor.setupAttributeTest(attribute)
     }
 
     async _onSkillClick(event) {
         event.preventDefault();
         const skill = $(event.currentTarget).data("skill");
-        let test = await this.actor.setupSkillTest(skill)
-        await test.rollTest();
-        test.sendToChat()
+        this.actor.setupSkillTest(skill)
     }
 
     async _onDeterminationClick(event) {
         event.preventDefault();
-        let test = await this.actor.setupGenericTest("determination")
-        await test.rollTest();
-        test.sendToChat()
+        this.actor.setupGenericTest("determination")
     }
 
     async _onStealthClick(event) {
         event.preventDefault();
-        let test = await this.actor.setupGenericTest("stealth")
-        await test.rollTest();
-        test.sendToChat()
+        this.actor.setupGenericTest("stealth")
     }
 
     async _onConvictionClick(event) {
@@ -263,18 +254,14 @@ export class StandardActorSheet extends BaseWnGActorSheet {
                 "corruption": {
                     label: "Corruption",
                     callback: async () => {
-                        let test = await this.actor.setupGenericTest("corruption")
-                        await test.rollTest();
-                        test.sendToChat()
+                        this.actor.setupGenericTest("corruption")
 
                     }
                 },
                 "mutation": {
                     label: "Mutation",
                     callback: async () => {
-                        let test = await this.actor.setupGenericTest("mutation")
-                        await test.rollTest();
-                        test.sendToChat()
+                        this.actor.setupGenericTest("mutation")
                     }
                 }
             }
@@ -289,18 +276,14 @@ export class StandardActorSheet extends BaseWnGActorSheet {
                 "corruption": {
                     label: "Fear",
                     callback: async () => {
-                        let test = await this.actor.setupGenericTest("fear")
-                        await test.rollTest();
-                        test.sendToChat()
+                        this.actor.setupGenericTest("fear")
 
                     }
                 },
                 "mutation": {
                     label: "Terror",
                     callback: async () => {
-                        let test = await this.actor.setupGenericTest("terror")
-                        await test.rollTest();
-                        test.sendToChat()
+                        this.actor.setupGenericTest("terror")
                     }
                 }
             }
@@ -309,28 +292,19 @@ export class StandardActorSheet extends BaseWnGActorSheet {
 
     async _onInfluenceClick(event) {
         event.preventDefault();
-        let test = await this.actor.setupGenericTest("influence")
-        await test.rollTest();
-        test.sendToChat()
+        this.actor.setupGenericTest("influence")
     }
 
     async _onWeaponClick(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        let tests = await this.actor.setupWeaponTest(div.data("itemId"))
-        ui.sidebar.activateTab("chat")
-        await Promise.all(tests.map(t => t.rollTest()));
-        tests.forEach(t => {
-            t.sendToChat()
-        })
+        this.actor.setupWeaponTest(div.data("itemId"))
     }
 
     async _onPowerClick(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        let test = await this.actor.setupPowerTest(div.data("itemId"))
-        await test.rollTest();
-        test.sendToChat()
+        await this.actor.setupPowerTest(div.data("itemId"))
     }
 
     async _prepareRollPsychicPower(event) {

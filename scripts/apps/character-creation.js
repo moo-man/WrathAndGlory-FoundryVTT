@@ -1,7 +1,5 @@
 import WNGUtility from "../common/utility.js";
 import { WrathAndGloryItem } from "../document/item.js";
-import ArchetypeGroups from "./archetype-groups.js";
-import FilterResults from "./filter-results.js";
 
 export default class CharacterCreation extends FormApplication {
     constructor(object) {

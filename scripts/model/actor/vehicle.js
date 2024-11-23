@@ -1,11 +1,10 @@
 import { TraitsModel } from "../item/components/traits";
-import { BaseActorModel } from "./components/base";
 import { VehicleComplement } from "./components/crew";
 import { VehicleCombatModel } from "./components/vehicle-combat";
 
 const fields = foundry.data.fields;
 
-export class VehicleModel extends BaseActorModel {
+export class VehicleModel extends BaseWarhammerActorModel {
     static defineSchema() {
         let schema = super.defineSchema();
         schema.complement = new fields.EmbeddedDataField(VehicleComplement);

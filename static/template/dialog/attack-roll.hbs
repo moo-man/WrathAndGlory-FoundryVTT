@@ -1,0 +1,80 @@
+<hr>
+{{log this}}
+<div class="wrapper">
+    <label class="name">{{localize "WEAPON.DAMAGE"}}</label>
+    <input data-tooltip="{{tooltips.damage}}" data-tooltip-direction="LEFT" name="damage" type="number" value="{{fields.damage}}" />
+</div>
+<div class="input-labels">
+        <label style="visibility: hidden">ED</label>
+        <div>Value</div>
+        <div>Dice</div>
+</div>
+<div class="wrapper">
+    <label class="name">{{localize "WEAPON.ED"}}</label>
+    <input data-tooltip="{{tooltips.ed}}" data-tooltip-direction="LEFT" name="ed.value" type="number" value="{{fields.ed.value}}" />
+    <input data-tooltip="{{tooltips.ed.dice}}" data-tooltip-direction="LEFT" name="ed.dice" type="number" value="{{fields.ed.dice}}" />
+</div>
+<div class="wrapper">
+    <label class="name">{{localize "WEAPON.AP"}}</label>
+    <input data-tooltip="{{tooltips.ap}}" data-tooltip-direction="LEFT" name="ap.value" type="number" value="{{fields.ap.value}}" />
+    <input data-tooltip="{{tooltips.ap.dice}}" data-tooltip-direction="LEFT" name="ap.dice" type="number" value="{{fields.ap.dice}}" />
+</div>
+{{#if data.weapon.isRanged}}
+    <div class="wrapper">
+        <label  class="name">{{localize "WEAPON.RANGE"}}</label>
+        <input style="flex: 0 0 50px" data-tooltip="{{tooltips.distance}}" data-tooltip-direction="LEFT" name="distance" type="number" value="{{fields.distance}}" />
+        <select {{#if fields.distance}}disabled{{/if}} data-tooltip="{{tooltips.range}}" data-tooltip-direction="LEFT" name="range">
+            {{#select fields.range}}
+                <option></option>
+                {{#each (config "ranges") as |range r|}}
+                    <option value="{{r}}">{{range}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+        <label style="flex: unset;">{{localize "WEAPON.AIM"}}</label>
+        <input type="checkbox" name="aim" {{checked fields.aim}}>
+    </div>
+{{/if}}
+<hr>
+<div class="wrapper ed-values">
+    <div class="input-labels">
+        <label style="visibility: hidden">{{localize "ED Values"}}</label>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+    </div>
+    <div class="dice-inputs">
+    <label class="name">{{localize "ED Values"}}</label>
+    <input {{#if (gt fields.damageDice.addValue 0)}}disabled{{/if}} data-tooltip="{{tooltips.ones}}" type="number" name="damageDice.values.ones" value="{{fields.damageDice.values.ones}}" />
+    <input {{#if (gt fields.damageDice.addValue 1)}}disabled{{/if}} data-tooltip="{{tooltips.twos}}" type="number" name="damageDice.values.twos" value="{{fields.damageDice.values.twos}}" />
+    <input {{#if (gt fields.damageDice.addValue 2)}}disabled{{/if}} data-tooltip="{{tooltips.threes}}" type="number" name="damageDice.values.threes" value="{{fields.damageDice.values.threes}}" />
+    <input {{#if (gt fields.damageDice.addValue 3)}}disabled{{/if}} data-tooltip="{{tooltips.fours}}" type="number" name="damageDice.values.fours" value="{{fields.damageDice.values.fours}}" />
+    <input {{#if (gt fields.damageDice.addValue 4)}}disabled{{/if}} data-tooltip="{{tooltips.fives}}" type="number" name="damageDice.values.fives" value="{{fields.damageDice.values.fives}}" />
+    <input data-tooltip="{{tooltips.sixes}}" type="number" name="damageDice.values.sixes" value="{{fields.damageDice.values.sixes}}" />
+    </div>
+</div>
+<div class="wrapper" style="width: 50%;">
+    <label style="flex: content; " class="name">{{localize "Add Dice Value"}}</label>
+    <input data-tooltip="{{tooltips.damageDice.addValue}}" data-tooltip-direction="LEFT" name="damageDice.addValue" type="number" value="{{fields.damageDice.addValue}}" />
+</div>
+{{!-- <div class="wrapper">
+            <b class="name"></b>
+            <b class="die">1</b>
+            <b class="die">2</b>
+            <b class="die">3</b>
+            <b class="die">4</b>
+            <b class="die">5</b>
+            <b class="die">6</b>
+        </div>
+        <div class="wrapper">
+            <label class="name">{{localize "WEAPON.DIE_VALUE"}}</label>
+            <input id="die-one" class="die" type="number" value="{{lookup damageValues '1'}}" />
+            <input id="die-two" class="die" type="number" value="{{lookup damageValues '2'}}" />
+            <input id="die-three" class="die" type="number" value="{{lookup damageValues '3'}}" />
+            <input id="die-four" class="die" type="number" value="{{lookup damageValues '4'}}" />
+            <input id="die-five" class="die" type="number" value="{{lookup damageValues '5'}}" />
+            <input id="die-six" class="die" type="number" value="{{lookup damageValues '6'}}" />
+        </div> --}}

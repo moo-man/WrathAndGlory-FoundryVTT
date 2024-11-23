@@ -142,12 +142,7 @@ export class VehicleSheet extends BaseWnGActorSheet {
             let weapon = this.actor.items.get(id);
             if (weapon)
             {
-                let tests = await actor.setupWeaponTest(weapon);
-                for(let test of tests)
-                {
-                    await test.rollTest();
-                    test.sendToChat();
-                }
+                actor.setupWeaponTest(weapon);
             }
         });
     }

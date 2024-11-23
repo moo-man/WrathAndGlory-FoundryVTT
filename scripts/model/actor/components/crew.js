@@ -1,10 +1,7 @@
-import ItemDialog from "../../../apps/item-dialog";
-import { DocumentListModel } from "../../shared/list";
-import { DocumentReferenceModel } from "../../shared/reference";
 let fields = foundry.data.fields
 
 // List of objects that reference some embedded document on the parent
-export class VehicleComplement extends DocumentListModel {
+export class VehicleComplement extends ListModel {
     static defineSchema() 
     {
         let schema = super.defineSchema();

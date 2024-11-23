@@ -7,11 +7,11 @@ export default class PowerTest extends WNGTest {
     if (!data)
       return
 
-    this.data.testData.ed = data.ed || {}
-    this.data.testData.ap = data.ap || {}
-    this.data.testData.damage= data.damage || {}
-    
-    this.data.testData.itemId = data.itemId
+    this.data.testData.ed = data.ed.value
+    this.data.testData.ap = data.ap.value
+    this.data.testData.damage= data.damage
+
+    this.testData.itemId = data.power.uuid;
 
     // TODO: add to dialog
     this.data.testData.otherDamage = {

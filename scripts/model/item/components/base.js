@@ -4,94 +4,11 @@
 
 let fields = foundry.data.fields;
 
-export class BaseItemModel extends foundry.abstract.DataModel 
+export class BaseItemModel extends BaseWarhammerItemModel 
 {
-    get id () 
-    {
-        return this.parent.id;
-    }
-
     static defineSchema() 
     {
         return {};
-    }
-
-    async _preCreate(data, options, user) 
-    {
-    }
-
-    async _preUpdate(data, options, user) 
-    {
-    }
-
-    async _preDelete(options, user)
-    {
-     
-    }
-
-    async _onUpdate(data, options, user)
-    {
-       
-    }
-
-    async _onCreate(data, options, user)
-    {
-      
-    }
-
-    async _onDelete(options, user)
-    {
-        
-    }
-    
-    computeBase() 
-    {
-
-    }
-
-    computeDerived() 
-    {
-        
-    }
-
-    computeOwned()
-    {
-        
-    }
-
-    async allowCreation(data, options, user)
-    {
-        if (this.parent.actor)
-        {
-            return this.parent.actor.system.itemIsAllowed(this.parent);
-        }
-        else 
-        {
-            return true;
-        }
-    }
-
-    /**
-     * Get effects from other sources, like weapon modifications
-     * 
-     */
-    getOtherEffects()
-    {
-        return [];
-    }
-
-    /**
-     * 
-     */
-    effectIsApplicable(effect)
-    {
-        return !effect.disabled;
-    }
-
-    // If an item effect is disabled it should still transfer to the actor, so that it's visibly disabled
-    shouldTransferEffect()
-    {
-        return true;
     }
     
     static migrateData(data)
