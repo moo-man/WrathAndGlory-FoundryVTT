@@ -22,7 +22,15 @@
   display: flex;
   flex-direction: column;
   height: 90%;
-  overflow: auto
+  overflow: auto;
+
+  .source {
+    display: flex;
+    justify-content: center;
+    i {
+      margin: 0px 5px;
+    }
+  }
 }
 
 .wrath-and-glory.sheet .tab .system-effects label{
