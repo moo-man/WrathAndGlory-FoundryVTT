@@ -68,6 +68,20 @@ export class AttackDialog extends CommonDialog {
     return options
   }
 
+  _getSubmissionData()
+  {
+    let data = super._getSubmissionData();
+    data.damageDice.values = {
+      1 : data.damageDice.values.ones,
+      2 : data.damageDice.values.twos,
+      3 : data.damageDice.values.threes,
+      4 : data.damageDice.values.fours,
+      5 : data.damageDice.values.fives,
+      6 : data.damageDice.values.sixes
+    }
+    return data;
+  }
+
   _defaultFields() 
   {
       return mergeObject({

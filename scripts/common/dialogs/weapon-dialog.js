@@ -24,6 +24,17 @@ export class WeaponDialog extends AttackDialog {
 
       dialogData.data.weapon = weapon;
 
+      if (dialogData.data.targets[0])
+      {
+        let token = actor.getActiveTokens()[0]?.document
+        let target = dialogData.data.targets[0];
+        if (target && token)
+        {
+          dialogData.fields.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
+        }
+      }
+
+
       options.title = `${weapon.name} Test`
 
       return dialogData;
@@ -82,7 +93,13 @@ export class WeaponDialog extends AttackDialog {
     }
     this.tooltips.finish(this, "WAAAGH!")
 
+    this.tooltips.start(this)
 
+    if (weapon.traitList.rad)
+    {
+      this.fields.damageDice.addValue += Number(this.weapon.traitList.rad.rating);
+    }
+    this.tooltips.finish(this, "Rad")
 
     if (this.fields.aim)
     {
@@ -127,8 +144,22 @@ export class WeaponDialog extends AttackDialog {
   computeInitialFields()
   {
     super.computeInitialFields();
-    this.computeTargets();
     this.computeRange();
+
+    if (this.weapon.traitList.melta && this.fields.range == "short") 
+    {
+      this.fields.damageDice.values = 
+      {
+        ones: 0,
+        twos: 0,
+        threes: 1,
+        fours: 1,
+        fives: 2,
+        sixes: 2
+      }
+    }
+
+    this.computeTargets();
   }
 
 
@@ -137,7 +168,6 @@ export class WeaponDialog extends AttackDialog {
     if (this.data.targets[0])
     {
           let target = this.data.targets[0]
-          let token = this.actor.getActiveTokens()[0]?.document
 
           if (target && target.actor)
           {
@@ -151,9 +181,6 @@ export class WeaponDialog extends AttackDialog {
               this.fields.difficulty += (this.options.multi - 1) * 2;
             }
             this.tooltips.finish(this, `Multi-Attack (${this.options.multi} Targets)`)
-
-            this.fields.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
-
 
 
             this.tooltips.start(this)
@@ -169,8 +196,22 @@ export class WeaponDialog extends AttackDialog {
             {
                 this.fields.pool += 3;
             }
-            this.tooltips.finish(this, "Target Size")
+            this.tooltips.finish(this, "Target Size") 
 
+            this.tooltips.start(this)
+            if (this.weapon.traitList.melta && this.fields.range == "short" && target.actor.type == "vehicle") 
+            {
+                this.fields.damageDice.values = 
+                {
+                  ones: 1,
+                  twos: 1,
+                  threes: 1,
+                  fours: 2,
+                  fives: 2,
+                  sixes: 2
+                }
+            }
+            this.tooltips.finish(this, `Melta`)
 
           // If using melee and target has parry weapon equipped, increase difficulty
           if (this.weapon.system.category == "melee" && target.actor.itemTypes.weapon.find(i => i.isEquipped && i.traitList.parry))

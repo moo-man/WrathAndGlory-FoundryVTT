@@ -5,25 +5,25 @@ export default function() {
         let canApply = li => li.find(".damageRoll").length && canvas.tokens.controlled.length > 0;
         let canRerollFailed = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             if (test)
-                return !test.context.rerollFailed && (msg.isAuthor || msg.isOwner)
+                return !test.context.rerollFailed && (msg.isAuthor || msg.isOwner) && msg.type == "test"
         }
 
         let canRerollSelected = li => {
-            return li.find(".selected").length// && !li.find(".shifted").length
+            return li.find(".selected").length;
         }
 
         let canEdit = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             if (test)
                 return msg.isAuthor || msg.isOwner
         }
 
         let canShift = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             let selected = Array.from(li.find(".selected")).map(i => Number(i.dataset.index))
 
             // If all selected dice are shiftable and number of selected <= shifts possible
@@ -32,28 +32,29 @@ export default function() {
 
         let canShiftDamage = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             return canShift(li) && test.doesDamage && (msg.isAuthor || msg.isOwner)
         }
 
         let canShiftPotency = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
-            return canShift(li) && test.testData.potency?.length && (msg.isAuthor || msg.isOwner)
+            let test = msg.system.test
+            return canShift(li) && test.testData?.potency?.length && (msg.isAuthor || msg.isOwner)
         }
 
         let canResetPotency = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             if (!test) return;
-            return test.testData.potency?.length && test.testData.potency.some(p => p.allocation) && (msg.isAuthor || msg.isOwner)
+            return test.testData?.potency?.length && test.testData?.potency.some(p => p.allocation) && (msg.isAuthor || msg.isOwner)
         }
 
 
 
         let canClearReroll = li => {
-            let test = game.messages.get(li.attr("data-message-id")).getTest()
-            return test && game.user.isGM && test.testData.rerolls.length
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let roll = msg.system.test || msg.system.damage;
+            return roll && game.user.isGM && roll.hasRerolled
         }
 
         let canUnshift = li => {
@@ -69,7 +70,7 @@ export default function() {
                 condition: canRerollFailed,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let actor = test.actor;
                     if (actor.type == "agent")
                     {
@@ -101,7 +102,7 @@ export default function() {
                 condition: canEdit,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     new EditTestForm(test).render(true)
                 }
             },
@@ -111,9 +112,9 @@ export default function() {
                 condition: canRerollSelected,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let roll = message.system.test || message.system.damage;
                     let selected = Array.from(li.find(".selected")).map(i => Number(i.dataset.index))
-                    test.reroll(selected)
+                    roll.reroll(selected)
                 }
             },
             {
@@ -122,8 +123,8 @@ export default function() {
                 condition: canClearReroll,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
-                    test.clearRerolls()
+                    let roll = message.system.test || message.system.damage;
+                    roll.clearRerolls()
                 }
             },
             {
@@ -132,7 +133,7 @@ export default function() {
                 condition: canResetPotency,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     test.resetAllocation()
                 }
             },
@@ -142,7 +143,7 @@ export default function() {
                 condition: canShift,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.shift(shifted, "other")
                 }
@@ -153,7 +154,7 @@ export default function() {
                 condition: canShiftDamage,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.shift(shifted, "damage")
                 }
@@ -164,7 +165,7 @@ export default function() {
                 condition: canShift,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.shift(shifted, "glory")
 
@@ -181,7 +182,7 @@ export default function() {
                 condition: canShiftPotency,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.shift(shifted, "potency")
                 }
@@ -192,7 +193,7 @@ export default function() {
                 condition: canUnshift,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     test.unshift()
                 }
             },
@@ -201,7 +202,7 @@ export default function() {
                 icon: '<i class="fas fa-user-minus"></i>',
                 condition: canApply,
                 callback: li => {
-                    let test = game.messages.get(li.attr("data-message-id")).getTest();
+                    let test = game.messages.get(li.attr("data-message-id")).system.test;
                     canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor));
                 }
             }
@@ -210,7 +211,7 @@ export default function() {
             //     icon: '<i class="fas fa-user-times"></i>',
             //     condition: canApply,
             //     callback: li => {
-            //         let test = game.messages.get(li.attr("data-message-id")).getTest();
+            //         let test = game.messages.get(li.attr("data-message-id")).system.test;
             //         canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor, true, true));
             //     }
             // }

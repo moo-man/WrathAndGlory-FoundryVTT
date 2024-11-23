@@ -49,6 +49,7 @@ import { ArchetypeModel } from "./model/item/archetype.js";
 import { FactionModel } from "./model/item/faction.js";
 import { WrathAndGloryActiveEffectModel } from "./model/effect/effect.js";
 import WrathAndGloryActiveEffectConfig from "./apps/effect-config.js";
+import { WrathAndGloryDamageMessageModel, WrathAndGloryTestMessageModel } from "./model/message/message.js";
 
 Hooks.once("init", () => {
 
@@ -62,7 +63,8 @@ Hooks.once("init", () => {
 
 CONFIG.ActiveEffect.legacyTransferral = false;
 CONFIG.ActiveEffect.dataModels["base"] = WrathAndGloryActiveEffectModel
-// CONFIG.ChatMessage.dataModels["test"] = SystemMessageModel;
+CONFIG.ChatMessage.dataModels["test"] = WrathAndGloryTestMessageModel;
+CONFIG.ChatMessage.dataModels["damage"] = WrathAndGloryDamageMessageModel;
 
 DocumentSheetConfig.registerSheet(ActiveEffect, "system", WrathAndGloryActiveEffectConfig, {makeDefault : true});
 

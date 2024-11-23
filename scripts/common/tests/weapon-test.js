@@ -4,12 +4,14 @@ export default class WeaponTest extends WNGTest {
   constructor(data = {})
   {
     super(data)
-    if (!data)
+    if (foundry.utils.isEmpty(data))
       return
 
-    this.data.testData.ed = data.ed.value
-    this.data.testData.ap = data.ap.value
+    this.data.testData.ed = data.ed;
+    this.data.testData.ap = data.ap;
     this.data.testData.damage= data.damage
+    this.data.testData.damageDice= data.damageDice
+
     this.data.testData.range = data.range
     this.data.testData.aim = data.aim
 
@@ -24,9 +26,9 @@ export default class WeaponTest extends WNGTest {
 
   async edit({pool=0, wrath=0, icons=0, damage=0, ed=0, ap=0}={})
   {
-    this.data.context.edit.damage += damage;
-    this.data.context.edit.ed += ed;
-    this.data.context.edit.ap += ap;
+    this.data.testData.edit.damage += damage;
+    this.data.testData.edit.ed += ed;
+    this.data.testData.edit.ap += ap;
     await super.edit({pool, wrath, icons})
   }
 

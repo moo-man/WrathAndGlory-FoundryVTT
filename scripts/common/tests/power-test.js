@@ -4,7 +4,7 @@ export default class PowerTest extends WNGTest {
   constructor(data)
   {
     super(data)
-    if (!data)
+    if (foundry.utils.isEmpty(data))
       return
 
     this.data.testData.ed = data.ed.value
@@ -22,7 +22,7 @@ export default class PowerTest extends WNGTest {
     
     this.data.testData.potency = duplicate(this.item.potency)
     this.data.testData.potency.forEach(p => p.allocation = 0)
-    this.data.context.edit.potency = 0;
+    this.data.testData.edit.potency = 0;
   }
 
   get template() {
@@ -46,7 +46,7 @@ export default class PowerTest extends WNGTest {
 
   computePotencies() {
 
-    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.length + this.context.edit.potency}
+    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.length + this.testData.edit.potency}
 
     this.result.potency.options.forEach(p => {
       // Set initial potency values (before potency allocation)
@@ -94,10 +94,10 @@ export default class PowerTest extends WNGTest {
 
   async edit({pool=0, wrath=0, icons=0, damage=0, ed=0, ap=0, potency=0}={})
   {
-    this.data.context.edit.damage += damage;
-    this.data.context.edit.ed += ed;
-    this.data.context.edit.ap += ap;
-    this.data.context.edit.potency += potency;
+    this.data.testData.edit.damage += damage;
+    this.data.testData.edit.ed += ed;
+    this.data.testData.edit.ap += ap;
+    this.data.testData.edit.potency += potency;
     await super.edit({pool, wrath, icons})
   }
 

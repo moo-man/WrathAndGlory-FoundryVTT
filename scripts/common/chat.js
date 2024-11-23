@@ -18,7 +18,7 @@ export default class WNGChat {
     let message = game.messages.get(id)
     if (message.isAuthor || message.isOwner)
     {
-      let test = message.getTest();
+      let test = message.system.test;
       test.rollDamage()
     }
   }
@@ -26,7 +26,7 @@ export default class WNGChat {
   static async _onWrathClick(ev) {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let message = game.messages.get(id)
-    let test = message.getTest();
+    let test = message.system.test;
     let chatData = {}
     let table
     let roll
@@ -89,7 +89,7 @@ export default class WNGChat {
       let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
       let effectId = $(ev.currentTarget).attr("data-id")
       let msg = game.messages.get(id)
-      let test = msg.getTest();
+      let test = msg.system.test;
       let item = test.item
       let effect = test.getEffect(effectId).toObject()
 
@@ -111,7 +111,7 @@ export default class WNGChat {
   {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let msg = game.messages.get(id)
-    let msgTest = msg.getTest();
+    let msgTest = msg.system.test;
     let itemTest = msgTest.result.test;
 
     if (canvas.tokens.controlled.length)
@@ -162,7 +162,7 @@ export default class WNGChat {
   {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let msg = game.messages.get(id)
-    let test = msg.getTest();
+    let test = msg.system.test;
 
     let table = game.tables.getName("Mutation Severity")
     let roll = new Roll(table.formula)
@@ -174,7 +174,7 @@ export default class WNGChat {
   {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let msg = game.messages.get(id)
-    let test = msg.getTest();
+    let test = msg.system.test;
 
     test.addAllocation(parseInt(ev.currentTarget.dataset.index))
   }
@@ -183,7 +183,7 @@ export default class WNGChat {
   {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let msg = game.messages.get(id)
-    let test = msg.getTest();
+    let test = msg.system.test;
     test.resetAllocation()
   }
 }
