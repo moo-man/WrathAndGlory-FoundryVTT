@@ -35,6 +35,10 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
             attributes: new foundry.data.fields.EmbeddedDataField(AttributesModel),
             skills : new foundry.data.fields.EmbeddedDataField(SkillsModel),
             combat : new foundry.data.fields.EmbeddedDataField(CombatModel),
+
+            species : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
+            faction : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
+            archetype : new foundry.data.fields.EmbeddedDataField(SingletonItemModel)
         }
     }
 
@@ -47,5 +51,13 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
         this.attributes.compute();
         this.skills.compute(this.attributes);
         this.combat.compute(this.attributes, this.parent.getFlag("wrath-and-glory", "autoCalc") || {});
+    }
+
+    
+    _addModelProperties()
+    {
+        this.species.relative = this.parent.items
+        this.faction.relative = this.parent.items
+        this.archetype.relative = this.parent.items
     }
 }

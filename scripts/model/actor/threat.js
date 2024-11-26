@@ -3,8 +3,11 @@ import { StandardWNGActorModel } from "./components/standard";
 let fields = foundry.data.fields;
 
 export class ThreatModel extends StandardWNGActorModel {
+    static singletonItemPaths = {"species" : "species", "faction" : "faction", "archetype" : "archetype"};
+
     static defineSchema() {
         let schema = super.defineSchema();
+
         schema.bio = new fields.SchemaField({
             species: new fields.StringField(),
             faction: new fields.StringField(),

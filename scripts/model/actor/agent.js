@@ -91,10 +91,5 @@ export class AgentModel extends StandardWNGActorModel {
         this.experience.current = this.experience.total - this.experience.spent;
 
 
-        //SINGETON TYPES
-        this.bio.origin.value = this.bio.origin.value || this.faction?.backgrounds.origin.find(b => b.active)?.description
-        this.bio.accomplishment.value = this.bio.accomplishment.value || this.faction?.backgrounds.accomplishment.find(b => b.active)?.description
-        this.bio.goal.value = this.bio.goal.value || this.faction?.backgrounds.goal.find(b => b.active)?.description
-
     }
 }
