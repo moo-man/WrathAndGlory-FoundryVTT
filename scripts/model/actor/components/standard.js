@@ -4,6 +4,7 @@ import { SkillsModel } from "./skills";
 
 export class StandardWNGActorModel extends BaseWarhammerActorModel {
 
+    static singletonItemPaths = {"species" : "species", "faction" : "faction", "archetype" : "archetype"};
         
     async _preCreate(data, options, user) 
     {

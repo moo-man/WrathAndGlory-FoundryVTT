@@ -128,7 +128,7 @@ export class BaseWnGActorSheet extends WarhammerActorSheet {
     _onItemEdit(event) {
         event.stopPropagation();
         const div = $(event.currentTarget).parents(".item");
-        const item = this.actor.items.get(div.data("itemId"));
+        const item = this.actor.items.get(div.data("itemId") || event.target.dataset.itemId);
         item.sheet.render(true);
     }
 

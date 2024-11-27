@@ -10,7 +10,7 @@
           <input name="name" type="text" value="{{actor.name}}" />
         </div>
         <div class="species">
-          <label class="item-label" data-type="species">{{localize "BIO.SPECIES"}}</label>
+          <label class="item-label item-edit" data-item-id="{{actor.system.species.document.id}}" data-type="species">{{localize "BIO.SPECIES"}}</label>
           {{#if actor.system.species.document}}
             <input disabled type="text" value="{{actor.system.species.name}}" />
             <a class="remove-singleton" data-path="system.species"><i class="fa-solid fa-xmark"></i></a>
@@ -21,7 +21,7 @@
       </div>
       <div class="row">
         <div class="faction">
-          <label class="item-label" data-type="faction">{{localize "BIO.FACTION"}}</label>
+          <label class="item-label item-edit" data-item-id="{{actor.system.faction.document.id}}" data-type="faction">{{localize "BIO.FACTION"}}</label>
           {{#if actor.system.faction.document}}
             <input disabled type="text" value="{{actor.system.faction.name}}" />
             <a class="remove-singleton" data-path="system.faction"><i class="fa-solid fa-xmark"></i></a>
@@ -30,7 +30,7 @@
           {{/if}}
         </div>
         <div class="archetype">
-          <label class="item-label" data-type="archetype">{{localize "BIO.ARCHETYPE"}}</label>
+          <label class="item-label item-edit" data-item-id="{{actor.system.archetype.document.id}}" data-type="archetype">{{localize "BIO.ARCHETYPE"}}</label>
           {{#if actor.system.archetype.document}}
             <input disabled type="text" value="{{actor.system.archetype.name}}" />
             <a class="remove-singleton" data-path="system.archetype"><i class="fa-solid fa-xmark"></i></a>

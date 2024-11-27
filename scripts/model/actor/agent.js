@@ -5,6 +5,7 @@ import { AgentAttributesModel } from "./components/attributes";
 const fields = foundry.data.fields;
 
 export class AgentModel extends StandardWNGActorModel {
+
     static defineSchema() {
         let schema = super.defineSchema();
         schema.attributes = new fields.EmbeddedDataField(AgentAttributesModel)
