@@ -3,13 +3,12 @@
         {{else}}
         <div class="seal heresy"></div>
         {{/if}}
-
-        {{#if context.targets.length}}
+        {{#if targetTokens.length}}
         <div class="targets">
                 <a class="crosshair">
                         <i class="fas fa-crosshairs"></i>
                 </a>
-                {{#each context.targets as |target t|}}
+                {{#each targetTokens as |target t|}}
                         <a class="target" data-token-id="{{target._id}}">{{target.name}}</a>
                 {{/each}}
         </div>

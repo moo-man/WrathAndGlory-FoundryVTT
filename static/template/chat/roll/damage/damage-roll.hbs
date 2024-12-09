@@ -4,35 +4,61 @@
 
         <div class="dice-container">
             {{#each result.dice as |die index|}}
-            <a class="die {{die.name}} unshifted" data-index="{{index}}"><img src="{{die.img}}"/>
-                {{#if die.rerolled}}
+                <a class="die {{die.name}} unshifted" data-index="{{index}}"><img src="{{die.img}}" />
+                    {{#if die.rerolled}}
                         <span class="reroll die-icon"><i class="fas fa-redo"></i></span>
-                {{/if}}    
-            </a>
+                    {{/if}}
+                </a>
             {{/each}}
         </div>
     </div>
 
     <div class="wrapper-input">
+        {{#if targetTokens.length}}
+            <div class="targets">
+                <a class="crosshair">
+                    <i class="fas fa-crosshairs"></i>
+                </a>
+                {{#each targetTokens as |target t|}}
+                    <a class="target" data-token-id="{{target._id}}">{{target.name}}</a>
+                {{/each}}
+            </div>
+        {{/if}}
         <p><strong>{{localize "WEAPON.DAMAGE"}}: {{result.total}}</strong></p>
         {{#if result.ap}}
-        <p><strong>{{localize "WEAPON.AP"}}: {{result.ap}}</strong></p>
+            <p><strong>{{localize "WEAPON.AP"}}: {{result.ap}}</strong></p>
         {{/if}}
 
         {{#if result.other.mortal.total}}
-        <p><strong title="{{result.other.mortal.value}} + {{result.other.mortal.bonus}}">{{localize "CHAT.MORTAL"}}: {{result.other.mortal.total}}</strong></p>
+            <p><strong title="{{result.other.mortal.value}} + {{result.other.mortal.bonus}}">{{localize "CHAT.MORTAL"}}:
+                    {{result.other.mortal.total}}</strong></p>
         {{/if}}
 
         {{#if result.other.wounds.total}}
-        <p><strong title="{{result.other.wounds.value}} + {{result.other.wounds.bonus}}">{{localize "CHAT.WOUNDS"}}: {{result.other.wounds.total}}</strong></p>
+            <p><strong title="{{result.other.wounds.value}} + {{result.other.wounds.bonus}}">{{localize "CHAT.WOUNDS"}}:
+                    {{result.other.wounds.total}}</strong></p>
         {{/if}}
 
         {{#if result.other.shock.total}}
-        <p><strong title="{{result.other.shock.value}} + {{result.other.shock.bonus}}">{{localize "CHAT.SHOCK"}}: {{result.other.shock.total}}</strong></p>
+            <p><strong title="{{result.other.shock.value}} + {{result.other.shock.bonus}}">{{localize "CHAT.SHOCK"}}:
+                    {{result.other.shock.total}}</strong></p>
         {{/if}}
 
         {{#if item.system.traits}}
-        <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.system.traits.formatted}}</strong></p>
+            <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.system.traits.formatted}}</strong></p>
         {{/if}}
     </div>
+
+    {{#if context.appliedReport}}
+    <h3 style="margin-top: 7px">Applied Damage</h3>
+    <div class="wrapper-input">
+        {{{context.appliedReport}}}
+    </div>
+    {{/if}}
 </div>
+
+{{#unless context.appliedReport}}
+<div class="wrapper">
+    <button type="button" class="apply-damage">Apply Damage</button>
+</div>
+{{/unless}}

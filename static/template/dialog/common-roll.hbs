@@ -27,6 +27,12 @@
                     <input name="wrath" class="base" type="number" value="{{fields.wrath}}" />
                 </div>
             {{/unless}}
+            <div class="wrapper">
+                <label>{{localize "DIALOG.ROLLMODE"}}</label>
+                <select name="rollMode">
+                    {{selectOptions rollModes selected=fields.rollMode localize=true }}
+                </select>
+            </div>
 
             {{{subTemplate}}}
         </div>

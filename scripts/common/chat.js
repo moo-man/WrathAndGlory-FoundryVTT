@@ -2,6 +2,7 @@ import WNGUtility from "./utility"
 
 export default class WNGChat {
   static chatListeners(html) {
+    html.on("click", ".apply-damage", this._onApplyDamage.bind(this))
     html.on("click", ".roll-damage", this._onDamageClick.bind(this))
     html.on("click", ".roll-wrath", this._onWrathClick.bind(this))
     html.on("click", "a.die", this._onDieClick.bind(this))
@@ -15,6 +16,12 @@ export default class WNGChat {
     // html.on("click", ".target", WNGUtility.focusToken.bind(this))
     html.on("click", ".apply-target", WarhammerChatListeners.onApplyTargetEffect)
     html.on("click", ".place-area", WarhammerChatListeners.onPlaceAreaEffect)
+  }
+
+  static async _onApplyDamage(ev)
+  {
+    let damage = game.messages.get($(ev.target).parents(".message").attr("data-message-id")).system.damage;
+    damage.applyToTargets();
   }
 
   static _onDamageClick(ev) {

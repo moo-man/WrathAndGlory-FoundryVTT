@@ -107,6 +107,11 @@ export class CombatModel extends foundry.abstract.DataModel {
             {
                 this.resilience.invulnerable = true
             }
+
+            if (item.traitList.forceField)
+            {
+                this.resilience.forceField = true;
+            }
         }
         this.resilience.armour += highestRes
     }

@@ -16,7 +16,10 @@ export default class DeterminationRoll extends WNGTest {
   }
   _computeResult() {
     super._computeResult();
+    // Convert number of successes to shock (but no more than the original wounds value)
     this.result.shock = this.result.success >= this.result.wounds ? this.result.wounds : Math.min(this.result.success, this.testData.wounds)
+
+    // Reduce Wounds by successes rolled
     this.result.wounds = this.testData.wounds >= this.result.success ? this.testData.wounds - this.result.success : 0
   }
 

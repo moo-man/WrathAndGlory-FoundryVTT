@@ -52,6 +52,7 @@ export class RollDialog extends WarhammerRollDialog {
         data.title = this.options.title;
         data.noDn = this.options.noDn;
         data.noWrath = this.options.noWrath;
+        data.rollModes = CONFIG.Dice.rollModes;
         return data;
     }
 
@@ -111,11 +112,17 @@ export class RollDialog extends WarhammerRollDialog {
   
     _defaultFields() 
     {
-        return mergeObject({
+        let fields = mergeObject({
             difficulty : 3,
             pool : 1,
             wrath : 1,
         }, super._defaultFields());
+
+        if (this.options.determination && game.user.isGM)
+        {
+          fields.rollMode = "gmroll";
+        }
+        return fields
     }
   }
   

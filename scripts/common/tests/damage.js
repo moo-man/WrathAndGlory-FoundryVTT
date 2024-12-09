@@ -187,6 +187,21 @@ export class DamageRoll {
       return this.message.update({ system: this.data })
   }
 
+  addReport(reports, replace=false)
+  {
+    let newReports = reports.map(r => `<p class="report" data-uuid="${r.uuid}" data-tooltip="${r.breakdown}" data-tooltip-direction="LEFT">${r.resisted ? '<i class="fa-solid fa-shield"></i>' : '<i class="fa-solid fa-user-minus"></i>'} ${r.message}</p>`).join("")
+
+    this.context.appliedReport = replace ? newReports : ((this.context.appliedReport || "") + newReports)
+    this.sendToChat()
+  }
+
+  async applyToTargets()
+  {
+    let tokens = (game.user.targets.size ? Array.from(game.user.targets).map(t => t.document) : this.targetTokens);
+    let reports = await Promise.all(tokens.map(t => t.actor?.applyDamage(this.result.total, {ap : this.result.ap, shock : this.result.other.shock, mortal : this.result.other.mortal}, {roll: this, token : t})));
+    this.addReport(reports);
+  }
+
   get hasRerolled()
   {
     return this.rerollData.indices.length
@@ -222,6 +237,11 @@ export class DamageRoll {
   get source()
   {
     return game.messages.get(this.context.source)
+  }
+
+  get targetTokens() 
+  {
+    return this.source.system.test.targetTokens;
   }
 
   get actor() { return game.wng.utility.getSpeaker(this.context.speaker) }

@@ -43,6 +43,19 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
         }
     }
 
+    async _preUpdate(data, options, user)
+    {
+        await super._preUpdate(data, options, user);
+        if (foundry.utils.hasProperty(options, "changed.system.combat.wounds.value"))
+        {
+            options.deltaWounds = data.system.combat.wounds.value - this.combat.wounds.value;
+        }
+        if (foundry.utils.hasProperty(options, "changed.system.combat.shock.value"))
+        {
+            options.deltaShock = data.system.combat.shock.value - this.combat.shock.value;
+        }
+    }
+
     computeBase() 
     {
     

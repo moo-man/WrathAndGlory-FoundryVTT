@@ -2,7 +2,10 @@ import EditTestForm from "../apps/edit-test.js";
 
 export default function() {
     Hooks.on("getChatLogEntryContext", (html, options) => {
-        let canApply = li => li.find(".damageRoll").length && canvas.tokens.controlled.length > 0;
+        let canApply = li => {
+            let msg = game.messages.get(li.attr("data-message-id"))
+            return game.user.isGM && msg.type == "damage";
+        }
         let canRerollFailed = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
             let test = msg.system.test
@@ -199,85 +202,14 @@ export default function() {
             },
             {
                 name: "BUTTON.ApplyDamage",
-                icon: '<i class="fas fa-user-minus"></i>',
+                icon: '<i class="fas fa-user-times"></i>',
                 condition: canApply,
                 callback: li => {
-                    let test = game.messages.get(li.attr("data-message-id")).system.test;
-                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor));
+                    let damage = game.messages.get(li.attr("data-message-id")).system.damage;
+                    damage.applyToTargets();
                 }
             }
-            // {
-            //     name: "BUTTON.ApplyDamageArmourAP",
-            //     icon: '<i class="fas fa-user-times"></i>',
-            //     condition: canApply,
-            //     callback: li => {
-            //         let test = game.messages.get(li.attr("data-message-id")).system.test;
-            //         canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor, true, true));
-            //     }
-            // }
 
         )
     });
-}
-
-function _dealDamageToTarget(test, target) {
-    let ap = Math.abs(test.result.damage.ap) || 0
-    let damage = test.result.damage.total + (test.result.damage.other?.wounds?.total || 0)
-    let res = target.combat.resilience.total || 1
-    let invuln = target.combat.resilience.invulnerable
-    let promise
-
-    let addWounds = 0;
-    let addShock = 0;
-
-    if (game.settings.get('wrath-and-glory', 'advancedArmour'))
-    {
-        if (!invuln)
-            res -= (Math.min(ap, target.system.combat.resilience.armour))
-    }
-    else 
-    {
-        if (!invuln)
-            res -= ap
-    }
-
-    if (res <= 0)
-        res = 1
-
-    if (res > damage)
-        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : target.prototypeToken.name}))
-
-    if (res == damage)
-    {
-        addShock++
-    }
-
-    if (res < damage)
-    {
-        addWounds = damage - res
-        if (addWounds <= 0)
-        addWounds = 0
-
-    }
-    addWounds += test.result.damage.other?.mortalWounds?.total || 0
-
-    if (test.result.damage.other?.shock?.total)
-    {
-        addShock += test.result.damage.other.shock.total
-    }
-
-    let updateObj = {}
-    if (addShock)
-    {
-        updateObj["system.combat.shock.value"] = target.combat.shock.value + 1
-        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_SHOCK", {name : target.prototypeToken.name}));
-}
-    if (addWounds)
-    {
-        updateObj["system.combat.wounds.value"] = target.combat.wounds.value + addWounds;
-        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE", {damage : addWounds, name : target.prototypeToken.name}));
-    }
-
-    target.update(updateObj);
-    return promise
 }

@@ -23,6 +23,7 @@ export class WNGTest extends WarhammerTestBase {
         type: data.type,
         speaker: data.speaker,
         rollClass: this.constructor.name,
+        rollMode : data.rollMode,
         rerolled: data.rerolled || false,
       },
       result: {},
@@ -32,10 +33,6 @@ export class WNGTest extends WarhammerTestBase {
 
   get template() {
     return "systems/wrath-and-glory/template/chat/roll/common/common-roll.hbs"
-  }
-
-  get damageTemplate() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/damage-roll.hbs"
   }
 
   static recreate(data) {
@@ -374,7 +371,7 @@ export class WNGTest extends WarhammerTestBase {
       rolls: [this.roll],
       system: this.data,
       user: game.user.id,
-      rollMode: game.settings.get("core", "rollMode"),
+      rollMode: this.context.rollMode,
       content: html,
       speaker: this.context.speaker
     };

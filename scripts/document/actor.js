@@ -28,6 +28,28 @@ export class WrathAndGloryActor extends WarhammerActor {
         })
     }
 
+    async _onUpdate(data, options, user)
+    {
+        await super._onUpdate(data, options, user);
+        if (options.deltaWounds > 0)
+        {
+            TokenHelpers.displayScrollingText("+" + options.deltaWounds, this, {fill: "0xFF0000", direction : CONST.TEXT_ANCHOR_POINTS.TOP});
+        }
+        else if (options.deltaWounds < 0)
+        {
+            TokenHelpers.displayScrollingText(options.deltaWounds, this, {fill: "0x00FF00", direction : CONST.TEXT_ANCHOR_POINTS.BOTTOM});
+        }
+    
+        if (options.deltaShock > 0)
+        {
+            TokenHelpers.displayScrollingText("+" + options.deltaShock, this, {fill: "0x6666FF", direction : CONST.TEXT_ANCHOR_POINTS.TOP});
+        }
+        else if (options.deltaShock < 0)
+        {
+            TokenHelpers.displayScrollingText(options.deltaShock, this, {fill: "0x6666FF", direction : CONST.TEXT_ANCHOR_POINTS.BOTTOM});
+        }
+    }
+
     //#region Rolling
     async setupAttributeTest(attribute, options = {}) {
         return this._setupTest(CommonDialog, WNGTest, {attribute}, options)
@@ -144,6 +166,20 @@ export class WrathAndGloryActor extends WarhammerActor {
         return dialogData
     }
 
+    async rollDetermination(wounds, message)
+    {
+        if (this.statuses.has("exhausted"))
+        {
+            return;
+        }
+        let test = await this.setupGenericTest("determination", {message, fields: {wounds}, resolveClose: true})
+        if (test)
+        {
+            await test.rollTest();
+        }
+        return test;
+    }
+
     characterCreation(archetype) {
         new Dialog({
             title: "Character Creation",
@@ -165,7 +201,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
         else if (this.type == "threat" && apply) // If threat, apply archetype statistics
         {
-            ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+            message.push(`Applying ${archetype.name} Archetype`)
             let actorData = this.toObject();
 
             let items = await archetype.GetArchetypeItems()
@@ -211,6 +247,119 @@ export class WrathAndGloryActor extends WarhammerActor {
             this.createEmbeddedDocuments("Item", items)
         }
     }
+
+    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}, {roll, token}) {
+        let res = this.system.combat.resilience.total || 1
+        ap = Math.abs(ap);
+
+        let invuln = this.system.combat.resilience.invulnerable
+        let forceField= this.system.combat.resilience.forceField
+
+        let wounds = 0
+
+        let report = {
+            message : null,
+            breakdown : [],
+            uuid : token?.uuid
+        }
+    
+        if (!invuln)
+        {
+            let resilienceReduction = ap
+            if (game.settings.get('wrath-and-glory', 'advancedArmour'))
+            {
+                resilienceReduction = Math.min(ap, target.system.combat.resilience.armour)
+            }
+            report.breakdown.push(`<strong>AP</strong>: Reduced Resilience to ${Math.max(0, res - resilienceReduction)} (${res} - ${resilienceReduction})`)
+            res = Math.max(0, res - resilienceReduction);
+        }
+    
+        if (res <= 0)
+            res = 1
+    
+        if (damage)
+        {
+            if (res > damage)
+            {
+                report.message = game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : token?.name})
+                report.breakdown.push(`<strong>Resilience</strong>: Resisted ${damage} Damage`)
+                report.resisted = true;
+            }
+        
+            if (res == damage)
+            {
+                report.breakdown.push(`<strong>Resilience</strong>: Suffered 1 Shock (${res} vs. ${damage} Damage)`)
+                shock++
+            }
+            if (res < damage)
+            {
+                // report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE_REDUCED", {damage, res, name : token?.name}))
+                wounds = damage - res
+                report.breakdown.push(`<strong>Resilience</strong>: ${damage} Damage reduced to ${wounds} Wounds (-${res})`)
+            }
+        }
+
+        if (mortal)
+        {
+            report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal}`)
+            // report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE_MORTAL", {mortal, name : token?.name}))
+            if (forceField)
+            {
+                report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal} converted to Wounds (${wounds + mortal})`);
+                wounds += mortal;
+                mortal = 0;
+            }
+        }
+
+        if (wounds)
+        {
+            let determination = await this.rollDetermination(wounds, roll?.message?.id)
+            if (determination)
+            {
+                wounds = determination.result.wounds;                
+                shock += determination.result.shock;     
+                // report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE_DETERMINATION", {shock : determination.result.shock, name : token?.name}))
+                report.breakdown.push(`<strong>Determination</strong>: Converted ${shock} Wounds to Shock`)
+                report.determination = determination;          
+            }        
+        }
+
+        let actualMaxShock = this.system.combat.shock.max + 1;
+        // TODO Move this shock test?
+        if (this.system.combat.shock && (shock + this.system.combat.shock.value > actualMaxShock))
+        {
+            let excessShock = (shock + this.system.combat.shock.value) - actualMaxShock
+            shock -= excessShock;
+            
+            mortal += excessShock
+            report.breakdown.push(`<strong>Exhausted</strong>: ${excessShock} Shock converted to Mortal Wounds (${mortal})`);
+        }
+    
+
+        let updateObj = {}
+        if (shock)
+        {
+            updateObj["system.combat.shock.value"] = this.system.combat.shock.value + shock
+        }
+        if (wounds || mortal)
+        {
+            updateObj["system.combat.wounds.value"] = this.system.combat.wounds.value + wounds + mortal;
+        }
+        if (shock || wounds)
+        {
+            report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE", {wounds : wounds + mortal, shock, name : token?.name}));
+            report.message = game.i18n.format(`<strong>${token?.name}</strong> received damage`);
+        }
+
+        report.breakdown = `<ul><li><p>${report.breakdown.join(`</p></li><li><p>`)}</p></li></ul>`
+    
+        report.wounds = wounds;
+        report.mortal = mortal;
+        report.shock = shock;
+        this.update(updateObj);
+        return report;
+    }
+    
 
     //#endregion
 
