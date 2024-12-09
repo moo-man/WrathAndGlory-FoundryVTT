@@ -20,6 +20,7 @@ export class PowerDialog extends AttackDialog {
       let dialogData = await super.setupData({skill, attribute}, actor, options)
       
       dialogData.data.power = power;
+      dialogData.data.scripts = dialogData.data.scripts.concat(power?.getScripts("dialog"));
       
       options.title = `${power.name} Test`
       

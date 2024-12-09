@@ -23,6 +23,7 @@ export class WeaponDialog extends AttackDialog {
       let dialogData = await super.setupData({skill, attribute}, actor, options)
 
       dialogData.data.weapon = weapon;
+      dialogData.data.scripts = dialogData.data.scripts.concat(weapon?.getScripts("dialog"));
 
       if (dialogData.data.targets[0])
       {

@@ -135,6 +135,15 @@ export class WeaponModel extends EquippedItemModel
         this.traits.add(this.Ammo.system.traits)
     }
 
+    getOtherEffects()
+    {
+        let other = [];
+        if (this.Ammo)
+        {
+            other = other.concat(this.Ammo.effects.contents);
+        }
+        return super.getOtherEffects().concat(other);
+    }
 
     _applyEffects(effects) {
         let overrides = {}
