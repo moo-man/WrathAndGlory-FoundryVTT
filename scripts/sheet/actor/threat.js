@@ -1,3 +1,4 @@
+import { MobConfig } from "../../apps/mob-config.js";
 import { StandardActorSheet } from "./standard.js";
 
 export class ThreatSheet extends StandardActorSheet {
@@ -12,13 +13,14 @@ export class ThreatSheet extends StandardActorSheet {
         const sheetData = await super.getData();
         sheetData.autoCalc.wounds = false;
         sheetData.autoCalc.shock = false;
-
+        sheetData.mobAbilities = this.document.system.mob.abilities.documents.filter(i => !i.system.isActiveMobAbility);
         return sheetData;
     }
 
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-cost").focusout(async (ev) => { await this._onItemCostFocusOut(ev); });
+        html.find(".configure-mob").click(this._onConfigureMob.bind(this));
     }
 
 
@@ -31,5 +33,10 @@ export class ThreatSheet extends StandardActorSheet {
         await this.actor.updateEmbeddedDocument("Item", data);
 
         this._render(true);
+    }
+
+    _onConfigureMob(event) 
+    {
+        new MobConfig(this.document).render(true);
     }
 }

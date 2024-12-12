@@ -12,9 +12,15 @@
       flex-basis: calc(20% - 1px);
       margin-left: 1px;
 
-      label {
-        min-width: 50px;
-        max-width: 50px;
+      label   {
+        display: flex;
+        justify-content: center;
+        a {
+          text-wrap: nowrap;
+          text-align: center;
+          font-size: 14px;
+          margin:0px;
+        }
       }
     }
   }

@@ -46,14 +46,15 @@
           <input name="system.bio.threat.second" type="text" value="{{system.bio.threat.second}}" />
           <input name="system.bio.threat.third" type="text" value="{{system.bio.threat.third}}" />
           <input name="system.bio.threat.fourth" type="text" value="{{system.bio.threat.fourth}}" />
+          <input name="system.bio.threat.fifth" type="text" value="{{system.bio.threat.fifth}}" />
         </div>
         <div class="ruin">
           <label>{{localize "RESOURCE.RUIN"}}</label>
           <input name="system.resources.ruin" type="number" value="{{system.resources.ruin}}" data-dtype="Number" />
         </div>
         <div class="mob">
-          <label>{{localize "THREAT.MOB"}}</label>
-          <input name="system.mob" type="number" value="{{system.mob}}" data-dtype="Number" />
+          <label><a class="configure-mob">{{localize "THREAT.MOB"}} <i class="fa-solid fa-people-group"></i></a></label>
+          <input name="system.mob.value" type="number" value="{{system.mob.value}}" data-dtype="Number" />
         </div>
       </div>
     </div>

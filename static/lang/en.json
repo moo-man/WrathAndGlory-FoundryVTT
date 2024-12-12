@@ -424,6 +424,8 @@
   "TITLE.ADVANCES": "ADVANCES",
   "TITLE.DETAILS": "DETAILS",
   "TITLE.COMPLEMENT": "COMPLEMENT",
+  "TITLE.MOB_ABILITIES" : "MOB ABILITIES",
+  "TITLE.INACTIVE_MOB_ABILITIES" : "INACTIVE MOB ABILITIES",
 
   "TRAUMATIC_INJURY.NAME": "Name",
   "TRAUMATIC_INJURY.DESCRIPTION": "Description",
@@ -562,6 +564,8 @@
   "EFFECT.HalfCover" : "Half Cover",
   "EFFECT.FullCover" : "Full Cover",
   "THREAT.MOB" : "Mob",
+  "THREAT.MobAbilities" : "Mob Abilities",
+  "THREAT.MobValue" : "Mob Value",
 
   "UpdaterTitle1": "Update",
   "UpdaterTitle2": "Content",

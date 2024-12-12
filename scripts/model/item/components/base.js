@@ -10,6 +10,29 @@ export class BaseItemModel extends BaseWarhammerItemModel
     {
         return {};
     }
+
+    get isMobAbility()
+    {
+        if (this.parent.actor.system.mob)
+        {
+            return this.parent.actor.system.mob.isMobAbility(this.parent);
+        }
+    }
+
+    get isActiveMobAbility()
+    {
+        return !this.isMobAbility || this.parent.actor.system.mob.isActiveMobAbility(this.parent);
+    }
+
+    get requiredMob()
+    {
+        return this.isMobAbility && this.parent.actor.system.mob.abilities.list.find(i => i.id == this.parent.id)?.requiredMob;
+    }
+
+    shouldTransferEffect(effect)
+    {
+        return super.shouldTransferEffect(effect) && this.isActiveMobAbility;
+    }
     
     static migrateData(data)
     {

@@ -44,13 +44,27 @@ export class StandardActorSheet extends BaseWnGActorSheet {
         items.traumaticInjuries = this.actor.itemTypes.traumaticInjury
         items.weaponUpgrades = this.actor.itemTypes.weaponUpgrade
 
-        items.equipped.weapons = this.actor.itemTypes.weapon.filter(i => i.equipped)
-        items.equipped.armour = this.actor.itemTypes.armour.filter(i => i.equipped)
+        items.equipped.weapons = this.actor.itemTypes.weapon.filter(i => i.equipped).filter(i => i.system.isActiveMobAbility)
+        items.equipped.armour = this.actor.itemTypes.armour.filter(i => i.equipped).filter(i => i.system.isActiveMobAbility)
         items.equipped.ammo = items.equipped.weapons.map(i => this.actor.items.get(i.ammo)).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
 
         sheetData.items = items;
 
         this.constructInventory(sheetData)
+
+        for(let type in sheetData.items)
+        {
+            if (type != "equipped")
+            {
+                sheetData.items[type] = sheetData.items[type].filter(i => i.system.isActiveMobAbility);
+            }
+        }
+
+        for(let type in sheetData.inventory)
+        {
+            sheetData.inventory[type].items = sheetData.inventory[type].items.filter(i => i.system.isActiveMobAbility);
+        }
+    
     }
 
     constructInventory(sheetData) {

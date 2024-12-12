@@ -80,4 +80,25 @@
       {{/each}}
     </div>
   </div>
+  {{#if mobAbilities.length }}
+    <div class="wrapper">
+    <h1>{{localize "TITLE.INACTIVE_MOB_ABILITIES"}}</h1>
+    <div class="item-list">
+      <div class="header">
+        <div class="item-property item-image"></div>
+        <span class="item-property item-name">{{localize "HEADER.ABILITY"}}</span>
+          <div class="item-property flex large">Mob Required</div>
+      </div>
+      {{#each mobAbilities as |item|}}
+      <div class="item" data-item-id="{{item.id}}">
+        <div class="item-content item-dropdown-right">
+          <img class="item-property item-image" src="{{item.img}}"></img>
+          <div class="item-property item-edit item-name ">{{item.name}}</div>
+          <div class="item-property flex large">{{item.system.requiredMob}}</div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+    {{/if}}
 </div>

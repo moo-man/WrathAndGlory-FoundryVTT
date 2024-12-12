@@ -3,7 +3,6 @@ import ready from "../hooks/ready.js"
 import init from "../hooks/init.js";
 import chat from "../hooks/chat.js";
 import combat from "../hooks/combat.js";
-import actor from "../hooks/actor.js";
 import token from "../hooks/token.js";
 import WNGUtility from "./utility.js";
 import hotbar from "../hooks/hotbar.js";
@@ -16,7 +15,6 @@ export default function() {
     init();
     chat();
     combat();
-    actor();
     token();
     hotbar();
     setting();

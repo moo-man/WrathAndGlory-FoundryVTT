@@ -21,10 +21,70 @@ export class ThreatModel extends StandardWNGActorModel {
             
         })
         schema.notes = new fields.StringField(),
-        schema.mob = new fields.NumberField(),
+        schema.mob = new fields.EmbeddedDataField(MobModel);
+        // schema.mob = new fields.SchemaField({
+        //     value : new fields.NumberField({min: 0}),
+        //     abilities : new fields.EmbeddedDataField(DocumentReferenceListModel),
+        // });
         schema.resources = new fields.SchemaField({
             ruin : new fields.NumberField({min : 0}),
         })
+        return schema;
+    }
+
+    static migrateData(data)
+    {
+        if (typeof data.mob == "number")
+        {
+            data.mob = {value : data.mob, abilites : []}
+        }
+    }
+
+    _addModelProperties()
+    {
+        this.mob.abilities.relative = this.parent.items;
+    }
+
+}
+
+class MobModel extends foundry.abstract.DataModel
+{
+    static defineSchema()
+    {
+        let schema = {};
+        schema.value = new fields.NumberField({min: 0});
+        schema.abilities = new fields.EmbeddedDataField(MobAbilities);
+        return schema;
+    }
+
+    isMobAbility(item)
+    {
+        return this.abilities.list.find(i => i.id == item.id);
+    }
+
+    isActiveMobAbility(item)
+    {
+        return this.abilities.list.find(i => i.id == item.id)?.requiredMob <= this.value;
+    }
+}
+
+
+class MobAbility extends DocumentReferenceModel
+{
+    static defineSchema()
+    {
+        let schema = super.defineSchema();
+        schema.requiredMob = new fields.NumberField({min: 0});
+        return schema;
+    }
+}
+
+class MobAbilities extends DocumentReferenceListModel
+{
+    static listSchema = MobAbility
+    static defineSchema()
+    {
+        let schema = super.defineSchema();
         return schema;
     }
 }
