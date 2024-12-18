@@ -619,15 +619,8 @@
         "id" : ""
       },
       "wargear" : [
-        [{
-          "name" : "",
-          "id" : ""
-        }]
       ],
       "groups" : {
-        "type": "and",
-        "groupId" : "root",
-        "items" : []
       },
       "suggested" : {
         "attributes" : {

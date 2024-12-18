@@ -1,6 +1,8 @@
+import { StandardWNGActorModel } from "../model/actor/components/standard";
+
 export default class Migration {
     static stats = {};
-    static MIGRATION_VERSION = "6.0.0"
+    static MIGRATION_VERSION = "5.1.7"
 
     // #region High Level Migration Handling
     static async migrateWorld(update=false, updateVersion=false) {
@@ -23,14 +25,15 @@ export default class Migration {
             }
         }
         ui.notifications.notify(`>>> Initiated <strong>Wrath & Glory</strong> Version ${game.system.version} Migration <<<`);
-        console.log(`%c+++++++++++++++++| Begin Migration of World Actors |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        console.log(`%c+++++++++++++++++| Begin Migration of World Actors |+++++++++++++++++`, "color: #DDD;background: #8a2e2a;font-weight:bold");
         for (let doc of game.actors.contents) 
         {
             this.stats.actors.total++;
             warhammer.utility.log(`+++| Actor: ${doc.name} |+++`, true, null, {groupCollapsed : true})
             try {
                 let migration = await this.migrateActor(doc);
-                if (!isEmpty(migration)) 
+                let didMigrate = await this.migrateActorEffectRefactor(doc);
+                if (!isEmpty(migration) || didMigrate) 
                 {
                     this.stats.actors.updated++;
                     if (update)
@@ -55,14 +58,15 @@ export default class Migration {
             }
         }
 
-        console.log(`%c+++++++++++++++++| Begin Migration of World Items |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        console.log(`%c+++++++++++++++++| Begin Migration of World Items |+++++++++++++++++`, "color: #DDD;background: #8a2e2a;font-weight:bold");
         for (let doc of game.items.contents) 
         {
             this.stats.items.total++;
             warhammer.utility.log(`+++| Item: ${doc.name} |+++`, true, null, {groupCollapsed : true})
             try {
                 let migration = await this.migrateItem(doc);
-                if (!isEmpty(migration)) 
+                let didMigrate = await this.migrateItemEffectRefactor(doc);
+                if (!isEmpty(migration) || didMigrate) 
                 {
                     this.stats.items.updated++;
                     if (update)
@@ -87,7 +91,7 @@ export default class Migration {
             }
         }
 
-        console.log(`%c+++++++++++++++++| ${game.system.version} Migration Complete |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        console.log(`%c+++++++++++++++++| ${game.system.version} Migration Complete |+++++++++++++++++`, "color: #DDD;background: #8a2e2a;font-weight:bold");
         this._printStatistics(this.stats)
         if (this.stats.actors.error.length || this.stats.items.error.length)
         {
@@ -156,7 +160,7 @@ export default class Migration {
             return;
         }
 
-        console.log(`%c+++++++++++++++++| Begin Migration of ${pack.metadata.label} |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        console.log(`%c+++++++++++++++++| Begin Migration of ${pack.metadata.label} |+++++++++++++++++`, "color: #DDD;background: #8a2e2a;font-weight:bold");
         let documents = await pack.getDocuments();
         for(let doc of documents)
         {
@@ -221,7 +225,7 @@ export default class Migration {
                 }
             }
         }
-        console.log(`%c+++++++++++++++++| ${pack.metadata.label} Migration Complete |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        console.log(`%c+++++++++++++++++| ${pack.metadata.label} Migration Complete |+++++++++++++++++`, "color: #DDD;background: #8a2e2a;font-weight:bold");
     }
 
     static async migrateActor(actor) {
@@ -303,8 +307,7 @@ export default class Migration {
 
         foundry.utils.mergeObject(migration, await this.effectDataMigration(effect))
 
-        if (!isEmpty(migration))
-        {
+        if (!isEmpty(migration)) {
             migration._id = effect._id;
         }
         return migration;
@@ -313,9 +316,28 @@ export default class Migration {
 
 
     // #region Data Migrations
-    static async actorDataMigration(actor)
-    {
+    static async actorDataMigration(actor) {
         let migrated = {}
+
+        if (actor.system instanceof StandardWNGActorModel) {
+
+            let faction = actor.itemTypes.faction[0];
+            let species = actor.itemTypes.species[0];
+            let archetype = actor.itemTypes.archetype[0];
+
+            if (faction) 
+            {
+                foundry.utils.setProperty(migrated, "system.faction.id", faction.id);
+            }
+            if (species) 
+            {
+                foundry.utils.setProperty(migrated, "system.species.id", species.id);
+            }
+            if (archetype) 
+            {
+                foundry.utils.setProperty(migrated, "system.archetype.id", archetype.id);
+            }
+        }
 
         return migrated;
     }
@@ -323,53 +345,213 @@ export default class Migration {
     {
         let migrated = {}
 
+        if (item.type == "weapon")
+        {
+            
+        }
+
+        if (item.type == "faction" && item.actor)
+        {
+            let factionEffectOnActor = item.actor.effects.find(i => i.sourceName == item.name);
+
+            let factionEffectOnItem = item.effects.contents.find(e => e.name == factionEffectOnActor.name)
+            let backgrounds = item.system.toObject().backgrounds;
+            let foundBG = backgrounds.origin.concat(backgrounds.accomplishment).concat(backgrounds.goal).find(bg => bg.effect.id == factionEffectOnItem?.id);
+            foundBG.chosen = true;
+            foundry.utils.setProperty(migrated, "system.backgrounds", backgrounds)
+        }
+
+        if (item.type == "archetype")
+        {
+            this._migrateReference(item, "species", migrated)
+            this._migrateReference(item, "faction", migrated)
+            this._migrateReference(item, "ability", migrated)
+            this._migrateReferenceList(item, "suggested.talents", migrated);
+        }
 
         return migrated;
     }  
     static async effectDataMigration(effect)
     {
         let migrated = {}
-        let applicationData = effect.getFlag("wrath-and-glory", "applicationData")
-        if (applicationData)
-        {
-            let transferData = {
-                type : applicationData.type,
-                documentType : applicationData.documentType,
-                avoidTest : applicationData.avoidTest,
-                testIndependent : applicationData.testIndependent,
-                preApplyScript : applicationData.preApplyScript,
-                equipTransfer : applicationData.equipTransfer,
-                enableConditionScript : applicationData.enableConditionScript,
-                filter : applicationData.filter,
-                prompt : applicationData.prompt,
-
-                zone : {
-                    type : applicationData.zoneType,
-                    keep : applicationData.keep,
-                    tarits : applicationData.traits
-                }
-            };
-            setProperty(migrated, "system.transferData", transferData);
-            migrated["flags.wrath-a.-=applicationData"] = null;
-        }
-        let scriptData = effect.getFlag("wrath-and-glory", "scriptData")
-        if (scriptData)
-        {
-            setProperty(migrated, "system.scriptData", scriptData);
-            migrated.system.scriptData.forEach(s => {
-                s.script = s.script || s.string;
-                s.options = s.options || {};
-                foundry.utils.mergeObject(s.options, s.options.dialog)
-                foundry.utils.mergeObject(s.options, s.options.immediate)
-            })
-            migrated["flags.impmal.-=scriptData"] = null;
-        }
+        
         return migrated;
     }  
+
+
+
+    static async migrateActorEffectRefactor(actor)
+    {
+        let effectsToDelete = [];
+        let migrated = false;
+
+        for(let effect of actor.effects)
+        {
+            let originItem = await fromUuid(actor.pack ? `Compendium.${actor.pack}.${effect.origin}` : effect.origin);
+            if (originItem)
+            {
+                let originEffect = originItem.effects.getName(effect.name);
+                if (originEffect)
+                {
+                    let effectData = effect.toObject();
+                    effectData.transfer = originEffect.transfer;
+                    originEffect.update(this.migrateEffectRefactor(effectData, effect));
+                    effectsToDelete.push(effect.id);
+                }
+            }
+        }
+        if (effectsToDelete.length)
+        {
+            migrated = true;
+            await actor.deleteEmbeddedDocuments("ActiveEffect", effectsToDelete);
+        }
+        for(let item of actor.items)
+        {
+            if (await this.migrateItemEffectRefactor(item))
+            {
+                migrated = true;
+            }
+        }
+        return migrated;
+    }
+
+    static async migrateItemEffectRefactor(item)
+    {
+        for(let effect of item.effects)
+        {
+            let migratedEffect = this.migrateEffectRefactor(effect.toObject(), effect)
+            if (!isEmpty(migratedEffect))
+            {
+                await effect.update(migratedEffect);
+                return true;
+            }
+            else return false;
+        }
+    }
+
+    static migrateEffectRefactor(data, document)
+    {
+        let changes = data?.changes || [];
+        let migrateScripts = false;
+        if (changes.some(c => c.mode == 6 || c.mode == 7) || data.system?.scriptData?.length == 0)
+        {
+            migrateScripts = true;
+        }
+
+        if (document.parent.documentName == "Item" && !document.getFlag("wrath-and-glory", "migrated"))
+        {
+            if (data.transfer == false && document.parent.type != "ammo")
+            {
+                setProperty(data, "system.transferData.type", "target");
+            }
+            if (document.parent.type == "ammo")
+            {
+                setProperty(data, "system.transferData.type", "document");
+                setProperty(data, "system.transferData.documentType", "Item");
+
+            }
+            setProperty(data, "flags.wrath-and-glory.migrated", true);
+        }
+    
+        if (migrateScripts) 
+        {
+            let scriptData = []
+
+            let changeConditon = foundry.utils.getProperty(data, "flags.wrath-and-glory.changeCondition");
+            for (let i in changeConditon) {
+                if (changes[i]?.mode >= 6) {
+                    let script;
+
+                    if (changes[i].value === "true" || changes[i].value === "false") {
+                        script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} = ${changes[i].value}`
+                    }
+                    else if (changes[i].value.includes("@"))
+                    {
+                        script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} += (${changes[i].value.replace("@", "args.actor.system.")})`
+                    }
+                    else {
+                        script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} += (${changes[i].value})`
+                    }
+                    scriptData.push({
+                        trigger: "dialog",
+                        label: changeConditon[i].description,
+                        script: script,
+                        options: {
+                            targeter: changes[i].mode == 7,
+                            activateScript: changeConditon[i].script,
+                            hideScript: changeConditon[i].hide
+                        }
+                    })
+                }
+            }
+
+            const convertScript = (str = "") => {
+                str = str.replaceAll("@test", "this.effect.sourceTest");
+                str = str.replaceAll("data.", "args.");
+                str = str.replaceAll("pool.bonus", "pool");
+                str = str.replaceAll("difficulty.bonus", "difficulty");
+                str = str.replaceAll("ed.bonus", "ed.value");
+                str = str.replaceAll("ap.bonus", "ap.value");
+                return str;
+            }
+
+
+            for (let newScript of scriptData) {
+                newScript.script = convertScript(newScript.script);
+                newScript.options.hideScript = convertScript(newScript.options.hideScript);
+                newScript.options.activateScript = convertScript(newScript.options.activateScript);
+                newScript.options.submissionScript = convertScript(newScript.options.submissionScript);
+            }
+
+
+
+            data.changes = data.changes.filter(i => i.mode < 6);
+            setProperty(data, "system.scriptData", scriptData)
+        }
+        return data;
+    }
+
+
+    static async _migrateReference(document, field, migration)
+    {
+        let property = foundry.utils.getProperty(document.system, field);
+        if (!property || property.uuid)
+        {
+            return;
+        }
+        if (property.id)
+        {
+            let uuid = warhammer.utility.findUuid(property.id);
+
+            if (uuid)
+            {
+                foundry.utils.setProperty(migration, `system.${field}`, {uuid, id : property.id});
+            }
+        }
+    }
+
+    static async _migrateReferenceList(document, field, migration)
+    {
+        let property = foundry.utils.getProperty(document.system, field);
+        if (property?.list)
+        {
+            let migratedList = property.list.map(i => {
+                return {
+                    id : i.id,
+                    uuid : warhammer.utility.findUuid(i.id)
+                }
+            })
+            foundry.utils.setProperty(migration, `system.${field}.list`, migratedList);
+        }
+    }
+
+
+
 
     //#endregion
 
     //#region Utilities
+    
     static shouldMigrate()
     {
         return false;

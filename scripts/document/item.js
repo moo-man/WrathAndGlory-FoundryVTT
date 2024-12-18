@@ -71,7 +71,7 @@ export class WrathAndGloryItem extends WarhammerItem {
         }
         if (item.type == "talent")
         {
-            let talents = duplicate(this.suggested.talents)
+            let talents = duplicate(this.suggested.talents.list)
             talents.push({"id" : item.id, "name" : item.name})
             this.update({"system.suggested.talents" : talents})
         }
@@ -201,7 +201,7 @@ export class WrathAndGloryItem extends WarhammerItem {
 
 
         // Get all archetype talents/wargear, merge with diff
-        for (let i of this.suggested.talents.concat(this.wargear.filter(k => k.id)))
+        for (let i of this.suggested.talents.list.concat(this.wargear.filter(k => k.id)))
         {
             let item = await game.wng.utility.findItem(i.id)
             if (item)

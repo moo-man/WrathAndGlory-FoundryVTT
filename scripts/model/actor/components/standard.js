@@ -24,8 +24,6 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
             "flags.wrath-and-glory.autoCalc.determination": true,
             "flags.wrath-and-glory.autoCalc.wounds": true,
             "flags.wrath-and-glory.autoCalc.conviction": true,
-            "flags.wrath-and-glory.autoWounded": true,
-            "flags.wrath-and-glory.autoExhausted": true,
             "flags.wrath-and-glory.generateMetaCurrencies": true
         })
     }
@@ -54,11 +52,6 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
         {
             options.deltaShock = data.system.combat.shock.value - this.combat.shock.value;
         }
-    }
-
-    computeBase() 
-    {
-    
     }
 
     computeDerived() {

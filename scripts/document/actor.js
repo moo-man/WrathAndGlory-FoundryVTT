@@ -324,26 +324,32 @@ export class WrathAndGloryActor extends WarhammerActor {
             }        
         }
 
-        let actualMaxShock = this.system.combat.shock.max + 1;
-        // TODO Move this shock test?
-        if (this.system.combat.shock && (shock + this.system.combat.shock.value > actualMaxShock))
+        if (shock && (this.hasCondition("exhausted")))
         {
-            let excessShock = (shock + this.system.combat.shock.value) - actualMaxShock
-            shock -= excessShock;
-            
-            mortal += excessShock
-            report.breakdown.push(`<strong>Exhausted</strong>: ${excessShock} Shock converted to Mortal Wounds (${mortal})`);
+            mortal += shock;
+            shock = 0;
+            report.breakdown.push(`<strong>Exhausted</strong>: ${shock} Shock converted to Mortal Wounds (${mortal})`);
         }
     
 
-        let updateObj = {}
+        let updateObj = {effects: []}
         if (shock)
         {
-            updateObj["system.combat.shock.value"] = this.system.combat.shock.value + shock
+            let newShock = this.system.combat.shock.value + shock
+            updateObj["system.combat.shock.value"] = newShock;
+            if (newShock >= this.system.combat.shock.max)
+            {
+                await this.addCondition("exhausted")
+            }
         }
         if (wounds || mortal)
         {
-            updateObj["system.combat.wounds.value"] = this.system.combat.wounds.value + wounds + mortal;
+            let newWounds = this.system.combat.wounds.value + wounds + mortal;
+            updateObj["system.combat.wounds.value"] = newWounds;
+            if (newWounds >= this.system.combat.wounds.max)
+            {
+                await this.addCondition("dying")
+            }
         }
         if (shock || wounds)
         {
@@ -412,8 +418,6 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (!existing) {
             effect.name = game.i18n.localize(effect.name)
-            effect.statuses = [effect.id];
-            delete effect.id
             return this.createEmbeddedDocuments("ActiveEffect", [effect], {condition: true})
         }
     }
@@ -458,7 +462,7 @@ export class WrathAndGloryActor extends WarhammerActor {
     get resources() { return this.system.resources }
     get corruption() { return this.system.corruption }
     get notes() { return this.system.notes }
-    get mob() { return this.system.mob }
+    get mob() { return this.system.mob.value }
 
     get traitsAvailable() {
         if (this.type == "vehicle")

@@ -321,6 +321,7 @@ WNG.placeholderItemData = {
 WNG.systemEffects = {
     "wounded" : {
         id : "wounded",
+        statuses : ["wounded"],
         name : "EFFECT.Wounded",
         img : "systems/wrath-and-glory/asset/icons/wounded.svg",
         changes : [
@@ -334,6 +335,7 @@ WNG.systemEffects = {
     },
     "full-defence" : {
         id : "full-defence",
+        statuses : ["full-defence"],
         name : "EFFECT.FullDefence",
         img : "systems/wrath-and-glory/asset/icons/full-defence.svg",
         changes : [
@@ -342,6 +344,7 @@ WNG.systemEffects = {
     },
     "all-out-attack" : {
         id : "all-out-attack",
+        statuses : ["all-out-attack"],
         name : "EFFECT.AllOutAttack",
         img : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
         changes : [
@@ -356,6 +359,7 @@ WNG.systemEffects = {
     },
     "halfCover" : {
         id : "halfCover",
+        statuses : ["halfCover"],
         name : "EFFECT.HalfCover",
         img : "systems/wrath-and-glory/asset/icons/half-cover.svg",
         changes : [
@@ -364,6 +368,7 @@ WNG.systemEffects = {
     },
     "fullCover" : {
         id : "fullCover",
+        statuses : ["fullCover"],
         name : "EFFECT.FullCover",
         img : "systems/wrath-and-glory/asset/icons/full-cover.svg",
         changes : [
@@ -376,11 +381,13 @@ WNG.systemEffects = {
 CONFIG.statusEffects = [
     {
         id : "bleeding",
+        statuses : ["bleeding"],
         name : "CONDITION.Bleeding",
         img : "systems/wrath-and-glory/asset/icons/conditions/bleeding.svg",
     },
     {
         id : "blinded",
+        statuses : ["blinded"],
         name : "CONDITION.Blinded",
         img : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
         changes : [
@@ -394,11 +401,13 @@ CONFIG.statusEffects = [
     },
     {
         id : "exhausted",
+        statuses : ["exhausted"],
         name : "CONDITION.Exhausted",
         img : "systems/wrath-and-glory/asset/icons/conditions/exhausted.svg"
     },
     {
         id : "fear",
+        statuses : ["fear"],
         name : "CONDITION.Fear",
         img : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
         changes : [
@@ -412,12 +421,14 @@ CONFIG.statusEffects = [
     },
     {
         id : "frenzied",
+        statuses : ["frenzied"],
         name : "CONDITION.Frenzied",
         img : "systems/wrath-and-glory/asset/icons/conditions/frenzied.svg",
         changes : [{key: "system.attributes.strength.bonus", mode : 2, value : 1}]
     },
     {
         id : "hindered",
+        statuses : ["hindered"],
         name : "CONDITION.Hindered",
         img : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
         changes : [
@@ -431,11 +442,13 @@ CONFIG.statusEffects = [
     },
     {
         id : "onfire",
+        statuses : ["onfire"],
         name : "CONDITION.OnFire",
         img : "systems/wrath-and-glory/asset/icons/conditions/onfire.svg"
     },
     {
         id : "pinned",
+        statuses : ["pinned"],
         name : "CONDITION.Pinned",
         img : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
         changes : [{key: "difficulty.base", mode : 6, value : 2}],
@@ -447,6 +460,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "poisoned",
+        statuses : ["poisoned"],
         name : "CONDITION.Poisoned",
         img : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
         changes : [{key: "difficulty.base", mode : 6, value : 2}],
@@ -458,23 +472,27 @@ CONFIG.statusEffects = [
     },
     {
         id : "prone",
+        statuses : ["prone"],
         name : "CONDITION.Prone",
         img : "systems/wrath-and-glory/asset/icons/conditions/prone.svg"
     },
     {
         id : "restrained",
+        statuses : ["restrained"],
         name : "CONDITION.Restrained",
         img : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
         changes : [{key: "system.combat.defence.bonus", mode : 2, value : -2},{key: "system.combat.speed", mode : 5, value : "0"} ]
     },
     {
         id : "staggered",
+        statuses : ["staggered"],
         name : "CONDITION.Staggered",
         img : "systems/wrath-and-glory/asset/icons/conditions/staggered.svg",
         changes : [{key: "system.combat.speed", mode : 1, value : 0.5} ]
     },
     {
         id : "terror",
+        statuses : ["terror"],
         name : "CONDITION.Terror",
         img : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
         changes : [{key: "difficulty.base", mode : 6, value : 2}],
@@ -486,12 +504,14 @@ CONFIG.statusEffects = [
     },
     {
         id : "vulnerable",
+        statuses : ["vulnerable"],
         name : "CONDITION.Vulnerable",
         img : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
         changes : [{key: "system.combat.defence.bonus", mode : 2, value : -1}]
     },
     {
         id : "dying",
+        statuses : ["dying"],
         name : "CONDITION.Dying",
         img : "systems/wrath-and-glory/asset/icons/dying.svg",
         system : {
@@ -507,6 +527,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "dead",
+        statuses : ["dead"],
         name : "CONDITION.Dead",
         img : "systems/wrath-and-glory/asset/icons/dead.svg"
     }

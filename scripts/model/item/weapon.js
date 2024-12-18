@@ -30,13 +30,11 @@ export class WeaponModel extends EquippedItemModel
             thrown : new fields.NumberField({nullable : true}),
         })
         schema.category = new fields.StringField({initial : "melee"});
-        schema.ammo = new fields.StringField({})
+        schema.ammo = new fields.EmbeddedDataField(DocumentReferenceModel);
         schema.salvo = new fields.NumberField({})
         schema.traits = new fields.EmbeddedDataField(TraitsModel);
         schema.upgrades = new fields.ArrayField(new fields.ObjectField());
-        schema.combi = new fields.SchemaField({
-            id : new fields.StringField(),
-        })
+        schema.combi = new fields.EmbeddedDataField(DocumentReferenceModel);
         schema.twinned = new fields.BooleanField();
         return schema;
     }
@@ -145,6 +143,15 @@ export class WeaponModel extends EquippedItemModel
         return super.getOtherEffects().concat(other);
     }
 
+    _addModelProperties()
+    {
+        if (this.parent.actor)
+        {
+            this.ammo.relative = this.parent.actor.items
+            this.combi.relative = this.parent.actor.items
+        }
+    }
+
     _applyEffects(effects) {
         let overrides = {}
         // Organize non-disabled effects by their application priority
@@ -189,8 +196,16 @@ export class WeaponModel extends EquippedItemModel
 
 
     get Ammo() {
-        if (this.parent.isOwned)
-            return this.parent.actor.items.get(this.ammo)
+        return this.ammo.document
+    }
+
+
+    static migrateData(data)
+    {
+        if (typeof data.ammo == "string")
+        {
+            data.ammo = {id : data.ammo};
+        }
     }
 
 }

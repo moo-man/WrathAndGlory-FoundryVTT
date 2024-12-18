@@ -164,7 +164,7 @@
               <div class="item-property flex">
                 {{#if item.isRanged}}
                 <select class="property-edit" data-target="system.ammo">
-                  {{#select item.ammo}}
+                  {{#select item.ammo.id}}
                   <option value="">-</option>
                   {{#each item.ammoList as |item|}}
                   <option value="{{item.id}}">{{item.name}} ({{item.quantity}})</option>

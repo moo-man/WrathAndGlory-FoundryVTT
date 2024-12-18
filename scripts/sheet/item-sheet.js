@@ -1,9 +1,8 @@
 import ArchetypeGeneric from "../apps/archetype-generic.js";
 import ArchetypeGroups from "../apps/archetype-groups.js";
 import ItemTraits from "../apps/item-traits.js";
-import { WrathAndGloryItem } from "../document/item.js";
 
-export class WrathAndGloryItemSheet extends ItemSheet {
+export class WrathAndGloryItemSheet extends WarhammerItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["wrath-and-glory", "sheet", "item"],
@@ -84,14 +83,9 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     if (this.item.type == "archetype")
     {
-      let element = $(ArchetypeGroups.constructHTML(this.item, {parentheses: true, commas: true, draggable:false}))
-      // Remove unnecessary outside parentheses
-      let parentheses = Array.from(element.find(".parentheses"))
-      parentheses[0].remove();
-      parentheses[parentheses.length - 1].remove()
-      data.wargearHTML = `<div class="group-wrapper">${element.html()}</div>`
+      data.wargearHTML = `<div class="group-wrapper">${this.item.system.wargear.textDisplay}</div>`
 
-      data.talents = this.item.suggested.talents.map(i => `<a class="archetype-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
+      data.talents = this.item.suggested.talents.list.map(i => `<a class="archetype-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
     }
     else if (this.item.type == "species")
     {
@@ -398,9 +392,9 @@ async _handleEnrichment()
        else if (this.item.type == "archetype") // Is archetype talent
        {
          let index = this.item.suggested.talents.findIndex(t => t.id == id)
-         let array = duplicate(this.item.suggested.talents)
+         let array = duplicate(this.item.suggested.talents.list)
          array.splice(index, 1);
-         this.item.update({"system.suggested.talents" : array})
+         this.item.update({"system.suggested.talents.list" : array})
        }
        else if (this.item.type == "species") // TODO Combine these if statements
        {

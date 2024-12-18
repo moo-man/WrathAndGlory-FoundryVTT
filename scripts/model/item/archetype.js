@@ -10,26 +10,91 @@ export class ArchetypeModel extends BaseItemModel
         let schema = super.defineSchema();
         schema.tier = new fields.NumberField({min : 1, initial : 1})
         schema.journal = new fields.StringField({});
-        schema.species = new fields.EmbeddedDataField(DocumentReferenceModel);
-        schema.faction = new fields.EmbeddedDataField(DocumentReferenceModel);
+        schema.species = new fields.EmbeddedDataField(DeferredReferenceModel);
+        schema.faction = new fields.EmbeddedDataField(DeferredReferenceModel);
         schema.influence = new fields.NumberField({initial : 0});
         schema.cost = new fields.NumberField({min : 0, initial : 0});
         schema.keywords = new fields.ArrayField(new fields.StringField());
         schema.attributes = Attributes();
         schema.skills = Skills();
         schema.ability = new fields.EmbeddedDataField(DeferredReferenceModel)
-        schema.wargear = new fields.ArrayField(new fields.EmbeddedDataField(ArchetypeWargearModel))
-        schema.groups = new fields.SchemaField({
-            type : new fields.StringField({initial : "and"}),
-            groupId : new fields.StringField({initial : "root"}),
-            items : new fields.ArrayField(new fields.ObjectField())
-        })
+        schema.wargear = new fields.EmbeddedDataField(ChoiceModel)
         schema.suggested = new fields.SchemaField({
             attributes : Attributes(),
             skills: Skills(),
-            // talents : new fields.ArrayField(new fields.EmbeddedDataField(DiffDocumentReferenceModel))
+            talents : new fields.EmbeddedDataField(DeferredReferenceListModel)
         })
         return schema;
+    }
+
+    static migrateData(data)
+    {
+        if (data.suggested.talents instanceof Array)
+        {
+            data.suggested.talents = {list : data.suggested.talents};
+        }
+
+
+        let _convertStructure = (structure, wargear) => {
+            structure.type = ["or", "and"].includes(structure.type) ? structure.type : "option";
+            if (!isNaN(structure.index))
+            {
+                structure.id = wargear[structure.index].groupId;
+            }
+            else 
+            {
+                structure.id = structure.groupId;
+            }
+            if (structure.items?.length)
+            {
+                structure.options = foundry.utils.deepClone(structure.items);
+                delete structure.items;
+                for(let opt of structure.options)
+                {
+                    _convertStructure(opt, wargear);
+                }
+            }
+            
+            return structure
+        }
+
+        if (data.wargear instanceof Array)
+        {
+            let oldWargear = foundry.utils.deepClone(data.wargear);
+
+            data.wargear = {
+                structure : _convertStructure(data.groups, oldWargear),
+                
+                options: oldWargear.map(w => {
+                    let type = w.type;
+                    if (type == "generic")
+                    {
+                        type = w.filters?.length ? "filter" : "placeholder";
+                    }
+                    return {
+                        name : w.name,
+                        type : type,
+                        id : w.groupId,
+                        diff : w.diff,
+                        documentId : w.id,
+                        idType : "id",
+                        filters: (w.filters || []).map(i => {
+                            let opMap = {
+                                lt : "<",
+                                le : "<=",
+                                eq : "==",
+                                gt : ">",
+                                ge : ">="
+                            }
+                            return {
+                                path : i.property,
+                                value : i.value,
+                                operation : opMap[i.test]
+                            }
+                        })
+                    }
+            })}
+        }
     }
 }
 
