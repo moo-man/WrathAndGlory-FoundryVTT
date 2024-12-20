@@ -81,10 +81,6 @@ export class BaseWnGActorSheet extends WarhammerActorSheet {
         html.find(".effects .source").click(this._onEditEmbeddedDoc.bind(this));  
         html.find(".item-delete").mousedown(this._onItemDelete.bind(this));
         html.find(".item-post").mousedown(this._onItemPost.bind(this));
-        html.find(".effect-create").click(this._onEffectCreate.bind(this));
-        html.find(".effect-edit").click(this._onEffectEdit.bind(this));
-        html.find(".effect-delete").click(this._onEffectDelete.bind(this));
-        html.find(".effect-toggle").click(this._onEffectToggle.bind(this));
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".checkbox").click(this._onCheckboxClick.bind(this))
         html.find(".property-edit").change(this._onSelectChange.bind(this))
@@ -161,35 +157,6 @@ export class BaseWnGActorSheet extends WarhammerActorSheet {
         let item = this.actor.items.get(id);
         if (item)
             item.sendToChat()
-    }
-
-
-    async _onEffectCreate(ev) {
-        let type = ev.currentTarget.attributes["data-type"].value
-        let effectData = { name: "New Effect", img: "icons/svg/aura.svg" }
-        if (type == "temporary") {
-            effectData["duration.rounds"] = 1;
-        }
-
-        this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
-    }
-
-    async _onEffectEdit(ev) {
-        let uuid = $(ev.currentTarget).parents(".item").attr("data-uuid")
-        let effect = await fromUuid(uuid)
-        effect.sheet.render(true);
-    }
-
-    async _onEffectDelete(ev) {
-        let uuid = $(ev.currentTarget).parents(".item").attr("data-uuid")
-        let effect = await fromUuid(uuid)
-        effect.delete();
-    }   
-
-    async _onEffectToggle(ev) {
-        let uuid = $(ev.currentTarget).parents(".item").attr("data-uuid")
-        let effect = await fromUuid(uuid)
-        effect.update({ "disabled": !effect.disabled })
     }
 
     _onFocusIn(event) {

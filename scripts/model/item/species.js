@@ -13,11 +13,10 @@ export class SpeciesModel extends StandardItemModel
         schema.speed = new fields.NumberField({min : 1, initial : 6})
         schema.size = new fields.StringField({});
         schema.journal = new fields.StringField({});
-        schema.abilities = new fields.ArrayField(new fields.ObjectField({}))
+        schema.abilities = new fields.EmbeddedDataField(DeferredReferenceListModel)
         schema.attributes = Attributes();
         schema.skills = Skills();
         schema.attributeMax = Attributes();
         return schema;
     }
-
 }

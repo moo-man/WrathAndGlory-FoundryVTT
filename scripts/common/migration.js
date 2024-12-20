@@ -369,6 +369,11 @@ export default class Migration {
             this._migrateReferenceList(item, "suggested.talents", migrated);
         }
 
+        if (item.type == "species")
+        {
+            this._migrateReferenceList(item, "abilities", migrated);
+        }
+
         return migrated;
     }  
     static async effectDataMigration(effect)

@@ -1,7 +1,20 @@
 let fields = foundry.data.fields
 
+
+export class VehicleCrew extends DocumentReferenceModel 
+{
+    static defineSchema() 
+    {
+        let schema = super.defineSchema();
+        schema.type = new fields.StringField({default: ""});
+        return schema;
+    }
+}
+
 // List of objects that reference some embedded document on the parent
-export class VehicleComplement extends ListModel {
+export class VehicleComplement extends DocumentReferenceListModel {
+    static listSchema = VehicleCrew
+
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -12,9 +25,14 @@ export class VehicleComplement extends ListModel {
         return schema;
     }
 
+    add(document, type)
+    {
+        return this._add({uuid : document.uuid, id : document.id, name : document.name, type});
+    }
+
     async choose(filter)
     {
-        let list = this.list.map(i => i.document).filter(i => i).filter(i => i.isOwner);
+        let list = this.documents.filter(i => i).filter(i => i.isOwner);
         if (filter)
         {
             list = list.filter(filter);
@@ -37,15 +55,5 @@ export class VehicleComplement extends ListModel {
     get activePilot() 
     {
         return this.list.find(i => i.type == "pilot")?.document;
-    }
-}
-
-export class VehicleCrew extends DocumentReferenceModel 
-{
-    static defineSchema() 
-    {
-        let schema = super.defineSchema();
-        schema.type = new fields.StringField({default: ""});
-        return schema;
     }
 }

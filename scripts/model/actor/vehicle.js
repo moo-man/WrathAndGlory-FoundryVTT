@@ -20,7 +20,6 @@ export class VehicleModel extends BaseWarhammerActorModel {
 
     computeBase() {
         super.computeBase();
-        this.complement.findDocuments(game.actors);
     }
 
     computeDerived()

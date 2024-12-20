@@ -110,7 +110,7 @@ export class WrathAndGloryItem extends WarhammerItem {
             effect.name = game.i18n.localize(effect.name)
             effect.statuses = [effect.id];
             delete effect.id
-            return this.createEmbeddedDocuments("ActiveEffect", [effect])
+            return this.createEmbeddedDocuments("ActiveEffect", [effect],  {condition: true})
         }
     }
 

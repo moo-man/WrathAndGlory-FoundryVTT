@@ -13,7 +13,7 @@ export class BaseItemModel extends BaseWarhammerItemModel
 
     get isMobAbility()
     {
-        if (this.parent.actor.system.mob)
+        if (this.parent.actor?.system.mob)
         {
             return this.parent.actor.system.mob.isMobAbility(this.parent);
         }

@@ -112,11 +112,11 @@ export class VehicleSheet extends BaseWnGActorSheet {
         if (data.type == "Actor" && data.uuid)
         {
             let actor = await fromUuid(data.uuid);
-            this.actor.update({"system.complement.list" : this.actor.system.complement.add({id : actor.id, type: complementType})})
+            this.actor.update(this.actor.system.complement.add(actor, complementType))
         }
         else if (data.type == "complementDrag")
         {
-            this.actor.update({"system.complement.list" : this.actor.system.complement.edit(data.index, {type: complementType})});
+            this.actor.update(this.actor.system.complement.edit(data.index, {type: complementType}));
         }
         super._onDrop(ev)
     }
@@ -128,7 +128,7 @@ export class VehicleSheet extends BaseWnGActorSheet {
         html.find(".complement-delete").click(ev => {
             let index = $(ev.currentTarget).parents(".item").attr("data-index");
 
-            this.actor.update({"system.complement.list" : this.actor.system.complement.remove(index)})
+            this.actor.update(this.actor.system.complement.remove(index))
         })
 
         html.find(".vehicle-traits").click(ev => {
