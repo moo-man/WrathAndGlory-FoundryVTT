@@ -73,7 +73,7 @@ export class RollDialog extends WarhammerRollDialog {
           fields.wrath = wrath;
         }
         
-        if (dn)
+        if (dn && !this.options.noDn)
         {
           fields.dn = dn;
         }
@@ -105,9 +105,16 @@ export class RollDialog extends WarhammerRollDialog {
       if (this.options.corruption)
       {
         let level = game.wng.config.corruptionLevels[this.actor.corruptionLevel]
-        this.difficulty += level.dn;
+        this.fields.dn += level.dn;
         this.tooltips.add("difficulty", level.dn, "Corruption Level")
       }
+    }
+
+    createBreakdown()
+    {
+        let breakdown = super.createBreakdown();
+        breakdown.modifiersBreakdown = this.tooltips.getCollectedTooltips();
+        return breakdown;
     }
   
     _defaultFields() 

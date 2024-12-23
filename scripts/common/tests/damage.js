@@ -90,7 +90,9 @@ export class DamageRoll {
       this._computeReroll();
     }
     this.result.total = this.result.base;
+    this.result.rolledValue = 0;
     this.result.dice.forEach((die) => {
+          this.result.rolledValue += die.value;
           this.result.total += die.value;
     });
   }

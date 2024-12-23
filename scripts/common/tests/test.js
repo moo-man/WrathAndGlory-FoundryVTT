@@ -21,6 +21,7 @@ export class WNGTest extends WarhammerTestBase {
         title: data.options?.title,
         targets: data.targets || [],
         type: data.type,
+        breakdown : data.context?.breakdown,
         speaker: data.speaker,
         rollClass: this.constructor.name,
         rollMode : data.rollMode,
@@ -450,28 +451,14 @@ export class WNGTest extends WarhammerTestBase {
   }
 
 
-  // Need a specialized function to account for both item and ammo effects
-  getEffect(effectId) {
-    return this.testEffects.find(e => e.id == effectId)
+  _formatBreakdown(breakdown)
+  {
+      breakdown.modifiersBreakdown = `<hr><p>${game.i18n.localize("DIALOG.MODIFIER_BREAKDOWN")}</p>${breakdown.modifiersBreakdown}`;
+      return Object.values(breakdown).join("");
   }
 
   get doesDamage() {
     return (this.testData.damage && (this.testData.damage.base || this.testData.damage.bonus || this.testData.damage.rank != "none")) || (this.testData.ed && (this.testData.ed.base || this.testData.ed.bonus || this.testData.ed.rank != "none"))
-  }
-
-  get testEffects() {
-    if (this.item) {
-      let effects = this.item.effects.filter(e => !e.transfer)
-      if (this.item.isRanged && this.item.Ammo)
-        effects = effects.concat(this.item.Ammo.ammoEffects)
-      return effects
-    }
-    else
-      return []
-  }
-
-  get showEffects() {
-    return this.testEffects.length && this.result.isSuccess
   }
 
   get showTest() {

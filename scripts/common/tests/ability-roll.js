@@ -48,10 +48,6 @@ export default class AbilityRoll extends WNGTest {
       return []
   }
 
-  get showEffects() {
-    return this.testEffects.length
-  }
-
   get showTest() {
     return this.item && this.item.hasTest 
   }
