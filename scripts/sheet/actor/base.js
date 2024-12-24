@@ -74,7 +74,7 @@ export class BaseWnGActorSheet extends WarhammerActorSheet {
         html.find(".item-dropdown").mousedown(this._dropdownLeftClick.bind(this))
         html.find(".rollable").mouseenter(this._toggleDice.bind(this))
         html.find(".rollable").mouseleave(this._toggleDice.bind(this))
-        html.find(".rollable").mousedown(this._onRollableAbilityClick.bind(this))
+        html.find(".rollable").click(this._onRollableAbilityClick.bind(this))
         html.find(".item-dropdown-right").mousedown(this._dropdownRightClick.bind(this))
         html.find(".item-create").mousedown(this._onItemCreate.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));

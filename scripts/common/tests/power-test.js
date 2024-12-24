@@ -20,7 +20,7 @@ export default class PowerTest extends WNGTest {
       "shock": { value: this.item.otherDamage.shock, bonus : 0 },
     }
     
-    this.data.testData.potency = duplicate(this.item.potency)
+    this.data.testData.potency = foundry.utils.deepClone(this.item.potency.list)
     this.data.testData.potency.forEach(p => p.allocation = 0)
     this.data.testData.edit.potency = 0;
   }

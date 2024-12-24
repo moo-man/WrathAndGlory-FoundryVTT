@@ -21,7 +21,14 @@ export class PsychicPowerModel extends StandardItemModel
         schema.multiTarget =  new fields.BooleanField({}),
         schema.keywords = new fields.StringField({}),
         schema.prerequisites = new fields.StringField({}),
-        schema.potency = new fields.ArrayField(new fields.ObjectField({}))
+        schema.potency = ListModel.createListModel(new fields.SchemaField({
+            cost : new fields.NumberField(),
+            description : new fields.StringField(),
+            initial : new fields.StringField(),
+            property : new fields.StringField(),
+            single : new fields.BooleanField(),
+            value : new fields.StringField()
+        }))
         return schema;
     }
 
@@ -41,6 +48,14 @@ export class PsychicPowerModel extends StandardItemModel
 
     get Activation() {
         return game.wng.config.powerActivations[this.activation]
+    }
+
+    static migrateData(data)
+    {
+        if (data.potency instanceof Array)
+        {
+            data.potency = {list : data.potency};
+        }
     }
 
 }

@@ -212,7 +212,7 @@
         <div class="wrapper potency">
             <h1>{{localize "TITLE.POTENCY"}}</h1>
             
-              {{#if system.potency.length}}
+              {{#if system.potency.list.length}}
               <div class="potency-list">
                       <div class="potency-header potency-fields">
                           <div>{{localize "POWER.POTENCY_COST"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_COST_HELP'}}"></i></div>
@@ -221,7 +221,7 @@
                           <div>{{localize "POWER.POTENCY_VALUE"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_VALUE_HELP'}}"></i></div>
                           <div style="flex: 0 0 70px">{{localize "POWER.POTENCY_SINGLE"}} <i class="far fa-question-circle" title="{{localize 'POWER.POTENCY_SINGLE_HELP'}}"></i></div>
                       </div>
-                      {{#each system.potency as |potency index|}}
+                      {{#each system.potency.list as |potency index|}}
                       <div class="potency-content">
                           <div class="potency-fields" data-index="{{index}}">
                             <input type="number" data-path="cost" placeholder='{{localize "POWER.POTENCY_COST"}}' value="{{potency.cost}}">
