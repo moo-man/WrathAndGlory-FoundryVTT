@@ -135,12 +135,12 @@ export class WeaponModel extends EquippedItemModel
 
     getOtherEffects()
     {
-        let other = [];
+        let other = super.getOtherEffects().concat(this.traits.effects);
         if (this.Ammo)
         {
             other = other.concat(this.Ammo.effects.contents);
         }
-        return super.getOtherEffects().concat(other);
+        return other;
     }
 
     _addModelProperties()

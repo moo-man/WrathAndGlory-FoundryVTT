@@ -63,103 +63,12 @@ export class WeaponDialog extends AttackDialog {
       this.fields.pool += Math.ceil(this.actor.mob / 2)
       this.tooltips.add("pool", Math.ceil(this.actor.mob / 2), "Mob")
     }
-
-    if (weapon.traitList.force) 
-    {
-      this.tooltips.start(this)
-      if (this.actor.hasKeyword("PSYKER"))
-      {
-        this.fields.damage += Math.ceil(this.actor.system.attributes.willpower.total / 2)
-        this.tooltips.finish(this, "Force Weapon")
-      }
-      else
-      {
-        this.fields.damage -= 2
-        this.tooltips.finish(this, "Force Weapon (Not a Psyker)")
-      }
-    }
-
-    this.tooltips.start(this)
-    this.fields.difficulty += weapon.traitList.unwieldy ? parseInt(weapon.traitList.unwieldy.rating) : 0
-    this.tooltips.finish(this, "Unwieldy")
-
-    this.tooltips.start(this)
-    if (this.actor.hasKeyword("ORK") && weapon.traitList["waaagh!"])
-    {
-        this.fields.pool += 1;
-        if (this.actor.system.combat.wounds.value > 0)
-        {
-          this.fields.ed += 1
-        }
-    }
-    this.tooltips.finish(this, "WAAAGH!")
-
-    this.tooltips.start(this)
-
-    if (weapon.traitList.rad)
-    {
-      this.fields.damageDice.addValue += Number(this.weapon.traitList.rad.rating);
-    }
-    this.tooltips.finish(this, "Rad")
-
-    if (this.fields.aim)
-    {
-      this.tooltips.start(this)
-      if (weapon.traitList.sniper)
-      {
-        this.fields.pool += 2
-        this.fields.ed.value += (parseInt(weapon.traitList.sniper.rating) || 0)
-        this.tooltips.finish(this, "Aim (Sniper)")
-      }
-      else 
-      {
-        this.fields.pool += 1
-        this.tooltips.finish(this, "Aim")
-      }
-    }
-
-    this.tooltips.start(this)
-    if (this.fields.range == "short")
-    {
-      this.fields.pool += 1
-      if (this.weapon.traitList.rapidFire)
-      {
-        this.fields.ed.value += (parseInt(weapon.traitList.rapidFire.rating) || 0)
-      }
-      this.tooltips.finish(this, "Short Range")
-    }
-    else if (this.fields.range == "long")
-    {
-      this.fields.difficulty += 2
-      this.tooltips.finish(this, "Long Range")
-    }
-    else 
-    {
-      this.tooltips.finish();
-    }
-    // dialogData.damageValues = weapon.damageValues
-
-
   }
 
   computeInitialFields()
   {
     super.computeInitialFields();
     this.computeRange();
-
-    if (this.weapon.traitList.melta && this.fields.range == "short") 
-    {
-      this.fields.damageDice.values = 
-      {
-        ones: 0,
-        twos: 0,
-        threes: 1,
-        fours: 1,
-        fives: 2,
-        sixes: 2
-      }
-    }
-
     this.computeTargets();
   }
 
@@ -198,28 +107,6 @@ export class WeaponDialog extends AttackDialog {
                 this.fields.pool += 3;
             }
             this.tooltips.finish(this, "Target Size") 
-
-            this.tooltips.start(this)
-            if (this.weapon.traitList.melta && this.fields.range == "short" && target.actor.type == "vehicle") 
-            {
-                this.fields.damageDice.values = 
-                {
-                  ones: 1,
-                  twos: 1,
-                  threes: 1,
-                  fours: 2,
-                  fives: 2,
-                  sixes: 2
-                }
-            }
-            this.tooltips.finish(this, `Melta`)
-
-          // If using melee and target has parry weapon equipped, increase difficulty
-          if (this.weapon.system.category == "melee" && target.actor.itemTypes.weapon.find(i => i.isEquipped && i.traitList.parry))
-          {
-              this.fields.difficulty += 1;
-              this.tooltips.add("difficulty", 1, game.i18n.localize("TRAIT.Parry"))
-          }
         }
     }
   }

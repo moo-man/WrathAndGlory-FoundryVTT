@@ -89,10 +89,16 @@ export class TraitsModel extends foundry.abstract.DataModel
             }
             else
             {
+                let effectData = systemConfig().traitEffects[i.name];
+                if (effectData)
+                {
+                    foundry.utils.setProperty(effectData, `flags.${game.system.id}.path`, `system.traitList.${i.name}.effect`);
+                }
                 traits[i.name] = {
                     name: i.name,
                     display: this.parent.traitsAvailable[i.name],
-                    type: i.type
+                    type: i.type,
+                    effect : effectData ? new ActiveEffect.implementation(effectData, {parent: this.parent.parent}) : null
                 }
                 if (game.wng.config.traitHasRating[i.name]) {
                     traits[i.name].rating = i.rating;
@@ -101,5 +107,10 @@ export class TraitsModel extends foundry.abstract.DataModel
             }
         })
         return traits
+    }
+
+    get effects()
+    {
+        return Object.values(this.obj).map(i => i.effect).filter(i => i);
     }
 }

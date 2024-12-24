@@ -29,4 +29,10 @@ export class AbilityModel extends StandardItemModel
     get AbilityType() {
         return game.wng.config.abilityTypes[this.abilityType]
     }
+
+    getOtherEffects()
+    {
+        return super.getOtherEffects().concat(this.traits.effects);
+    }
+
 }

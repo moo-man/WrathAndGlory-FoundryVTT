@@ -377,6 +377,386 @@ WNG.systemEffects = {
     }
 }
 
+WNG.traitEffects = {
+         // Qualities
+         agonising: {
+            name : "TRAIT.Agonising",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Agonising",
+                    trigger : "preApplyDamage",
+                    script : "TODO: Add wounds to shock",
+                },
+            ],
+            }
+        },
+        arc: {
+            name : "TRAIT.Arc",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Attacking a Vehicle",
+                    trigger : "dialog",
+                    script : "args.fields.ed.value += parseInt(this.item.traitList.arc.rating)",
+                    options : {
+                        hideScript : "return args.target && args.target.type != 'vehicle'",
+                        activateScript : "return args.target?.type == 'vehicle'",
+                    }
+                },
+            ],
+            }
+        },
+        assault: {
+            name : "TRAIT.Assault",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Attacking while Sprinting",
+                    trigger : "dialog",
+                    script : "args.fields.difficulty += 2"
+                },
+            ],
+            }
+        },
+        brutal: {
+            name : "TRAIT.Brutal",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Brutal",
+                    trigger : "dialog",
+                    script : "args.fields.damageDice.values.threes += 1; args.fields.damageDice.values.fives += 1; args.fields.damageDice.values.sixes += 1;",
+                    options : {
+                        activateScript: "return true;"
+                    }
+                },
+            ],
+            }
+        },
+        force: {
+            name : "TRAIT.Force",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Force Weapon",
+                    trigger : "dialog",
+                    script : "args.fields.damage += Math.ceil(args.actor.system.attributes.willpower.total / 2)",
+                    options : {
+                        hideScript : "return !args.actor.hasKeyword('PSYKER');",
+                        activateScript: "return args.actor.hasKeyword('PSYKER');"
+                    }
+                },
+                {
+                    label : "Force Weapon (Not a Psyker)",
+                    trigger : "dialog",
+                    script : "args.fields.damage -= 2",
+                    options : {
+                        hideScript : "return args.actor.hasKeyword('PSYKER');",
+                        activateScript: "return !args.actor.hasKeyword('PSYKER');"
+                    }
+                }
+            ],
+            }
+        },
+        flamer: {
+            name : "TRAIT.Flamer",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [
+                {
+                    label : "On Fire",
+                    trigger : "applyDamage",
+                    script : "TODO: Add on fire condition",
+                }
+            ],
+            }
+        },
+        heavy: {
+            name : "TRAIT.Heavy",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Entangle",
+                    trigger : "dialog",
+                    script : "args.fields.difficulty += 2;",
+                    options : {
+                        // TODO add prone?
+                        hideScript : "return args.actor.system.attributes.strength.total >= this.item.traitList.heavy.value",
+                        activateScript : "return args.actor.system.attributes.strength.total < this.item.traitList.heavy.value"
+                    }
+                }]
+            }
+
+        },
+        inflict: {
+            name : "TRAIT.Inflict",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Inflict Condition",
+                    trigger : "applyDamage",
+                    script : "TODO",
+                }]
+            }
+        },
+        kustom: {
+            name : "TRAIT.Kustom",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Select Trait",
+                    trigger : "manual",
+                    script : "[Script.mo3XmOzgaROpB97i]"
+                }]
+            }
+        },
+        melta: {
+            name : "TRAIT.Melta",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Melta - Short Range",
+                    trigger : "dialog",
+                    script : "args.fields.damageDice.values.threes += 1; args.fields.damageDice.values.fives += 1;",
+                    options : {
+                        hideScript : "return args.target && args.target.type != 'vehicle'",
+                        activateScript : "return args.target?.type != 'vehicle'",
+                    }
+                },
+                {
+                    label : "Melta - Short Range (Vehicle)",
+                    trigger : "dialog",
+                    script : "args.fields.damageDice.values.ones += 1; args.fields.damageDice.values.twos += 1; args.fields.damageDice.values.threes += 1;   args.fields.damageDice.values.fours += 1; args.fields.damageDice.values.fives += 1;",
+                    options : {
+                        hideScript : "return args.target && args.target.type == 'vehicle'",
+                        activateScript : "return args.target?.type == 'vehicle'",
+                    }
+                }
+            ],
+            }
+        },
+        parry: {
+            name : "TRAIT.Parry",
+            system : {
+                transferData : {
+                    documentType : "Actor",
+                    equipTransfer: true
+                },
+                scriptData : [{
+                    label : "Parry",
+                    trigger : "dialog",
+                    script : "args.fields.difficulty += 1",
+                    options : {
+                        targeter: true,
+                        hideScript : "return !this.weapon || this.weapon?.isRanged",
+                        activateScript : "return this.weapon?.isMelee",
+                    }
+                }]
+            }
+        },
+        pistol : {
+            name : "TRAIT.Pistol",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+            }
+        },
+        rad: {
+            name : "TRAIT.Rad",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Rad",
+                    trigger : "dialog",
+                    script : "args.fields.damageDice.addValue += parseInt(this.item.traitList.rad.rating)",
+                    options : {
+                        activateScript : "return true;",
+                    }
+                }]
+            }
+        },
+        rapidFire: {
+            name : "TRAIT.RapidFire",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Rapid Fire - Short Range",
+                    trigger : "dialog",
+                    script : "args.fields.ed.value += (parseInt(this.item.traitList.rapidFire.rating) || 0)",
+                    options : {
+                        activateScript : "return this.fields.range == 'short'",
+                    }
+                }]
+            }
+        },
+        reliable: {
+            name : "TRAIT.Reliable",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                }
+            }
+        },
+        rending: {
+            name : "TRAIT.Rending",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                // TODO
+            }
+        },
+        silent: {
+            name : "TRAIT.Silent",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+            }
+        },
+        sniper: {
+            name : "TRAIT.Sniper",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Sniper - Aim",
+                    trigger : "dialog",
+                    script : "args.fields.pool += 1; args.fields.ed.value += (parseInt(this.item.traitList.sniper.rating) || 0);",
+                    options : {
+                        activateScript : "return this.fields.aim",
+                    }
+                }]
+            }
+        },
+        spread: {
+            name : "TRAIT.Spread",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Spread - Mob",
+                    trigger : "dialog",
+                    script : "args.fields.pool += 3;",
+                    options : {
+                        activateScript : "return args.target?.isMob",
+                    }
+                }]
+            }
+        },
+        supercharge: {
+            name : "TRAIT.Supercharge",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                //TODO
+            }
+        },
+        unwieldy: {
+            name : "TRAIT.Unwieldy",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Unwieldy",
+                    trigger : "dialog",
+                    script : "args.fields.difficulty += parseInt(this.item.traitList.unwieldy.rating);",
+                    options : {
+                        activateScript : "return true;",
+                    }
+                }]
+            }
+        },
+        "waaagh!": {
+            name : "TRAIT.Waaagh",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Unwieldy",
+                    trigger : "dialog",
+                    script : "args.fields.pool++; if (args.actor.statuses.has('wounded')) args.fields.ed.value++;",
+                    options : {
+                        activateScript : "return args.actor.hasKeyword('ORK');",
+                    }
+                }]
+            }
+        },
+        warpWeapons: {
+            name : "TRAIT.WarpWeapon",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Warp Weapon",
+                    trigger : "dialog",
+                    script : "this.fields.damage = args.target.system.combat.resilience.total - 4;",
+                    options : {
+                        hideScript : "return !args.target;",
+                        activateScript : "return this.item.system.damage.base < (args.target.system.combat.resilience.total - 4);",
+                    }
+                }]
+            }
+        }   ,
+        bulk: {
+            name : "TRAIT.Bulk",
+            system : {
+                transferData : {
+                    equipTransfer: true
+                },
+                scriptData : [{
+                    label : "Reduce Speed",
+                    trigger : "prePrepareData",
+                    script : "this.actor.system.combat.speed -= this.item.itemTraits.bulk.rating",
+                }]
+            }
+        },
+        powered: {
+            name : "TRAIT.Powered",
+            system : {
+                transferData : {
+                    equipTransfer: true
+                },
+                scriptData : [{
+                    label : "Increase Strength",
+                    trigger : "computeCombat",
+                    script : "this.actor.system.attributes.strength.total -= this.item.itemTraits.bulk.rating",
+                }]
+            }
+        }  
+}
 
 CONFIG.statusEffects = [
     {

@@ -293,7 +293,6 @@ export class WrathAndGloryActor extends WarhammerActor {
             }
             if (res < damage)
             {
-                // report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE_REDUCED", {damage, res, name : token?.name}))
                 wounds = damage - res
                 report.breakdown.push(`<strong>Resilience</strong>: ${damage} Damage reduced to ${wounds} Wounds (-${res})`)
             }
@@ -302,7 +301,6 @@ export class WrathAndGloryActor extends WarhammerActor {
         if (mortal)
         {
             report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal}`)
-            // report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE_MORTAL", {mortal, name : token?.name}))
             if (forceField)
             {
                 report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal} converted to Wounds (${wounds + mortal})`);
@@ -318,7 +316,6 @@ export class WrathAndGloryActor extends WarhammerActor {
             {
                 wounds = determination.result.wounds;                
                 shock += determination.result.shock;     
-                // report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE_DETERMINATION", {shock : determination.result.shock, name : token?.name}))
                 report.breakdown.push(`<strong>Determination</strong>: Converted ${shock} Wounds to Shock`)
                 report.determination = determination;          
             }        
