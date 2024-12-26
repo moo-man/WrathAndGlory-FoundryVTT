@@ -305,7 +305,9 @@
   "PSYCHIC_POWER.WOUNDS": "Wounds",
   "PSYCHIC_POWER.SHOCK": "Shock",
   "PSYCHIC_POWER.MORTAL": "Mortal",
-
+  "PSYCHIC_POWER.BOUND" : "Bound",
+  "PSYCHIC_POWER.UNBOUND" : "Unbound",
+  "PSYCHIC_POWER.TRANSCENDENT" : "Transcendent",
 
   "POWER.POTENCY_COST" : "Cost",
   "POWER.POTENCY_INITIAL" : "Initial",
@@ -605,5 +607,23 @@
   "BugReport.ErrorForm": "Please fill out the form",
   "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
   "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
-  "BUTTON.PostBug" : "W&G Bug Report"
+  "BUTTON.PostBug" : "W&G Bug Report",
+
+  "WH" : {
+    "Trigger" : {
+      "preTakeDamage" : "Pre-Take Damage",
+      "preApplyDamage" : "Pre-Apply Damage",
+
+      "computeDamage" : "Compute Damage",
+      "preComputeDamage" : "Pre-Compute Damage",
+
+      "takeDamage" : "Take Damage",
+      "applyDamage" : "Apply Damage",
+
+      "rollTest" : "Roll Test",
+      "preRollTest" : "Pre-Roll Test",
+      "preRollWeaponTest" : "Pre-Roll Weapon Test",
+      "rollWeaponTest" : "Roll Weapon Test"
+    }
+  }
 }

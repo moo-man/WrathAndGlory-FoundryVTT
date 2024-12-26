@@ -103,7 +103,7 @@ export class CombatModel extends foundry.abstract.DataModel {
             }
 
 
-            if (item.traitList.invulnerable)
+            if (item.system.invulnerable)
             {
                 this.resilience.invulnerable = true
             }

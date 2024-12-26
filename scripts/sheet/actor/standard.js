@@ -195,62 +195,19 @@ export class StandardActorSheet extends BaseWnGActorSheet {
         })
     }
 
-
     async _onRollableAbilityClick(ev) {
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
 
         if (ev.button == 0) {
-            let test
             if (item.abilityType == "determination")
-                test = await this.actor.setupGenericTest("determination")
+                await this.actor.setupGenericTest("determination")
             else
-                test = await this.actor.setupAbilityRoll(item)
+                await this.actor.setupAbilityRoll(item)
 
         }
         else
             this._dropdownRightClick(ev)
-    }
-
-    async _prepareCustomRoll() {
-        this._resetRollData();
-        return prepareCommonRoll(this.rollData);
-    }
-
-    async _prepareReroll() {
-        return reroll(this.rollData);
-    }
-
-    async _prepareDamageRoll() {
-        this._resetRollData();
-        this.rollData.weapon = {
-            damage: {
-                base: 0,
-                rank: "none",
-                bonus: 0
-            },
-            ed: {
-                base: 0,
-                rank: "none",
-                bonus: 0,
-                die: {
-                    one: 0,
-                    two: 0,
-                    three: 0,
-                    four: 1,
-                    five: 1,
-                    six: 2
-                }
-            },
-            ap: {
-                base: 0,
-                rank: "none",
-                bonus: 0
-            },
-            traits: ""
-        }
-        this.rollData.name = "ROLL.DAMAGE";
-        return prepareDamageRoll(this.rollData);
     }
 
     async _onAttributeClick(event) {
@@ -336,88 +293,5 @@ export class StandardActorSheet extends BaseWnGActorSheet {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         await this.actor.setupPowerTest(div.data("itemId"))
-    }
-
-    async _prepareRollPsychicPower(event) {
-        event.preventDefault();
-        this._resetRollData();
-        const div = $(event.currentTarget).parents(".item");
-        const psychicPower = this.actor.items.get(div.data("itemId"));
-        const skill = this.actor.system.skills.psychicMastery;
-        this.rollData.difficulty.target = psychicPower.dn;
-        this.rollData.name = psychicPower.name;
-        this.rollData.weapon = {
-            damage: {
-                base: psychicPower.damage.base,
-                rank: psychicPower.damage.rank,
-                bonus: psychicPower.damage.bonus
-            },
-            ed: {
-                base: psychicPower.ed.base,
-                rank: psychicPower.ed.rank,
-                bonus: psychicPower.ed.bonus,
-                die: psychicPower.ed.die
-            },
-            potency: psychicPower.potency
-        };
-        this.rollData.wrath.isPsy = true;
-        this.rollData.wrath.isCommon = false;
-        this.rollData.pool.size = skill.total;
-        this.rollData.skillName = skill.label;
-        this.rollData.name = psychicPower.name;
-        return preparePsychicRoll(this.rollData);
-    }
-
-    _resetRollData() {
-        let rank = 0;
-        if (this.actor.advances) {
-            rank = this.actor.advances.rank;
-        }
-        this.rollData = {
-            name: "DIALOG.CUSTOM_ROLL",
-            rank: rank,
-            difficulty: {
-                target: 3,
-                penalty: 0,
-                rank: "none"
-            },
-            pool: {
-                size: 1,
-                bonus: 0,
-                rank: "none"
-            },
-            wrath: {
-                base: 1,
-                isPsy: false,
-                isCommon: true,
-                isWeapon: false
-            },
-            result: {
-                dice: [],
-                wrath: 0,
-                isSuccess: false,
-                isWrathCriticals: false,
-                isWrathComplications: false
-            },
-            rolls: {
-                hit: [],
-                damage: []
-            }
-        };
-    }
-
-    _getConvictionPenalty() {
-        let corruption = this.actor.corruption.current;
-        if (corruption > 20) {
-            return 4;
-        } else if (corruption > 15) {
-            return 3;
-        } else if (corruption > 10) {
-            return 2;
-        } else if (corruption > 5) {
-            return 1;
-        } else {
-            return 0;
-        }
     }
 }

@@ -130,6 +130,10 @@ export class WrathAndGloryItem extends WarhammerItem {
         return this.system.traits.obj;
     }
 
+    hasKeyword(keyword) {
+        return this.keywords.split(",").map(i => i.trim()).includes(keyword.toUpperCase())
+    }
+
     // TODO move this to model
     async GetArchetypeItems() {
         let items = [];

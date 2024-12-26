@@ -272,21 +272,26 @@ WNG.vehicleRoles = {
 }
 
 
-// mergeObject(scriptTriggers, {
+WNG.scriptTriggers = {
 
-//     equipToggle : "WH.Trigger.EquipToggle",
+    equipToggle : "WH.Trigger.EquipToggle",
 
-//     takeDamageMod : "WH.Trigger.TakeDamageMod",
-//     applyDamageMod : "WH.Trigger.ApplyDamageMod",
+    preRollTest : "WH.Trigger.preRollTest",
+    rollTest : "WH.Trigger.rollTest",
 
-//     preRollTest : "WH.Trigger.PreRollTest",
-//     preRollCombatTest : "WH.Trigger.PreRollCombatTest",
-//     preRollSpellTest : "WH.Trigger.PreRollSpellTest",
+    preRollWeaponTest : "WH.Trigger.preRollWeaponTest",
+    rollWeaponTest : "WH.Trigger.rollWeaponTest",
+    
+    computeDamage : "WH.Trigger.computeDamage",
+    preComputeDamage : "WH.Trigger.preComputeDamage",
 
-//     rollTest : "WH.Trigger.RollTest",
-//     rollCombatTest : "WH.Trigger.RollCombatTest",
-//     rollSpellTest : "WH.Trigger.RollSpellTest",
-// }),
+    preTakeDamage : "WH.Trigger.preTakeDamage",
+    preApplyDamage : "WH.Trigger.preApplyDamage",
+
+    takeDamage : "WH.Trigger.takeDamage",
+    applyDamage : "WH.Trigger.applyDamage",
+    
+}
 
 WNG.avoidTestTemplate = "systems/wrath-and-glory/template/apps/effect-avoid-test.hbs",
 WNG.effectScripts = {},
@@ -324,13 +329,15 @@ WNG.systemEffects = {
         statuses : ["wounded"],
         name : "EFFECT.Wounded",
         img : "systems/wrath-and-glory/asset/icons/wounded.svg",
-        changes : [
-            {key: "difficulty.base", mode : 6, value : 1}
-        ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+1 DN to all Tests", script : "return true"}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 1",
+                label : "+1 DN to all Tests",
+                options : {
+                    activateScript : "return true;",
+                }
+            }]
         }
     },
     "full-defence" : {
@@ -348,13 +355,18 @@ WNG.systemEffects = {
         name : "EFFECT.AllOutAttack",
         img : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
         changes : [
-            {key: "pool.bonus", mode : 6, value : 2},
             {key: "system.combat.defence.bonus", mode : 2, value : -2},
         ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+2 bonus dice to melee", script : "return data.weapon && data.weapon.isMelee"}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.pool += 2",
+                label : "+2 bonus dice for Melee attacks",
+                options : {
+                    hideScript : "return !args.weapon || args.weapon.isRanged",
+                    activateScript : "return args.weapon.isMelee;",
+                }
+            }]
         }
     },
     "halfCover" : {
@@ -374,7 +386,41 @@ WNG.systemEffects = {
         changes : [
             {key: "system.combat.defence.bonus", mode : 2, value : 2},
         ]
-    }
+    },
+    "unbound" : {
+        id : "unbound",
+        statuses : ["unbound"],
+        name : "PSYCHIC_POWER.UNBOUND",
+        img : "systems/wrath-and-glory/asset/icons/wounded.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "if (args.fields.level == 'bound') args.fields.level = 'unbound'",
+                label : "Unbound",
+                options : {
+                    hideScript : "return !args.power",
+                    activateScript : "return true;",
+                }
+            }]
+        }
+    },
+    "transcendent" : {
+        id : "transcendent",
+        statuses : ["transcendent"],
+        name : "PSYCHIC_POWER.TRANSCENDENT",
+        img : "systems/wrath-and-glory/asset/icons/wounded.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "if (args.fields.level == 'bound' || args.fields.level == 'unbound') args.fields.level = 'transcendent'",
+                label : "Transcendent",
+                options : {
+                    hideScript : "return !args.power",
+                    activateScript : "return true;",
+                }
+            }]
+        }
+    },
 }
 
 WNG.traitEffects = {
@@ -434,7 +480,7 @@ WNG.traitEffects = {
                 scriptData : [{
                     label : "Brutal",
                     trigger : "dialog",
-                    script : "args.fields.damageDice.values.threes += 1; args.fields.damageDice.values.fives += 1; args.fields.damageDice.values.sixes += 1;",
+                    script : "args.fields.damageDice.values.threes += 1; args.fields.damageDice.values.fives += 1;",
                     options : {
                         activateScript: "return true;"
                     }
@@ -770,13 +816,15 @@ CONFIG.statusEffects = [
         statuses : ["blinded"],
         name : "CONDITION.Blinded",
         img : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
-        changes : [
-            {key: "difficulty.base", mode : 6, value : 4}
-        ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "Blinded", script : "return data.weapon"}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 4",
+                label : "Sight Related",
+                options : {
+                    activateScript : "return ['weaponSkill', 'ballisticSkill', 'psychicMastery'].includes(args.skill)"
+                }
+            }]
         }
     },
     {
@@ -790,13 +838,15 @@ CONFIG.statusEffects = [
         statuses : ["fear"],
         name : "CONDITION.Fear",
         img : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
-        changes : [
-            {key: "difficulty.base", mode : 6, value : 2}
-        ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+2 DN to all Tests", script : "return true"}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 2",
+                label : "+2 DN to all Tests",
+                options : {
+                    activateScript : "return true;"
+                }
+            }]
         }
     },
     {
@@ -811,13 +861,15 @@ CONFIG.statusEffects = [
         statuses : ["hindered"],
         name : "CONDITION.Hindered",
         img : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
-        changes : [
-            {key: "difficulty.base", mode : 6, value : 1}
-        ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+DN to all Tests", script : "return true"}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 1",
+                label : "+1 DN to all Tests",
+                options : {
+                    activateScript : "return true;"
+                }
+            }]
         }
     },
     {
@@ -831,11 +883,16 @@ CONFIG.statusEffects = [
         statuses : ["pinned"],
         name : "CONDITION.Pinned",
         img : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
-        changes : [{key: "difficulty.base", mode : 6, value : 2}],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "Pinned: Ballistic Skill Test Penalty", script : ""}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 2",
+                label : "+2 DN to Ballistic Skill Tests",
+                options : {
+                    activateScript : "return args.attribute == 'ballisticSkill';",
+                    hideScript : "return args.attribute != 'ballisticSkill';"
+                }
+            }]
         }
     },
     {
@@ -843,11 +900,15 @@ CONFIG.statusEffects = [
         statuses : ["poisoned"],
         name : "CONDITION.Poisoned",
         img : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
-        changes : [{key: "difficulty.base", mode : 6, value : 2}],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+DN to all Tests", script : "return true"}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 2",
+                label : "+2 DN to all Tests",
+                options : {
+                    activateScript : "return true",
+                }
+            }]
         }
     },
     {
@@ -875,11 +936,15 @@ CONFIG.statusEffects = [
         statuses : ["terror"],
         name : "CONDITION.Terror",
         img : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
-        changes : [{key: "difficulty.base", mode : 6, value : 2}],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+2 DN to all Tests", script : "return true"}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 2",
+                label : "+2 DN to all Tests",
+                options : {
+                    activateScript : "return true",
+                }
+            }]
         }
     },
     {

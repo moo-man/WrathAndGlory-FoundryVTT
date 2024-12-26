@@ -1,6 +1,10 @@
 import { AttackDialog } from "./attack-dialog.js";
 
 export class PowerDialog extends AttackDialog {
+
+  subTemplate=["systems/wrath-and-glory/template/dialog/attack-roll.hbs", "systems/wrath-and-glory/template/dialog/power-roll.hbs"]
+
+
   get power() 
   {
     return this.data.power;
@@ -19,6 +23,12 @@ export class PowerDialog extends AttackDialog {
       
       let dialogData = await super.setupData({skill, attribute}, actor, options)
       
+      dialogData.data.levels = {
+        bound : game.i18n.localize("PSYCHIC_POWER.BOUND"),
+        unbound : game.i18n.localize("PSYCHIC_POWER.UNBOUND"),
+        transcendent : game.i18n.localize("PSYCHIC_POWER.TRANSCENDENT")
+      }
+
       dialogData.data.power = power;
       dialogData.data.scripts = dialogData.data.scripts.concat(power?.getScripts("dialog"));
       
@@ -30,6 +40,41 @@ export class PowerDialog extends AttackDialog {
       }
       return dialogData;
   }
+
+  computeFields()
+  {
+    super.computeFields();
+    if (this.fields.level == "unbound")
+    {
+      this.fields.wrath += 1
+      this.tooltips.add("wrath", 1, this.data.levels[this.fields.level])
+    }
+    if (this.fields.level == "transcendent")
+    {
+        this.fields.wrath += 2
+        this.tooltips.add("wrath", 2, this.data.levels[this.fields.level])
+    }
+  }
+
+  
+    /**
+     * Transforms dialog data and fields into a options into data that will be given to some test object for evaluation
+     * @returns {object} Formatted submission data
+     */
+    _getSubmissionData()
+    {
+      let submitData = super._getSubmissionData();
+      if (this.fields.level == "unbound" && !this.actor.hasCondition("unbound"))
+      {
+        this.actor.addCondition("unbound")
+      }
+      if (this.fields.level == "transcendent" && !this.actor.hasCondition("transcendent"))
+      {
+        this.actor.removeCondition("unbound")
+        this.actor.addCondition("transcendent")
+      }
+      return submitData;
+    }
 
   computeInitialFields()
   {
@@ -43,5 +88,12 @@ export class PowerDialog extends AttackDialog {
     {
       this.fields.difficulty = null;
     }
+  }
+
+  _defaultFields() 
+  {
+      return mergeObject({
+          level : "bound",
+      }, super._defaultFields());
   }
 }

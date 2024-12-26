@@ -200,12 +200,6 @@ async _handleEnrichment()
         new ItemTraits(this.item).render(true)
     })
 
-    html.find(".effect-create").click(async ev => {
-
-      let effectData = { name: this.item.name, img: this.item.img }
-      this.object.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
-    })
-
     html.find(".effect-edit").click(ev => {
       let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
       this.object.effects.get(id).sheet.render(true)

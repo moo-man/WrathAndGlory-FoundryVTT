@@ -115,7 +115,7 @@ export class WeaponDialog extends AttackDialog {
   {
       let range
     let weapon = this.weapon;
-    if (this.fields.distance) {
+    if (this.fields.distance && weapon.isRanged) {
 
       if (this.fields.distance <= weapon.range.short) 
       {
