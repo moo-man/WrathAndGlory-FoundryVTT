@@ -385,8 +385,8 @@ export class WrathAndGloryActor extends WarhammerActor {
     
 
         let updateObj = {}
-
-        this.runScripts("takeDamage", {wounds, shock, mortal, report, updateObj, actor: this})
+        args = {wounds, shock, mortal, report, updateObj, actor: this}
+        this.runScripts("takeDamage", args)
         test?.actor?.runScripts("applyDamage", args)
         test?.item?.runScripts("applyDamage", args)
         

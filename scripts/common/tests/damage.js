@@ -8,10 +8,32 @@ export class DamageRoll {
     this.rerolledDamage = this.rerollData.rerolls.map(i => Roll.fromData(i));
   }
 
+  static DEFAULT_DAMAGE = {
+    damage : 0,
+    ed : {value : 0},
+    ap : {value : 0},
+    damageDice : {
+        values : {
+          1 : 0,
+          2 : 0,
+          3 : 0,
+          4 : 1,
+          5 : 1,
+          6 : 2,
+        },
+        addValue : 0
+      },
+    other : {
+      mortal: "",
+      wounds: "",
+      shock: "",
+    }
+  }
+
   static fromTest(test)
   {
     return new this({
-      damageData : test.result.damage,
+      damageData : foundry.utils.mergeObject(foundry.utils.deepClone(this.DEFAULT_DAMAGE), test.result.damage),
       context : {
         title : test.context.title,
         targets : test.context.targets,
