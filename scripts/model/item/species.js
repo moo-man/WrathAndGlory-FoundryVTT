@@ -19,4 +19,13 @@ export class SpeciesModel extends StandardItemModel
         schema.attributeMax = Attributes();
         return schema;
     }
+
+    static migrateData(data)
+    {
+        super.migrateData(data);
+        if (data.abilities instanceof Array)
+        {
+            data.abilities = {list: data.abilities};
+        }
+    }
 }

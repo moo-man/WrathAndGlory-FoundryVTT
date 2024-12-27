@@ -7,17 +7,18 @@ export default class PowerTest extends WNGTest {
     if (foundry.utils.isEmpty(data))
       return
 
-    this.data.testData.ed = data.ed.value
-    this.data.testData.ap = data.ap.value
+    this.data.testData.ed = data.ed;
+    this.data.testData.ap = data.ap;
     this.data.testData.damage= data.damage
+    this.data.testData.damageDice= data.damageDice
 
     this.testData.itemId = data.power.uuid;
 
     // TODO: add to dialog
     this.data.testData.otherDamage = {
-      "mortalWounds": { value: this.item.otherDamage.mortalWounds, bonus : 0 },
-      "wounds": { value: this.item.otherDamage.wounds, bonus : 0 },
-      "shock": { value: this.item.otherDamage.shock, bonus : 0 },
+      mortal: this.item.otherDamage.mortal,
+      wounds: this.item.otherDamage.wounds,
+      shock: this.item.otherDamage.shock
     }
     
     this.data.testData.potency = foundry.utils.deepClone(this.item.potency.list)

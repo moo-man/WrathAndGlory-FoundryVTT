@@ -497,6 +497,7 @@ export default class Migration {
                 str = str.replaceAll("difficulty.bonus", "difficulty");
                 str = str.replaceAll("ed.bonus", "ed.value");
                 str = str.replaceAll("ap.bonus", "ap.value");
+                str = str.replaceAll("damage.bonus", "damage");
                 return str;
             }
 

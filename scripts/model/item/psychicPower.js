@@ -52,6 +52,7 @@ export class PsychicPowerModel extends StandardItemModel
 
     static migrateData(data)
     {
+        super.migrateData(data);
         if (data.potency instanceof Array)
         {
             data.potency = {list : data.potency};

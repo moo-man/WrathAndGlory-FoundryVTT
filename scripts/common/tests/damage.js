@@ -16,7 +16,8 @@ export class DamageRoll {
         title : test.context.title,
         targets : test.context.targets,
         speaker : test.context.speaker,
-        source : test.message?.id
+        source : test.message?.id,
+        itemId : test.testData.itemId
       },
       rerollData : {
         indices : [],
@@ -35,23 +36,35 @@ export class DamageRoll {
   async rollTest() {
     // Total dice in the test
     let result = {
-      diceNum : this.damageData.ed.value,
-
       base: this.damageData.damage,
       ed: this.damageData.ed.value,
       ap: this.damageData.ap.value,
       total: this.damageData.damage,
       other : {
         mortal : 0,
-        wounds: 0,
-        shock :0
+        wounds:  0,
+        shock :  0
       }
     }
+
+    let modifiers = {
+      damage : [],
+      ed : [],
+      ap : [],
+      wounds : [],
+      mortal : [],
+      shock: []
+    }
+
+    await Promise.all(this.actor.runScripts("preComputeDamage", {damage : this.data.result, roll : this, test : this.source?.system.test, modifiers}) || []);
+    await Promise.all(this.item?.runScripts("preComputeDamage", {damage : this.data.result, roll : this, test : this.source?.system.test, modifiers}) || []);
+
+    this.result.ed += modifiers.ed.reduce((acc, mod) => acc + mod.value, 0);
 
     if (this.damageData.ed.dice)
     {
       result.edDice = (await new Roll(`${this.damageData.ed.dice}d6`).roll()).total;
-      result.diceNum += edDice;
+      result.ed += edDice;
     }
 
     if (this.damageData.ap.dice)
@@ -61,7 +74,7 @@ export class DamageRoll {
       }
 
     this.roll = Roll.fromTerms([
-      new PoolDie({ number: result.ed, faces: 6, options: { values: this.damageData.damageDice.values, add : this.damageData.damageDice.addValue } }),
+      new PoolDie({ number: result.ed || 0, faces: 6, options: { values: this.damageData.damageDice.values, add : this.damageData.damageDice.addValue } }),
     ])
 
     await this.roll.evaluate();
@@ -72,17 +85,68 @@ export class DamageRoll {
     // Set dice indices before filtering out shifted
     this.damageData.dice.forEach((die, index) => die.index = index);
 
+    result.other.mortal = (await new Roll(this.damageData.other.mortal || "0").roll()).total
+    result.other.wounds = (await new Roll(this.damageData.other.wounds || "0").roll()).total
+    result.other.shock = (await new Roll(this.damageData.other.shock || "0").roll()).total
+
+
     this.data.result = result;
+    await Promise.all(this.actor.runScripts("computeDamage", {damage : this.data.result, roll : this, test : this.source?.system.test, modifiers}) || []);
+    await Promise.all(this.item?.runScripts("computeDamage", {damage : this.data.result, roll : this, test : this.source?.system.test, modifiers}) || []);
+    this.result.base += modifiers.damage.reduce((acc, mod) => acc + mod.value, 0);
+    this.result.ap += modifiers.ap.reduce((acc, mod) => acc + mod.value, 0);
+    this.result.other.mortal += modifiers.mortal.reduce((acc, mod) => acc + mod.value, 0);
+    this.result.other.shock += modifiers.shock.reduce((acc, mod) => acc + mod.value, 0);
+
     this.computeDamage();
 
+    let getModifierBreakdown = (modifiers) => {
+      // modifiers[type].map(mod => `<li><p><strong>${mod.label}</strong>: ${HandlebarsHelpers.numberFormat(mod.value, { hash: { sign: true } })}</p></li>`);
+      return modifiers.map(mod => `${mod.value >= 0 ? (" + "  + mod.value) : (" - " + Math.abs(mod.value))}  (${mod.label})`)
+
+      // Should return " + X (label) - Y (label) or similar"
+      // return modifiers[0]?.value >= 0 ? ` + ${str}` : str
+  }
+
+    this.result.breakdown = {
+      damage : `<p>${this.damageData.damage} (Base) + ${result.rolledValue} (ED) ${getModifierBreakdown(modifiers.damage)}</p>`,
+      mortal : `<p>${this.damageData.other.mortal} (@DICE) ${getModifierBreakdown(modifiers.mortal)}`,
+      wounds : `<p>${this.damageData.other.wounds} (@DICE) ${getModifierBreakdown(modifiers.wounds)}`,
+      shock : `<p>${this.damageData.other.shock} (@DICE) ${getModifierBreakdown(modifiers.shock)}`,
+    }
+
+    
+    if (this.damageData.other.mortal.includes("d")) 
+    { this.result.breakdown.mortal = this.result.breakdown.mortal.replace("@DICE", result.other.mortal)}
+    else 
+    {this.result.breakdown.mortal = this.result.breakdown.mortal.replace("(@DICE)", "")}
+    
+    if (this.damageData.other.wounds.includes("d")) 
+    { this.result.breakdown.wounds = this.result.breakdown.wounds.replace("@DICE", result.other.wounds)}
+    else 
+    {this.result.breakdown.wounds = this.result.breakdown.wounds.replace("(@DICE)", "")}
+    
+    if (this.damageData.other.shock.includes("d")) 
+    { this.result.breakdown.shock = this.result.breakdown.shock.replace("@DICE", result.other.shock)}
+    else 
+    {this.result.breakdown.shock = this.result.breakdown.shock.replace("(@DICE)", "")}
+
+    
+    if (this.result.ap)
+    {
+      this.result.breakdown.ap = `<p>${this.damageData.ap.value} (Base) ${getModifierBreakdown(modifiers.ap)}</p>`
+    }
+
+    if (this.result.ed)
+    {
+      this.result.breakdown.ed = `<p><strong>ED</strong>: ${this.damageData.ed.value} (Base) ${getModifierBreakdown(modifiers.ed)}</p>`;
+    }
     await this.sendToChat();
-
-    return this
-
   }
 
   computeDamage()
-  {
+  {   
+    
     this.result.roll = foundry.utils.deepClone(this.damageData.roll);
     this.result.dice = foundry.utils.deepClone(this.damageData.dice);
 
@@ -95,6 +159,9 @@ export class DamageRoll {
           this.result.rolledValue += die.value;
           this.result.total += die.value;
     });
+
+
+
   }
 
 
@@ -200,7 +267,7 @@ export class DamageRoll {
   async applyToTargets()
   {
     let tokens = (game.user.targets.size ? Array.from(game.user.targets).map(t => t.document) : this.targetTokens);
-    let reports = await Promise.all(tokens.map(t => t.actor?.applyDamage(this.result.total, {ap : this.result.ap, shock : this.result.other.shock, mortal : this.result.other.mortal}, {roll: this, token : t})));
+    let reports = await Promise.all(tokens.map(t => t.actor?.applyDamage(this.result.total + this.result.other.wounds, {ap : this.result.ap, shock : this.result.other.shock, mortal : this.result.other.mortal}, {test : this.source?.system.test, damageRoll: this, token : t})));
     this.addReport(reports);
   }
 
@@ -243,13 +310,14 @@ export class DamageRoll {
 
   get targetTokens() 
   {
-    return this.source.system.test.targetTokens;
+    // Ability rolls aren't sourced from a Test, they roll damage directly
+    return this.source ? this.source.system.test.targetTokens : this.context.targets.map(i => game.scenes.get(i.scene)?.tokens.get(i.token));
   }
 
   get actor() { return game.wng.utility.getSpeaker(this.context.speaker) }
 
   get item()
   {
-    return this.source?.system.test?.item;
+    return this.source?.system.test?.item || fromUuidSync(this.context.itemId);
   }
 }

@@ -89,16 +89,20 @@ export class WrathAndGloryActor extends WarhammerActor {
                 return this._setupTest(RollDialog, DeterminationRoll, {pool : this.combat.determination.total,}, options)
             case "corruption":
                 options.title = game.i18n.localize(`ROLL.CORRUPTION`)
+                options.conviction = true;
                 return this._setupTest(RollDialog, CorruptionTest, {pool : this.combat.conviction.total}, options)
             case "mutation":
                 options.title = game.i18n.localize(`ROLL.MUTATION`)
+                options.conviction = true;
                 return this._setupTest(RollDialog, MutationTest, {pool : this.combat.conviction.total}, options)
             case "fear":
                 options.title = game.i18n.localize(`ROLL.FEAR`)
+                options.resolve = true;
                 options.noWrath = true;
                 return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
             case "terror":
                 options.title = game.i18n.localize(`ROLL.TERROR`)
+                options.resolve = true;
                 options.noWrath = true;
                 return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
             case "influence":
@@ -142,28 +146,31 @@ export class WrathAndGloryActor extends WarhammerActor {
             ap: {}
         }
         if (ability.hasDamage) {
-            testData.damage.base = ability.damage.base
-            testData.damage.bonus = ability.damage.bonus
-            testData.damage.rank = ability.damage.rank
-            testData.ed.base = ability.ed.base
-            testData.ed.bonus = ability.ed.bonus
-            testData.ed.rank = ability.ed.rank
-            testData.ap.base = ability.ap.base
-            testData.ap.bonus = ability.ap.bonus
-            testData.ap.rank = ability.ap.rank
+            testData.damage = ability.damage.base
+            testData.ed.value = ability.ed.base
+            testData.ap.value = ability.ap.base
+            testData.damageDice = {
+                values : {
+                  1 : 0,
+                  2 : 0,
+                  3 : 0,
+                  4 : 1,
+                  5 : 1,
+                  6 : 2,
+                },
+                addValue : 0
+              }
             testData.otherDamage = {
-                mortalWounds: { value: ability.otherDamage.mortalWounds, bonus : 0 },
-                wounds: { value: ability.otherDamage.wounds, bonus : 0 },
-                shock: { value: ability.otherDamage.shock, bonus : 0 },
+                mortal: ability.otherDamage.mortal,
+                wounds: ability.otherDamage.wounds,
+                shock: ability.otherDamage.shock,
             }
 
         }
         ui.sidebar.activateTab("chat")
-        return new AbilityRoll(testData)
-        
-
-
-        return dialogData
+        let roll = new AbilityRoll(testData)
+        await roll.rollTest();
+        roll.sendToChat();
     }
 
     async rollDetermination(wounds, message)
@@ -186,8 +193,8 @@ export class WrathAndGloryActor extends WarhammerActor {
             content: "<p>Begin Character Creation?</p>",
             yes: () =>  new CharacterCreation({ actor: this, archetype }).render(true),
             no: async () => {
-                let species = await game.wng.utility.findItem(archetype.species.id, "species")
-                let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
+                let species = await warhammer.utility.findItemId(archetype.species.id, "species")
+                let faction = await warhammer.utility.findItemId(archetype.faction.id, "faction")
                 this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
                }
         }).render(true)
@@ -248,12 +255,40 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
     }
 
-    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}, {roll, token}) {
-        let res = this.system.combat.resilience.total || 1
+    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}, {test, damageRoll, token}) {
+
+        let resilience = foundry.utils.deepClone(this.system.combat.resilience)
+        let res = resilience.total || 1
         ap = Math.abs(ap);
 
-        let invuln = this.system.combat.resilience.invulnerable
-        let forceField= this.system.combat.resilience.forceField
+        // label, value, description
+        let modifiers = {
+            damage : [],
+            ap : [],
+            shock: [],
+            mortal: [],
+            resilience : []
+        };
+
+        let addModifierBreakdown = (type, label) => {
+            for(let mod of modifiers[type])
+            {
+                report.breakdown.push(`<strong>${mod.label}</strong>: ${HandlebarsHelpers.numberFormat(mod.value, { hash: { sign: true } })} ${label}` + (mod.description ? ` (${mod.description})` : ""))
+            }
+        }
+        
+        let args = {damage, ap, shock, mortal, test, damageRoll, modifiers, resilience, actor: this}
+        this.runScripts("preTakeDamage", args)
+        test?.actor?.runScripts("preApplyDamage", args)
+        test?.item?.runScripts("preApplyDamage", args)
+        damage = args.damage;
+        ap = args.ap;
+        shock = args.shock;
+        mortal = args.mortal;
+
+        
+        let invuln = resilience.invulnerable
+        let forceField = resilience.forceField
 
         let wounds = 0
 
@@ -262,16 +297,31 @@ export class WrathAndGloryActor extends WarhammerActor {
             breakdown : [],
             uuid : token?.uuid
         }
+
+        damage += modifiers.damage.reduce((acc, mod) => acc + mod.value, 0);
+        ap += modifiers.ap.reduce((acc, mod) => acc + mod.value, 0);
+        shock += modifiers.shock.reduce((acc, mod) => acc + mod.value, 0);
+        mortal += modifiers.mortal.reduce((acc, mod) => acc + mod.value, 0);
+
+        if (invuln)
+        {
+            ap = 0;
+        }
     
-        if (!invuln)
+        if (ap)
         {
             let resilienceReduction = ap
             if (game.settings.get('wrath-and-glory', 'advancedArmour'))
             {
                 resilienceReduction = Math.min(ap, target.system.combat.resilience.armour)
             }
+            addModifierBreakdown("ap", "AP");
             report.breakdown.push(`<strong>AP</strong>: Reduced Resilience to ${Math.max(0, res - resilienceReduction)} (${res} - ${resilienceReduction})`)
             res = Math.max(0, res - resilienceReduction);
+        }
+        else  if (invuln)
+        {
+            report.breakdown.push(`<strong>Invulnerable</strong>: Ignore AP`);
         }
     
         if (res <= 0)
@@ -279,6 +329,7 @@ export class WrathAndGloryActor extends WarhammerActor {
     
         if (damage)
         {
+            addModifierBreakdown("damage", "Damage");
             if (res > damage)
             {
                 report.message = game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : token?.name})
@@ -300,6 +351,7 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (mortal)
         {
+            addModifierBreakdown("mortal", "Mortal Wounds");
             report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal}`)
             if (forceField)
             {
@@ -309,9 +361,12 @@ export class WrathAndGloryActor extends WarhammerActor {
             }
         }
 
+        addModifierBreakdown("shock", "Shock");
+
+
         if (wounds)
         {
-            let determination = await this.rollDetermination(wounds, roll?.message?.id)
+            let determination = await this.rollDetermination(wounds, damageRoll?.message?.id)
             if (determination)
             {
                 wounds = determination.result.wounds;                
@@ -329,7 +384,12 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
     
 
-        let updateObj = {effects: []}
+        let updateObj = {}
+
+        this.runScripts("takeDamage", {wounds, shock, mortal, report, updateObj, actor: this})
+        test?.actor?.runScripts("applyDamage", args)
+        test?.item?.runScripts("applyDamage", args)
+        
         if (shock)
         {
             let newShock = this.system.combat.shock.value + shock
@@ -348,10 +408,14 @@ export class WrathAndGloryActor extends WarhammerActor {
                 await this.addCondition("dying")
             }
         }
-        if (shock || wounds)
+        if (shock || wounds || mortal)
         {
             report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE", {wounds : wounds + mortal, shock, name : token?.name}));
             report.message = game.i18n.format(`<strong>${token?.name}</strong> received damage`);
+        }
+        else 
+        {
+            report.message = game.i18n.format(`<strong>${token?.name}</strong> received no damage`);
         }
 
         report.breakdown = `<ul><li><p>${report.breakdown.join(`</p></li><li><p>`)}</p></li></ul>`

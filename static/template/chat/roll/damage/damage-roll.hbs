@@ -1,6 +1,6 @@
 <div class="wrath-and-glory chat roll damageRoll">
     <div class="wrapper">
-        <h3>{{context.title}} - Damage</h3>
+        <h3 data-tooltip="{{this.result.breakdown.ed}}" data-tooltip-direction="UP">{{context.title}} - Damage</h3>
 
         <div class="dice-container">
             {{#each result.dice as |die index|}}
@@ -24,27 +24,24 @@
                 {{/each}}
             </div>
         {{/if}}
-        <p data-tooltip="{{result.base}} (Base) + {{result.rolledValue}}" data-tooltip-direction="LEFT"><strong>{{localize "WEAPON.DAMAGE"}}: {{result.total}}</strong></p>
+        <p data-tooltip="{{this.result.breakdown.damage}}" data-tooltip-direction="LEFT"><strong>{{localize "WEAPON.DAMAGE"}}: {{result.total}}</strong></p>
         {{#if result.ap}}
-            <p><strong>{{localize "WEAPON.AP"}}: {{result.ap}}</strong></p>
+            <p data-tooltip="{{this.result.breakdown.ap}}" data-tooltip-direction="LEFT"><strong>{{localize "WEAPON.AP"}}: {{result.ap}}</strong></p>
         {{/if}}
 
-        {{#if result.other.mortal.total}}
-            <p><strong title="{{result.other.mortal.value}} + {{result.other.mortal.bonus}}">{{localize "CHAT.MORTAL"}}:
-                    {{result.other.mortal.total}}</strong></p>
+        {{#if result.other.mortal}}
+            <p data-tooltip="{{this.result.breakdown.mortal}}" data-tooltip-direction="LEFT"><strong>{{localize "CHAT.MORTAL"}}: {{result.other.mortal}}</strong></p>
         {{/if}}
 
-        {{#if result.other.wounds.total}}
-            <p><strong title="{{result.other.wounds.value}} + {{result.other.wounds.bonus}}">{{localize "CHAT.WOUNDS"}}:
-                    {{result.other.wounds.total}}</strong></p>
+        {{#if result.other.wounds}}
+            <p data-tooltip="{{this.result.breakdown.wounds}}" data-tooltip-direction="LEFT"><strong>{{localize "CHAT.WOUNDS"}}: {{result.other.wounds}}</strong></p>
         {{/if}}
 
-        {{#if result.other.shock.total}}
-            <p><strong title="{{result.other.shock.value}} + {{result.other.shock.bonus}}">{{localize "CHAT.SHOCK"}}:
-                    {{result.other.shock.total}}</strong></p>
+        {{#if result.other.shock}}
+            <p data-tooltip="{{this.result.breakdown.shock}}" data-tooltip-direction="LEFT"><strong>{{localize "CHAT.SHOCK"}}: {{result.other.shock}}</strong></p>
         {{/if}}
 
-        {{#if item.system.traits}}
+        {{#if item.system.traits.list.length}}
             <p><strong>{{localize "WEAPON.TRAITS"}}: {{item.system.traits.formatted}}</strong></p>
         {{/if}}
     </div>

@@ -160,6 +160,11 @@
   "BUTTON.CONFIGURE": "Configure",
   "BUTTON.JOURNAL": "Journal",
 
+  "SHIFT.DAMAGE" : "Damage",
+  "SHIFT.GLORY" : "Glory",
+  "SHIFT.OTHER" : "Other",
+  "SHIFT.POTENCY" : "Potency",
+
   "BUTTON.ApplyDamage" : "Apply Damage",
   "BUTTON.ApplyDamageInvuln" : "Apply Damage (Invulnerable armour)",
   "BUTTON.ApplyDamageArmourAP" : "Apply Damage (AP only on Armour)",
@@ -214,6 +219,8 @@
   "DIALOG.OUT_OF_RANGE" : "Out of Range!",
   "DIALOG.ROLLMODE" : "Roll Mode",
   "DIALOG.MODIFIER_BREAKDOWN" : "Modifier Breakdown",
+  "DIALOG.DICE_TOOLTIP" : "Number of D6s rolled to determine the value (e.g. 2 = 2D6)",
+  "DIALOG.POWER_LEVEL": "Power Level",
 
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",

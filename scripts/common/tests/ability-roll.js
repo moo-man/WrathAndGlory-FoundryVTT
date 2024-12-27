@@ -4,25 +4,20 @@ import { WNGTest } from "./test.js"
 export default class AbilityRoll extends WNGTest {
   constructor(data = {})
   {
+    data.targets = Array.from(game.user.targets).map(t => t.actor?.speakerData(t.document));
     super(data)
     if (!data)
       return
 
-    this.data.testData.ed = data.ed || {}
-    this.data.testData.ap = data.ap || {}
-    this.data.testData.damage= data.damage || {}
+    this.data.testData.ed = data.ed;
+    this.data.testData.ap = data.ap;
+    this.data.testData.damage= data.damage
+    this.data.testData.damageDice= data.damageDice
 
     this.data.testData.otherDamage = data.otherDamage || {}
 
     this.testData.itemId = data.itemId
-  }
-
-  get template() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.hbs"
-  }
-
-  get damageTemplate() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.hbs"
+    this.data.context.title = data.title;
   }
 
   async rollTest() {
@@ -34,18 +29,10 @@ export default class AbilityRoll extends WNGTest {
     this.data.result = {}
     if (this.item.hasTest) this.result.test = duplicate(this.item.test);
     this.computeDamage()
-    this.rollDamage() 
   }
   
   sendToChat() {
-    this.sendDamageToChat()
-  }
-
-  get testEffects() {
-    if(this.item)
-      return this.item.effects.filter(e => !e.transfer)
-    else 
-      return []
+    this.rollDamage() 
   }
 
   get showTest() {

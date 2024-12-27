@@ -15,7 +15,6 @@ export class DamageModel extends foundry.abstract.DataModel
             base: new fields.NumberField({initial: 0, nullable: false}),
             bonus: new fields.NumberField({initial: 0, nullable: false}),
             dice : new fields.NumberField({min: 0, initial: 0, nullable: false}),
-            rank: new fields.StringField({initial : "none"})
         })
         
         schema.ap = new fields.SchemaField({
@@ -26,9 +25,9 @@ export class DamageModel extends foundry.abstract.DataModel
         })
         
         schema.otherDamage = new fields.SchemaField({
-            mortalWounds : new fields.StringField({}),
-            wounds : new fields.StringField({}),
-            shock : new fields.StringField({})
+            mortal : new fields.StringField({initial : "0"}),
+            wounds : new fields.StringField({initial : "0"}),
+            shock : new fields.StringField({initial : "0"})
         })
         return schema;
     }
@@ -61,5 +60,14 @@ export class DamageModel extends foundry.abstract.DataModel
             rank = " + DR";
         }
         return `${damage}${rank}`;
+    }
+
+    migrateData(data)
+    {
+        if (data.otherDamage.mortalWounds)
+        {
+            data.otherDamage.mortal = data.otherDamage.mortalWounds;
+            delete data.otherDamage.mortalWounds;
+        }
     }
 }

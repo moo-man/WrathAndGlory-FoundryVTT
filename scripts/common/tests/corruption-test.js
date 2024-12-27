@@ -45,9 +45,8 @@ export default class CorruptionTest  extends WNGTest {
 
       if (prevLevel < newLevel) {
         ui.notifications.notify(game.i18n.localize("ROLL.NewCorruptionLevel"))
-        this.actor.setupGenericTest("mutation").then(async mutationTest => {
-          await mutationTest.rollTest();
-          mutationTest.sendToChat();
+        this.actor.setupGenericTest("mutation").then(test => {
+          test.rollTest();
         })
       }
     }

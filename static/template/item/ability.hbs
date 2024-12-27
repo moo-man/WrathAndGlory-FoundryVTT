@@ -33,7 +33,7 @@
           <div class="item-form-group static">
             <label>{{localize "ABILITY.COST"}}</label>
             <div class="item-form-inputs small">
-              <input name="system.cost" type="number" value="{{system.cost}}" data-dtype="Number" />
+              <input name="system.cost" type="number" value="{{system.cost}}"/>
             </div>
           </div>
           <div class="item-form-group">
@@ -72,7 +72,7 @@
           <div class="item-form-group">
             <label>{{localize "PSYCHIC_POWER.TEST"}}</label>
             <div class="item-form-inputs small">
-              <input name="system.test.dn" class="dn" placeholder="DN" type="number" value="{{system.test.dn}}" data-dtype="Number" />
+              <input name="system.test.dn" class="dn" placeholder="DN" type="number" value="{{system.test.dn}}"/>
             </div>
             <div class="item-form-inputs">
               <select name="system.test.type" class="type">
@@ -130,22 +130,15 @@
           <div class="damage-header">
             <b class="spacer"></b>
             <b class="base">{{localize "DIALOG.BASE"}}</b>
-            <b class="rank">{{localize "DIALOG.RANK"}}</b>
             <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
+            <b class="modifier" data-tooltip="{{DIALOG.DICE_TOOLTIP}}">{{localize "DIALOG.DICE"}}</b>
           </div>
           <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
             <div class="item-form-inputs">
-              <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}"
-              data-dtype="Number" />
-              <select name="system.damage.rank" class="rank">
-                {{#select system.damage.rank}}
-                <option value="none">{{localize "RANK.NONE"}}</option>
-                <option value="single">{{localize "RANK.SINGLE"}}</option>
-                <option value="double">{{localize "RANK.DOUBLE"}}</option>
-                {{/select}}
-              </select>
-              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" data-dtype="Number" />
+              <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}"/>
+              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}"/>
+              <input name="system.damage.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
             </div>
           </div>
         </div>
@@ -153,15 +146,9 @@
           <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.ED"}}</label>
             <div class="item-form-inputs">
-              <input name="system.damage.ed.base" class="base" type="number" value="{{system.damage.ed.base}}" data-dtype="Number" />
-              <select name="system.damage.ed.rank" class="rank">
-                {{#select system.damage.ed.rank}}
-                <option value="none">{{localize "RANK.NONE"}}</option>
-                <option value="single">{{localize "RANK.SINGLE"}}</option>
-                <option value="double">{{localize "RANK.DOUBLE"}}</option>
-                {{/select}}
-              </select>
-              <input name="system.damage.ed.bonus" class="modifier" type="number" value="{{system.damage.ed.bonus}}" data-dtype="Number" />
+              <input name="system.damage.ed.base" class="base" type="number" value="{{system.damage.ed.base}}"/>
+              <input name="system.damage.ed.bonus" class="modifier" type="number" value="{{system.damage.ed.bonus}}"/>
+              <input name="system.damage.ed.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
             </div>
           </div>
         </div>
@@ -169,15 +156,9 @@
           <div class="item-form-group fixed">
             <label>{{localize "WEAPON.AP"}}</label>
             <div class="item-form-inputs">
-              <input name="system.damage.ap.base" class="base" type="number" value="{{system.damage.ap.base}}" data-dtype="Number" />
-              <select name="system.damage.ap.rank" class="rank">
-                {{#select system.damage.ap.rank}}
-                <option value="none">{{localize "RANK.NONE"}}</option>
-                <option value="single">{{localize "RANK.SINGLE"}}</option>
-                <option value="double">{{localize "RANK.DOUBLE"}}</option>
-                {{/select}}
-              </select>
-              <input name="system.damage.ap.bonus" class="modifier" type="number" value="{{system.damage.ap.bonus}}" data-dtype="Number" />
+              <input name="system.damage.ap.base" class="base" type="number" value="{{system.damage.ap.base}}"/>
+              <input name="system.damage.ap.bonus" class="modifier" type="number" value="{{system.damage.ap.bonus}}"/>
+              <input name="system.damage.ap.dice" class="modifier" type="number" value="{{system.damage.ap.dice}}" />
             </div>
           </div>
         </div>
@@ -192,9 +173,9 @@
           <div class="item-form-group fixed">
             <label>{{localize "PSYCHIC_POWER.OTHER_DAMAGE"}}</label>
             <div class="item-form-inputs">
-              <input name="system.damage.otherDamage.shock" class="base" type="text" value="{{system.damage.otherDamage.shock}}" data-dtype="String" />
-              <input name="system.damage.otherDamage.wounds" class="base" type="text" value="{{system.damage.otherDamage.wounds}}" data-dtype="String" />
-              <input name="system.damage.otherDamage.mortalWounds" class="modifier" type="text" value="{{system.damage.otherDamage.mortalWounds}}" data-dtype="String" />
+              <input name="system.damage.otherDamage.shock" class="base" type="text" value="{{system.damage.otherDamage.shock}}"/>
+              <input name="system.damage.otherDamage.wounds" class="base" type="text" value="{{system.damage.otherDamage.wounds}}"/>
+              <input name="system.damage.otherDamage.mortal" class="modifier" type="text" value="{{system.damage.otherDamage.mortal}}"/>
             </div>
           </div>
         </div>

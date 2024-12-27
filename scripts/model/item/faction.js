@@ -40,6 +40,7 @@ export class FactionModel extends StandardItemModel
 
     static migrateData(data)
     {
+        super.migrateData(data);
         for(let bg of data.backgrounds.origin)
         {
             if (typeof bg.effect == "string")

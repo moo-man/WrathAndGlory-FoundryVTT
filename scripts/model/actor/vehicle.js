@@ -35,6 +35,7 @@ export class VehicleModel extends BaseWarhammerActorModel {
 
     static migrateData(data)
     {
+        super.migrateData(data);
         if (data.traits instanceof Array)
         {
             data.traits = {list : data.traits};

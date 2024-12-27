@@ -12,7 +12,24 @@ export class WNGTest extends WarhammerTestBase {
         attribute: data.attribute,
         skill: data.skill,
         wrath: data.wrath,
-        shifted: data.shifted || { damage: [], glory: [], other: [], potency: [] },
+        shifted: data.shifted || { damage: {
+          label : game.i18n.localize("SHIFT.DAMAGE"),
+          dice : [],
+          letter : "D"
+        }, glory: {
+          label : game.i18n.localize("SHIFT.GLORY"),
+          dice : [],
+          letter : "G"
+        }, other: {
+          label : game.i18n.localize("SHIFT.OTHER"),
+          dice : [],
+          letter : "?"
+        }, potency: {
+          label : game.i18n.localize("SHIFT.POTENCY"),
+          dice : [],
+          letter : "P"
+        }},
+        // shifted: data.shifted || { damage: [], glory: [], other: [], potency: [], added: {} },
         rerolls: [], // Indices of reroll sets,
         useDN: true,
         edit: { pool: 0, wrath: 0, icons: 0, damage: 0, ed: 0, ap: 0 }
@@ -58,6 +75,7 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   async rollTest() {
+    await this.runPreScripts()
     // Total dice in the test
     let diceNum = this.testData.pool
 
@@ -71,6 +89,7 @@ export class WNGTest extends WarhammerTestBase {
     this._computeResult();
 
     this.handleCounters();
+    await this.runPostScripts();
 
     return this
 
@@ -146,7 +165,7 @@ export class WNGTest extends WarhammerTestBase {
   computeDamage() {
       this.result.damage = {
         damage : this.testData.damage + this.testData.edit.damage,
-        ed : { value : this.testData.ed.value + this.testData.shifted.damage.length + this.testData.edit.ed, dice : this.testData.ed.dice},
+        ed : { value : this.testData.ed.value + this.testData.shifted.damage.dice.length + this.testData.edit.ed, dice : this.testData.ed.dice},
         ap : { value : this.testData.ap.value + + this.testData.edit.ap, dice : this.testData.ap.dice},
         other : this.testData.otherDamage,
         damageDice : this.testData.damageDice
@@ -169,14 +188,14 @@ export class WNGTest extends WarhammerTestBase {
   _computeShifted() {
     this.result.shifted = this.result.dice.filter(die => this.isShifted(die.index));
     this.result.shifted.forEach(die => {
-      if (this.testData.shifted.damage.includes(die.index))
-        die.shift = "damage";
-      else if (this.testData.shifted.glory.includes(die.index))
-        die.shift = "glory";
-      else if (this.testData.shifted.potency.includes(die.index))
-        die.shift = "potency"
-      else
-        die.shift = "other";
+
+      for(let type in this.testData.shifted)
+      {
+        if (this.testData.shifted[type].dice.includes(die.index))
+        {
+          die.shifted = this.testData.shifted[type];
+        }
+      }
     })
   }
 
@@ -316,6 +335,11 @@ export class WNGTest extends WarhammerTestBase {
     this.sendToChat();
   }
 
+  addShiftOption(key, label, letter)
+  {
+    this.testData.shifted[key] = {dice : [], letter, label}
+  }
+
 
   handleCounters() {
     if (this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies")) {
@@ -336,9 +360,14 @@ export class WNGTest extends WarhammerTestBase {
   }
 
 
-  shift(shift, type) {
+  async shift(shift, type) 
+  {
+    if (type == "other" && Object.keys(this.testData.shifted).length > 4)
+    {
+      type = await this.promptShiftType()
+    }
 
-    this.testData.shifted[type] = this.testData.shifted[type].concat(shift)
+    this.testData.shifted[type].dice = this.testData.shifted[type].dice.concat(shift)
     this._computeResult()
     this.sendToChat()
   }
@@ -351,10 +380,10 @@ export class WNGTest extends WarhammerTestBase {
         ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", { change: glorySubtract }))
     })
     //this.result.allDice.filter(die => die.shift).forEach(die => die.shift = "")
-    this.testData.shifted.other = []
-    this.testData.shifted.damage = []
-    this.testData.shifted.glory = []
-    this.testData.shifted.potency = []
+    for(let option of Object.values(this.testData.shifted))
+    {
+      option.dice = [];
+    }
     this._computeResult()
     this.sendToChat()
   }
@@ -362,6 +391,18 @@ export class WNGTest extends WarhammerTestBase {
   // Is this test shiftable?
   isShiftable() {
     return true
+  }
+
+  async promptShiftType()
+  {
+    let options = Object.keys(this.testData.shifted).filter(i => !["damage", "potency", "glory"].includes(i)).map(id => {
+      return {
+        id,
+        name : this.testData.shifted[id].label,
+        img : "modules/wng-core/assets/dice/die-pool-6.webp"
+      }
+    })
+    return (await ItemDialog.create(options, 1, {title : "Shift Options"}))[0].id
   }
 
   async sendToChat({ newMessage = null, chatDataMerge = {} } = {}) {
@@ -409,16 +450,7 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   isShifted(dieIndex) {
-    if (this.testData.shifted.damage.includes(dieIndex))
-      return true
-    if (this.testData.shifted.glory.includes(dieIndex))
-      return true
-    if (this.testData.shifted.potency.includes(dieIndex))
-      return true
-    if (this.testData.shifted.other.includes(dieIndex))
-      return true
-
-    return false
+    return Object.values(this.testData.shifted).some(option => option.dice.includes(dieIndex));
   }
 
   getRankNum(rank) {

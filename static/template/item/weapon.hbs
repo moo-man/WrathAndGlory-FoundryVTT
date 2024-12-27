@@ -43,7 +43,7 @@
           <div class="item-form-group static">
             <label>{{localize "WEAPON.QUANTITY"}}</label>
             <div class="item-form-inputs small">
-              <input name="system.quantity" type="number" value="{{system.quantity}}" data-dtype="Number" />
+              <input name="system.quantity" type="number" value="{{system.quantity}}" />
             </div>
           </div>
         </div>
@@ -52,15 +52,15 @@
             <div class="item-form-group static">
               <label>{{localize "WEAPON.SALVO"}}</label>
               <div class="item-form-inputs small">
-                <input name="system.salvo" type="number" value="{{system.salvo}}" data-dtype="Number" />
+                <input name="system.salvo" type="number" value="{{system.salvo}}" />
               </div>
             </div>
             <div class="item-form-group static">
               <label>{{localize "WEAPON.RANGE"}}</label>
               <div class="item-form-inputs medium">
-                <input name="system.range.short" type="number" value="{{system.range.short}}" data-dtype="Number" />
-                <input name="system.range.medium" type="number" value="{{system.range.medium}}" data-dtype="Number" />
-                <input name="system.range.long" type="number" value="{{system.range.long}}" data-dtype="Number" />
+                <input name="system.range.short" type="number" value="{{system.range.short}}" />
+                <input name="system.range.medium" type="number" value="{{system.range.medium}}" />
+                <input name="system.range.long" type="number" value="{{system.range.long}}" />
               </div>
             </div>
           </div>
@@ -69,13 +69,13 @@
             <div class="item-form-group static">
               <label>{{localize "WEAPON.RANGE"}}</label>
               <div class="item-form-inputs small">
-                <input name="system.range.melee" type="number" value="{{system.range.melee}}" data-dtype="Number" />
+                <input name="system.range.melee" type="number" value="{{system.range.melee}}" />
               </div>
             </div>
             <div class="item-form-group static">
               <label>{{localize "WEAPON.THROWN"}} S x </label>
               <div class="item-form-inputs small">
-                <input name="system.range.thrown" type="number" value="{{system.range.thrown}}" data-dtype="Number" />
+                <input name="system.range.thrown" type="number" value="{{system.range.thrown}}" />
               </div>
             </div>
           </div>
@@ -84,23 +84,14 @@
           <div class="damage-header">
             <b class="spacer"></b>
             <b class="base">{{localize "DIALOG.BASE"}}</b>
-            <b class="rank">{{localize "DIALOG.RANK"}}</b>
             <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
-            <b class="modifier">{{localize "DIALOG.DICE"}}</b>
+            <b class="modifier" data-tooltip="{{DIALOG.DICE_TOOLTIP}}">{{localize "DIALOG.DICE"}}</b>
           </div>
           <div class="item-form-group fixed">
             <label>{{localize "WEAPON.DAMAGE"}}</label>
             <div class="item-form-inputs">
-              <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}"
-                data-dtype="Number" />
-              <select name="system.damage.rank" class="rank">
-                {{#select system.damage.rank}}
-                  <option value="none">{{localize "RANK.NONE"}}</option>
-                  <option value="single">{{localize "RANK.SINGLE"}}</option>
-                  <option value="double">{{localize "RANK.DOUBLE"}}</option>
-                {{/select}}
-              </select>
-              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" data-dtype="Number" />
+              <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}" />
+              <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" />
               <input name="system.damage.dice" class="modifier" type="number" value="{{system.damage.dice}}" />
             </div>
           </div>
@@ -109,16 +100,8 @@
           <div class="item-form-group fixed">
             <label>{{localize "WEAPON.ED"}}</label>
             <div class="item-form-inputs">
-              <input name="system.damage.ed.base" class="base" type="number" value="{{system.damage.ed.base}}"
-                data-dtype="Number" />
-              <select name="system.damage.ed.rank" class="rank">
-                {{#select system.damage.ed.rank}}
-                  <option value="none">{{localize "RANK.NONE"}}</option>
-                  <option value="single">{{localize "RANK.SINGLE"}}</option>
-                  <option value="double">{{localize "RANK.DOUBLE"}}</option>
-                {{/select}}
-              </select>
-              <input name="system.damage.ed.bonus" class="modifier" type="number" value="{{system.damage.ed.bonus}}" data-dtype="Number" />
+              <input name="system.damage.ed.base" class="base" type="number" value="{{system.damage.ed.base}}" />
+              <input name="system.damage.ed.bonus" class="modifier" type="number" value="{{system.damage.ed.bonus}}" />
               <input name="system.damage.ed.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
             </div>
           </div>
@@ -127,16 +110,8 @@
           <div class="item-form-group fixed">
             <label>{{localize "WEAPON.AP"}}</label>
             <div class="item-form-inputs">
-              <input name="system.damage.ap.base" class="base" type="number" value="{{system.damage.ap.base}}"
-                data-dtype="Number" />
-              <select name="system.damage.ap.rank" class="rank">
-                {{#select system.damage.ap.rank}}
-                  <option value="none">{{localize "RANK.NONE"}}</option>
-                  <option value="single">{{localize "RANK.SINGLE"}}</option>
-                  <option value="double">{{localize "RANK.DOUBLE"}}</option>
-                {{/select}}
-              </select>
-              <input name="system.damage.ap.bonus" class="modifier" type="number" value="{{system.damage.ap.bonus}}" data-dtype="Number" />
+              <input name="system.damage.ap.base" class="base" type="number" value="{{system.damage.ap.base}}" />
+              <input name="system.damage.ap.bonus" class="modifier" type="number" value="{{system.damage.ap.bonus}}" />
               <input name="system.damage.ap.dice" class="modifier" type="number" value="{{system.damage.ap.dice}}" />
             </div>
           </div>
@@ -185,7 +160,7 @@
           <div class="item-form-group static">
             <label>{{localize "WEAPON.VALUE"}}</label>
             <div class="item-form-inputs small">
-              <input name="system.value" type="number" value="{{system.value}}" data-dtype="Number" />
+              <input name="system.value" type="number" value="{{system.value}}" />
             </div>
           </div>
           <div class="item-form-group static">

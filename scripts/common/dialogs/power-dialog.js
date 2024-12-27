@@ -54,6 +54,17 @@ export class PowerDialog extends AttackDialog {
         this.fields.wrath += 2
         this.tooltips.add("wrath", 2, this.data.levels[this.fields.level])
     }
+
+    let power = this.power;
+  
+    this.tooltips.start(this)
+    this.fields.damage += power.system.damage.base + power.system.damage.bonus
+    this.fields.ed.value += power.system.damage.ed.base + power.system.damage.ed.bonus
+    this.fields.ap.value += power.system.damage.ap.base + power.system.damage.ap.bonus
+    this.fields.ed.dice += power.system.damage.ed.dice
+    this.fields.ap.dice += power.system.damage.ap.dice
+    this.tooltips.finish(this, "Power")
+  
   }
 
   

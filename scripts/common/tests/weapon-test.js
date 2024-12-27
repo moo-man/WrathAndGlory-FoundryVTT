@@ -23,6 +23,17 @@ export default class WeaponTest extends WNGTest {
     return "systems/wrath-and-glory/template/chat/roll/weapon/weapon-roll.hbs"
   }
 
+  async runPreScripts()
+  {
+      await super.runPreScripts();
+      await Promise.all(this.actor.runScripts("preRollWeaponTest", this));
+  }
+
+  async runPostScripts()
+  {
+      await super.runPostScripts();
+      await Promise.all(this.actor.runScripts("rollWeaponTest", this));
+  }
 
   async edit({pool=0, wrath=0, icons=0, damage=0, ed=0, ap=0}={})
   {

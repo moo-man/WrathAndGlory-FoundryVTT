@@ -202,6 +202,7 @@ export class WeaponModel extends EquippedItemModel
 
     static migrateData(data)
     {
+        super.migrateData(data);
         if (typeof data.ammo == "string")
         {
             data.ammo = {id : data.ammo};
