@@ -2,7 +2,7 @@ import { StandardWNGActorModel } from "../model/actor/components/standard";
 
 export default class Migration {
     static stats = {};
-    static MIGRATION_VERSION = "5.1.7"
+    static MIGRATION_VERSION = "6.0.0"
 
     // #region High Level Migration Handling
     static async migrateWorld(update=false, updateVersion=false) {
@@ -354,11 +354,17 @@ export default class Migration {
         {
             let factionEffectOnActor = item.actor.effects.find(i => i.sourceName == item.name);
 
-            let factionEffectOnItem = item.effects.contents.find(e => e.name == factionEffectOnActor.name)
-            let backgrounds = item.system.toObject().backgrounds;
-            let foundBG = backgrounds.origin.concat(backgrounds.accomplishment).concat(backgrounds.goal).find(bg => bg.effect.id == factionEffectOnItem?.id);
-            foundBG.chosen = true;
-            foundry.utils.setProperty(migrated, "system.backgrounds", backgrounds)
+            let factionEffectOnItem = item.effects.contents.find(e => e.name == factionEffectOnActor?.name)
+            if (factionEffectOnItem)
+            {
+                let backgrounds = item.system.toObject().backgrounds;
+                let foundBG = backgrounds.origin.concat(backgrounds.accomplishment).concat(backgrounds.goal).find(bg => bg.effect.id == factionEffectOnItem?.id);
+                if (foundBG)
+                {
+                    foundBG.chosen = true;
+                    foundry.utils.setProperty(migrated, "system.backgrounds", backgrounds)
+                }
+            }
         }
 
         if (item.type == "archetype")
@@ -560,7 +566,6 @@ export default class Migration {
     
     static shouldMigrate()
     {
-        return false;
         let systemMigrationVersion = game.settings.get("wrath-and-glory", "systemMigrationVersion")
 
         return foundry.utils.isNewerVersion(this.MIGRATION_VERSION, systemMigrationVersion);
