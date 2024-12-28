@@ -20,7 +20,13 @@ export class WrathAndGloryActor extends WarhammerActor {
         super.prepareBaseData();
     }
 
-    
+    prepareDerivedData()
+    {
+        this._applyDerivedEffects();
+        super.prepareDerivedData();
+    }
+
+        
     _applyDerivedEffects() {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)

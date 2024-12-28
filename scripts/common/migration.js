@@ -537,7 +537,7 @@ export default class Migration {
 
             if (uuid)
             {
-                foundry.utils.setProperty(migration, `system.${field}`, {uuid, id : property.id});
+                foundry.utils.setProperty(migration, `system.${field}`, {uuid, id : property.id, name : property.name});
             }
         }
     }
@@ -550,7 +550,8 @@ export default class Migration {
             let migratedList = property.list.map(i => {
                 return {
                     id : i.id,
-                    uuid : warhammer.utility.findUuid(i.id)
+                    uuid : warhammer.utility.findUuid(i.id),
+                    name : i.name
                 }
             })
             foundry.utils.setProperty(migration, `system.${field}.list`, migratedList);

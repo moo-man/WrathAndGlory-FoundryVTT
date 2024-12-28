@@ -234,8 +234,6 @@ export class StandardActorSheet extends BaseWnGActorSheet {
 
     async _onConvictionClick(event) {
         event.preventDefault();
-        this._resetRollData();
-
         new Dialog({
             title: "Conviction Roll",
             buttons: {

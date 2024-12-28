@@ -40,7 +40,7 @@ export class ArchetypeModel extends BaseItemModel
             structure.type = ["or", "and"].includes(structure.type) ? structure.type : "option";
             if (!isNaN(structure.index))
             {
-                structure.id = wargear[structure.index].groupId;
+                structure.id = wargear[structure.index].groupId || wargear[structure.index].id;
             }
             else 
             {
@@ -75,7 +75,7 @@ export class ArchetypeModel extends BaseItemModel
                     return {
                         name : w.name,
                         type : type,
-                        id : w.groupId,
+                        id : w.groupId || w.id,
                         diff : w.diff,
                         documentId : w.id,
                         idType : "id",
