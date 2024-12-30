@@ -146,37 +146,78 @@ export class WrathAndGloryActor extends WarhammerActor {
         let testData = {
             title: ability.name,
             speaker: this.speakerData(),
-            itemId: ability.uuid,
-            damage: {},
-            ed: {},
-            ap: {}
+            item: ability,
         }
-        if (ability.hasDamage) {
-            testData.damage = ability.damage.base
-            testData.ed.value = ability.ed.base
-            testData.ap.value = ability.ap.base
-            testData.damageDice = {
-                values : {
-                  1 : 0,
-                  2 : 0,
-                  3 : 0,
-                  4 : 1,
-                  5 : 1,
-                  6 : 2,
-                },
-                addValue : 0
-              }
-            testData.otherDamage = {
-                mortal: ability.otherDamage.mortal,
-                wounds: ability.otherDamage.wounds,
-                shock: ability.otherDamage.shock,
-            }
 
+        if (ability.system.test.self)
+        {
+            return this.setupTestFromItem(ability, {item : ability});
         }
+
+        if (this.type == "threat" && ability.type == "ability")
+        {
+            if (!(await this.spend("system.resources.ruin", ability.system.cost || 0)))
+            {
+                if (game.counter.ruin > 0)
+                {
+                    game.wng.RuinGloryCounter.changeCounter(-1, "ruin");
+                    ui.notifications.notify(`<strong>${ability.name}</strong>: Spent ${ability.system.cost} Ruin (Counter)`)
+                }
+                else 
+                {
+                    ui.notifications.error(`<strong>${ability.name}</strong>: Not enough Ruin!`)
+                    return;
+                }
+            }
+            else 
+            {
+                ui.notifications.notify(`<strong>${ability.name}</strong>: Spent ${ability.system.cost} Ruin (Personal)`)
+            }
+        }
+        
         ui.sidebar.activateTab("chat")
         let roll = new AbilityRoll(testData)
         await roll.rollTest();
         roll.sendToChat();
+    }
+
+    async setupTestFromItem(item, options)
+    {
+        if (typeof item == "string")
+        {
+            item = await fromUuid(item);
+        }
+
+        if (item)
+        {
+            options.appendTitle = ` - ${item.name}`;
+            return this.setupTestFromData(item.system.test, options);
+        }
+    }
+
+    async setupTestFromData(data, options={})
+    {
+        let dn = data.dn;
+        let type = data.type;
+        let specification = data.specification;
+        foundry.utils.setProperty(options, "fields.difficulty", dn);
+        
+        if (type == "attribute")
+        {
+            return this.setupAttributeTest(specification, options)
+        }
+        else if (type == "skill")
+        {       
+            return this.setupSkillTest(specification, options)
+        }
+        else if (type == "resolve")
+        {
+            return this.setupGenericTest(specification, options)
+        }
+        else if (type == "corruption")
+        {
+            return this.setupGenericTest(specification, options)
+        }
     }
 
     async rollDetermination(wounds, message)
@@ -261,7 +302,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
     }
 
-    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}, {test, damageRoll, token}) {
+    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}, {test, damageRoll, token, allowDetermination=true}={}) {
 
         let resilience = foundry.utils.deepClone(this.system.combat.resilience)
         let res = resilience.total || 1
@@ -370,7 +411,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         addModifierBreakdown("shock", "Shock");
 
 
-        if (wounds)
+        if (wounds && allowDetermination)
         {
             let determination = await this.rollDetermination(wounds, damageRoll?.message?.id)
             if (determination)
@@ -431,6 +472,23 @@ export class WrathAndGloryActor extends WarhammerActor {
         report.shock = shock;
         this.update(updateObj);
         return report;
+    }
+
+    applyHealing({wounds=0, shock=0}, {messageData={}, suppressMessage=false})
+    {
+        let newWounds = this.system.combat.wounds.value - wounds;
+        let newShock = this.system.combat.shock.value - shock;
+
+        this.update({"system.combat.wounds.value" : newWounds, "system.combat.shock.value" : newShock});
+        
+        let token = this.getActiveTokens()[0];
+        let name = token ? token.name : this.prototypeToken.name;
+        let content = `${name} healed ${[shock ? (shock + " Shock") : null, wounds ? (wounds + " Wounds") : null].filter(i => i).join(" and ")}`;
+        if (!suppressMessage)
+        {
+            ChatMessage.create(foundry.utils.mergeObject({content, speaker : {alias : name}, flavor : "Healing"}, messageData));
+        }
+        return {shock : newShock, wounds : newWounds}
     }
     
 

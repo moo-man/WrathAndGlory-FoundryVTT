@@ -6,6 +6,7 @@ export class DamageModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
+        schema.enabled = new fields.BooleanField({initial: false});
         schema.base = new fields.NumberField({initial: 0, nullable: false});
         schema.bonus = new fields.NumberField({initial: 0, nullable: false});
         schema.dice = new fields.NumberField({min: 0, initial: 0, nullable: false});

@@ -18,7 +18,8 @@ export class CommonDialog extends RollDialog {
         dialogData.data.attribute = attribute || game.wng.config.skillAttribute[skill];
         dialogData.data.skill = skill;
         dialogData.options.title = this._constructTitle(dialogData);
-
+        dialogData.data.item = options.item;
+        
         return dialogData
     }
 

@@ -113,6 +113,11 @@ export class WrathAndGloryItem extends WarhammerItem {
         return existing
     }
 
+    getTestData()
+    {
+        return this.system.test;
+    }
+
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
 
@@ -254,43 +259,10 @@ export class WrathAndGloryItem extends WarhammerItem {
         }
         journal.sheet.render(true, {pageId : page?.id})
     }
-
-    get rollable() {
-        if (this.type == "ability") {
-            if (this.abilityType == "determination") return true
-            if (this.hasDamage) return true
-            if (this.hasTest) return true
-        }
-
-    }
     
-    get hasDamage() {
-        return (this.damage && (this.damage.base || this.damage.bonus || this.damage.rank != "none")) || (this.damage?.ed && (this.damage?.ed.base || this.damage?.ed.bonus || this.damage?.ed.rank != "none") || (this.damage?.otherDamage.shock || this.damage?.otherDamage.wounds || this.damage?.otherDamage.mortalWounds))
-    }
-
-    get damageValues() {
-        if (this.traitList.brutal)
-            return {
-                1: 0,
-                2: 0,
-                3: 1,
-                4: 1,
-                5: 2,
-                6: 2
-            }
-        else
-            return {
-                1: 0,
-                2: 0,
-                3: 0,
-                4: 1,
-                5: 1,
-                6: 2
-            }
-    }
 
     get hasTest() {
-        return this.test && Number.isNumeric(this.test.dn) && this.test.type
+        return this.test && this.test.type
     }
 
     // @@@@@@ TYPE GETTERS @@@@@@

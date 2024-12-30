@@ -32,7 +32,8 @@ export class WNGTest extends WarhammerTestBase {
         // shifted: data.shifted || { damage: [], glory: [], other: [], potency: [], added: {} },
         rerolls: [], // Indices of reroll sets,
         useDN: true,
-        edit: { pool: 0, wrath: 0, icons: 0, damage: 0, ed: 0, ap: 0 }
+        itemId : data.item?.uuid,
+        edit: { pool: 0, wrath: 0, icons: 0, damage: 0, ed: 0, ap: 0 },
       },
       context: {
         title: data.options?.title,
@@ -46,6 +47,11 @@ export class WNGTest extends WarhammerTestBase {
       },
       result: {},
       class: this.constructor.name
+    }
+
+    if (this.item?.system.damage?.enabled)
+    {
+      this.addDamageData(this.item.system.damage);
     }
   }
 
@@ -67,6 +73,29 @@ export class WNGTest extends WarhammerTestBase {
     if (test.result.damage?.roll)
       test.damageRoll = Roll.fromData(test.result.damage.roll)
     return test
+  }
+
+  async runPreScripts()
+  {
+      await super.runPreScripts();
+      await Promise.all(this.item?.runScripts("preRollTest", this) || []);
+  }
+
+  async runPostScripts()
+  {
+      await super.runPostScripts();
+      await Promise.all(this.item?.runScripts("rollTest", this) || []);
+  }
+
+  addDamageData(data)
+  {
+      this.testData.damage = {
+        base : data.damage,
+        ed : data.ed,
+        ap : data.ap,
+        damageDice : data.damageDice,
+        other : data.otherDamage
+      }
   }
 
   static fromData(data)
@@ -163,13 +192,17 @@ export class WNGTest extends WarhammerTestBase {
     * Set Base values for damage
     */
   computeDamage() {
+    if (this.testData.damage)
+    {
+
       this.result.damage = {
-        damage : this.testData.damage + this.testData.edit.damage,
-        ed : { value : this.testData.ed.value + this.testData.shifted.damage.dice.length + this.testData.edit.ed, dice : this.testData.ed.dice},
-        ap : { value : this.testData.ap.value + + this.testData.edit.ap, dice : this.testData.ap.dice},
-        other : this.testData.otherDamage,
-        damageDice : this.testData.damageDice
+        damage : this.testData.damage.base + this.testData.edit.damage,
+        ed : { value : this.testData.damage.ed.value + this.testData.shifted.damage.dice.length + this.testData.edit.ed, dice : this.testData.damage.ed.dice},
+        ap : { value : this.testData.damage.ap.value + + this.testData.edit.ap, dice : this.testData.damage.ap.dice},
+        damageDice : this.testData.damage.damageDice,
+        other : this.testData.damage.other
       }
+    }
     }
   
 
@@ -490,11 +523,21 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   get doesDamage() {
-    return (this.testData.damage && (this.testData.damage.base || this.testData.damage.bonus || this.testData.damage.rank != "none")) || (this.testData.ed && (this.testData.ed.base || this.testData.ed.bonus || this.testData.ed.rank != "none"))
+    return this.testData.damage;
   }
 
   get showTest() {
-    return this.result.isSuccess && this.result.test
+    let effects = this.targetEffects.concat(this.damageEffects).concat(this.areaEffects)
+
+    // Effects already prompt a test
+    if (effects.some(e => e.system.transferData.avoidTest.value == "item"))
+    {
+      return false;
+    }
+    else
+    {
+      return this.result.isSuccess && this.result.test
+    }
   }
 
   get testDisplay() {

@@ -1,11 +1,6 @@
 import { WNGTest } from "./test.js"
 
 export default class CorruptionTest  extends WNGTest {
-  constructor(data = {})
-  {
-    super(data)
-  }
-
   get template() {
     return "systems/wrath-and-glory/template/chat/roll/corruption/corruption-roll.hbs"
   }

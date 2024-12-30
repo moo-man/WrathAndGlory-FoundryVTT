@@ -275,7 +275,7 @@
               <div class="ability-type" title="{{configLookup 'abilityTypeDescriptions' item.abilityType}}">{{configLookup "abilityTypeAbbrev" item.abilityType}}</div>
               {{/if}}
               <img class="item-property item-image" src="{{item.img}}"></img>
-              <div class="item-property item-name {{#if item.rollable}}rollable{{else}}item-dropdown{{/if}}">{{item.name}}</div>
+              <div class="item-property item-name rollable">{{item.name}}</div>
           <span class="item-property item-dropdown flex large long-text">{{{lookup ../enrichment item.id}}}</span>
         </div>
           {{> sheetButtonsV1 document=item}}

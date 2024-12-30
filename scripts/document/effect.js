@@ -12,28 +12,26 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
 
         //TODO
         let test;
-        let options = {title : {append : " - " + this.name}, context: {resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest}};
+        let options = {title : {append : " - " + this.name}, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest};
         if (transferData.avoidTest.value == "item")
         {
-            test = await this.actor.setupTestFromItem(this.item.uuid, options);
+            test = await this.actor.setupTestFromItem(this.item, options);
         }
         else if (transferData.avoidTest.value == "custom")
         {
-            test = await this.actor.setupTestFromData(this.transferData.avoidTest, options);
+            test = await this.actor.setupTestFromData(transferData.avoidTest, options);
         }
-
-        await test.roll();
 
         if (!transferData.avoidTest.reversed)
         {
             // If the avoid test is marked as opposed, it has to win, not just succeed
             if (transferData.avoidTest.opposed && this.sourceTest)
             {
-                return test.result.SL > this.sourceTest.result?.SL;
+                return test.result.success > this.sourceTest.result.success;
             }
             else 
             {
-                return test.succeeded;
+                return test.result.isSuccess;
             }
         }
         else  // Reversed - Failure removes the effect
@@ -41,13 +39,40 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
             // If the avoid test is marked as opposed, it has to win, not just succeed
             if (transferData.avoidTest.opposed && this.sourceTest)
             {
-                return test.result.SL < this.sourceTest.result?.SL;
+                return test.result.success < this.sourceTest.result.success;
             }
             else 
             {
-                return !test.succeeded;
+                return !test.result.isSuccess;
             }
         }
+    }
+
+    
+    get testDisplay() {
+
+        let avoidTestData
+        if (this.system.transferData.avoidTest.value == "custom")
+        {
+            avoidTestData = this.system.transferData.avoidTest;
+        }
+        else if (this.system.transferData.avoidTest.value == "item")
+        {
+            avoidTestData = this.item.system.test;
+        }
+        else 
+        {
+            return ""
+        }
+
+        if (avoidTestData.type == "attribute")
+            return `DN ${avoidTestData.dn} ${game.wng.config.attributes[avoidTestData.specification]} Test`
+        if (avoidTestData.type == "skill")
+            return `DN ${avoidTestData.dn} ${game.wng.config.skills[avoidTestData.specification]} (${game.wng.config.attributeAbbrev[game.wng.config.skillAttribute[avoidTestData.specification]]}) Test`
+        if (avoidTestData.type == "resolve")
+            return `DN ${avoidTestData.dn} ${game.wng.config.resolveTests[avoidTestData.specification]} Test`
+        if (avoidTestData.type == "corruption")
+            return `DN ${avoidTestData.dn} Corruption Test`
     }
 
     

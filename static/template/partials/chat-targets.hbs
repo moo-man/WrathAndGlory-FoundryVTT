@@ -1,0 +1,10 @@
+{{#if targets}}
+<div class="targets">
+        <a class="crosshair">
+                <i class="fas fa-crosshairs"></i>
+        </a>
+        {{#each targets as |target t|}}
+                <a class="target" data-token-id="{{target._id}}">{{target.name}}</a>
+        {{/each}}
+</div>
+{{/if}}

@@ -1,0 +1,89 @@
+<div class="wrapper">
+
+<div class="item-form-group static">
+    <label>{{localize "ABILITY.DAMAGE"}}</label>
+    <div class="item-form-inputs">
+        <div class="wng-checkbox {{#if system.damage.enabled}}checked{{else}}unchecked{{/if}}" data-target="system.damage.enabled">
+        {{#if system.damage.enabled}}
+        <i class="fas fa-check"></i>
+        {{/if}}
+        </div>
+    </div>
+</div>    
+</div>
+
+{{#if system.damage.enabled}}
+<div class="wrapper">
+    <div class="damage-header">
+        <b class="spacer"></b>
+        <b class="base">{{localize "DIALOG.BASE"}}</b>
+        <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
+        <b class="modifier" data-tooltip="{{DIALOG.DICE_TOOLTIP}}">{{localize "DIALOG.DICE"}}</b>
+    </div>
+    {{#unless hideDamage}}
+    <div class="item-form-group fixed">
+        <label>{{localize "PSYCHIC_POWER.DAMAGE"}}</label>
+        <div class="item-form-inputs">
+            <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}" />
+            <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" />
+            <input name="system.damage.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
+        </div>
+    </div>
+    {{/unless}}
+</div>
+{{#unless hideED}}
+<div class="wrapper">
+    <div class="item-form-group fixed">
+        <label>{{localize "PSYCHIC_POWER.ED"}}</label>
+        <div class="item-form-inputs">
+            <input name="system.damage.ed.base" class="base" type="number" value="{{system.damage.ed.base}}" />
+            <input name="system.damage.ed.bonus" class="modifier" type="number" value="{{system.damage.ed.bonus}}" />
+            <input name="system.damage.ed.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
+        </div>
+    </div>
+</div>
+{{/unless}}
+{{#unless hideAP}}
+<div class="wrapper">
+    <div class="item-form-group fixed">
+        <label>{{localize "WEAPON.AP"}}</label>
+        <div class="item-form-inputs">
+            <input name="system.damage.ap.base" class="base" type="number" value="{{system.damage.ap.base}}" />
+            <input name="system.damage.ap.bonus" class="modifier" type="number" value="{{system.damage.ap.bonus}}" />
+            <input name="system.damage.ap.dice" class="modifier" type="number" value="{{system.damage.ap.dice}}" />
+        </div>
+    </div>
+</div>
+{{/unless}}
+
+
+{{#unless hideOther}}
+<div class="wrapper">
+    <div class="damage-header">
+        <b class="spacer"></b>
+        <b class="base">{{localize "PSYCHIC_POWER.SHOCK"}}</b>
+        <b class="rank">{{localize "PSYCHIC_POWER.WOUNDS"}}</b>
+        <b class="modifier">{{localize "PSYCHIC_POWER.MORTAL"}}</b>
+    </div>
+    <div class="item-form-group fixed">
+        <label>{{localize "PSYCHIC_POWER.OTHER_DAMAGE"}}</label>
+        <div class="item-form-inputs">
+            <input name="system.damage.otherDamage.shock" class="base" type="text" value="{{system.damage.otherDamage.shock}}" />
+            <input name="system.damage.otherDamage.wounds" class="base" type="text" value="{{system.damage.otherDamage.wounds}}" />
+            <input name="system.damage.otherDamage.mortal" class="modifier" type="text" value="{{system.damage.otherDamage.mortal}}" />
+        </div>
+    </div>
+</div>
+{{/unless}}
+
+{{#unless hideTraits}}
+<div class="wrapper">
+    <div class="item-form-group stacked">
+        <label>{{localize "WEAPON.TRAITS"}}<a class="item-traits"><i class="fas fa-cog"></i></a></label>
+        <div class="item-form-inputs">
+            <input disabled type="text" value="{{item.system.traits.formatted}}" />
+        </div>
+    </div>
+</div>
+{{/unless}}
+{{/if}}

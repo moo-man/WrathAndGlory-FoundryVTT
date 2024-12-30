@@ -28,6 +28,8 @@
   "ABILITY.REQUIREMENTS": "Requirements",
   "ABILITY.DISPLAY": "Display",
   "ABILITY.TYPE": "Type",
+  "ABILITY.DAMAGE": "Damage",
+  "ABILITY.TEST_SELF": "Test Self",
 
   "ABILITY_TYPE.BATTLECRY" : "Battlecry",
   "ABILITY_TYPE.ACTION" : "Action",
@@ -409,7 +411,7 @@
 
   "TALENT.NAME": "Name",
   "TALENT.EFFECT": "Effect",
-  "TALENT.COST": "Cost",
+  "TALENT.COST": "XP Cost",
   "TALENT.DESCRIPTION": "Description",
   "TALENT.REQUIREMENTS": "Requirements",
   "TALENT.DISPLAY": "Display",

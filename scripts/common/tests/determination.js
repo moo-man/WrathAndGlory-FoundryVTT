@@ -3,10 +3,12 @@ import { PoolDie, WNGTest } from "./test.js";
 export default class DeterminationRoll extends WNGTest {
   constructor(data = {}) {
     super(data)
-    if (data)
-    {
-      this.testData.wounds = data.wounds
-    }
+    if (foundry.utils.isEmpty(data))  
+      return
+    
+    
+    this.testData.wounds = data.wounds
+
     this.testData.useDN = false
 
   }

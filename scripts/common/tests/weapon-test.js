@@ -7,15 +7,9 @@ export default class WeaponTest extends WNGTest {
     if (foundry.utils.isEmpty(data))
       return
 
-    this.data.testData.ed = data.ed;
-    this.data.testData.ap = data.ap;
-    this.data.testData.damage= data.damage
-    this.data.testData.damageDice= data.damageDice
-
     this.data.testData.range = data.range
     this.data.testData.aim = data.aim
 
-    this.testData.itemId = data.weapon.uuid;
     //this.data.context.edit = mergeObject(this.data.context.edit, {damage : 0, ed : 0, ap : 0})
   }
 

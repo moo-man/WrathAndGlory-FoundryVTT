@@ -6,20 +6,6 @@ export default class PowerTest extends WNGTest {
     super(data)
     if (foundry.utils.isEmpty(data))
       return
-
-    this.data.testData.ed = data.ed;
-    this.data.testData.ap = data.ap;
-    this.data.testData.damage= data.damage
-    this.data.testData.damageDice= data.damageDice
-
-    this.testData.itemId = data.power.uuid;
-
-    // TODO: add to dialog
-    this.data.testData.otherDamage = {
-      mortal: this.item.otherDamage.mortal,
-      wounds: this.item.otherDamage.wounds,
-      shock: this.item.otherDamage.shock
-    }
     
     this.data.testData.potency = foundry.utils.deepClone(this.item.potency.list)
     this.data.testData.potency.forEach(p => p.allocation = 0)
@@ -28,6 +14,20 @@ export default class PowerTest extends WNGTest {
 
   get template() {
     return "systems/wrath-and-glory/template/chat/roll/power/power-roll.hbs"
+  }
+
+  async runPreScripts()
+  {
+      await super.runPreScripts();
+      await Promise.all(this.actor.runScripts("preRollPowerTest", this));
+      await Promise.all(this.item.runScripts("preRollPowerTest", this));
+  }
+
+  async runPostScripts()
+  {
+      await super.runPostScripts();
+      await Promise.all(this.actor.runScripts("rollPowerTest", this));
+      await Promise.all(this.item.runScripts("rollPowerTest", this));
   }
 
 

@@ -30,7 +30,11 @@ export const initializeHandlebars = () => {
     "systems/wrath-and-glory/template/chat/roll/mutation/mutation-result.hbs",
     "systems/wrath-and-glory/template/chat/roll/mutation/mutation-buttons.hbs",
     "systems/wrath-and-glory/template/apps/combatant-list.hbs",
-    //"systems/wrath-and-glory/template/partials/damage.hbs",
   ];
+  loadTemplates({
+    damage : "systems/wrath-and-glory/template/partials/damage.hbs",
+    test : "systems/wrath-and-glory/template/partials/test.hbs",
+    chatTargets : "systems/wrath-and-glory/template/partials/chatTargets.hbs"
+  })
   return loadTemplates(templatePaths);
 };

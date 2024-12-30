@@ -30,6 +30,8 @@ export class PowerDialog extends AttackDialog {
       }
 
       dialogData.data.power = power;
+      dialogData.data.item = power;
+      
       dialogData.data.scripts = dialogData.data.scripts.concat(power?.getScripts("dialog"));
       
       options.title = `${power.name} Test`

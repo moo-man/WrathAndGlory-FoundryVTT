@@ -3,6 +3,8 @@ import { PoolDie, WNGTest } from "./test.js";
 export default class InitiativeRoll extends WNGTest {
   constructor(data = {}) {
     super(data)
+    if (foundry.utils.isEmpty(data))  
+      return
     this.testData.useDN = false
 
   }
