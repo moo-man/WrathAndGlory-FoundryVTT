@@ -1,5 +1,7 @@
 <div class="wrapper">
 
+
+{{#unless hideEnabled}}
 <div class="item-form-group static">
     <label>{{localize "ABILITY.DAMAGE"}}</label>
     <div class="item-form-inputs">
@@ -11,6 +13,8 @@
     </div>
 </div>    
 </div>
+
+{{/unless}}
 
 {{#if system.damage.enabled}}
 <div class="wrapper">
@@ -26,7 +30,7 @@
         <div class="item-form-inputs">
             <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}" />
             <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" />
-            <input name="system.damage.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
+            <input name="system.damage.dice" class="modifier" type="number" value="{{system.damage.dice}}" />
         </div>
     </div>
     {{/unless}}

@@ -1,3 +1,4 @@
+import { DamageModel } from "../../model/item/components/damage";
 import { DamageRoll } from "./damage";
 
 export class WNGTest extends WarhammerTestBase {
@@ -89,6 +90,18 @@ export class WNGTest extends WarhammerTestBase {
 
   addDamageData(data)
   {
+    if (data instanceof DamageModel)
+    {
+      this.testData.damage = {
+        base : data.base,
+        ed : {value : data.ed.base, dice : data.ed.dice},
+        ap : {value : data.ap.base, dice : data.ap.dice},
+        damageDice : data.damageDice,
+        other : data.otherDamage
+      }
+    }
+    else // From a Dialog
+    {
       this.testData.damage = {
         base : data.damage,
         ed : data.ed,
@@ -96,6 +109,7 @@ export class WNGTest extends WarhammerTestBase {
         damageDice : data.damageDice,
         other : data.otherDamage
       }
+    }
   }
 
   static fromData(data)
@@ -162,6 +176,12 @@ export class WNGTest extends WarhammerTestBase {
     this.result.isSuccess = this.result.success >= this.result.dn;
     if (this.result.isWrathCritical)
       this.result.isWrathCritical = this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
+
+    if (this.result.isSuccess)
+      this.computeDamage() 
+
+    if (this.item?.hasTest) this.result.test = duplicate(this.item.test);
+
   }
 
   _computeReroll() {
@@ -198,7 +218,7 @@ export class WNGTest extends WarhammerTestBase {
       this.result.damage = {
         damage : this.testData.damage.base + this.testData.edit.damage,
         ed : { value : this.testData.damage.ed.value + this.testData.shifted.damage.dice.length + this.testData.edit.ed, dice : this.testData.damage.ed.dice},
-        ap : { value : this.testData.damage.ap.value + + this.testData.edit.ap, dice : this.testData.damage.ap.dice},
+        ap : { value : this.testData.damage.ap.value + this.testData.edit.ap, dice : this.testData.damage.ap.dice},
         damageDice : this.testData.damage.damageDice,
         other : this.testData.damage.other
       }

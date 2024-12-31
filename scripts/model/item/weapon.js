@@ -88,6 +88,11 @@ export class WeaponModel extends EquippedItemModel
         return this.multiTarget ? game.i18n.localize("Yes") : game.i18n.localize("No")
     }
 
+    computeBase()
+    {
+        this.damage.enabled = true;
+    }
+
     computeDerived()
     {
         this.applyUpgrades();

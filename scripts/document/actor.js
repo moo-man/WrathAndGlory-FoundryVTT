@@ -154,7 +154,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             return this.setupTestFromItem(ability, {item : ability});
         }
 
-        if (this.type == "threat" && ability.type == "ability")
+        if (this.type == "threat" && ability.type == "ability" && ability.system.cost)
         {
             if (!(await this.spend("system.resources.ruin", ability.system.cost || 0)))
             {
@@ -467,7 +467,7 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         report.breakdown = `<ul><li><p>${report.breakdown.join(`</p></li><li><p>`)}</p></li></ul>`
     
-        report.wounds = wounds;
+        report.wounds = wounds + mortal;
         report.mortal = mortal;
         report.shock = shock;
         this.update(updateObj);

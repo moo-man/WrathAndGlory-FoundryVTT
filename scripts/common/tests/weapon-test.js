@@ -10,6 +10,8 @@ export default class WeaponTest extends WNGTest {
     this.data.testData.range = data.range
     this.data.testData.aim = data.aim
 
+    this.addDamageData(data);
+
     //this.data.context.edit = mergeObject(this.data.context.edit, {damage : 0, ed : 0, ap : 0})
   }
 
@@ -43,9 +45,6 @@ export default class WeaponTest extends WNGTest {
 
     this.result.range = this.testData.range
     this.result.aim = this.testData.aim
-    if (this.item.hasTest) this.result.test = duplicate(this.item.test);
-    if (this.result.isSuccess)
-      this.computeDamage() 
   }
 
   get weapon() {return fromUuidSync(this.testData.itemId)}

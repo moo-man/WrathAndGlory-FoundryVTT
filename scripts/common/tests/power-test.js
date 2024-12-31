@@ -10,6 +10,12 @@ export default class PowerTest extends WNGTest {
     this.data.testData.potency = foundry.utils.deepClone(this.item.potency.list)
     this.data.testData.potency.forEach(p => p.allocation = 0)
     this.data.testData.edit.potency = 0;
+
+    if (this.item.system.damage?.enabled)
+    {
+      this.addDamageData(data);
+    }
+
   }
 
   get template() {
@@ -35,8 +41,6 @@ export default class PowerTest extends WNGTest {
   _computeResult()
   {
     super._computeResult()
-    if (this.item.hasTest) this.result.test = duplicate(this.item.test);
-    this.computeDamage() 
     if (this.result.isSuccess)
     {
       this.result.range = this.item.range
@@ -47,7 +51,7 @@ export default class PowerTest extends WNGTest {
 
   computePotencies() {
 
-    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.length + this.testData.edit.potency}
+    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.dice.length + this.testData.edit.potency}
 
     this.result.potency.options.forEach(p => {
       // Set initial potency values (before potency allocation)
@@ -65,7 +69,7 @@ export default class PowerTest extends WNGTest {
         newValue = propValue.replace(propValueNum, propValueNum + addToValue) // Replace the number with the potency value added
       }
       else 
-        newValue = propValue + addToValue // If numeric property, just add the potency value
+        newValue = parseInt(propValue) + addToValue // If numeric property, just add the potency value
 
 
       if (p.property)

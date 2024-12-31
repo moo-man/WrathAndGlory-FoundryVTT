@@ -58,6 +58,8 @@ export default class AbilityRoll extends WNGTest {
   _computeResult()
   {
     this.data.result = {}
+    if (this.item.hasTest) this.result.test = duplicate(this.item.test);
+    this.result.isSuccess = true;
     if (this.testData.damage)
     {
       this.computeDamage()
@@ -89,11 +91,6 @@ export default class AbilityRoll extends WNGTest {
       delete chatData.roll
       return this.message.update(chatData)
     }
-  }
-
-  
-  get showTest() {
-    return this.item && this.item.hasTest 
   }
 
 

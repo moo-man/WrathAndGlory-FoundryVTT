@@ -12,7 +12,7 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
 
         //TODO
         let test;
-        let options = {title : {append : " - " + this.name}, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest};
+        let options = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest};
         if (transferData.avoidTest.value == "item")
         {
             test = await this.actor.setupTestFromItem(this.item, options);
