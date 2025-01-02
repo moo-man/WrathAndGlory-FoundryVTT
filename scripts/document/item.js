@@ -135,8 +135,17 @@ export class WrathAndGloryItem extends WarhammerItem {
         return this.system.traits.obj;
     }
 
-    hasKeyword(keyword) {
-        return this.keywords.split(",").map(i => i.trim()).includes(keyword.toUpperCase())
+    hasKeyword(keyword) 
+    {
+
+        if (typeof keyword == "string")
+        {
+            keyword = [keyword];
+        }
+
+        let keywords = this.keywords.split(",").map(i => i.trim());
+
+        return keyword.some(k => keywords.includes(k));
     }
 
     // TODO move this to model

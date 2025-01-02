@@ -11,3 +11,7 @@
         {{#if isShiftable}}
         <p><strong>{{localize "CHAT.SHIFTING"}}: {{result.shiftsPossible}}</strong></p>
         {{/if}}
+
+        {{#each result.text}}
+        <p><strong>{{this.label}}</strong>: {{this.description}}</p>
+        {{/each}}

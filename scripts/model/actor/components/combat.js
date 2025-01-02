@@ -17,6 +17,7 @@ export class CombatModel extends foundry.abstract.DataModel {
             }),
             determination: new foundry.data.fields.SchemaField({
                 bonus: new foundry.data.fields.NumberField(),
+                attribute: new foundry.data.fields.StringField({initial: "toughness"}),
                 total: new foundry.data.fields.NumberField()
             }),
             shock: new foundry.data.fields.SchemaField({
@@ -63,7 +64,7 @@ export class CombatModel extends foundry.abstract.DataModel {
         if (autoCalc.resilience)
             this.resilience.total = Math.max(attributes.toughness.total + 1 + this.resilience.bonus + this.resilience.armour, 1);
         if (autoCalc.determination)
-            this.determination.total = Math.max(attributes[this.determination.attribute || "toughness"].total + this.determination.bonus, 1);
+            this.determination.total = Math.max(attributes[this.determination.attribute].total + this.determination.bonus, 1);
 
 
         if (autoCalc.defence) {

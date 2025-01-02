@@ -476,7 +476,7 @@ export default class Migration {
                     if (changes[i].value === "true" || changes[i].value === "false") {
                         script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} = ${changes[i].value}`
                     }
-                    else if (changes[i].value.includes("@"))
+                    else if (changes[i].value.includes("@") && !changes[i].value.includes("@test"))
                     {
                         script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} += (${changes[i].value.replace("@", "args.actor.system.")})`
                     }

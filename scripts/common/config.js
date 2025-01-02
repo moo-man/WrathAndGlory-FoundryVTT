@@ -656,7 +656,7 @@ WNG.traitEffects = {
                     trigger : "dialog",
                     script : "args.fields.ed.value += (parseInt(this.item.traitList.rapidFire.rating) || 0)",
                     options : {
-                        activateScript : "return this.fields.range == 'short'",
+                        activateScript : "return args.fields.range == 'short'",
                     }
                 }]
             }
@@ -697,7 +697,7 @@ WNG.traitEffects = {
                     trigger : "dialog",
                     script : "args.fields.pool += 1; args.fields.ed.value += (parseInt(this.item.traitList.sniper.rating) || 0);",
                     options : {
-                        activateScript : "return this.fields.aim",
+                        activateScript : "return args.fields.aim",
                     }
                 }]
             }
@@ -768,7 +768,7 @@ WNG.traitEffects = {
                 scriptData : [{
                     label : "Warp Weapon",
                     trigger : "dialog",
-                    script : "this.fields.damage = args.target.system.combat.resilience.total - 4;",
+                    script : "args.fields.damage = args.target.system.combat.resilience.total - 4;",
                     options : {
                         hideScript : "return !args.target;",
                         activateScript : "return this.item.system.damage.base < (args.target.system.combat.resilience.total - 4);",

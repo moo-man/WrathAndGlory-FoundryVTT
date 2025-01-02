@@ -16,8 +16,9 @@ import { CommonDialog } from "../common/dialogs/common-dialog.js";
 export class WrathAndGloryActor extends WarhammerActor {
 
     prepareBaseData() {
-        this.derivedEffects = []
+        this.derivedEffects = [];
         super.prepareBaseData();
+        this.keywords = new Set(this.itemTypes.keyword.map(i => i.name));
     }
 
     prepareDerivedData()
@@ -308,6 +309,8 @@ export class WrathAndGloryActor extends WarhammerActor {
         let res = resilience.total || 1
         ap = Math.abs(ap);
 
+        token = token || this.prototypeToken;
+
         // label, value, description
         let modifiers = {
             damage : [],
@@ -455,10 +458,12 @@ export class WrathAndGloryActor extends WarhammerActor {
                 await this.addCondition("dying")
             }
         }
+        let applyDamageEffects = false
         if (shock || wounds || mortal)
         {
             report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE", {wounds : wounds + mortal, shock, name : token?.name}));
             report.message = game.i18n.format(`<strong>${token?.name}</strong> received damage`);
+            applyDamageEffects = true;
         }
         else 
         {
@@ -470,7 +475,14 @@ export class WrathAndGloryActor extends WarhammerActor {
         report.wounds = wounds + mortal;
         report.mortal = mortal;
         report.shock = shock;
-        this.update(updateObj);
+        await this.update(updateObj);
+
+        let damageEffects = test?.damageEffects || []
+        if (damageEffects.length && applyDamageEffects)
+        {
+            this.applyEffect({effects : damageEffects, messageId : test.message.id})
+        }
+
         return report;
     }
 
@@ -573,8 +585,14 @@ export class WrathAndGloryActor extends WarhammerActor {
     }
 
 
-    hasKeyword(keyword) {
-        return !!this.itemTypes.keyword.find(i => i.name == keyword)
+    hasKeyword(keyword) 
+    {
+        if (typeof keyword == "string")
+        {
+            keyword = [keyword];
+        }
+
+        return keyword.some(k => this.keywords.has(k));
     }
 
 

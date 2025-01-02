@@ -46,7 +46,11 @@ export class WNGTest extends WarhammerTestBase {
         rollMode : data.rollMode,
         rerolled: data.rerolled || false,
       },
-      result: {},
+      result: {
+        text : {
+
+        }
+      },
       class: this.constructor.name
     }
 
@@ -94,8 +98,8 @@ export class WNGTest extends WarhammerTestBase {
     {
       this.testData.damage = {
         base : data.base,
-        ed : {value : data.ed.base, dice : data.ed.dice},
-        ap : {value : data.ap.base, dice : data.ap.dice},
+        ed : {value : data.ed.base + data.ed.bonus + (data.ed.rank * (this.actor.system.advances?.rank || 0)), dice : data.ed.dice},
+        ap : {value : data.ap.base + data.ed.bonus + (data.ap.rank * (this.actor.system.advances?.rank || 0)), dice : data.ap.dice},
         damageDice : data.damageDice,
         other : data.otherDamage
       }
@@ -150,7 +154,7 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   _computeResult() {
-    this.data.result = {}
+    this.data.result = {text : {}}
     this.result.dn = (this.testData.useDN) && this.testData.difficulty
     this.result.roll = this.roll.toJSON();
     this.result.dice = this.roll.dice.reduce((prev, current) => prev.concat(current.results), []);
@@ -180,7 +184,7 @@ export class WNGTest extends WarhammerTestBase {
     if (this.result.isSuccess)
       this.computeDamage() 
 
-    if (this.item?.hasTest) this.result.test = duplicate(this.item.test);
+    if (this.item?.hasTest && !this.item.system.test.self) this.result.test = duplicate(this.item.test);
 
   }
 

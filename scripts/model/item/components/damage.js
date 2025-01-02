@@ -10,19 +10,20 @@ export class DamageModel extends foundry.abstract.DataModel
         schema.base = new fields.NumberField({initial: 0, nullable: false});
         schema.bonus = new fields.NumberField({initial: 0, nullable: false});
         schema.dice = new fields.NumberField({min: 0, initial: 0, nullable: false});
-        schema.rank = new fields.StringField({initial : "none"});
+        schema.rank = new fields.NumberField({initial : 0, choices : {0 : "RANK.NONE", 1 : "RANK.SINGLE", 2: "RANK.DOUBLE"}});
 
         schema.ed = new fields.SchemaField({
             base: new fields.NumberField({initial: 0, nullable: false}),
             bonus: new fields.NumberField({initial: 0, nullable: false}),
             dice : new fields.NumberField({min: 0, initial: 0, nullable: false}),
+            rank: new fields.NumberField({initial : 0, choices : {0 : "RANK.NONE", 1 : "RANK.SINGLE", 2: "RANK.DOUBLE"}})
         })
         
         schema.ap = new fields.SchemaField({
             base: new fields.NumberField({initial: 0, nullable: false}),
             bonus: new fields.NumberField({initial: 0, nullable: false}),
             dice : new fields.NumberField({min: 0, initial: 0, nullable: false}),
-            rank: new fields.StringField({initial : "none"})
+            rank: new fields.NumberField({initial : 0, choices : {0 : "RANK.NONE", 1 : "RANK.SINGLE", 2: "RANK.DOUBLE"}})
         })
         
         schema.otherDamage = new fields.SchemaField({
@@ -46,7 +47,6 @@ export class DamageModel extends foundry.abstract.DataModel
         return this._dataWithRank("ap");
     }
 
-    
     _dataWithRank(type) {
         let data = type != "damage" ? this[type] : this;
         let damage = data.base + data.bonus;
@@ -55,20 +55,11 @@ export class DamageModel extends foundry.abstract.DataModel
             damage = damage ? damage + ` + ${data.dice}` : data.dice
         }
         let rank = "";
-        if (data.rank === "single") {
+        if (data.rank === 1) {
             rank = " + R";
-        } else if (data.rank === "double") {
+        } else if (data.rank === 2) {
             rank = " + DR";
         }
         return `${damage}${rank}`;
-    }
-
-    migrateData(data)
-    {
-        if (data.otherDamage.mortalWounds)
-        {
-            data.otherDamage.mortal = data.otherDamage.mortalWounds;
-            delete data.otherDamage.mortalWounds;
-        }
     }
 }

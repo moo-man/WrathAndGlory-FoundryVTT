@@ -15,13 +15,13 @@
 </div>
 
 {{/unless}}
-
 {{#if system.damage.enabled}}
 <div class="wrapper">
     <div class="damage-header">
         <b class="spacer"></b>
         <b class="base">{{localize "DIALOG.BASE"}}</b>
         <b class="modifier">{{localize "DIALOG.BONUS"}}</b>
+        <b class="modifier">{{localize "DIALOG.RANK"}}</b>
         <b class="modifier" data-tooltip="{{DIALOG.DICE_TOOLTIP}}">{{localize "DIALOG.DICE"}}</b>
     </div>
     {{#unless hideDamage}}
@@ -30,6 +30,9 @@
         <div class="item-form-inputs">
             <input name="system.damage.base" class="base" type="number" value="{{system.damage.base}}" />
             <input name="system.damage.bonus" class="modifier" type="number" value="{{system.damage.bonus}}" />
+            <select name="system.damage.rank" class="rank">
+                {{selectOptions item.system.schema.fields.damage.fields.rank.choices selected=system.damage.rank localize=true}}
+            </select>
             <input name="system.damage.dice" class="modifier" type="number" value="{{system.damage.dice}}" />
         </div>
     </div>
@@ -42,6 +45,9 @@
         <div class="item-form-inputs">
             <input name="system.damage.ed.base" class="base" type="number" value="{{system.damage.ed.base}}" />
             <input name="system.damage.ed.bonus" class="modifier" type="number" value="{{system.damage.ed.bonus}}" />
+            <select name="system.damage.ed.rank" class="rank">
+                {{selectOptions item.system.schema.fields.damage.fields.ed.fields.rank.choices selected=system.damage.ed.rank localize=true}}
+            </select>
             <input name="system.damage.ed.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
         </div>
     </div>
@@ -54,6 +60,9 @@
         <div class="item-form-inputs">
             <input name="system.damage.ap.base" class="base" type="number" value="{{system.damage.ap.base}}" />
             <input name="system.damage.ap.bonus" class="modifier" type="number" value="{{system.damage.ap.bonus}}" />
+            <select name="system.damage.ap.rank" class="rank">
+                {{selectOptions item.system.schema.fields.damage.fields.ap.fields.rank.choices selected=system.damage.ap.rank localize=true}}
+            </select>
             <input name="system.damage.ap.dice" class="modifier" type="number" value="{{system.damage.ap.dice}}" />
         </div>
     </div>

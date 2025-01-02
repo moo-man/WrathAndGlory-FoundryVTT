@@ -52,29 +52,68 @@ export class BaseItemModel extends BaseWarhammerItemModel
 
         if (data.damage)
         {
-            if (!data.damage.ap && data.ap)
-            {
+            if (!data.damage.ap && data.ap) {
                 data.damage.ap = data.ap;
                 delete data.ap;
             }
 
-            if (!data.damage.ed && data.ed)
-            {
+            if (!data.damage.ed && data.ed) {
                 data.damage.ed = data.ed;
                 delete data.ed;
             }
 
-            if (!data.damage.other && data.other)
-            {
+            if (!data.damage.other && data.other) {
                 data.damage.other = data.other;
                 delete data.other;
             }
 
-            if (!data.damage.otherDamage && data.otherDamage)
-            {
+            if (!data.damage.otherDamage && data.otherDamage) {
                 data.damage.otherDamage = data.otherDamage;
                 delete data.otherDamage;
             }
+
+
+
+            if (data.damage.otherDamage.mortalWounds) 
+            {
+                data.otherDamage.mortal = data.otherDamage.mortalWounds;
+                delete data.otherDamage.mortalWounds;
+            }
+            if (data.damage)
+            {
+                data.damage.rank = this._convertRank(data.damage.rank);
+            }
+            if (data.damage.ed)
+            {
+                data.damage.ed.rank = this._convertRank(data.damage.ed.rank);
+            }
+            if (data.damage.ap)
+            {
+                data.damage.ap.rank = this._convertRank(data.damage.ap.rank);
+            }
+        }
+
+
+    }
+
+    static _convertRank(str)
+    {
+        if (typeof str == "string")
+        {
+
+            return {
+                "none": 0,
+                "single": 1,
+                "double": 2
+            }[str];
+        }
+        else if (isNaN(str))
+        {
+            return 0;
+        }
+        else 
+        {
+            return str;
         }
     }
 

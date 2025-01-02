@@ -48,9 +48,10 @@ export class WeaponDialog extends AttackDialog {
 
     this.tooltips.start(this)
     this.fields.pool += weapon.attack.base + weapon.attack.bonus
-    this.fields.damage += weapon.system.damage.base + weapon.system.damage.bonus
-    this.fields.ed.value += weapon.system.damage.ed.base + weapon.system.damage.ed.bonus
-    this.fields.ap.value += weapon.system.damage.ap.base + weapon.system.damage.ap.bonus
+    this.fields.damage += weapon.system.damage.base + weapon.system.damage.bonus + (weapon.system.damage.rank * this.actor.system.advances?.rank)
+    this.fields.ed.value += weapon.system.damage.ed.base + weapon.system.damage.ed.bonus + (weapon.system.damage.ed.rank * this.actor.system.advances?.rank)
+    this.fields.ap.value += weapon.system.damage.ap.base + weapon.system.damage.ap.bonus + (weapon.system.damage.ap.rank * this.actor.system.advances?.rank)
+
     this.fields.ed.dice += weapon.system.damage.ed.dice
     this.fields.ap.dice += weapon.system.damage.ap.dice
 

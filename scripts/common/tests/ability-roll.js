@@ -26,23 +26,7 @@ export default class AbilityRoll extends WNGTest {
       this.testSelf = true;
     }
 
-    if (item.system.damage.enabled)
-    {
-      this.addDamageData(item);
-    }
-
     this.data.context.title = data.title;
-  }
-
-  addDamageData(item)
-  {
-      this.testData.damage = {
-        base : item.system.damage.base + item.system.damage.bonus,
-        ed : {value : item.system.damage.ed.base + item.system.damage.ed.bonus, dice : item.system.damage.ed.dice},
-        ap : {value : item.system.damage.ap.base + item.system.damage.ap.bonus, dice : item.system.damage.ap.dice},
-        damageDice : {},
-        other : item.system.damage.otherDamage
-      }
   }
 
   get template() {
