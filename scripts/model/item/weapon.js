@@ -145,6 +145,10 @@ export class WeaponModel extends EquippedItemModel
         {
             other = other.concat(this.Ammo.effects.contents);
         }
+        for(let upg of this.upgrades)
+        {
+           other = other.concat(upg.effects.map(e => new ActiveEffect.implementation(e, {parent : this.parent})));
+        }
         return other;
     }
 
