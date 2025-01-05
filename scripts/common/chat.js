@@ -123,18 +123,18 @@ export default class WNGChat {
     let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
     let msg = game.messages.get(id)
     let test = msg.system.test;
-    let options = {resist : [this.key].concat(test?.item?.type || []), resistingTest : test}
+    let options = {resist : [this.key].concat(test?.item?.type || []), resistingTest : test, appendTitle : ` - ${test.item.name}`}
     if (canvas.tokens.controlled.length)
     {
       for (let token of canvas.tokens.controlled)
       {
-        token.actor.setupTestFromItem(test.item, options);
+        token.actor.setupTestFromData(test.result.test, options);
       }
 
     }
     else if (game.user.character)
     { 
-      game.user.character.setupTestFromItem(test.item, options);
+      game.user.character.setupTestFromData(test.item, options);
         
     }
     else 

@@ -317,7 +317,8 @@ export class WrathAndGloryActor extends WarhammerActor {
             ap : [],
             shock: [],
             mortal: [],
-            resilience : []
+            resilience : [],
+            wounds : [],
         };
 
         let addModifierBreakdown = (type, label) => {
@@ -327,6 +328,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             }
         }
         
+        let mortalDetermination = false;
         let args = {damage, ap, shock, mortal, test, damageRoll, modifiers, resilience, actor: this}
         this.runScripts("preTakeDamage", args)
         test?.actor?.runScripts("preApplyDamage", args)
@@ -335,10 +337,13 @@ export class WrathAndGloryActor extends WarhammerActor {
         ap = args.ap;
         shock = args.shock;
         mortal = args.mortal;
-
+        mortalDetermination = args.mortalDetermination;
         
         let invuln = resilience.invulnerable
-        let forceField = resilience.forceField
+        if (resilience.forceField)
+        {
+            mortalDetermination = true;
+        }
 
         let wounds = 0
 
@@ -348,9 +353,15 @@ export class WrathAndGloryActor extends WarhammerActor {
             uuid : token?.uuid
         }
 
+        if (args.abort)
+        {
+            report.message = game.i18n.format(`<strong>${token?.name}</strong> received no damage`);
+            report.breakdown = `<p>${args.abort}</p>`
+            return report;
+        }
+
         damage += modifiers.damage.reduce((acc, mod) => acc + mod.value, 0);
         ap += modifiers.ap.reduce((acc, mod) => acc + mod.value, 0);
-        shock += modifiers.shock.reduce((acc, mod) => acc + mod.value, 0);
         mortal += modifiers.mortal.reduce((acc, mod) => acc + mod.value, 0);
 
         if (invuln)
@@ -403,16 +414,13 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             addModifierBreakdown("mortal", "Mortal Wounds");
             report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal}`)
-            if (forceField)
+            if (mortalDetermination)
             {
                 report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal} converted to Wounds (${wounds + mortal})`);
                 wounds += mortal;
                 mortal = 0;
             }
         }
-
-        addModifierBreakdown("shock", "Shock");
-
 
         if (wounds && allowDetermination)
         {
@@ -421,7 +429,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             {
                 wounds = determination.result.wounds;                
                 shock += determination.result.shock;     
-                report.breakdown.push(`<strong>Determination</strong>: Converted ${shock} Wounds to Shock`)
+                report.breakdown.push(`<strong>Determination</strong>: Converted ${determination.result.shock} Wounds to Shock`)
                 report.determination = determination;          
             }        
         }
@@ -435,12 +443,24 @@ export class WrathAndGloryActor extends WarhammerActor {
     
 
         let updateObj = {}
-        args = {wounds, shock, mortal, report, updateObj, actor: this}
+        args = {wounds, shock, mortal, report, updateObj, actor: this, test, damageRoll}
         this.runScripts("takeDamage", args)
         test?.actor?.runScripts("applyDamage", args)
         test?.item?.runScripts("applyDamage", args)
+
+        // If you want to modify wounds before determination, use damage modifier
+        // modifier.wounds is for modifying wounds after determination
+        wounds += modifiers.wounds.reduce((acc, mod) => acc + mod.value, 0);
+        shock += modifiers.shock.reduce((acc, mod) => acc + mod.value, 0);
+        addModifierBreakdown("shock", "Shock");
+        addModifierBreakdown("wounds", "Wounds");
+
+
+        shock = Math.max(shock, 0);
+        wounds = Math.max(wounds, 0);
+        mortal = Math.max(mortal, 0);
         
-        if (shock)
+        if (shock > 0)
         {
             let newShock = this.system.combat.shock.value + shock
             updateObj["system.combat.shock.value"] = newShock;
@@ -449,7 +469,7 @@ export class WrathAndGloryActor extends WarhammerActor {
                 await this.addCondition("exhausted")
             }
         }
-        if (wounds || mortal)
+        if (wounds > 0 || mortal > 0)
         {
             let newWounds = this.system.combat.wounds.value + wounds + mortal;
             updateObj["system.combat.wounds.value"] = newWounds;
@@ -459,7 +479,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             }
         }
         let applyDamageEffects = false
-        if (shock || wounds || mortal)
+        if (shock + wounds + mortal > 0 && !args.abort) // if shock or wounds or mortal
         {
             report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE", {wounds : wounds + mortal, shock, name : token?.name}));
             report.message = game.i18n.format(`<strong>${token?.name}</strong> received damage`);
@@ -470,12 +490,26 @@ export class WrathAndGloryActor extends WarhammerActor {
             report.message = game.i18n.format(`<strong>${token?.name}</strong> received no damage`);
         }
 
-        report.breakdown = `<ul><li><p>${report.breakdown.join(`</p></li><li><p>`)}</p></li></ul>`
+        if (args.abort)
+        {
+            report.breakdown = `<p>${args.abort}</p>`
+        }
+        else 
+        {
+            report.breakdown = `<ul><li><p>${report.breakdown.join(`</p></li><li><p>`)}</p></li></ul>`
+        }
     
         report.wounds = wounds + mortal;
         report.mortal = mortal;
         report.shock = shock;
-        await this.update(updateObj);
+        if (!args.abort)
+        {
+            await this.update(updateObj);
+        }
+        else if (args.abort) 
+        {
+            return report;
+        }
 
         let damageEffects = test?.damageEffects || []
         if (damageEffects.length && applyDamageEffects)

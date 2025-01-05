@@ -1,6 +1,7 @@
 import { DamageModel } from "./components/damage";
 import { StandardItemModel } from "./components/standard";
 import { TestDataModel } from "./components/test";
+import { TraitsModel } from "./components/traits";
 
 let fields = foundry.data.fields;
 
@@ -20,6 +21,7 @@ export class PsychicPowerModel extends StandardItemModel
         schema.range = new fields.StringField({}),
         schema.multiTarget =  new fields.BooleanField({}),
         schema.keywords = new fields.StringField({}),
+        schema.traits = new fields.EmbeddedDataField(TraitsModel);
         schema.prerequisites = new fields.StringField({}),
         schema.potency = ListModel.createListModel(new fields.SchemaField({
             cost : new fields.NumberField(),
@@ -32,6 +34,10 @@ export class PsychicPowerModel extends StandardItemModel
         return schema;
     }
 
+
+    get traitsAvailable() {
+        return game.wng.config.weaponTraits
+    }
     
     get DN() {
         if (!this.dn)

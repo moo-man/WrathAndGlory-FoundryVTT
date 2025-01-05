@@ -750,7 +750,7 @@ WNG.traitEffects = {
                     documentType : "Item",
                 },
                 scriptData : [{
-                    label : "Unwieldy",
+                    label : "WAAAGH!",
                     trigger : "dialog",
                     script : "args.fields.pool++; if (args.actor.statuses.has('wounded')) args.fields.ed.value++;",
                     options : {
@@ -864,12 +864,18 @@ CONFIG.statusEffects = [
         system : {
             scriptData : [{
                 trigger : "dialog",
-                script : "args.fields.difficulty += 1",
-                label : "+1 DN to all Tests",
+                script : "args.fields.difficulty += parseInt(this.effect.specifier) || 1",
+                label : "+DN to all Tests",
                 options : {
                     activateScript : "return true;"
                 }
-            }]
+            },
+            {
+                trigger : "immediate",
+                script : "this.effect.updateSource({name : this.effect.setSpecifier(this.effect.getFlag(game.system.id, 'value') || 1)})",
+                label : "Value"
+            }
+            ]
         }
     },
     {
@@ -952,7 +958,20 @@ CONFIG.statusEffects = [
         statuses : ["vulnerable"],
         name : "CONDITION.Vulnerable",
         img : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
-        changes : [{key: "system.combat.defence.bonus", mode : 2, value : -1}]
+        system : {
+            scriptData : [
+            {
+                trigger : "immediate",
+                script : "this.effect.updateSource({name : this.effect.setSpecifier(this.effect.getFlag(game.system.id, 'value') || 1)})",
+                label : "Value"
+            },
+            {
+                trigger : "prePrepareDerivedData",
+                label : "Defence",
+                script : "this.actor.system.combat.defence.bonus -= parseInt(this.effect.specifier)"
+            }
+            ]
+        }
     },
     {
         id : "dying",

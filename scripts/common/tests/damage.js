@@ -107,9 +107,9 @@ export class DamageRoll {
     // Set dice indices before filtering out shifted
     this.damageData.dice.forEach((die, index) => die.index = index);
 
-    result.other.mortal = (await new Roll(this.damageData.other.mortal || "0").roll()).total
-    result.other.wounds = (await new Roll(this.damageData.other.wounds || "0").roll()).total
-    result.other.shock = (await new Roll(this.damageData.other.shock || "0").roll()).total
+    result.other.mortal = (await new Roll(this.damageData.other.mortal?.toString() || "0").roll()).total
+    result.other.wounds = (await new Roll(this.damageData.other.wounds?.toString() || "0").roll()).total
+    result.other.shock = (await new Roll(this.damageData.other.shock?.toString() || "0").roll()).total
 
 
     this.data.result = result;
@@ -138,17 +138,17 @@ export class DamageRoll {
     }
 
     
-    if (this.damageData.other.mortal.includes("d")) 
+    if ((this.damageData.other.mortal?.toString() || "").includes("d")) 
     { this.result.breakdown.mortal = this.result.breakdown.mortal.replace("@DICE", result.other.mortal)}
     else 
     {this.result.breakdown.mortal = this.result.breakdown.mortal.replace("(@DICE)", "")}
     
-    if (this.damageData.other.wounds.includes("d")) 
+    if ((this.damageData.other.wounds?.toString() || "").includes("d")) 
     { this.result.breakdown.wounds = this.result.breakdown.wounds.replace("@DICE", result.other.wounds)}
     else 
     {this.result.breakdown.wounds = this.result.breakdown.wounds.replace("(@DICE)", "")}
     
-    if (this.damageData.other.shock.includes("d")) 
+    if ((this.damageData.other.shock?.toString() || "").includes("d")) 
     { this.result.breakdown.shock = this.result.breakdown.shock.replace("@DICE", result.other.shock)}
     else 
     {this.result.breakdown.shock = this.result.breakdown.shock.replace("(@DICE)", "")}
