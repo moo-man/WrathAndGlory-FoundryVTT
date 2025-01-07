@@ -2,6 +2,8 @@ import WNGUtility from "../common/utility.js";
 
 export class WrathAndGloryItem extends WarhammerItem {
 
+    static bracket = ["[", "]"];
+
     _preUpdate(updateData, options, user) {
         // TODO Move this to model
         if (getProperty(updateData, "system.type") == "corruption")

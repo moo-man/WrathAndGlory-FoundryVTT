@@ -15,14 +15,14 @@ export class DamageModel extends foundry.abstract.DataModel
         schema.ed = new fields.SchemaField({
             base: new fields.NumberField({initial: 0, nullable: false}),
             bonus: new fields.NumberField({initial: 0, nullable: false}),
-            dice : new fields.NumberField({min: 0, initial: 0, nullable: false}),
+            dice : new fields.StringField(),
             rank: new fields.NumberField({initial : 0, choices : {0 : "RANK.NONE", 1 : "RANK.SINGLE", 2: "RANK.DOUBLE"}})
         })
         
         schema.ap = new fields.SchemaField({
             base: new fields.NumberField({initial: 0, nullable: false}),
             bonus: new fields.NumberField({initial: 0, nullable: false}),
-            dice : new fields.NumberField({min: 0, initial: 0, nullable: false}),
+            dice : new fields.StringField(),
             rank: new fields.NumberField({initial : 0, choices : {0 : "RANK.NONE", 1 : "RANK.SINGLE", 2: "RANK.DOUBLE"}})
         })
         

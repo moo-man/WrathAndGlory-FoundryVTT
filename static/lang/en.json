@@ -461,6 +461,7 @@
   "WEAPON.QUANTITY": "Quantity",
   "WEAPON.AIM": "Aim",
   "WEAPON.AIMED": "Aimed",
+  "WEAPON.CHARGING": "Charging",
   "WEAPON.COMBIWEAPON": "Combi-Weapon",
   "WEAPON.TWINNED": "Twinned",
   "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
@@ -632,7 +633,9 @@
       "rollTest" : "Roll Test",
       "preRollTest" : "Pre-Roll Test",
       "preRollWeaponTest" : "Pre-Roll Weapon Test",
-      "rollWeaponTest" : "Roll Weapon Test"
+      "rollWeaponTest" : "Roll Weapon Test",
+      "preRollPowerTest" : "Pre-Roll Power Test",
+      "rollPowerTest" : "Roll Power Test"
     }
   }
 }

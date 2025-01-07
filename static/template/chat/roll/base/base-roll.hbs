@@ -1,5 +1,5 @@
     <div class="wrapper">
-        <h3>{{context.title}} <i data-tooltip="{{context.breakdown.modifiersBreakdown}}" data-tooltip-direction="LEFT" class="fa-regular fa-circle-info"></i> </h3>
+        <h3 data-tooltip="{{context.breakdown.modifiersBreakdown}}" data-tooltip-direction="LEFT">{{context.title}}</h3>
         {{#if result.dn}}
         <h4>{{localize "CHAT.DN"}} {{result.dn}}</h4>
         {{/if}}

@@ -463,6 +463,11 @@ export default class Migration {
             }
             setProperty(data, "flags.wrath-and-glory.migrated", true);
         }
+
+        if (document.parent.documentName == "Item" && document.parent.type == "psychicPower" && data.system?.transferData?.type == "document")
+        {
+            setProperty(data, "system.transferData.type", "target");
+        }
     
         if (migrateScripts) 
         {

@@ -33,7 +33,7 @@
             <select name="system.damage.rank" class="rank">
                 {{selectOptions item.system.schema.fields.damage.fields.rank.choices selected=system.damage.rank localize=true}}
             </select>
-            <input name="system.damage.dice" class="modifier" type="number" value="{{system.damage.dice}}" />
+            <input name="system.damage.dice" class="modifier" type="text" value="{{system.damage.dice}}" />
         </div>
     </div>
     {{/unless}}
@@ -48,7 +48,7 @@
             <select name="system.damage.ed.rank" class="rank">
                 {{selectOptions item.system.schema.fields.damage.fields.ed.fields.rank.choices selected=system.damage.ed.rank localize=true}}
             </select>
-            <input name="system.damage.ed.dice" class="modifier" type="number" value="{{system.damage.ed.dice}}" />
+            <input name="system.damage.ed.dice" class="modifier" type="text" value="{{system.damage.ed.dice}}" />
         </div>
     </div>
 </div>
@@ -63,7 +63,7 @@
             <select name="system.damage.ap.rank" class="rank">
                 {{selectOptions item.system.schema.fields.damage.fields.ap.fields.rank.choices selected=system.damage.ap.rank localize=true}}
             </select>
-            <input name="system.damage.ap.dice" class="modifier" type="number" value="{{system.damage.ap.dice}}" />
+            <input name="system.damage.ap.dice" class="modifier" type="text" value="{{system.damage.ap.dice}}" />
         </div>
     </div>
 </div>

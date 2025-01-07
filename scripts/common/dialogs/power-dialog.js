@@ -19,9 +19,8 @@ export class PowerDialog extends AttackDialog {
 
       
       let skill = "psychicMastery"
-      let attribute = power.skill.attribute
       
-      let dialogData = await super.setupData({skill, attribute}, actor, options)
+      let dialogData = await super.setupData({skill}, actor, options)
       
       dialogData.data.levels = {
         bound : game.i18n.localize("PSYCHIC_POWER.BOUND"),
@@ -33,7 +32,9 @@ export class PowerDialog extends AttackDialog {
       dialogData.data.item = power;
       
       dialogData.data.scripts = dialogData.data.scripts.concat(power?.getScripts("dialog"));
-      
+      foundry.utils.setProperty(dialogData, "fields.ed.dice",  power.system.damage.ed.dice);
+      foundry.utils.setProperty(dialogData, "fields.ap.dice",  power.system.damage.ap.dice);
+
       options.title = `${power.name} Test`
       
       if (power.system.DN == "?") 
@@ -63,8 +64,6 @@ export class PowerDialog extends AttackDialog {
     this.fields.damage += power.system.damage.base + power.system.damage.bonus
     this.fields.ed.value += power.system.damage.ed.base + power.system.damage.ed.bonus
     this.fields.ap.value += power.system.damage.ap.base + power.system.damage.ap.bonus
-    this.fields.ed.dice += power.system.damage.ed.dice
-    this.fields.ap.dice += power.system.damage.ap.dice
     this.tooltips.finish(this, "Power")
   
   }
@@ -91,6 +90,7 @@ export class PowerDialog extends AttackDialog {
 
   computeInitialFields()
   {
+    super.computeInitialFields();
     let DN = this.power.system.DN;
     if(!isNaN(DN))
     {

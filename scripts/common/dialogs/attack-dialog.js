@@ -9,51 +9,60 @@ export class AttackDialog extends CommonDialog {
       ed : {
           label : "ED",
           type : 1,
+          noCollect: true,
           path : "fields.ed.value",
       },
       ap : {
           label : "AP",
           type : 1,
+          noCollect: true,
           path : "fields.ap.value"
       },
       damage : {
           label : "Damage",
           type : 1,
+          noCollect: true,
           path : "fields.damage"
       },
       ones : {
           label : "Ones Value",
           type : 1,
+          noCollect: true,
           path : "fields.damageDice.values.ones",
           hideLabel : true
       },
       twos : {
           label : "Twos Value",
           type : 1,
+          noCollect: true,
           path : "fields.damageDice.values.twos",
           hideLabel : true
       },
       threes : {
           label : "Threes Value",
           type : 1,
+          noCollect: true,
           path : "fields.damageDice.values.threes",
           hideLabel : true
       },
       fours : {
           label : "Fours Value",
           type : 1,
+          noCollect: true,
           path : "fields.damageDice.values.fours",
           hideLabel : true
       },
       fives : {
           label : "Fives Value",
           type : 1,
+          noCollect: true,
           path : "fields.damageDice.values.fives",
           hideLabel : true
       },
       sixes : {
           label : "Sixes Value",
           type : 1,
+          noCollect: true,
           path : "fields.damageDice.values.sixes",
           hideLabel : true
       }

@@ -1,5 +1,12 @@
 export default class WrathAndGloryEffect extends WarhammerActiveEffect {
 
+        // Config object used by systems to hide properties that aren't relevant
+        static CONFIGURATION = {
+            zones : false,
+            exclude : {},
+            bracket : ["[", "]"]
+        };
+
     async resistEffect()
     {
         let result = await super.resistEffect();
@@ -12,7 +19,11 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
 
         //TODO
         let test;
-        let options = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest};
+        let options = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest, fields: {}};
+        if (this.sourceTest && this.sourceTest.result?.test)
+        {
+            transferData.avoidTest.dn = this.sourceTest.result.test.dn;
+        }
         if (transferData.avoidTest.value == "item")
         {
             test = await this.actor.setupTestFromItem(this.item, options);

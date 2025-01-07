@@ -25,6 +25,8 @@ export class WeaponDialog extends AttackDialog {
       dialogData.data.item = weapon;
       dialogData.data.weapon = weapon;
       dialogData.data.scripts = dialogData.data.scripts.concat(weapon?.getScripts("dialog"));
+      foundry.utils.setProperty(dialogData, "fields.ed.dice",  weapon.system.damage.ed.dice);
+      foundry.utils.setProperty(dialogData, "fields.ap.dice",  weapon.system.damage.ap.dice);
 
       if (dialogData.data.targets[0])
       {
@@ -52,13 +54,23 @@ export class WeaponDialog extends AttackDialog {
     this.fields.ed.value += weapon.system.damage.ed.base + weapon.system.damage.ed.bonus + (weapon.system.damage.ed.rank * this.actor.system.advances?.rank || 0)
     this.fields.ap.value += weapon.system.damage.ap.base + weapon.system.damage.ap.bonus + (weapon.system.damage.ap.rank * this.actor.system.advances?.rank || 0)
 
-    this.fields.ed.dice += weapon.system.damage.ed.dice
-    this.fields.ap.dice += weapon.system.damage.ap.dice
-
     if (weapon.isMelee) {
       this.fields.damage += this.actor.system.attributes.strength.total
     }
     this.tooltips.finish(this, "Weapon")
+
+    if (this.fields.aim)
+    {
+      this.fields.pool++;
+      this.tooltips.add("pool", 1, game.i18n.localize("WEAPON.AIM"))
+
+    }
+
+    if (this.fields.charging)
+    {
+      this.fields.pool++;
+      this.tooltips.add("pool", 1, game.i18n.localize("WEAPON.CHARGING"))
+    }
 
     if (this.actor.isMob)
     {

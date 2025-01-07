@@ -12,12 +12,12 @@
 <div class="wrapper">
     <label class="name">{{localize "WEAPON.ED"}}</label>
     <input data-tooltip="{{tooltips.ed}}" data-tooltip-direction="LEFT" name="ed.value" type="number" value="{{fields.ed.value}}" />
-    <input data-tooltip="{{tooltips.ed.dice}}" data-tooltip-direction="LEFT" name="ed.dice" type="number" value="{{fields.ed.dice}}" />
+    <input data-tooltip="{{tooltips.ed.dice}}" data-tooltip-direction="LEFT" name="ed.dice" type="text" value="{{fields.ed.dice}}" />
 </div>
 <div class="wrapper">
     <label class="name">{{localize "WEAPON.AP"}}</label>
     <input data-tooltip="{{tooltips.ap}}" data-tooltip-direction="LEFT" name="ap.value" type="number" value="{{fields.ap.value}}" />
-    <input data-tooltip="{{tooltips.ap.dice}}" data-tooltip-direction="LEFT" name="ap.dice" type="number" value="{{fields.ap.dice}}" />
+    <input data-tooltip="{{tooltips.ap.dice}}" data-tooltip-direction="LEFT" name="ap.dice" type="text" value="{{fields.ap.dice}}" />
 </div>
 {{#if data.weapon.isRanged}}
     <div class="wrapper">
@@ -33,6 +33,11 @@
         </select>
         <label style="flex: unset;">{{localize "WEAPON.AIM"}}</label>
         <input type="checkbox" name="aim" {{checked fields.aim}}>
+    </div>
+{{else if data.weapon.isMelee}}
+    <div class="wrapper">
+        <label style="flex: unset;">{{localize "WEAPON.CHARGING"}}</label>
+        <input type="checkbox" name="charging" {{checked fields.charging}}>
     </div>
 {{/if}}
 <hr>

@@ -111,7 +111,7 @@ export class WNGTest extends WarhammerTestBase {
         ed : data.ed,
         ap : data.ap,
         damageDice : data.damageDice,
-        other : data.otherDamage
+        other : this.item.system.damage.otherDamage
       }
     }
   }
@@ -219,13 +219,13 @@ export class WNGTest extends WarhammerTestBase {
     if (this.testData.damage)
     {
 
-      this.result.damage = {
+      this.result.damage = foundry.utils.deepClone({
         damage : this.testData.damage.base + this.testData.edit.damage,
         ed : { value : this.testData.damage.ed.value + this.testData.shifted.damage.dice.length + this.testData.edit.ed, dice : this.testData.damage.ed.dice},
         ap : { value : this.testData.damage.ap.value + this.testData.edit.ap, dice : this.testData.damage.ap.dice},
         damageDice : this.testData.damage.damageDice,
         other : this.testData.damage.other || this.item?.system?.damage.otherDamage
-      }
+      })
     }
     }
   

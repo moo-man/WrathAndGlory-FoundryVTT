@@ -281,6 +281,9 @@ WNG.scriptTriggers = {
 
     preRollWeaponTest : "WH.Trigger.preRollWeaponTest",
     rollWeaponTest : "WH.Trigger.rollWeaponTest",
+
+    preRollPowerTest : "WH.Trigger.preRollPowerTest",
+    rollPowerTest : "WH.Trigger.rollPowerTest",
     
     computeDamage : "WH.Trigger.computeDamage",
     preComputeDamage : "WH.Trigger.preComputeDamage",
@@ -615,8 +618,8 @@ WNG.traitEffects = {
                     script : "args.fields.difficulty += 1",
                     options : {
                         targeter: true,
-                        hideScript : "return !this.weapon || this.weapon?.isRanged",
-                        activateScript : "return this.weapon?.isMelee",
+                        hideScript : "return !args.weapon || args.weapon?.isRanged",
+                        activateScript : "return args.weapon?.isMelee",
                     }
                 }]
             }

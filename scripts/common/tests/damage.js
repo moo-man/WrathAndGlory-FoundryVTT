@@ -85,14 +85,14 @@ export class DamageRoll {
 
     if (this.damageData.ed.dice)
     {
-      result.edDice = (await new Roll(`${this.damageData.ed.dice}d6`).roll()).total;
-      result.ed += edDice;
+      result.edDice = (await new Roll(this.damageData.ed.dice || "0").roll()).total;
+      result.ed += result.edDice;
     }
 
     if (this.damageData.ap.dice)
       {
-        result.apDice = (await new Roll(`${this.damageData.ap.dice}d6`).roll()).total;
-        result.ap += apDice;
+        result.apDice = (await new Roll(this.damageData.ap.dice || "0").roll()).total;
+        result.ap += result.apDice;
       }
 
     this.roll = Roll.fromTerms([
