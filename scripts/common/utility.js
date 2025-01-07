@@ -47,9 +47,9 @@ export default class WNGUtility {
 
     let item = game.items.contents.find(i => i.type == "keyword" && i.name.toLowerCase() == name.toLowerCase())
     if (!item) {
-      let packs = game.wng.tags.getPacksWithTag("keyword")
-      for (let pack of packs) {
-        let i = pack.index.contents.find(i => i.name == name)
+      for (let pack of game.packs) {
+
+        let i = pack.index.contents.find(i => i.name == name && i.type == "keyword")
         if (i) { // If item is in pack
           item = await pack.getDocument(i._id)
         }

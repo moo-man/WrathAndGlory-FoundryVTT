@@ -22,7 +22,7 @@ export class FactionModel extends StandardItemModel
     {
         for (let bg of this.backgrounds.origin.concat(this.backgrounds.accomplishment).concat(this.backgrounds.goal))
         {
-            if (bg.effect.id == effect.id)
+            if (bg.chosen && bg.effect.id == effect.id)
             {
                 return true;
             }
@@ -72,6 +72,7 @@ function backgroundData()
         name : new fields.StringField(),
         description : new fields.StringField(),
         effect : new fields.EmbeddedDataField(DocumentReferenceModel),
-        chosen : new fields.BooleanField({})
+        active : new fields.BooleanField(),
+        chosen : new fields.BooleanField()
     }));
 }

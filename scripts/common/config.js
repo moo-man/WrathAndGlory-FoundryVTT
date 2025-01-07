@@ -296,6 +296,16 @@ WNG.scriptTriggers = {
     
 }
 
+WNG.filterValues = {
+    "system.rarity" : {    
+            "common": 1,
+            "uncommon": 2,
+            "rare": 3,
+            "very-rare": 4,
+            "unique": 5
+        }
+}
+
 WNG.avoidTestTemplate = "systems/wrath-and-glory/template/apps/effect-avoid-test.hbs",
 WNG.effectScripts = {},
 
@@ -321,8 +331,8 @@ WNG.transferTypes = {
 },
 
 WNG.placeholderItemData = {
-    type : "equipment",
-    img : "modules/wng-core/assets/icons/equipment/equipment.webp"
+    type : "gear",
+    img : "modules/wng-core/assets/icons/gear/gear.webp"
 },
 
 

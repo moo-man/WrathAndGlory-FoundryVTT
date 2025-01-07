@@ -1,5 +1,3 @@
-import ArchetypeGeneric from "../apps/archetype-generic.js";
-import ArchetypeGroups from "../apps/archetype-groups.js";
 import ItemTraits from "../apps/item-traits.js";
 
 export class WrathAndGloryItemSheet extends WarhammerItemSheet {
