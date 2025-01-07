@@ -3,8 +3,8 @@
         {{else}}
         <div class="seal heresy"></div>
         {{/if}}
-
-        {{chatTargets targets=targetTokens}}
+        
+        {{> chatTargets targets=targetTokens}}
                 
         <p><strong>{{localize "CHAT.SUCCESS"}}: {{result.success}}</strong></p>
         <p><strong>{{localize "CHAT.FAILURE"}}: {{result.failure}}</strong></p>

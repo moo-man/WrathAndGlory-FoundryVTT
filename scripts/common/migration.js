@@ -593,6 +593,12 @@ Hooks.on("ready", () =>
 {
     if(game.wng.migration.shouldMigrate())
     {
+        ChatMessage.create({content : `
+        <h2>The Effect Refactor Arrives</h2>
+        <p>If (and only if) you are updating from <strong>Wrath & Glory</strong> version 5.1.7 (or earlier), effects have been vastly improved with the integration of th <strong>Warhammer Library</strong>. However, this means that your Actors/Items in the world are out of date and don't utilize these new features.</p>
+        <p>It is recommended that your important Actors (notably player characters) replace their Talents, Powers, Upgrades, etc. fresh from the Compendium. <strong>Note</strong>: Implementing these effects is an ongoing process, while a great many Items from the preimum modules have been updated, there may be some that have not received attention and haven't been updated.</p>
+        <p>If you have questions, please utilize the <a href="https://discord.gg/foundryvtt">Discord</a> channels where I or other community members will be happy to answer your questions. Thanks!</p>
+        `})
         game.wng.migration.migrateWorld(true, true);
     }
 });

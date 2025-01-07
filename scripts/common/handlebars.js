@@ -34,7 +34,7 @@ export const initializeHandlebars = () => {
   loadTemplates({
     damage : "systems/wrath-and-glory/template/partials/damage.hbs",
     test : "systems/wrath-and-glory/template/partials/test.hbs",
-    chatTargets : "systems/wrath-and-glory/template/partials/chatTargets.hbs"
+    chatTargets : "systems/wrath-and-glory/template/partials/chat-targets.hbs"
   })
   return loadTemplates(templatePaths);
 };
