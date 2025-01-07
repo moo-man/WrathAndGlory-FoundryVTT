@@ -1,0 +1,1 @@
+return args.weapon.isRanged && args.fields.distance > 18;

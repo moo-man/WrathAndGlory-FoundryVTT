@@ -1,0 +1,1 @@
+return !this.actor.statuses.has("halfCover") && !this.actor.statuses.has("fullCover")

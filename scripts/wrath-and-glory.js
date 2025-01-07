@@ -50,6 +50,7 @@ import { FactionModel } from "./model/item/faction.js";
 import { WrathAndGloryActiveEffectModel } from "./model/effect/effect.js";
 import WrathAndGloryActiveEffectConfig from "./apps/effect-config.js";
 import { WrathAndGloryDamageMessageModel, WrathAndGloryTestMessageModel } from "./model/message/message.js";
+import loadEffects from "./loadEffects.js";
 
 Hooks.once("init", () => {
 
@@ -149,3 +150,4 @@ Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : tr
 
 
 hooks()
+loadEffects();

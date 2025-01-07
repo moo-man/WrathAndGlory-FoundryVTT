@@ -1,0 +1,1 @@
+return !(args.options.conviction || args.options.resolve || args.weapon);

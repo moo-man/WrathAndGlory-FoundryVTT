@@ -1,0 +1,1 @@
+this.actor.applyDamage(0, {shock : 1});

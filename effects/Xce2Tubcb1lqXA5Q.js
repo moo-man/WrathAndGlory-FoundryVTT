@@ -1,0 +1,1 @@
+return !["toughness", "willpower"].includes(args.attribute);

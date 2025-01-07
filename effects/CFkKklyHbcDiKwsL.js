@@ -1,0 +1,1 @@
+await this.actor.applyHealing({wounds: 1, shock: 1}, {messageData : this.script.getChatData()});

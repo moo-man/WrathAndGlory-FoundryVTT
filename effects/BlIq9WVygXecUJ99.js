@@ -1,0 +1,1 @@
+return args.actor.statuses.has("halfCover") || args.actor.statuses.has("fullCover");

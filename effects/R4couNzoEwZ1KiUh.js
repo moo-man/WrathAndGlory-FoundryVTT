@@ -1,0 +1,1 @@
+args.fields.pool += this.effect.sourceTest.result.diceBonus || 6;

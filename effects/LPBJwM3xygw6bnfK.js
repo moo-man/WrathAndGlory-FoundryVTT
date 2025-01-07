@@ -1,0 +1,1 @@
+return args.weapon?.id == this.effect.getFlag(game.system.id, "trademarkId")

@@ -1,0 +1,1 @@
+return !args.weapon || args.weapon.traitList.inflict?.rating != "On Fire"

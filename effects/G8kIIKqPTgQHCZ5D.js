@@ -1,0 +1,1 @@
+args.fields.difficulty += (this.effect.sourceTest.result.defence)

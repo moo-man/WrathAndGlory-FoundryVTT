@@ -1,0 +1,1 @@
+return args.target?.hasKeyword(["CHAOS", "HERETIC"]);

@@ -1,0 +1,1 @@
+this.actor.setupGenericTest("fear", {fields : {difficulty : 1 + this.effect.sourceActor.system.advances.rank * 2}})

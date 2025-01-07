@@ -1,0 +1,1 @@
+return !args.actor.hasKeyword("T’AU") || !args.weapon || !args.weapon.isRanged;

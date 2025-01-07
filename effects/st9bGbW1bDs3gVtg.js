@@ -1,0 +1,1 @@
+args.fields.ap.value += (-args.actor.system.advances.rank)

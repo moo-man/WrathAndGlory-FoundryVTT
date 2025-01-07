@@ -1,0 +1,1 @@
+args.fields.difficulty += this.effect.sourceActor.system.attributes.willpower.total

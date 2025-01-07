@@ -1,0 +1,1 @@
+return !["fellowship", "willpower"].includes(args.attribute)

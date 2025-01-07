@@ -1,0 +1,1 @@
+return !["strength", "agility"].includes(args.attribute)

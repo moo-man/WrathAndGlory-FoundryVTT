@@ -1,0 +1,1 @@
+args.fields.ed.value += (this.effect.sourceTest.result.edBonus)

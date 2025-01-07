@@ -1,0 +1,1 @@
+return !args.weapon || args.weapon.isRanged || !this.actor.items.filter(i => i.system.isEquipped).some(i => i.flags.hasParry)

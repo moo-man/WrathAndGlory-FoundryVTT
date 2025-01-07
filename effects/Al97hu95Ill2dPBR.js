@@ -1,0 +1,1 @@
+args.fields.ed.value += (args.actor.system.advances.rank * 2)

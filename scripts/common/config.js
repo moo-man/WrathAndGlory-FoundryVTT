@@ -319,6 +319,7 @@ WNG.premiumModules = {
     "wng-litanies" : "Litanies of the Lost",
     "wng-records1" : "Redacted Records: Vol. I",
     "wng-cos" : "Church of Steel",
+    "wng-xenos" : "Threat Assessment: Xenos",
 }
 
 WNG.transferTypes = {
@@ -446,8 +447,8 @@ WNG.traitEffects = {
                 },
                 scriptData : [{
                     label : "Agonising",
-                    trigger : "preApplyDamage",
-                    script : "TODO: Add wounds to shock",
+                    trigger : "applyDamage",
+                    script : "if (!args.actor.hasCondition('exhausted')) args.modifiers.shock.push({label : this.effect.name, value : args.wounds})",
                 },
             ],
             }
@@ -538,7 +539,7 @@ WNG.traitEffects = {
                 {
                     label : "On Fire",
                     trigger : "applyDamage",
-                    script : "TODO: Add on fire condition",
+                    script : "args.actor.addCondition('onFire')",
                 }
             ],
             }
@@ -571,7 +572,7 @@ WNG.traitEffects = {
                 scriptData : [{
                     label : "Inflict Condition",
                     trigger : "applyDamage",
-                    script : "TODO",
+                    script : "//TODO",
                 }]
             }
         },

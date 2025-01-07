@@ -1,0 +1,1 @@
+return !this.effect.specifier || args.skill != "survival"

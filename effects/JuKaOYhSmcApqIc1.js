@@ -1,0 +1,1 @@
+args.fields.pool += this.actor.system.advances.rank

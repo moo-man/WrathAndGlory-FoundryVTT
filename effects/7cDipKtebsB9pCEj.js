@@ -1,0 +1,2 @@
+await this.actor.addCondition("vulnerable", {[game.system.id] : {value : Math.abs(this.effect.sourceTest.result.defence)}})
+await this.actor.addCondition("hindered",{[game.system.id] : {value : Math.abs(this.effect.sourceTest.result.penalty)}})

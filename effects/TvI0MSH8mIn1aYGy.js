@@ -1,0 +1,1 @@
+return !args.fields.distance || args.fields.distance <= 12;

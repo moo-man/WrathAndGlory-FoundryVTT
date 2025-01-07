@@ -1,0 +1,1 @@
+return args.weapon?.isRanged && this.actor.itemTypes.weapon.some(i => i.traitList.parry)

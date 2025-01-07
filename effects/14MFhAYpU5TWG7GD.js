@@ -1,0 +1,1 @@
+return !args.options.multi || !args.weapon || !args.weapon.isRanged;

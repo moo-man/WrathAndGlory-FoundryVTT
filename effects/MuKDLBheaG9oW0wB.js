@@ -1,0 +1,1 @@
+return args.weapon?.name !== "Scoped Needle Pistol" || args.fields.range != "long";

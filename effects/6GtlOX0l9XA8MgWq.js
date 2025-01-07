@@ -1,0 +1,1 @@
+return !args.target?.system.combat.fly;
