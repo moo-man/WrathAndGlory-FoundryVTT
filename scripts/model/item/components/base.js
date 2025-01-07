@@ -72,12 +72,12 @@ export class BaseItemModel extends BaseWarhammerItemModel
                 delete data.otherDamage;
             }
 
-            if (typeof data.damage.ed.dice == "number")
+            if (typeof data.damage.ed.dice == "number" && data.damageap.dice != 0)
             {
                 data.damage.ed.dice = "1d6"
             }
 
-            if (typeof data.damage.ap.dice == "number")
+            if (typeof data.damage.ap.dice == "number" && data.damageap.dice != 0)
             {
                 data.damage.ed.dice = "1d6"
             }

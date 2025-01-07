@@ -228,10 +228,6 @@ export class WrathAndGloryActor extends WarhammerActor {
             return;
         }
         let test = await this.setupGenericTest("determination", {message, fields: {wounds}, resolveClose: true})
-        if (test)
-        {
-            await test.rollTest();
-        }
         return test;
     }
 
@@ -429,7 +425,14 @@ export class WrathAndGloryActor extends WarhammerActor {
             {
                 wounds = determination.result.wounds;                
                 shock += determination.result.shock;     
-                report.breakdown.push(`<strong>Determination</strong>: Converted ${determination.result.shock} Wounds to Shock`)
+                if (determination.result.shockIgnored)
+                {   
+                    report.breakdown.push(`<strong>Determination</strong>: Ignored ${determination.result.converted} Wounds`)
+                }
+                else
+                {
+                    report.breakdown.push(`<strong>Determination</strong>: Converted ${determination.result.converted} Wounds to Shock`)
+                }
                 report.determination = determination;          
             }        
         }

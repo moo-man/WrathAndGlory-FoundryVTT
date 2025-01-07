@@ -90,6 +90,7 @@ export class WeaponModel extends EquippedItemModel
 
     computeBase()
     {
+        super.computeBase();
         this.damage.enabled = true;
     }
 
@@ -105,15 +106,6 @@ export class WeaponModel extends EquippedItemModel
         }
         if (this.isRanged && this.Ammo) {
             this.applyAmmo()
-        }
-
-        if (this.combi.id)
-        {
-            let combi = this.parent.actor?.items.get(this.combi.id);
-            if (combi)
-            {
-                this.combi.document = combi;
-            }
         }
     }
 

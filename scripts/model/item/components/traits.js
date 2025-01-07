@@ -40,7 +40,7 @@ export class TraitsModel extends foundry.abstract.DataModel
 
     add(traits)
     {
-        let add = traits.filter(i => i.type == "add")
+        let add = traits.filter(i => i.type == "add" || !i.type)
         let remove = traits.filter(i => i.type == "remove")
 
         add.forEach(trait => {

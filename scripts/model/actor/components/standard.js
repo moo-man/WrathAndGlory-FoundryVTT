@@ -47,10 +47,34 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
         if (foundry.utils.hasProperty(options, "changed.system.combat.wounds.value"))
         {
             options.deltaWounds = data.system.combat.wounds.value - this.combat.wounds.value;
+            if (data.system.combat.wounds.value > this.combat.wounds.max)
+            {
+                data.system.combat.wounds.value = this.combat.wounds.max;
+            }
         }
         if (foundry.utils.hasProperty(options, "changed.system.combat.shock.value"))
         {
             options.deltaShock = data.system.combat.shock.value - this.combat.shock.value;
+            if (data.system.combat.shock.value > this.combat.shock.max)
+            {
+                data.system.combat.shock.value = this.combat.shock.max;
+            }
+        }
+    }
+
+    async _onUpdate(data, options, user)
+    {
+        super._onUpdate(data, options, user)
+        if (user == game.user.id)
+        {
+            if (this.combat.wounds.value > 0)
+            {
+                this.parent.addCondition("wounded")
+            }
+            else if (this.parent.hasCondition("wounded"))
+            {
+                this.parent.removeCondition("wounded");
+            }
         }
     }
 

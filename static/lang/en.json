@@ -195,6 +195,7 @@
   "CHAT.FAIL_CORRUPTION" : "Gain {corruption} Corruption, 1 Ruin added",
   "CHAT.FAIL_FEAR" : "Gains the @JournalEntry[Fear] Condition, 1 Ruin added",
   "CHAT.DETERMINATION_RESULT" : "Converted {shock} Wounds to Shock ({wounds} Wounds leftover)",
+  "CHAT.DETERMINATION_RESULT_IGNORE_SHOCK" : "Ignored {shock} Wounds ({wounds} Wounds leftover)",
   "CHAT.STEALTH" : "Stealth",
   "CHAT.STEALTH_RESULT" : "{stealth}",
   "CHAT.WOUNDS": "Wounds",
@@ -223,6 +224,7 @@
   "DIALOG.MODIFIER_BREAKDOWN" : "Modifier Breakdown",
   "DIALOG.DICE_TOOLTIP" : "Number of D6s rolled to determine the value (e.g. 2 = 2D6)",
   "DIALOG.POWER_LEVEL": "Power Level",
+  "DIALOG.IGNORE_SHOCK": "Ignore Shock",
 
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",
