@@ -1,42 +1,13 @@
 import WNGUtility from "../common/utility.js";
 
-export class WrathAndGloryItem extends Item {
+export class WrathAndGloryItem extends WarhammerItem {
 
-    constructor(data, context)
-    {
-        super(data, context)
-        if (context && context.archetype)
-        {
-            this.archetype = context.archetype.item;
-            this.archetypeItemIndex = context.archetype.index;
-            this.archetypeItemPath = context.archetype.path
-        }
-    }
-
-    // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
-    async _preCreate(data, options, user) {
-        if (data._id && !this.isOwned)
-            options.keepId = WNGUtility._keepID(data._id, this)
-
-        await super._preCreate(data, options, user)
-    }
+    static bracket = ["[", "]"];
 
     _preUpdate(updateData, options, user) {
+        // TODO Move this to model
         if (getProperty(updateData, "system.type") == "corruption")
             setProperty(updateData, "system.specification", "corruption")
-    }
-
-    prepareBaseData()
-    {
-        this.system.computeBase();
-    }
-    prepareDerivedData()
-    {
-        this.system.computeDerived();
-    }
-    
-    prepareOwnedData() {
-        this.system.computeOwned()
     }
 
     async sendToChat() {
@@ -62,37 +33,28 @@ export class WrathAndGloryItem extends Item {
         return { text: this.description }
     }
 
+    // TODO move this to model
     handleArchetypeItem(item)
     {
         if (["weapon", "weaponUpgrade", "armour", "gear", "ammo", "augmentic"].includes(item.type))
         {
-            let wargear = duplicate(this.wargear);
-            wargear.push({
-                name : item.name,
-                id : item.uuid,
-                type: "item",
-                diff : {}
-            })
-            let groups = this.addToGroup({index: wargear.length - 1, type : "item"})
-            return this.update({"system.wargear" : wargear, "system.groups" : groups})
+            ui.notification.error("Open the Choice Config window to add Wargear.")
         }
         if(item.type == "ability")
         {
-            return this.update({"system.ability.id" : item.uuid, "system.ability.name" : item.name})
+            return this.update(this.system.ability.set(item));
         }
         if(item.type == "faction")
         {
-            return this.update({"system.faction.id" : item.uuid, "system.faction.name" : item.name})
+            return this.update(this.system.faction.set(item));
         }
         if(item.type == "species")
         {
-            return this.update({"system.species.id" : item.uuid, "system.species.name" : item.name})
+            return this.update(this.system.species.set(item));
         }
         if (item.type == "talent")
         {
-            let talents = duplicate(this.suggested.talents)
-            talents.push({"id" : item.id, "name" : item.name})
-            this.update({"system.suggested.talents" : talents})
+            this.update(this.system.suggested.talents.add(item));
         }
         if (item.type == "keyword")
         {
@@ -102,36 +64,14 @@ export class WrathAndGloryItem extends Item {
         }
     }
 
+    // TODO move this to model
     handleSpeciesItem(item)
     {
         if(item.type == "ability")
         {
-            let abilities = duplicate(this.abilities);
-            abilities.push({id : item.uuid, name : item.name})
-            return this.update({"system.abilities" : abilities})
+            return this.update(this.system.abilities.add(item));
         }
     }
-
-    addToGroup(object)
-    {
-        let groups = duplicate(this.groups)
-        object.groupId = randomID()
-        groups.items.push(object)
-        return groups
-    }
-
-    resetGroups()
-    {
-        this.update({ "system.groups": {type: "and", groupId: "root", items : Array.fromRange(this.wargear.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
-    }
-
-    _deleteIndex(index, path)
-    {
-        let array = duplicate(getProperty(this, path))
-        array.splice(index, 1)
-        this.update({ [path]: array})
-    }
-
 
     async addCondition(effect) {
         if (typeof (effect) === "string")
@@ -149,7 +89,7 @@ export class WrathAndGloryItem extends Item {
             effect.name = game.i18n.localize(effect.name)
             effect.statuses = [effect.id];
             delete effect.id
-            return this.createEmbeddedDocuments("ActiveEffect", [effect])
+            return this.createEmbeddedDocuments("ActiveEffect", [effect],  {condition: true})
         }
     }
 
@@ -175,40 +115,10 @@ export class WrathAndGloryItem extends Item {
         return existing
     }
 
-
-        /**
-     * Override update to account for archetype parent
-     */
-         async update(data={}, context={})
-         {
-             // If this item is from an archetype entry, update the diff instead of the actual item
-             // I would like to have done this is the item's _preCreate but the item seems to lose
-             // its "archetype" reference so it has to be done here
-             // TODO: Current Issue - changing a property, then changing back to the original value
-             // does not work due to `diffObject()`
-
-             if (this.archetype) {
-                 // Get the archetype's equipment, find the corresponding object, add to its diff
-
-                 let list = duplicate(getProperty(this.archetype, this.archetypeItemPath))
-                 let item = list[this.archetypeItemIndex];
-                 mergeObject( // Merge current diff with new diff
-                 item.diff,
-                 diffObject(this.toObject(), data),
-                 { overwrite: true })
-
-                 // If the diff includes the item's name, change the name stored in the archetype
-                 if (item.diff.name)
-                 item.name = item.diff.name
-                 else
-                 item.name = this.name
-
-                 this.archetype.update({ [`${this.archetypeItemPath}`]: list })
-                 data={}
-             }
-             return super.update(data, context)
-         }
-
+    getTestData()
+    {
+        return this.system.test;
+    }
 
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
@@ -227,21 +137,35 @@ export class WrathAndGloryItem extends Item {
         return this.system.traits.obj;
     }
 
+    hasKeyword(keyword) 
+    {
+
+        if (typeof keyword == "string")
+        {
+            keyword = [keyword];
+        }
+
+        let keywords = this.keywords.split(",").map(i => i.trim());
+
+        return keyword.some(k => keywords.includes(k));
+    }
+
+    // TODO move this to model
     async GetArchetypeItems() {
         let items = [];
 
-        let species = await game.wng.utility.findItem(this.species.id, "species")
-        let faction = game.wng.utility.findItem(this.faction.id, "faction")
+        let species = await this.system.species.document;
+        let faction = await this.system.faction.document;
 
-        let speciesAbilities = species.abilities.map(i => game.wng.utility.findItem(i.id, "ability"))
-        let archetypeAbility = game.wng.utility.findItem(this.ability.id, "ability")
+        let speciesAbilities = await species.system.abilities.awaitDocuments();
+        let archetypeAbility = await this.system.ability.document;
         let keywords = this.keywords.map(WNGUtility.getKeywordItem)
 
 
         // Get all archetype talents/wargear, merge with diff
-        for (let i of this.suggested.talents.concat(this.wargear.filter(k => k.id)))
+        for (let i of this.suggested.talents.list.concat(this.wargear.filter(k => k.id)))
         {
-            let item = await game.wng.utility.findItem(i.id)
+            let item = await warhammer.utility.findItemId(i.id)
             if (item)
             {
                 item = item.toObject();
@@ -346,43 +270,10 @@ export class WrathAndGloryItem extends Item {
         }
         journal.sheet.render(true, {pageId : page?.id})
     }
-
-    get rollable() {
-        if (this.type == "ability") {
-            if (this.abilityType == "determination") return true
-            if (this.hasDamage) return true
-            if (this.hasTest) return true
-        }
-
-    }
     
-    get hasDamage() {
-        return (this.damage && (this.damage.base || this.damage.bonus || this.damage.rank != "none")) || (this.damage?.ed && (this.damage?.ed.base || this.damage?.ed.bonus || this.damage?.ed.rank != "none") || (this.damage?.otherDamage.shock || this.damage?.otherDamage.wounds || this.damage?.otherDamage.mortalWounds))
-    }
-
-    get damageValues() {
-        if (this.traitList.brutal)
-            return {
-                1: 0,
-                2: 0,
-                3: 1,
-                4: 1,
-                5: 2,
-                6: 2
-            }
-        else
-            return {
-                1: 0,
-                2: 0,
-                3: 0,
-                4: 1,
-                5: 1,
-                6: 2
-            }
-    }
 
     get hasTest() {
-        return this.test && Number.isNumeric(this.test.dn) && this.test.type
+        return this.test && this.test.type
     }
 
     // @@@@@@ TYPE GETTERS @@@@@@

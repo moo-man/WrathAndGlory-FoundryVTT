@@ -1,0 +1,1 @@
+return !args.weapon || (args.weapon.isRanged && args.weapon.traitList.pistol)

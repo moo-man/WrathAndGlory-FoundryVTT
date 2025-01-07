@@ -440,7 +440,7 @@
           "rank": "none"
         },
         "otherDamage" : {
-          "mortalWounds" : "",
+          "mortal" : "",
           "wounds" : "",
           "shock" : ""
         }
@@ -509,7 +509,7 @@
           "rank": "none"
         },
         "other" : {
-          "mortalWounds" : "",
+          "mortal" : "",
           "wounds" : "",
           "shock" : ""
         }
@@ -619,15 +619,8 @@
         "id" : ""
       },
       "wargear" : [
-        [{
-          "name" : "",
-          "id" : ""
-        }]
       ],
       "groups" : {
-        "type": "and",
-        "groupId" : "root",
-        "items" : []
       },
       "suggested" : {
         "attributes" : {
@@ -728,5 +721,12 @@
       },
       "objectives" : []
     }
+  },
+  "ChatMessage" : {
+    "types" : [
+      "base",
+      "test",
+      "damage"
+    ]
   }
 }

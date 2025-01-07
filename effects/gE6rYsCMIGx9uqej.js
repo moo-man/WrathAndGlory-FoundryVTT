@@ -1,0 +1,1 @@
+return !args.weapon || !args.options.multi || !args.weapon || !args.weapon.isMelee;

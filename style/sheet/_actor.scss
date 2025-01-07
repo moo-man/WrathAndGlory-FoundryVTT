@@ -45,6 +45,7 @@
           flex-direction: row;
           flex-basis: calc(50% - 1px);
           margin-right: 1px;
+          align-items: center;
         }
       }
 
@@ -56,6 +57,12 @@
 
       input {
         flex-grow: 1;
+      }
+      
+      a {
+        font-size: var(--font-size-20);
+        margin-left: -20px;
+        margin-right: 5px;
       }
     }
   }
@@ -86,4 +93,21 @@
     }
   }
   
+  .sheet-effect-buttons {
+    justify-content: left;
+    display: flex;
+    align-self:flex-start;
+    button {
+      background-color: var(--color-imperium);
+      font-size: var(--font-size-12);
+      line-height: 16px;
+      border-radius: 0px;
+      height: 1rem;
+      padding: 0px 3px;
+      &:hover {
+        box-shadow: none;
+      }
+    }
+  }
+
 }

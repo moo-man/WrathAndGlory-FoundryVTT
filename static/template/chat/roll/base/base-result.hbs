@@ -3,20 +3,15 @@
         {{else}}
         <div class="seal heresy"></div>
         {{/if}}
-
-        {{#if context.targets.length}}
-        <div class="targets">
-                <a class="crosshair">
-                        <i class="fas fa-crosshairs"></i>
-                </a>
-                {{#each context.targets as |target t|}}
-                        <a class="target" data-token-id="{{target._id}}">{{target.name}}</a>
-                {{/each}}
-        </div>
-        {{/if}}
         
+        {{> chatTargets targets=targetTokens}}
+                
         <p><strong>{{localize "CHAT.SUCCESS"}}: {{result.success}}</strong></p>
         <p><strong>{{localize "CHAT.FAILURE"}}: {{result.failure}}</strong></p>
         {{#if isShiftable}}
         <p><strong>{{localize "CHAT.SHIFTING"}}: {{result.shiftsPossible}}</strong></p>
         {{/if}}
+
+        {{#each result.text}}
+        <p><strong>{{this.label}}</strong>: {{this.description}}</p>
+        {{/each}}

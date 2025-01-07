@@ -1,11 +1,10 @@
 import { TraitsModel } from "../item/components/traits";
-import { BaseActorModel } from "./components/base";
 import { VehicleComplement } from "./components/crew";
 import { VehicleCombatModel } from "./components/vehicle-combat";
 
 const fields = foundry.data.fields;
 
-export class VehicleModel extends BaseActorModel {
+export class VehicleModel extends BaseWarhammerActorModel {
     static defineSchema() {
         let schema = super.defineSchema();
         schema.complement = new fields.EmbeddedDataField(VehicleComplement);
@@ -21,7 +20,6 @@ export class VehicleModel extends BaseActorModel {
 
     computeBase() {
         super.computeBase();
-        this.complement.findDocuments(game.actors);
     }
 
     computeDerived()
@@ -37,6 +35,7 @@ export class VehicleModel extends BaseActorModel {
 
     static migrateData(data)
     {
+        super.migrateData(data);
         if (data.traits instanceof Array)
         {
             data.traits = {list : data.traits};

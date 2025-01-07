@@ -1,10 +1,10 @@
 import { AttributesModel } from "./attributes";
-import { BaseActorModel } from "./base";
 import { CombatModel } from "./combat";
 import { SkillsModel } from "./skills";
 
-export class StandardWNGActorModel extends BaseActorModel {
+export class StandardWNGActorModel extends BaseWarhammerActorModel {
 
+    static singletonItemPaths = {"species" : "species", "faction" : "faction", "archetype" : "archetype"};
         
     async _preCreate(data, options, user) 
     {
@@ -24,8 +24,6 @@ export class StandardWNGActorModel extends BaseActorModel {
             "flags.wrath-and-glory.autoCalc.determination": true,
             "flags.wrath-and-glory.autoCalc.wounds": true,
             "flags.wrath-and-glory.autoCalc.conviction": true,
-            "flags.wrath-and-glory.autoWounded": true,
-            "flags.wrath-and-glory.autoExhausted": true,
             "flags.wrath-and-glory.generateMetaCurrencies": true
         })
     }
@@ -36,17 +34,61 @@ export class StandardWNGActorModel extends BaseActorModel {
             attributes: new foundry.data.fields.EmbeddedDataField(AttributesModel),
             skills : new foundry.data.fields.EmbeddedDataField(SkillsModel),
             combat : new foundry.data.fields.EmbeddedDataField(CombatModel),
+
+            species : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
+            faction : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
+            archetype : new foundry.data.fields.EmbeddedDataField(SingletonItemModel)
         }
     }
 
-    computeBase() 
+    async _preUpdate(data, options, user)
     {
-    
+        await super._preUpdate(data, options, user);
+        if (foundry.utils.hasProperty(options, "changed.system.combat.wounds.value"))
+        {
+            options.deltaWounds = data.system.combat.wounds.value - this.combat.wounds.value;
+            if (data.system.combat.wounds.value > this.combat.wounds.max)
+            {
+                data.system.combat.wounds.value = this.combat.wounds.max;
+            }
+        }
+        if (foundry.utils.hasProperty(options, "changed.system.combat.shock.value"))
+        {
+            options.deltaShock = data.system.combat.shock.value - this.combat.shock.value;
+            if (data.system.combat.shock.value > this.combat.shock.max)
+            {
+                data.system.combat.shock.value = this.combat.shock.max;
+            }
+        }
+    }
+
+    async _onUpdate(data, options, user)
+    {
+        super._onUpdate(data, options, user)
+        if (user == game.user.id)
+        {
+            if (this.combat.wounds.value > 0)
+            {
+                this.parent.addCondition("wounded")
+            }
+            else if (this.parent.hasCondition("wounded"))
+            {
+                this.parent.removeCondition("wounded");
+            }
+        }
     }
 
     computeDerived() {
         this.attributes.compute();
         this.skills.compute(this.attributes);
         this.combat.compute(this.attributes, this.parent.getFlag("wrath-and-glory", "autoCalc") || {});
+    }
+
+    
+    _addModelProperties()
+    {
+        this.species.relative = this.parent.items
+        this.faction.relative = this.parent.items
+        this.archetype.relative = this.parent.items
     }
 }

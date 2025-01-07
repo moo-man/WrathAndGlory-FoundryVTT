@@ -1,259 +1,172 @@
-import { RollDialog } from "./base-dialog.js";
+import { AttackDialog } from "./attack-dialog.js";
 
-export class WeaponDialog extends RollDialog {
-  async _render(...args)
+export class WeaponDialog extends AttackDialog {
+
+
+  get weapon() 
   {
-      await super._render(...args)
-
-      if (this.distance)
-        this.distance.dispatchEvent(new Event("change"))
+    return this.data.weapon;
   }
 
+  static async setupData(weapon, actor, options={})
+  {
+      if (typeof weapon == "string")
+      {
+        weapon = actor.items.get(weapon) || await fromUuid(weapon)
+      }
 
-  static async create(data) {
-    let hide = this.runConditional("hide", data)
-    this.removeHiddenChanges(hide, data);
-    data.condensedChanges = this.condenseChanges(data.changes);
-    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/weapon-roll.hbs", data);
-    return new Promise((resolve) => {
-      new this({
-        title: game.i18n.localize(data.title),
-        content: html,
-        actor : data.actor,
-        targets : data.targets,
-        dialogData : data,
-        buttons: {
-          roll: {
-            icon: '<i class="fas fa-check"></i>',
-            label: game.i18n.localize("BUTTON.ROLL"),
-            callback: async (html) => {
-              let data = await this.dialogCallback(html)
-          
-              if (data.damage.dice)
-              {
-                let damageRoll = new Roll(`${data.damage.dice}d6`);
-                await damageRoll.roll();
-                damageRoll.toMessage({speaker : ChatMessage.getSpeaker({actor : data.actor}), flavor : "Damage Dice Roll"})
-                data.damage.bonus += damageRoll.total;
-              }
+      options.combi = weapon.system.combi.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
 
-              if (data.ed.dice)
-              {
-                let edRoll = new Roll(`${data.ed.dice}d6`);
-                await edRoll.roll();
-                edRoll.toMessage({speaker : ChatMessage.getSpeaker({actor : data.actor}), flavor : "ED Dice Roll"})
-                data.ed.bonus += edRoll.total;
-              }
+      let skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
+      let attribute = weapon.getSkillFor(actor).attribute
 
-                
-              if (data.ap.dice)
-              {
-                let apRoll = new Roll(`${data.ap.dice}d6`);
-                await apRoll.roll();
-                apRoll.toMessage({speaker : ChatMessage.getSpeaker({actor : data.actor}), flavor : "AP Dice Roll"})
-                data.ap.bonus += apRoll.total;
-              }
-    
+      let dialogData = await super.setupData({skill, attribute}, actor, options)
 
-              resolve(data)
-            },
-          }
-        },
-        default: "roll"
-      }, { width: 550 }).render(true)
-    })
-  }
+      dialogData.data.item = weapon;
+      dialogData.data.weapon = weapon;
+      dialogData.data.scripts = dialogData.data.scripts.concat(weapon?.getScripts("dialog"));
+      foundry.utils.setProperty(dialogData, "fields.ed.dice",  weapon.system.damage.ed.dice);
+      foundry.utils.setProperty(dialogData, "fields.ap.dice",  weapon.system.damage.ap.dice);
 
-  static dialogCallback(html) {
-    let testData = super.dialogCallback(html)
-    testData.damage.base = parseInt(html.find("#damage-base")[0].value);
-    testData.damage.bonus = parseInt(html.find("#damage-bonus")[0].value);
-    testData.damage.rank = html.find("#damage-rank")[0].value;
-    testData.damage.dice = Number(html.find("#damage-dice")[0].value);
-    testData.ed.base = parseInt(html.find("#ed-base")[0].value);
-    testData.ed.bonus = parseInt(html.find("#ed-bonus")[0].value);
-    testData.ed.rank = html.find("#ed-rank")[0].value;
-    testData.ed.dice = Number(html.find("#ed-dice")[0].value);
-    testData.ap.base = parseInt(html.find("#ap-base")[0].value);
-    testData.ap.bonus = parseInt(html.find("#ap-bonus")[0].value);
-    testData.ap.rank = html.find("#ap-rank")[0].value;
-    testData.ap.dice = Number(html.find("#ap-dice")[0].value);
-    testData.ed.damageValues[1] = parseInt(html.find("#die-one")[0].value);
-    testData.ed.damageValues[2] = parseInt(html.find("#die-two")[0].value);
-    testData.ed.damageValues[3] = parseInt(html.find("#die-three")[0].value);
-    testData.ed.damageValues[4] = parseInt(html.find("#die-four")[0].value);
-    testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
-    testData.ed.damageValues[6]= parseInt(html.find("#die-six")[0].value);
-    testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
-    testData.range = html.find(".range")[0]?.value
-    testData.aim = !!html.find(".aim.checked")[0]
-
-    return testData
-  }
-
-  static _baseTestData() {
-    return mergeObject({
-      damage: {
-        base: 0,
-        rank: "none",
-        bonus: 0
-      },
-      ed: {
-        base: 0,
-        rank: "none",
-        bonus: 0,
-        damageValues: {
-          1: 0,
-          2: 0,
-          3: 0,
-          4: 1,
-          5: 1,
-          6: 2
+      if (dialogData.data.targets[0])
+      {
+        let token = actor.getActiveTokens()[0]?.document
+        let target = dialogData.data.targets[0];
+        if (target && token)
+        {
+          dialogData.fields.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
         }
-      },
-      ap: {
-        base: 0,
-        rank: "none",
-        bonus: 0
-      },
-    }, super._baseTestData())
+      }
+
+
+      options.title = `${weapon.name} Test`
+
+      return dialogData;
   }
 
-  _calculateRange(range)
+  computeFields()
   {
-    let weapon = this.data.dialogData.weapon
-    if (range == "short")
+    let weapon = this.weapon;
+
+    this.tooltips.start(this)
+    this.fields.pool += weapon.attack.base + weapon.attack.bonus
+    this.fields.damage += weapon.system.damage.base + weapon.system.damage.bonus + (weapon.system.damage.rank * this.actor.system.advances?.rank || 0)
+    this.fields.ed.value += weapon.system.damage.ed.base + weapon.system.damage.ed.bonus + (weapon.system.damage.ed.rank * this.actor.system.advances?.rank || 0)
+    this.fields.ap.value += weapon.system.damage.ap.base + weapon.system.damage.ap.bonus + (weapon.system.damage.ap.rank * this.actor.system.advances?.rank || 0)
+
+    if (weapon.isMelee) {
+      this.fields.damage += this.actor.system.attributes.strength.total
+    }
+    this.tooltips.finish(this, "Weapon")
+
+    if (this.fields.aim)
     {
-      this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 1
-      if (weapon.traitList.rapidFire)
-        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (parseInt(weapon.traitList.rapidFire.rating) || 0)
+      this.fields.pool++;
+      this.tooltips.add("pool", 1, game.i18n.localize("WEAPON.AIM"))
 
     }
-    else if (range == "long")
-    {
-      this.inputs["difficulty.bonus"].value = parseInt(this.inputs["difficulty.bonus"].value) + 2
-    }
-  }
 
-  _calculateAim() {
-    let weapon = this.data.dialogData.weapon
-    if (this.userEntry.aim)
+    if (this.fields.charging)
     {
-      if (weapon.traitList.sniper)
-      {
-        this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 2
-        this.inputs["ed.bonus"].value = parseInt(this.inputs["ed.bonus"].value) + (parseInt(weapon.traitList.sniper.rating) || 0)
-      }
-      else 
-      {
-        this.inputs["pool.bonus"].value = parseInt(this.inputs["pool.bonus"].value) + 1
-      }
+      this.fields.pool++;
+      this.tooltips.add("pool", 1, game.i18n.localize("WEAPON.CHARGING"))
     }
-  }
 
-  applyEffects() {
-    super.applyEffects();
-    if (this.range)
+    if (this.actor.isMob)
     {
-      this._calculateRange(this.range.value);
-      this._calculateAim()
+      this.fields.pool += Math.ceil(this.actor.mob / 2)
+      this.tooltips.add("pool", Math.ceil(this.actor.mob / 2), "Mob")
     }
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    // Reset effect values
-    this.effectValues = flattenObject(mergeObject(this.effectValues, {
-      "damage.base": null,
-      "damage.rank": null,
-      "damage.bonus": null,
-      "damage.dice": null,
-      "ed.base": null,
-      "ed.rank": null,
-      "ed.bonus": null,
-      "ed.dice": null,
-      "ap.base": null,
-      "ap.rank": null,
-      "ap.bonus": null,
-      "ap.dice": null,
-    }))
+  computeInitialFields()
+  {
+    super.computeInitialFields();
+    this.computeRange();
+    this.computeTargets();
+  }
 
 
-    html.find('.damage,.ed,.ap').change(ev => {
-      let type = ev.currentTarget.classList[0]
-      let input = ev.currentTarget.classList[1]
-      this.userEntry[`${type}.${input}`] = Number.isNumeric(ev.target.value) ? parseInt(ev.target.value) : ev.target.value
-      this.applyEffects()
-    }).each((i, input) => {
-      this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input
-    })
+  computeTargets()
+  {
+    if (this.data.targets[0])
+    {
+          let target = this.data.targets[0]
 
-    this.range = html.find(".range").change(ev => {
-      this.applyEffects();
-    })[0]
+          if (target && target.actor)
+          {
+            this.fields.difficulty = target.actor.combat.defence.total
+            this.tooltips.set("difficulty", target.actor.combat.defence.total, "Target Defence")
 
-    this.distance = html.find(".distance").change(ev => {
-      let rangeNum = parseInt(ev.target.value);
-      let weapon = this.data.dialogData.weapon
+            
+            this.tooltips.start(this)
+            if (this.options.multi)
+            {
+              this.fields.difficulty += (this.options.multi - 1) * 2;
+            }
+            this.tooltips.finish(this, `Multi-Attack (${this.options.multi} Targets)`)
+
+
+            this.tooltips.start(this)
+            if (target.actor.system.combat.size == "large")
+            {
+                this.fields.pool += 1;
+            }
+            else if (target.actor.system.combat.size == "huge")
+            {
+                this.fields.pool += 2;
+            }
+            else if (target.actor.system.combat.size == "gargantuan")
+            {
+                this.fields.pool += 3;
+            }
+            this.tooltips.finish(this, "Target Size") 
+        }
+    }
+  }
+
+  computeRange()
+  {
       let range
+    let weapon = this.weapon;
+    if (this.fields.distance && weapon.isRanged) {
 
-      if (rangeNum <= weapon.range.short)
+      if (this.fields.distance <= weapon.range.short) 
       {
         range = "short"
       }
 
-      else if (rangeNum > weapon.range.short && rangeNum <= weapon.range.medium)
+      else if (this.fields.distance > weapon.range.short && this.fields.distance <= weapon.range.medium) 
       {
         range = "medium"
       }
 
-      else if (rangeNum > weapon.range.medium && rangeNum <= weapon.range.long)
+      else if (this.fields.distance > weapon.range.medium && this.fields.distance <= weapon.range.long) 
       {
         range = "long"
       }
-      
+
       else 
       {
         range = ""
-        if (rangeNum)
+        if (this.fields.distance) {
           ui.notifications.warn(game.i18n.localize("DIALOG.OUT_OF_RANGE"))
+        }
       }
-      this.range.value = range;
-      this.range.dispatchEvent(new Event("change"))
-    })[0]
+    }
 
-    html.find(".aim").click(ev => {
-      ev.currentTarget.classList.toggle("checked")
+    if (range)
+    {
+      this.fields.range = range;
+    }
+  }
 
-      if (ev.currentTarget.classList.contains("checked"))
-      {
-        ev.currentTarget.innerHTML = '<i class="fas fa-check"></i>'
-        this.userEntry.aim = true
-      }
-      else 
-      {
-        ev.currentTarget.innerHTML = ''
-        this.userEntry.aim = false
-      }
-
-      this.applyEffects();
-    })
-
-    this.userEntry = flattenObject(mergeObject(this.userEntry, {
-      "damage.base": parseInt(this.inputs["damage.base"].value),
-      "damage.rank": this.inputs["damage.rank"].value,
-      "damage.bonus": parseInt(this.inputs["damage.bonus"].value),
-      "damage.dice": parseInt(this.inputs["damage.dice"].value),
-      "ed.base": parseInt(this.inputs["ed.base"].value),
-      "ed.rank": this.inputs["ed.rank"].value,
-      "ed.bonus": parseInt(this.inputs["ed.bonus"].value),
-      "ed.dice": parseInt(this.inputs["ed.dice"].value),
-      "ap.base": parseInt(this.inputs["ap.base"].value),
-      "ap.rank": this.inputs["ap.rank"].value,
-      "ap.bonus": parseInt(this.inputs["ap.bonus"].value),
-      "ap.dice": parseInt(this.inputs["ap.dice"].value),
-      "aim" : false
-    }))
+  _defaultFields() 
+  {
+      return mergeObject({
+          distance : null,
+          range : null,
+          aim : false,
+      }, super._defaultFields());
   }
 }

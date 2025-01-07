@@ -400,3 +400,10 @@ display: none
   background: var(--color-imperium);
   cursor: pointer;
 }
+
+.warhammer.active-effect-sheet {
+
+  .script {
+      background-color: var(--color-imperium);
+  }
+}

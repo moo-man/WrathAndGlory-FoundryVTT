@@ -1,4 +1,3 @@
-import WNGDocumentMixin from "./mixin.js";
 import { WNGTest } from "../common/tests/test.js";
 import WeaponTest from "../common/tests/weapon-test.js";
 import PowerTest from "../common/tests/power-test.js";
@@ -7,41 +6,28 @@ import MutationTest from "../common/tests/mutation-test.js";
 import ResolveTest from "../common/tests/resolve-test.js";
 import DeterminationRoll from "../common/tests/determination.js";
 import AbilityRoll from "../common/tests/ability-roll.js";
-import WNGUtility from "../common/utility.js";
 import StealthRoll from "../common/tests/stealth.js";
 import CharacterCreation from "../apps/character-creation.js";
 import { RollDialog } from "../common/dialogs/base-dialog.js";
 import { WeaponDialog } from "../common/dialogs/weapon-dialog.js";
 import { PowerDialog } from "../common/dialogs/power-dialog.js";
+import { CommonDialog } from "../common/dialogs/common-dialog.js";
 
-export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
+export class WrathAndGloryActor extends WarhammerActor {
 
     prepareBaseData() {
-        // this.propagateDataModels(this.system, "runScripts", this.runScripts.bind(this));
-        this._itemTypes = null; 
-        this.derivedEffects = []
-        this.system.computeBase();
-        // this.runScripts("prepareBaseData", this);
+        this.derivedEffects = [];
+        super.prepareBaseData();
+        this.keywords = new Set(this.itemTypes.keyword.map(i => i.name));
     }
 
     prepareDerivedData()
     {
-        this.runScripts("prePrepareDerivedData", this);
-        this.system.computeDerived();
-        this.items.forEach(i => i.prepareOwnedData());
+        this._applyDerivedEffects();
+        super.prepareDerivedData();
     }
 
-
-    prepareDerivedData() {
-        // this.runScripts("prePrepareDerivedData", this);
-        this._applyDerivedEffects()
-        this.system.computeDerived();
-        this.items.forEach(i => i.prepareOwnedData());
-        // this.runScripts("prepareOwnedItems", this);
-        // this.system.computeDerived();
-        // this.runScripts("postPrepareDerivedData", this);
-    }
-
+        
     _applyDerivedEffects() {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)
@@ -49,386 +35,201 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         })
     }
 
+    async _onUpdate(data, options, user)
+    {
+        await super._onUpdate(data, options, user);
+        if (options.deltaWounds > 0)
+        {
+            TokenHelpers.displayScrollingText("+" + options.deltaWounds, this, {fill: "0xFF0000", direction : CONST.TEXT_ANCHOR_POINTS.TOP});
+        }
+        else if (options.deltaWounds < 0)
+        {
+            TokenHelpers.displayScrollingText(options.deltaWounds, this, {fill: "0x00FF00", direction : CONST.TEXT_ANCHOR_POINTS.BOTTOM});
+        }
+    
+        if (options.deltaShock > 0)
+        {
+            TokenHelpers.displayScrollingText("+" + options.deltaShock, this, {fill: "0x6666FF", direction : CONST.TEXT_ANCHOR_POINTS.TOP});
+        }
+        else if (options.deltaShock < 0)
+        {
+            TokenHelpers.displayScrollingText(options.deltaShock, this, {fill: "0x6666FF", direction : CONST.TEXT_ANCHOR_POINTS.BOTTOM});
+        }
+    }
+
     //#region Rolling
     async setupAttributeTest(attribute, options = {}) {
-        let attributeObject = this.attributes[attribute]
-
-        let dialogData = this._baseDialogData();
-        dialogData.title = `${game.i18n.localize(attributeObject.label)} Test`
-        dialogData.pool.size = attributeObject.total
-        this._addOptions(dialogData, options)
-        dialogData.type = "attribute"
-        dialogData.attribute = attribute
-        let testData = await RollDialog.create(dialogData)
-        testData.targets = dialogData.targets
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.attribute = attribute;
-        return new WNGTest(testData)
+        return this._setupTest(CommonDialog, WNGTest, {attribute}, options)
     }
 
     async setupSkillTest(skill, options = {}) {
-        let skillObject = this.skills[skill]
-
-        let dialogData = this._baseDialogData();
-        dialogData.title = `${game.i18n.localize(skillObject.label)} Test`
-        dialogData.pool.size = skillObject.total
-        this._addOptions(dialogData, options)
-        dialogData.type = "skill"
-        dialogData.skill = skill
-        let testData = await RollDialog.create(dialogData)
-        testData.targets = dialogData.targets
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.skill = skill
-        testData.attribute = skillObject.attribute
-        return new WNGTest(testData)
+        return this._setupTest(CommonDialog, WNGTest, {skill}, options)
     }
 
     async setupGenericTest(type, options = {}) {
-        let dialogData = this._baseDialogData();
-        let testClass = WNGTest
+        options = foundry.utils.mergeObject(options, {fields : {}, [type] : true})
+        
+        if (type == "conviction")
+        {
+            type = await Dialog.wait({
+                title : game.i18n.localize(`ROLL.CONVICTION`), 
+                buttons : {
+                    corruption : {
+                        label : game.i18n.localize(`ROLL.CORRUPTION`)
+                    },
+                    mutation : {
+                        label : game.i18n.localize(`ROLL.MUTATION`)
+                    }
+            }})
+        }
+
         switch (type) {
             case "stealth":
-                dialogData.pool.size = this.skills.stealth.total;
-                dialogData.title = game.i18n.localize(`ROLL.STEALTH`);
-                dialogData.noDn = true;
-                testClass = StealthRoll;
-                break;
+                options.title = game.i18n.localize(`ROLL.STEALTH`);
+                options.noDn = true;
+                options.noWrath = true;
+                return this._setupTest(CommonDialog, StealthRoll, {skill: "stealth"}, options)
             case "determination":
-                dialogData.pool.size = this.combat.determination.total
-                dialogData.title = game.i18n.localize(`ROLL.DETERMINATION`)
-                dialogData.determination = true;
-                dialogData.noDn = true;
-                testClass = DeterminationRoll;
-                break;
-            case "conviction":
-                dialogData.pool.size = this.combat.conviction.total
-                dialogData.title = game.i18n.localize(`ROLL.CONVICTION`)
-                break;
+                options.title = game.i18n.localize(`ROLL.DETERMINATION`)
+                options.noDn = true;
+                options.noWrath = true;
+                return this._setupTest(RollDialog, DeterminationRoll, {pool : this.combat.determination.total,}, options)
             case "corruption":
-                dialogData.pool.size = this.combat.conviction.total
-                dialogData.title = game.i18n.localize(`ROLL.CORRUPTION`)
-                this._addCorruptionData(dialogData)
-                testClass = CorruptionTest;
-                break;
+                options.title = game.i18n.localize(`ROLL.CORRUPTION`)
+                options.conviction = true;
+                return this._setupTest(RollDialog, CorruptionTest, {pool : this.combat.conviction.total}, options)
             case "mutation":
-                dialogData.pool.size = this.combat.conviction.total
-                dialogData.title = game.i18n.localize(`ROLL.MUTATION`)
-                dialogData.difficulty.target = 3
-                testClass = MutationTest;
-                break;
+                options.title = game.i18n.localize(`ROLL.MUTATION`)
+                options.conviction = true;
+                return this._setupTest(RollDialog, MutationTest, {pool : this.combat.conviction.total}, options)
             case "fear":
-                dialogData.pool.size = this.combat.resolve.total
-                dialogData.title = game.i18n.localize(`ROLL.FEAR`)
-                dialogData.type == "fear"
-                testClass = ResolveTest
-                break;
+                options.title = game.i18n.localize(`ROLL.FEAR`)
+                options.resolve = true;
+                options.noWrath = true;
+                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
             case "terror":
-                dialogData.pool.size = this.combat.resolve.total
-                dialogData.title = game.i18n.localize(`ROLL.TERROR`)
-                dialogData.type == "terror"
-                testClass = ResolveTest
-                break;
+                options.title = game.i18n.localize(`ROLL.TERROR`)
+                options.resolve = true;
+                options.noWrath = true;
+                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
             case "influence":
-                dialogData.pool.size = this.resources.influence
-                dialogData.title = game.i18n.localize(`ROLL.INFLUENCE`)
-                break;
+                options.fields.pool = this.resources.influence
+                options.title = game.i18n.localize(`ROLL.INFLUENCE`)
+                options.noWrath = true;
+                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
             default:
                 throw new Error("Unknown roll type: " + type)
         }
-        this._addOptions(dialogData, options)
-        dialogData.type = type
-        let testData = await RollDialog.create(dialogData)
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.type = type
-        ui.sidebar.activateTab("chat")
-        return new testClass(testData)
     }
-
-
 
     async setupWeaponTest(weapon, options={})
     {
-        if (typeof weapon == "string")
-            weapon = this.items.get(weapon) || await fromUuid(weapon)
-
-        options.combi = weapon.system.combi.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
-
-        let tests = []
-        let multi = options.combi ? 2 : 0;
-
-        // If targets, call this function again with single target option
-        if (game.user.targets.size)
+        if (game.user.targets.size > 1)
         {
-            let targets = Array.from(game.user.targets)
-            game.user.updateTokenTargets([])
-            options.multi = targets.length + multi;
-            // Function needs to return an array of WeaponTests so need to do some funky stuff to convert
-            targets.forEach(target => {
-                options.target = target;
-                tests.push(this._promptWeaponDialog(weapon, options))
-                if (options.combi)
-                {
-                    tests.push(this._promptWeaponDialog(weapon.system.combi.document, options))
-                }
-            })
-            tests = await Promise.all(tests)
+            return Promise.all(game.user.targets.map(i => {
+                let optionsCopy = foundry.utils.deepClone(options);
+                optionsCopy.targets = [i];
+                optionsCopy.multi = game.user.targets.size;
+                return this._setupTest(WeaponDialog, WeaponTest, weapon, optionsCopy);
+            }))
         }
         else 
         {
-            options.multi = multi;
-            tests = [await this._promptWeaponDialog(weapon, options)];
-            if (options.combi)
-            {
-                tests.push(await this._promptWeaponDialog(weapon.system.combi.document, options))
-            }
+            return this._setupTest(WeaponDialog, WeaponTest, weapon, options);
         }
-
-
-        return tests
-    }
-
-    async _promptWeaponDialog(weapon, options)
-    {
-        let dialogData = this._weaponDialogData(weapon, {multi : options.multi, targets : [options.target].filter(t => t)});
-        dialogData.title = `${weapon.name} Test`
-        this._addOptions(dialogData, options)
-        dialogData.type = "weapon"
-        dialogData.skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
-        dialogData.attribute = weapon.getSkillFor(this).attribute
-        let testData = await WeaponDialog.create(dialogData)
-        testData.targets = dialogData.targets
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.itemId = weapon.uuid
-        testData.skill = dialogData.skill
-        testData.attribute = dialogData.attribute
-        return new WeaponTest(testData);
     }
 
     async setupPowerTest(power, options = {}) {
-        if (typeof power == "string")
-            power = this.items.get(power) || await fromUuid(power)
-
-        let dialogData = this._powerDialogData(power);
-        dialogData.title = `${power.name}`
-        this._addOptions(dialogData, options)
-        dialogData.type = "power"
-        dialogData.skill = "psychicMastery"
-        dialogData.attribute = power.skill.attribute
-        let testData = await PowerDialog.create(dialogData)
-        testData.targets = dialogData.targets
-        testData.title = dialogData.title
-        testData.speaker = this.speakerData();
-        testData.itemId = power.uuid
-        testData.skill = dialogData.skill
-        testData.attribute = dialogData.attribute
-        ui.sidebar.activateTab("chat")
-        return new PowerTest(testData)
+        return this._setupTest(PowerDialog, PowerTest, power, options)
     }
 
     async setupAbilityRoll(ability, options = {}) {
         let testData = {
             title: ability.name,
             speaker: this.speakerData(),
-            itemId: ability.uuid,
-            damage: {},
-            ed: {},
-            ap: {}
+            item: ability,
         }
-        if (ability.hasDamage) {
-            testData.damage.base = ability.damage.base
-            testData.damage.bonus = ability.damage.bonus
-            testData.damage.rank = ability.damage.rank
-            testData.ed.base = ability.ed.base
-            testData.ed.bonus = ability.ed.bonus
-            testData.ed.rank = ability.ed.rank
-            testData.ap.base = ability.ap.base
-            testData.ap.bonus = ability.ap.bonus
-            testData.ap.rank = ability.ap.rank
-            testData.otherDamage = {
-                mortalWounds: { value: ability.otherDamage.mortalWounds, bonus : 0 },
-                wounds: { value: ability.otherDamage.wounds, bonus : 0 },
-                shock: { value: ability.otherDamage.shock, bonus : 0 },
-            }
 
+        if (ability.system.test.self)
+        {
+            return this.setupTestFromItem(ability, {item : ability});
         }
+
+        if (this.type == "threat" && ability.type == "ability" && ability.system.cost)
+        {
+            if (!(await this.spend("system.resources.ruin", ability.system.cost || 0)))
+            {
+                if (game.counter.ruin > 0)
+                {
+                    game.wng.RuinGloryCounter.changeCounter(-1, "ruin");
+                    ui.notifications.notify(`<strong>${ability.name}</strong>: Spent ${ability.system.cost} Ruin (Counter)`)
+                }
+                else 
+                {
+                    ui.notifications.error(`<strong>${ability.name}</strong>: Not enough Ruin!`)
+                    return;
+                }
+            }
+            else 
+            {
+                ui.notifications.notify(`<strong>${ability.name}</strong>: Spent ${ability.system.cost} Ruin (Personal)`)
+            }
+        }
+        
         ui.sidebar.activateTab("chat")
-        return new AbilityRoll(testData)
+        let roll = new AbilityRoll(testData)
+        await roll.rollTest();
+        roll.sendToChat();
     }
 
-    _baseDialogData() {
-        return {
-            difficulty: {
-                target: 3,
-                penalty: 0,
-                rank: "none"
-            },
-            pool: {
-                size: 1,
-                bonus: 0,
-                rank: "none"
-            },
-            wrath: {
-                base: this.hasCondition("dying") ? 1 + this.itemTypes["traumaticInjury"].length : 1
-            },
-            changes: this.allDialogChanges( {targets : Array.from(game.user.targets).map(t => t.actor)}),
-            actor: this,
-            targets: Array.from(game.user.targets)
-        };
-    }
-
-
-    _weaponDialogData(weapon, options={}) {
-
-        let dialogData = this._baseDialogData()
-        if (options.targets)
+    async setupTestFromItem(item, options)
+    {
+        if (typeof item == "string")
         {
-            dialogData.targets = options.targets;
-            dialogData.changes = this.allDialogChanges({targets: options.targets.map(i => i.actor), vehicle : weapon.actor?.type == "vehicle" ? weapon.actor : null});
-            // Weapon dialogs need to get dialog changes separately because of special target handling
+            item = await fromUuid(item);
         }
 
-        if (weapon.Ammo) {
-            // Add ammo dialog changes if any exist
-            weapon.Ammo.effects.forEach(e => {
-                mergeObject(dialogData.changes, e.getDialogChanges())
-            })
-        }
-        dialogData.weapon = weapon
-        dialogData.skill = weapon.getSkillFor(this)
-        dialogData.pool.size = dialogData.skill.total;
-        dialogData.pool.bonus = weapon.attack.base + weapon.attack.bonus;
-        if (this.isMob)
-            dialogData.pool.bonus += Math.ceil(this.mob / 2)
-        dialogData.pool.rank = weapon.attack.rank;
-        dialogData.damageValues = weapon.damageValues
-
-        dialogData.damage = duplicate(weapon.system.damage)
-        dialogData.ed = duplicate(weapon.system.damage.ed)
-        dialogData.ap = duplicate(weapon.system.damage.ap)
-
-        if (weapon.isMelee) {
-            dialogData.damage.base += this.attributes.strength.total
-        }
-
-        if (weapon.traitList.force) {
-            if (this.hasKeyword("PSYKER"))
-                dialogData.damage.bonus += Math.ceil(this.attributes.willpower.total / 2)
-            else
-                dialogData.damage.bonus -= 2
-        }
-
-        if (dialogData.targets[0])
+        if (item)
         {
-            let target = dialogData.targets[0]
-            let token
-            dialogData.difficulty.target = target.actor.combat.defence.total
+            options.appendTitle = ` - ${item.name}`;
+            return this.setupTestFromData(item.system.test, options);
+        }
+    }
 
-            if (this.isToken)
-                token = this.token
-            else
-                token = this.getActiveTokens()[0]?.document
-
-            if (token)
-                dialogData.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
-
-            if (target.actor.system.combat.size == "large")
-            {
-                dialogData.pool.bonus += 1;
-            }
-            else if (target.actor.system.combat.size == "huge")
-            {
-                dialogData.pool.bonus += 2;
-            }
-            else if (target.actor.system.combat.size == "gargantuan")
-            {
-                dialogData.pool.bonus += 3;
-            }
-
-
-        // If using melee and target has parry weapon equipped, increase difficulty
-        if (weapon.system.category == "melee" && target.actor.itemTypes.weapon.find(i => i.equipped && i.traitList["parry"]))
+    async setupTestFromData(data, options={})
+    {
+        let dn = data.dn;
+        let type = data.type;
+        let specification = data.specification;
+        foundry.utils.setProperty(options, "fields.difficulty", dn);
+        
+        if (type == "attribute")
         {
-            dialogData.difficulty.penalty += 1;
+            return this.setupAttributeTest(specification, options)
         }
-
+        else if (type == "skill")
+        {       
+            return this.setupSkillTest(specification, options)
         }
-        dialogData.difficulty.penalty += weapon.traitList.unwieldy ? parseInt(weapon.traitList.unwieldy.rating) : 0
-
-        if (this.hasKeyword("ORK") && weapon.traitList["waaagh!"])
+        else if (type == "resolve")
         {
-            dialogData.pool.bonus += 1;
-            if (this.combat.wounds.value > 0)
-                dialogData.ed.bonus += 1
+            return this.setupGenericTest(specification, options)
         }
-
-        if (options.multi > 1)
+        else if (type == "corruption")
         {
-            dialogData.difficulty.penalty += (options.multi - 1) * 2;
-            dialogData.multi = options.multi
-        }
-
-        return dialogData
-    }
-
-    _powerDialogData(power) {
-        let dialogData = this._baseDialogData()
-        dialogData.power = power
-        dialogData.difficulty.target = power.system.DN
-        if (!Number.isNumeric(dialogData.difficulty.target)) {
-            ui.notifications.warn(game.i18n.localize("DIALOG.TARGET_DEFENSE_WARNING"))
-        }
-        dialogData.pool.size = power.skill.total;
-        return dialogData
-    }
-
-    _addOptions(dialogData, options) {
-        dialogData.difficulty.target = options.dn || dialogData.difficulty.target
-        dialogData.pool.size = options.pool || dialogData.pool.size
-        dialogData.title = options.title || dialogData.title
-        delete options.title;
-        delete options.pool;
-        delete options.dn;
-
-        mergeObject(dialogData, options);
-    }
-
-    _addCorruptionData(dialogData) {
-        let level = game.wng.config.corruptionLevels[this.corruptionLevel]
-        dialogData.difficulty.penalty += level.dn
-    }
-
-    speakerData() {
-        if (this.isToken) {
-            return {
-                token: this.token.id,
-                scene: this.token.parent.id
-            }
-        }
-        else {
-            return {
-                actor: this.id
-            }
+            return this.setupGenericTest(specification, options)
         }
     }
 
-    allDialogChanges({targets=[], vehicle} = {}) {
-        let effects = this.effects.contents.concat(vehicle?.effects.contents || []);
-        // Aggregate dialog changes from each effect
-        let changes = effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges()), {})
-
-        if (targets.length) {
-            let target = targets[0]
-            let targetChanges = target.effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges({target : true})), {})
-            mergeObject(changes, targetChanges);
+    async rollDetermination(wounds, message)
+    {
+        if (this.statuses.has("exhausted"))
+        {
+            return;
         }
-
-        return changes
+        let test = await this.setupGenericTest("determination", {message, fields: {wounds}, resolveClose: true})
+        return test;
     }
-
 
     characterCreation(archetype) {
         new Dialog({
@@ -436,8 +237,8 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
             content: "<p>Begin Character Creation?</p>",
             yes: () =>  new CharacterCreation({ actor: this, archetype }).render(true),
             no: async () => {
-                let species = await game.wng.utility.findItem(archetype.species.id, "species")
-                let faction = await game.wng.utility.findItem(archetype.faction.id, "faction")
+                let species = await warhammer.utility.findItemId(archetype.species.id, "species")
+                let faction = await warhammer.utility.findItemId(archetype.faction.id, "faction")
                 this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
                }
         }).render(true)
@@ -451,7 +252,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
         }
         else if (this.type == "threat" && apply) // If threat, apply archetype statistics
         {
-            ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+            message.push(`Applying ${archetype.name} Archetype`)
             let actorData = this.toObject();
 
             let items = await archetype.GetArchetypeItems()
@@ -497,6 +298,248 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
             this.createEmbeddedDocuments("Item", items)
         }
     }
+
+    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}, {test, damageRoll, token, allowDetermination=true}={}) {
+
+        let resilience = foundry.utils.deepClone(this.system.combat.resilience)
+        let res = resilience.total || 1
+        ap = Math.abs(ap);
+
+        token = token || this.prototypeToken;
+
+        // label, value, description
+        let modifiers = {
+            damage : [],
+            ap : [],
+            shock: [],
+            mortal: [],
+            resilience : [],
+            wounds : [],
+        };
+
+        let addModifierBreakdown = (type, label) => {
+            for(let mod of modifiers[type])
+            {
+                report.breakdown.push(`<strong>${mod.label}</strong>: ${HandlebarsHelpers.numberFormat(mod.value, { hash: { sign: true } })} ${label}` + (mod.description ? ` (${mod.description})` : ""))
+            }
+        }
+        
+        let mortalDetermination = false;
+        let args = {damage, ap, shock, mortal, test, damageRoll, modifiers, resilience, actor: this}
+        this.runScripts("preTakeDamage", args)
+        test?.actor?.runScripts("preApplyDamage", args)
+        test?.item?.runScripts("preApplyDamage", args)
+        damage = args.damage;
+        ap = args.ap;
+        shock = args.shock;
+        mortal = args.mortal;
+        mortalDetermination = args.mortalDetermination;
+        
+        let invuln = resilience.invulnerable
+        if (resilience.forceField)
+        {
+            mortalDetermination = true;
+        }
+
+        let wounds = 0
+
+        let report = {
+            message : null,
+            breakdown : [],
+            uuid : token?.uuid
+        }
+
+        if (args.abort)
+        {
+            report.message = game.i18n.format(`<strong>${token?.name}</strong> received no damage`);
+            report.breakdown = `<p>${args.abort}</p>`
+            return report;
+        }
+
+        damage += modifiers.damage.reduce((acc, mod) => acc + mod.value, 0);
+        ap += modifiers.ap.reduce((acc, mod) => acc + mod.value, 0);
+        mortal += modifiers.mortal.reduce((acc, mod) => acc + mod.value, 0);
+
+        if (invuln)
+        {
+            ap = 0;
+        }
+    
+        if (ap)
+        {
+            let resilienceReduction = ap
+            if (game.settings.get('wrath-and-glory', 'advancedArmour'))
+            {
+                resilienceReduction = Math.min(ap, target.system.combat.resilience.armour)
+            }
+            addModifierBreakdown("ap", "AP");
+            report.breakdown.push(`<strong>AP</strong>: Reduced Resilience to ${Math.max(0, res - resilienceReduction)} (${res} - ${resilienceReduction})`)
+            res = Math.max(0, res - resilienceReduction);
+        }
+        else  if (invuln)
+        {
+            report.breakdown.push(`<strong>Invulnerable</strong>: Ignore AP`);
+        }
+    
+        if (res <= 0)
+            res = 1
+    
+        if (damage)
+        {
+            addModifierBreakdown("damage", "Damage");
+            if (res > damage)
+            {
+                report.message = game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : token?.name})
+                report.breakdown.push(`<strong>Resilience</strong>: Resisted ${damage} Damage`)
+                report.resisted = true;
+            }
+        
+            if (res == damage)
+            {
+                report.breakdown.push(`<strong>Resilience</strong>: Suffered 1 Shock (${res} vs. ${damage} Damage)`)
+                shock++
+            }
+            if (res < damage)
+            {
+                wounds = damage - res
+                report.breakdown.push(`<strong>Resilience</strong>: ${damage} Damage reduced to ${wounds} Wounds (-${res})`)
+            }
+        }
+
+        if (mortal)
+        {
+            addModifierBreakdown("mortal", "Mortal Wounds");
+            report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal}`)
+            if (mortalDetermination)
+            {
+                report.breakdown.push(`<strong>Mortal Wounds</strong>: ${mortal} converted to Wounds (${wounds + mortal})`);
+                wounds += mortal;
+                mortal = 0;
+            }
+        }
+
+        if (wounds && allowDetermination)
+        {
+            let determination = await this.rollDetermination(wounds, damageRoll?.message?.id)
+            if (determination)
+            {
+                wounds = determination.result.wounds;                
+                shock += determination.result.shock;     
+                if (determination.result.shockIgnored)
+                {   
+                    report.breakdown.push(`<strong>Determination</strong>: Ignored ${determination.result.converted} Wounds`)
+                }
+                else
+                {
+                    report.breakdown.push(`<strong>Determination</strong>: Converted ${determination.result.converted} Wounds to Shock`)
+                }
+                report.determination = determination;          
+            }        
+        }
+
+        if (shock && (this.hasCondition("exhausted")))
+        {
+            mortal += shock;
+            shock = 0;
+            report.breakdown.push(`<strong>Exhausted</strong>: ${shock} Shock converted to Mortal Wounds (${mortal})`);
+        }
+    
+
+        let updateObj = {}
+        args = {wounds, shock, mortal, report, updateObj, actor: this, test, damageRoll}
+        this.runScripts("takeDamage", args)
+        test?.actor?.runScripts("applyDamage", args)
+        test?.item?.runScripts("applyDamage", args)
+
+        // If you want to modify wounds before determination, use damage modifier
+        // modifier.wounds is for modifying wounds after determination
+        wounds += modifiers.wounds.reduce((acc, mod) => acc + mod.value, 0);
+        shock += modifiers.shock.reduce((acc, mod) => acc + mod.value, 0);
+        addModifierBreakdown("shock", "Shock");
+        addModifierBreakdown("wounds", "Wounds");
+
+
+        shock = Math.max(shock, 0);
+        wounds = Math.max(wounds, 0);
+        mortal = Math.max(mortal, 0);
+        
+        if (shock > 0)
+        {
+            let newShock = this.system.combat.shock.value + shock
+            updateObj["system.combat.shock.value"] = newShock;
+            if (newShock >= this.system.combat.shock.max)
+            {
+                await this.addCondition("exhausted")
+            }
+        }
+        if (wounds > 0 || mortal > 0)
+        {
+            let newWounds = this.system.combat.wounds.value + wounds + mortal;
+            updateObj["system.combat.wounds.value"] = newWounds;
+            if (newWounds >= this.system.combat.wounds.max)
+            {
+                await this.addCondition("dying")
+            }
+        }
+        let applyDamageEffects = false
+        if (shock + wounds + mortal > 0 && !args.abort) // if shock or wounds or mortal
+        {
+            report.breakdown.push(game.i18n.format("NOTE.APPLY_DAMAGE", {wounds : wounds + mortal, shock, name : token?.name}));
+            report.message = game.i18n.format(`<strong>${token?.name}</strong> received damage`);
+            applyDamageEffects = true;
+        }
+        else 
+        {
+            report.message = game.i18n.format(`<strong>${token?.name}</strong> received no damage`);
+        }
+
+        if (args.abort)
+        {
+            report.breakdown = `<p>${args.abort}</p>`
+        }
+        else 
+        {
+            report.breakdown = `<ul><li><p>${report.breakdown.join(`</p></li><li><p>`)}</p></li></ul>`
+        }
+    
+        report.wounds = wounds + mortal;
+        report.mortal = mortal;
+        report.shock = shock;
+        if (!args.abort)
+        {
+            await this.update(updateObj);
+        }
+        else if (args.abort) 
+        {
+            return report;
+        }
+
+        let damageEffects = test?.damageEffects || []
+        if (damageEffects.length && applyDamageEffects)
+        {
+            this.applyEffect({effects : damageEffects, messageId : test.message.id})
+        }
+
+        return report;
+    }
+
+    applyHealing({wounds=0, shock=0}, {messageData={}, suppressMessage=false})
+    {
+        let newWounds = this.system.combat.wounds.value - wounds;
+        let newShock = this.system.combat.shock.value - shock;
+
+        this.update({"system.combat.wounds.value" : newWounds, "system.combat.shock.value" : newShock});
+        
+        let token = this.getActiveTokens()[0];
+        let name = token ? token.name : this.prototypeToken.name;
+        let content = `${name} healed ${[shock ? (shock + " Shock") : null, wounds ? (wounds + " Wounds") : null].filter(i => i).join(" and ")}`;
+        if (!suppressMessage)
+        {
+            ChatMessage.create(foundry.utils.mergeObject({content, speaker : {alias : name}, flavor : "Healing"}, messageData));
+        }
+        return {shock : newShock, wounds : newWounds}
+    }
+    
 
     //#endregion
 
@@ -549,9 +592,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
 
         if (!existing) {
             effect.name = game.i18n.localize(effect.name)
-            effect.statuses = [effect.id];
-            delete effect.id
-            return this.createEmbeddedDocuments("ActiveEffect", [effect])
+            return this.createEmbeddedDocuments("ActiveEffect", [effect], {condition: true})
         }
     }
 
@@ -581,8 +622,14 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
     }
 
 
-    hasKeyword(keyword) {
-        return !!this.itemTypes.keyword.find(i => i.name == keyword)
+    hasKeyword(keyword) 
+    {
+        if (typeof keyword == "string")
+        {
+            keyword = [keyword];
+        }
+
+        return keyword.some(k => this.keywords.has(k));
     }
 
 
@@ -595,7 +642,7 @@ export class WrathAndGloryActor extends WNGDocumentMixin(Actor) {
     get resources() { return this.system.resources }
     get corruption() { return this.system.corruption }
     get notes() { return this.system.notes }
-    get mob() { return this.system.mob }
+    get mob() { return this.system.mob.value }
 
     get traitsAvailable() {
         if (this.type == "vehicle")

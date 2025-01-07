@@ -1,9 +1,6 @@
-import ArchetypeGeneric from "../apps/archetype-generic.js";
-import ArchetypeGroups from "../apps/archetype-groups.js";
 import ItemTraits from "../apps/item-traits.js";
-import { WrathAndGloryItem } from "../document/item.js";
 
-export class WrathAndGloryItemSheet extends ItemSheet {
+export class WrathAndGloryItemSheet extends WarhammerItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["wrath-and-glory", "sheet", "item"],
@@ -59,15 +56,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     const data = await super.getData();
 
-    // If this is a temp item with an archetype parent
-    if (this.item.archetype) {
-      let list = duplicate(getProperty(this.item.archetype, this.item.archetypeItemPath))
-      let wargearObj = list[this.item.archetypeItemIndex];
-      mergeObject(data.system, wargearObj.diff, { overwrite: true }) // Merge archetype diff with item data
-      data.name = wargearObj.diff.name || data.item.name
-    }
-    else
-      data.name = data.item.name
+    data.name = data.item.name
 
     data.system = data.data.system // project system data so that handlebars has the same name and value paths
 
@@ -75,7 +64,7 @@ export class WrathAndGloryItemSheet extends ItemSheet {
       return {
           name : i.name,
           key : i.id,
-          img : i.icon,
+          img : i.img,
           existing : this.item.hasCondition(i.id)
       }
     })  
@@ -84,18 +73,13 @@ export class WrathAndGloryItemSheet extends ItemSheet {
 
     if (this.item.type == "archetype")
     {
-      let element = $(ArchetypeGroups.constructHTML(this.item, {parentheses: true, commas: true, draggable:false}))
-      // Remove unnecessary outside parentheses
-      let parentheses = Array.from(element.find(".parentheses"))
-      parentheses[0].remove();
-      parentheses[parentheses.length - 1].remove()
-      data.wargearHTML = `<div class="group-wrapper">${element.html()}</div>`
+      data.wargearHTML = `<div class="group-wrapper">${this.item.system.wargear.textDisplay}</div>`
 
-      data.talents = this.item.suggested.talents.map(i => `<a class="archetype-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
+      data.talents = this.item.suggested.talents.list.map(i => `<a class="archetype-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
     }
     else if (this.item.type == "species")
     {
-      data.abilities = this.item.abilities.map(i => `<a class="species-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
+      data.abilities = this.item.abilities.list.map(i => `<a class="species-item" data-id=${i.id}>${i.name}</a>`).join("<span class='connector'>,</span>")
     }
     else if (this.item.type == "weapon" && this.item.isOwned)
     {
@@ -181,13 +165,10 @@ async _handleEnrichment()
 
 
   _updatePotency(index, path, value) {
-    let potency = foundry.utils.deepClone(this.item.potency)
     if (Number.isNumeric(value) && typeof value != "boolean") // 
       value = Number(value)
 
-    setProperty(potency[index], path, value)
-
-    this.item.update({ "system.potency": potency })
+      this.item.update(this.item.system.potency.edit(index, value, path))
   }
 
     // Prevent upgrades from stacking
@@ -215,39 +196,6 @@ async _handleEnrichment()
       }
       else 
         new ItemTraits(this.item).render(true)
-    })
-
-    html.find(".effect-create").click(async ev => {
-      if (this.item.isOwned)
-        ui.notifications.error("Effects can only be added to world items or actors directly")
-      let effectData = { label: this.item.name, icon: this.item.img }
-
-        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.hbs", effectData)
-        let dialog = new Dialog({
-            title : "Quick Effect",
-            content : html,
-            buttons : {
-                "create" : {
-                    label : "Create",
-                    callback : html => {
-                        let mode = 2
-                        let label = html.find(".label").val()
-                        let key = html.find(".key").val()
-                        let value = parseInt(html.find(".modifier").val())
-                        effectData.name = label
-                        effectData.changes = [{key, mode, value}]
-                        this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
-                    }
-                },
-                "skip" : {
-                    label : "Skip",
-                    callback : () => this.object.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
-                }
-            }
-        })
-        await dialog._render(true)
-        dialog._element.find(".label").select()
-
     })
 
     html.find(".effect-edit").click(ev => {
@@ -305,16 +253,7 @@ async _handleEnrichment()
     })
 
     html.find(".add-potency").click(ev => {
-      let potency = duplicate(this.item.potency)
-      potency.push({
-        "description": "",
-        "cost": 1,
-        "property": "",
-        "initial": "",
-        "value": "",
-        "single" : false
-      })
-      this.item.update({ "system.potency": potency })
+      this.item.update(this.item.system.potency.add())
     })
 
     
@@ -340,7 +279,7 @@ async _handleEnrichment()
 
     html.find(".potency-delete").click(ev => {
       let index = parseInt($(ev.currentTarget).parents(".potency-fields").attr("data-index"))
-      this.item._deleteIndex(index, "system.potency")
+      this.item.update(this.item.system.potency.remove(index))
     })
 
     html.find(".background-delete").click(ev => {
@@ -379,27 +318,12 @@ async _handleEnrichment()
     })
 
 
-
-    html.find(".add-generic").click(async ev => {
-      new ArchetypeGeneric({item: this.item}).render(true)
-    })
-
-    html.find(".reset").click(ev => {
-      this.item.resetGroups();
-    })
-
-    html.find(".configure-groups").click(ev => {
-      new ArchetypeGroups(this.item).render(true)
-    })
-
     html.find(".archetype-item,.species-item,.archetype-faction,.archetype-species").mouseup(async ev => {
       let id = ev.currentTarget.dataset.id;
       if (ev.button == 0)
       {
         
-        let item = await game.wng.utility.findItem(id)
-        if (!item)
-          item = await fromUuid(id)
+        let item = await warhammer.utility.findItemId(id)
         
         if (!item)
         {
@@ -412,76 +336,24 @@ async _handleEnrichment()
       {
        if (ev.currentTarget.classList.contains("archetype-ability")) 
        {
-         this.item.update({"system.ability" : {id: "", name: ""}})
+         this.item.update(this.item.system.ability.unset())
        }
        if (ev.currentTarget.classList.contains("archetype-faction")) 
        {
-         this.item.update({"system.faction" : {id: "", name: ""}})
+         this.item.update(this.item.system.faction.unset())
        }
        if (ev.currentTarget.classList.contains("archetype-species")) 
        {
-         this.item.update({"system.species" : {id: "", name: ""}})
+         this.item.update(this.item.system.species.unset())
        }
        else if (this.item.type == "archetype") // Is archetype talent
        {
-         let index = this.item.suggested.talents.findIndex(t => t.id == id)
-         let array = duplicate(this.item.suggested.talents)
-         array.splice(index, 1);
-         this.item.update({"system.suggested.talents" : array})
+         this.item.update(this.item.system.suggested.talents.removeId(id))
        }
        else if (this.item.type == "species") // TODO Combine these if statements
        {
-          let index = this.item.abilities.findIndex(t => t.id == id)
-          let array = duplicate(this.item.abilities)
-          array.splice(index, 1);
-          this.item.update({"system.abilities" : array})
+          this.item.update(this.item.system.abilities.removeId(id))
        }
-      }
-    })
-    
-    html.find(".wargear").mouseup(async ev => {
-      let index = Number(ev.currentTarget.dataset.index)
-      let array = duplicate(this.item.wargear);
-      let obj = this.item.wargear[index];
-
-      if (obj) {
-        if (ev.button == 0)
-        {
-          if (obj.type == "generic")
-          new ArchetypeGeneric({item: this.item, index}).render(true);
-          else
-          {
-            let item = game.items.get(obj.id)
-            if (!item)
-              item = await fromUuid(obj.id)
-
-            if (!item) 
-              throw new Error("Could not find Item with ID " + obj.id)
-
-            new Item.implementation(item.toObject(), { archetype: { item: this.item, index, path: "system.wargear" } }).sheet.render(true)
-
-          }
-        }
-        else {
-          new Dialog({
-            title: "Delete Item?",
-            content: "Do you want to remove this item from the Archetype? This will reset the groupings.",
-            buttons: {
-              yes: {
-                label: "Yes",
-                callback: async () => {
-                  array.splice(index, 1)
-                  await this.item.update({ "system.wargear" : array })
-                  this.item.resetGroups();
-                }
-              },
-              no: {
-                label: "No",
-                callback: () => { }
-              }
-            }
-          }).render(true)
-        }
       }
     })
 

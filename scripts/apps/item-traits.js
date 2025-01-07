@@ -20,7 +20,7 @@ export default class ItemTraits extends FormApplication
             data.traits = Object.keys(this.object.system.traitsAvailable).map(i => {
                 let existing = this.object._source.system.traits.list.find(t => t.name == i)
                 if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
-                existing = this.object.system.traits.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
+                existing = this.object.system.traits.list.find(t => t.name == i && t.type == this.options.type) // Don't include traits from the other type for existing
                 return  {
                     display : this.object.system.traitsAvailable[i],
                     key : i,
@@ -44,7 +44,7 @@ export default class ItemTraits extends FormApplication
         let newTraits = []
         if (this.object.type == "weaponUpgrade" || this.object.type == "ammo")
         {
-            newTraits = this.object.system.traits.filter(i => i.type != this.options.type) // Retain traits from the other type
+            newTraits = this.object.system.traits.list.filter(i => i.type != this.options.type) // Retain traits from the other type
         }
         for (let key in formData)
         {
@@ -63,7 +63,7 @@ export default class ItemTraits extends FormApplication
                 newTraits.push(traitObj)
             }
         }
-        this.object.update({"system.traits" : newTraits})
+        this.object.update({"system.traits.list" : newTraits})
     }
 
     parseCustomTraits(string)
@@ -75,7 +75,7 @@ export default class ItemTraits extends FormApplication
 
         for (let match of matches)
         {
-            traits.push({
+            traits.list.push({
                 name : match[1].trim().slugify(),
                 custom : true,
                 display : match[1].trim(),
@@ -90,7 +90,7 @@ export default class ItemTraits extends FormApplication
     constructCustomString(traits)
     {
         let customString = ``
-        let customTraits = traits.filter(i => i.custom)
+        let customTraits = traits.list.filter(i => i.custom)
 
         customTraits.forEach(t => {
             customString += `${t.display} : ${t.description} |`

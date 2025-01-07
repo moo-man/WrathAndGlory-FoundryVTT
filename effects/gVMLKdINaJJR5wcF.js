@@ -1,0 +1,1 @@
+return !args.weapon || (game.combat && game.combat.round >= 2)

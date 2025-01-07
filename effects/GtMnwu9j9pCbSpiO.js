@@ -1,0 +1,1 @@
+args.fields.pool += (args.actor.system.test.result.bonus)

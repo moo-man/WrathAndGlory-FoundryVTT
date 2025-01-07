@@ -1,17 +1,16 @@
 import WNGUtility from "../common/utility.js";
 import { WrathAndGloryItem } from "../document/item.js";
-import ArchetypeGroups from "./archetype-groups.js";
-import FilterResults from "./filter-results.js";
 
 export default class CharacterCreation extends FormApplication {
     constructor(object) {
         super(object)
         this.actor = object.actor;
         this.archetype = object.archetype.clone();
-        this.species = game.wng.utility.findItem(object.archetype.species.id, "species")
-        this.faction = game.wng.utility.findItem(object.archetype.faction.id, "faction")
+        this.species = object.archetype.species.document;
+        this.faction = object.archetype.faction.document;
+        this.archetypeAbility = object.archetype.ability.document;
         this.speciesAbilities = []; // Must be awaited if species is a promise
-        this.archetypeAbility = game.wng.utility.findItem(this.archetype.ability.id, "ability")
+        this.wargear = this.archetype.system.wargear.clone();
         this.addedTalents = [];
     }
 
@@ -62,7 +61,7 @@ export default class CharacterCreation extends FormApplication {
         this.species = await this.species;
         this.faction = await this.faction;
         this.archetypeAbility = await this.archetypeAbility
-        this.speciesAbilities = await Promise.all(this.species.abilities.map(i => game.wng.utility.findItem(i.id, "ability")))
+        this.speciesAbilities = await this.species.system.abilities.awaitDocuments()
 
         await this.initializeCharacter()
 
@@ -111,26 +110,29 @@ export default class CharacterCreation extends FormApplication {
             let html = ""
             if (["and", "or"].includes(group.type)) {
                 let connector = `<span class="connector">${group.type}</span>`
-                html += `<div class='wargear-group ${group.type == "or" ? "choice" : ""} ${group.groupId == "root" ? "root" : ""}' data-id="${group.groupId}">`
-                html += group.items.map(g => {
+                html += `<div class='wargear-group ${group.type == "or" ? "choice" : ""} ${group.id == "root" ? "root" : ""}' data-id="${group.id}">`
+                html += group.options.map(g => {
                     let groupHTML = groupToHTML(g)
                     if (group.type == "or") {
-                        groupHTML = `<div class="wargear-selection" data-id="${g.groupId}">${groupHTML}<a class="wargear-selector"><i class="far fa-circle"></i></a></div>`
+                        groupHTML = `<div class="wargear-selection" data-id="${g.id}">${groupHTML}<a class="wargear-selector"><i class="far fa-circle"></i></a></div>`
                     }
                     return groupHTML
-                }).join(group.groupId == "root" ? "" : connector)
+                }).join(group.id == "root" ? "" : connector)
                 html += "</div>"
                 return html
             }
-            else if (group.type == "item" || (group.type == "generic" && group.filters.length == 0)) {
-                return `<div class="wargear-item" data-id='${group.groupId}'>${group.name}</div>`
-            }
-            else if (group.type == "generic") {
-                return `<div class="wargear-item generic" data-id='${group.groupId}'><i class="fas fa-filter"></i> ${group.name}</div>`
+            else {
+                if (group.content.type == "filter") {
+                    return `<div class="wargear-item placeholder" data-id='${group.id}'><i class="fas fa-filter"></i> ${group.content.name}</div>`
+                }
+                else 
+                {
+                    return `<div class="wargear-item" data-id='${group.id}'>${group.content.name}</div>`
+                }
             }
         }
 
-        html += groupToHTML(ArchetypeGroups.groupIndexToObjects(this.archetype.system.groups, this.archetype), html)
+        html += groupToHTML(this.wargear.compileTree().structure)
         return html;
     }
 
@@ -140,21 +142,18 @@ export default class CharacterCreation extends FormApplication {
      * @param {Object} filter Filter details (to replace with object)
      * @param {String} id ID of item chosen
      */
-    async chooseWargear(filter, id)
+    async chooseWargear(option, document)
     {
-        let element = this.element.find(`.generic[data-id=${filter.groupId}]`)[0]
-        let group = ArchetypeGroups.search(filter.groupId, this.archetype.system.groups)
-        let wargearObject = this.archetype.wargear[group.index]
-        let item = await game.wng.utility.findItem(id)
-        
-        if (element && item) 
-        {
-            element.classList.remove("generic")
-            element.textContent = item.name
+        let element = this.element.find(`.placeholder[data-id=${option.id}]`)[0]
 
-            wargearObject.type = "item"
-            wargearObject.name = item.name;
-            wargearObject.id = item.id;
+        if (element && document) 
+        {
+            element.classList.remove("placeholder")
+            element.textContent = document.name
+
+            option.type = "item";
+            option.name = document.name;
+            option.documentId = document.id;
         }
     }
 
@@ -179,21 +178,21 @@ export default class CharacterCreation extends FormApplication {
         let faction = this.faction?.toObject()
         if (faction)
         {
+            let effectId = formData["background-bonus"];
             if (formData["background-bonus"])
             {
-                faction.effects = faction.effects.filter(e => e._id == formData["background-bonus"])
-                
-                if (faction.effects[0].changes[0].mode == 0)
+                let effect = faction.effects.find(i => i._id == effectId)
+                if (effect.changes[0].mode == 0)
                 {
-                    let key = faction.effects[0].changes[0].key
+                    let key = effect.changes[0].key
                     // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
                     this.character.updateSource({[key] : getProperty(this.character, key) + 1})
                     faction.effects = [];
                 }
                 else 
                 {
-                    faction.effects[0].transfer = true;
-                    faction.effects[0].name = $(ev.target).find(".background-bonus").children("option").filter(":selected").text()
+                    // faction.effects[0].transfer = true;
+                    effect.name = $(ev.target).find(".background-bonus").children("option").filter(":selected").text()
                     // Gross but whatever, uses the selected text (with background name appended) as the effect name
                 }
             }
@@ -204,13 +203,19 @@ export default class CharacterCreation extends FormApplication {
             let chosenGoal = $(this.form).find(".goal .active")[0]
 
             if(chosenOrigin) {
-                faction.system.backgrounds.origin[chosenOrigin.dataset.index || 0].active = true;
+                let bg = faction.system.backgrounds.origin[chosenOrigin.dataset.index || 0]
+                bg.active = true;
+                bg.chosen = effectId == bg.effect.id;
             }
             if(chosenAccomplishment) {
-                faction.system.backgrounds.accomplishment[chosenAccomplishment.dataset.index || 0].active = true;
+                let bg = faction.system.backgrounds.accomplishment[chosenAccomplishment.dataset.index || 0]
+                bg.active = true;
+                bg.chosen = effectId == bg.effect.id;
             }
             if(chosenGoal) {
-                faction.system.backgrounds.goal[chosenGoal.dataset.index || 0].active = true;
+                let bg = faction.system.backgrounds.goal[chosenGoal.dataset.index || 0]
+                bg.active = true;
+                bg.chosen = effectId == bg.effect.id;
             }
         }
         else
@@ -251,19 +256,20 @@ export default class CharacterCreation extends FormApplication {
                 errors.push("Background bonus not selected")
             }
 
-            let unresolvedGenerics = false;
+            let unresolvedplaceholders = false;
             // WARGEAR
-            this.element.find(".wargear-item.generic").each((i, e) => {
+            this.element.find(".wargear-item.placeholder").each((i, e) => {
                 if (!this.isDisabled(e)) {
                     let id = e.dataset.id
-                    let group = ArchetypeGroups.search(id, this.archetype.system.groups)
-                    let wargear = this.archetype.wargear[group.index]
-                    if (wargear.filters.length)
-                        unresolvedGenerics = true;
+                    let option = this.wargear.options.find(i => i.id == id);
+                    if (option.type == "filter" && option.filters.length)
+                    {
+                        unresolvedplaceholders = true;
+                    }
                 }
             })
-            if (unresolvedGenerics)
-                errors.push("Unresolved Generic Items")
+            if (unresolvedplaceholders)
+                errors.push("Unresolved placeholder Items")
 
 
             if (errors.length) {
@@ -302,30 +308,21 @@ export default class CharacterCreation extends FormApplication {
     
     // Take the wargear of the archetype, check if it has the disabled class in the form (if it was not chosen), create a temporary item
     retrieveChosenWargear() {
-        let wargear = this.archetype.wargear;
         // Filter wargear by whether it has a disabled ancestor, if not, add to actor
-        return wargear.filter(e => {
-            let element = this.element.find(`.wargear-item[data-id='${e.groupId}']`)
+        return this.archetype.wargear.options.filter(e => {
+            let element = this.element.find(`.wargear-item[data-id='${e.id}']`)
             let enabled = element.parents(".disabled").length == 0
             return enabled
         }).map(async e => {
-            let item;
-            // If chosen item is still generic, create a basic item for it
-            if (e.type == "generic") {
-                item = new WrathAndGloryItem({ type: "gear", name: e.name, img: "modules/wng-core/assets/icons/gear/gear.webp" })
+            let item = await this.wargear.getOptionDocument(e.id)
+            if (e.type != "placeholder")
+            {
+                return item;
             }
-            else if (e.id) {
-                // Create a temp item and incorporate the diff
-                let document = await game.wng.utility.findItem(e.id)
-                if (document)
-                    item = new WrathAndGloryItem(mergeObject(document.toObject(), e.diff, { overwrite: true }))
-                else if (e.name)
-                {
-                    ui.notifications.warn(`Could not find ${e.name}, creating generic`)
-                    item = new WrathAndGloryItem({ type: "gear", name: e.name, img: "modules/wng-core/assets/icons/gear/gear.webp" })
-                }
+            else 
+            {
+                return new Item.implementation(item)
             }
-            return item
         }).filter(i => i);
     }
 
@@ -371,16 +368,20 @@ export default class CharacterCreation extends FormApplication {
 
         html.find(".wargear-item").click(async ev => {
             let id = ev.currentTarget.dataset.id
-            let group = ArchetypeGroups.search(id, this.archetype.system.groups)
-            let wargear = this.archetype.wargear[group.index]
+            let option = this.wargear.options.find(i => i.id == id);
 
-            if (wargear.type == "generic" && wargear.filters.length)
+            if (option.type == "filter")
             {
-                new FilterResults({wargear, app: this}).render(true)
+                let document = await this.wargear.getOptionDocument(id)
+                this.chooseWargear(option, document);
             }
-            else if (wargear.type == "item")
-              new WrathAndGloryItem((await game.wng.utility.findItem(wargear.id)).toObject()).sheet.render(true, {editable: false})
+            else
+            {
+                let document = await this.wargear.getOptionDocument(id)
+                document.sheet.render(true, {editable : false});
+            }
         })
+    
 
 
         html.find(".background").click(ev => {
@@ -579,12 +580,12 @@ export default class CharacterCreation extends FormApplication {
     {
         let parent = $(element).closest(".wargear-selection");
         let group = parent.find(".wargear-group,.wargear-item")
-        let groupId = group.attr("data-id")
+        let id = group.attr("data-id")
         let choice = parent.closest(".choice")
         
         // Disable siblings
         choice.children().each((i, e) => {
-            if (e.dataset.id != groupId) {
+            if (e.dataset.id != id) {
                 this.disableElements(e)
             }
         })

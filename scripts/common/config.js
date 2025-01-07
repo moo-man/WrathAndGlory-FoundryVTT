@@ -272,187 +272,742 @@ WNG.vehicleRoles = {
 }
 
 
+WNG.scriptTriggers = {
+
+    equipToggle : "WH.Trigger.EquipToggle",
+
+    preRollTest : "WH.Trigger.preRollTest",
+    rollTest : "WH.Trigger.rollTest",
+
+    preRollWeaponTest : "WH.Trigger.preRollWeaponTest",
+    rollWeaponTest : "WH.Trigger.rollWeaponTest",
+
+    preRollPowerTest : "WH.Trigger.preRollPowerTest",
+    rollPowerTest : "WH.Trigger.rollPowerTest",
+    
+    computeDamage : "WH.Trigger.computeDamage",
+    preComputeDamage : "WH.Trigger.preComputeDamage",
+
+    preTakeDamage : "WH.Trigger.preTakeDamage",
+    preApplyDamage : "WH.Trigger.preApplyDamage",
+
+    takeDamage : "WH.Trigger.takeDamage",
+    applyDamage : "WH.Trigger.applyDamage",
+    
+}
+
+WNG.filterValues = {
+    "system.rarity" : {    
+            "common": 1,
+            "uncommon": 2,
+            "rare": 3,
+            "very-rare": 4,
+            "unique": 5
+        }
+}
+
+WNG.avoidTestTemplate = "systems/wrath-and-glory/template/apps/effect-avoid-test.hbs",
+WNG.effectScripts = {},
+
+WNG.logFormat = [`%cW & G` + `%c @MESSAGE`, "color: #DDD;background: #8a2e2a;font-weight:bold", "color: unset"],
+WNG.rollClasses = {},
+
+WNG.premiumModules = {
+    "wrath-and-glory" : "Wrath & Glory System",
+    "wng-core" : "Core Rulebook",
+    "wng-forsaken" : "Forsaken System Player's Guide",
+    "wng-litanies" : "Litanies of the Lost",
+    "wng-records1" : "Redacted Records: Vol. I",
+    "wng-cos" : "Church of Steel",
+    "wng-xenos" : "Threat Assessment: Xenos",
+}
+
+WNG.transferTypes = {
+    document : "WH.TransferType.Document",
+    damage : "WH.TransferType.Damage",
+    target : "WH.TransferType.Target",
+    area : "WH.TransferType.Area",
+    aura : "WH.TransferType.Aura",
+    other : "WH.TransferType.Other"
+},
+
+WNG.placeholderItemData = {
+    type : "gear",
+    img : "modules/wng-core/assets/icons/gear/gear.webp"
+},
+
+
 WNG.systemEffects = {
     "wounded" : {
         id : "wounded",
+        statuses : ["wounded"],
         name : "EFFECT.Wounded",
-        icon : "systems/wrath-and-glory/asset/icons/wounded.svg",
-        changes : [
-            {key: "difficulty.base", mode : 6, value : 1}
-        ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+1 DN to all Tests", script : "return true"}
-            }
+        img : "systems/wrath-and-glory/asset/icons/wounded.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 1",
+                label : "+1 DN to all Tests",
+                options : {
+                    activateScript : "return true;",
+                }
+            }]
         }
     },
     "full-defence" : {
         id : "full-defence",
+        statuses : ["full-defence"],
         name : "EFFECT.FullDefence",
-        icon : "systems/wrath-and-glory/asset/icons/full-defence.svg",
+        img : "systems/wrath-and-glory/asset/icons/full-defence.svg",
         changes : [
             {key: "system.combat.defence.bonus", mode : 2, value : 1},
         ],
     },
     "all-out-attack" : {
         id : "all-out-attack",
+        statuses : ["all-out-attack"],
         name : "EFFECT.AllOutAttack",
-        icon : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
+        img : "systems/wrath-and-glory/asset/icons/all-out-attack.svg",
         changes : [
-            {key: "pool.bonus", mode : 6, value : 2},
             {key: "system.combat.defence.bonus", mode : 2, value : -2},
         ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+2 bonus dice to melee", script : "return data.weapon && data.weapon.isMelee"}
-            }
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.pool += 2",
+                label : "+2 bonus dice for Melee attacks",
+                options : {
+                    hideScript : "return !args.weapon || args.weapon.isRanged",
+                    activateScript : "return args.weapon.isMelee;",
+                }
+            }]
         }
     },
     "halfCover" : {
         id : "halfCover",
+        statuses : ["halfCover"],
         name : "EFFECT.HalfCover",
-        icon : "systems/wrath-and-glory/asset/icons/half-cover.svg",
+        img : "systems/wrath-and-glory/asset/icons/half-cover.svg",
         changes : [
             {key: "system.combat.defence.bonus", mode : 2, value : 1},
         ]
     },
     "fullCover" : {
         id : "fullCover",
+        statuses : ["fullCover"],
         name : "EFFECT.FullCover",
-        icon : "systems/wrath-and-glory/asset/icons/full-cover.svg",
+        img : "systems/wrath-and-glory/asset/icons/full-cover.svg",
         changes : [
             {key: "system.combat.defence.bonus", mode : 2, value : 2},
         ]
-    }
+    },
+    "unbound" : {
+        id : "unbound",
+        statuses : ["unbound"],
+        name : "PSYCHIC_POWER.UNBOUND",
+        img : "systems/wrath-and-glory/asset/icons/wounded.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "if (args.fields.level == 'bound') args.fields.level = 'unbound'",
+                label : "Unbound",
+                options : {
+                    hideScript : "return !args.power",
+                    activateScript : "return true;",
+                }
+            }]
+        }
+    },
+    "transcendent" : {
+        id : "transcendent",
+        statuses : ["transcendent"],
+        name : "PSYCHIC_POWER.TRANSCENDENT",
+        img : "systems/wrath-and-glory/asset/icons/wounded.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "if (args.fields.level == 'bound' || args.fields.level == 'unbound') args.fields.level = 'transcendent'",
+                label : "Transcendent",
+                options : {
+                    hideScript : "return !args.power",
+                    activateScript : "return true;",
+                }
+            }]
+        }
+    },
 }
 
+WNG.traitEffects = {
+         // Qualities
+         agonising: {
+            name : "TRAIT.Agonising",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Agonising",
+                    trigger : "applyDamage",
+                    script : "if (!args.actor.hasCondition('exhausted')) args.modifiers.shock.push({label : this.effect.name, value : args.wounds})",
+                },
+            ],
+            }
+        },
+        arc: {
+            name : "TRAIT.Arc",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Attacking a Vehicle",
+                    trigger : "dialog",
+                    script : "args.fields.ed.value += parseInt(this.item.traitList.arc.rating)",
+                    options : {
+                        hideScript : "return args.target && args.target.type != 'vehicle'",
+                        activateScript : "return args.target?.type == 'vehicle'",
+                    }
+                },
+            ],
+            }
+        },
+        assault: {
+            name : "TRAIT.Assault",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Attacking while Sprinting",
+                    trigger : "dialog",
+                    script : "args.fields.difficulty += 2"
+                },
+            ],
+            }
+        },
+        brutal: {
+            name : "TRAIT.Brutal",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Brutal",
+                    trigger : "dialog",
+                    script : "args.fields.damageDice.values.threes += 1; args.fields.damageDice.values.fives += 1;",
+                    options : {
+                        activateScript: "return true;"
+                    }
+                },
+            ],
+            }
+        },
+        force: {
+            name : "TRAIT.Force",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [{
+                    label : "Force Weapon",
+                    trigger : "dialog",
+                    script : "args.fields.damage += Math.ceil(args.actor.system.attributes.willpower.total / 2)",
+                    options : {
+                        hideScript : "return !args.actor.hasKeyword('PSYKER');",
+                        activateScript: "return args.actor.hasKeyword('PSYKER');"
+                    }
+                },
+                {
+                    label : "Force Weapon (Not a Psyker)",
+                    trigger : "dialog",
+                    script : "args.fields.damage -= 2",
+                    options : {
+                        hideScript : "return args.actor.hasKeyword('PSYKER');",
+                        activateScript: "return !args.actor.hasKeyword('PSYKER');"
+                    }
+                }
+            ],
+            }
+        },
+        flamer: {
+            name : "TRAIT.Flamer",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                },
+                scriptData : [
+                {
+                    label : "On Fire",
+                    trigger : "applyDamage",
+                    script : "args.actor.addCondition('onFire')",
+                }
+            ],
+            }
+        },
+        heavy: {
+            name : "TRAIT.Heavy",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Entangle",
+                    trigger : "dialog",
+                    script : "args.fields.difficulty += 2;",
+                    options : {
+                        // TODO add prone?
+                        hideScript : "return args.actor.system.attributes.strength.total >= this.item.traitList.heavy.value",
+                        activateScript : "return args.actor.system.attributes.strength.total < this.item.traitList.heavy.value"
+                    }
+                }]
+            }
+
+        },
+        inflict: {
+            name : "TRAIT.Inflict",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Inflict Condition",
+                    trigger : "applyDamage",
+                    script : "//TODO",
+                }]
+            }
+        },
+        kustom: {
+            name : "TRAIT.Kustom",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Select Trait",
+                    trigger : "manual",
+                    script : "[Script.mo3XmOzgaROpB97i]"
+                }]
+            }
+        },
+        melta: {
+            name : "TRAIT.Melta",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Melta - Short Range",
+                    trigger : "dialog",
+                    script : "args.fields.damageDice.values.threes += 1; args.fields.damageDice.values.fives += 1;",
+                    options : {
+                        hideScript : "return args.target && args.target.type != 'vehicle'",
+                        activateScript : "return args.target?.type != 'vehicle'",
+                    }
+                },
+                {
+                    label : "Melta - Short Range (Vehicle)",
+                    trigger : "dialog",
+                    script : "args.fields.damageDice.values.ones += 1; args.fields.damageDice.values.twos += 1; args.fields.damageDice.values.threes += 1;   args.fields.damageDice.values.fours += 1; args.fields.damageDice.values.fives += 1;",
+                    options : {
+                        hideScript : "return args.target && args.target.type == 'vehicle'",
+                        activateScript : "return args.target?.type == 'vehicle'",
+                    }
+                }
+            ],
+            }
+        },
+        parry: {
+            name : "TRAIT.Parry",
+            system : {
+                transferData : {
+                    documentType : "Actor",
+                    equipTransfer: true
+                },
+                scriptData : [{
+                    label : "Parry",
+                    trigger : "dialog",
+                    script : "args.fields.difficulty += 1",
+                    options : {
+                        targeter: true,
+                        hideScript : "return !args.weapon || args.weapon?.isRanged",
+                        activateScript : "return args.weapon?.isMelee",
+                    }
+                }]
+            }
+        },
+        pistol : {
+            name : "TRAIT.Pistol",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+            }
+        },
+        rad: {
+            name : "TRAIT.Rad",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Rad",
+                    trigger : "dialog",
+                    script : "args.fields.damageDice.addValue += parseInt(this.item.traitList.rad.rating)",
+                    options : {
+                        activateScript : "return true;",
+                    }
+                }]
+            }
+        },
+        rapidFire: {
+            name : "TRAIT.RapidFire",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Rapid Fire - Short Range",
+                    trigger : "dialog",
+                    script : "args.fields.ed.value += (parseInt(this.item.traitList.rapidFire.rating) || 0)",
+                    options : {
+                        activateScript : "return args.fields.range == 'short'",
+                    }
+                }]
+            }
+        },
+        reliable: {
+            name : "TRAIT.Reliable",
+            system : {
+                transferData : {
+                    documentType : "Item"
+                }
+            }
+        },
+        rending: {
+            name : "TRAIT.Rending",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                // TODO
+            }
+        },
+        silent: {
+            name : "TRAIT.Silent",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+            }
+        },
+        sniper: {
+            name : "TRAIT.Sniper",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Sniper - Aim",
+                    trigger : "dialog",
+                    script : "args.fields.pool += 1; args.fields.ed.value += (parseInt(this.item.traitList.sniper.rating) || 0);",
+                    options : {
+                        activateScript : "return args.fields.aim",
+                    }
+                }]
+            }
+        },
+        spread: {
+            name : "TRAIT.Spread",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Spread - Mob",
+                    trigger : "dialog",
+                    script : "args.fields.pool += 3;",
+                    options : {
+                        activateScript : "return args.target?.isMob",
+                    }
+                }]
+            }
+        },
+        supercharge: {
+            name : "TRAIT.Supercharge",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                //TODO
+            }
+        },
+        unwieldy: {
+            name : "TRAIT.Unwieldy",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Unwieldy",
+                    trigger : "dialog",
+                    script : "args.fields.difficulty += parseInt(this.item.traitList.unwieldy.rating);",
+                    options : {
+                        activateScript : "return true;",
+                    }
+                }]
+            }
+        },
+        "waaagh!": {
+            name : "TRAIT.Waaagh",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "WAAAGH!",
+                    trigger : "dialog",
+                    script : "args.fields.pool++; if (args.actor.statuses.has('wounded')) args.fields.ed.value++;",
+                    options : {
+                        activateScript : "return args.actor.hasKeyword('ORK');",
+                    }
+                }]
+            }
+        },
+        warpWeapons: {
+            name : "TRAIT.WarpWeapon",
+            system : {
+                transferData : {
+                    documentType : "Item",
+                },
+                scriptData : [{
+                    label : "Warp Weapon",
+                    trigger : "dialog",
+                    script : "args.fields.damage = args.target.system.combat.resilience.total - 4;",
+                    options : {
+                        hideScript : "return !args.target;",
+                        activateScript : "return this.item.system.damage.base < (args.target.system.combat.resilience.total - 4);",
+                    }
+                }]
+            }
+        }   ,
+        bulk: {
+            name : "TRAIT.Bulk",
+            system : {
+                transferData : {
+                    equipTransfer: true
+                },
+                scriptData : [{
+                    label : "Reduce Speed",
+                    trigger : "prePrepareData",
+                    script : "this.actor.system.combat.speed -= this.item.itemTraits.bulk.rating",
+                }]
+            }
+        },
+        powered: {
+            name : "TRAIT.Powered",
+            system : {
+                transferData : {
+                    equipTransfer: true
+                },
+                scriptData : [{
+                    label : "Increase Strength",
+                    trigger : "computeCombat",
+                    script : "this.actor.system.attributes.strength.total -= this.item.itemTraits.bulk.rating",
+                }]
+            }
+        }  
+}
 
 CONFIG.statusEffects = [
     {
         id : "bleeding",
+        statuses : ["bleeding"],
         name : "CONDITION.Bleeding",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/bleeding.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/bleeding.svg",
     },
     {
         id : "blinded",
+        statuses : ["blinded"],
         name : "CONDITION.Blinded",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
-        changes : [
-            {key: "difficulty.base", mode : 6, value : 4}
-        ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "Blinded", script : "return data.weapon"}
-            }
+        img : "systems/wrath-and-glory/asset/icons/conditions/blinded.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 4",
+                label : "Sight Related",
+                options : {
+                    activateScript : "return ['weaponSkill', 'ballisticSkill', 'psychicMastery'].includes(args.skill)"
+                }
+            }]
         }
     },
     {
         id : "exhausted",
+        statuses : ["exhausted"],
         name : "CONDITION.Exhausted",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/exhausted.svg"
+        img : "systems/wrath-and-glory/asset/icons/conditions/exhausted.svg"
     },
     {
         id : "fear",
+        statuses : ["fear"],
         name : "CONDITION.Fear",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
-        changes : [
-            {key: "difficulty.base", mode : 6, value : 2}
-        ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+2 DN to all Tests", script : "return true"}
-            }
+        img : "systems/wrath-and-glory/asset/icons/conditions/fear.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 2",
+                label : "+2 DN to all Tests",
+                options : {
+                    activateScript : "return true;"
+                }
+            }]
         }
     },
     {
         id : "frenzied",
+        statuses : ["frenzied"],
         name : "CONDITION.Frenzied",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/frenzied.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/frenzied.svg",
         changes : [{key: "system.attributes.strength.bonus", mode : 2, value : 1}]
     },
     {
         id : "hindered",
+        statuses : ["hindered"],
         name : "CONDITION.Hindered",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
-        changes : [
-            {key: "difficulty.base", mode : 6, value : 1}
-        ],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+DN to all Tests", script : "return true"}
+        img : "systems/wrath-and-glory/asset/icons/conditions/hindered.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += parseInt(this.effect.specifier) || 1",
+                label : "+DN to all Tests",
+                options : {
+                    activateScript : "return true;"
+                }
+            },
+            {
+                trigger : "immediate",
+                script : "this.effect.updateSource({name : this.effect.setSpecifier(this.effect.getFlag(game.system.id, 'value') || 1)})",
+                label : "Value"
             }
+            ]
         }
     },
     {
         id : "onfire",
+        statuses : ["onfire"],
         name : "CONDITION.OnFire",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/onfire.svg"
+        img : "systems/wrath-and-glory/asset/icons/conditions/onfire.svg"
     },
     {
         id : "pinned",
+        statuses : ["pinned"],
         name : "CONDITION.Pinned",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
-        changes : [{key: "difficulty.base", mode : 6, value : 2}],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "Pinned: Ballistic Skill Test Penalty", script : ""}
-            }
+        img : "systems/wrath-and-glory/asset/icons/conditions/pinned.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 2",
+                label : "+2 DN to Ballistic Skill Tests",
+                options : {
+                    activateScript : "return args.attribute == 'ballisticSkill';",
+                    hideScript : "return args.attribute != 'ballisticSkill';"
+                }
+            }]
         }
     },
     {
         id : "poisoned",
+        statuses : ["poisoned"],
         name : "CONDITION.Poisoned",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
-        changes : [{key: "difficulty.base", mode : 6, value : 2}],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+DN to all Tests", script : "return true"}
-            }
+        img : "systems/wrath-and-glory/asset/icons/conditions/poisoned.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 2",
+                label : "+2 DN to all Tests",
+                options : {
+                    activateScript : "return true",
+                }
+            }]
         }
     },
     {
         id : "prone",
+        statuses : ["prone"],
         name : "CONDITION.Prone",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/prone.svg"
+        img : "systems/wrath-and-glory/asset/icons/conditions/prone.svg"
     },
     {
         id : "restrained",
+        statuses : ["restrained"],
         name : "CONDITION.Restrained",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/restrained.svg",
         changes : [{key: "system.combat.defence.bonus", mode : 2, value : -2},{key: "system.combat.speed", mode : 5, value : "0"} ]
     },
     {
         id : "staggered",
+        statuses : ["staggered"],
         name : "CONDITION.Staggered",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/staggered.svg",
+        img : "systems/wrath-and-glory/asset/icons/conditions/staggered.svg",
         changes : [{key: "system.combat.speed", mode : 1, value : 0.5} ]
     },
     {
         id : "terror",
+        statuses : ["terror"],
         name : "CONDITION.Terror",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
-        changes : [{key: "difficulty.base", mode : 6, value : 2}],
-        flags : { 
-            "wrath-and-glory.changeCondition" : { 
-                0 : {description : "+2 DN to all Tests", script : "return true"}
-            }
+        img : "systems/wrath-and-glory/asset/icons/conditions/terror.svg",
+        system : {
+            scriptData : [{
+                trigger : "dialog",
+                script : "args.fields.difficulty += 2",
+                label : "+2 DN to all Tests",
+                options : {
+                    activateScript : "return true",
+                }
+            }]
         }
     },
     {
         id : "vulnerable",
+        statuses : ["vulnerable"],
         name : "CONDITION.Vulnerable",
-        icon : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
-        changes : [{key: "system.combat.defence.bonus", mode : 2, value : -1}]
+        img : "systems/wrath-and-glory/asset/icons/conditions/vulnerable.svg",
+        system : {
+            scriptData : [
+            {
+                trigger : "immediate",
+                script : "this.effect.updateSource({name : this.effect.setSpecifier(this.effect.getFlag(game.system.id, 'value') || 1)})",
+                label : "Value"
+            },
+            {
+                trigger : "prePrepareDerivedData",
+                label : "Defence",
+                script : "this.actor.system.combat.defence.bonus -= parseInt(this.effect.specifier)"
+            }
+            ]
+        }
     },
     {
         id : "dying",
+        statuses : ["dying"],
         name : "CONDITION.Dying",
-        icon : "systems/wrath-and-glory/asset/icons/dying.svg"
+        img : "systems/wrath-and-glory/asset/icons/dying.svg",
+        system : {
+            scriptData : [{
+                label : "Extra Wrath Die",
+                script : "args.fields.wrath++;",
+                trigger : "dialog",
+                options: {
+                    activateScript : "return true;"
+                }
+            }]
+        }
     },
     {
         id : "dead",
+        statuses : ["dead"],
         name : "CONDITION.Dead",
-        icon : "systems/wrath-and-glory/asset/icons/dead.svg"
+        img : "systems/wrath-and-glory/asset/icons/dead.svg"
     }
     
 ]
@@ -476,4 +1031,4 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         }
     }])
 
-export default WNG
+export default mergeObject(defaultWarhammerConfig, WNG);

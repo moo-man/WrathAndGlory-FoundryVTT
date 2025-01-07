@@ -1,1 +1,5 @@
-<p><strong>{{localize "CHAT.DETERMINATION"}}: {{localize "CHAT.DETERMINATION_RESULT" wounds=result.wounds shock=result.shock}}</strong></p>
+{{#if result.shockIgnored}}
+<p><strong>{{localize "CHAT.DETERMINATION_RESULT_IGNORE_SHOCK" wounds=result.wounds shock=result.converted}}</strong></p>
+{{else}}
+<p><strong>{{localize "CHAT.DETERMINATION_RESULT" wounds=result.wounds shock=result.converted}}</strong></p>
+{{/if}}

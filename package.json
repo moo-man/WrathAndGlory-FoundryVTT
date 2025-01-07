@@ -4,8 +4,8 @@
   "description": "The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.",
   "main": "wrath-and-glory.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=development rollup --config rollup.config.js --watch",
-    "release": "cross-env NODE_ENV=production rollup --config rollup.config.js"
+    "build": "node scriptPacker.js&& cross-env NODE_ENV=development rollup --config rollup.config.js --watch",
+    "release": "node scriptPacker.js&& cross-env NODE_ENV=production rollup --config rollup.config.js"
   },
   "repository": {
     "type": "git",

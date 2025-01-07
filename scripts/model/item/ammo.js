@@ -14,4 +14,9 @@ export class AmmoModel extends PhysicalItemModel
         return schema;
     }
 
+    // Ammo effects should never transfer to actors, they always append to the weapon's effects
+    shouldTransferEffect(effect)
+    {
+        return false;
+    }
 }

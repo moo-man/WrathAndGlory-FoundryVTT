@@ -1,0 +1,1 @@
+this.actor.system.combat.defence.bonus -= parseInt(this.effect.specifier)

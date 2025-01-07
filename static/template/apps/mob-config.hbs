@@ -1,0 +1,28 @@
+<div>
+    <p>Drag and Drop Items from the Actor to designate them as Mob Abilities.</p>
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "THREAT.MobAbilities"}}</div>
+            <div>{{localize "THREAT.MobValue"}}</div>
+            <div class="list-controls"></div>
+        </div>
+        <div class="list-content">
+            {{#each abilities.list}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-index="{{@key}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.document.img}}">
+                            <a class="label">{{this.document.name}}</a>
+                        </div>
+                        <div>
+                            <input data-action="editList" type="number" value="{{this.requiredMob}}" data-list="system.mob.abilities" data-ipath="requiredMob">
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="listDelete"><i class="fa-regular fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

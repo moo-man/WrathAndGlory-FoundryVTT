@@ -15,5 +15,17 @@ export default function() {
             })
         }
 
+        // Remove damage breakdown if user shouldn't see details
+        if (message.type == "damage")
+        {
+            html.find(".report").each((i, element) => {
+                let actor = fromUuidSync(element.dataset?.uuid);
+                if (actor && !actor.isOwner)
+                {
+                    element.dataset.tooltip = "";
+                }
+            })
+        }
+
     })
 }

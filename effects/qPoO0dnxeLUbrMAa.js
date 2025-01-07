@@ -1,0 +1,1 @@
+args.fields.pool += (this.effect.sourceActor.system.advances.rank * 2)

@@ -1,0 +1,1 @@
+return args.type == "corruption" && this.actor.corruption.current == 0

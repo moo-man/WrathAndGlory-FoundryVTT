@@ -6,7 +6,6 @@ import WNG from "./common/config.js"
 import WNGUtility from "./common/utility.js"
 import { WNGTest, WrathDie, PoolDie } from "./common/tests/test.js";
 import WeaponTest from "./common/tests/weapon-test.js";
-import WrathAndGloryEffectSheet from "./apps/active-effect-config.js";
 import PowerTest from "./common/tests/power-test.js";
 import CorruptionTest from "./common/tests/corruption-test.js";
 import MutationTest from "./common/tests/mutation-test.js";
@@ -14,10 +13,7 @@ import ResolveTest from "./common/tests/resolve-test.js";
 import DeterminationRoll from "./common/tests/determination.js";
 import StealthRoll from "./common/tests/stealth.js";
 import AbilityRoll from "./common/tests/ability-roll.js";
-import ModuleInitializer from "./apps/module-initialization.js"
-import ModuleUpdater from "./apps/module-updater.js"
-import {migrateWorld} from "./common/migration.js"
-import TagManager from "./common/tag-manager.js";
+import Migration from "./common/migration.js"
 import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./common/combat.js";
 import WrathANdGloryCombatTracker from "./apps/combat-tracker.js";
 import { WrathAndGloryOptionalCombat } from "./common/combat-optional.js";
@@ -51,6 +47,10 @@ import { WeaponModel } from "./model/item/weapon.js";
 import { WeaponUpgradeModel } from "./model/item/weaponUpgrade.js";
 import { ArchetypeModel } from "./model/item/archetype.js";
 import { FactionModel } from "./model/item/faction.js";
+import { WrathAndGloryActiveEffectModel } from "./model/effect/effect.js";
+import WrathAndGloryActiveEffectConfig from "./apps/effect-config.js";
+import { WrathAndGloryDamageMessageModel, WrathAndGloryTestMessageModel } from "./model/message/message.js";
+import loadEffects from "./loadEffects.js";
 
 Hooks.once("init", () => {
 
@@ -58,9 +58,23 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
-  CONFIG.ActiveEffect.sheetClass = WrathAndGloryEffectSheet;
+  //CONFIG.ChatMessage.documentClass = SystemChatMessage;
   DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", Level4TextPageSheet, { types : ["text"], makeDefault: true, label : "W&G Journal Sheet" });
   DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", DataslatePageSheet, { types : ["text"], makeDefault: false, label : "Data Slate" });
+
+CONFIG.ActiveEffect.legacyTransferral = false;
+CONFIG.ActiveEffect.dataModels["base"] = WrathAndGloryActiveEffectModel
+CONFIG.ChatMessage.dataModels["test"] = WrathAndGloryTestMessageModel;
+CONFIG.ChatMessage.dataModels["damage"] = WrathAndGloryDamageMessageModel;
+
+DocumentSheetConfig.registerSheet(ActiveEffect, "system", WrathAndGloryActiveEffectConfig, {makeDefault : true});
+
+Actors.unregisterSheet("core", ActorSheet);
+Actors.registerSheet("wrath-and-glory", AgentSheet, { types: ["agent"], makeDefault: true });
+Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
+Actors.registerSheet("wrath-and-glory", VehicleSheet, { types: ["vehicle"], makeDefault: true });
+Items.unregisterSheet("core", ItemSheet);
+Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
 
   
   if (game.settings.get("wrath-and-glory", "initiativeRollOption"))
@@ -113,15 +127,10 @@ Hooks.once("init", () => {
       WrathDie,
       PoolDie,
     },
-    apps: {
-      ModuleInitializer,
-      ModuleUpdater
-    },
     ItemTraits,
     RuinGloryCounter,
     utility : WNGUtility,
-    migration : {migrateWorld},
-    tags: new TagManager()
+    migration : Migration
   };
 
   CONFIG.Dice.terms.w = WrathDie;
@@ -130,13 +139,7 @@ Hooks.once("init", () => {
 
   game.wng.config = WNG
   CONFIG.Combat.initiative = { formula: "(@attributes.initiative.total)dp", decimals: 0 };
-  Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("wrath-and-glory", AgentSheet, { types: ["agent"], makeDefault: true });
-  Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
-  Actors.registerSheet("wrath-and-glory", VehicleSheet, { types: ["vehicle"], makeDefault: true });
-  Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
-  DocumentSheetConfig.registerSheet(ActiveEffect, "wrath-and-glory", WrathAndGloryEffectSheet, {makeDefault: true, label : "Wrath & Glory Active Effect Config"})
+  
   initializeHandlebars();
 
   CONFIG.fontDefinitions.Priori = {editor : true, fonts : []}
@@ -147,3 +150,4 @@ Hooks.once("init", () => {
 
 
 hooks()
+loadEffects();

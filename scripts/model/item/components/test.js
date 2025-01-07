@@ -6,7 +6,8 @@ export class TestDataModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.dn = new fields.StringField({}),
+        schema.self = new fields.BooleanField(),
+        schema.dn = new fields.NumberField({nullable : true}),
         schema.type = new fields.StringField({}),
         schema.specification = new fields.StringField({})
         return schema;

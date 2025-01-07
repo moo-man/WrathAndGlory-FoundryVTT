@@ -1,0 +1,1 @@
+this.effect.updateSource({name : this.effect.setSpecifier(this.effect.getFlag(game.system.id, 'value') || 1)})

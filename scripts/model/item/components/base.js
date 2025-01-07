@@ -4,94 +4,34 @@
 
 let fields = foundry.data.fields;
 
-export class BaseItemModel extends foundry.abstract.DataModel 
+export class BaseItemModel extends BaseWarhammerItemModel 
 {
-    get id () 
-    {
-        return this.parent.id;
-    }
-
     static defineSchema() 
     {
         return {};
     }
 
-    async _preCreate(data, options, user) 
+    get isMobAbility()
     {
-    }
-
-    async _preUpdate(data, options, user) 
-    {
-    }
-
-    async _preDelete(options, user)
-    {
-     
-    }
-
-    async _onUpdate(data, options, user)
-    {
-       
-    }
-
-    async _onCreate(data, options, user)
-    {
-      
-    }
-
-    async _onDelete(options, user)
-    {
-        
-    }
-    
-    computeBase() 
-    {
-
-    }
-
-    computeDerived() 
-    {
-        
-    }
-
-    computeOwned()
-    {
-        
-    }
-
-    async allowCreation(data, options, user)
-    {
-        if (this.parent.actor)
+        if (this.parent.actor?.system.mob)
         {
-            return this.parent.actor.system.itemIsAllowed(this.parent);
-        }
-        else 
-        {
-            return true;
+            return this.parent.actor.system.mob.isMobAbility(this.parent);
         }
     }
 
-    /**
-     * Get effects from other sources, like weapon modifications
-     * 
-     */
-    getOtherEffects()
+    get isActiveMobAbility()
     {
-        return [];
+        return !this.isMobAbility || this.parent.actor.system.mob.isActiveMobAbility(this.parent);
     }
 
-    /**
-     * 
-     */
-    effectIsApplicable(effect)
+    get requiredMob()
     {
-        return !effect.disabled;
+        return this.isMobAbility && this.parent.actor.system.mob.abilities.list.find(i => i.id == this.parent.id)?.requiredMob;
     }
 
-    // If an item effect is disabled it should still transfer to the actor, so that it's visibly disabled
-    shouldTransferEffect()
+    shouldTransferEffect(effect)
     {
-        return true;
+        return super.shouldTransferEffect(effect) && this.isActiveMobAbility;
     }
     
     static migrateData(data)
@@ -112,29 +52,78 @@ export class BaseItemModel extends foundry.abstract.DataModel
 
         if (data.damage)
         {
-            if (!data.damage.ap && data.ap)
-            {
+            if (!data.damage.ap && data.ap) {
                 data.damage.ap = data.ap;
                 delete data.ap;
             }
 
-            if (!data.damage.ed && data.ed)
-            {
+            if (!data.damage.ed && data.ed) {
                 data.damage.ed = data.ed;
                 delete data.ed;
             }
 
-            if (!data.damage.other && data.other)
-            {
+            if (!data.damage.other && data.other) {
                 data.damage.other = data.other;
                 delete data.other;
             }
 
-            if (!data.damage.otherDamage && data.otherDamage)
-            {
+            if (!data.damage.otherDamage && data.otherDamage) {
                 data.damage.otherDamage = data.otherDamage;
                 delete data.otherDamage;
             }
+
+            if (typeof data.damage.ed.dice == "number" && data.damageap.dice != 0)
+            {
+                data.damage.ed.dice = "1d6"
+            }
+
+            if (typeof data.damage.ap.dice == "number" && data.damageap.dice != 0)
+            {
+                data.damage.ed.dice = "1d6"
+            }
+
+
+
+            if (data.damage.otherDamage.mortalWounds) 
+            {
+                data.otherDamage.mortal = data.otherDamage.mortalWounds;
+                delete data.otherDamage.mortalWounds;
+            }
+            if (data.damage)
+            {
+                data.damage.rank = this._convertRank(data.damage.rank);
+            }
+            if (data.damage.ed)
+            {
+                data.damage.ed.rank = this._convertRank(data.damage.ed.rank);
+            }
+            if (data.damage.ap)
+            {
+                data.damage.ap.rank = this._convertRank(data.damage.ap.rank);
+            }
+        }
+
+
+    }
+
+    static _convertRank(str)
+    {
+        if (typeof str == "string")
+        {
+
+            return {
+                "none": 0,
+                "single": 1,
+                "double": 2
+            }[str];
+        }
+        else if (isNaN(str))
+        {
+            return 0;
+        }
+        else 
+        {
+            return str;
         }
     }
 

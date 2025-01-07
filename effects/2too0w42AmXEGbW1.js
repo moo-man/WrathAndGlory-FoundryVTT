@@ -1,0 +1,1 @@
+args.fields.difficulty -= 2 * (args.options.multi - 1);

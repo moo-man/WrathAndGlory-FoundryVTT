@@ -1,0 +1,1 @@
+return !["persuasion", "leadership"].includes(args.skill) || args.actor.system.resources.faith.current == 0

@@ -4,61 +4,79 @@ import { WNGTest } from "./test.js"
 export default class AbilityRoll extends WNGTest {
   constructor(data = {})
   {
-    super(data)
-    if (!data)
-      return
+    if (foundry.utils.isEmpty(data))
+    {
+      // Recreated test
+      super(data)
+      return;
+    }
+    else 
+    {
+      // New Test
+      data.targets = Array.from(game.user.targets).map(t => t.actor?.speakerData(t.document));
+      super(data)
+    }
 
-    this.data.testData.ed = data.ed || {}
-    this.data.testData.ap = data.ap || {}
-    this.data.testData.damage= data.damage || {}
+    this.testData.itemId = data.item?.uuid;
+    
+    let item = data.item;
 
-    this.data.testData.otherDamage = data.otherDamage || {}
+    if (item.system.test.self)
+    {
+      this.testSelf = true;
+    }
 
-    this.testData.itemId = data.itemId
+    this.data.context.title = data.title;
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.hbs"
+    return "systems/wrath-and-glory/template/chat/roll/ability/ability-use.hbs"
   }
 
-  get damageTemplate() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/ability-roll.hbs"
-  }
 
   async rollTest() {
     this._computeResult();
+    this.result.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
   }
 
   _computeResult()
   {
     this.data.result = {}
     if (this.item.hasTest) this.result.test = duplicate(this.item.test);
-    this.computeDamage()
-    this.rollDamage() 
+    this.result.isSuccess = true;
+    if (this.testData.damage)
+    {
+      this.computeDamage()
+    }
   }
   
-  sendToChat() {
-    this.sendDamageToChat()
+  async sendToChat({ newMessage = null, chatDataMerge = {} } = {}) {
+
+    const html = await renderTemplate(this.template, this);
+    let chatData = {
+      _id : randomID(),
+      type: "test",
+      rolls: [],
+      system: this.data,
+      user: game.user.id,
+      rollMode: this.context.rollMode,
+      content: html,
+      speaker: this.context.speaker
+    };
+    chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.prototypeToken.name
+    ChatMessage.applyRollMode(chatData, chatData.rollMode);
+
+    if (newMessage || !this.message) 
+    {
+      this.context.messageId = chatData._id
+      await ChatMessage.create(chatData, {keepId : true});
+    }
+    else {
+      delete chatData.roll
+      return this.message.update(chatData)
+    }
   }
 
-  get testEffects() {
-    if(this.item)
-      return this.item.effects.filter(e => !e.transfer)
-    else 
-      return []
-  }
 
-  get showEffects() {
-    return this.testEffects.length
-  }
-
-  get showTest() {
-    return this.item && this.item.hasTest 
-  }
-
-
-  get ability() {return true}
-
-
-  
+  get ability() {return true}  
 }

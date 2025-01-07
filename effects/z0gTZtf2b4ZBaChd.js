@@ -1,0 +1,1 @@
+await this.actor.addEffectItems("Compendium.wng-core.items.Item.JVz6FoVEc7p1DJUj", this.effect);

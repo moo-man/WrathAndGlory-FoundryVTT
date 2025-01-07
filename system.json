@@ -3,11 +3,10 @@
   "name" : "wrath-and-glory",
   "title": "Warhammer 40,000: Wrath & Glory",
   "description": "The official system for Warhammer 40,000 Roleplay: Wrath & Glory! Time is running out in the 41st Millennium. This accursed age needs heroes more than ever before. Will you answer the call?",
-  "version": "5.1.7",
-  "minimumCoreVersion" : 11,
+  "version": "6.0.0",
   "compatibility" : {
-    "minimum" : 11,
-    "verified" : 11,
+    "minimum" : 12,
+    "verified" : 12,
     "maximum" : 12  
   },
   "templateVersion": 2,
@@ -47,6 +46,17 @@
       "extensions": ["css", "hbs", "json"]
     }
   },
+  "relationships": {
+    "requires": [{
+      "id": "warhammer-lib",
+      "type": "module",
+      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/1.4.0/module.json",
+      "compatibility": {
+        "minimum" : "1.4.0",
+        "verified": "1.4.0"
+      }
+    }]
+  },
   "background" : "/modules/wng-core/assets/images/cover.webp",
   "gridDistance": 1,
   "gridUnits": "m",
@@ -55,7 +65,7 @@
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/5.1.7/wrath-and-glory.zip",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/6.0.0/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 

@@ -29,6 +29,24 @@
   margin: 0px 5px;
 }
 
+.wrath-and-glory.chat {
+  .test-buttons {
+    button {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      line-height: unset;
+      p {
+        flex: 1;
+        margin: 5px 0px;
+      }
+      .test-label {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
 
 .wrath-and-glory.chat strong {
   font-family: var(--font-text);
@@ -146,10 +164,10 @@
 }
 
 
-.wrath-and-glory.chat .die.shifted .die-icon.potency,
-.wrath-and-glory.chat .die.shifted .die-icon.other,
-.wrath-and-glory.chat .die.shifted .die-icon.damage,
-  .wrath-and-glory.chat .die.shifted .die-icon.glory{
+.wrath-and-glory.chat .die.shifted .die-icon.shift-icon,
+.wrath-and-glory.chat .die.shifted .die-icon.shift-icon,
+.wrath-and-glory.chat .die.shifted .die-icon.shift-icon,
+  .wrath-and-glory.chat .die.shifted .die-icon.shift-icon{
   left: -5px;
 }
 

@@ -117,7 +117,7 @@
                 <h4>{{localize "FACTION.ORIGIN"}} <a class="roll-background origin"><i class="fas fa-dice"></i></a></h4>
                 <ol class="origin">
                     {{#each faction.backgrounds.origin as |bg index|}}
-                    <li><a class="background" data-index="{{index}}" data-effect="{{bg.effect}}"><b>{{bg.name}}</b>: {{bg.description}}</li></a>
+                    <li><a class="background" data-index="{{index}}" data-effect="{{bg.effect.id}}"><b>{{bg.name}}</b>: {{bg.description}}</li></a>
                     {{/each}}
                 </ol>
                 {{/if}}
@@ -125,7 +125,7 @@
                 <h4>{{localize "FACTION.ACCOMPLISHMENT"}} <a class="roll-background accomplishment"><i class="fas fa-dice"></i></a></h4>
                 <ol class="accomplishment">
                     {{#each faction.backgrounds.accomplishment as |bg index|}}
-                    <li><a class="background" data-index="{{index}}" data-effect="{{bg.effect}}"><b>{{bg.name}}</b>: {{bg.description}}</li></a>
+                    <li><a class="background" data-index="{{index}}" data-effect="{{bg.effect.id}}"><b>{{bg.name}}</b>: {{bg.description}}</li></a>
                     {{/each}}
                 </ol>
                 {{/if}}
@@ -133,7 +133,7 @@
                 <h4>{{localize "FACTION.GOAL"}} <a class="roll-background goal"><i class="fas fa-dice"></i></a></h4>
                 <ol class="goal">
                     {{#each faction.backgrounds.goal as |bg index|}}
-                    <li><a class="background" data-index="{{index}}" data-effect="{{bg.effect}}"><b>{{bg.name}}</b>: {{bg.description}}</li></a>
+                    <li><a class="background" data-index="{{index}}" data-effect="{{bg.effect.id}}"><b>{{bg.name}}</b>: {{bg.description}}</li></a>
                     {{/each}}
                 </ol>
                 {{/if}}

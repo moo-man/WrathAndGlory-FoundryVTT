@@ -1,0 +1,1 @@
+return args.actor.statuses.has("wounded")

@@ -12,19 +12,10 @@
     <h4>Shifted</h4>
     <div class="dice-container">
             {{#each result.shifted as |die|}}
+            {{log this}}
             <a class="die {{die.name}} shifted" data-index="{{die.index}}"><img src="{{die.img}}"/>
-                    {{log die}}
-                    {{#if (eq die.shift "glory")}}
-                    <span class="glory die-icon">G</span>
-                    {{/if}}
-                    {{#if (eq die.shift "damage")}} 
-                    <span class="damage die-icon">D</span>
-                    {{/if}}
-                    {{#if (eq die.shift "potency")}} 
-                    <span class="potency die-icon">P</span>
-                    {{/if}}
-                    {{#if (eq die.shift "other")}} 
-                    <span class="other die-icon">?</span>
+                    {{#if die.shifted}}
+                    <span class="die-icon shift-icon" data-tooltip="{{die.shifted.label}}" data-tooltip-direction="UP">{{die.shifted.letter}}</span>
                     {{/if}}
                     {{#if die.rerolled}}
                     <span class="reroll die-icon"><i class="fas fa-redo"></i></span>

@@ -1,0 +1,1 @@
+this.actor.setupAttributeTest("willpower", {appendTitle : ` - ${this.effect.sourceItem.name}`});

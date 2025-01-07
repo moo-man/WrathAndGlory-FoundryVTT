@@ -66,30 +66,6 @@
 }
 
 
-.active-effect-sheet .change-flags {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.active-effect-sheet .change-flags .conditional-code {
-  flex: 0 0 20px;
-  margin: 5px;
-}
-
-#effect-script-config .ace-editor,
-  #effect-script-config textarea {
-  width: 100%;
-  height: calc(50% - 65px);
-  resize: none;
-} 
-
-#effect-script-config .ace-editor  > *{
-  height: 95%
-}
-
-
 #character-creation .character-creation{
   height: calc(100% - 30px);
   width: 100%;

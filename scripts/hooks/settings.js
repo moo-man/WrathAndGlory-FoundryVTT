@@ -1,11 +1,11 @@
 export default function () {
-  game.settings.register("wrath-and-glory", "worldSchemaVersion", {
-    name: "World Version",
+  game.settings.register("wrath-and-glory", "systemMigrationVersion", {
+    name: "System Migration Version",
     hint: "Used to automatically upgrade worlds data when the system is upgraded.",
     scope: "world",
     config: false,
-    default: 0,
-    type: Number,
+    default: "1.0.0",
+    type: String,
   });
 
   game.settings.register('wrath-and-glory', 'initiativeRollOption', {

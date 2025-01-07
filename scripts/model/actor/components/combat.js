@@ -11,18 +11,19 @@ export class CombatModel extends foundry.abstract.DataModel {
                 total: new foundry.data.fields.NumberField()
             }),
             wounds: new foundry.data.fields.SchemaField({
-                value: new foundry.data.fields.NumberField(),
+                value: new foundry.data.fields.NumberField({min : 0, initial : 0}),
                 bonus: new foundry.data.fields.NumberField(),
                 max: new foundry.data.fields.NumberField()
             }),
             determination: new foundry.data.fields.SchemaField({
                 bonus: new foundry.data.fields.NumberField(),
+                attribute: new foundry.data.fields.StringField({initial: "toughness"}),
                 total: new foundry.data.fields.NumberField()
             }),
             shock: new foundry.data.fields.SchemaField({
-                value: new foundry.data.fields.NumberField(),
+                value: new foundry.data.fields.NumberField({initial : 0, min : 0}),
                 bonus: new foundry.data.fields.NumberField(),
-                max: new foundry.data.fields.NumberField()
+                max: new foundry.data.fields.NumberField({nullable : true, initial : 0})
             }),
             resolve: new foundry.data.fields.SchemaField({
                 bonus: new foundry.data.fields.NumberField(),
@@ -63,7 +64,7 @@ export class CombatModel extends foundry.abstract.DataModel {
         if (autoCalc.resilience)
             this.resilience.total = Math.max(attributes.toughness.total + 1 + this.resilience.bonus + this.resilience.armour, 1);
         if (autoCalc.determination)
-            this.determination.total = Math.max(attributes[this.determination.attribute || "toughness"].total + this.determination.bonus, 1);
+            this.determination.total = Math.max(attributes[this.determination.attribute].total + this.determination.bonus, 1);
 
 
         if (autoCalc.defence) {
@@ -103,9 +104,14 @@ export class CombatModel extends foundry.abstract.DataModel {
             }
 
 
-            if (item.traitList.invulnerable)
+            if (item.system.invulnerable)
             {
                 this.resilience.invulnerable = true
+            }
+
+            if (item.traitList.forceField)
+            {
+                this.resilience.forceField = true;
             }
         }
         this.resilience.armour += highestRes

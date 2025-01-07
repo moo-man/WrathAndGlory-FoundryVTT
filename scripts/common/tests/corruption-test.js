@@ -1,11 +1,6 @@
 import { WNGTest } from "./test.js"
 
 export default class CorruptionTest  extends WNGTest {
-  constructor(data = {})
-  {
-    super(data)
-  }
-
   get template() {
     return "systems/wrath-and-glory/template/chat/roll/corruption/corruption-roll.hbs"
   }
@@ -45,9 +40,8 @@ export default class CorruptionTest  extends WNGTest {
 
       if (prevLevel < newLevel) {
         ui.notifications.notify(game.i18n.localize("ROLL.NewCorruptionLevel"))
-        this.actor.setupGenericTest("mutation").then(async mutationTest => {
-          await mutationTest.rollTest();
-          mutationTest.sendToChat();
+        this.actor.setupGenericTest("mutation").then(test => {
+          test.rollTest();
         })
       }
     }

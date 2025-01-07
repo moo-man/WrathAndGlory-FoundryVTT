@@ -1,6 +1,6 @@
 import ActorConfigure from "../../apps/actor-configure.js";
 
-export class BaseWnGActorSheet extends ActorSheet {
+export class BaseWnGActorSheet extends WarhammerActorSheet {
     rollData = {};
 
     static get defaultOptions() {
@@ -74,16 +74,13 @@ export class BaseWnGActorSheet extends ActorSheet {
         html.find(".item-dropdown").mousedown(this._dropdownLeftClick.bind(this))
         html.find(".rollable").mouseenter(this._toggleDice.bind(this))
         html.find(".rollable").mouseleave(this._toggleDice.bind(this))
-        html.find(".rollable").mousedown(this._onRollableAbilityClick.bind(this))
+        html.find(".rollable").click(this._onRollableAbilityClick.bind(this))
         html.find(".item-dropdown-right").mousedown(this._dropdownRightClick.bind(this))
         html.find(".item-create").mousedown(this._onItemCreate.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
+        html.find(".effects .source").click(this._onEditEmbeddedDoc.bind(this));  
         html.find(".item-delete").mousedown(this._onItemDelete.bind(this));
         html.find(".item-post").mousedown(this._onItemPost.bind(this));
-        html.find(".effect-create").click(this._onEffectCreate.bind(this));
-        html.find(".effect-edit").click(this._onEffectEdit.bind(this));
-        html.find(".effect-delete").click(this._onEffectDelete.bind(this));
-        html.find(".effect-toggle").click(this._onEffectToggle.bind(this));
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".checkbox").click(this._onCheckboxClick.bind(this))
         html.find(".property-edit").change(this._onSelectChange.bind(this))
@@ -127,7 +124,7 @@ export class BaseWnGActorSheet extends ActorSheet {
     _onItemEdit(event) {
         event.stopPropagation();
         const div = $(event.currentTarget).parents(".item");
-        const item = this.actor.items.get(div.data("itemId"));
+        const item = this.actor.items.get(div.data("itemId") || event.target.dataset.itemId);
         item.sheet.render(true);
     }
 
@@ -160,60 +157,6 @@ export class BaseWnGActorSheet extends ActorSheet {
         let item = this.actor.items.get(id);
         if (item)
             item.sendToChat()
-    }
-
-
-    async _onEffectCreate(ev) {
-        let type = ev.currentTarget.attributes["data-type"].value
-        let effectData = { name: "New Effect", icon: "icons/svg/aura.svg" }
-        if (type == "temporary") {
-            effectData["duration.rounds"] = 1;
-        }
-
-        let html = await renderTemplate("systems/wrath-and-glory/template/apps/quick-effect.hbs")
-        let dialog = new Dialog({
-            title: "Quick Effect",
-            content: html,
-            buttons: {
-                "create": {
-                    label: "Create",
-                    callback: html => {
-                        let mode = 2
-                        let label = html.find(".label").val()
-                        let key = html.find(".key").val()
-                        let value = parseInt(html.find(".modifier").val())
-                        effectData.name = label
-                        effectData.changes = [{ key, mode, value }]
-                        this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
-                    }
-                },
-                "skip": {
-                    label: "Skip",
-                    callback: () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effect => effect[0].sheet.render(true))
-                }
-            }
-        })
-        await dialog._render(true)
-        dialog._element.find(".label").select()
-
-
-    }
-
-    _onEffectEdit(ev) {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        this.object.effects.get(id).sheet.render(true)
-    }
-
-    _onEffectDelete(ev) {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
-    }
-
-    _onEffectToggle(ev) {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        let effect = this.object.effects.get(id)
-
-        effect.update({ "disabled": !effect.disabled })
     }
 
     _onFocusIn(event) {

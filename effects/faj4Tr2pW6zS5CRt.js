@@ -1,0 +1,1 @@
+return !args.weapon || !args.weapon.isMelee || !args.target.system.advances?.tier;

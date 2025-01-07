@@ -30,13 +30,11 @@ export class WeaponModel extends EquippedItemModel
             thrown : new fields.NumberField({nullable : true}),
         })
         schema.category = new fields.StringField({initial : "melee"});
-        schema.ammo = new fields.StringField({})
+        schema.ammo = new fields.EmbeddedDataField(DocumentReferenceModel);
         schema.salvo = new fields.NumberField({})
         schema.traits = new fields.EmbeddedDataField(TraitsModel);
         schema.upgrades = new fields.ArrayField(new fields.ObjectField());
-        schema.combi = new fields.SchemaField({
-            id : new fields.StringField(),
-        })
+        schema.combi = new fields.EmbeddedDataField(DocumentReferenceModel);
         schema.twinned = new fields.BooleanField();
         return schema;
     }
@@ -90,6 +88,12 @@ export class WeaponModel extends EquippedItemModel
         return this.multiTarget ? game.i18n.localize("Yes") : game.i18n.localize("No")
     }
 
+    computeBase()
+    {
+        super.computeBase();
+        this.damage.enabled = true;
+    }
+
     computeDerived()
     {
         this.applyUpgrades();
@@ -102,15 +106,6 @@ export class WeaponModel extends EquippedItemModel
         }
         if (this.isRanged && this.Ammo) {
             this.applyAmmo()
-        }
-
-        if (this.combi.id)
-        {
-            let combi = this.parent.actor?.items.get(this.combi.id);
-            if (combi)
-            {
-                this.combi.document = combi;
-            }
         }
     }
 
@@ -135,6 +130,28 @@ export class WeaponModel extends EquippedItemModel
         this.traits.add(this.Ammo.system.traits)
     }
 
+    getOtherEffects()
+    {
+        let other = super.getOtherEffects().concat(this.traits.effects);
+        if (this.Ammo)
+        {
+            other = other.concat(this.Ammo.effects.contents);
+        }
+        for(let upg of this.upgrades)
+        {
+           other = other.concat(upg.effects.map(e => new ActiveEffect.implementation(e, {parent : this.parent})));
+        }
+        return other;
+    }
+
+    _addModelProperties()
+    {
+        if (this.parent.actor)
+        {
+            this.ammo.relative = this.parent.actor.items
+            this.combi.relative = this.parent.actor.items
+        }
+    }
 
     _applyEffects(effects) {
         let overrides = {}
@@ -180,8 +197,17 @@ export class WeaponModel extends EquippedItemModel
 
 
     get Ammo() {
-        if (this.parent.isOwned)
-            return this.parent.actor.items.get(this.ammo)
+        return this.ammo.document
+    }
+
+
+    static migrateData(data)
+    {
+        super.migrateData(data);
+        if (typeof data.ammo == "string")
+        {
+            data.ammo = {id : data.ammo};
+        }
     }
 
 }

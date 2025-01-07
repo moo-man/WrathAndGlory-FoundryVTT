@@ -1,0 +1,1 @@
+return args.target.statuses.has("halfCover") || args.target.statuses.has("fullCover");

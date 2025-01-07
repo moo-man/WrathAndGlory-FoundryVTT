@@ -18,6 +18,52 @@ export class FactionModel extends StandardItemModel
         return schema;
     }
 
+    shouldTransferEffect(effect)
+    {
+        for (let bg of this.backgrounds.origin.concat(this.backgrounds.accomplishment).concat(this.backgrounds.goal))
+        {
+            if (bg.chosen && bg.effect.id == effect.id)
+            {
+                return true;
+            }
+        }
+        return false
+    }
+
+    _addModelProperties()
+    {
+        for (let bg of this.backgrounds.origin.concat(this.backgrounds.accomplishment).concat(this.backgrounds.goal))
+        {
+            bg.effect.relative = this.parent.effects;
+        }
+    }
+
+    static migrateData(data)
+    {
+        super.migrateData(data);
+        for(let bg of data.backgrounds.origin)
+        {
+            if (typeof bg.effect == "string")
+            {
+                bg.effect = {id : bg.effect}
+            }
+        }
+        for(let bg of data.backgrounds.accomplishment)
+        {
+            if (typeof bg.effect == "string")
+            {
+                bg.effect = {id : bg.effect}
+            }
+        }
+        for(let bg of data.backgrounds.goal)
+        {
+            if (typeof bg.effect == "string")
+            {
+                bg.effect = {id : bg.effect}
+            }
+        }
+    }
+
 }
 
 function backgroundData() 
@@ -25,7 +71,8 @@ function backgroundData()
     return new fields.ArrayField(new fields.SchemaField({
         name : new fields.StringField(),
         description : new fields.StringField(),
-        effect : new fields.StringField(),
-        active : new fields.BooleanField()
+        effect : new fields.EmbeddedDataField(DocumentReferenceModel),
+        active : new fields.BooleanField(),
+        chosen : new fields.BooleanField()
     }));
 }

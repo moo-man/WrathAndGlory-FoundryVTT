@@ -135,6 +135,8 @@
       </div>
     {{/if}}
   </div>
+</div>
+<div class="combat">
   <div class="wargear wrapper">
     <h1>{{localize "TITLE.WARGEAR"}}</h1>
     <div class="pointer-enable wrapper">
@@ -162,7 +164,7 @@
               <div class="item-property flex">
                 {{#if item.isRanged}}
                 <select class="property-edit" data-target="system.ammo">
-                  {{#select item.ammo}}
+                  {{#select item.ammo.id}}
                   <option value="">-</option>
                   {{#each item.ammoList as |item|}}
                   <option value="{{item.id}}">{{item.name}} ({{item.quantity}})</option>
@@ -177,6 +179,7 @@
             <span class="item-traits"><b>Traits:</b> {{{array item.system.traits.formatted "item-trait"}}}</span>
           </div>
           {{/if}}
+          {{> sheetButtonsV1 document=item}}
         </div>
         {{/each}}
       </div>
@@ -222,6 +225,8 @@
               <div class="item-property">{{item.rating}}</div>
               <div class="item-property flex large">{{{array item.system.traits.formatted "item-trait"}}}</div>
           </div>
+          {{> sheetButtonsV1 document=item}}
+
         </div>
         {{/each}}
       </div>
@@ -249,6 +254,7 @@
               <div class="item-property">{{item.range}}</div>
               <div class="item-property">{{item.MultiTarget}}</div>
           </div>
+          {{> sheetButtonsV1 document=item}}
         </div>
         {{/each}}
       </div>
@@ -269,9 +275,10 @@
               <div class="ability-type" title="{{configLookup 'abilityTypeDescriptions' item.abilityType}}">{{configLookup "abilityTypeAbbrev" item.abilityType}}</div>
               {{/if}}
               <img class="item-property item-image" src="{{item.img}}"></img>
-              <div class="item-property item-name {{#if item.rollable}}rollable{{else}}item-dropdown{{/if}}">{{item.name}}</div>
+              <div class="item-property item-name rollable">{{item.name}}</div>
           <span class="item-property item-dropdown flex large long-text">{{{lookup ../enrichment item.id}}}</span>
         </div>
+          {{> sheetButtonsV1 document=item}}
         </div>
         {{/if}}
         {{/each}}
@@ -279,4 +286,5 @@
       {{/if}}
     </div>
   </div>
+
 </div>

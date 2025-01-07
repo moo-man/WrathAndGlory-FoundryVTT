@@ -1,15 +1,10 @@
 import entryContextHooks from "../hooks/entryContext.js"
 import ready from "../hooks/ready.js"
-import settings from "../hooks/settings.js"
 import init from "../hooks/init.js";
-import effects from "../hooks/effects.js"
 import chat from "../hooks/chat.js";
 import combat from "../hooks/combat.js";
-import actor from "../hooks/actor.js";
 import token from "../hooks/token.js";
 import WNGUtility from "./utility.js";
-import sidebar from "../hooks/sidebar.js";
-import item from "../hooks/item.js";
 import hotbar from "../hooks/hotbar.js";
 import setting from "../hooks/setting.js";
 import i18n from "../hooks/i18n.js";
@@ -18,20 +13,12 @@ export default function() {
     entryContextHooks();
     ready();
     init();
-    effects();
     chat();
-    item();
     combat();
-    actor();
     token();
-    sidebar();
     hotbar();
     setting();
     i18n();
-
-    Hooks.on("preCreateJournalEntry", _keepID)
-    Hooks.on("preCreateScene", _keepID)
-    Hooks.on("preCreateRollTable", _keepID)
 
 
     Hooks.on("renderActorSheet", _addKeywordListeners)

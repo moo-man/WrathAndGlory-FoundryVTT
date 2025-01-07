@@ -1,0 +1,1 @@
+return !(args.data.skill === 'intimidation' || args.data.skill === 'leadership' || args.data.skill === 'weaponSkill')

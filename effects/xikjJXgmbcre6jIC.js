@@ -1,0 +1,1 @@
+args.fields.difficulty += parseInt(this.effect.specifier) || 1

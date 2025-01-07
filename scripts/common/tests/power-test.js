@@ -4,29 +4,36 @@ export default class PowerTest extends WNGTest {
   constructor(data)
   {
     super(data)
-    if (!data)
+    if (foundry.utils.isEmpty(data))
       return
-
-    this.data.testData.ed = data.ed || {}
-    this.data.testData.ap = data.ap || {}
-    this.data.testData.damage= data.damage || {}
     
-    this.data.testData.itemId = data.itemId
-
-    // TODO: add to dialog
-    this.data.testData.otherDamage = {
-      "mortalWounds": { value: this.item.otherDamage.mortalWounds, bonus : 0 },
-      "wounds": { value: this.item.otherDamage.wounds, bonus : 0 },
-      "shock": { value: this.item.otherDamage.shock, bonus : 0 },
-    }
-    
-    this.data.testData.potency = duplicate(this.item.potency)
+    this.data.testData.potency = foundry.utils.deepClone(this.item.potency.list)
     this.data.testData.potency.forEach(p => p.allocation = 0)
-    this.data.context.edit.potency = 0;
+    this.data.testData.edit.potency = 0;
+
+    if (this.item.system.damage?.enabled)
+    {
+      this.addDamageData(data);
+    }
+
   }
 
   get template() {
     return "systems/wrath-and-glory/template/chat/roll/power/power-roll.hbs"
+  }
+
+  async runPreScripts()
+  {
+      await super.runPreScripts();
+      await Promise.all(this.actor.runScripts("preRollPowerTest", this));
+      await Promise.all(this.item.runScripts("preRollPowerTest", this));
+  }
+
+  async runPostScripts()
+  {
+      await super.runPostScripts();
+      await Promise.all(this.actor.runScripts("rollPowerTest", this));
+      await Promise.all(this.item.runScripts("rollPowerTest", this));
   }
 
 
@@ -34,8 +41,6 @@ export default class PowerTest extends WNGTest {
   _computeResult()
   {
     super._computeResult()
-    if (this.item.hasTest) this.result.test = duplicate(this.item.test);
-    this.computeDamage() 
     if (this.result.isSuccess)
     {
       this.result.range = this.item.range
@@ -46,7 +51,7 @@ export default class PowerTest extends WNGTest {
 
   computePotencies() {
 
-    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.length + this.context.edit.potency}
+    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.dice.length + this.testData.edit.potency}
 
     this.result.potency.options.forEach(p => {
       // Set initial potency values (before potency allocation)
@@ -64,7 +69,7 @@ export default class PowerTest extends WNGTest {
         newValue = propValue.replace(propValueNum, propValueNum + addToValue) // Replace the number with the potency value added
       }
       else 
-        newValue = propValue + addToValue // If numeric property, just add the potency value
+        newValue = parseInt(propValue) + addToValue // If numeric property, just add the potency value
 
 
       if (p.property)
@@ -94,10 +99,10 @@ export default class PowerTest extends WNGTest {
 
   async edit({pool=0, wrath=0, icons=0, damage=0, ed=0, ap=0, potency=0}={})
   {
-    this.data.context.edit.damage += damage;
-    this.data.context.edit.ed += ed;
-    this.data.context.edit.ap += ap;
-    this.data.context.edit.potency += potency;
+    this.data.testData.edit.damage += damage;
+    this.data.testData.edit.ed += ed;
+    this.data.testData.edit.ap += ap;
+    this.data.testData.edit.potency += potency;
     await super.edit({pool, wrath, icons})
   }
 

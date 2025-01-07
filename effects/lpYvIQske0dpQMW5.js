@@ -1,0 +1,1 @@
+return args.target.system.mob?.value > 1;

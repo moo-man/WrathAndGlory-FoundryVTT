@@ -38,8 +38,8 @@
               {{#each system.backgrounds.origin as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.origin" data-index="{{bg}}" data-inner-target="active" >
-                  {{#if background.active}}
+                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.origin" data-index="{{bg}}" data-inner-target="active" >
+                  {{#if background.chosen}}
                     <i class="fas fa-check"></i>
                   {{/if}}
                   </div>
@@ -47,7 +47,7 @@
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
-                  {{#select background.effect}}
+                  {{#select background.effect.id}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
                   <option value="{{effect.id}}">{{effect.name}}</option>
@@ -77,8 +77,8 @@
               {{#each system.backgrounds.accomplishment as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="active">
-                  {{#if background.active}}
+                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="active">
+                  {{#if background.chosen}}
                     <i class="fas fa-check"></i>
                   {{/if}}
                   </div>
@@ -86,7 +86,7 @@
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
-                  {{#select background.effect}}
+                  {{#select background.effect.id}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
                   <option value="{{effect.id}}">{{effect.name}}</option>
@@ -116,8 +116,8 @@
               {{#each system.backgrounds.goal as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.active}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.goal" data-index="{{bg}}" data-inner-target="active">
-                  {{#if background.active}}
+                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.goal" data-index="{{bg}}" data-inner-target="active">
+                  {{#if background.chosen}}
                     <i class="fas fa-check"></i>
                   {{/if}}
                   </div>
@@ -125,7 +125,7 @@
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
                 <select class="bg-effect" data-path="effect">
-                  {{#select background.effect}}
+                  {{#select background.effect.id}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
                   <option value="{{effect.id}}">{{effect.name}}</option>

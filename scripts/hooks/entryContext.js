@@ -2,28 +2,31 @@ import EditTestForm from "../apps/edit-test.js";
 
 export default function() {
     Hooks.on("getChatLogEntryContext", (html, options) => {
-        let canApply = li => li.find(".damageRoll").length && canvas.tokens.controlled.length > 0;
+        let canApply = li => {
+            let msg = game.messages.get(li.attr("data-message-id"))
+            return game.user.isGM && msg.type == "damage";
+        }
         let canRerollFailed = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             if (test)
-                return !test.context.rerollFailed && (msg.isAuthor || msg.isOwner)
+                return !test.context.rerollFailed && (msg.isAuthor || msg.isOwner) && msg.type == "test"
         }
 
         let canRerollSelected = li => {
-            return li.find(".selected").length// && !li.find(".shifted").length
+            return li.find(".selected").length;
         }
 
         let canEdit = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             if (test)
                 return msg.isAuthor || msg.isOwner
         }
 
         let canShift = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             let selected = Array.from(li.find(".selected")).map(i => Number(i.dataset.index))
 
             // If all selected dice are shiftable and number of selected <= shifts possible
@@ -32,28 +35,29 @@ export default function() {
 
         let canShiftDamage = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             return canShift(li) && test.doesDamage && (msg.isAuthor || msg.isOwner)
         }
 
         let canShiftPotency = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
-            return canShift(li) && test.testData.potency?.length && (msg.isAuthor || msg.isOwner)
+            let test = msg.system.test
+            return canShift(li) && test.testData?.potency?.length && (msg.isAuthor || msg.isOwner)
         }
 
         let canResetPotency = li => {
             let msg = game.messages.get(li.attr("data-message-id"))
-            let test = msg.getTest()
+            let test = msg.system.test
             if (!test) return;
-            return test.testData.potency?.length && test.testData.potency.some(p => p.allocation) && (msg.isAuthor || msg.isOwner)
+            return test.testData?.potency?.length && test.testData?.potency.some(p => p.allocation) && (msg.isAuthor || msg.isOwner)
         }
 
 
 
         let canClearReroll = li => {
-            let test = game.messages.get(li.attr("data-message-id")).getTest()
-            return test && game.user.isGM && test.testData.rerolls.length
+            let msg = game.messages.get(li.attr("data-message-id"))
+            let roll = msg.system.test || msg.system.damage;
+            return roll && game.user.isGM && roll.hasRerolled
         }
 
         let canUnshift = li => {
@@ -69,7 +73,7 @@ export default function() {
                 condition: canRerollFailed,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let actor = test.actor;
                     if (actor.type == "agent")
                     {
@@ -101,7 +105,7 @@ export default function() {
                 condition: canEdit,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     new EditTestForm(test).render(true)
                 }
             },
@@ -111,9 +115,9 @@ export default function() {
                 condition: canRerollSelected,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let roll = message.system.test || message.system.damage;
                     let selected = Array.from(li.find(".selected")).map(i => Number(i.dataset.index))
-                    test.reroll(selected)
+                    roll.reroll(selected)
                 }
             },
             {
@@ -122,8 +126,8 @@ export default function() {
                 condition: canClearReroll,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
-                    test.clearRerolls()
+                    let roll = message.system.test || message.system.damage;
+                    roll.clearRerolls()
                 }
             },
             {
@@ -132,7 +136,7 @@ export default function() {
                 condition: canResetPotency,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     test.resetAllocation()
                 }
             },
@@ -142,7 +146,7 @@ export default function() {
                 condition: canShift,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.shift(shifted, "other")
                 }
@@ -153,7 +157,7 @@ export default function() {
                 condition: canShiftDamage,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.shift(shifted, "damage")
                 }
@@ -164,7 +168,7 @@ export default function() {
                 condition: canShift,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.shift(shifted, "glory")
 
@@ -181,7 +185,7 @@ export default function() {
                 condition: canShiftPotency,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     let shifted = Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index))
                     test.shift(shifted, "potency")
                 }
@@ -192,91 +196,20 @@ export default function() {
                 condition: canUnshift,
                 callback: async li => {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     test.unshift()
                 }
             },
             {
                 name: "BUTTON.ApplyDamage",
-                icon: '<i class="fas fa-user-minus"></i>',
+                icon: '<i class="fas fa-user-times"></i>',
                 condition: canApply,
                 callback: li => {
-                    let test = game.messages.get(li.attr("data-message-id")).getTest();
-                    canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor));
+                    let damage = game.messages.get(li.attr("data-message-id")).system.damage;
+                    damage.applyToTargets();
                 }
             }
-            // {
-            //     name: "BUTTON.ApplyDamageArmourAP",
-            //     icon: '<i class="fas fa-user-times"></i>',
-            //     condition: canApply,
-            //     callback: li => {
-            //         let test = game.messages.get(li.attr("data-message-id")).getTest();
-            //         canvas.tokens.controlled.forEach(t => _dealDamageToTarget(test, t.actor, true, true));
-            //     }
-            // }
 
         )
     });
-}
-
-function _dealDamageToTarget(test, target) {
-    let ap = Math.abs(test.result.damage.ap) || 0
-    let damage = test.result.damage.total + (test.result.damage.other?.wounds?.total || 0)
-    let res = target.combat.resilience.total || 1
-    let invuln = target.combat.resilience.invulnerable
-    let promise
-
-    let addWounds = 0;
-    let addShock = 0;
-
-    if (game.settings.get('wrath-and-glory', 'advancedArmour'))
-    {
-        if (!invuln)
-            res -= (Math.min(ap, target.system.combat.resilience.armour))
-    }
-    else 
-    {
-        if (!invuln)
-            res -= ap
-    }
-
-    if (res <= 0)
-        res = 1
-
-    if (res > damage)
-        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : target.prototypeToken.name}))
-
-    if (res == damage)
-    {
-        addShock++
-    }
-
-    if (res < damage)
-    {
-        addWounds = damage - res
-        if (addWounds <= 0)
-        addWounds = 0
-
-    }
-    addWounds += test.result.damage.other?.mortalWounds?.total || 0
-
-    if (test.result.damage.other?.shock?.total)
-    {
-        addShock += test.result.damage.other.shock.total
-    }
-
-    let updateObj = {}
-    if (addShock)
-    {
-        updateObj["system.combat.shock.value"] = target.combat.shock.value + 1
-        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE_SHOCK", {name : target.prototypeToken.name}));
-}
-    if (addWounds)
-    {
-        updateObj["system.combat.wounds.value"] = target.combat.wounds.value + addWounds;
-        ui.notifications.notify(game.i18n.format("NOTE.APPLY_DAMAGE", {damage : addWounds, name : target.prototypeToken.name}));
-    }
-
-    target.update(updateObj);
-    return promise
 }

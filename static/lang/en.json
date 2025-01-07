@@ -28,6 +28,8 @@
   "ABILITY.REQUIREMENTS": "Requirements",
   "ABILITY.DISPLAY": "Display",
   "ABILITY.TYPE": "Type",
+  "ABILITY.DAMAGE": "Damage",
+  "ABILITY.TEST_SELF": "Test Self",
 
   "ABILITY_TYPE.BATTLECRY" : "Battlecry",
   "ABILITY_TYPE.ACTION" : "Action",
@@ -160,6 +162,11 @@
   "BUTTON.CONFIGURE": "Configure",
   "BUTTON.JOURNAL": "Journal",
 
+  "SHIFT.DAMAGE" : "Damage",
+  "SHIFT.GLORY" : "Glory",
+  "SHIFT.OTHER" : "Other",
+  "SHIFT.POTENCY" : "Potency",
+
   "BUTTON.ApplyDamage" : "Apply Damage",
   "BUTTON.ApplyDamageInvuln" : "Apply Damage (Invulnerable armour)",
   "BUTTON.ApplyDamageArmourAP" : "Apply Damage (AP only on Armour)",
@@ -187,8 +194,8 @@
   "CHAT.WRATH_COMPLICATION_CORRUPTION": "Double Corruption points!",
   "CHAT.FAIL_CORRUPTION" : "Gain {corruption} Corruption, 1 Ruin added",
   "CHAT.FAIL_FEAR" : "Gains the @JournalEntry[Fear] Condition, 1 Ruin added",
-  "CHAT.DETERMINATION" : "Determination",
-  "CHAT.DETERMINATION_RESULT" : "{wounds} Wounds, {shock} Shock",
+  "CHAT.DETERMINATION_RESULT" : "Converted {shock} Wounds to Shock ({wounds} Wounds leftover)",
+  "CHAT.DETERMINATION_RESULT_IGNORE_SHOCK" : "Ignored {shock} Wounds ({wounds} Wounds leftover)",
   "CHAT.STEALTH" : "Stealth",
   "CHAT.STEALTH_RESULT" : "{stealth}",
   "CHAT.WOUNDS": "Wounds",
@@ -198,6 +205,7 @@
   "DIALOG.YES": "Yes",
   "DIALOG.NO": "No",
   "DIALOG.DN": "DN",
+  "DIALOG.DIFFICULTY": "Difficulty",
   "DIALOG.DICE_POOL": "Dice Pool",
   "DIALOG.BONUS": "Bonus",
   "DIALOG.PENALTY": "Penalty",
@@ -212,6 +220,11 @@
   "DIALOG.ITEM_DELETE" : "Item Delete",
   "DIALOG.ITEM_DELETE_PROMPT" : "Are you sure you want to delete this item?",
   "DIALOG.OUT_OF_RANGE" : "Out of Range!",
+  "DIALOG.ROLLMODE" : "Roll Mode",
+  "DIALOG.MODIFIER_BREAKDOWN" : "Modifier Breakdown",
+  "DIALOG.DICE_TOOLTIP" : "Number of D6s rolled to determine the value (e.g. 2 = 2D6)",
+  "DIALOG.POWER_LEVEL": "Power Level",
+  "DIALOG.IGNORE_SHOCK": "Ignore Shock",
 
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",
@@ -303,7 +316,9 @@
   "PSYCHIC_POWER.WOUNDS": "Wounds",
   "PSYCHIC_POWER.SHOCK": "Shock",
   "PSYCHIC_POWER.MORTAL": "Mortal",
-
+  "PSYCHIC_POWER.BOUND" : "Bound",
+  "PSYCHIC_POWER.UNBOUND" : "Unbound",
+  "PSYCHIC_POWER.TRANSCENDENT" : "Transcendent",
 
   "POWER.POTENCY_COST" : "Cost",
   "POWER.POTENCY_INITIAL" : "Initial",
@@ -398,7 +413,7 @@
 
   "TALENT.NAME": "Name",
   "TALENT.EFFECT": "Effect",
-  "TALENT.COST": "Cost",
+  "TALENT.COST": "XP Cost",
   "TALENT.DESCRIPTION": "Description",
   "TALENT.REQUIREMENTS": "Requirements",
   "TALENT.DISPLAY": "Display",
@@ -424,6 +439,8 @@
   "TITLE.ADVANCES": "ADVANCES",
   "TITLE.DETAILS": "DETAILS",
   "TITLE.COMPLEMENT": "COMPLEMENT",
+  "TITLE.MOB_ABILITIES" : "MOB ABILITIES",
+  "TITLE.INACTIVE_MOB_ABILITIES" : "INACTIVE MOB ABILITIES",
 
   "TRAUMATIC_INJURY.NAME": "Name",
   "TRAUMATIC_INJURY.DESCRIPTION": "Description",
@@ -446,6 +463,7 @@
   "WEAPON.QUANTITY": "Quantity",
   "WEAPON.AIM": "Aim",
   "WEAPON.AIMED": "Aimed",
+  "WEAPON.CHARGING": "Charging",
   "WEAPON.COMBIWEAPON": "Combi-Weapon",
   "WEAPON.TWINNED": "Twinned",
   "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
@@ -476,9 +494,12 @@
   "ERROR.ID": "ID for {name} already exists in collection. This Document has been given a unique ID.",
   "ERROR.NoMoreRuin" : "No more Ruin",
   "NOTE.RuinSubtracted" : "Ruin Subtracted",
-  "NOTE.APPLY_DAMAGE_RESIST" : "{name} resisted the Damage",
-  "NOTE.APPLY_DAMAGE_SHOCK" : "{name} sustained 1 Shock",
-  "NOTE.APPLY_DAMAGE" : "{damage} Wounds applied to {name}",
+  "NOTE.APPLY_DAMAGE_REDUCED" : "{damage} Damage reduced by {res} Resilience",
+  "NOTE.APPLY_DAMAGE_DETERMINATION" : "Determination converted {shock} Wounds to Shock",
+  "NOTE.APPLY_DAMAGE_RESIST" : "<strong>{name}</strong> resisted the Damage",
+  "NOTE.APPLY_DAMAGE_SHOCK" : "{name} sustained {shock} Shock",
+  "NOTE.APPLY_DAMAGE" : "{wounds} Wounds and {shock} Shock applied to <strong>{name}</strong>",
+  "NOTE.APPLY_DAMAGE_MORTAL" : "{mortal} Mortal Wounds converted to normal",
   "ERROR.MacroItemMissing" : "Your controlled Actor does not have an item named",
   "ROLL.CannotFindTable" : "Cannot find table. Either import it from the Compendium or create your own. It must have the name {name}",
   "ERROR.NoAvailableActors" : "No available owned Actors to choose!",
@@ -559,6 +580,8 @@
   "EFFECT.HalfCover" : "Half Cover",
   "EFFECT.FullCover" : "Full Cover",
   "THREAT.MOB" : "Mob",
+  "THREAT.MobAbilities" : "Mob Abilities",
+  "THREAT.MobValue" : "Mob Value",
 
   "UpdaterTitle1": "Update",
   "UpdaterTitle2": "Content",
@@ -596,5 +619,25 @@
   "BugReport.ErrorForm": "Please fill out the form",
   "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
   "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
-  "BUTTON.PostBug" : "W&G Bug Report"
+  "BUTTON.PostBug" : "W&G Bug Report",
+
+  "WH" : {
+    "Trigger" : {
+      "preTakeDamage" : "Pre-Take Damage",
+      "preApplyDamage" : "Pre-Apply Damage",
+
+      "computeDamage" : "Compute Damage",
+      "preComputeDamage" : "Pre-Compute Damage",
+
+      "takeDamage" : "Take Damage",
+      "applyDamage" : "Apply Damage",
+
+      "rollTest" : "Roll Test",
+      "preRollTest" : "Pre-Roll Test",
+      "preRollWeaponTest" : "Pre-Roll Weapon Test",
+      "rollWeaponTest" : "Roll Weapon Test",
+      "preRollPowerTest" : "Pre-Roll Power Test",
+      "rollPowerTest" : "Roll Power Test"
+    }
+  }
 }

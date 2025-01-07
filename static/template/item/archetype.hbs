@@ -98,16 +98,8 @@
       </div>
 
       <div class="wrapper wargear">
-        <h1>{{localize "ARCHETYPE.WARGEAR"}} 
-          <button type="button" class="add-generic"><i class="fas fa-plus"></i></button>
-          <button type="button" class="reset"><i class="fas fa-redo"></i></button>
-          <button type="button" class="configure-groups"><i class="fas fa-cog"></i></button>
-        </h1>
-        <div class="wargear-list">
-          {{{wargearHTML}}}
-        </div>
+        {{> choiceDisplay label="ARCHETYPE.WARGEAR" path="wargear" display=item.system.wargear.textDisplay}}
       </div>
-
       
       <div class="wrapper item-attributes">
         <h1>{{localize "ARCHETYPE.SUGGESTED_ATTRIBUTES"}}</h1>

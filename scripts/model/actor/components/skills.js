@@ -9,7 +9,7 @@ export class SkillModel extends foundry.abstract.DataModel {
         return {
             label: new fields.StringField({ required: true, initial: "" }),
             attribute: new fields.StringField(),
-            rating: new fields.NumberField({ required: true, initial: 0 }),
+            rating: new fields.NumberField({ required: true, initial: 0, min: 0 }),
             base: new fields.NumberField({ required: true, initial: 0 }),
             bonus: new fields.NumberField({ required: true, initial: 0 }),
             cost: new fields.NumberField({ required: true, initial: 0 }),

@@ -1,0 +1,1 @@
+return args.attribute != "fellowship" && args.skill != "survival"

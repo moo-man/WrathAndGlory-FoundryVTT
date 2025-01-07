@@ -1,115 +1,112 @@
-import { RollDialog } from "./base-dialog.js";
+import { AttackDialog } from "./attack-dialog.js";
 
-export class PowerDialog extends RollDialog {
+export class PowerDialog extends AttackDialog {
 
-  static async create(data) {
-    let hide = this.runConditional("hide", data)
-    this.removeHiddenChanges(hide, data);
-    data.condensedChanges = this.condenseChanges(data.changes);
-    const html = await renderTemplate("systems/wrath-and-glory/template/dialog/psychic-roll.hbs", data);
-    return new Promise((resolve) => {
-      new this({
-        title: game.i18n.localize(data.title),
-        content: html,
-        actor: data.actor,
-        targets: data.targets,
-        dialogData: data,
-        buttons: {
-          roll: {
-            icon: '<i class="fas fa-check"></i>',
-            label: game.i18n.localize("BUTTON.ROLL"),
-            callback: async (html) => {
-              let data = this.dialogCallback(html)
-              resolve(data)
-            },
-          }
-        },
-        default: "roll"
-      }, { width: 550 }).render(true)
-    })
+  subTemplate=["systems/wrath-and-glory/template/dialog/attack-roll.hbs", "systems/wrath-and-glory/template/dialog/power-roll.hbs"]
+
+
+  get power() 
+  {
+    return this.data.power;
   }
 
-  static dialogCallback(html) {
-    let testData = super.dialogCallback(html)
-    testData.damage.base = parseInt(html.find("#damage-base")[0].value);
-    testData.damage.bonus = parseInt(html.find("#damage-bonus")[0].value);
-    testData.damage.rank = html.find("#damage-rank")[0].value;
-    testData.ed.base = parseInt(html.find("#ed-base")[0].value);
-    testData.ed.bonus = parseInt(html.find("#ed-bonus")[0].value);
-    testData.ed.rank = html.find("#ed-rank")[0].value;
-    testData.ed.damageValues[1] = parseInt(html.find("#die-one")[0].value);
-    testData.ed.damageValues[2] = parseInt(html.find("#die-two")[0].value);
-    testData.ed.damageValues[3] = parseInt(html.find("#die-three")[0].value);
-    testData.ed.damageValues[4] = parseInt(html.find("#die-four")[0].value);
-    testData.ed.damageValues[5] = parseInt(html.find("#die-five")[0].value);
-    testData.ed.damageValues[6] = parseInt(html.find("#die-six")[0].value);
-    testData.wrath.base = parseInt(html.find("#wrath-base")[0].value);
-    return testData
+  static async setupData(power, actor, options={})
+  {
+      if (typeof power == "string")
+      {
+        power = actor.items.get(power) || await fromUuid(power)
+      }
+
+      
+      let skill = "psychicMastery"
+      
+      let dialogData = await super.setupData({skill}, actor, options)
+      
+      dialogData.data.levels = {
+        bound : game.i18n.localize("PSYCHIC_POWER.BOUND"),
+        unbound : game.i18n.localize("PSYCHIC_POWER.UNBOUND"),
+        transcendent : game.i18n.localize("PSYCHIC_POWER.TRANSCENDENT")
+      }
+
+      dialogData.data.power = power;
+      dialogData.data.item = power;
+      
+      dialogData.data.scripts = dialogData.data.scripts.concat(power?.getScripts("dialog"));
+      foundry.utils.setProperty(dialogData, "fields.ed.dice",  power.system.damage.ed.dice);
+      foundry.utils.setProperty(dialogData, "fields.ap.dice",  power.system.damage.ap.dice);
+
+      options.title = `${power.name} Test`
+      
+      if (power.system.DN == "?") 
+      {
+        ui.notifications.warn(game.i18n.localize("DIALOG.TARGET_DEFENSE_WARNING"))
+      }
+      return dialogData;
   }
 
-  static _baseTestData() {
-    return mergeObject({
-      damage: {
-        base: 0,
-        rank: "none",
-        bonus: 0
-      },
-      ed: {
-        base: 0,
-        rank: "none",
-        bonus: 0,
-        damageValues: {
-          1: 0,
-          2: 0,
-          3: 0,
-          4: 1,
-          5: 1,
-          6: 2
-        }
-      },
-      potency: 0
-    }, super._baseTestData())
+  computeFields()
+  {
+    super.computeFields();
+    if (this.fields.level == "unbound")
+    {
+      this.fields.wrath += 1
+      this.tooltips.add("wrath", 1, this.data.levels[this.fields.level])
+    }
+    if (this.fields.level == "transcendent")
+    {
+        this.fields.wrath += 2
+        this.tooltips.add("wrath", 2, this.data.levels[this.fields.level])
+    }
+
+    let power = this.power;
+  
+    this.tooltips.start(this)
+    this.fields.damage += power.system.damage.base + power.system.damage.bonus
+    this.fields.ed.value += power.system.damage.ed.base + power.system.damage.ed.bonus
+    this.fields.ap.value += power.system.damage.ap.base + power.system.damage.ap.bonus
+    this.tooltips.finish(this, "Power")
+  
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
+  
+    /**
+     * Transforms dialog data and fields into a options into data that will be given to some test object for evaluation
+     * @returns {object} Formatted submission data
+     */
+    _getSubmissionData()
+    {
+      let submitData = super._getSubmissionData();
+      if (this.fields.level == "unbound" && !this.actor.hasCondition("unbound"))
+      {
+        this.actor.addCondition("unbound")
+      }
+      if (this.fields.level == "transcendent" && !this.actor.hasCondition("transcendent"))
+      {
+        this.actor.removeCondition("unbound")
+        this.actor.addCondition("transcendent")
+      }
+      return submitData;
+    }
 
-    // Reset effect values
-    this.effectValues = flattenObject(mergeObject(this.effectValues, {
-      "damage.base": null,
-      "damage.rank": null,
-      "damage.bonus": null,
-      "ed.base": null,
-      "ed.rank": null,
-      "ed.bonus": null,
-      "wrath": null
-    }))
-
-
-    html.find('.damage,.ed').change(ev => {
-      let type = ev.currentTarget.classList[0]
-      let input = ev.currentTarget.classList[1]
-      this.userEntry[`${type}.${input}`] = Number.isNumeric(ev.target.value) ? parseInt(ev.target.value) : ev.target.value
-      this.applyEffects()
-    }).each((i, input) => {
-      this.inputs[`${input.classList[0]}.${input.classList[1]}`] = input
-    })
-
-    this.inputs.wrath = html.find("#wrath-base").change(ev => {
-      this.userEntry["wrath"] = parseInt(ev.target.value)
-      this.applyEffects();
-    })[0]
-
-
-    this.userEntry = flattenObject(mergeObject(this.userEntry, {
-      "damage.base": parseInt(this.inputs["damage.base"].value),
-      "damage.rank": this.inputs["damage.rank"].value,
-      "damage.bonus": parseInt(this.inputs["damage.bonus"].value),
-      "ed.base": parseInt(this.inputs["ed.base"].value),
-      "ed.rank": this.inputs["ed.rank"].value,
-      "ed.bonus": parseInt(this.inputs["ed.bonus"].value),
-      "wrath": parseInt(this.inputs["wrath"].value)
-    }))
+  computeInitialFields()
+  {
+    super.computeInitialFields();
+    let DN = this.power.system.DN;
+    if(!isNaN(DN))
+    {
+      this.fields.difficulty = this.power.system.DN
+      this.tooltips.set("difficulty", this.fields.difficulty, this.power.name + " DN");
+    }
+    else 
+    {
+      this.fields.difficulty = null;
+    }
   }
 
+  _defaultFields() 
+  {
+      return mergeObject({
+          level : "bound",
+      }, super._defaultFields());
+  }
 }

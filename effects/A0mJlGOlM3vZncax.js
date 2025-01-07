@@ -1,0 +1,1 @@
+return args.actor.itemTypes.armour.filter(i => i.system.isEquipped && i.hasKeyword("HEAVY")).length > 0

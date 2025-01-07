@@ -4,7 +4,7 @@ export default class ResolveTest  extends WNGTest {
   constructor(data = {})
   {
     super(data)
-    if (!data)  
+    if (foundry.utils.isEmpty(data))  
       return
 
       this.testData.type = data.type

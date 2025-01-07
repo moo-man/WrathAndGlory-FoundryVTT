@@ -20,4 +20,9 @@ export class ArmourModel extends EquippedItemModel
         return schema;
     }
 
+    getOtherEffects()
+    {
+        return super.getOtherEffects().concat(this.traits.effects);
+    }
+
 }
