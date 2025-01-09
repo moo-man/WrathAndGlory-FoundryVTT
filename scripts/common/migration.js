@@ -337,6 +337,13 @@ export default class Migration {
             {
                 foundry.utils.setProperty(migrated, "system.archetype.id", archetype.id);
             }
+
+            if (faction)
+            {
+                foundry.utils.setProperty(migrated, "system.bio.origin", faction.system.backgrounds.origin.find(i => i.active)?.description || "");
+                foundry.utils.setProperty(migrated, "system.bio.accomplishment", faction.system.backgrounds.accomplishment.find(i => i.active)?.description || "");
+                foundry.utils.setProperty(migrated, "system.bio.goal", faction.system.backgrounds.goal.find(i => i.active)?.description || "");
+            }
         }
 
         return migrated;

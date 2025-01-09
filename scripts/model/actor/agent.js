@@ -30,18 +30,9 @@ export class AgentModel extends StandardWNGActorModel {
             height  : new fields.StringField(),
             eye  : new fields.StringField(),
             hair  : new fields.StringField(),
-            origin : new fields.SchemaField({
-                value  : new fields.StringField(),
-                bonus  : new fields.StringField()
-            }),
-            accomplishment : new fields.SchemaField({
-                value  : new fields.StringField(),
-                bonus  : new fields.StringField()
-            }),
-            goal : new fields.SchemaField({
-                value  : new fields.StringField(),
-                bonus  : new fields.StringField()
-            }),
+            origin : new fields.StringField(),
+            accomplishment : new fields.StringField(),
+            goal : new fields.StringField(),
             objective  : new fields.StringField()
         })
 
@@ -90,7 +81,22 @@ export class AgentModel extends StandardWNGActorModel {
         }
 
         this.experience.current = this.experience.total - this.experience.spent;
+    }
 
-
+    static migrateData(data)
+    {
+        super.migrateData(data);
+        if (typeof data.bio.origin == "object")
+        {
+            data.bio.origin = data.bio.origin.value;
+        }
+        if (typeof data.bio.accomplishment == "object")
+        {
+            data.bio.accomplishment = data.bio.accomplishment.value;
+        }
+        if (typeof data.bio.goal == "object")
+        {
+            data.bio.goal = data.bio.goal.value;
+        }
     }
 }
