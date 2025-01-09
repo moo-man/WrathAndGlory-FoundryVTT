@@ -40,7 +40,11 @@ export class ArchetypeModel extends BaseItemModel
             structure.type = ["or", "and"].includes(structure.type) ? structure.type : "option";
             if (!isNaN(structure.index))
             {
-                structure.id = wargear[structure.index].groupId || wargear[structure.index].id;
+                structure.id = wargear[structure.index].groupId || wargear[structure.index].id || structure.groupId;
+                if (wargear[structure.index])
+                {
+                    wargear[structure.index].groupId = structure.id;
+                }
             }
             else 
             {
@@ -86,6 +90,14 @@ export class ArchetypeModel extends BaseItemModel
                                 eq : "==",
                                 gt : ">",
                                 ge : ">="
+                            }
+                            if (i.property.includes("hasKeyword"))
+                            {
+                                return {
+                                    path : "keywords",
+                                    value : i.property.split("\"")[1].split("").filter(i => i != "").join(""),
+                                    operation : "includes"
+                                }
                             }
                             return {
                                 path : i.property,
