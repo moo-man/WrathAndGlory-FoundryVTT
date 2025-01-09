@@ -19,7 +19,12 @@ If applicable, add screenshots to help explain your problem.
 **Version Numbers**
 PLEASE PROVIDE YOUR FOUNDRY, SYSTEM, and MODULE VERSIONS (where applicable) 
 
+Do NOT put "latest"
+
 Foundry:
 wrath-and-glory:
 wng-forsaken:
 wng-litanies:
+wng-record1
+wng-cos
+wng-xenos
