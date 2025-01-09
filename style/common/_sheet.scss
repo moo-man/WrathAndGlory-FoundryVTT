@@ -32,12 +32,12 @@
   text-align: center;
 }
 
-#combat li.combatant:hover {
+.combat-sidebar li.combatant:hover {
   background: rgba(138, 46, 42, 0.4);
 }
 
-#combat li.combatant .deactivate ,
-  #combat li.combatant .activate {
+.combat-sidebar li.combatant .deactivate ,
+  .combat-sidebar li.combatant .activate {
     display: block;
     width: 40px;
     height: var(--sidebar-item-height);
@@ -45,16 +45,16 @@
     background: url(/icons/svg/up.svg) no-repeat 50% 50%;
     background-size: 32px;
 }
-#combat li.combatant .deactivate {
+.combat-sidebar li.combatant .deactivate {
   background: url(/icons/svg/down.svg) no-repeat 50% 50%;
   background-size: 32px;
 }
 
-#combat li.combatant .activate:hover {
+.combat-sidebar li.combatant .activate:hover {
   box-shadow: inset 0 0 10px var(--color-imperium)
 }
 
-#combat li.combatant.active {
+.combat-sidebar li.combatant.active {
   border: none
 }
 

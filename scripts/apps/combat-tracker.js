@@ -34,6 +34,7 @@ export default class WrathANdGloryCombatTracker extends CombatTracker {
             combat.setTurn(li.dataset.combatantId)
         }
         else if (btn.dataset.control == "deactivate") {            
+            combat.runEndTurnScripts(c);
             c.update(c.setComplete())
         }
       }

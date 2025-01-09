@@ -285,7 +285,7 @@ async _handleEnrichment()
     html.find(".background-delete").click(ev => {
       let index = parseInt($(ev.currentTarget).parents(".background").attr("data-index"))
       let path = $(ev.currentTarget).parents(".backgrounds").attr("data-path")
-      this.item._deleteIndex(index, path)
+      this.item.update({[path] : foundry.utils.getProperty(this.item, path).filter((_, i) => (index != i))})
     })
     
     html.find(".potency-fields input").change(ev => {

@@ -27,6 +27,11 @@ export class DamageRoll {
       mortal: "",
       wounds: "",
       shock: "",
+    },
+    bonus : {
+      mortal: 0,
+      wounds: 0,
+      shock: 0,
     }
   }
 
@@ -107,9 +112,9 @@ export class DamageRoll {
     // Set dice indices before filtering out shifted
     this.damageData.dice.forEach((die, index) => die.index = index);
 
-    result.other.mortal = (await new Roll(this.damageData.other.mortal?.toString() || "0").roll()).total
-    result.other.wounds = (await new Roll(this.damageData.other.wounds?.toString() || "0").roll()).total
-    result.other.shock = (await new Roll(this.damageData.other.shock?.toString() || "0").roll()).total
+    result.other.mortal = (await new Roll(this.damageData.other.mortal?.toString() || "0").roll()).total + this.damageData.bonus.mortal;
+    result.other.wounds = (await new Roll(this.damageData.other.wounds?.toString() || "0").roll()).total + this.damageData.bonus.wounds;
+    result.other.shock = (await new Roll(this.damageData.other.shock?.toString() || "0").roll()).total + this.damageData.bonus.shock;
 
 
     this.data.result = result;

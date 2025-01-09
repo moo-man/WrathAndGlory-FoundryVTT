@@ -46,7 +46,7 @@
                 {{/if}}
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
-                <select class="bg-effect" data-path="effect">
+                <select class="bg-effect" data-path="effect.id">
                   {{#select background.effect.id}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
@@ -85,7 +85,7 @@
                 {{/if}}
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
-                <select class="bg-effect" data-path="effect">
+                <select class="bg-effect" data-path="effect.id">
                   {{#select background.effect.id}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}
@@ -124,7 +124,7 @@
                 {{/if}}
                 <input class="bg-name" data-path="name" type="text" value="{{background.name}}" />
                 <input class="bg-description" data-path="description" type="text" value="{{background.description}}" />
-                <select class="bg-effect" data-path="effect">
+                <select class="bg-effect" data-path="effect.id">
                   {{#select background.effect.id}}
                   <option value=""></option>
                   {{#each ../item.effects as |effect e|}}

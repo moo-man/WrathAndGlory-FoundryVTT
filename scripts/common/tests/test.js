@@ -224,7 +224,12 @@ export class WNGTest extends WarhammerTestBase {
         ed : { value : this.testData.damage.ed.value + this.testData.shifted.damage.dice.length + this.testData.edit.ed, dice : this.testData.damage.ed.dice},
         ap : { value : this.testData.damage.ap.value + this.testData.edit.ap, dice : this.testData.damage.ap.dice},
         damageDice : this.testData.damage.damageDice,
-        other : this.testData.damage.other || this.item?.system?.damage.otherDamage
+        other : this.testData.damage.other || this.item?.system?.damage.otherDamage,
+        bonus : {
+          shock : 0, 
+          mortal : 0,
+          wounds : 0,
+        }
       })
     }
     }

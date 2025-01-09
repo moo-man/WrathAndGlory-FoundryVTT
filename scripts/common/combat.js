@@ -19,14 +19,32 @@ export class WrathAndGloryCombat extends Combat {
         
         combatants.push(newActiveCombatant.setCurrent())
         // Update new turn, and combatant flags in one update
-        await this.update({turn: newTurn, combatants})
+
+        this.runEndTurnScripts(this.combatant)
+
+        await this.update({turn: newTurn, combatants}, {direction: 1})
+    }
+
+    runEndTurnScripts(combatant)
+    {
+        if (combatant?.actor && CombatHelpers.trackers && CombatHelpers.trackers[this.id]?.endTurn?.[combatant.id] < this.round)
+        {
+            // warhammer-lib checks previous combatant to run endTurn scripts, so they only run when the next combatant is activated
+            // Instead, run them here then add to the tracker to prevent it from running again
+            combatant.actor?.runScripts("endTurn", {combat: this}, true);
+            // Prevent warhammer-lib endTurn script because it's handled here
+            if (CombatHelpers.trackers)
+            {
+                foundry.utils.setProperty(CombatHelpers.trackers, `${this.id}.endTurn.${combatant.id}`, this.round);
+            }
+        }
     }
 
     async nextRound() {
         let advanceTime = Math.max(this.turns.length - (this.turn || 0), 0) * CONFIG.time.turnTime;
         advanceTime += CONFIG.time.roundTime;
         let combatants = this.combatants.map(c => c.setPending())
-        return this.update({round: this.round + 1, turn : null, combatants}, {advanceTime});
+        return this.update({round: this.round + 1, turn : null, combatants}, {advanceTime, direction: 1});
       }
 }
 
