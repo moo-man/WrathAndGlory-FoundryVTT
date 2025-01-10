@@ -1,0 +1,1 @@
+args.data.attribute = "willpower"

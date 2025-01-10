@@ -1,0 +1,1 @@
+return args.type == "skill" && game.user.targets.size

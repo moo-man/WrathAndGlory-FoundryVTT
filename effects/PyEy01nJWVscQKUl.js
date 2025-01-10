@@ -1,0 +1,1 @@
+this.actor.addEffectItems("Compendium.wng-core.items.Item.STrmO2xhRZgClDSR", this.effect, {img : this.effect.img});
