@@ -75,7 +75,7 @@ export default class ItemTraits extends FormApplication
 
         for (let match of matches)
         {
-            traits.list.push({
+            traits.push({
                 name : match[1].trim().slugify(),
                 custom : true,
                 display : match[1].trim(),
