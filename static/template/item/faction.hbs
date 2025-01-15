@@ -38,7 +38,7 @@
               {{#each system.backgrounds.origin as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.origin" data-index="{{bg}}" data-inner-target="active" >
+                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.origin" data-index="{{bg}}" data-inner-target="chosen" >
                   {{#if background.chosen}}
                     <i class="fas fa-check"></i>
                   {{/if}}
@@ -77,7 +77,7 @@
               {{#each system.backgrounds.accomplishment as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="active">
+                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.accomplishment" data-index="{{bg}}" data-inner-target="chosen">
                   {{#if background.chosen}}
                     <i class="fas fa-check"></i>
                   {{/if}}
@@ -116,7 +116,7 @@
               {{#each system.backgrounds.goal as |background bg|}}
               <div class="background" data-index="{{bg}}">
                 {{#if ../item.isOwned}}
-                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.goal" data-index="{{bg}}" data-inner-target="active">
+                <div class="wng-checkbox {{#if background.chosen}}checked{{else}}unchecked{{/if}}" data-target="system.backgrounds.goal" data-index="{{bg}}" data-inner-target="chosen">
                   {{#if background.chosen}}
                     <i class="fas fa-check"></i>
                   {{/if}}

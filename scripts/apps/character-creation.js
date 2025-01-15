@@ -187,7 +187,6 @@ export default class CharacterCreation extends FormApplication {
                     let key = effect.changes[0].key
                     // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
                     this.character.updateSource({[key] : getProperty(this.character, key) + 1})
-                    faction.effects = [];
                 }
                 else 
                 {
@@ -315,7 +314,7 @@ export default class CharacterCreation extends FormApplication {
             return enabled
         }).map(async e => {
             let item = await this.wargear.getOptionDocument(e.id)
-            if (e.type != "placeholder")
+            if (!["filter", "placeholder"].includes(e.type))
             {
                 return item;
             }
@@ -373,7 +372,14 @@ export default class CharacterCreation extends FormApplication {
             if (option.type == "filter")
             {
                 let document = await this.wargear.getOptionDocument(id)
-                this.chooseWargear(option, document);
+                if (document instanceof Item)
+                {
+                    this.chooseWargear(option, document);
+                }
+                else 
+                {
+                    ui.notifications.error("Either no results found or no result was selected.")
+                }
             }
             else
             {

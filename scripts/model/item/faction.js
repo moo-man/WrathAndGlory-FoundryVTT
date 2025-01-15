@@ -22,7 +22,7 @@ export class FactionModel extends StandardItemModel
     {
         for (let bg of this.backgrounds.origin.concat(this.backgrounds.accomplishment).concat(this.backgrounds.goal))
         {
-            if (bg.chosen && bg.effect.id == effect.id)
+            if (bg.chosen && bg.effect.id == effect.id && !effect.changes.some(c => c.mode == 0))
             {
                 return true;
             }

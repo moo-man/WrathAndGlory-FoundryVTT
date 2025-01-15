@@ -1,4 +1,4 @@
-if (args.test.result.test)
+if (args.result.test)
 {
-	args.test.result.test.dn += this.actor.system.advances.rank;
+	args.result.test.dn += this.actor.system.advances.rank;
 }

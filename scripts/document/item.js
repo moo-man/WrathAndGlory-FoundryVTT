@@ -303,7 +303,7 @@ export class WrathAndGloryItem extends WarhammerItem {
     get display() { return this.system.display }
     get value() { return this.system.value }
     get rarity() { return this.system.rarity }
-    get keywords() { return this.system.keywords }
+    get keywords() { return this.system.keywords || "" }
     get quantity() { return this.system.quantity }
     get rating() { return this.system.rating }
     get traits() { return this.system.traits }
