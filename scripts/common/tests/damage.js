@@ -4,7 +4,10 @@ export class DamageRoll {
   constructor(data) {
     this.data = data
     if (this.result.roll)
-      this.roll = Roll.fromData(this.result.roll)
+    {
+      this.roll = Roll.fromData(foundry.utils.mergeObject(this.result.roll, {options : { values: this.damageData.damageDice.values, add : this.damageData.damageDice.addValue}}));
+    }
+
     this.rerolledDamage = this.rerollData.rerolls.map(i => Roll.fromData(i));
   }
 
@@ -219,7 +222,11 @@ export class DamageRoll {
 
     this.rerollData.indices.push(diceIndices)
 
-    let reroll = await this.roll.reroll({async: true});
+    // the reroll function does not seem to preserve the term options, so reconstruct the roll
+    let reroll = Roll.fromTerms([
+      new PoolDie({ number: this.result.ed || 0, faces: 6, options: { values: this.damageData.damageDice.values, add : this.damageData.damageDice.addValue } }),
+    ]);
+    await reroll.evaluate();
     this.rerollData.rerolls.push(reroll.toJSON())
     this.rerolledDamage.push(reroll)
 
