@@ -17,7 +17,6 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
 
         let transferData = this.system.transferData;
 
-        //TODO
         let test;
         let options = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest, fields: {}};
         if (this.sourceTest && this.sourceTest.result?.test)

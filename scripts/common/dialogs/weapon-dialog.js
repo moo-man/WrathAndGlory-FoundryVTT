@@ -59,19 +59,43 @@ export class WeaponDialog extends AttackDialog {
     }
     this.tooltips.finish(this, "Weapon")
 
+
+    // Aiming
     if (this.fields.aim)
     {
       this.fields.pool++;
       this.tooltips.add("pool", 1, game.i18n.localize("WEAPON.AIM"))
-
     }
 
+    // Range
+    this.tooltips.start(this)
+    if (this.fields.range == "short")
+    {
+      this.fields.pool += 1
+      if (this.weapon.traitList.rapidFire)
+      {
+        this.fields.ed.value += (parseInt(weapon.traitList.rapidFire.rating) || 0)
+      }
+      this.tooltips.finish(this, "Short Range")
+    }
+    else if (this.fields.range == "long")
+    {
+      this.fields.difficulty += 2
+      this.tooltips.finish(this, "Long Range")
+    }
+    else 
+    {
+      this.tooltips.finish();
+    }
+
+    // Charging
     if (this.fields.charging)
     {
       this.fields.pool++;
       this.tooltips.add("pool", 1, game.i18n.localize("WEAPON.CHARGING"))
     }
 
+    // Mob
     if (this.actor.isMob)
     {
       this.fields.pool += Math.ceil(this.actor.mob / 2)
@@ -127,7 +151,7 @@ export class WeaponDialog extends AttackDialog {
 
   computeRange()
   {
-      let range
+    let range
     let weapon = this.weapon;
     if (this.fields.distance && weapon.isRanged) {
 
