@@ -68,4 +68,14 @@ export default function () {
     default: false,
     type: Boolean,
   });
+
+  
+  game.settings.register("wrath-and-glory", "postedIssues", {
+    name: "Posted Issues",
+    scope: "world",
+    config: false,
+    default: [],
+    type: Array
+  });
+
 }

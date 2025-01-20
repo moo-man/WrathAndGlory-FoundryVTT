@@ -272,6 +272,14 @@ WNG.vehicleRoles = {
 }
 
 
+WNG.bugReporterConfig = {
+    endpoint  : "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/wng",
+    githubURL : "https://api.github.com/repos/moo-man/WrathAndGlory-FoundryVTT/",
+    successMessage : "Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: @URL",
+    troubleshootingURL : "https://moo-man.github.io/WrathAndGlory-FoundryVTT/pages/troubleshooting.html"
+}
+
+
 WNG.scriptTriggers = {
 
     equipToggle : "WH.Trigger.EquipToggle",
