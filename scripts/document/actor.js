@@ -370,7 +370,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             let resilienceReduction = ap
             if (game.settings.get('wrath-and-glory', 'advancedArmour'))
             {
-                resilienceReduction = Math.min(ap, target.system.combat.resilience.armour)
+                resilienceReduction = Math.min(ap, resilience.armour)
             }
             addModifierBreakdown("ap", "AP");
             report.breakdown.push(`<strong>AP</strong>: Reduced Resilience to ${Math.max(0, res - resilienceReduction)} (${res} - ${resilienceReduction})`)
