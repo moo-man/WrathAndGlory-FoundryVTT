@@ -368,9 +368,9 @@ export class WrathAndGloryActor extends WarhammerActor {
         if (ap)
         {
             let resilienceReduction = ap
-            if (game.settings.get('wrath-and-glory', 'advancedArmour'))
+            if (game.settings.get('wrath-and-glory', 'advancedArmour') && this.type != "vehicle")
             {
-                resilienceReduction = Math.min(ap, resilience.armour)
+                resilienceReduction = Math.min(ap, resilience.armour || 0)
             }
             addModifierBreakdown("ap", "AP");
             report.breakdown.push(`<strong>AP</strong>: Reduced Resilience to ${Math.max(0, res - resilienceReduction)} (${res} - ${resilienceReduction})`)
@@ -418,32 +418,32 @@ export class WrathAndGloryActor extends WarhammerActor {
             }
         }
 
-        if (wounds && allowDetermination)
+        if (this.type != "vehicle")
         {
-            let determination = await this.rollDetermination(wounds, damageRoll?.message?.id)
-            if (determination)
+            if (wounds && allowDetermination) 
             {
-                wounds = determination.result.wounds;                
-                shock += determination.result.shock;     
-                if (determination.result.shockIgnored)
-                {   
-                    report.breakdown.push(`<strong>Determination</strong>: Ignored ${determination.result.converted} Wounds`)
+                let determination = await this.rollDetermination(wounds, damageRoll?.message?.id)
+                if (determination) {
+                    wounds = determination.result.wounds;
+                    shock += determination.result.shock;
+                    if (determination.result.shockIgnored) {
+                        report.breakdown.push(`<strong>Determination</strong>: Ignored ${determination.result.converted} Wounds`)
+                    }
+                    else {
+                        report.breakdown.push(`<strong>Determination</strong>: Converted ${determination.result.converted} Wounds to Shock`)
+                    }
+                    report.determination = determination;
                 }
-                else
-                {
-                    report.breakdown.push(`<strong>Determination</strong>: Converted ${determination.result.converted} Wounds to Shock`)
-                }
-                report.determination = determination;          
-            }        
+            }
+
+            if (shock && (this.hasCondition("exhausted"))) 
+            {
+                mortal += shock;
+                shock = 0;
+                report.breakdown.push(`<strong>Exhausted</strong>: ${shock} Shock converted to Mortal Wounds (${mortal})`);
+            }
         }
 
-        if (shock && (this.hasCondition("exhausted")))
-        {
-            mortal += shock;
-            shock = 0;
-            report.breakdown.push(`<strong>Exhausted</strong>: ${shock} Shock converted to Mortal Wounds (${mortal})`);
-        }
-    
 
         let updateObj = {}
         args = {wounds, shock, mortal, report, updateObj, actor: this, test, damageRoll}
@@ -463,7 +463,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         wounds = Math.max(wounds, 0);
         mortal = Math.max(mortal, 0);
         
-        if (shock > 0)
+        if (shock > 0 && this.type != "vehicle")
         {
             let newShock = this.system.combat.shock.value + shock
             updateObj["system.combat.shock.value"] = newShock;
