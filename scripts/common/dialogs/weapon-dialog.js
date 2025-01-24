@@ -72,10 +72,6 @@ export class WeaponDialog extends AttackDialog {
     if (this.fields.range == "short")
     {
       this.fields.pool += 1
-      if (this.weapon.traitList.rapidFire)
-      {
-        this.fields.ed.value += (parseInt(weapon.traitList.rapidFire.rating) || 0)
-      }
       this.tooltips.finish(this, "Short Range")
     }
     else if (this.fields.range == "long")

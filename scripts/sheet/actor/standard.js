@@ -114,41 +114,6 @@ export class StandardActorSheet extends BaseWnGActorSheet {
         }
     }
 
-    constructEffectLists(sheetData) {
-        let effects = {
-            temporary : [],
-            disabled : [],
-            passive : []
-        }
-
-        for(let e of Array.from(sheetData.actor.allApplicableEffects()))
-        {
-            if (e.isTemporary && !e.disabled)
-            {
-                effects.temporary.push(e);
-            }
-            else if (e.disabled)
-            {
-                effects.disabled.push(e);
-            }
-            else
-            {
-                effects.passive.push(e);
-            }
-        }
-
-        effects.conditions = CONFIG.statusEffects.map(i => {
-            return {
-                name: i.name,
-                key: i.id,
-                img: i.img,
-                existing: this.actor.hasCondition(i.id)
-            }
-        })
-
-        sheetData.effects = effects;
-    }
-
 
     _onDrop(ev) {
         let data = ev.dataTransfer.getData("text/plain")

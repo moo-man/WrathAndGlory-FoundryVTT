@@ -28,7 +28,7 @@ export default class ResolveTest  extends WNGTest {
       if (this.fear)
         this.actor.addCondition("fear")
     }
-    if (!this.result.isSuccess && !this.context.pointsAdded)
+    if (!this.result.isSuccess && !this.context.pointsAdded && this.actor.hasPlayerOwner)
     {
       this.context.pointsAdded = true;
       game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {
@@ -51,7 +51,7 @@ export default class ResolveTest  extends WNGTest {
         this.actor.removeCondition("fear")
       this.updateMessageFlags();
     }
-    if (this.result.isSuccess && this.context.pointsAdded)
+    if (this.result.isSuccess && this.context.pointsAdded && this.actor.hasPlayerOwner)
     {
       this.context.pointsAdded = true;
       game.wng.RuinGloryCounter.changeCounter(-1,  "ruin").then(() => {

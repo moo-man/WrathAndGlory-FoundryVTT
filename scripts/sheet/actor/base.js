@@ -50,19 +50,36 @@ export class BaseWnGActorSheet extends WarhammerActorSheet {
     }
 
     constructEffectLists(sheetData) {
-        let effects = {}
+        let effects = {
+            temporary : [],
+            disabled : [],
+            passive : []
+        }
+
+        for(let e of Array.from(sheetData.actor.allApplicableEffects()))
+        {
+            if (e.isTemporary && !e.disabled)
+            {
+                effects.temporary.push(e);
+            }
+            else if (e.disabled)
+            {
+                effects.disabled.push(e);
+            }
+            else
+            {
+                effects.passive.push(e);
+            }
+        }
 
         effects.conditions = CONFIG.statusEffects.map(i => {
             return {
-                label: i.name,
+                name: i.name,
                 key: i.id,
-                img: i.icon,
+                img: i.img,
                 existing: this.actor.hasCondition(i.id)
             }
         })
-        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.disabled && !i.isCondition)
-        effects.disabled = sheetData.actor.effects.filter(i => i.disabled && !i.isCondition)
-        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.disabled && !i.isCondition)
 
         sheetData.effects = effects;
     }
