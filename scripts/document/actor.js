@@ -467,7 +467,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             let newShock = this.system.combat.shock.value + shock
             updateObj["system.combat.shock.value"] = newShock;
-            if (newShock >= this.system.combat.shock.max)
+            if (newShock > this.system.combat.shock.max)
             {
                 await this.addCondition("exhausted")
             }
@@ -476,7 +476,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             let newWounds = this.system.combat.wounds.value + wounds + mortal;
             updateObj["system.combat.wounds.value"] = newWounds;
-            if (newWounds >= this.system.combat.wounds.max)
+            if (newWounds > this.system.combat.wounds.max)
             {
                 await this.addCondition("dying")
             }

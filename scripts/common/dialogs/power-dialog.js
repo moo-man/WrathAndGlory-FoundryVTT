@@ -47,16 +47,19 @@ export class PowerDialog extends AttackDialog {
   computeFields()
   {
     super.computeFields();
+    this.tooltips.start(this)
+
     if (this.fields.level == "unbound")
     {
       this.fields.wrath += 1
-      this.tooltips.add("wrath", 1, this.data.levels[this.fields.level])
+      this.fields.pool += 1
     }
     if (this.fields.level == "transcendent")
     {
         this.fields.wrath += 2
-        this.tooltips.add("wrath", 2, this.data.levels[this.fields.level])
+        this.fields.pool += 2
     }
+    this.tooltips.finish(this, this.data.levels[this.fields.level])
 
     let power = this.power;
   
