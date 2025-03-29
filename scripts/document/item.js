@@ -163,15 +163,7 @@ export class WrathAndGloryItem extends WarhammerItem {
 
 
         // Get all archetype talents/wargear, merge with diff
-        for (let i of this.suggested.talents.list.concat(this.wargear.filter(k => k.id)))
-        {
-            let item = await warhammer.utility.findItemId(i.id)
-            if (item)
-            {
-                item = item.toObject();
-                items.push(mergeObject(item, i.diff, {overwrite: true}))
-            }
-        }
+        items = items.concat(this.suggested.talents.documents).concat(this.wargear.options.map(w => this.wargear.getOptionDocument(w.id)));
 
         items = (await Promise.all(items.concat(
             [species],

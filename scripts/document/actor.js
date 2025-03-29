@@ -252,11 +252,10 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
         else if (this.type == "threat" && apply) // If threat, apply archetype statistics
         {
-            message.push(`Applying ${archetype.name} Archetype`)
+            ui.notifications.info(`Applying ${archetype.name} Archetype`)
             let actorData = this.toObject();
 
             let items = await archetype.GetArchetypeItems()
-            items.push(archetype.toObject())
             let faction = items.find(i => i.type == "faction")
             let species = items.find(i => i.type == "species")
             faction.effects = [];
