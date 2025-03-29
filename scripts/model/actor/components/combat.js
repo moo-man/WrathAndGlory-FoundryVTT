@@ -82,16 +82,6 @@ export class CombatModel extends foundry.abstract.DataModel {
         this.resilience.armour = 0;
         let highestRes = 0
         for (let item of armour.filter(i => i.system.equipped)) {
-            if (item.rating)
-            {
-                if (item.traitList.powered)
-                    attributes.strength.total += parseInt(item.traitList.powered.rating);
-            }
-
-            if (item.traitList.bulk)
-            {
-                this.speed -= item.traitList.bulk.rating
-            }
 
             if (item.traitList.shield) 
             {
@@ -103,15 +93,9 @@ export class CombatModel extends foundry.abstract.DataModel {
                 highestRes = item.rating
             }
 
-
             if (item.system.invulnerable)
             {
                 this.resilience.invulnerable = true
-            }
-
-            if (item.traitList.forceField)
-            {
-                this.resilience.forceField = true;
             }
         }
         this.resilience.armour += highestRes

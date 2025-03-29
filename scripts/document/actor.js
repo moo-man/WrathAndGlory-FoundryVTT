@@ -335,7 +335,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         mortalDetermination = args.mortalDetermination;
         
         let invuln = resilience.invulnerable
-        if (resilience.forceField)
+        if (resilience.powerField)
         {
             mortalDetermination = true;
         }

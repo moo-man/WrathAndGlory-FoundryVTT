@@ -806,8 +806,8 @@ WNG.traitEffects = {
                 },
                 scriptData : [{
                     label : "Reduce Speed",
-                    trigger : "prePrepareData",
-                    script : "this.actor.system.combat.speed -= this.item.itemTraits.bulk.rating",
+                    trigger : "prepareBaseData",
+                    script : "this.actor.system.combat.speed -= parseInt(this.item.traitList.bulk.rating)",
                 }]
             }
         },
@@ -819,11 +819,37 @@ WNG.traitEffects = {
                 },
                 scriptData : [{
                     label : "Increase Strength",
-                    trigger : "computeCombat",
-                    script : "this.actor.system.attributes.strength.total -= this.item.itemTraits.bulk.rating",
+                    trigger : "prepareBaseData",
+                    script : "this.actor.system.attributes.strength.bonus += parseInt(this.item.traitList.powered.rating)",
                 }]
             }
-        }  
+        },
+        // shield: {
+        //     name : "TRAIT.Shield",
+        //     system : {
+        //         transferData : {
+        //             equipTransfer: true
+        //         },
+        //         scriptData : [{
+        //             label : "Add Shield Bonuses",
+        //             trigger : "prepareData",
+        //             script : "this.actor.system.combat.resilience.armour += parseInt(this.item.traitList.shield.rating); this.actor.system.combat.defence.bonus += parseInt(this.item.traitList.shield.rating)",
+        //         }]
+        //     }
+        // },
+        powerField: {
+            name : "TRAIT.PowerField",
+            system : {
+                transferData : {
+                    equipTransfer: true
+                },
+                scriptData : [{
+                    label : "Power Field",
+                    trigger : "prepareDerivedData",
+                    script : "this.actor.system.combat.resilience.powerField = true",
+                }]
+            }
+        } 
 }
 
 CONFIG.statusEffects = [
