@@ -461,8 +461,26 @@ export class WrathAndGloryActor extends WarhammerActor {
         shock = Math.max(shock, 0);
         wounds = Math.max(wounds, 0);
         mortal = Math.max(mortal, 0);
+
+        if (this.isMob && test)
+        {
+            let mobHit = 1 + Math.max(0, test.result.success - this.system.combat.defence.total);
+            let mobDamage = 0;
+            if (wounds + mortal > 0)
+            {
+                mobDamage += mobHit;
+            }
+
+            if (shock && shock > this.system.combat.shock.max)
+            {
+                mobDamage += mobHit
+            }
+
+            updateObj["system.mob.value"] = this.system.mob.value - mobDamage
+            report.breakdown.push(`<strong>Mob</strong>: Reduced by ${mobDamage}`);
+        }
         
-        if (shock > 0 && this.type != "vehicle")
+        if (shock > 0 && this.type != "vehicle" && !this.isMob)
         {
             let newShock = this.system.combat.shock.value + shock
             updateObj["system.combat.shock.value"] = newShock;
@@ -471,7 +489,7 @@ export class WrathAndGloryActor extends WarhammerActor {
                 await this.addCondition("exhausted")
             }
         }
-        if (wounds > 0 || mortal > 0)
+        if ((wounds > 0 || mortal > 0) && !this.isMob)
         {
             let newWounds = this.system.combat.wounds.value + wounds + mortal;
             updateObj["system.combat.wounds.value"] = newWounds;
@@ -480,6 +498,8 @@ export class WrathAndGloryActor extends WarhammerActor {
                 await this.addCondition("dying")
             }
         }
+
+
         let applyDamageEffects = false
         if (shock + wounds + mortal > 0 && !args.abort) // if shock or wounds or mortal
         {
