@@ -460,8 +460,8 @@ justify-content: center;
     text-align: center;
     padding: 0 30px;
     background: none;
-    width: 100%;
-    display: block;
+    display: flex;
+    align-self: center;
   }
 
   .choice-text {
@@ -471,6 +471,11 @@ justify-content: center;
     margin: 5px;
     width: unset;
     padding: 10px;
+  }
+
+  .choice-group {
+    display: flex;
+    flex-direction: column;
   }
 }
 
