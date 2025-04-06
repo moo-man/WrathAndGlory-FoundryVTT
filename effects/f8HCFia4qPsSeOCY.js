@@ -1,12 +1,12 @@
 if (this.item.specifier == "Skill")
     {
-        let skills = ["awareness",
-        "cunning",
-        "deception",
-        "insight",
-        "persuasion",
-        "psychicMastery",
-        "stealth"].map(i => {
+        let skills = ["ballisticSkill",
+        "medicae",
+        "pilot",
+        "scholar",
+        "survival",
+        "tech",
+        "weaponSkill"].map(i => {
             return {id : i, name : systemConfig().skills[i], img : this.effect.img}
         });
         let choice = await ItemDialog.create(skills, 1, {title : this.effect.name, text : "Select Skill"})
