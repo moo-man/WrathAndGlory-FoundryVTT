@@ -1,3 +1,4 @@
 {
-    "path" : "C:/path/to/foundry/data"
+    "path" : "C:/path/to/foundry/data",
+    "pathWithVersion" : "C:/path/to/foundry/{version}/data"
 }

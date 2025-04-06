@@ -7,7 +7,7 @@ import jscc from 'rollup-plugin-jscc'
 
 let manifest = JSON.parse(fs.readFileSync("./system.json"))
 
-let systemPath = foundryPath.systemPath(manifest.id)
+let systemPath = foundryPath.systemPath(manifest.id, manifest.compatibility.verified)
 
 console.log("Bundling to " + systemPath)
 

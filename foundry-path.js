@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 
-function foundryConfig(systemId) {
+function foundryConfig(systemId, version) {
   const configPath = path.resolve(process.cwd(), 'foundryconfig.json');
   let config;
 
@@ -16,7 +16,7 @@ function foundryConfig(systemId) {
   }
   else if (config?.path)
   {
-    foundryPath = path.join(config.path, "systems", systemId)
+      foundryPath = path.join(config.path, "systems", systemId).replace("{version}", version);
   }
 
   console.log("Foundry Path: " + foundryPath)
