@@ -80,10 +80,16 @@ export default class RuinGloryCounter extends Application {
     /**
      * Set the counter of (type) to (value)
      * @param value Value to set counter to
-     * @param type  Type of counter, "momentum" or "doom"
+     * @param type  Type of counter, "glory" or "ruin"
      */
     static async setCounter(value, type) {
       value = Math.round(value);
+      let max = game.settings.get("wrath-and-glory", `${type}Max`);
+
+      if (max)
+      {
+        value = Math.min(max, value);
+      }
   
       if (!game.user.isGM) {
         game.socket.emit('system.wrath-and-glory', {
@@ -102,7 +108,7 @@ export default class RuinGloryCounter extends Application {
     /**
      * Change the counter of (type) by (value)
      * @param diff How much to change the counter
-     * @param type  Type of counter, "momentum" or "doom"
+     * @param type  Type of counter, "glory" or "ruin"
      */
     static async changeCounter(diff, type) {
       let value = game.settings.get('wrath-and-glory', type);

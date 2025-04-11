@@ -35,6 +35,25 @@ export default function () {
   });
 
 
+  game.settings.register('wrath-and-glory', 'ruinMax', {
+    name: 'Maximum Ruin',
+    hint: 'Caps the amount of Ruin in the counter.',
+    scope: 'world',
+    config: true,
+    default: 8,
+    type: Number,
+  });
+
+  game.settings.register('wrath-and-glory', 'gloryMax', {
+    name: 'Maximum Glory',
+    hint: 'Caps the amount of Glory in the counter.',
+    scope: 'world',
+    config: true,
+    default: 6,
+    type: Number,
+  });
+
+
   game.settings.register('wrath-and-glory', 'ruin', {
     name: 'Ruin',
     scope: 'world',

@@ -435,13 +435,16 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   unshift() {
-    let glorySubtract = -this.testData.shifted.glory.length
-    game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
-      game.counter.render(true)
-      if (glorySubtract)
-        ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", { change: glorySubtract }))
-    })
-    //this.result.allDice.filter(die => die.shift).forEach(die => die.shift = "")
+    if (this.testData.shifted.glory.dice.length)
+    {
+      let glorySubtract = -this.testData.shifted.glory.dice.length
+      game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
+        game.counter.render(true)
+        if (glorySubtract)
+          ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", { change: glorySubtract }))
+      })
+      //this.result.allDice.filter(die => die.shift).forEach(die => die.shift = "")
+    }
     for(let option of Object.values(this.testData.shifted))
     {
       option.dice = [];
