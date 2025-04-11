@@ -139,8 +139,26 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
     }
 
-    async setupPowerTest(power, options = {}) {
-        return this._setupTest(PowerDialog, PowerTest, power, options)
+    async setupPowerTest(power, options = {}) 
+    {
+        if (typeof power == "string")
+        {
+            power = this.items.get(power) || await fromUuid(power)
+        }
+
+        if (game.user.targets.size > 1 && power.system.multiTarget)
+        {
+            return Promise.all(game.user.targets.map(i => {
+                let optionsCopy = foundry.utils.deepClone(options);
+                optionsCopy.targets = [i];
+                optionsCopy.multi = game.user.targets.size;
+                return this._setupTest(PowerDialog, PowerTest, power, optionsCopy);
+            }))
+        }
+        else 
+        {
+            return this._setupTest(PowerDialog, PowerTest, power, options);
+        }
     }
 
     async setupAbilityRoll(ability, options = {}) {
@@ -227,7 +245,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             return;
         }
-        let test = await this.setupGenericTest("determination", {message, fields: {wounds}, resolveClose: true})
+        let test = await this.setupGenericTest("determination", {message, fields: {wounds}}, {resolveClose: true});
         return test;
     }
 

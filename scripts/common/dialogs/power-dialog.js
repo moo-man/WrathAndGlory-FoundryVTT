@@ -37,7 +37,7 @@ export class PowerDialog extends AttackDialog {
 
       options.title = `${power.name} Test`
       
-      if (power.system.DN == "?") 
+      if (power.system.dn.includes("@") && dialogData.data.targets.length == 0) 
       {
         ui.notifications.warn(game.i18n.localize("DIALOG.TARGET_DEFENSE_WARNING"))
       }
@@ -60,6 +60,13 @@ export class PowerDialog extends AttackDialog {
         this.fields.pool += 2
     }
     this.tooltips.finish(this, this.data.levels[this.fields.level])
+
+    this.tooltips.start(this)
+    if (this.options.multi)
+    {
+      this.fields.difficulty += (this.options.multi - 1) * 2;
+    }
+    this.tooltips.finish(this, `Multi-Attack (${this.options.multi} Targets)`)
 
     let power = this.power;
   
@@ -94,10 +101,16 @@ export class PowerDialog extends AttackDialog {
   computeInitialFields()
   {
     super.computeInitialFields();
-    let DN = this.power.system.DN;
-    if(!isNaN(DN))
+    if(this.power.system.dn)
     {
-      this.fields.difficulty = this.power.system.DN
+      if (Number.isNumeric(this.power.system.dn))
+      {
+        this.fields.difficulty = parseInt(this.dn)
+      }
+      else if (this.power.system.dn.includes("@") && this.target)
+      {
+        this.fields.difficulty = (0, eval)(Roll.replaceFormulaData(this.power.system.dn, this.target.getRollData()))
+      }
       this.tooltips.set("difficulty", this.fields.difficulty, this.power.name + " DN");
     }
     else 
