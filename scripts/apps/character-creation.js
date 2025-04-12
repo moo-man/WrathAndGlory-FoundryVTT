@@ -205,16 +205,19 @@ export default class CharacterCreation extends FormApplication {
                 let bg = faction.system.backgrounds.origin[chosenOrigin.dataset.index || 0]
                 bg.active = true;
                 bg.chosen = effectId == bg.effect.id;
+                this.character.updateSource({"system.bio.origin" : bg.description});
             }
             if(chosenAccomplishment) {
                 let bg = faction.system.backgrounds.accomplishment[chosenAccomplishment.dataset.index || 0]
                 bg.active = true;
                 bg.chosen = effectId == bg.effect.id;
+                this.character.updateSource({"system.bio.accomplishment" : bg.description});
             }
             if(chosenGoal) {
                 let bg = faction.system.backgrounds.goal[chosenGoal.dataset.index || 0]
                 bg.active = true;
                 bg.chosen = effectId == bg.effect.id;
+                this.character.updateSource({"system.bio.goal" : bg.description});
             }
         }
         else
@@ -234,8 +237,10 @@ export default class CharacterCreation extends FormApplication {
             .concat(this.addedTalents)
             .concat((await Promise.all(this.archetype.keywords.map(WNGUtility.getKeywordItem))).map(i => i?.toObject())).filter(i => i)
 
+        let characterData = this.character.toObject();
+        delete characterData.folder;
 
-        await this.actor.update(mergeObject(this.character.toObject(), { overwrite: true }))
+        await this.actor.update(characterData);
         this.actor.createEmbeddedDocuments("Item", items) // Separately add items so effects are inherently added
         this.close();
     }
