@@ -245,7 +245,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             return;
         }
-        let test = await this.setupGenericTest("determination", {message, fields: {wounds}}, {resolveClose: true});
+        let test = await this.setupGenericTest("determination", {message, fields: {wounds}, resolveClose: true});
         return test;
     }
 
@@ -482,13 +482,19 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (this.isMob && test)
         {
+            // How many of the mob is hit
             let mobHit = 1 + Math.max(0, test.result.success - this.system.combat.defence.total);
+
+            // How much to reduce the mob by
             let mobDamage = 0;
+
+            // If wounds inflicted, all mobs that were hit die
             if (wounds + mortal > 0)
             {
                 mobDamage += mobHit;
             }
 
+            // If shock inflicted is greater than a mob member has, all mobs that were hit die
             if (shock && shock > this.system.combat.shock.max)
             {
                 mobDamage += mobHit
