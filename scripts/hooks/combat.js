@@ -1,6 +1,6 @@
 export default function() {
     Hooks.on("updateCombat", (combat, data) => {
-        if (combat.current.round == 1 && !combat.current.turn)
+        if (combat.current.round == 1 && !combat.current.turn && game.users.activeGM  == game.user)
         {
             let chatData = {
                 content : `<div class="wrath-and-glory chat"><h3>New Combat - Battlecries</h3>`
