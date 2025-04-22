@@ -50,14 +50,18 @@ export class BaseItemModel extends BaseWarhammerItemModel
             }
         }
 
+        let validDamage = (obj) => {
+            return ("base" in obj || "bonus" in obj || "rank" in obj)
+        }
+
         if (data.damage)
         {
-            if (!data.damage.ap && data.ap) {
+            if (!validDamage(data.damage.ap) && data.ap) {
                 data.damage.ap = data.ap;
                 delete data.ap;
             }
 
-            if (!data.damage.ed && data.ed) {
+            if (!validDamage(data.damage.ed) && data.ed) {
                 data.damage.ed = data.ed;
                 delete data.ed;
             }
@@ -84,7 +88,7 @@ export class BaseItemModel extends BaseWarhammerItemModel
 
 
 
-            if (data.damage.otherDamage.mortalWounds) 
+            if (data.damage.otherDamage?.mortalWounds) 
             {
                 data.otherDamage.mortal = data.otherDamage.mortalWounds;
                 delete data.otherDamage.mortalWounds;
@@ -102,8 +106,6 @@ export class BaseItemModel extends BaseWarhammerItemModel
                 data.damage.ap.rank = this._convertRank(data.damage.ap.rank);
             }
         }
-
-
     }
 
     static _convertRank(str)

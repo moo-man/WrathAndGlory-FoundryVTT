@@ -428,16 +428,16 @@
       "damage": {
         "base": 0,
         "bonus": 0,
-        "rank": "none",
+        "rank": 0,
         "ed": {
           "base": 0,
           "bonus": 0,
-          "rank": "none"
+          "rank": 0
         },
         "ap": {
           "base": 0,
           "bonus": 0,
-          "rank": "none"
+          "rank": 0
         },
         "otherDamage" : {
           "mortal" : "",
@@ -502,11 +502,11 @@
       "damage": {
         "base": 0,
         "bonus": 0,
-        "rank": "none",
+        "rank": 0,
         "ed": {
           "base": 0,
           "bonus": 0,
-          "rank": "none"
+          "rank": 0
         },
         "other" : {
           "mortal" : "",
@@ -533,22 +533,22 @@
       "attack": {
         "base": 0,
         "bonus": 0,
-        "rank": "none"
+        "rank": 0
       },
       "damage": {
         "base": 0,
         "bonus": 0,
-        "rank": "none"
+        "rank": 0
       },
       "ed": {
         "base": 0,
         "bonus": 0,
-        "rank": "none"
+        "rank": 0
       },
       "ap": {
         "base": 0,
         "bonus": 0,
-        "rank": "none"
+        "rank": 0
       },
       "category": "melee",
       "range": {
