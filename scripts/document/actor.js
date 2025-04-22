@@ -483,7 +483,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         if (this.isMob && test)
         {
             // How many of the mob is hit
-            let mobHit = 1 + Math.max(0, test.result.success - this.system.combat.defence.total);
+            let mobHit = 1 + Math.max(0, test.result.success - test.result.dn);
 
             // How much to reduce the mob by
             let mobDamage = 0;
@@ -501,6 +501,10 @@ export class WrathAndGloryActor extends WarhammerActor {
             }
 
             updateObj["system.mob.value"] = this.system.mob.value - mobDamage
+            if (mobDamage >= this.system.mob.value)
+            {
+                await this.addCondition("dead");
+            }
             report.breakdown.push(`<strong>Mob</strong>: Reduced by ${mobDamage}`);
         }
         
