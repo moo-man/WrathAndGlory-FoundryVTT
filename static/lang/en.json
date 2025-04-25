@@ -327,7 +327,7 @@
   "POWER.POTENCY_SINGLE" : "Single",
   "POWER.POTENCY_COST_HELP" : "How many shifts this Potency costs",
   "POWER.POTENCY_INITIAL_HELP" : "Initial value before overcasting",
-  "POWER.POTENCY_PROPERTY_HELP" : "Property being overcasted",
+  "POWER.POTENCY_PROPERTY_HELP" : "<p>Property being overcasted.</p> Examples: <ul><li><p><strong>Damage</strong>: <code>damage.base</code></p></li><li><p><strong>ED</strong>: <code>damage.ed.value</code></p></li><li><p><strong>AP</strong>: <code>damage.ap.value</code></p></li><li><p><strong>Shock</strong>: <code>damage.bonus.shock</code></p></li><li><p><strong>Mortal Wounds</strong>: <code>damage.bonus.mortal</code></p></li><li><p><strong>Range</strong>: <code>range</code></p></li><li><p><strong>Duration</strong>: <code>duration</code></p></li>",
   "POWER.POTENCY_VALUE_HELP" : "How much to add per overcast",
   "POWER.POTENCY_SINGLE_HELP" : "Can only be allocated once",
 

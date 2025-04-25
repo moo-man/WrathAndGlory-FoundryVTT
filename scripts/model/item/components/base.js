@@ -51,6 +51,8 @@ export class BaseItemModel extends BaseWarhammerItemModel
         }
 
         let validDamage = (obj) => {
+            if (!obj) return false
+            
             return ("base" in obj || "bonus" in obj || "rank" in obj)
         }
 
