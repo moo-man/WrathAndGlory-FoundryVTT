@@ -105,7 +105,7 @@ export class PowerDialog extends AttackDialog {
     {
       if (Number.isNumeric(this.power.system.dn))
       {
-        this.fields.difficulty = parseInt(this.dn)
+        this.fields.difficulty = parseInt(this.power.system.dn)
       }
       else if (this.power.system.dn.includes("@") && this.target)
       {
