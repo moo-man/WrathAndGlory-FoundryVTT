@@ -1,0 +1,88 @@
+@use "./mixins/border" as *;
+
+.application.wrath-and-glory.sheet {
+
+    --input-border: var(--color-cool-3);
+    --keyword-bg: var(--color-cool-3);
+
+    .input-group {
+        display: flex;
+        align-items: center;
+        height: 1.5rem;
+        border: 1px solid var(--input-border);
+        box-sizing: content-box;
+        > * 
+        {
+            flex: 1;
+        }
+        label {
+            padding: 0px 1rem;
+            flex: 0 0 6rem;
+            text-align: center;
+            &.large {
+                flex: 0 0 10rem;
+            }
+            &.small {
+                flex: 0 0 3rem;
+            }
+        }
+        input {
+            outline: none;
+            border-radius: 0px;
+            height: 100%;
+            border: 0px;
+            text-align: center;
+            padding: 0px;
+        }
+
+        .like-input {
+            a {
+                flex: 0 0 1rem;
+            }
+        }
+    }
+
+    h2.sheet-divider {
+        text-align: center;
+        font-size: var(--font-size-18);
+        font-weight: bold;
+        margin: 0px 30%;
+        @include gradient-border;
+    }
+
+    .sheet-header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .header-details {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 0.5rem;
+        }
+        img {
+            flex: 0 0 100px;
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .details-row {
+
+        }
+    }
+
+
+    .details-row {
+        gap: 0.5rem;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        > * {
+            flex: 1;
+        }
+    }
+
+}

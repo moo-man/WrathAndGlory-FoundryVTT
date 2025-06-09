@@ -129,6 +129,9 @@
   "ATTRIBUTE.WILLPOWER_ABREV" : "Wil",
   "ATTRIBUTE.INTELLECT_ABREV" : "Int",
   "ATTRIBUTE.FELLOWSHIP_ABREV" : "Fel",
+  "ATTRIBUTE.BASE" : "Base",
+  "ATTRIBUTE.ADVANCES" : "Advances",
+  "ATTRIBUTE.TOTAL" : "Total",
 
   "BIO.ARCHETYPE": "Archetype",
   "BIO.FACTION": "Faction",
