@@ -12,11 +12,11 @@ export class AgentSheet extends StandardActorSheet {
         header : {scrollable: [""], template : 'systems/wrath-and-glory/templates/actor/agent/agent-header.hbs', classes: ["sheet-header"] },
         tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
         stats: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-stats.hbs' },
-        // combat: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/tabs/actor-skills.hbs' },
-        // talents: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/tabs/actor-talents.hbs' },
-        // gear: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/tabs/actor-combat.hbs' },
-        // effects: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/tabs/actor-powers.hbs' },
-        // notes: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/tabs/actor-effects.hbs' },
+        combat: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-combat.hbs' },
+        abilities: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-abilities.hbs' },
+        gear: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-gear.hbs' },
+        effects: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-effects.hbs' },
+        notes: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/agent/agent-notes.hbs' },
       }
 
       
@@ -31,20 +31,20 @@ export class AgentSheet extends StandardActorSheet {
           group: "primary",
           label: "TAB.COMBAT",
         },
-        talents: {
-          id: "talents",
+        abilities: {
+          id: "abilities",
           group: "primary",
-          label: "TAB.TALENTS",
-        },
-        gear: {
-          id: "gear",
-          group: "primary",
-          label: "TAB.GEAR",
+          label: "TAB.ABILITIES",
         },
         effects: {
           id: "effects",
           group: "primary",
           label: "TAB.EFFECTS",
+        },
+        gear: {
+          id: "gear",
+          group: "primary",
+          label: "TAB.GEAR",
         },
         notes: {
           id: "notes",

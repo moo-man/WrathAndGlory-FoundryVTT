@@ -70,11 +70,13 @@
         }
     }
 
+    .ascensions,
     .keywords {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
         gap: 0.5rem;
+        .ascension,
         .keyword {
             border-radius: 10px;
             background: var(--keyword-bg);
@@ -92,6 +94,95 @@
             > * {
                 flex: 1;
                 text-align: center;
+            }
+        }
+    }
+
+    .combat-sections {
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+        > * {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            .attribute-box {
+                flex: 0 0 1.5rem;
+            }
+            .sheet-divider
+            {
+                margin: 0px;
+            }
+        }
+    }
+
+    .gear-fields {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        > * {
+            flex: 0 0 10rem;
+        }
+        h2 {
+            flex: 1;
+            margin: 0px;
+        }
+    }
+
+    .list-row {
+        button {
+            height: 1.5rem;
+        }
+    }
+
+    .quantity {
+        display: flex;
+        justify-content: center;
+        button {
+            border: 0px;
+            outline: none;
+            box-shadow: none;
+
+            &:hover {
+                background: none;
+            }
+        }
+    }
+
+    .notes-section  {
+        .flexrow {
+            gap: 0.5rem;
+        }
+    }
+
+    .tab[data-tab=notes]
+    {
+        h2:not(:first-child) 
+        {
+            margin-top: 1rem;
+        }
+    }
+
+    .advances {
+        display: flex;
+        gap: 0.5rem;
+
+        .small {
+            flex: 0.7
+        }
+
+        .experience {
+            flex: 3;
+        }
+
+
+        &.labels {
+            .attribute-box {
+                border: 0px;
+            }
+            .label {
+                border: 0px;
             }
         }
     }

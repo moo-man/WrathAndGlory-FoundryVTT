@@ -85,4 +85,24 @@
         }
     }
 
+    .effect-lists {
+        gap:  0.5rem;
+        display:   flex;
+        flex-direction: column;
+    }
+
+    .conditions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        .condition {
+            border: 1px solid var(--color-cool-3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 0.5rem; 
+            flex: 0 0 2rem;
+        }
+    }
+
 }

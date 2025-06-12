@@ -23,7 +23,6 @@
 
     {{#each system.skills}}
     <div class="attribute-box single">
-        {{log this}}
             <div class="label" style="grid-column: 1 / span 9"><span class="skill-attribute"></span><label class="centered">{{configLookup "skills" @key}}</label> <span class="skill-attribute">({{configLookup "attributeAbbrev" this.attribute}})</span></div>
             <div class="field" style="grid-column: 10 / span 1">{{formInput (lookup (lookup ../fields.skills.fields @key) "fields.base") value=this.base tooltip="ATTRIBUTE.BASE"}}</div>
             <div class="field" style="grid-column: 11 / span 1">{{formInput (lookup (lookup ../fields.skills.fields @key) "fields.rating") value=this.rating tooltip="ATTRIBUTE.RATING"}}</div>

@@ -39,7 +39,6 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
       async _prepareContext(options)
       {
           let context = await super._prepareContext(options);
-          // context.items.equipped = this.getEquippedItems();
           return context;
       }
 

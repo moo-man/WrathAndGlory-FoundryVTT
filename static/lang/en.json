@@ -239,6 +239,7 @@
 
   "HEADER.TALENT": "Talent",
   "HEADER.ABILITY": "Ability",
+  "HEADER.ABILITIES": "Abilities",
   "HEADER.PSYCHIC_POWER": "Psychic Power",
   "HEADER.WEAPON": "Weapon",
   "HEADER.ARMOUR": "Armour",
@@ -404,6 +405,7 @@
   "SKILL.WEAPON_SKILL": "Weapon Skill",
 
   "TAB.EFFECTS": "EFFECTS",
+  "TAB.ABILITIES": "ABILITIES",
   "TAB.COMBAT": "COMBAT",
   "TAB.GEAR": "GEAR",
   "TAB.NOTES": "NOTES",
