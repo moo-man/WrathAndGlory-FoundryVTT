@@ -94,7 +94,38 @@
             {{/each}}
         </div>
     </div>
+    
+    {{#if mobAbilities.length }}
+    <h2 class="sheet-divider">{{localize "TITLE.INACTIVE_MOB_ABILITIES"}}</h2>
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.ABILITY"}}</div>
+            <div>{{localize "Mob Required"}}</div>
+            <div class="list-controls">
 
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each mobAbilities}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div>
+                            {{{this.system.requiredMob}}}
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    <div class="dropdown-content collapsed">
 
-
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/if}}
 </section>

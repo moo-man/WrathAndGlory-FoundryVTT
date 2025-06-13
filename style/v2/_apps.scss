@@ -1,0 +1,14 @@
+.application.mob-config {
+    .window-content {
+        > div {
+            height: 100%;
+            .sheet-list {
+                height: 100%;
+            }
+            .list-content {
+                overflow: auto;
+                height: calc(100% - 3rem);
+            }
+        }
+    }
+}

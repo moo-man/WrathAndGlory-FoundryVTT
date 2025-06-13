@@ -135,7 +135,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
         else 
         {
-            return this._setupTest(WeaponDialog, WeaponTest, weapon, options);
+            return this._setupTest(WeaponDialog, WeaponTest, weapon, context);
         }
     }
 
@@ -157,7 +157,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
         else 
         {
-            return this._setupTest(PowerDialog, PowerTest, power, options);
+            return this._setupTest(PowerDialog, PowerTest, power, context);
         }
     }
 
@@ -177,7 +177,7 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (ability.system.abilityType == "determination")
         {
-            return this.actor.setupGenericTest("determination")
+            return this.setupGenericTest("determination")
         }
 
         if (ability.system.test.self)

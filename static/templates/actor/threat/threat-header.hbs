@@ -49,14 +49,30 @@
                 {{/if}}
             </div>
         </div>
-    <div class="details-row">
-            <div class="input-group">
-                <label>{{localize "BIO.QUOTE"}}</label>
-                <input type="text" name="system.bio.quote" value="{{system.bio.quote}}">
+        <div class="details-row">
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 7">{{localize "BIO.THREAT"}}</div>
+                <div class="field" style="grid-column: 8 / span 1"> <input name="system.bio.threat.first" type="text"
+                        value="{{system.bio.threat.first}}" /></div>
+                <div class="field" style="grid-column: 9 / span 1"> <input name="system.bio.threat.second" type="text"
+                        value="{{system.bio.threat.second}}" /></div>
+                <div class="field" style="grid-column: 10 / span 1"> <input name="system.bio.threat.third" type="text"
+                        value="{{system.bio.threat.third}}" /></div>
+                <div class="field" style="grid-column: 11 / span 1"> <input name="system.bio.threat.fourth" type="text"
+                        value="{{system.bio.threat.fourth}}" /></div>
+                <div class="field" style="grid-column: 12 / span 1"> <input name="system.bio.threat.fifth" type="text"
+                        value="{{system.bio.threat.fifth}}" /></div>
             </div>
-           <div class="input-group" style="flex: 0.3">
-                <label class="small">{{localize "RESOURCE.WRATH"}}</label>
-                <input type="text" name="system.resources.wrath" value="{{system.resources.wrath}}">
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 7">{{localize "RESOURCE.RUIN"}}</div>
+                <div class="field" style="grid-column: 8 / span 5"> <input name="system.resources.ruin" type="text"
+                        value="{{system.resources.ruin}}" /></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 7"><a data-action="configureMob">{{localize "THREAT.MOB"}} <i
+                            class="fa-solid fa-people-group"></i></a></div>
+                <div class="field" style="grid-column: 8 / span 5"> <input name="system.mob.value" type="number"
+                        value="{{system.mob.value}}" /></div>
             </div>
         </div>
     </div>
