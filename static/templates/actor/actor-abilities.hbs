@@ -1,74 +1,99 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
 
-        <div class="sheet-list">
-            <div class="list-header row-content">
-                <div class="list-name">{{localize "HEADER.TALENT"}}</div>
-                <div class="flex large">{{localize "HEADER.DESCRIPTION"}}</div>
-                <div class="list-controls">
-                    <a class="list-control" data-action="createItem" data-type="talent"><i class="fas fa-plus"></i></a>
-                </div>
-            </div>
-            <div class="list-content">
-                {{#each items.talent}}
-                    <div class="list-row" data-uuid="{{this.uuid}}">
-                        <div class="row-content">
-                            <div class="list-name">
-                                <img src="{{this.img}}">
-                                <a class="label" data-action="">{{this.name}}</a>
-                            </div>
-                            <div class="flex large"></div>
-                        </div>
-                    </div>
-                {{/each}}
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.TALENT"}}</div>
+            <div class="flex large">{{localize "HEADER.DESCRIPTION"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="talent"><i class="fas fa-plus"></i></a>
             </div>
         </div>
+        <div class="list-content">
+            {{#each items.talent}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="ability">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div class="inline-description" data-action="toggleSummary">
+                            {{{this.system.description}}}
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    <div class="dropdown-content collapsed">
 
-           
-        <div class="sheet-list">
-            <div class="list-header row-content">
-                <div class="list-name">{{localize "HEADER.ABILITIES"}}</div>
-                <div class="flex large">{{localize "HEADER.DESCRIPTION"}}</div>
-                <div class="list-controls">
-                    <a class="list-control" data-action="createItem" data-type="ability"><i class="fas fa-plus"></i></a>
-                </div>
-            </div>
-            <div class="list-content">
-                {{#each items.ability}}
-                    <div class="list-row" data-uuid="{{this.uuid}}">
-                        <div class="row-content">
-                            <div class="list-name">
-                                <img src="{{this.img}}">
-                                <a class="label" data-action="">{{this.name}}</a>
-                            </div>
-                            <div class="flex large"></div>
-                        </div>
                     </div>
-                {{/each}}
-            </div>
+                </div>
+            {{/each}}
         </div>
+    </div>
 
-        <div class="sheet-list">
-            <div class="list-header row-content">
-                <div class="list-name">{{localize "HEADER.PSYCHIC_POWER"}}</div>
-                <div class="flex large">{{localize "HEADER.DESCRIPTION"}}</div>
-                <div class="list-controls">
-                    <a class="list-control" data-action="createItem" data-type="psychicPower"><i class="fas fa-plus"></i></a>
-                </div>
-            </div>
-            <div class="list-content">
-                {{#each items.psychicPower}}
-                    <div class="list-row" data-uuid="{{this.uuid}}">
-                        <div class="row-content">
-                            <div class="list-name">
-                                <img src="{{this.img}}">
-                                <a class="label" data-action="">{{this.name}}</a>
-                            </div>
-                            <div class="flex large"></div>
-                        </div>
-                    </div>
-                {{/each}}
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.ABILITIES"}}</div>
+            <div class="flex large">{{localize "HEADER.DESCRIPTION"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="ability"><i class="fas fa-plus"></i></a>
             </div>
         </div>
+        <div class="list-content">
+            {{#each items.ability}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="ability">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div class="inline-description" data-action="toggleSummary">
+                            {{{this.system.description}}}
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.PSYCHIC_POWER"}}</div>
+            <div class="flex large">{{localize "HEADER.DESCRIPTION"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="psychicPower"><i
+                        class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.psychicPower}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="psychicPower">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div class="inline-description" data-action="toggleSummary">
+                            {{{this.system.description}}}
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
 
 
 

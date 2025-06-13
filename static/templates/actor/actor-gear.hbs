@@ -32,7 +32,7 @@
                         <div class="row-content">
                             <div class="list-name">
                                 <img src="{{item.img}}">
-                                <a class="label">{{item.name}}</a>
+                                <a class="label" data-action="toggleSummary">{{item.name}}</a>
                             </div>
                             {{#if ../equippable}}
 
@@ -59,6 +59,9 @@
                             <div class="list-controls">
                                 <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                             </div>
+                        </div>
+                        <div class="dropdown-content collapsed">
+                            
                         </div>
                         {{> sheetButtons document=item}}
                     </div>

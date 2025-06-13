@@ -42,6 +42,10 @@ export class PsychicPowerModel extends StandardItemModel
     get Activation() {
         return game.wng.config.powerActivations[this.activation]
     }
+    
+    get MultiTarget() {
+        return this.multiTarget ? game.i18n.localize("Yes") : game.i18n.localize("No")
+    }
 
     static migrateData(data)
     {

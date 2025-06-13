@@ -52,7 +52,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
               if (img)
               {
                   this._icon = img.src;
-                  img.src = "systems/impmal/assets/icons/d10.webp";
+                  img.src = "systems/wrath-and-glory/assets/icons/dice.svg";
               }
               })
               element.addEventListener("mouseleave", ev => {
@@ -136,27 +136,74 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
           new ActorConfigForm(this.actor).render(true);
       }
   
-
-      static _onRollTest(ev, target)
+      static async _toggleSummary(ev) 
       {
-          let type = target.dataset.type;  // characteristic, skill, etc.
-          let key = this._getKey(ev);                   // Non items, such as characteristic keys, or skill keys
-          let itemId = this._getId(ev);                   // Item ids, if using skill items or weapons
+          ev.preventDefault();
+          let document = this._getDocument(ev);
+          this._toggleDropdown(ev, document.system.description);
+      }
   
+
+      static async _onRollTest(ev, target)
+      {
+          let type = target.dataset.type; 
+          let key = target.dataset.key; 
+          let itemId = this._getId(ev); 
+  
+          if (type == "conviction")
+          {
+            type = await new foundry.applications.api.DialogV2.wait({
+              window: {title: "Conviction Roll"},
+              buttons: [
+                  {
+                      key  : "corruption",
+                      label: "Corruption",
+                  },
+                  {
+                    key : "mutation",
+                    label : "Mutation"
+                  }
+                ]
+            })
+          }
+
+          if (type == "resolve")
+            {
+              type = await new foundry.applications.api.DialogV2.wait({
+                window: {title: "Resolve Roll"},
+                buttons: [
+                    {
+                        key  : "fear",
+                        label: "Fear",
+                    },
+                    {
+                      key : "terror",
+                      label : "Terror"
+                    }
+                  ]
+              })
+            }
+
           switch(type)
           {
           case "attribute":
               return this.actor.setupAttributeTest(key);
           case "skill":
-              return this.actor.setupSkillTest({itemId, key});
+              return this.actor.setupSkillTest(key);
+          case "determination":
+          case "stealth":
+          case "corruption":
+          case "mutation":
+          case "fear":
+          case "terror":
+          case "influence":
+              return this.actor.setupGenericTest(type);
           case "weapon":
               return this.actor.setupWeaponTest(itemId);
-          case "power":
+          case "psychicPower":
               return this.actor.setupPowerTest(itemId);
-          case "trait":
-              return this.actor.setupTraitTest(itemId);
-          case "item":
-              return this.actor.setupTestFromItem(this.actor.items.get(itemId).uuid);
+          case "ability":
+              return this.actor.setupAbilityRoll(itemId);
           }
       }
   

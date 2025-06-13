@@ -84,10 +84,6 @@ export class WeaponModel extends EquippedItemModel
         return this.upgrades.map(i => new CONFIG.Item.documentClass(i))
     }
 
-    get MultiTarget() {
-        return this.multiTarget ? game.i18n.localize("Yes") : game.i18n.localize("No")
-    }
-
     computeBase()
     {
         super.computeBase();
