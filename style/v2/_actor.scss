@@ -7,6 +7,12 @@
         overflow: auto;
     }
 
+    .sheet-header {
+        .attribute-box {
+            height: 1.5rem;
+        }
+    }
+
     .attributes {
         display: flex;
         gap: 0.5rem;

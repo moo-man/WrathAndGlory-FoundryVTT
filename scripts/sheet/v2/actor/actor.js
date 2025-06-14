@@ -19,6 +19,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             rollTest : this._onRollTest,
             toggleSummary : this._toggleSummary,
             configureActor : this._onConfigureActor,
+            toggleCondition: this._onToggleCondition
         },
         defaultTab : "main"
       }   
@@ -218,6 +219,16 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
               return this.actor.setupAbilityRoll(itemId);
           }
       }
+
+      
+    static _onToggleCondition(ev, target)
+    {
+        let key = target.dataset.condition;
+        if (this.actor.hasCondition(key))
+            this.actor.removeCondition(key)
+        else
+            this.actor.addCondition(key)
+    }
   
   
 }

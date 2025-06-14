@@ -3,7 +3,6 @@ import WnGActorSheet from "./actor";
 export class StandardActorSheet extends WnGActorSheet {
     static DEFAULT_OPTIONS = {
         actions: {
-            toggleCondition: this._onToggleCondition
         },
     }
 
@@ -91,15 +90,6 @@ export class StandardActorSheet extends WnGActorSheet {
                 type: "augmentic"
             }
         }
-    }
-
-    static _onToggleCondition(ev, target)
-    {
-        let key = target.dataset.condition;
-        if (this.actor.hasCondition(key))
-            this.actor.removeCondition(key)
-        else
-            this.actor.addCondition(key)
     }
 
 }

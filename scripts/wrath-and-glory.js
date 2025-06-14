@@ -23,7 +23,6 @@ import { AgentModel } from "./model/actor/agent.js"
 import { ThreatModel } from "./model/actor/threat.js";
 import { VehicleModel } from "./model/actor/vehicle.js";
 import { WrathAndGloryActor } from "./document/actor.js";
-import { VehicleSheet } from "./sheet/actor/vehicle.js";
 import { WrathAndGloryItemSheet } from "./sheet/item-sheet.js";
 import { WrathAndGloryItem } from "./document/item.js";
 import WrathAndGloryEffect from "./document/effect.js";
@@ -51,6 +50,7 @@ import { WrathAndGloryDamageMessageModel, WrathAndGloryTestMessageModel } from "
 import loadEffects from "./loadEffects.js";
 import { AgentSheet } from "./sheet/v2/actor/agent.js";
 import { ThreatSheet } from "./sheet/v2/actor/threat.js";
+import { VehicleSheet } from "./sheet/v2/actor/vehicle.js";
 
 Hooks.once("init", () => {
 
