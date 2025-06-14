@@ -27,7 +27,7 @@ export class StandardActorSheet extends WnGActorSheet {
         context.items.equipped = {
             weapon : context.items.weapon.filter(i => i.equipped).filter(i => i.system.isActiveMobAbility),
             armour : context.items.armour.filter(i => i.equipped).filter(i => i.system.isActiveMobAbility),
-            ammo : context.items.weapon.filter(i => i.equipped).filter(i => i.system.isActiveMobAbility).map(i => this.actor.items.get(i.ammo)).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
+            ammo : context.items.weapon.filter(i => i.equipped).filter(i => i.system.isActiveMobAbility).map(i => i.system.ammo.document).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
         }
 
         this.constructInventory(context)

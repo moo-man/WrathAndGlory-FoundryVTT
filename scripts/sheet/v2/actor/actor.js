@@ -19,7 +19,8 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             rollTest : this._onRollTest,
             toggleSummary : this._toggleSummary,
             configureActor : this._onConfigureActor,
-            toggleCondition: this._onToggleCondition
+            toggleCondition: this._onToggleCondition,
+            toggleTrait : this._onToggleTrait
         },
         defaultTab : "main"
       }   
@@ -156,6 +157,15 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
           this._toggleDropdown(ev, document.system.description);
       }
   
+      static async _onToggleTrait(ev)
+      {
+        let item = this._getDocument(ev);
+        let index = this._getIndex(ev);
+        let trait = item.system.traits.list[index];
+        let description = trait.description || game.wng.config.traitDescriptions[trait.name];
+
+        this._toggleDropdown(ev, await TextEditor.enrichHTML(description, {async: true, relativeTo: this.document, secrets: this.document.isOwner}));
+      }
 
       static async _onRollTest(ev, target)
       {

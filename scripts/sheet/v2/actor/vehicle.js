@@ -110,7 +110,7 @@ export class VehicleSheet extends WnGActorSheet {
         context.items.equipped = {
             weapon: context.items.weapon.filter(i => i.equipped).filter(i => i.system.isActiveMobAbility),
         }
-        context.items.equipped.ammo = context.items.equipped.weapon.map(i => this.actor.items.get(i.ammo)).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
+        context.items.equipped.ammo = context.items.equipped.weapon.map(i => i.system.ammo.document).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
 
         this.constructInventory(context)
     }

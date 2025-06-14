@@ -77,7 +77,7 @@
                 </div>
                 <div class="list-content">
                     {{#each items.traumaticInjury}}
-                        <div class="list-row"  data-uuid="{{this.uuid}}" data-uuid="{{this.uuid}}">
+                        <div class="list-row" data-uuid="{{this.uuid}}" data-uuid="{{this.uuid}}">
                             <div class="row-content">
                                 <div class="list-name rollable">
                                     <img src="{{this.img}}">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="list-content">
                     {{#each items.memorableInjury}}
-                        <div class="list-row"  data-uuid="{{this.uuid}}" data-uuid="{{this.uuid}}">
+                        <div class="list-row" data-uuid="{{this.uuid}}" data-uuid="{{this.uuid}}">
                             <div class="row-content">
                                 <div class="list-name rollable">
                                     <img src="{{this.img}}">
@@ -165,7 +165,7 @@
         <div class="list-content">
             {{#if items.equipped.weapon.length}}
                 {{#each items.equipped.weapon}}
-                    <div class="list-row" data-id="{{this.id}}"  data-uuid="{{this.uuid}}">
+                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
                         <div class="row-content">
                             <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                                 <img src="{{this.img}}">
@@ -175,7 +175,8 @@
                             <div class="small">{{this.system.damage.ED}}</div>
                             <div class="small">{{this.system.damage.AP}}</div>
                             <div class="small" data-tooltip="{{this.system.Range}}" data-tooltip-direction="RIGHT">
-                                {{this.system.Range}}</div>
+                                {{this.system.Range}}
+                            </div>
                             <div class="flex">
                                 {{#if this.isRanged}}
                                     <select data-action="editProperty" data-path="system.ammo.id"
@@ -184,6 +185,12 @@
                                     </select>
                                 {{/if}}
                             </div>
+                        </div>
+                        <div class="traits">
+                            {{{array this.system.traits.formatted "trait" action="toggleTrait"}}}
+                        </div>
+                        <div class="dropdown-content collapsed">
+
                         </div>
                     </div>
                 {{/each}}
@@ -199,6 +206,34 @@
         </div>
     </div>
 
+    {{#if items.equipped.ammo.length}}
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.AMMO"}}</div>
+                <div>{{localize "ITEM.QTY"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each items.equipped.ammo}}
+                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <div class="label">{{this.name}}</div>
+                            </div>
+                            <div class="quantity">
+                                <button type="button" data-action="stepProperty" data-path="system.quantity"
+                                    data-reversed="true" data-type="decrement">-</button>
+                                {{this.system.quantity}}
+                                <button type="button" data-action="stepProperty" data-path="system.quantity"
+                                    data-type="increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "HEADER.ARMOUR"}}</div>
@@ -208,7 +243,7 @@
         <div class="list-content">
             {{#if items.equipped.armour.length}}
                 {{#each items.equipped.armour}}
-                    <div class="list-row"  data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
                         <div class="row-content">
                             <div class="list-name rollable">
                                 <img src="{{this.img}}" data-action="rollTest" data-type="weapon">
@@ -246,7 +281,7 @@
         </div>
         <div class="list-content">
             {{#each items.psychicPower}}
-                <div class="list-row"  data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
                     <div class="row-content">
                         <div class="list-name rollable">
                             <img src="{{this.img}}" data-action="rollTest" data-type="psychicPower">
@@ -275,7 +310,7 @@
             <div class="list-content">
                 {{#each items.abilitiesAndTalents}}
                     {{#if this.system.display}}
-                        <div class="list-row"  data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                        <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
                             <div class="row-content">
                                 <div class="list-name rollable">
                                     <img src="{{this.img}}" data-action="rollTest" data-type="ability">
