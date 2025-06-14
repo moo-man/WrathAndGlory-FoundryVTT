@@ -1,0 +1,63 @@
+<header class="sheet-header">
+    <img class="profile" data-action="editImage" src="{{source.img}}" data-edit="img">
+    <div class="header-details">
+        <div class="details-row">
+            <div class="input-group">
+                <label>{{localize "BIO.NAME"}}</label>
+                <input type="text" name="name" value="{{source.name}}">
+            </div>
+            <div class="input-group">
+                <label>{{localize "BIO.SPECIES"}}</label>
+                {{#if system.species.document}}
+                    <div class="like-input">
+                        <div class="singleton-item" data-id="{{system.species.document.id}}">
+                            <a data-action="editEmbedded">{{system.species.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.species"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                {{else}}
+                    <input type="text" name="system.species.name" value="{{system.species.name}}">
+                {{/if}}
+            </div>
+        </div>
+        <div class="details-row">
+            <div class="input-group">
+                <label>{{localize "BIO.FACTION"}}</label>
+                {{#if system.faction.document}}
+                    <div class="like-input">
+                        <div class="singleton-item" data-id="{{system.faction.document.id}}">
+                            <a data-action="editEmbedded">{{system.faction.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.faction"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                {{else}}
+                    <input type="text" name="system.faction.name" value="{{system.faction.name}}">
+                {{/if}}
+            </div>
+
+            <div class="input-group">
+                <label>{{localize "BIO.ARCHETYPE"}}</label>
+                {{#if system.archetype.document}}
+                    <div class="like-input">
+                        <div class="singleton-item" data-id="{{system.archetype.document.id}}">
+                            <a data-action="editEmbedded">{{system.archetype.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.archetype"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                {{else}}
+                    <input type="text" name="system.archetype.name" value="{{system.archetype.name}}">
+                {{/if}}
+            </div>
+        </div>
+    <div class="details-row">
+            <div class="input-group">
+                <label>{{localize "BIO.QUOTE"}}</label>
+                <input type="text" name="system.bio.quote" value="{{system.bio.quote}}">
+            </div>
+           <div class="input-group" style="flex: 0.3">
+                <label class="small">{{localize "RESOURCE.WRATH"}}</label>
+                <input type="text" name="system.resources.wrath" value="{{system.resources.wrath}}">
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,5 @@
+@mixin gradient-border() {
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(36deg, rgba(255,255,255,0) 0%, var(--color-cool-3) 50%, rgba(255,255,255,0) 100%);
+    border-image-slice: 1;
+}

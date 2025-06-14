@@ -1,0 +1,203 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    
+        <div class="attribute-box" style="margin-bottom: 1rem;">
+            <div  style="grid-column: 1 / span 3"  class="label"><a data-action="configureTraits">{{localize "VEHICLE.TRAITS"}} <i class="fas fa-cog"></i> </a></div>
+            <div  style="grid-column: 4 / span 9"  class="field"><input type="text" disabled value="{{system.traits.formatted}}"></div>
+        </div>
+
+    <h2 class="sheet-divider">{{localize "TITLE.COMPLEMENT"}}</h2>
+
+    <div class="sheet-list complement-list" data-type="pilot" data-path="system.complement">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.PILOTS"}}</div>
+                <div class="list-controls">
+                    <input type="number" name="system.complement.pilot" value="{{system.complement.pilot}}">
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each complement.pilot}}
+                    <div class="list-row" data-complement="{{this.id}}" data-index="{{this.index}}">
+                        <div class="row-content">
+                            {{#if this.document}}
+                                <div class="list-name">
+                                    <img src="{{tokenImg this.document}}">
+                                    <a class="label" data-action="openComplement">{{this.document.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="listDelete"><i class="fas fa-times"></i></a>
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="sheet-list complement-list" data-type="crew" data-path="system.complement">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.CREW"}}</div>
+                <div class="list-controls">
+                    <input type="number" name="system.complement.crew" value="{{system.complement.crew}}">
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each complement.crew}}
+                    <div class="list-row" data-complement="{{this.id}}" data-index="{{this.index}}">
+                        <div class="row-content">
+                            {{#if this.document}}
+                                <div class="list-name">
+                                    <img src="{{tokenImg this.document}}">
+                                    <a class="label" data-action="openComplement">{{this.document.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="listDelete"><i class="fas fa-times"></i></a>
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        
+        <div class="sheet-list complement-list" data-type="passenger" data-path="system.complement">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.PASSENGERS"}}</div>
+                <div class="list-controls">
+                    <input type="number" name="system.complement.passenger" value="{{system.complement.passenger}}">
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each complement.passenger}}
+                    <div class="list-row" data-complement="{{this.id}}" data-index="{{this.index}}">
+                        <div class="row-content">
+                            {{#if this.document}}
+                                <div class="list-name">
+                                    <img src="{{tokenImg this.document}}">
+                                    <a class="label" data-action="openComplement">{{this.document.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="listDelete"><i class="fas fa-times"></i></a>
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="sheet-list complement-list" data-type="unassigned" data-path="system.complement">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.UNASSIGNED"}}</div>
+                <div class="list-controls">
+                    <input type="number" name="system.complement.unassigned" value="{{system.complement.unassigned}}">
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each complement.unassigned}}
+                    <div class="list-row" data-complement="{{this.id}}" data-index="{{this.index}}">
+                        <div class="row-content">
+                            {{#if this.document}}
+                                <div class="list-name">
+                                    <img src="{{tokenImg this.document}}">
+                                    <a class="label" data-action="openComplement">{{this.document.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="listDelete"><i class="fas fa-times"></i></a>
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+
+    <h2 class="sheet-divider">{{localize "TITLE.WARGEAR"}}</h2>
+        <div class="sheet-list" >
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.WEAPON"}}</div>
+            <div class="small">{{localize "WEAPON.DAMAGE"}}</div>
+            <div class="small">{{localize "WEAPON.ED"}}</div>
+            <div class="small">{{localize "WEAPON.AP"}}</div>
+            <div class="small">{{localize "WEAPON.RANGE"}}</div>
+            <div class="flex">{{localize "HEADER.AMMO"}}</div>
+        </div>
+        <div class="list-content">
+            {{#if items.equipped.weapon.length}}
+                {{#each items.equipped.weapon}}
+                    <div class="list-row" data-id="{{this.id}}"  data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name rollable" data-action="rollWeapon" data-type="weapon">
+                                <img src="{{this.img}}">
+                                <a class="label">{{this.name}}</a>
+                            </div>
+                            <div class="small">{{this.system.damage.formatted}}</div>
+                            <div class="small">{{this.system.damage.ED}}</div>
+                            <div class="small">{{this.system.damage.AP}}</div>
+                            <div class="small" data-tooltip="{{this.system.Range}}" data-tooltip-direction="RIGHT">
+                                {{this.system.Range}}</div>
+                            <div class="flex">
+                                {{#if this.isRanged}}
+                                    <select data-action="editProperty" data-path="system.ammo.id"
+                                        data-tooltip="{{system.ammo.document.system.quantity}}">
+                                        {{selectOptions this.ammoList selected=system.ammo.id labelAttr="name"  valueAttr="_id" blank=""}}
+                                    </select>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="list-row">
+                    <div class="row-content">
+                        <div class="list-name">
+                            No Weapons Equipped
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+
+    {{#if items.equipped.ammo.length}}
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.AMMO"}}</div>
+                <div>{{localize "ITEM.QTY"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each items.equipped.ammo}}
+                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <div class="label">{{this.name}}</div>
+                            </div>
+                            <div class="quantity">
+                                <button type="button" data-action="stepProperty" data-path="system.quantity"
+                                    data-reversed="true" data-type="decrement">-</button>
+                                {{this.system.quantity}}
+                                <button type="button" data-action="stepProperty" data-path="system.quantity"
+                                    data-type="increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
+    <h2 class="sheet-divider">{{localize "TITLE.KEYWORDS"}}</h2>
+    <div class="keywords">
+        <button data-action="createItem" data-type="keyword"><i class="fa-solid fa-plus"></i></button> 
+        {{#each items.keyword}}
+        <div class="keyword context-menu-alt" data-uuid="{{this.uuid}}">
+            <img src="{{this.img}}">
+            <a data-action="editEmbedded" >
+                {{this.name}}
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</section>

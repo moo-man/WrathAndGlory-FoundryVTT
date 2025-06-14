@@ -129,6 +129,9 @@
   "ATTRIBUTE.WILLPOWER_ABREV" : "Wil",
   "ATTRIBUTE.INTELLECT_ABREV" : "Int",
   "ATTRIBUTE.FELLOWSHIP_ABREV" : "Fel",
+  "ATTRIBUTE.BASE" : "Base",
+  "ATTRIBUTE.ADVANCES" : "Advances",
+  "ATTRIBUTE.TOTAL" : "Total",
 
   "BIO.ARCHETYPE": "Archetype",
   "BIO.FACTION": "Faction",
@@ -236,6 +239,7 @@
 
   "HEADER.TALENT": "Talent",
   "HEADER.ABILITY": "Ability",
+  "HEADER.ABILITIES": "Abilities",
   "HEADER.PSYCHIC_POWER": "Psychic Power",
   "HEADER.WEAPON": "Weapon",
   "HEADER.ARMOUR": "Armour",
@@ -249,7 +253,9 @@
   "HEADER.SPENT": "Spent",
   "HEADER.TOTAL": "Total",
   "HEADER.DEFENCE": "Defence",
+  "HEADER.DEF": "Def.",
   "HEADER.RESILIENCE": "Resilience",
+  "HEADER.RES": "Res.",
   "HEADER.DETERMINATION": "Determination",
   "HEADER.SHOCK": "Shock",
   "HEADER.CONVICTION": "Conviction",
@@ -401,6 +407,7 @@
   "SKILL.WEAPON_SKILL": "Weapon Skill",
 
   "TAB.EFFECTS": "EFFECTS",
+  "TAB.ABILITIES": "ABILITIES",
   "TAB.COMBAT": "COMBAT",
   "TAB.GEAR": "GEAR",
   "TAB.NOTES": "NOTES",

@@ -20,7 +20,7 @@ export class ThreatModel extends StandardWNGActorModel {
             }),
             
         })
-        schema.notes = new fields.StringField(),
+        schema.notes = new fields.HTMLField(),
         schema.mob = new fields.EmbeddedDataField(MobModel);
         // schema.mob = new fields.SchemaField({
         //     value : new fields.NumberField({min: 0}),

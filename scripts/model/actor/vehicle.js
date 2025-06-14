@@ -13,7 +13,7 @@ export class VehicleModel extends BaseWarhammerActorModel {
         schema.value = new fields.NumberField();
         schema.traits = new fields.EmbeddedDataField(TraitsModel)
         schema.combat = new fields.EmbeddedDataField(VehicleCombatModel)
-        schema.notes = new fields.StringField()
+        schema.notes = new fields.HTMLField()
 
         return schema;
     }

@@ -1,0 +1,79 @@
+<header class="sheet-header">
+    <img class="profile" data-action="editImage" src="{{source.img}}" data-edit="img">
+    <div class="header-details">
+        <div class="details-row">
+            <div class="input-group">
+                <label>{{localize "BIO.NAME"}}</label>
+                <input type="text" name="name" value="{{source.name}}">
+            </div>
+            <div class="input-group">
+                <label>{{localize "BIO.SPECIES"}}</label>
+                {{#if system.species.document}}
+                    <div class="like-input">
+                        <div class="singleton-item" data-id="{{system.species.document.id}}">
+                            <a data-action="editEmbedded">{{system.species.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.species"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                {{else}}
+                    <input type="text" name="system.species.name" value="{{system.species.name}}">
+                {{/if}}
+            </div>
+        </div>
+        <div class="details-row">
+            <div class="input-group">
+                <label>{{localize "BIO.FACTION"}}</label>
+                {{#if system.faction.document}}
+                    <div class="like-input">
+                        <div class="singleton-item" data-id="{{system.faction.document.id}}">
+                            <a data-action="editEmbedded">{{system.faction.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.faction"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                {{else}}
+                    <input type="text" name="system.faction.name" value="{{system.faction.name}}">
+                {{/if}}
+            </div>
+
+            <div class="input-group">
+                <label>{{localize "BIO.ARCHETYPE"}}</label>
+                {{#if system.archetype.document}}
+                    <div class="like-input">
+                        <div class="singleton-item" data-id="{{system.archetype.document.id}}">
+                            <a data-action="editEmbedded">{{system.archetype.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.archetype"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                {{else}}
+                    <input type="text" name="system.archetype.name" value="{{system.archetype.name}}">
+                {{/if}}
+            </div>
+        </div>
+        <div class="details-row">
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 7">{{localize "BIO.THREAT"}}</div>
+                <div class="field" style="grid-column: 8 / span 1"> <input name="system.bio.threat.first" type="text"
+                        value="{{system.bio.threat.first}}" /></div>
+                <div class="field" style="grid-column: 9 / span 1"> <input name="system.bio.threat.second" type="text"
+                        value="{{system.bio.threat.second}}" /></div>
+                <div class="field" style="grid-column: 10 / span 1"> <input name="system.bio.threat.third" type="text"
+                        value="{{system.bio.threat.third}}" /></div>
+                <div class="field" style="grid-column: 11 / span 1"> <input name="system.bio.threat.fourth" type="text"
+                        value="{{system.bio.threat.fourth}}" /></div>
+                <div class="field" style="grid-column: 12 / span 1"> <input name="system.bio.threat.fifth" type="text"
+                        value="{{system.bio.threat.fifth}}" /></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 7">{{localize "RESOURCE.RUIN"}}</div>
+                <div class="field" style="grid-column: 8 / span 5"> <input name="system.resources.ruin" type="text"
+                        value="{{system.resources.ruin}}" /></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 7"><a data-action="configureMob">{{localize "THREAT.MOB"}} <i
+                            class="fa-solid fa-people-group"></i></a></div>
+                <div class="field" style="grid-column: 8 / span 5"> <input name="system.mob.value" type="number"
+                        value="{{system.mob.value}}" /></div>
+            </div>
+        </div>
+    </div>
+</header>

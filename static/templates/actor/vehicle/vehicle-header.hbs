@@ -1,0 +1,50 @@
+<header class="sheet-header">
+    <img class="profile" data-action="editImage" src="{{source.img}}" data-edit="img">
+    <div class="header-details">
+        <div class="details-row">
+            <div class="attribute-box">
+                <div  style="grid-column: 1 / span 5"  class="label">{{localize "BIO.NAME"}}</div>
+                <div  style="grid-column: 6 / span 7"  class="field"><input type="text" name="name" value="{{source.name}}"></div>
+            </div>
+            <div class="attribute-box">
+                <div style="grid-column: 1 / span 6" class="label">{{localize "HEADER.RARITY"}}</div>
+                <div style="grid-column: 7 / span 6" class="field">{{formInput fields.rarity value=system.rarity choices=(config "rarity")}}</div>
+            </div>
+            <div class="attribute-box">
+                <div style="grid-column: 1 / span 6" class="label">{{localize "HEADER.VALUE"}}</div>
+                <div style="grid-column: 7 / span 6" class="field">{{formInput fields.value value=system.value}}</div>
+            </div>
+        </div>
+
+        <div class="details-row">
+            <div class="attribute-box man">
+                <div style="grid-column: 1 / span 6" class="label">{{localize "HEADER.MAN"}}</div>
+                <div style="grid-column: 7 / span 6" class="field"><input type="number" value="{{system.mnvr}}" name="system.mnvr" /></div>
+            </div>
+            <div class="attribute-box resilience">
+                <div  style="grid-column: 1 / span 6" class="label">{{localize "HEADER.RES"}}</div>
+                <div  style="grid-column: 7 / span 6" class="field"><input type="number" value="{{system.combat.resilience.total}}" name="system.combat.resilience.total" /></div>
+            </div>
+            <div class="attribute-box defence">
+                <div style="grid-column: 1 / span 6" class="label">{{localize "HEADER.DEF"}}</div>
+                <div style="grid-column: 7 / span 6" class="field"><input type="number" value="{{system.combat.defence.total}}" readonly /></div>
+            </div>
+            <div class="attribute-box speed">
+                <div style="grid-column: 1 / span 6" class="label">{{localize "HEADER.SPEED"}}</div>
+                <div style="grid-column: 7 / span 6" class="field"><input type="number" value="{{system.combat.speed}}" name="system.combat.speed" /></div>
+            </div>
+        </div>
+
+        <div class="details-row">
+            <div class="attribute-box">
+                <div  style="grid-column: 1 / span 6"class="label">{{localize "HEADER.WOUNDS"}}</div>
+                 <div style="grid-column: 7 / span 3"class="field"><input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}" /></div>
+                 <div style="grid-column: 10 / span 3" class="field"><input type="number" name="system.combat.wounds.max" value="{{system.combat.wounds.max}}" /></div>
+            </div>
+            <div class="attribute-box">
+                <div style="grid-column: 1 / span 6" class="label">{{localize "HEADER.SIZE"}}</div>
+                <div style="grid-column: 7 / span 6" class="field">{{formInput fields.combat.fields.size value=system.combat.size choices=(config "size")}}</div>
+            </div>
+        </div>
+    </div>
+</header>
