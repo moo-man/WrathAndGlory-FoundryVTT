@@ -160,6 +160,34 @@
         </div>
     </div>
 
+    {{#if items.equipped.ammo.length}}
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.AMMO"}}</div>
+                <div>{{localize "ITEM.QTY"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each items.equipped.ammo}}
+                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <div class="label">{{this.name}}</div>
+                            </div>
+                            <div class="quantity">
+                                <button type="button" data-action="stepProperty" data-path="system.quantity"
+                                    data-reversed="true" data-type="decrement">-</button>
+                                {{this.system.quantity}}
+                                <button type="button" data-action="stepProperty" data-path="system.quantity"
+                                    data-type="increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
     <h2 class="sheet-divider">{{localize "TITLE.KEYWORDS"}}</h2>
     <div class="keywords">
         <button data-action="createItem" data-type="keyword"><i class="fa-solid fa-plus"></i></button> 

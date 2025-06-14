@@ -48,9 +48,9 @@ import { WrathAndGloryActiveEffectModel } from "./model/effect/effect.js";
 import WrathAndGloryActiveEffectConfig from "./apps/effect-config.js";
 import { WrathAndGloryDamageMessageModel, WrathAndGloryTestMessageModel } from "./model/message/message.js";
 import loadEffects from "./loadEffects.js";
-import { AgentSheet } from "./sheet/v2/actor/agent.js";
-import { ThreatSheet } from "./sheet/v2/actor/threat.js";
-import { VehicleSheet } from "./sheet/v2/actor/vehicle.js";
+import { AgentSheet } from "./sheet/actor/agent.js";
+import { ThreatSheet } from "./sheet/actor/threat.js";
+import { VehicleSheet } from "./sheet/actor/vehicle.js";
 
 Hooks.once("init", () => {
 
