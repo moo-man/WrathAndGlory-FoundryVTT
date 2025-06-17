@@ -23,7 +23,6 @@ import { AgentModel } from "./model/actor/agent.js"
 import { ThreatModel } from "./model/actor/threat.js";
 import { VehicleModel } from "./model/actor/vehicle.js";
 import { WrathAndGloryActor } from "./document/actor.js";
-import { WrathAndGloryItemSheet } from "./sheet/item-sheet.js";
 import { WrathAndGloryItem } from "./document/item.js";
 import WrathAndGloryEffect from "./document/effect.js";
 import { DataslatePageSheet } from "./apps/dataslate.js";
@@ -51,6 +50,23 @@ import loadEffects from "./loadEffects.js";
 import { AgentSheet } from "./sheet/actor/agent.js";
 import { ThreatSheet } from "./sheet/actor/threat.js";
 import { VehicleSheet } from "./sheet/actor/vehicle.js";
+import AbilitySheet from "./sheet/item/types/ability.js";
+import AmmoSheet from "./sheet/item/types/ammo.js";
+import ArchetypeSheet from "./sheet/item/types/archetype.js";
+import ArmourSheet from "./sheet/item/types/armour.js";
+import AscensionSheet from "./sheet/item/types/ascension.js";
+import AugmeticSheet from "./sheet/item/types/augmetic.js";
+import GearSheet from "./sheet/item/types/gear.js";
+import KeywordSheet from "./sheet/item/types/keyword.js";
+import MemorableInjurySheet from "./sheet/item/types/memorableInjury.js";
+import TraumaticInjurySheet from "./sheet/item/types/traumaticInjury.js";
+import MutationSheet from "./sheet/item/types/mutation.js";
+import SpeciesSheet from "./sheet/item/types/species.js";
+import TalentSheet from "./sheet/item/types/talent.js";
+import WeaponUpgradeSheet from "./sheet/item/types/weaponUpgrade.js";
+import WeaponSheet from "./sheet/item/types/weapon.js";
+import FactionSheet from "./sheet/item/types/faction.js";
+import PsychicPowerSheet from "./sheet/item/types/power.js";
 
 Hooks.once("init", () => {
 
@@ -73,8 +89,25 @@ Actors.unregisterSheet("core", ActorSheet);
 Actors.registerSheet("wrath-and-glory", AgentSheet, { types: ["agent"], makeDefault: true });
 Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
 Actors.registerSheet("wrath-and-glory", VehicleSheet, { types: ["vehicle"], makeDefault: true });
+
 Items.unregisterSheet("core", ItemSheet);
-Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
+Items.registerSheet("wrath-and-glory", AbilitySheet, {types : ["ability"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", AmmoSheet, {types : ["ammo"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", ArchetypeSheet, {types : ["archetype"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", ArmourSheet, {types : ["armour"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", AscensionSheet, {types : ["ascension"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", AugmeticSheet, {types : ["augmentic"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", GearSheet, {types : ["gear"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", KeywordSheet, {types : ["keyword"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", MemorableInjurySheet, {types : ["memorableInjury"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", TraumaticInjurySheet, {types : ["traumaticInjury"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", MutationSheet, {types : ["mutation"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", SpeciesSheet, {types : ["species"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", TalentSheet, {types : ["talent"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", WeaponUpgradeSheet, {types : ["weaponUpgrade"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", WeaponSheet, {types : ["weapon"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", FactionSheet, {types : ["faction"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", PsychicPowerSheet, {types : ["psychicPower"], makeDefault : true});
 
   
   if (game.settings.get("wrath-and-glory", "initiativeRollOption"))

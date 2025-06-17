@@ -7,6 +7,7 @@ let fields = foundry.data.fields;
 
 export class AbilityModel extends StandardItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.ability", "WH.Components.damage"];
 
     get traitsAvailable() {
         return game.wng.config.weaponTraits

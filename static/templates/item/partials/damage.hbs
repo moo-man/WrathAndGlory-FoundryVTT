@@ -1,0 +1,58 @@
+<div class="damage-labels">
+        <div class="spacer"></div>
+        <div class="labels">
+                <div>{{localize "ABILITY.BASE"}}</div>
+                <div>{{localize "ABILITY.BONUS"}}</div>
+                <div>{{localize "ABILITY.RANK"}}</div>
+                <div>{{localize "ABILITY.DICE"}}</div>
+        </div>
+</div>
+<div class="form-group">
+        <label>{{localize "ABILITY.DAMAGE"}}</label>
+        <div class="form-fields">
+                {{formInput fields.base value=damage.base}}
+                {{formInput fields.bonus value=damage.bonus}}
+                {{formInput fields.rank value=damage.rank localize=true}}
+                {{formInput fields.dice value=damage.dice}}
+        </div>
+</div>
+<div class="form-group">
+
+        <label>{{localize "ABILITY.ED"}}</label>
+        <div class="form-fields">
+                {{formInput fields.ed.fields.base value=damage.ed.base}}
+                {{formInput fields.ed.fields.bonus value=damage.ed.bonus}}
+                {{formInput fields.ed.fields.rank value=damage.ed.rank localize=true}}
+                {{formInput fields.ed.fields.dice value=damage.ed.dice}}
+        </div>
+</div>
+{{#unless hideAP}}
+<div class="form-group">
+
+        <label>{{localize "ABILITY.AP"}}</label>
+        <div class="form-fields">
+                {{formInput fields.ap.fields.base value=damage.ap.base}}
+                {{formInput fields.ap.fields.bonus value=damage.ap.bonus}}
+                {{formInput fields.ap.fields.rank value=damage.ap.rank localize=true}}
+                {{formInput fields.ap.fields.dice value=damage.ap.dice}}
+        </div>
+</div>
+{{/unless}}
+
+<div class="damage-labels">
+        <div class="spacer"></div>
+        <div class="labels">
+                <div>{{localize "ABILITY.SHOCK"}}</div>
+                <div>{{localize "ABILITY.WOUNDS"}}</div>
+                <div>{{localize "ABILITY.MORTAL"}}</div>
+        </div>
+</div>
+<div class="form-group">
+
+        <label>{{localize "ABILITY.OTHER"}}</label>
+        <div class="form-fields">
+                {{formInput fields.otherDamage.fields.shock value=damage.otherDamage.shock  classes="centered"}}
+                {{formInput fields.otherDamage.fields.wounds value=damage.otherDamage.wounds classes="centered"}}
+                {{formInput fields.otherDamage.fields.mortal value=damage.otherDamage.mortal classes="centered"}}
+        </div>
+</div>

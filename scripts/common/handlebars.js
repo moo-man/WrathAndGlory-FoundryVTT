@@ -1,17 +1,5 @@
 export const initializeHandlebars = () => {
   const templatePaths = [
-    "systems/wrath-and-glory/template/actor/tab/effects.hbs",
-    "systems/wrath-and-glory/template/item/tab/bonus.hbs",
-    "systems/wrath-and-glory/template/item/tab/effects.hbs",
-    "systems/wrath-and-glory/template/actor/tab/combat.hbs",
-    "systems/wrath-and-glory/template/actor/tab/gear.hbs",
-    "systems/wrath-and-glory/template/actor/tab/notes.hbs",
-    "systems/wrath-and-glory/template/actor/tab/notes-threat.hbs",
-    "systems/wrath-and-glory/template/actor/tab/settings.hbs",
-    "systems/wrath-and-glory/template/actor/tab/stats.hbs",
-    "systems/wrath-and-glory/template/actor/tab/talents.hbs",
-    "systems/wrath-and-glory/template/actor/tab/vehicle/main.hbs",
-    "systems/wrath-and-glory/template/actor/tab/vehicle/gear.hbs",
     "systems/wrath-and-glory/template/chat/roll/base/dice-container.hbs",
     "systems/wrath-and-glory/template/chat/roll/base/base-result.hbs",
     "systems/wrath-and-glory/template/chat/roll/base/base-roll.hbs",
@@ -32,10 +20,15 @@ export const initializeHandlebars = () => {
     "systems/wrath-and-glory/template/apps/combatant-list.hbs",
   ];
   loadTemplates({
-    damage : "systems/wrath-and-glory/template/partials/damage.hbs",
     test : "systems/wrath-and-glory/template/partials/test.hbs",
     chatTargets : "systems/wrath-and-glory/template/partials/chat-targets.hbs",
-    listEffect : "systems/wrath-and-glory/template/partials/list-effect.hbs"
+    listEffect : "systems/wrath-and-glory/template/partials/list-effect.hbs",
+
+    testDetails : "systems/wrath-and-glory/templates/item/partials/test.hbs",
+    physical : "systems/wrath-and-glory/templates/item/partials/physical.hbs",
+    traitsMod : "systems/wrath-and-glory/templates/item/partials/traits-mod.hbs",
+    traits : "systems/wrath-and-glory/templates/item/partials/traits.hbs",
+    damage : "systems/wrath-and-glory/templates/item/partials/damage.hbs"
   })
   return loadTemplates(templatePaths);
 };

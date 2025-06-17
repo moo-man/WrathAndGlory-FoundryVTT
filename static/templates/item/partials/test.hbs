@@ -1,0 +1,25 @@
+<fieldset>
+    <legend>Test</legend>
+    {{#unless hideSelf}}
+    {{formGroup fields.self value=test.self}}
+    {{/unless}}
+    {{formGroup fields.dn value=test.dn}}
+    <div class="flexrow">
+        {{formGroup fields.type value=test.type choices=(config "testTypes")}}
+
+            {{#if (eq test.type "attribute")}}
+                {{formInput fields.specification value=test.specification blank="-" choices=(config "attributes")}}
+            {{/if}}
+            {{#if (eq test.type "skill")}}
+                {{formInput fields.specification value=test.specification blank="-" choices=(config "skills")}}
+            {{/if}}
+            {{#if (eq test.type "resolve")}}
+                {{formInput fields.specification value=test.specification blank="-" choices=(config "resolveTests")}}
+            {{/if}}
+            {{#if (eq test.type "conviction")}}
+                {{formInput fields.specification value=test.specification blank="-" choices=(config "convictionTests")}}
+            {{/if}}
+
+
+    </div>
+</fieldset>

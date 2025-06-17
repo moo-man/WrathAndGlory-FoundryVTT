@@ -5,6 +5,8 @@ let fields = foundry.data.fields;
 
 export class ArmourModel extends EquippedItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.armour", "WH.Components.physical"];
+    
     get traitsAvailable()
     {
         return game.wng.config.armourTraits;

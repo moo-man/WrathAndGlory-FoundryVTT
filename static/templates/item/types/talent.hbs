@@ -1,0 +1,9 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        <div class="flexrow">
+        {{formGroup fields.cost value=system.cost }}
+        {{formGroup fields.requirements value=system.requirements classes="flex3"}}
+        </div>
+        {{formGroup fields.display value=system.display }}
+
+        {{> testDetails fields=fields.test.fields test=system.test}}
+</section>

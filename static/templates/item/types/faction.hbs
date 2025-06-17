@@ -1,0 +1,159 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        <h2 class="sheet-divider">{{localize "FACTION.ORIGIN"}}<a data-action="listCreate" data-path="system.backgrounds.origin"><i class="fas fa-plus"></i></a></h2>
+        
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                        {{#if document.isOwned}}
+                            <div class="small">{{localize "FACTION.CHOSEN"}}</div>
+                        {{/if}}
+                        <div class="flex">{{localize "FACTION.NAME"}}</div>
+                        <div class="flex large">{{localize "FACTION.DESCRIPTION"}}</div>
+                        <div class="flex">{{localize "FACTION.EFFECT"}}</div>
+                        <div class="list-controls">
+
+                        </div>
+                </div>
+
+                <div class="list-content" data-path="system.backgrounds.origin">
+                    {{#each system.backgrounds.origin}}
+                        <div class="list-row" data-index="{{@key}}">
+                            <div class="row-content">
+                                {{#if ../document.isOwned}}
+                                <div class="small">
+                                    <input type="checkbox" data-action="toggleChosen" {{checked this.chosen}}>
+                                </div>
+                                {{/if}}
+                                <div class="flex">
+                                        <input type="text" data-action="editList" data-ipath="name" value="{{this.name}}">
+                                </div>
+                                <div class="flex large">
+                                        <input type="text" data-action="editList" data-ipath="description" value="{{this.description}}">
+                                </div>
+                                <div class="flex">
+                                        <select data-action="editList" data-ipath="effect.id">
+                                                {{selectOptions ../item.effects.contents selected=this.effect.id labelAttr="name" valueAttr="id" blank=""}}
+                                        </select>
+                                </div>
+
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="listDelete"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+        <h2 class="sheet-divider">{{localize "FACTION.ACCOMPLISHMENT"}}<a data-action="listCreate" data-path="system.backgrounds.accomplishment"><i class="fas fa-plus"></i></a></h2>
+        
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                        {{#if document.isOwned}}
+                            <div class="small">{{localize "FACTION.CHOSEN"}}</div>
+                        {{/if}}
+                        <div class="flex">{{localize "FACTION.NAME"}}</div>
+                        <div class="flex large">{{localize "FACTION.DESCRIPTION"}}</div>
+                        <div class="flex">{{localize "FACTION.EFFECT"}}</div>
+                                        <div class="list-controls">
+
+                        </div>
+                </div>
+                <div class="list-content" data-path="system.backgrounds.accomplishment">
+                    {{#each system.backgrounds.accomplishment}}
+                        <div class="list-row" data-index="{{@key}}">
+                            <div class="row-content">
+                                {{#if ../document.isOwned}}
+                                <div class="small">
+                                    <input type="checkbox" data-action="toggleChosen" {{checked this.chosen}}>
+                                </div>
+                                {{/if}}
+                                <div class="flex">
+                                        <input type="text" data-action="editList" data-ipath="name" value="{{this.name}}">
+                                </div>
+                                <div class="flex large">
+                                        <input type="text" data-action="editList" data-ipath="description" value="{{this.description}}">
+                                </div>
+                                <div class="flex">
+                                        <select data-action="editList" data-ipath="effect.id">
+                                                {{!-- {{selectOptions item.effects}} --}}
+                                        </select>
+                                </div>
+
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="listDelete"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+        <h2 class="sheet-divider">{{localize "FACTION.GOAL"}}<a data-action="listCreate" data-path="system.backgrounds.goal"><i class="fas fa-plus"></i></a></h2>
+        
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                        {{#if document.isOwned}}
+                            <div class="small">{{localize "FACTION.CHOSEN"}}</div>
+                        {{/if}}
+                        <div class="flex">{{localize "FACTION.NAME"}}</div>
+                        <div class="flex large">{{localize "FACTION.DESCRIPTION"}}</div>
+                        <div class="flex">{{localize "FACTION.EFFECT"}}</div>
+                                        <div class="list-controls">
+
+                        </div>
+                </div>
+                <div class="list-content" data-path="system.backgrounds.goal">
+                    {{#each system.backgrounds.goal}}
+                        <div class="list-row" data-index="{{@key}}">
+                            <div class="row-content">
+                                {{#if ../document.isOwned}}
+                                <div class="small">
+                                    <input type="checkbox" data-action="toggleChosen" {{checked this.chosen}}>
+                                </div>
+                                {{/if}}
+                                <div class="flex">
+                                        <input type="text" data-action="editList" data-ipath="name" value="{{this.name}}">
+                                </div>
+                                <div class="flex large">
+                                        <input type="text" data-action="editList" data-ipath="description" value="{{this.description}}">
+                                </div>
+                                <div class="flex">
+                                        <select data-action="editList" data-ipath="effect.id">
+                                                {{!-- {{selectOptions item.effects}} --}}
+                                        </select>
+                                </div>
+
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="listDelete"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+        <h2 class="sheet-divider">{{localize "FACTION.OBJECTIVES"}}<a data-action="listCreate" data-path="system.objectives"><i class="fas fa-plus"></i></a></h2>
+        
+            <div class="sheet-list">
+                <div class="list-content" data-path="system.objectives">
+                    {{#each system.objectives}}
+                        <div class="list-row" data-index="{{@key}}">
+                            <div class="row-content">
+                                <div class="flex">
+                                        <input type="text" data-action="editList" value="{{this}}">
+                                </div>
+
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="deleteEmbedded"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+</section>

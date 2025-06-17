@@ -69,7 +69,7 @@
 
         {{#unless (eq system.abilityType "determination")}}
         {{> test}}
-        {{> damage}}
+        {{> damage fields=fields.damage damage=source.system.damage}}
         {{/unless}}
       </div>
       <div class="tab" data-group="primary" data-tab="effects">

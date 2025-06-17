@@ -1,0 +1,46 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+
+        <div class="flexrow">
+                {{formGroup fields.tier value=system.tier}}
+                {{formGroup fields.cost value=system.cost}}
+                {{formGroup fields.influence value=system.influence}}
+        </div>
+        <div class="flexrow">
+                {{> documentReference document=system.species.document path="system.species" label="ARCHETYPE.SPECIES"}}
+                {{> documentReference document=system.faction.document path="system.faction" label="ARCHETYPE.FACTION"}}
+        </div>
+        {{> nameListInput label="ARCHETYPE.KEYWORDS" list=system.keywords path="system.keywords"}}
+
+        {{> documentReference document=system.ability.document path="system.ability" label="ARCHETYPE.ABILITY"}}
+
+        <h2 class="sheet-divider">{{localize "ARCHETYPE.ATTRIBUTES"}}</h2>
+        <div class="flexrow attributes">
+                {{#each system.attributes}}
+                        {{formGroup (lookup ../fields.attributes.fields @key) value=this classes="stacked" label=(configLookup "attributeAbbrev" @key)}}
+                {{/each}}
+        </div>
+        <h2 class="sheet-divider">{{localize "ARCHETYPE.SKILLS"}}</h2>
+        <div class="skills">
+                {{#each system.skills}}
+                        {{formGroup (lookup ../fields.skills.fields @key) value=this label=(configLookup "skills" @key)}}
+                {{/each}}
+        </div>
+
+        {{> choiceDisplay system.wargear display=item.system.wargear.textDisplay path="wargear" label="ARCHETYPE.WARGEAR"}}
+
+                <h2 class="sheet-divider">{{localize "ARCHETYPE.SUGGESTED_ATTRIBUTES"}}</h2>
+                <div class="flexrow attributes">
+                        {{#each system.suggested.attributes}}
+                                {{formGroup (lookup ../fields.suggested.fields.attributes.fields @key) value=this classes="stacked" label=(configLookup "attributeAbbrev" @key)}}
+                        {{/each}}
+                </div>
+                <h2 class="sheet-divider">{{localize "ARCHETYPE.SUGGESTED_SKILLS"}}</h2>
+                <div class="skills">
+                        {{#each system.suggested.skills}}
+                                {{formGroup (lookup ../fields.suggested.fields.skills.fields @key) value=this label=(configLookup "skills" @key)}}
+                        {{/each}}
+                </div>
+
+        {{> nameList label="ARCHETYPE.SUGGESTED_TALENTS" list=system.suggested.talents.list path="system.suggested.talents"}}
+
+</section>

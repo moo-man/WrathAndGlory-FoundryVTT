@@ -6,6 +6,7 @@ let fields = foundry.data.fields;
 
 export class WeaponModel extends EquippedItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.weapon", "WH.Components.physical"];
 
     static defineSchema() 
     {

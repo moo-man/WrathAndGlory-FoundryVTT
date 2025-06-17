@@ -4,6 +4,7 @@ let fields = foundry.data.fields;
 
 export class ArchetypeModel extends BaseItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.archetype"];
 
     static defineSchema() 
     {
@@ -25,6 +26,23 @@ export class ArchetypeModel extends BaseItemModel
             talents : new fields.EmbeddedDataField(DeferredReferenceListModel)
         })
         return schema;
+    }
+
+    async _preCreate(data, options, user)
+    {
+        await super._preCreate(data, options, user)   
+
+        if (this.parent.actor && !options.appliedArchetype)
+        {
+            foundry.applications.api.DialogV2.confirm({
+                window: {title: this.actor.type == "agent" ? "Character Creation" : "Apply Archetype"},
+                content: `<p>${this.actor.type == "agent" ? "Begin Character Creation?" : "Apply Archetype data to this Actor?"}</p>`,
+                yes: () => this.actor.applyArchetype(item, true),
+                no: () => this.actor.applyArchetype(item, false)
+            })
+        }
+
+        return false
     }
 
     static migrateData(data)

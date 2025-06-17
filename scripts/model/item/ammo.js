@@ -5,6 +5,7 @@ let fields = foundry.data.fields;
 
 export class AmmoModel extends PhysicalItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.ammo", "WH.Components.physical"];
 
     static defineSchema() 
     {

@@ -1,0 +1,7 @@
+        <div class="flexrow">
+            {{#unless hideQuantity}}
+                {{formGroup fields.quantity value=system.quantity }}
+            {{/unless}}
+                {{formGroup fields.value value=system.value}}
+                {{formGroup fields.rarity value=system.rarity choices=(config "rarity")}}
+        </div>

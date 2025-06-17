@@ -1,0 +1,112 @@
+<section class="tab {{tab.cssClass}} effects" data-group="primary" data-tab="{{tab.id}}">
+    <div class="flexrow" style="align-items: flex-start; gap: 0.5rem;">
+        <div class="conditions">
+            {{#each conditions}}
+                <div class="condition">
+                    <label>{{this.name}}</label>
+                    {{#if this.existing}}
+                        <a data-action="toggleCondition" data-condition="{{this.key}}"><i
+                                class="far fa-check-circle"></i></a>
+                    {{else}}
+                        <a data-action="toggleCondition" data-condition="{{this.key}}"><i class="far fa-circle"></i></a>
+                    {{/if}}
+                </div>
+            {{/each}}
+        </div>
+
+            <div class="effect-lists flex3">
+                <div class="sheet-list">
+                    <div class="list-header row-content">
+                        <div class="list-name">{{localize "HEADER.EFFECTS"}}</div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="createEffect" data-type="effect"><i
+                                    class="fa-solid fa-plus"></i></a>
+                        </div>
+                    </div>
+                    {{#each item.effects}}
+                        <div class="list-row {{#if this.disabled}}inactive{{/if}}" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name">
+                                    <img src="{{this.img}}">
+                                    <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    {{#if this.disabled}}
+                                        <a class="list-control" data-action="toggleProperty" data-path="disabled"><i
+                                                class="fa-regular fa-circle"></i></a>
+                                    {{else}}
+                                        <a class="list-control" data-action="toggleProperty" data-path="disabled"><i
+                                                class="fa-regular fa-circle-check"></i></a>
+                                    {{/if}}
+                                    <a data-action="deleteEmbedded" class="list-control"><i
+                                            class="fa-solid fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+
+                {{#if item.system.ammo.document.effects.contents.length}}
+                    <div class="sheet-list">
+                        <div class="list-header row-content">
+                            <div class="list-name">{{localize "HEADER.AMMO_EFFECTS"}}</div>
+                        </div>
+                        <div class="list-content">
+                            {{#each item.system.ammo.document.effects.contents}}
+                                <div class="list-row" data-uuid="{{this.uuid}}">
+                                    <div class="row-content">
+                                        <div class="list-name">
+                                            <img src="{{this.img}}">
+                                            <div>{{this.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if upgradeEffects.length}}
+                    <div class="sheet-list">
+                        <div class="list-header row-content">
+                            <div class="list-name">{{localize "HEADER.UPGRADE_EFFECTS"}}</div>
+                        </div>
+                        <div class="list-content">
+                            {{#each upgradeEffects}}
+                                <div class="list-row" data-uuid="{{this.uuid}}">
+                                    <div class="row-content">
+                                        <div class="list-name">
+                                            <img src="{{this.img}}">
+                                            <div>{{this.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if effectsFromActor.length}}
+                    <div class="sheet-list">
+                        <div class="list-header row-content">
+                            <div class="list-name">{{localize "HEADER.ACTOR_EFFECTS"}}</div>
+                        </div>
+                        <div class="list-content">
+                            {{#each effectsFromActor}}
+                                <div class="list-row" data-uuid="{{this.uuid}}">
+                                    <div class="row-content">
+                                        <div class="list-name">
+                                            <img src="{{this.img}}">
+                                            <div>{{this.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                {{/if}}
+            </div>
+
+        </div>
+
+</section>

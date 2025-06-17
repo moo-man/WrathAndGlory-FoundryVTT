@@ -1,0 +1,58 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        {{> physical hideQuantity=(not (eq system.category "grenade-missile"))}}
+
+        {{formGroup fields.category value=system.category choices=(config "weaponCategory")}}
+
+
+        {{#if (eq rangeType "single")}}
+        <div class="flexrow">
+                {{formGroup fields.range.fields.melee value=source.system.range.melee}}
+                {{formGroup fields.range.fields.thrown value=source.system.range.thrown}}
+        </div>
+        {{else if (eq rangeType "multi")}}
+        <div class="flexrow">
+                <div class="form-group">
+                        <label>{{localize "WEAPON.RANGE"}}</label>
+                        <div class="form-fields">
+                                {{formInput fields.range.fields.short value=source.system.range.short}}
+                                {{formInput fields.range.fields.medium value=source.system.range.medium}}
+                                {{formInput fields.range.fields.long value=source.system.range.long}}
+                        </div>
+                </div>
+        </div>
+        {{/if}}
+
+        {{> damage fields=fields.damage.fields damage=source.system.damage}}
+        {{> traits}}
+        
+        {{#if (eq item.actor.type "vehicle")}}
+                {{formGroup fields.twinned value=system.twinned}}
+        {{/if}}
+
+        {{#if ownedWeapons.length}}
+        {{formGroup fields.combi.fields.id value=system.combi.id choices=ownedWeapons valueAttr="id" labelAttr="name"}}
+        {{/if}}
+
+        {{formGroup fields.keywords value=system.keywords}}
+
+            <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.UPGRADES"}}</div>
+        </div>
+        <div class="list-content" data-path="system.upgrades">
+            {{#each document.system.upgrades}}
+                <div class="list-row" data-index="{{@key}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}" >
+                            <a class="label" data-action="openUpgrade">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="listDelete"><i class="fa-regular fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

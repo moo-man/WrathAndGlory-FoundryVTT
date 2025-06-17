@@ -191,6 +191,13 @@ WNG.rarity = {
   "unique": "RARITY.UNIQUE",
 }
 
+WNG.weaponCategory = {
+    "melee" : "CATEGORY.MELEE",
+    "ranged" : "CATEGORY.RANGED",
+    "grenade-missile" : "CATEGORY.GRENADE_MISSILE",
+    "launcher" : "CATEGORY.LAUNCHER",
+}
+
 WNG.powerActivations = {
     free : "ACTIVATION.FREE",
     action : "ACTIVATION.ACTION",
@@ -225,7 +232,7 @@ WNG.testTypes = {
     "attribute" : "Attribute",
     "skill" : "Skill",
     "resolve" : "Resolve",
-    "corruption" : "Corruption"
+    "conviction" : "Conviction"
 }
 
 WNG.resolveTests = {
