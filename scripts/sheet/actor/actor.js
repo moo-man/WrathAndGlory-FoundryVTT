@@ -1,3 +1,5 @@
+import ActorConfigForm from "../../apps/actor-configure";
+
 export default class WnGActorSheet extends WarhammerActorSheetV2
 {
     static DEFAULT_OPTIONS = {
@@ -172,40 +174,6 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
           let type = target.dataset.type; 
           let key = target.dataset.key; 
           let itemId = this._getId(ev); 
-  
-          if (type == "conviction")
-          {
-            type = await new foundry.applications.api.DialogV2.wait({
-              window: {title: "Conviction Roll"},
-              buttons: [
-                  {
-                      key  : "corruption",
-                      label: "Corruption",
-                  },
-                  {
-                    key : "mutation",
-                    label : "Mutation"
-                  }
-                ]
-            })
-          }
-
-          if (type == "resolve")
-            {
-              type = await new foundry.applications.api.DialogV2.wait({
-                window: {title: "Resolve Roll"},
-                buttons: [
-                    {
-                        key  : "fear",
-                        label: "Fear",
-                    },
-                    {
-                      key : "terror",
-                      label : "Terror"
-                    }
-                  ]
-              })
-            }
 
           switch(type)
           {
@@ -217,6 +185,8 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
           case "stealth":
           case "corruption":
           case "mutation":
+          case "resolve":
+          case "conviction":
           case "fear":
           case "terror":
           case "influence":

@@ -52,7 +52,7 @@
         <div>
             <h2 class="sheet-divider">{{localize "TITLE.INJURIES"}}</h2>
             <div class="attribute-box single">
-                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.DETERMINATION"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="determination" style="grid-column: 1 / span 8">{{localize "HEADER.DETERMINATION"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number"
                         name="system.combat.determination.total" value="{{system.combat.determination.total}}" {{#if
                         autoCalc.determination}}disabled{{/if}}></div>

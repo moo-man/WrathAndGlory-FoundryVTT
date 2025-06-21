@@ -1,15 +1,7 @@
-export class DataslatePageSheet extends JournalTextPageSheet {
+export class DataslatePageSheet extends foundry.applications.sheets.journal.JournalEntryPageProseMirrorSheet {
 
-    static get defaultOptions() {
-        let options = super.defaultOptions
-        options.viewClasses.push("dataslate")
-        return options
-    }
-
-
-    async getData() {
-        let data = await super.getData();
-        return data
+    static DEFAULT_OPTIONS = {
+        viewClasses :  ["dataslate"]
     }
 }
 

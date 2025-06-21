@@ -10,7 +10,7 @@ export class DamageModel extends foundry.abstract.DataModel
         schema.enabled = new fields.BooleanField({initial: false});
         schema.base = new fields.NumberField({initial: 0, nullable: false});
         schema.bonus = new fields.NumberField({initial: 0, nullable: false});
-        schema.dice = new fields.NumberField({min: 0, initial: 0, nullable: false});
+        schema.dice = new fields.StringField();
         schema.rank = new fields.NumberField({initial : 0, choices : {0 : "RANK.NONE", 1 : "RANK.SINGLE", 2: "RANK.DOUBLE"}});
 
         schema.ed = new fields.SchemaField({

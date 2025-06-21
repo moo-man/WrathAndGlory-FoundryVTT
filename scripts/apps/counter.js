@@ -1,78 +1,100 @@
-export default class RuinGloryCounter extends Application {
-    static get defaultOptions() {
-      const options = super.defaultOptions;
-      options.title = "Glory & Ruin Counter";
-      options.id = 'counter';
-      options.template = 'systems/wrath-and-glory/template/apps/counter.hbs';
-      return options;
-    }
+export default class RuinGloryCounter extends HandlebarsApplicationMixin(ApplicationV2) {
+  
+
+    static DEFAULT_OPTIONS = {
+      id: "counter",
+      classes : ["warhammer", "wrath-and-glory"],
+      window: {
+      },
+      actions: {
+        stepValue : this._onStepValue
+      }
+    };
+
+    static PARTS = {
+      counter: {
+          template: "systems/wrath-and-glory/templates/apps/counter.hbs"
+        },
+    };
+
+
     /* -------------------------------------------- */
     /**
      * Provide data to the HTML template for rendering
      * @type {Object}
      */
-    getData() {
-      const data = super.getData();
-      data.glory = game.settings.get('wrath-and-glory', 'glory');
-      data.ruin = game.settings.get('wrath-and-glory', 'ruin');
-      data.canEdit =
-        game.user.isGM || game.settings.get('wrath-and-glory', 'playerCounterEdit');
+    async _prepareContext(options) {
+      const context = await super._prepareContext(options);
+      context.glory = game.settings.get('wrath-and-glory', 'glory');
+      context.ruin = game.settings.get('wrath-and-glory', 'ruin');
+      context.canEdit = game.user.isGM || game.settings.get('wrath-and-glory', 'playerCounterEdit');
   
-      return data;
+      return context;
     }
 
-    render(force=false, options={})
+    render(options)
     {
       let userPosition = game.settings.get("wrath-and-glory", "counterPosition")
-      if (userPosition.hide)
+      options.position = userPosition
+
+      if (options.position.hide)
+      {
         return
-      options.top = userPosition.top || window.innerHeight - 200
-      options.left = userPosition.left || 250
-      super.render(force, options)
+      }
+      else 
+      {
+        delete options.position.hide;
+        super.render(options);
+      }
+
     }
 
-    async _render(...args)
-    {
-      await super._render(...args)
-      delete ui.windows[this.appId]
-    }
 
     setPosition(...args) {
       super.setPosition(...args);
       game.settings.set("wrath-and-glory", "counterPosition", this.position)
     }
 
-    // close(){
-    //   return
-    // }
-  
-    activateListeners(html) {
-      super.activateListeners(html);
 
-      new Draggable(this, html, html.find(".handle")[0], false)
-  
-      html.find('input').focusin(ev => {
-        ev.target.select()
+    close(options)
+    {
+      if (options.fromControls)
+      {
+        super.close(options);
+      }
+    }
+
+    async _onRender(options)
+    {
+      await super._onRender(options);
+      new foundry.applications.ux.Draggable.implementation(this, this.element, this.element.querySelector(".handle"), false)
+
+
+      let inputs = this.element.querySelectorAll("input")
+      inputs.forEach(input => {
+        input.addEventListener("change", ev => {
+          let counter = ev.target.dataset.counter;
+          RuinGloryCounter.setCounter(ev.target.value, counter);
+        });
+
+        input.addEventListener("mouseup", ev => {
+          ev.target.classList.toggle("clicked");
+        })
+
+        input.addEventListener("focusin", ev => {
+          ev.target.select();
+        })
       })
-      // Call setCounter when input is used
-      this.input = html.find('input').change(async ev => {
-        const type = $(ev.currentTarget).attr('data-type');
-        RuinGloryCounter.setCounter(ev.target.value, type);
-      });
-  
-      // Call changeCounter when +/- is used
-      html.find('.incr,.decr').mousedown(async ev => {
-        let input = $(ev.target.parentElement).find("input")
-        const type = input.attr('data-type');
-        const multiplier = $(ev.currentTarget).hasClass('incr') ? 1 : -1;
-        $(ev.currentTarget).toggleClass("clicked")
-        let newValue = await RuinGloryCounter.changeCounter(1 * multiplier, type);
-        input[0].value = newValue
-      });
-  
-      html.find('.incr,.decr').mouseup(ev => {
-        $(ev.currentTarget).removeClass("clicked")
-      });
+    }
+
+    static async  _onStepValue(ev, target)
+    {
+      let input = target.parentElement.querySelector("input");
+      let counter = input.dataset.counter;
+      let multiplier = target.dataset.type == "incr" ? 1 : -1;
+      target.classList.toggle("clicked");
+      let newValue = await RuinGloryCounter.changeCounter(1 * multiplier, counter);
+      input.value = newValue;
     }
   
     // ************************* STATIC FUNCTIONS ***************************
@@ -88,7 +110,7 @@ export default class RuinGloryCounter extends Application {
 
       if (max)
       {
-        value = Math.min(max, value);
+        value = Math.clamp(value, 0, max);
       }
   
       if (!game.user.isGM) {
@@ -135,15 +157,15 @@ export default class RuinGloryCounter extends Application {
 
 
   Hooks.on("renderSceneControls", (app, html, options) => {
-    let button = $(`<li class='scene-controls' data-tooltip="${game.i18n.localize("CONTROLS.WNGCounterToggle")}"><i class="fa-solid fa-input-numeric"></i></li>`)
-    button.on("click", () => {
-
+    let button = document.createElement("li")
+    button.innerHTML = `<button class='control ui-control layer icon fa-solid fa-input-numeric' data-tooltip="${game.i18n.localize("CONTROLS.WNGCounterToggle")}"></button>`
+    button.addEventListener("click", ev => {
       // Retain show/hide on refresh by storing in settings
       position = game.settings.get("wrath-and-glory", "counterPosition")
       position.hide = game.counter.rendered;
       game.settings.set("wrath-and-glory", "counterPosition", position);
       
-      game.counter.rendered ? game.counter.close() : game.counter.render(true);
+      game.counter.rendered ? game.counter.close({fromControls : true}) : game.counter.render({force : true});
     })
-    html.find("ol.main-controls").append(button)
+    html.querySelector("#scene-controls-layers").append(button)
   })

@@ -17,7 +17,6 @@ export const initializeHandlebars = () => {
     "systems/wrath-and-glory/template/chat/roll/stealth/stealth-result.hbs",
     "systems/wrath-and-glory/template/chat/roll/mutation/mutation-result.hbs",
     "systems/wrath-and-glory/template/chat/roll/mutation/mutation-buttons.hbs",
-    "systems/wrath-and-glory/template/apps/combatant-list.hbs",
   ];
   loadTemplates({
     test : "systems/wrath-and-glory/template/partials/test.hbs",
@@ -28,7 +27,8 @@ export const initializeHandlebars = () => {
     physical : "systems/wrath-and-glory/templates/item/partials/physical.hbs",
     traitsMod : "systems/wrath-and-glory/templates/item/partials/traits-mod.hbs",
     traits : "systems/wrath-and-glory/templates/item/partials/traits.hbs",
-    damage : "systems/wrath-and-glory/templates/item/partials/damage.hbs"
+    damage : "systems/wrath-and-glory/templates/item/partials/damage.hbs",
+    combatant : "systems/wrath-and-glory/templates/apps/combatant.hbs"
   })
   return loadTemplates(templatePaths);
 };

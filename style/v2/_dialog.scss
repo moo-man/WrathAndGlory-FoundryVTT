@@ -1,0 +1,17 @@
+.warhammer.roll-dialog-v2 {
+
+    .dialog-fields {
+        flex: 1;
+        input {
+            padding: 0px;
+        }
+    }
+
+    .form-group.labels {
+        .form-fields {
+            >* {
+                text-align: center;
+            }
+        }
+    }
+}

@@ -1,4 +1,3 @@
-import { Level4TextPageSheet } from "../apps/journal-sheet"
 
 export default function () {
   Hooks.on("init", () => {
@@ -9,11 +8,5 @@ export default function () {
         game.settings.set("wrath-and-glory", data.payload.type, data.payload.value)
       }
     })
-
-    Level4TextPageSheet._removeNoTOC();
   })
-
-
-
-
 }

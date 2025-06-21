@@ -15,10 +15,9 @@ import StealthRoll from "./common/tests/stealth.js";
 import AbilityRoll from "./common/tests/ability-roll.js";
 import Migration from "./common/migration.js"
 import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./common/combat.js";
-import WrathANdGloryCombatTracker from "./apps/combat-tracker.js";
+import WrathAndGloryCombatTracker from "./apps/combat-tracker.js";
 import { WrathAndGloryOptionalCombat } from "./common/combat-optional.js";
 import settings from "./hooks/settings.js";
-import { Level4TextPageSheet } from "./apps/journal-sheet.js";
 import { AgentModel } from "./model/actor/agent.js"
 import { ThreatModel } from "./model/actor/threat.js";
 import { VehicleModel } from "./model/actor/vehicle.js";
@@ -75,10 +74,8 @@ Hooks.once("init", () => {
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
   //CONFIG.ChatMessage.documentClass = SystemChatMessage;
-  DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", Level4TextPageSheet, { types : ["text"], makeDefault: true, label : "W&G Journal Sheet" });
   DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", DataslatePageSheet, { types : ["text"], makeDefault: false, label : "Data Slate" });
 
-CONFIG.ActiveEffect.legacyTransferral = false;
 CONFIG.ActiveEffect.dataModels["base"] = WrathAndGloryActiveEffectModel
 CONFIG.ChatMessage.dataModels["test"] = WrathAndGloryTestMessageModel;
 CONFIG.ChatMessage.dataModels["damage"] = WrathAndGloryDamageMessageModel;
@@ -117,7 +114,7 @@ Items.registerSheet("wrath-and-glory", PsychicPowerSheet, {types : ["psychicPowe
   else 
   {
     CONFIG.Combat.documentClass = WrathAndGloryCombat;
-    CONFIG.ui.combat = WrathANdGloryCombatTracker
+    CONFIG.ui.combat = WrathAndGloryCombatTracker
     CONFIG.Combatant.documentClass = WrathAndGloryCombatant
   }
 

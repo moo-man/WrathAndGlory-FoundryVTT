@@ -2,8 +2,6 @@ import { CommonDialog } from "./common-dialog.js";
 
 export class AttackDialog extends CommonDialog {
 
-  subTemplate=["systems/wrath-and-glory/template/dialog/attack-roll.hbs"]
-
   get tooltipConfig() {
     return foundry.utils.mergeObject({
       ed : {

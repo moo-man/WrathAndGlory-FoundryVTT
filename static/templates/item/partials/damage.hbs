@@ -13,7 +13,7 @@
                 {{formInput fields.base value=damage.base}}
                 {{formInput fields.bonus value=damage.bonus}}
                 {{formInput fields.rank value=damage.rank localize=true}}
-                {{formInput fields.dice value=damage.dice}}
+                {{formInput fields.dice value=damage.dice classes="centered"}}
         </div>
 </div>
 <div class="form-group">
@@ -23,7 +23,7 @@
                 {{formInput fields.ed.fields.base value=damage.ed.base}}
                 {{formInput fields.ed.fields.bonus value=damage.ed.bonus}}
                 {{formInput fields.ed.fields.rank value=damage.ed.rank localize=true}}
-                {{formInput fields.ed.fields.dice value=damage.ed.dice}}
+                {{formInput fields.ed.fields.dice value=damage.ed.dice classes="centered"}}
         </div>
 </div>
 {{#unless hideAP}}
@@ -34,7 +34,7 @@
                 {{formInput fields.ap.fields.base value=damage.ap.base}}
                 {{formInput fields.ap.fields.bonus value=damage.ap.bonus}}
                 {{formInput fields.ap.fields.rank value=damage.ap.rank localize=true}}
-                {{formInput fields.ap.fields.dice value=damage.ap.dice}}
+                {{formInput fields.ap.fields.dice value=damage.ap.dice classes="centered"}}
         </div>
 </div>
 {{/unless}}

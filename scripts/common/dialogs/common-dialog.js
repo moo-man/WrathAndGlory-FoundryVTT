@@ -2,6 +2,35 @@ import { RollDialog } from "./base-dialog";
 
 export class CommonDialog extends RollDialog {
 
+  static DEFAULT_OPTIONS = {
+    position: {
+        width: 600
+    }
+  };
+  
+  static PARTS = {
+    common : {
+        template : "systems/wrath-and-glory/templates/dialog/common-roll.hbs",
+        fields: true
+    },
+    determination : {
+      template : "systems/wrath-and-glory/templates/dialog/determination-roll.hbs",
+      fields: true
+    },
+    mode : {
+        template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+        fields: true
+    },
+    modifiers : {
+        template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+        modifiers: true
+    },
+    footer : {
+        template : "templates/generic/form-footer.hbs"
+    }
+};
+
+
     get skill() 
     {
       return this.data.skill;
@@ -12,29 +41,34 @@ export class CommonDialog extends RollDialog {
       return this.data.attribute;
     }
 
-    static async setupData({attribute, skill}, actor, options={})
+    get title()
     {
-        let dialogData = await super.setupData({}, actor, options)
+      return this.context.title;
+    }
+
+    static async setupData({attribute, skill}, actor, context={})
+    {
+        let dialogData = await super.setupData({}, actor, context)
         dialogData.data.attribute = attribute || game.wng.config.skillAttribute[skill];
         dialogData.data.skill = skill;
-        dialogData.options.title = this._constructTitle(dialogData);
-        dialogData.data.item = options.item;
+        dialogData.context.title = this._constructTitle(dialogData);
+        dialogData.data.item = context.item;
         
         return dialogData
     }
 
-    static _constructTitle({data, fields, options})
+    static _constructTitle({data, fields, context})
     {
-      let title = options.title
+      let title = context.title
       if (!title && data.skill)
       {
-        title = options.title || `${game.wng.config.skills[data.skill]} Test`
+        title = context.title || `${game.wng.config.skills[data.skill]} Test`
       }
       else if (!title && data.attribute)
       {
-        title = options.title || `${game.wng.config.attributes[data.attribute]} Test`;
+        title = context.title || `${game.wng.config.attributes[data.attribute]} Test`;
       }
-      title += options.appendTitle || "";
+      title += context.appendTitle || "";
       return title;
     }
 
@@ -54,18 +88,28 @@ export class CommonDialog extends RollDialog {
         this.fields.pool = pool
         this.tooltips.set("pool", pool, game.wng.config.skills[this.data.skill] || game.wng.config.attributes[this.data.attribute])
       }
-      else if (this.options.initialTooltip)
+      else if (this.context.initialTooltip)
       {
-        this.tooltips.set("pool", this.initialFields.pool, this.options.initialTooltip)
+        this.tooltips.set("pool", this.initialFields.pool, this.context.initialTooltip)
         // this.options.initialTooltip = game.wng.config.skills[this.data.skill] || game.wng.config.attributes[this.data.attribute]
       }
 
-      if (this.options.corruption)
+      if (this.context.corruption)
       {
         let level = game.wng.config.corruptionLevels[this.actor.corruptionLevel]
         this.difficulty += level.dn;
         this.tooltips.add("difficulty", level.dn, "Corruption Level")
       }
+    }
+
+    _configureRenderParts(options) 
+    {
+        let parts = super._configureRenderParts(options);
+        if (!this.context.determination)
+        {
+            delete parts.determination;
+        }
+        return parts;
     }
   
     _defaultFields() 

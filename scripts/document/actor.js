@@ -71,16 +71,38 @@ export class WrathAndGloryActor extends WarhammerActor {
         
         if (type == "conviction")
         {
-            type = await Dialog.wait({
-                title : game.i18n.localize(`ROLL.CONVICTION`), 
-                buttons : {
-                    corruption : {
-                        label : game.i18n.localize(`ROLL.CORRUPTION`)
+            type = await foundry.applications.api.Dialog.wait({
+                window : {title : game.i18n.localize(`ROLL.CONVICTION`)},
+                buttons : [
+                    {
+                        action : "corruption",
+                        label : `ROLL.CORRUPTION`
                     },
-                    mutation : {
-                        label : game.i18n.localize(`ROLL.MUTATION`)
+                    {
+                        action : "mutation",
+                        label : `ROLL.MUTATION`
                     }
-            }})
+                ]
+            });
+        }
+
+        if (type == "resolve")
+        {
+            type = await foundry.applications.api.Dialog.wait({
+                window : {title : game.i18n.localize(`ROLL.RESOLVE`)},
+                buttons : [
+                    {
+                        action : "fear",
+                        label : `ROLL.FEAR`,
+                        callback: () => {}
+                    },
+                    {
+                        action : "terror",
+                        label : `ROLL.TERROR`,
+                        callback: () => {}
+                    }
+                ]
+            });
         }
 
         switch (type) {
@@ -93,30 +115,30 @@ export class WrathAndGloryActor extends WarhammerActor {
                 context.title = game.i18n.localize(`ROLL.DETERMINATION`)
                 context.noDn = true;
                 context.noWrath = true;
-                return this._setupTest(RollDialog, DeterminationRoll, {pool : this.combat.determination.total,}, context)
+                return this._setupTest(CommonDialog, DeterminationRoll, {pool : this.combat.determination.total,}, context)
             case "corruption":
                 context.title = game.i18n.localize(`ROLL.CORRUPTION`)
                 context.conviction = true;
-                return this._setupTest(RollDialog, CorruptionTest, {pool : this.combat.conviction.total}, context)
+                return this._setupTest(CommonDialog, CorruptionTest, {pool : this.combat.conviction.total}, context)
             case "mutation":
                 context.title = game.i18n.localize(`ROLL.MUTATION`)
                 context.conviction = true;
-                return this._setupTest(RollDialog, MutationTest, {pool : this.combat.conviction.total}, context)
+                return this._setupTest(CommonDialog, MutationTest, {pool : this.combat.conviction.total}, context)
             case "fear":
                 context.title = game.i18n.localize(`ROLL.FEAR`)
                 context.resolve = true;
                 context.noWrath = true;
-                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
             case "terror":
                 context.title = game.i18n.localize(`ROLL.TERROR`)
                 context.resolve = true;
                 context.noWrath = true;
-                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
             case "influence":
                 context.fields.pool = this.resources.influence
                 context.title = game.i18n.localize(`ROLL.INFLUENCE`)
                 context.noWrath = true;
-                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
             default:
                 throw new Error("Unknown roll type: " + type)
         }

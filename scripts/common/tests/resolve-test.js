@@ -32,7 +32,7 @@ export default class ResolveTest  extends WNGTest {
     {
       this.context.pointsAdded = true;
       game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {
-        game.counter.render(true)
+        game.counter.render({force: true})
       })
     }
 
@@ -55,7 +55,7 @@ export default class ResolveTest  extends WNGTest {
     {
       this.context.pointsAdded = true;
       game.wng.RuinGloryCounter.changeCounter(-1,  "ruin").then(() => {
-        game.counter.render(true)
+        game.counter.render({force: true})
       })
     }
   }

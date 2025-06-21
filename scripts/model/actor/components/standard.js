@@ -16,15 +16,6 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
             "prototypeToken.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
             "prototypeToken.disposition": CONST.TOKEN_DISPOSITIONS.NEUTRAL,
             "prototypeToken.name": data.name,
-            "flags.wrath-and-glory.autoCalc.defence": true,
-            "flags.wrath-and-glory.autoCalc.resilience": true,
-            "flags.wrath-and-glory.autoCalc.shock": true,
-            "flags.wrath-and-glory.autoCalc.awareness": true,
-            "flags.wrath-and-glory.autoCalc.resolve": true,
-            "flags.wrath-and-glory.autoCalc.determination": true,
-            "flags.wrath-and-glory.autoCalc.wounds": true,
-            "flags.wrath-and-glory.autoCalc.conviction": true,
-            "flags.wrath-and-glory.generateMetaCurrencies": true
         })
     }
     
@@ -37,7 +28,21 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
 
             species : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
             faction : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
-            archetype : new foundry.data.fields.EmbeddedDataField(SingletonItemModel)
+            archetype : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
+
+            settings : new foundry.data.fields.SchemaField({
+                generateMetaCurrencies : new foundry.data.fields.BooleanField({initial : true}),
+                autoCalc : new foundry.data.fields.SchemaField({
+                    defence : new foundry.data.fields.BooleanField({initial: true}),
+                    resilience : new foundry.data.fields.BooleanField({initial: true}),
+                    shock : new foundry.data.fields.BooleanField({initial: true}),
+                    awareness : new foundry.data.fields.BooleanField({initial: true}),
+                    resolve : new foundry.data.fields.BooleanField({initial: true}),
+                    determination : new foundry.data.fields.BooleanField({initial: true}),
+                    wounds : new foundry.data.fields.BooleanField({initial: true}),
+                    conviction : new foundry.data.fields.BooleanField({initial: true}),
+                })
+            })
         }
     }
 
@@ -81,7 +86,7 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
     computeDerived() {
         this.attributes.compute();
         this.skills.compute(this.attributes);
-        this.combat.compute(this.attributes, this.parent.getFlag("wrath-and-glory", "autoCalc") || {});
+        this.combat.compute(this.attributes, this.settings.autoCalc);
     }
 
     

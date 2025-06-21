@@ -1,0 +1,27 @@
+<div>
+    {{#unless isVehicle}}
+    {{formGroup fields.autoCalc.fields.defence value=values.autoCalc.defence label="AUTOCALC.DEFENCE" localize=true}}
+    {{formGroup fields.autoCalc.fields.resilience value=values.autoCalc.resilience label="AUTOCALC.RESILIENCE" localize=true}}
+
+    {{#if isAgent}}
+        {{formGroup fields.autoCalc.fields.shock value=values.autoCalc.shock label="AUTOCALC.SHOCK" localize=true}}
+    {{/if}}
+
+    {{formGroup fields.autoCalc.fields.resolve value=values.autoCalc.resolve label="AUTOCALC.RESOLVE" localize=true}}
+    {{formGroup fields.autoCalc.fields.awareness value=values.autoCalc.awareness label="AUTOCALC.AWARENESS" localize=true}}
+    {{formGroup fields.autoCalc.fields.determination value=values.autoCalc.determination label="AUTOCALC.DETERMINATION" localize=true}}
+    {{#if isAgent}}
+        {{formGroup fields.autoCalc.fields.wounds value=values.autoCalc.wounds label="AUTOCALC.WOUNDS" localize=true}}
+    {{/if}}
+
+    {{formGroup fields.autoCalc.fields.conviction value=values.autoCalc.conviction label="AUTOCALC.CONVICTION" localize=true}}
+
+    <hr>
+
+    {{formGroup fields.generateMetaCurrencies value=values.generateMetaCurrencies label="CONFIGURE.GenerateMetaCurrencies" localize=true}}
+
+
+    {{else}}
+    {{formGroup fields.hidePassengers value=values.hidePassengers label="CONFIGURE.HidePassengers" localize=true}}
+    {{/unless}}
+</div>

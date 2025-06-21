@@ -2,15 +2,38 @@ import { AttackDialog } from "./attack-dialog.js";
 
 export class PowerDialog extends AttackDialog {
 
-  subTemplate=["systems/wrath-and-glory/template/dialog/attack-roll.hbs", "systems/wrath-and-glory/template/dialog/power-roll.hbs"]
-
+  static PARTS = {
+    common : {
+        template : "systems/wrath-and-glory/templates/dialog/common-roll.hbs",
+        fields: true
+    },
+    attack : {
+      template : "systems/wrath-and-glory/templates/dialog/attack-roll.hbs",
+      fields: true
+    },
+    power : {
+      template : "systems/wrath-and-glory/templates/dialog/power-roll.hbs",
+      fields: true
+    },
+    mode : {
+        template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+        fields: true
+    },
+    modifiers : {
+        template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+        modifiers: true
+    },
+    footer : {
+        template : "templates/generic/form-footer.hbs"
+    }
+};
 
   get power() 
   {
     return this.data.power;
   }
 
-  static async setupData(power, actor, options={})
+  static async setupData(power, actor, context={})
   {
       if (typeof power == "string")
       {
@@ -20,7 +43,7 @@ export class PowerDialog extends AttackDialog {
       
       let skill = "psychicMastery"
       
-      let dialogData = await super.setupData({skill}, actor, options)
+      let dialogData = await super.setupData({skill}, actor, context)
       
       dialogData.data.levels = {
         bound : game.i18n.localize("PSYCHIC_POWER.BOUND"),
@@ -35,7 +58,7 @@ export class PowerDialog extends AttackDialog {
       foundry.utils.setProperty(dialogData, "fields.ed.dice",  power.system.damage.ed.dice);
       foundry.utils.setProperty(dialogData, "fields.ap.dice",  power.system.damage.ap.dice);
 
-      options.title = `${power.name} Test`
+      context.title = `${power.name} Test`
       
       if (power.system.dn.includes("@") && dialogData.data.targets.length == 0) 
       {
@@ -62,11 +85,11 @@ export class PowerDialog extends AttackDialog {
     this.tooltips.finish(this, this.data.levels[this.fields.level])
 
     this.tooltips.start(this)
-    if (this.options.multi)
+    if (this.context.multi)
     {
-      this.fields.difficulty += (this.options.multi - 1) * 2;
+      this.fields.difficulty += (this.context.multi - 1) * 2;
     }
-    this.tooltips.finish(this, `Multi-Attack (${this.options.multi} Targets)`)
+    this.tooltips.finish(this, `Multi-Attack (${this.context.multi} Targets)`)
 
     let power = this.power;
   

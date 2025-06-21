@@ -18,7 +18,7 @@ export default class CharacterCreation extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "character-creation",
             title: "Character Creation",
-            template: "systems/wrath-and-glory/template/apps/character-creation.hbs",
+            template: "systems/wrath-and-glory/templates/apps/character-creation.hbs",
             width: 1400,
             closeOnSubmit: false,
             height: 800,

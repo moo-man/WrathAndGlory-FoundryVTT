@@ -49,7 +49,7 @@ export class CombatModel extends foundry.abstract.DataModel {
         let actor = this.parent.parent;
         let attributes = actor.system.attributes;
         let skills = actor.system.skills;
-        let autoCalc = actor.getFlag("wrath-and-glory", "autoCalc") || {};
+        let autoCalc = this.parent.settings.autoCalc;
 
         this.computeArmour(actor.itemTypes.armour, attributes);
 

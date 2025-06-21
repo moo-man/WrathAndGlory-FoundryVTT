@@ -18,6 +18,16 @@
           }
     }
 
+    .attribute-box {
+        .label.rollable {
+            &:hover {
+                cursor: pointer;
+                background: var(--roll-bg)
+            }
+        }
+        
+    }
+
     .attributes {
         display: flex;
         gap: 0.5rem;

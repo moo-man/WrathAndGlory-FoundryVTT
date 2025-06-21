@@ -1,0 +1,30 @@
+<div class="counter-body"> 
+
+  <div class="counter-controls">
+    <a class="handle"><i class="fas fa-grip-horizontal"></i></a>
+  </div>
+
+  <div class="counters">
+    <div class="counter">
+      <h3>{{localize "RESOURCE.GLORY"}}</h3>
+      <div class="input-controls">
+        <a {{#unless canEdit}}style="visibility: hidden"{{/unless}} data-type="decr" data-action="stepValue"><i class="fas fa-minus"></i></a> 
+        <input type="number" data-counter="glory" value="{{glory}}" 
+        {{#unless canEdit}}disabled{{/unless}}> 
+        <a  {{#unless canEdit}}style="visibility: hidden"{{/unless}} data-type="incr" data-action="stepValue"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    
+    
+    <div class="counter">
+      <h3>{{localize "RESOURCE.RUIN"}}</h3>
+      <div class="input-controls">
+        <a {{#unless (isGM)}}style="visibility: hidden"{{/unless}} data-type="decr" data-action="stepValue"><i class="fas fa-minus"></i></a>
+        <input type="number" data-counter="ruin" value="{{ruin}}" 
+        {{#unless (isGM)}}disabled{{/unless}}> 
+        <a {{#unless (isGM)}}style="visibility: hidden"{{/unless}} data-type="incr" data-action="stepValue"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+  </div>
+
+  </div>

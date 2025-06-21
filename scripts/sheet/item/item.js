@@ -1,3 +1,4 @@
+import ItemTraits from "../../apps/item-traits"
 
 
 export default class WnGItemSheet extends WarhammerItemSheetV2

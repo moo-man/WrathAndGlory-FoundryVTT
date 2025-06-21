@@ -407,9 +407,9 @@ export class WNGTest extends WarhammerTestBase {
     if (this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies")) {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1, "glory").then(() => { game.counter.render(true) })
+        game.wng.RuinGloryCounter.changeCounter(1, "glory").then(() => { game.counter.render({force: true}) })
       else if (this.actor.type == "threat")
-        game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => { game.counter.render(true) })
+        game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => { game.counter.render({force: true}) })
     }
   }
 
@@ -439,7 +439,7 @@ export class WNGTest extends WarhammerTestBase {
     {
       let glorySubtract = -this.testData.shifted.glory.dice.length
       game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
-        game.counter.render(true)
+        game.counter.render({force: true})
         if (glorySubtract)
           ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", { change: glorySubtract }))
       })
@@ -636,7 +636,7 @@ export class PoolDie extends Die {
     if (game.modules.get("wng-core") && game.modules.get("wng-core").active)
       roll.img = `modules/wng-core/assets/dice/die-pool-${roll.result}.webp`
     else
-      roll.img = `systems/wrath-and-glory/asset/image/die-pool-${roll.result}.webp`
+      roll.img = `systems/wrath-and-glory/assets/image/die-pool-${roll.result}.webp`
   }
 
 
@@ -707,7 +707,7 @@ export class WrathDie extends Die {
     if (game.modules.get("wng-core") && game.modules.get("wng-core").active)
       roll.img = `modules/wng-core/assets/dice/die-wrath-${roll.result}.webp`
     else
-      roll.img = `systems/wrath-and-glory/asset/image/die-wrath-${roll.result}.webp`
+      roll.img = `systems/wrath-and-glory/assets/image/die-wrath-${roll.result}.webp`
   }
 
 
