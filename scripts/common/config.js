@@ -357,7 +357,7 @@ WNG.systemEffects = {
         id : "wounded",
         statuses : ["wounded"],
         name : "EFFECT.Wounded",
-        img : "systems/wrath-and-glory/asset/icons/effects/wounded.svg",
+        img : "systems/wrath-and-glory/assets/icons/effects/wounded.svg",
         system : {
             scriptData : [{
                 trigger : "dialog",
@@ -1032,7 +1032,7 @@ CONFIG.statusEffects = [
         id : "dying",
         statuses : ["dying"],
         name : "CONDITION.Dying",
-        img : "systems/wrath-and-glory/assets/icons/dying.svg",
+        img : "systems/wrath-and-glory/assets/icons/effects/dying.svg",
         system : {
             scriptData : [{
                 label : "Extra Wrath Die",
@@ -1048,7 +1048,7 @@ CONFIG.statusEffects = [
         id : "dead",
         statuses : ["dead"],
         name : "CONDITION.Dead",
-        img : "systems/wrath-and-glory/assets/icons/dead.svg"
+        img : "systems/wrath-and-glory/assets/icons/effects/dead.svg"
     }
     
 ]

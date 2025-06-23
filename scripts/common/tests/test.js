@@ -37,7 +37,7 @@ export class WNGTest extends WarhammerTestBase {
         edit: { pool: 0, wrath: 0, icons: 0, damage: 0, ed: 0, ap: 0 },
       },
       context: {
-        title: data.options?.title,
+        title: data.context?.title,
         targets: data.targets || [],
         type: data.type,
         breakdown : data.context?.breakdown,
@@ -61,7 +61,7 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/common/common-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/common/common-roll.hbs"
   }
 
   static recreate(data) {
@@ -70,7 +70,7 @@ export class WNGTest extends WarhammerTestBase {
     }
 
     let test = new game.wng.rollClasses[data.context.rollClass]()
-    test.data = data;
+    test.data = data.toJSON();
     if (test.result.roll)
       test.roll = Roll.fromData(test.result.roll)
     if (test.testData.rerolls.length)
@@ -454,7 +454,7 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   // Is this test shiftable?
-  isShiftable() {
+  get  isShiftable() {
     return true
   }
 

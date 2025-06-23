@@ -16,7 +16,7 @@ export class WrathAndGloryItem extends WarhammerItem {
             item.img = null;
         }
 
-        const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.hbs", { item, data: item.system });
+        const html = await renderTemplate("systems/wrath-and-glory/templates/chat/item.hbs", { item, data: item.system });
         const chatData = {
             user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),

@@ -118,19 +118,23 @@ export class WrathAndGloryActor extends WarhammerActor {
                 return this._setupTest(CommonDialog, DeterminationRoll, {pool : this.combat.determination.total,}, context)
             case "corruption":
                 context.title = game.i18n.localize(`ROLL.CORRUPTION`)
+                context.corruption = true;
                 context.conviction = true;
                 return this._setupTest(CommonDialog, CorruptionTest, {pool : this.combat.conviction.total}, context)
             case "mutation":
                 context.title = game.i18n.localize(`ROLL.MUTATION`)
+                context.mutation = true;
                 context.conviction = true;
                 return this._setupTest(CommonDialog, MutationTest, {pool : this.combat.conviction.total}, context)
             case "fear":
                 context.title = game.i18n.localize(`ROLL.FEAR`)
+                context.fear = true;
                 context.resolve = true;
                 context.noWrath = true;
                 return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
             case "terror":
                 context.title = game.i18n.localize(`ROLL.TERROR`)
+                context.terror = true;
                 context.resolve = true;
                 context.noWrath = true;
                 return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)

@@ -34,7 +34,7 @@ export class ArchetypeModel extends BaseItemModel
 
         if (this.parent.actor && !options.appliedArchetype)
         {
-            foundry.applications.api.DialogV2.confirm({
+            foundry.applications.api.Dialog.confirm({
                 window: {title: this.actor.type == "agent" ? "Character Creation" : "Apply Archetype"},
                 content: `<p>${this.actor.type == "agent" ? "Begin Character Creation?" : "Apply Archetype data to this Actor?"}</p>`,
                 yes: () => this.actor.applyArchetype(item, true),

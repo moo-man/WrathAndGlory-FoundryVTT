@@ -125,19 +125,19 @@
         <div>
             <h2 class="sheet-divider">{{localize "TITLE.MUTATIONS"}}</h2>
             <div class="attribute-box single">
-                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.CONVICTION"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="conviction" style="grid-column: 1 / span 8">{{localize "HEADER.CONVICTION"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number"
                         name="system.combat.conviction.total" value="{{system.combat.conviction.total}}" {{#if
                         autoCalc.conviction}}disabled{{/if}}></div>
             </div>
             <div class="attribute-box single">
-                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.RESOLVE"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="resolve" style="grid-column: 1 / span 8">{{localize "HEADER.RESOLVE"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number"
                         name="system.combat.resolve.total" value="{{system.combat.resolve.total}}" {{#if
                         autoCalc.resolve}}disabled{{/if}}></div>
             </div>
             <div class="attribute-box single">
-                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.CORRUPTION"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="corruption" style="grid-column: 1 / span 8">{{localize "HEADER.CORRUPTION"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number" name="system.corruption.current"
                         value="{{system.corruption.current}}" {{#if autoCalc.corruption}}disabled{{/if}}></div>
             </div>

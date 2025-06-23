@@ -60,7 +60,7 @@ export class DamageRoll {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/damage/damage-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/damage/damage-roll.hbs"
   }
 
   async rollTest() {

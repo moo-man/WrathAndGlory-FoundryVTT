@@ -1,4 +1,5 @@
 import ItemTraits from "../../apps/item-traits"
+import { PostedItemMessageModel } from "../../model/message/item"
 
 
 export default class WnGItemSheet extends WarhammerItemSheetV2
@@ -22,7 +23,7 @@ export default class WnGItemSheet extends WarhammerItemSheetV2
         ]
       },
       actions : {
-        postToChat : function() {this.item.postItem()},
+        postToChat : function() {PostedItemMessageModel.postItem(this.item)},
         editTraits : this._onEditTraits,
         toggleCondition: this._onToggleCondition
         

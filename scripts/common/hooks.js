@@ -1,36 +1,27 @@
-import entryContextHooks from "../hooks/entryContext.js"
 import ready from "../hooks/ready.js"
 import init from "../hooks/init.js";
-import chat from "../hooks/chat.js";
 import combat from "../hooks/combat.js";
 import token from "../hooks/token.js";
-import WNGUtility from "./utility.js";
 import hotbar from "../hooks/hotbar.js";
 import setting from "../hooks/setting.js";
 import i18n from "../hooks/i18n.js";
+import chat from "../hooks/chat.js";
 
 export default function() {
-    entryContextHooks();
     ready();
     init();
-    chat();
     combat();
     token();
     hotbar();
     setting();
     i18n();
+    chat();
 
     Hooks.on("renderSidebarTab", WarhammerBugReport.addSidebarButton)
 
     Hooks.on("renderActorSheet", _addKeywordListeners)
     Hooks.on("renderJournalTextPageSheet", _addKeywordListeners)
     Hooks.on("renderItemSheet", _addKeywordListeners)
-
-    
-    function _keepID(document, data, options) {
-        if (data._id)
-            options.keepId = WNGUtility._keepID(data._id, document)
-    }
 
     function _addKeywordListeners(sheet, app)
     {

@@ -44,7 +44,6 @@ import { ArchetypeModel } from "./model/item/archetype.js";
 import { FactionModel } from "./model/item/faction.js";
 import { WrathAndGloryActiveEffectModel } from "./model/effect/effect.js";
 import WrathAndGloryActiveEffectConfig from "./apps/effect-config.js";
-import { WrathAndGloryDamageMessageModel, WrathAndGloryTestMessageModel } from "./model/message/message.js";
 import loadEffects from "./loadEffects.js";
 import { AgentSheet } from "./sheet/actor/agent.js";
 import { ThreatSheet } from "./sheet/actor/threat.js";
@@ -66,6 +65,10 @@ import WeaponUpgradeSheet from "./sheet/item/types/weaponUpgrade.js";
 import WeaponSheet from "./sheet/item/types/weapon.js";
 import FactionSheet from "./sheet/item/types/faction.js";
 import PsychicPowerSheet from "./sheet/item/types/power.js";
+import { WrathAndGloryTestMessageModel } from "./model/message/test.js";
+import { WrathAndGloryDamageMessageModel } from "./model/message/damage.js";
+import { WnGChatMessage } from "./document/message.js";
+import { PostedItemMessageModel } from "./model/message/item.js";
 
 Hooks.once("init", () => {
 
@@ -73,12 +76,13 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
-  //CONFIG.ChatMessage.documentClass = SystemChatMessage;
+  CONFIG.ChatMessage.documentClass = WnGChatMessage;
   DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", DataslatePageSheet, { types : ["text"], makeDefault: false, label : "Data Slate" });
 
 CONFIG.ActiveEffect.dataModels["base"] = WrathAndGloryActiveEffectModel
 CONFIG.ChatMessage.dataModels["test"] = WrathAndGloryTestMessageModel;
 CONFIG.ChatMessage.dataModels["damage"] = WrathAndGloryDamageMessageModel;
+CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
 
 DocumentSheetConfig.registerSheet(ActiveEffect, "system", WrathAndGloryActiveEffectConfig, {makeDefault : true});
 

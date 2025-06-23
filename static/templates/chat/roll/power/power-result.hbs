@@ -1,0 +1,21 @@
+        {{> systems/wrath-and-glory/templates/chat/roll/base/base-result.hbs}}
+        {{#if result.isWrathCritical}}
+        <p><strong class="red">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_CRITICAL_PSY"}}</strong></p>
+        {{/if}}
+
+        {{#if result.isWrathComplication}}
+        <p><strong class="red">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_COMPLICATION_PSY"}}</strong></p>
+        {{/if}}
+
+        
+        {{#if result.range}}
+        <p><strong>{{localize "PSYCHIC_POWER.RANGE"}}</strong><strong>:
+                {{result.range}}</strong></p>
+        {{/if}}
+
+        {{#if result.duration}}
+        <p><strong>{{localize "PSYCHIC_POWER.DURATION"}}</strong><strong>:
+                {{result.duration}}</strong></p>
+        {{/if}}

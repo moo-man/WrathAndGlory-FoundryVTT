@@ -11,7 +11,7 @@ export default class ResolveTest  extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/resolve/resolve-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/resolve/resolve-roll.hbs"
   }
 
 
