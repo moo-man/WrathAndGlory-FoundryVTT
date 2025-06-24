@@ -1,3 +1,6 @@
+import TableSettings from "../apps/table-settings";
+import WnGThemeConfig from "../apps/theme";
+
 export default function () {
   game.settings.register("wrath-and-glory", "systemMigrationVersion", {
     name: "System Migration Version",
@@ -96,5 +99,39 @@ export default function () {
     default: [],
     type: Array
   });
+
+  game.settings.registerMenu("wrath-and-glory", "tableSettingsMenu", {
+    name : game.i18n.localize("SETTINGS.TableSettings"),
+    label : game.i18n.localize("SETTINGS.TableConfigure"),
+    hint : game.i18n.localize("SETTINGS.TableSettingsHint"),
+    icon : "fa-solid fa-list",
+    type : TableSettings,
+    restricted : true
+})  ;
+
+game.settings.register("wrath-and-glory", "tableSettings", {
+    name: "SETTINGS.TableSettings",
+    scope: "world",
+    config: false,
+    type: TableSettings.schema
+});
+
+  game.settings.registerMenu("wrath-and-glory", "themeConfig", {
+    name: "WH.Theme.Config",
+    label : "WH.Theme.ConfigButton",
+    hint : "WH.Theme.ConfigHint",
+    icon: "fa-solid fa-table-layout",
+    scope: "user",
+    config: true,
+    type: WnGThemeConfig
+  });
+
+  game.settings.register("wrath-and-glory", "theme", {
+    name: "Theme",
+    scope: "client",
+    config: false,
+    type: WnGThemeConfig.schema
+});
+
 
 }

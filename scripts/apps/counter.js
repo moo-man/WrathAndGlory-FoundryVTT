@@ -4,7 +4,9 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
     static DEFAULT_OPTIONS = {
       id: "counter",
       classes : ["warhammer", "wrath-and-glory"],
-      window: {
+      position: {
+        width: 240,
+        height: 85
       },
       actions: {
         stepValue : this._onStepValue
@@ -30,6 +32,10 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
       context.canEdit = game.user.isGM || game.settings.get('wrath-and-glory', 'playerCounterEdit');
   
       return context;
+    }
+
+    get hasFrame() {
+      return false;
     }
 
     render(options)
@@ -77,8 +83,12 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
           RuinGloryCounter.setCounter(ev.target.value, counter);
         });
 
+        input.addEventListener("mousedown", ev => {
+          ev.target.classList.add("clicked");
+        })
+
         input.addEventListener("mouseup", ev => {
-          ev.target.classList.toggle("clicked");
+          ev.target.classList.remove("clicked");
         })
 
         input.addEventListener("focusin", ev => {
@@ -156,7 +166,7 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
   }
 
 
-  Hooks.on("renderSceneControls", (app, html, options) => {
+  Hooks.on("ready", (app, html, options) => {
     let button = document.createElement("li")
     button.innerHTML = `<button class='control ui-control layer icon fa-solid fa-input-numeric' data-tooltip="${game.i18n.localize("CONTROLS.WNGCounterToggle")}"></button>`
     button.addEventListener("click", ev => {
@@ -167,5 +177,5 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
       
       game.counter.rendered ? game.counter.close({fromControls : true}) : game.counter.render({force : true});
     })
-    html.querySelector("#scene-controls-layers").append(button)
+    document.querySelector("#scene-controls-layers").append(button)
   })

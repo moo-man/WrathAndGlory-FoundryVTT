@@ -156,7 +156,7 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "HEADER.WEAPON"}}</div>
-            <div class="small">{{localize "WEAPON.DAMAGE"}}</div>
+            <div class="small">{{localize "WEAPON.DMG"}}</div>
             <div class="small">{{localize "WEAPON.ED"}}</div>
             <div class="small">{{localize "WEAPON.AP"}}</div>
             <div class="small">{{localize "WEAPON.RANGE"}}</div>
@@ -181,14 +181,16 @@
                                 {{#if this.isRanged}}
                                     <select data-action="editProperty" data-path="system.ammo.id"
                                         data-tooltip="{{system.ammo.document.system.quantity}}">
-                                        {{selectOptions this.ammoList selected=system.ammo.id labelAttr="name"  valueAttr="_id" blank=""}}
+                                        {{selectOptions this.ammoList selected=system.ammo.id labelAttr="name"  valueAttr="_id" blank="-"}}
                                     </select>
                                 {{/if}}
                             </div>
                         </div>
+                        {{#if this.system.traits.list.length}}
                         <div class="traits">
                             {{{array this.system.traits.formatted "trait" action="toggleTrait"}}}
                         </div>
+                        {{/if}}
                         <div class="dropdown-content collapsed">
 
                         </div>

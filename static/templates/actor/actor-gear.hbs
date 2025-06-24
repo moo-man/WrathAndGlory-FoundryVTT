@@ -1,15 +1,19 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
   {{#if (eq actor.type "agent")}}
     <div class="gear-fields">
-        <div class="input-group">
-            <label>{{localize "RESOURCE.INFLUENCE"}}</label>
-            <input type="text" name="system.resources.influence" value="{{system.resources.influence}}">
+        <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 6">{{localize "RESOURCE.INFLUENCE"}}</div>
+                <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.resources.influence" value="{{system.resources.influence}}"></div>
         </div>
+
         <h2 class="sheet-divider">{{localize "TITLE.WARGEAR"}}</h2>
-        <div class="input-group">
-            <label>{{localize "RESOURCE.WEALTH"}}</label>
-            <input type="text" name="system.resources.wealth" value="{{system.resources.wealth}}">
+        <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 6">{{localize "RESOURCE.WEALTH"}}</div>
+                <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.resources.wealth" value="{{system.resources.wealth}}"></div>
         </div>
+
+
+
     </div>
     {{/if}}
 
@@ -28,8 +32,8 @@
                             class="fas fa-plus"></i></a>
                 </div>
             </div>
-            {{#each section.items as |item|}}
             <div class="list-content">
+            {{#each section.items as |item|}}
                 <div class="list-row" data-uuid="{{item.uuid}}">
                         <div class="row-content">
                             <div class="list-name">
@@ -67,8 +71,8 @@
                         </div>
                         {{> sheetButtons document=item}}
                     </div>
-                </div>
-            {{/each}}
+                {{/each}}
+            </div>
         </div>
     {{/each}}
 </section>

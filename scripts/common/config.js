@@ -335,6 +335,7 @@ WNG.premiumModules = {
     "wng-records1" : "Redacted Records: Vol. I",
     "wng-cos" : "Church of Steel",
     "wng-xenos" : "Threat Assessment: Xenos",
+    "wng-starter-set" : "Starter Set",
 }
 
 WNG.transferTypes = {
@@ -351,6 +352,12 @@ WNG.placeholderItemData = {
     img : "modules/wng-core/assets/icons/gear/gear.webp"
 },
 
+WNG.badgeInfo = {
+    img : "systems/wrath-and-glory/assets/ui/badge.webp",
+    notes : "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases",
+    issues : "https://github.com/moo-man/WrathAndGlory-FoundryVTT/issues",
+    wiki : "https://moo-man.github.io/WrathAndGlory-FoundryVTT/pages/home.html",
+},
 
 WNG.systemEffects = {
     "wounded" : {

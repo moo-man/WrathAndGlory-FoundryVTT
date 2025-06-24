@@ -1,0 +1,70 @@
+@use "./mixins/editor" as *;
+@use "./mixins/links" as links;
+
+body.wng-theme {
+    .application.journal-sheet {
+        --color-text-primary: var(--color-black);
+        --background: transparent;
+
+        .journal-header {
+            .title {
+                background: none;
+                border: 0px;
+                box-shadow: none;
+                border: 4px solid transparent;
+                border-image: var(--image-border) 8 8 8 8 repeat repeat;
+                border-right: 0px;
+                border-left: 0px;
+            }
+        }
+
+        .journal-entry-content {
+            @include editor-text;
+            @include links.links;
+        }
+
+          .journal-sidebar {
+            border-right: 4px solid transparent;
+            border-image: var(--image-border) 8 8 8 8 repeat repeat;
+            color: var(--color-black);
+          }
+
+
+          .dataslate.journal-entry-page {
+              --color-imperium: limegreen;
+            padding: 30px;
+            box-shadow: inset 0 0 30px limegreen;
+            background: black;
+        
+            p {
+                color: antiquewhite;
+                text-align: justify;
+                line-height: 130%;
+                font-weight: bolder;
+                font-family: 'Courier New', Courier, monospace;
+                &.computer {
+                    color: limegreen;
+                }
+            }
+        
+            h1,h2,h3,h4
+            {
+                border-color: limegreen;
+                font-family: 'Courier New', Courier, monospace;
+                color: limegreen;
+                font-size: var(--font-size-24);
+                text-transform: uppercase;
+            }
+        
+            h2 {
+                border-image: none;
+                border-width: 2px;
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+
+}

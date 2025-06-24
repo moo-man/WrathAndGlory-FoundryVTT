@@ -3,11 +3,12 @@ export default class ItemTraits extends WHFormApplication
     static DEFAULT_OPTIONS = {
         classes : ["wrath-and-glory", "item-traits"],
         window : {
-            title : "Item Traits"
+            title : "Item Traits",
+            resizable: true
         },
         position : {
             width: 300,
-            height: 500
+            height: 600
         },
         form: {
             handler: this.submit,

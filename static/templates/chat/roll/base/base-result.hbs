@@ -1,3 +1,4 @@
+<div class="chat-container">
         {{#if result.isSuccess}}
         <div class="seal approved"></div>
         {{else}}
@@ -6,6 +7,8 @@
         
         {{> chatTargets targets=targetTokens}}
                 
+
+
         <p><strong>{{localize "CHAT.SUCCESS"}}: {{result.success}}</strong></p>
         <p><strong>{{localize "CHAT.FAILURE"}}: {{result.failure}}</strong></p>
         {{#if isShiftable}}
@@ -15,3 +18,5 @@
         {{#each result.text}}
         <p><strong>{{this.label}}</strong>: {{this.description}}</p>
         {{/each}}
+
+</div>

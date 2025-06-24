@@ -23,6 +23,7 @@
                                     class="fa-solid fa-plus"></i></a>
                         </div>
                     </div>
+                    <div class="list-content">
                     {{#each item.effects}}
                         <div class="list-row {{#if this.disabled}}inactive{{/if}}" data-uuid="{{this.uuid}}">
                             <div class="row-content">
@@ -44,6 +45,8 @@
                             </div>
                         </div>
                     {{/each}}
+                    </div>
+
                 </div>
 
                 {{#if item.system.ammo.document.effects.contents.length}}

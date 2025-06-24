@@ -12,7 +12,8 @@ export default class ActorConfigForm extends WHFormApplication
 
     static PARTS = {
         form: {
-            template: "systems/wrath-and-glory/templates/apps/actor-configure.hbs"
+            template: "systems/wrath-and-glory/templates/apps/actor-configure.hbs",
+            classes : ["standard-form"]
         },
         footer : {
             template : "templates/generic/form-footer.hbs"

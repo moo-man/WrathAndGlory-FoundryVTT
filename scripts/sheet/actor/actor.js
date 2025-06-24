@@ -14,8 +14,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
           ],
         },
         position: {
-            height: 800,
-            height: 720
+            width: 700,
         },
         actions : {
             rollTest : this._onRollTest,
@@ -78,6 +77,10 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
                   img.src = this._icon;
               }
               })
+          });
+
+          this.element.querySelector(".add-effect").addEventListener("change", ev => {
+              this.actor.addCondition(ev.target.value);
           });
       }
 
@@ -156,7 +159,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
       {
           ev.preventDefault();
           let document = this._getDocument(ev);
-          this._toggleDropdown(ev, document.system.description);
+          this._toggleDropdown(ev, await TextEditor.enrichHTML(document.system.description, {secrets: this.document.owner, relativeTo : this.document}));
       }
   
       static async _onToggleTrait(ev)

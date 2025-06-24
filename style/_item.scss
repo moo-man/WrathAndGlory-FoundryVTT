@@ -18,6 +18,13 @@
         gap: 0.5rem;
     }
 
+    .form-group:has(input[type="checkbox"])
+    {
+        label {
+            flex:8;
+        }
+    }
+
     .skills {
         display: flex;
         flex-direction: column;

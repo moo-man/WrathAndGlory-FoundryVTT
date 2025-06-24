@@ -2,12 +2,14 @@
     <img class="profile" data-action="editImage" src="{{source.img}}" data-edit="img">
     <div class="header-details">
         <div class="details-row">
-            <div class="input-group">
-                <label>{{localize "BIO.NAME"}}</label>
-                <input type="text" name="name" value="{{source.name}}">
+
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 5">{{localize "BIO.NAME"}}</div>
+                <div class="field" style="grid-column: 6 / span 7"><input type="text" name="name" value="{{source.name}}"></div>
             </div>
-            <div class="input-group">
-                <label>{{localize "BIO.SPECIES"}}</label>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 5">{{localize "BIO.SPECIES"}}</div>
+                <div class="field" style="grid-column: 6 / span 7">
                 {{#if system.species.document}}
                     <div class="like-input">
                         <div class="singleton-item" data-id="{{system.species.document.id}}">
@@ -18,12 +20,14 @@
                 {{else}}
                     <input type="text" name="system.species.name" value="{{system.species.name}}">
                 {{/if}}
+                </div>
             </div>
         </div>
         <div class="details-row">
-            <div class="input-group">
-                <label>{{localize "BIO.FACTION"}}</label>
-                {{#if system.faction.document}}
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 5">{{localize "BIO.FACTION"}}</div>
+                <div class="field" style="grid-column: 6 / span 7">
+                  {{#if system.faction.document}}
                     <div class="like-input">
                         <div class="singleton-item" data-id="{{system.faction.document.id}}">
                             <a data-action="editEmbedded">{{system.faction.name}}</a>
@@ -33,10 +37,11 @@
                 {{else}}
                     <input type="text" name="system.faction.name" value="{{system.faction.name}}">
                 {{/if}}
+                </div>
             </div>
-
-            <div class="input-group">
-                <label>{{localize "BIO.ARCHETYPE"}}</label>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 5">{{localize "BIO.ARCHETYPE"}}</div>
+                <div class="field" style="grid-column: 6 / span 7">
                 {{#if system.archetype.document}}
                     <div class="like-input">
                         <div class="singleton-item" data-id="{{system.archetype.document.id}}">
@@ -47,16 +52,19 @@
                 {{else}}
                     <input type="text" name="system.archetype.name" value="{{system.archetype.name}}">
                 {{/if}}
+                </div>
             </div>
         </div>
     <div class="details-row">
-            <div class="input-group">
-                <label>{{localize "BIO.QUOTE"}}</label>
-                <input type="text" name="system.bio.quote" value="{{system.bio.quote}}">
+
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 3">{{localize "BIO.QUOTE"}}</div>
+                <div class="field" style="grid-column: 4 / span 9"><input type="text" name="system.bio.quote" value="{{system.bio.quote}}"></div>
             </div>
-           <div class="input-group" style="flex: 0.3">
-                <label class="small">{{localize "RESOURCE.WRATH"}}</label>
-                <input type="text" name="system.resources.wrath" value="{{system.resources.wrath}}">
+
+            <div class="attribute-box single" style="flex: 0.3">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "RESOURCE.WRATH"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="text" name="system.resources.wrath" value="{{system.resources.wrath}}"></div>
             </div>
         </div>
     </div>

@@ -430,6 +430,7 @@
   "WEAPON.NAME": "Name",
   "WEAPON.DESCRIPTION": "Description",
   "WEAPON.DAMAGE": "Damage",
+  "WEAPON.DMG": "Dmg.",
   "WEAPON.AP": "AP",
   "WEAPON.ED": "ED",
   "WEAPON.CATEGORY": "Category",
@@ -586,6 +587,16 @@
   "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
   "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
   "BUTTON.PostBug": "W&G Bug Report",
+
+  "SETTINGS.TableSettings" : "Table Settings",
+  "SETTINGS.TableConfigure" : "Configure Tables",
+  "SETTINGS.TableSettingsHint" : "Configure which tables the system uses.",
+
+  "TableSetting.critical" : "Critical Hit Table",
+  "TableSetting.perilsritarm" : "Perils of the Warp",
+  "TableSetting.combatComplications" : "Complication Consequences",
+  "TableSetting.complicationsConsequences" : "Combat Complications",
+
   "WH": {
     "Trigger": {
       "preTakeDamage": "Pre-Take Damage",

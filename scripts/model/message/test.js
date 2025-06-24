@@ -1,3 +1,5 @@
+import WnGTables from "../../common/tables";
+
 export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel 
 {
     static defineSchema() 
@@ -24,11 +26,49 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
         });
     }
 
-
     get test() 
     {
         return game.wng.rollClasses[this.class].recreate(this);
     }
+
+    async getHeaderToken() {
+      if (this.test.actor) {
+          let token = this.test.actor.getActiveTokens()[0]?.document || this.test.actor.prototypeToken;
+
+          let path = token.hidden ? "modules/impmal-core/assets/tokens/unknown.webp" : token.texture.src;
+
+          if (foundry.helpers.media.VideoHelper.hasVideoExtension(path)) {
+              path = await game.video.createThumbnail(path, { width: 50, height: 50 }).then(img => chatOptions.flags.img = img)
+          }
+
+          return path;
+      }
+      else return false
+  }
+
+  async onRender(html) {
+
+      let token = await this.getHeaderToken();
+      if (token) {
+          let header = html.querySelector(".message-header");
+          let div = document.createElement("div")
+          div.classList.add("message-token");
+          let image = document.createElement("img");
+          image.src = token
+          image.style.zIndex = 1;
+
+          div.appendChild(image);
+          header.insertBefore(div, header.firstChild);
+
+          warhammer.utility.replacePopoutTokens(html);
+      }
+
+
+      if (!this.parent.isAuthor && !this.parent.isOwner) 
+      {
+          html.querySelectorAll("h3").forEach(e => e.dataset.tooltip = "");
+      }
+  }
 
     static _onRollDamage(ev, target)
     {
@@ -38,58 +78,32 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
           test.rollDamage()
         }
     }
+
     static async _onRollWrath(ev, target)
     {
         let test = this.test;
-        let chatData = {}
-        let table
-        let roll
-        let result
+
+        WnGTables.rollTable(target.dataset.table)
+
         if (test.result.isWrathCritical) {
           if (test.weapon) {
-            table = game.tables.getName(game.i18n.localize("TABLE.CRITICAL_HIT_TABLE"))
-            if (!table)
-              return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : game.i18n.localize("TABLE.CRITICAL_HIT_TABLE")}))
-            roll = new Roll(table.formula)
-            result = await table.roll({ roll })
-            chatData = { content: result.results[0].getChatText() + ` (${result.roll.total})`, flavor: `Critical Hit` }
-          }
+            WnGTables.rollTable("critical")
         }
+      }
         if (test.result.isWrathComplication) {
           if (test.weapon) {
-            table = game.tables.getName(game.i18n.localize("TABLE.COMBAT_COMPLICATIONS"))
-            if (!table)
-              return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : game.i18n.localize("TABLE.COMBAT_COMPLICATIONS")}))
-            roll = new Roll(table.formula)
-            result = await table.roll({ roll })
-            chatData = { content: result.results[0].getChatText() + ` (${result.roll.total})`, flavor: `Combat Complication` }
+            WnGTables.rollTable("combatComplications")
           }
           else if (test.power) {
-            table = game.tables.getName(game.i18n.localize("TABLE.PERILS_OF_THE_WARP"))
-            if (!table)
-              return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : game.i18n.localize("TABLE.PERILS_OF_THE_WARP")}))
             let modifier = (test.result.allDice.filter(die => die.name == "wrath-complication").length - 1) * 10
-            roll = new Roll(table.formula + " + " + modifier)
-            result = await table.roll({ roll })
-            chatData = { content: result.results[0].getChatText() + ` (${result.roll.total})`, flavor: `Perils of the Warp ${modifier ? "(+" + modifier + ")" : ""}` }
+            WnGTables.rollTable("perils", {modifier})
           }
           else {
-            table = game.tables.getName(game.i18n.localize("TABLE.COMPLICATION_CONSEQUENCES"))
-            if (!table)
-              return ui.notifications.error(game.i18n.format("ROLL.CannotFindTable", {name : game.i18n.localize("TABLE.COMPLICATION_CONSEQUENCES")}))
-            roll = new Roll(table.formula)
-            result = await table.roll({ roll })
-            chatData = { content: result.results[0].getChatText() + ` (${result.roll.total})`, flavor: `Complication Consequence` }
+            WnGTables.rollTable("complicationConsequences")
           }
-        }
-        if (chatData.content)
-        {
-          chatData.speaker = test.context.speaker
-          chatData.roll = result.roll
-          chatData.type = CONST.CHAT_MESSAGE_TYPES.ROLL
-          return ChatMessage.create(chatData)
-        }
+      }
     }
+    
     static _onToggleDie(ev, target)
     {
         let message = this.parent;

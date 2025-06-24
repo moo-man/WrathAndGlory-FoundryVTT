@@ -1,0 +1,19 @@
+@mixin links {
+
+    a.content-link, a.inline-roll {
+        background: none;
+        font-weight: bold;
+        color: var(--color-imperium);
+        i {
+            
+            color: var(--color-imperium);
+        }
+        border: none;
+
+        &.broken {
+            opacity: 0.7
+
+        }
+    }
+
+}

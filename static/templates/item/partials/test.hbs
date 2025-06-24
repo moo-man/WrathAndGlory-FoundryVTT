@@ -4,7 +4,7 @@
     {{formGroup fields.self value=test.self}}
     {{/unless}}
     {{formGroup fields.dn value=test.dn}}
-    <div class="flexrow">
+    <div class="flexrow" style="gap: 0px">
         {{formGroup fields.type value=test.type choices=(config "testTypes")}}
 
             {{#if (eq test.type "attribute")}}

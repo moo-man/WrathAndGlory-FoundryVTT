@@ -67,14 +67,6 @@ export class AttackDialog extends CommonDialog {
   }, super.tooltipConfig)
 }
 
-  static get defaultOptions() {
-    let options = super.defaultOptions
-    options.classes.push("wrath-and-glory")
-    options.resizable = true;
-    options.width = 700;
-    return options
-  }
-
   _getSubmissionData()
   {
     let data = super._getSubmissionData();

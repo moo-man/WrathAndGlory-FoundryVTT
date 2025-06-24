@@ -1,0 +1,72 @@
+@font-face {
+    font-family: "Playfair Display";
+    src: url("./assets/font/playfair-display-regular.ttf");
+  }
+  
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("./assets/font/playfair-display-bold.ttf");
+    font-weight: bold;
+  }
+  
+  @font-face {
+    font-family: "Caxton Std Book";
+    src: url("./assets/font/CaxtonStd-Book.otf");
+  }
+  
+  @font-face {
+    font-family: "Caxton Std Book";
+    src: url("./assets/font/Caxton Std Bold.otf");
+    font-weight: bold;
+  }
+  
+  @font-face {
+    font-family: "Caxton Std Book";
+    src: url("./assets/font/Caxton Std Book Italic.otf");
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Intruder";
+    src: url("./assets/font/Intruder.ttf");
+  }
+  
+  @font-face {
+    font-family: "MinionPro";
+    src: url("./assets/font/MinionPro-Regular.otf");
+  }
+  
+  @font-face {
+    font-family: "Priori";
+    src: url("./assets/font/PrioriSerifOT-Bold.otf");
+  }
+  
+body.wng-font
+{
+    --font-text: "Caxton Std Book";
+    --font-header: "Priori";
+}
+  
+  
+  :root {
+    --color-red: #892e29;
+    --color-dark-grey: #4c4d4f;
+    --color-light-grey: #8b8d90;
+    --color-black: #000000;
+    --color-subheader: #181e1f;
+    --color-white: #e6e5e3;
+    --color-header: #8a2e2a;
+    --color-imperium: #8a2e2a;
+    --color-imperium-half: #8a2e2a88;
+    --color-aeldari: #232737;
+    --color-ork: #3f5028;
+    --color-chaos: #361f3c;
+    --color-green: #32a852;
+    --color-border-highlight: #8a2e2a;
+  
+    --image-background: url(./assets/image/background.webp);
+    --image-border: url(./assets/image/border.webp);
+    --image-border-red: url(./assets/image/border-red.webp);
+    --image-title-border: url(./assets/image/title-border.webp);
+    --image-input: url(./assets/image/input.webp);
+  }
