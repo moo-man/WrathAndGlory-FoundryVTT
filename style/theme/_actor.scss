@@ -24,6 +24,18 @@ body.wng-theme {
         }
 
 
+        [data-tab=notes]
+        {
+            .attribute-box {
+                height: 2rem;
+                input,
+                > * 
+                {
+                    height: 2rem;
+                }
+            }
+        }
+
         .ascensions,
         .keywords {
             button {

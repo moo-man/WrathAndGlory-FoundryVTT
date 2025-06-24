@@ -7,6 +7,14 @@
         overflow: auto;
     }
 
+    section[data-tab=notes]
+    {
+        input[type=text]
+        {
+            padding: 0px 0.5rem;
+        }
+    }
+
     .sheet-header {
         .attribute-box {
             height: 2rem;
@@ -39,11 +47,11 @@
           }
     }
 
-    .attribute-box {
+    .attribute-box:not(.labels) {
         .label.rollable {
             &:hover {
                 cursor: pointer;
-                background: var(--roll-bg)
+                background-color: var(--roll-bg)
             }
         }
         

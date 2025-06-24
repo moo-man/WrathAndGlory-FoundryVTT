@@ -58,6 +58,7 @@ body.wng-theme {
         }
     }
 
+    .application.warhammer,
     .sheet,
     .dialog {
         --font-h1: var(--font-header);
@@ -110,7 +111,7 @@ body.wng-theme {
 
                 a {
                     color: var(--color-black);
-
+                    background: none;
                     &.active {
                         color: var(--color-imperium);
                     }
@@ -123,6 +124,92 @@ body.wng-theme {
                 button {
                     @include buttons.wng-button;
                 }
+            }
+
+            .script-list .script {
+                background: var(--color-imperium);
+                color: var(--color-white);
+            }
+            .sheet-list {
+                .list-header {
+                    background-color: var(--color-black);
+                    color: var(--color-white); 
+                }
+                .list-row {
+                    background-color: var(--color-dark-grey);
+                    &:nth-child(even)
+                    {
+                         background-color: var(--color-light-grey);
+                    }
+                }
+    
+                .list-content {
+                    color: var(--color-white);
+                    .traits,
+                    .row-content {
+                        height: 1.5rem;
+                        line-height: 1.5rem;
+                        button,
+                        img {
+                            height: 1.5rem;
+                            width: 1.5rem;
+                            flex: 0 0 1.5rem;
+                        }
+                        > *  {
+                            height: 1.5rem;
+                            line-height: 1.5rem;
+                        }
+    
+                        .quantity{
+                            gap: 0.5rem;
+                        }
+    
+                        button {
+                            box-shadow: none;
+                            background: url(./assets/image/button.webp) repeat;
+                            border-radius: 0px;
+                            min-height: 1.5rem;
+                            border-left: 1px solid black;
+                            border-right: 1px solid black;
+                            line-height: 1.5rem;;
+                        }
+    
+         
+                        &:hover {
+                            background-color: var(--roll-bg);
+                        }
+    
+                        .list-control {
+                            color: var()
+                        }                    
+                    }
+                }
+    
+                input:not([type=checkbox]) {
+                    @include minimal-input;
+                    background: var(--color-white)
+                }
+    
+                select {
+                    border: 1px solid black;
+                    box-shadow: none;
+                    border: none;
+                    background: var(--color-red);
+                    color: var(--color-white);
+                }
+    
+    
+                &.potency {
+                    .list-row {
+                        background: none;
+                    }
+    
+                    .row-content {
+                        margin: 0px;
+                        gap: 0px;
+                    }
+                }
+    
             }
         }
 
@@ -165,6 +252,12 @@ body.wng-theme {
         input {
             @include minimal-input;
             background: var(--color-white)
+        }
+    }
+
+    .warhammer.application.choice-config {
+        .choice {
+            border-color: var(--color-imperium);
         }
     }
 }

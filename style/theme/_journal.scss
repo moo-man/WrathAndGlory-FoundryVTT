@@ -1,5 +1,6 @@
 @use "./mixins/editor" as *;
 @use "./mixins/links" as links;
+@use "./mixins/button" as buttons;
 
 body.wng-theme {
     .application.journal-sheet {
@@ -16,6 +17,10 @@ body.wng-theme {
                 border-right: 0px;
                 border-left: 0px;
             }
+        }
+
+        .inline-control {
+            @include buttons.wng-button;
         }
 
         .journal-entry-content {
