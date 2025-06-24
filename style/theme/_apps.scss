@@ -58,7 +58,7 @@ body.wng-theme {
         }
     }
 
-    .sheet:not(.wrath-and-glory),
+    .sheet,
     .dialog {
         --font-h1: var(--font-header);
         --font-h2: var(--font-header);
@@ -122,7 +122,6 @@ body.wng-theme {
             footer {
                 button {
                     @include buttons.wng-button;
-
                 }
             }
         }
@@ -160,5 +159,12 @@ body.wng-theme {
             }
         }
 
+    }
+
+    .mob-config {
+        input {
+            @include minimal-input;
+            background: var(--color-white)
+        }
     }
 }

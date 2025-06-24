@@ -2,7 +2,7 @@
 @use "./mixins/button" as buttons;
 
 body.wng-theme {
-    .application.actor.wrath-and-glory {
+    .application.sheet.actor.wrath-and-glory {
         --roll-bg: var(--color-imperium);
 
         .window-content {

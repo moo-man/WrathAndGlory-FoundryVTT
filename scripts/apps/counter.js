@@ -38,7 +38,7 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
       return false;
     }
 
-    render(options)
+    render(options={})
     {
       let userPosition = game.settings.get("wrath-and-glory", "counterPosition")
       options.position = userPosition

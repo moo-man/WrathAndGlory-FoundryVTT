@@ -287,17 +287,20 @@ export class WrathAndGloryActor extends WarhammerActor {
         return test;
     }
 
-    characterCreation(archetype) {
-        new Dialog({
-            title: "Character Creation",
+    async characterCreation(archetype) {
+        if (await foundry.applications.api.Dialog.confirm({
+            window: {title: "Character Creation"},
             content: "<p>Begin Character Creation?</p>",
-            yes: () =>  new CharacterCreation({ actor: this, archetype }).render(true),
-            no: async () => {
-                let species = await warhammer.utility.findItemId(archetype.species.id, "species")
-                let faction = await warhammer.utility.findItemId(archetype.faction.id, "faction")
-                this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
-               }
-        }).render(true)
+        }))
+        {
+            new CharacterCreation({ actor: this, archetype }).render(true)
+        }
+        else 
+        {
+            let species = await warhammer.utility.findItemId(archetype.species.id, "species")
+            let faction = await warhammer.utility.findItemId(archetype.faction.id, "faction")
+            this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
+        }
     }
 
     async applyArchetype(archetype, apply) {

@@ -11,8 +11,9 @@ body.wng-theme {
 
 
     .application.warhammer,
-    .application.journal-sheet,
-    .application.wrath-and-glory {
+    .application.sheet.journal-sheet,
+    .application.sheet.active-effect-config,
+    .application.sheet.wrath-and-glory {
 
         --font-h1: var(--font-header);
         --font-h2: var(--font-header);
@@ -118,7 +119,7 @@ body.wng-theme {
                 gap: 0px;
                 .like-input,
                 select,
-                input:not([type=checkbox]),
+                input:not([type=checkbox],[type=color],[type=range]),
                 input[type=text],
                 input[type=number] {
                     @include form-input;
@@ -140,17 +141,7 @@ body.wng-theme {
             }
 
             
-                &:has(input[type=checkbox])
-                {
-                    gap: 0.5rem;
-                    label {
-                        flex: 5;
-                    }
-    
-                    .form-fields{ 
-                        justify-content: flex-start;
-                    }
-                }
+
         }
 
 
@@ -185,7 +176,8 @@ body.wng-theme {
 
                 &.active {
                     background-color: var(--color-imperium);
-                }
+                   color: var(--color-white);
+                }   
             }
         }
 
@@ -244,7 +236,7 @@ body.wng-theme {
                 }
             }
 
-            input {
+            input:not([type=checkbox]) {
                 @include minimal-input;
                 background: var(--color-white)
             }

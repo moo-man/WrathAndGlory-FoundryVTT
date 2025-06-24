@@ -1,4 +1,5 @@
 import WNGUtility from "../common/utility.js";
+import { PostedItemMessageModel } from "../model/message/item.js";
 
 export class WrathAndGloryItem extends WarhammerItem {
 
@@ -10,22 +11,8 @@ export class WrathAndGloryItem extends WarhammerItem {
             setProperty(updateData, "system.specification", "corruption")
     }
 
-    async sendToChat() {
-        const item = new CONFIG.Item.documentClass(this._source)
-        if (item.img.includes("/unknown")) {
-            item.img = null;
-        }
-
-        const html = await renderTemplate("systems/wrath-and-glory/templates/chat/item.hbs", { item, data: item.system });
-        const chatData = {
-            user: game.user.id,
-            rollMode: game.settings.get("core", "rollMode"),
-            content: html,
-            "flags.wrath-and-glory.itemData": this.toObject()
-        };
-
-        ChatMessage.applyRollMode(chatData, chatData.rollMode);
-        ChatMessage.create(chatData);
+    async postItem() {
+        PostedItemMessageModel.postItem(this)
     }
 
 

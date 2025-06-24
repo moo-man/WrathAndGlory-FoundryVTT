@@ -44,6 +44,12 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
           let context = await super._prepareContext(options);
           return context;
       }
+
+      async _onDropKeyword(data, ev)
+      {
+        let item = await game.wng.utility.getKeywordItem(data.name);
+        return this.actor.createEmbeddedDocuments("Item", [item.toObject()])
+      }
       
       
       _attributeAndSkillTooltips(context) {
@@ -133,7 +139,26 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
               {
                   let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
                   const document = await fromUuid(uuid);
-                  this.actor.createEmbeddedDocuments("ActiveEffect", [document.toObject()]);
+                  this.actor.createEmbeddedDocuments(document.documentName, [document.toObject()]);
+              }
+            },
+            {
+              name: "Post to Chat",
+              icon: '<i class="fas fa-comment"></i>',
+              condition: li => {
+                let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+                if (uuid)
+                {
+                  let parsed = foundry.utils.parseUuid(uuid);
+                  return parsed.type == "Item"; // Can only post Items to chat
+                }
+                else return false;
+              },
+              callback: async li => 
+              {
+                let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+                const document = await fromUuid(uuid);
+                document.postItem();
               }
             },
         ];

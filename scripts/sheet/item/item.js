@@ -23,7 +23,7 @@ export default class WnGItemSheet extends WarhammerItemSheetV2
         ]
       },
       actions : {
-        postToChat : function() {PostedItemMessageModel.postItem(this.item)},
+        postToChat : function() {this.item.postItem()},
         editTraits : this._onEditTraits,
         toggleCondition: this._onToggleCondition
         

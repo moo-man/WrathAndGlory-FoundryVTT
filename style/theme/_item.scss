@@ -2,8 +2,10 @@
 @use "./mixins/button" as buttons;
 
 body.wng-theme {
-    .application.item.wrath-and-glory {
+    .application.item.sheet.wrath-and-glory {
 
+        --name-bg : var(--color-imperium);
+        --attribute-border: var(--color-imperium);
         
         .window-content {
             border: 30px solid transparent;
@@ -42,5 +44,31 @@ body.wng-theme {
                 text-overflow: ellipsis;
             }
         }
+
+        .name-list {
+
+            .floating {
+                color: var(--color-white);
+            }
+
+            .list-element:not(.input)
+            {
+                background: none;
+            }
+        }
+
+
+
+        &.faction {
+            [data-tab="stats"] {
+                .list-row {
+                    background: none;
+                    a {
+                        color: var(--color-black);
+                    }
+                }
+            }
+        }
+
     }
 }

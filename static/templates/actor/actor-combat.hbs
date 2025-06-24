@@ -52,7 +52,8 @@
         <div>
             <h2 class="sheet-divider">{{localize "TITLE.INJURIES"}}</h2>
             <div class="attribute-box single">
-                <div class="label rollable" data-action="rollTest" data-type="determination" style="grid-column: 1 / span 8">{{localize "HEADER.DETERMINATION"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="determination"
+                    style="grid-column: 1 / span 8">{{localize "HEADER.DETERMINATION"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number"
                         name="system.combat.determination.total" value="{{system.combat.determination.total}}" {{#if
                         autoCalc.determination}}disabled{{/if}}></div>
@@ -79,7 +80,7 @@
                     {{#each items.traumaticInjury}}
                         <div class="list-row" data-uuid="{{this.uuid}}" data-uuid="{{this.uuid}}">
                             <div class="row-content">
-                                <div class="list-name rollable">
+                                <div class="list-name">
                                     <img src="{{this.img}}">
                                     <a class="label" data-action="editEmbedded">{{this.name}}</a>
                                 </div>
@@ -107,7 +108,7 @@
                     {{#each items.memorableInjury}}
                         <div class="list-row" data-uuid="{{this.uuid}}" data-uuid="{{this.uuid}}">
                             <div class="row-content">
-                                <div class="list-name rollable">
+                                <div class="list-name">
                                     <img src="{{this.img}}">
                                     <a class="label" data-action="editEmbedded">{{this.name}}</a>
                                 </div>
@@ -125,19 +126,22 @@
         <div>
             <h2 class="sheet-divider">{{localize "TITLE.MUTATIONS"}}</h2>
             <div class="attribute-box single">
-                <div class="label rollable" data-action="rollTest" data-type="conviction" style="grid-column: 1 / span 8">{{localize "HEADER.CONVICTION"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="conviction"
+                    style="grid-column: 1 / span 8">{{localize "HEADER.CONVICTION"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number"
                         name="system.combat.conviction.total" value="{{system.combat.conviction.total}}" {{#if
                         autoCalc.conviction}}disabled{{/if}}></div>
             </div>
             <div class="attribute-box single">
-                <div class="label rollable" data-action="rollTest" data-type="resolve" style="grid-column: 1 / span 8">{{localize "HEADER.RESOLVE"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="resolve" style="grid-column: 1 / span 8">
+                    {{localize "HEADER.RESOLVE"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number"
                         name="system.combat.resolve.total" value="{{system.combat.resolve.total}}" {{#if
                         autoCalc.resolve}}disabled{{/if}}></div>
             </div>
             <div class="attribute-box single">
-                <div class="label rollable" data-action="rollTest" data-type="corruption" style="grid-column: 1 / span 8">{{localize "HEADER.CORRUPTION"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="corruption"
+                    style="grid-column: 1 / span 8">{{localize "HEADER.CORRUPTION"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number" name="system.corruption.current"
                         value="{{system.corruption.current}}" {{#if autoCalc.corruption}}disabled{{/if}}></div>
             </div>
@@ -148,6 +152,34 @@
                 <div class="field" style="grid-column: 11 / span 2"><input type="number"
                         name="system.resources.faith.total" value="{{system.resources.faith.total}}"></div>
             </div>
+
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "HEADER.MUTATIONS"}}</div>
+                    <div class="list-controls">
+                        <a data-action="createItem" data-type="mutation" class="item-control">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each items.mutation}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}" data-action="rollTest" data-id="{{this.id}}" data-type="ability">
+                                    <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="deleteEmbedded"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
         </div>
     </div>
     <h2 class="sheet-divider">{{localize "TITLE.WARGEAR"}}</h2>
@@ -187,9 +219,9 @@
                             </div>
                         </div>
                         {{#if this.system.traits.list.length}}
-                        <div class="traits">
-                            {{{array this.system.traits.formatted "trait" action="toggleTrait"}}}
-                        </div>
+                            <div class="traits">
+                                {{{array this.system.traits.formatted "trait" action="toggleTrait"}}}
+                            </div>
                         {{/if}}
                         <div class="dropdown-content collapsed">
 

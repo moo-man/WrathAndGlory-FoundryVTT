@@ -52,23 +52,27 @@
 
     &.psychicPower,
     &.faction {
-        .sheet-divider {
-            display: Flex;
-            align-items: center;
-            gap: 1rem;
-            justify-content: center;
-        }
-        input {
-            padding: 0px 0.5rem;
-        }
-        .row-content {
-            gap: 0.5rem;
-        }
-        .list-row {
-            margin-bottom: 0.5rem;
+        [data-tab="stats"]
+        {
+
+            .sheet-divider {
+                display: Flex;
+                align-items: center;
+                gap: 1rem;
+                justify-content: center;
+            }
+            input {
+                padding: 0px 0.5rem;
+            }
+            .row-content {
+                gap: 0.5rem;
+            }
+            .list-row {
+                margin-bottom: 0.5rem;
+            }
         }
     }
-
+        
     .potency {
         .row-content {
             margin-bottom:  0.5rem;

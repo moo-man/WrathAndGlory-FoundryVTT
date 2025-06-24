@@ -7,19 +7,16 @@ export class AttackDialog extends CommonDialog {
       ed : {
           label : "ED",
           type : 1,
-          noCollect: true,
           path : "fields.ed.value",
       },
       ap : {
           label : "AP",
           type : 1,
-          noCollect: true,
           path : "fields.ap.value"
       },
       damage : {
           label : "Damage",
           type : 1,
-          noCollect: true,
           path : "fields.damage"
       },
       ones : {

@@ -28,23 +28,6 @@ export class ArchetypeModel extends BaseItemModel
         return schema;
     }
 
-    async _preCreate(data, options, user)
-    {
-        await super._preCreate(data, options, user)   
-
-        if (this.parent.actor && !options.appliedArchetype)
-        {
-            foundry.applications.api.Dialog.confirm({
-                window: {title: this.actor.type == "agent" ? "Character Creation" : "Apply Archetype"},
-                content: `<p>${this.actor.type == "agent" ? "Begin Character Creation?" : "Apply Archetype data to this Actor?"}</p>`,
-                yes: () => this.actor.applyArchetype(item, true),
-                no: () => this.actor.applyArchetype(item, false)
-            })
-        }
-
-        return false
-    }
-
     static migrateData(data)
     {
         super.migrateData(data);

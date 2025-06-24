@@ -2,7 +2,7 @@
   {{#if (eq actor.type "agent")}}
     <div class="gear-fields">
         <div class="attribute-box single">
-                <div class="label" style="grid-column: 1 / span 6">{{localize "RESOURCE.INFLUENCE"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="influence" style="grid-column: 1 / span 6">{{localize "RESOURCE.INFLUENCE"}}</div>
                 <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.resources.influence" value="{{system.resources.influence}}"></div>
         </div>
 
@@ -36,8 +36,8 @@
             {{#each section.items as |item|}}
                 <div class="list-row" data-uuid="{{item.uuid}}">
                         <div class="row-content">
-                            <div class="list-name">
-                                <img src="{{item.img}}">
+                         <div class="list-name {{#if (eq ../type "gear")}}rollable{{/if}}">
+                                <img src="{{this.img}}" {{#if (eq ../type "gear")}}data-action="rollTest" data-id="{{item.id}}" data-type="ability"{{/if}}>
                                 <a class="label" data-action="toggleSummary">{{item.name}}</a>
                             </div>
                             {{#if ../equippable}}

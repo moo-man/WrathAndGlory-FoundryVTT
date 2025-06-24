@@ -180,6 +180,8 @@ Items.registerSheet("wrath-and-glory", PsychicPowerSheet, {types : ["psychicPowe
   CONFIG.defaultFontFamily = "Priori"
   CONFIG.canvasTextStyle._fontFamily = "Priori"
 
+  warhammer.utility.registerPremiumModuleInitialization()
+
 });
 
 

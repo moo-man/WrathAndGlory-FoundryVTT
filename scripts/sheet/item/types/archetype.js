@@ -6,6 +6,7 @@ export default class ArchetypeSheet extends WnGItemSheet {
 
   static DEFAULT_OPTIONS = {
     classes: [this.type],
+    defaultTab: "stats"
   }
 
   static PARTS = {
@@ -14,6 +15,12 @@ export default class ArchetypeSheet extends WnGItemSheet {
     description: { scrollable: [""], template: `systems/wrath-and-glory/templates/item/item-description.hbs` },
     stats: { scrollable: [""], template: `systems/wrath-and-glory/templates/item/types/${this.type}.hbs` },
     effects: { scrollable: [""], template: 'systems/wrath-and-glory/templates/item/item-effects.hbs' },
+  }
+
+  _prepareTabs(options) {
+    let tabs = super._prepareTabs(options);
+    delete tabs.description;
+    return tabs;
   }
 
   async _onDropItem(data, ev)

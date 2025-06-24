@@ -1,1 +1,1 @@
-args.fields.damage.bonus += (args.actor.system.advances.rank)
+args.fields.damage += (args.actor.system.advances.rank)

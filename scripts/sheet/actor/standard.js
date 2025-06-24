@@ -6,13 +6,6 @@ export class StandardActorSheet extends WnGActorSheet {
         },
     }
 
-    _onDropKeyword(data, ev) {
-
-        let item = game.items.find(i => i.name == data.name && i.type == "keyword")
-        return this.actor.createEmbeddedDocuments("Item", [item.toObject()])
-    }
-
-
     async _prepareContext(options) {
         let context = await super._prepareContext(options);
         this.constructItemLists(context)
@@ -20,6 +13,20 @@ export class StandardActorSheet extends WnGActorSheet {
         return context;
     }
 
+
+    async _onDropItem(data, ev)
+    {
+        let item = await Item.implementation.fromDropData(data);
+
+        if (item?.type == "archetype")
+        {
+            this.actor.characterCreation(item);
+        }
+        else 
+        {
+            super._onDropItem(data, ev);
+        }
+    }
 
 
     constructItemLists(context) {

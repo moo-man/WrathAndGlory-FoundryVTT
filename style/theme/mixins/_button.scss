@@ -2,4 +2,8 @@
     background: url(./assets/image/button.webp) repeat;
     border: 1px solid black;
     color: #CCC;
+    &:not(.icon)
+    {
+        font-family: var(--font-text);
+    }
 }

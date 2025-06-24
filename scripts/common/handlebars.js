@@ -19,10 +19,8 @@ export const initializeHandlebars = () => {
     "systems/wrath-and-glory/templates/chat/roll/mutation/mutation-buttons.hbs",
   ];
   loadTemplates({
-    test : "systems/wrath-and-glory/template/partials/test.hbs",
-    chatTargets : "systems/wrath-and-glory/template/partials/chat-targets.hbs",
-    listEffect : "systems/wrath-and-glory/template/partials/list-effect.hbs",
-
+    chatTargets : "systems/wrath-and-glory/templates/partials/chat-targets.hbs",
+    listEffect : "systems/wrath-and-glory/templates/partials/list-effect.hbs",
     testDetails : "systems/wrath-and-glory/templates/item/partials/test.hbs",
     physical : "systems/wrath-and-glory/templates/item/partials/physical.hbs",
     traitsMod : "systems/wrath-and-glory/templates/item/partials/traits-mod.hbs",

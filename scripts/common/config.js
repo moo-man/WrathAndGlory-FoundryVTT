@@ -327,6 +327,26 @@ WNG.effectScripts = {},
 WNG.logFormat = [`%cW & G` + `%c @MESSAGE`, "color: #DDD;background: #8a2e2a;font-weight:bold", "color: unset"],
 WNG.rollClasses = {},
 
+WNG.copyrightText = `
+
+<p>No part of this publication may be reproduced, distributed, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical, photocopying, recording or otherwise without the prior permission of the publishers.</p>        
+
+<p>Warhammer 40,000 Roleplay: Wrath & Glory © Copyright Games Workshop Limited 2025. Warhammer 40,000 Roleplay, the Warhammer 40,000 Roleplay logo, Wrath & Glory, the Wrath & Glory logo, GW, Games Workshop, Space Marine, 40k, Warhammer, Warhammer 40,000, the ‘Aquila’ Double-headed Eagle logo, and all associated logos, illustrations, images, names, creatures, races, vehicles, locations, weapons, characters, and the distinctive likeness thereof, are either ® or ™, and/or © Games Workshop Limited, variably registered around the world, and used under licence.</p>
+
+<div style="display: flex; justify-content: space-around;">
+    <img src="modules/warhammer-lib/assets/c7.png" height=50 width=50/>   
+    <img src="modules/warhammer-lib/assets/warhammer.png" height=50 width=50/>
+</div>
+
+<ul>
+<li>Published by: <strong>Cubicle 7 Entertainment Ltd</strong></li>
+<li>Foundry Edition by <strong>@AUTHORS@</strong></li>
+<li>Special thanks to: <strong>Games Workshop, Fatshark</strong></li>
+</ul>
+`
+
+WNG.dicePath = "systems/wrath-and-glory/assets/image/"
+
 WNG.premiumModules = {
     "wrath-and-glory" : "Wrath & Glory System",
     "wng-core" : "Core Rulebook",

@@ -133,5 +133,4 @@ game.settings.register("wrath-and-glory", "tableSettings", {
     type: WnGThemeConfig.schema
 });
 
-
 }

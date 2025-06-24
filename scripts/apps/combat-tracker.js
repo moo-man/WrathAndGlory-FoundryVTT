@@ -40,8 +40,8 @@ export default class WrathAndGloryCombatTracker extends CombatTracker {
     async _onRender(options)
     {
         await super._onRender(options);
-        this.element.querySelector("[data-action='nextTurn']").remove();
-        this.element.querySelector("[data-action='previousTurn']").remove();
+        this.element.querySelector("[data-action='nextTurn']")?.remove();
+        this.element.querySelector("[data-action='previousTurn']")?.remove();
     }
 
     static _onToggleActive(ev, target)

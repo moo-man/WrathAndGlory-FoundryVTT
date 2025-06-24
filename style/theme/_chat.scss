@@ -37,6 +37,7 @@ body.wng-theme {
         font-weight: bold;
         text-align: center;
         border-style: solid;
+        text-transform: none;
         border-width: 0px 8px 8px 8px;
         border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
       }
@@ -45,6 +46,7 @@ body.wng-theme {
         color: var(--color-black);
         font-family: var(--font-text);
         font-size: var(--font-size-16);
+        text-transform: none;
         font-weight: bold;
         text-align: center;
       }
