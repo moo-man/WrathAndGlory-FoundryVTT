@@ -1,0 +1,1 @@
+return args.weapon || args.power || args.options.resolve || args.options.conviction || args.options.determination || !["cunning", "deception", "insight", "intimidation", "leadership","persuasion","tech"].includes(args.skill);

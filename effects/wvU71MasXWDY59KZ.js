@@ -1,0 +1,1 @@
+return !args.target || !args.target.hasKeyword("CHAOS")

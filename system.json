@@ -50,10 +50,10 @@
     "requires": [{
       "id": "warhammer-lib",
       "type": "module",
-      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.1.0/module.json",
+      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.1.2/module.json",
       "compatibility": {
-        "minimum" : "2.1.0",
-        "verified": "2.1.0"
+        "minimum" : "2.1.2",
+        "verified": "2.1.2"
       }
     }]
   },
