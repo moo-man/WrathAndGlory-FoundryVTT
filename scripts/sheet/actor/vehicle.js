@@ -1,67 +1,122 @@
-import ItemTraits from "../../apps/item-traits.js";
-import { BaseWnGActorSheet } from "./base.js";
+import ItemTraits from "../../apps/item-traits";
+import WnGActorSheet from "./actor";
 
-export class VehicleSheet extends BaseWnGActorSheet {
-
-    static get defaultOptions() {
-        let options = super.defaultOptions
-
-        options.classes.push("vehicle");
-        options.template = "systems/wrath-and-glory/template/actor/vehicle.hbs";
-        options.resizable = true;
-        options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main", }]
-        options.dragDrop.concat([{dragSelector: ".actor-list .actor"}, {}])
-        options.scrollY.push(".main-lists");
-
-        return options
+export class VehicleSheet extends WnGActorSheet {
+    static DEFAULT_OPTIONS = {
+        actions: {
+            deleteComplement: this._onDeleteComplement,
+            configureTraits : this._onConfigureTraits,
+            rollWeapon : this._onRollWeapon,
+            openComplement : this._onOpenComplement
+        },
+        dragDrop: [{ dragSelector: '.list-row[data-complement]', dropSelector: null }],
     }
 
-    async getData() {
-        const data = await super.getData();
-        this.constructItemLists(data);
-        data.complement = {
-            pilot : [],
-            crew : [],
-            passenger : [],
-            unassigned : []
+
+    static PARTS = {
+        header: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/vehicle/vehicle-header.hbs', classes: ["sheet-header"] },
+        tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
+        main: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/vehicle/vehicle-main.hbs' },
+        effects: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-effects.hbs' },
+        gear: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-gear.hbs' },
+        notes: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/vehicle/vehicle-notes.hbs' },
+    }
+
+    static TABS = {
+        main: {
+            id: "main",
+            group: "primary",
+            label: "TAB.MAIN",
+        },
+        effects: {
+            id: "effects",
+            group: "primary",
+            label: "TAB.EFFECTS",
+        },
+        gear: {
+            id: "gear",
+            group: "primary",
+            label: "TAB.GEAR",
+        },
+        notes: {
+            id: "notes",
+            group: "primary",
+            label: "TAB.NOTES",
         }
-        data.system.complement.list.forEach((i, index) => {
-            data.complement[i.type || "unassigned"].push(mergeObject(i, {index}));
+    }
+
+    async _prepareContext(options) {
+        let context = await super._prepareContext(options);
+
+        this.constructItemLists(context);
+        context.complement = {
+            pilot: [],
+            crew: [],
+            passenger: [],
+            unassigned: []
+        }
+        context.system.complement.list.forEach((i, index) => {
+            context.complement[i.type || "unassigned"].push(mergeObject(i, { index }));
         })
 
-        data.complement.pilot = this._padComplementList(data.complement.pilot, data.system.complement.pilot)
-        data.complement.crew = this._padComplementList(data.complement.crew, data.system.complement.crew)
-        data.complement.passenger = this._padComplementList(data.complement.passenger, data.system.complement.passenger)
-        return data;
+        context.complement.pilot = this._padComplementList(context.complement.pilot, context.system.complement.pilot)
+        context.complement.crew = this._padComplementList(context.complement.crew, context.system.complement.crew)
+        context.complement.passenger = this._padComplementList(context.complement.passenger, context.system.complement.passenger)
+        return context;
     }
 
-    constructEffectLists(sheetData) {
-        super.constructEffectLists(sheetData);
-
-        sheetData.effects.conditions = sheetData.effects.conditions.filter(i => ["onfire", "hindered", "restrained", "vulnerable"].includes(i.key))
-    }
-
-    constructItemLists(sheetData) {
-        let items = {}
-
-        items.ammo = this.actor.itemTypes.ammo
-        items.gear = this.actor.itemTypes.gear
-        items.keywords = this.actor.itemTypes.keyword
-        items.weapons = this.actor.itemTypes.weapon
-        items.equipped = {
-            weapons : items.weapons.filter(i => i.system.equipped),    
+    _padComplementList(array, size) {
+        if (array.length < size) {
+            array = array.concat(Array(size - array.length).fill(undefined));
         }
+        return array
+    }
+    
+    _prepareEffectsContext(context) {
+        super._prepareEffectsContext(context);
 
-        items.equipped.ammo = items.equipped.weapons.map(i => this.actor.items.get(i.ammo)).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
-        
-
-        sheetData.items = items;
-
-        this.constructInventory(sheetData)
+        context.effects.conditions = context.effects.conditions.filter(i => ["onfire", "hindered", "restrained", "vulnerable"].includes(i.key))
     }
 
-    constructInventory(sheetData) {
-        sheetData.inventory = {
+    async _onDropActor(data, ev)
+    {
+        let complementType = ev.target.dataset.type || ev.target.closest(".complement-list")?.dataset?.type
+        let actor = await Actor.implementation.fromDropData(data);
+        this.actor.update(this.actor.system.complement.add(actor, complementType))
+    }
+
+    async _onDropComplementDrag(data, ev)
+    {
+        let complementType = ev.target.dataset.type || ev.target.closest(".complement-list")?.dataset?.type
+        this.actor.update(this.actor.system.complement.edit(data.index, {type: complementType}));
+    }
+
+    _onDragStart(ev)
+    {
+        let complementId = this._getDataAttribute(ev, "complement");
+        let index = this._getIndex(ev);
+        if (complementId)
+        {
+            ev.dataTransfer.setData("text/plain", JSON.stringify({type : "ComplementDrag", index}));
+        }
+        else 
+        {
+            return super._onDragStart(ev);
+        }
+    }
+
+
+    constructItemLists(context) {
+        context.items.equipped = {
+            weapon: context.items.weapon.filter(i => i.equipped).filter(i => i.system.isActiveMobAbility),
+        }
+        context.items.equipped.ammo = context.items.equipped.weapon.map(i => i.system.ammo.document).filter(i => !!i).filter((item, index, self) => self.findIndex(dup => dup.id == item.id) == index) //remove duplicate
+
+        this.constructInventory(context)
+    }
+
+    constructInventory(context) {
+        context.inventory = {
             weapons: {
                 header: "HEADER.WEAPON",
                 items: this.actor.itemTypes.weapon,
@@ -86,65 +141,30 @@ export class VehicleSheet extends BaseWnGActorSheet {
         }
     }
 
-
-    _padComplementList(array, size)
+    static _onConfigureTraits(ev)
     {
-        if (array.length < size)
-        {
-            array = array.concat(Array(size - array.length).fill(undefined));
-        }
-        return array
+        new ItemTraits(this.document).render(true)
     }
 
-      /** @inheritdoc */
-  _onDragStart(event) {
-    const li = event.currentTarget;
-    if (li.dataset.complementId)
+    static async _onRollWeapon(ev)
     {
-        event.dataTransfer.setData("text/plain", JSON.stringify({type : "complementDrag", index : li.dataset.index}));
-    }
-    else super._onDragStart(event);
-  }
-
-    async _onDrop(ev) {
-        let data = JSON.parse(ev.dataTransfer.getData("text/plain"));
-        let complementType = ev.target.dataset.type || $(ev.target).parents(".complement-list")[0]?.dataset?.type
-        if (data.type == "Actor" && data.uuid)
+        let actor = await this.actor.system.complement.choose();
+        let weapon = this._getDocument(ev);
+        if (weapon)
         {
-            let actor = await fromUuid(data.uuid);
-            this.actor.update(this.actor.system.complement.add(actor, complementType))
-        }
-        else if (data.type == "complementDrag")
-        {
-            this.actor.update(this.actor.system.complement.edit(data.index, {type: complementType}));
-        }
-        super._onDrop(ev)
+            actor.setupWeaponTest(weapon);
+        }  
     }
 
-
-    activateListeners(html) {
-        super.activateListeners(html);
-
-        html.find(".complement-delete").click(ev => {
-            let index = $(ev.currentTarget).parents(".item").attr("data-index");
-
-            this.actor.update(this.actor.system.complement.remove(index))
-        })
-
-        html.find(".vehicle-traits").click(ev => {
-            new ItemTraits(this.object).render(true)
-        })
-
-        html.find(".roll-weapon").click(async ev => {
-            let actor = await this.actor.system.complement.choose();
-            const div = $(ev.currentTarget).parents(".item");
-            let id = div.data("itemId");
-            let weapon = this.actor.items.get(id);
-            if (weapon)
-            {
-                actor.setupWeaponTest(weapon);
-            }
-        });
+    static _onDeleteComplement(ev)
+    {
+        let index = this._getIndex(ev)
+        this.actor.update(this.actor.system.complement.remove(index))
     }
 
+    static _onOpenComplement(ev, target)
+    {
+        let index = this._getIndex(ev)
+        this.actor.system.complement.documents[index]?.sheet.render({force:  true});
+    }
 }

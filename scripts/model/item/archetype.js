@@ -4,6 +4,7 @@ let fields = foundry.data.fields;
 
 export class ArchetypeModel extends BaseItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.archetype"];
 
     static defineSchema() 
     {

@@ -1,0 +1,74 @@
+@use "./mixins/form" as *;
+@use "./mixins/button" as buttons;
+
+body.wng-theme {
+    .application.item.sheet.wrath-and-glory {
+
+        --name-bg : var(--color-imperium);
+        --attribute-border: var(--color-imperium);
+        
+        .window-content {
+            border: 30px solid transparent;
+            border-top: 0px;
+            border-image: url(./assets/image/journal-border.webp) 0 80 60 repeat;
+            border-bottom: 20px solid transparent;
+        }
+
+        .sheet-header {
+            .attribute-box {
+                height: 2rem;
+
+                .label,
+                input {
+                    height: 2rem
+                }
+            }
+        }
+
+        .editor-section {
+            .header {
+                display: none;
+            }
+        }
+
+        .damage-labels {
+            .labels {
+                color: var(--color-black);
+            }
+        }
+
+        .form-group {
+            label {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .name-list {
+
+            .floating {
+                color: var(--color-white);
+            }
+
+            .list-element:not(.input)
+            {
+                background: none;
+            }
+        }
+
+
+
+        &.faction {
+            [data-tab="stats"] {
+                .list-row {
+                    background: none;
+                    a {
+                        color: var(--color-black);
+                    }
+                }
+            }
+        }
+
+    }
+}

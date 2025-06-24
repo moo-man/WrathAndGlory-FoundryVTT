@@ -1,5 +1,5 @@
 
-export class RollDialog extends WarhammerRollDialog {
+export class RollDialog extends WarhammerRollDialogV2 {
 
     get tooltipConfig() {
       return {
@@ -22,46 +22,24 @@ export class RollDialog extends WarhammerRollDialog {
         }
     }
   }
-
-    static get defaultOptions() {
-      let options = super.defaultOptions
-      options.classes.push("wrath-and-glory")
-      options.resizable = true;
-      options.width = 540;
-      return options
-    }
   
-    get template() 
+
+    async _prepareContext(options)
     {
-      return "systems/wrath-and-glory/template/dialog/common-roll.hbs";
+        let context = await super._prepareContext(options);
+        context.title = this.context.title;
+        context.noDn = this.context.noDn;
+        context.noWrath = this.context.noWrath;
+        context.rollModes = CONFIG.Dice.rollModes;
+        return context;
     }
 
-    constructor(...args)
+    static async setupData({pool, wrath, dn}, actor, context={})
     {
-      super(...args);
-      if (this.options.determination)
-      {
-        this.subTemplate = "systems/wrath-and-glory/template/dialog/determination-roll.hbs"
-      }
-    }
-
-
-    async getData()
-    {
-        let data = await super.getData();
-        data.title = this.options.title;
-        data.noDn = this.options.noDn;
-        data.noWrath = this.options.noWrath;
-        data.rollModes = CONFIG.Dice.rollModes;
-        return data;
-    }
-
-    static async setupData({pool, wrath, dn}, actor, options={})
-    {
-        let {data, fields} = this._baseDialogData(actor, options);
+        let {data, fields} = this._baseDialogData(actor, context);
 
         
-        mergeObject(fields, options.fields || {});
+        foundry.utils.mergeObject(fields, context.fields || {});
 
 
         if (pool)
@@ -73,22 +51,22 @@ export class RollDialog extends WarhammerRollDialog {
           fields.wrath = wrath;
         }
         
-        if (dn && !this.options.noDn)
+        if (dn && !this.context.noDn)
         {
           fields.dn = dn;
         }
         else 
         {
-          options.useDn = false;
+          context.useDn = false;
         }
 
-        return {data, fields, options};
+        return {data, fields, context};
     }
 
     _getSubmissionData()
     {
       let data = super._getSubmissionData();
-      if (this.options.noWrath)
+      if (this.context.noWrath)
       {
         data.wrath = 0;
       }
@@ -102,7 +80,7 @@ export class RollDialog extends WarhammerRollDialog {
 
     computeInitialFields()
     {
-      if (this.options.corruption)
+      if (this.context.corruption)
       {
         let level = game.wng.config.corruptionLevels[this.actor.corruptionLevel]
         this.fields.dn += level.dn;
@@ -125,7 +103,7 @@ export class RollDialog extends WarhammerRollDialog {
             wrath : 1,
         }, super._defaultFields());
 
-        if (this.options.determination && game.user.isGM)
+        if (this.context.determination && game.user.isGM)
         {
           fields.rollMode = "gmroll";
         }

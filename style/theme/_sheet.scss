@@ -1,0 +1,209 @@
+@use "./mixins/form" as *;
+@use "./mixins/button" as buttons;
+@use "./var";
+@use "./mixins/editor" as editor;
+@use "./mixins/links" as links;
+
+body.wng-theme.light-theme,
+body.wng-theme {
+
+    --button-hover-background-color: var(--color-imperium);
+
+
+    .application.roll-dialog-v2,
+    .application.warhammer.sheet.journal-sheet,
+    .application.warhammer.sheet.wrath-and-glory {
+
+        --font-h1: var(--font-header);
+        --font-h2: var(--font-header);
+        --font-h3: var(--font-header);
+        --font-h4: var(--font-header);
+
+        --color-scrollbar : var(--color-imperium);
+        --color-text-primary: var(--color-black);
+        --attribute-input : none;
+        --attribute-input-border : transparent;
+        --attribute-border : transparent;
+        --fieldset-border : var(--color-imperium);
+        --attribute-locked-input : var(--color-black);
+        --attribute-locked-border : var(--color-black);
+        --attribute-label : transparent;
+        --attribute-field : transparent;
+
+        --form-group-border: var(--color-black);
+        --name-border: var(--color-black);
+    
+
+        ::selection {
+            background-color: var(--color-imperium);
+        }
+
+        input[type=checkbox]
+        {
+            --checkbox-background-color: var(--color-light-grey);
+            --checkbox-checked-color: var(--color-imperium);
+        }
+
+        .window-content {
+            padding: 0.5rem;
+            border: 8px solid transparent;
+            border-image: var(--image-border) 8 8 8 8 repeat repeat;
+
+            background: var(--image-background) 0 100% repeat;
+            /*, var(--image-background) 50px 100% repeat;*/
+            font-family: var(--font-text);
+
+            button {
+                @include buttons.wng-button;
+            }
+        }
+
+        .window-header {
+            border-image: url(./assets/image/header.webp) repeat;
+            border-image-slice: 8 8 7 7 fill;
+            border-image-width: 0px 0px 2px 2px;
+            font-family: var(--font-text);
+        }
+
+        .sheet-header img {
+            border: 8px solid transparent;
+            border-image: var(--image-border) 8 8 8 8 repeat repeat;
+        }
+
+
+        hr {
+            color: var(--color-black);
+            background-image: linear-gradient(90deg, transparent 0%, var(--color-imperium) 50%, transparent 100%);
+        }
+
+        .attribute-box {
+            &:not(.labels) {
+                .label {
+                    @include form-label
+                }
+            }
+
+            &.labels {
+                .label {
+                    color: var(--color-black)
+                }
+            }
+
+            .like-input,
+            input[type=text],
+            input[type=number],
+            select {
+                @include form-input;
+            }
+    
+
+        }
+
+        select,
+        input {
+            @include minimal-input
+        }
+
+        .form-group {
+            gap: 0px;
+            .hint {
+                color: var(--color-black)
+            }
+            label {
+                @include form-label;
+                height: 2rem;
+                line-height: 2rem;
+            }
+            .form-fields {
+                gap: 0px;
+                .like-input,
+                select,
+                input:not([type=checkbox],[type=color],[type=range]),
+                input[type=text],
+                input[type=number] {
+                    @include form-input;
+                    border: 0px;
+
+                    &:disabled {
+                        border: 0px;
+                    }
+                }
+
+                input[type="checkbox"] {
+                    --checkbox-size: 2rem;
+                    margin: 0px;
+                    &::before {
+                        border-radius: 0px;
+                    }
+                    height: 2rem;
+                }
+            }
+
+            
+
+        }
+
+
+        input[type=search]
+        {
+            background: white;
+            border: 1px solid var(--color-black);
+            outline: none;
+            &::placeholder {
+                color: var(--color-dark-grey);
+            }
+        }
+
+        .sheet-divider {
+            border-style: solid;
+            border-width: 0px 8px 8px 8px;
+            font-size: var(--font-size-18);
+            border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
+            color: var(--color-red);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .sheet-tabs {
+            border: 8px solid transparent;
+            border-image: var(--image-border) 8 8 8 8 repeat repeat;
+
+            a {
+                font-size: var(--font-size-18);
+                color: var(--color-white);
+                background-color: var(--color-black);
+
+                &.active {
+                    background-color: var(--color-imperium);
+                   color: var(--color-white);
+                }   
+            }
+        }
+
+        
+
+        
+        .name-list {
+            label  {
+                @include form-label;
+            }
+        }
+
+        .condition {
+            @include form-label;
+        }
+
+        .dropdown-content {
+            @include editor.editor-text;
+            @include links.links;
+        }
+
+        .editor-section {
+            @include editor.editor-text;
+            @include links.links;
+            background: url(./assets/image/input.webp) repeat;
+            box-shadow: inset 0 0 6px var(--color-dark-grey);
+            padding: 0.5rem;
+        }
+    }
+}

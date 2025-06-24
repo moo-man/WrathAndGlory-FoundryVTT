@@ -1,0 +1,7 @@
+<section class="standard-form scrollable">
+    <fieldset>
+        <legend>Wrath & Glory Theme</legend>
+        {{formGroup fields.enabled value=setting.enabled localize=true label="Enabled"}}
+        {{formGroup fields.font value=setting.font localize=true disabled=(not setting.enabled) label="Font"}}
+    </fieldset>
+</section>

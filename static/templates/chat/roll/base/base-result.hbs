@@ -1,0 +1,22 @@
+<div class="chat-container">
+        {{#if result.isSuccess}}
+        <div class="seal approved"></div>
+        {{else}}
+        <div class="seal heresy"></div>
+        {{/if}}
+        
+        {{> chatTargets targets=targetTokens}}
+                
+
+
+        <p><strong>{{localize "CHAT.SUCCESS"}}: {{result.success}}</strong></p>
+        <p><strong>{{localize "CHAT.FAILURE"}}: {{result.failure}}</strong></p>
+        {{#if isShiftable}}
+        <p><strong>{{localize "CHAT.SHIFTING"}}: {{result.shiftsPossible}}</strong></p>
+        {{/if}}
+
+        {{#each result.text}}
+        <p><strong>{{this.label}}</strong>: {{this.description}}</p>
+        {{/each}}
+
+</div>

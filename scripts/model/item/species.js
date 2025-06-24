@@ -5,6 +5,7 @@ let fields = foundry.data.fields;
 
 export class SpeciesModel extends StandardItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.species"];
 
     static defineSchema() 
     {

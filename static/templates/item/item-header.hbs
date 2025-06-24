@@ -1,0 +1,9 @@
+<div class="sheet-header">
+    <img data-action="editImage" data-edit="img" src="{{item.img}}" {{#if (eq item.img "modules/warhammer-lib.assets/blank.png")}}class="img-border"{{/if}}>
+    <div class="header-fields">
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 3">{{localize "Name"}}</div>
+            <input type="text" style="grid-column: 4 / span 9" name="name" value="{{source.name}}">
+        </div>
+    </div>
+</div>

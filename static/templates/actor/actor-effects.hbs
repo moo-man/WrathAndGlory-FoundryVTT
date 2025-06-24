@@ -1,0 +1,91 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="flexrow" style="align-items: flex-start; gap: 0.5rem;">
+        <div class="conditions">
+            {{#each effects.conditions}}
+                <div class="condition" >
+                    <label>{{this.name}}</label>
+                    {{#if this.existing}}
+                        <a data-action="toggleCondition" data-condition="{{this.key}}"><i
+                                class="far fa-check-circle"></i></a>
+                    {{else}}
+                        <a data-action="toggleCondition" data-condition="{{this.key}}"><i
+                                class="far fa-circle"></i></a>
+                    {{/if}}
+                </div>
+            {{/each}}
+            <select class="add-effect">
+                <option>Add Effect</option>
+                {{#each (config "systemEffects")}}
+                    <option value="{{@key}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="effect-lists flex3">
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "HEADER.TEMPORARY_EFFECTS"}}</div>
+                    <div>{{localize "HEADER.SOURCE"}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="createEffect" data-category="temporary">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each effects.temporary}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                {{> listEffect effect=this}}
+                            </div>
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "HEADER.PASSIVE_EFFECTS"}}</div>
+                    <div>{{localize "HEADER.SOURCE"}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="createEffect" data-category="passive">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each effects.passive}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                {{> listEffect effect=this}}
+                            </div>
+                            {{> sheetButtons document=this}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "HEADER.DISABLED_EFFECTS"}}</div>
+                    <div>{{localize "HEADER.SOURCE"}}</div>
+                    <div class="list-controls"></div>
+                </div>
+                <div class="list-content">
+                    {{#each effects.disabled}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content inactive">
+                                {{> listEffect effect=this}}
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

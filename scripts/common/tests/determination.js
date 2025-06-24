@@ -14,7 +14,7 @@ export default class DeterminationRoll extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/determination/determination-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/determination/determination-roll.hbs"
   }
   _computeResult() {
     super._computeResult();

@@ -1,4 +1,5 @@
 import WNGUtility from "../common/utility.js";
+import { PostedItemMessageModel } from "../model/message/item.js";
 
 export class WrathAndGloryItem extends WarhammerItem {
 
@@ -10,22 +11,8 @@ export class WrathAndGloryItem extends WarhammerItem {
             setProperty(updateData, "system.specification", "corruption")
     }
 
-    async sendToChat() {
-        const item = new CONFIG.Item.documentClass(this._source)
-        if (item.img.includes("/unknown")) {
-            item.img = null;
-        }
-
-        const html = await renderTemplate("systems/wrath-and-glory/template/chat/item.hbs", { item, data: item.system });
-        const chatData = {
-            user: game.user.id,
-            rollMode: game.settings.get("core", "rollMode"),
-            content: html,
-            "flags.wrath-and-glory.itemData": this.toObject()
-        };
-
-        ChatMessage.applyRollMode(chatData, chatData.rollMode);
-        ChatMessage.create(chatData);
+    async postItem() {
+        PostedItemMessageModel.postItem(this)
     }
 
 
@@ -208,15 +195,21 @@ export class WrathAndGloryItem extends WarhammerItem {
     }
 
     get ammoList() {
+        let list = [];
         if (!this.isOwned)
             return
         if (this.category == "ranged")
-            return this.actor.itemTypes.ammo
+            list = this.actor.itemTypes.ammo
         else if (this.category == "launcher")
-            return this.actor.itemTypes.weapon.filter(i => i.category == "grenade-missile")
+            list = this.actor.itemTypes.weapon.filter(i => i.category == "grenade-missile")
         else if (this.category == "grenade-missile")
             return [this]
 
+        return list.map(i => {
+            let data = i.toObject();
+            data.name += ` (${i.system.quantity})`
+            return data;
+        })
     }
 
     // effects that exist on ammo type items that do not apply to the weapon

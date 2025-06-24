@@ -6,6 +6,7 @@ let fields = foundry.data.fields;
 
 export class TalentModel extends StandardItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.talent"];
 
     static defineSchema() 
     {

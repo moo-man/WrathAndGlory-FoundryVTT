@@ -19,7 +19,7 @@ export default class PowerTest extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/power/power-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/power/power-roll.hbs"
   }
 
   async runPreScripts()

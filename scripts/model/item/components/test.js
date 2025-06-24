@@ -2,6 +2,7 @@ let fields = foundry.data.fields;
 
 export class TestDataModel extends foundry.abstract.DataModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Components.test"];
 
     static defineSchema() 
     {

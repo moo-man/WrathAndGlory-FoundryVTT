@@ -20,7 +20,7 @@ export class MobConfig extends WarhammerSheetMixinV2(HandlebarsApplicationMixin(
 
     static PARTS = {
         form: {
-            template: "systems/wrath-and-glory/template/apps/mob-config.hbs"
+            template: "systems/wrath-and-glory/templates/apps/mob-config.hbs"
         }
     };
 

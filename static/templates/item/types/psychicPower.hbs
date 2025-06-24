@@ -1,0 +1,74 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        <div class="flexrow">
+        {{formGroup fields.cost value=system.cost }}
+        {{formGroup fields.prerequisites value=system.prerequisites classes="flex3"}}
+        </div>
+        <div class="flexrow">
+        {{formGroup fields.activation value=system.activation choices=(config "powerActivations")}}
+        {{formGroup fields.duration value=system.duration }}
+        </div>
+
+        <div class="flexrow">
+        {{formGroup fields.dn value=system.dn}}
+        {{formGroup fields.range value=system.range }}
+        {{formGroup fields.multiTarget value=system.multiTarget }}
+        </div>
+
+        {{> testDetails fields=fields.test.fields test=system.test hideSelf=true}}
+
+        {{formGroup fields.damage.fields.enabled value=system.damage.enabled}}
+
+        {{#if system.damage.enabled}}
+        {{> damage fields=fields.damage.fields damage=source.system.damage hideAP=true}}
+        {{> traits}}
+        {{/if}}
+        {{formGroup fields.keywords value=system.keywords}}
+
+        <h2 class="sheet-divider">{{localize "PSYCHIC_POWER.POTENCY"}}</h2>
+            <div class="sheet-list potency">
+                <div class="list-header row-content">
+                        <div data-tooltip="POWER.POTENCY_COST_HELP" data-tooltip-direction="UP"  class="flex">{{localize "POWER.POTENCY_COST"}}</div>
+                        <div data-tooltip="POWER.POTENCY_INITIAL_HELP" data-tooltip-direction="UP"  class="flex">{{localize "POWER.POTENCY_INITIAL"}}</div>
+                        <div data-tooltip="POWER.POTENCY_PROPERTY_HELP" data-tooltip-direction="LEFT"  class="flex">{{localize "POWER.POTENCY_PROPERTY"}}</div>
+                        <div data-tooltip="POWER.POTENCY_VALUE_HELP" data-tooltip-direction="UP"  class="flex">{{localize "POWER.POTENCY_VALUE"}}</div>
+                        <div class="small" data-tooltip="POWER.POTENCY_SINGLE_HELP" data-tooltip-direction="UP" >{{localize "POWER.POTENCY_SINGLE"}}</div>
+                        <div class="list-controls">
+
+                        </div>
+                </div>
+                <div class="list-content" data-path="system.potency">
+                    {{#each system.potency.list}}
+                        <div class="list-row" data-index="{{@key}}">
+                            <div class="row-content">
+                                <div class="flex">
+                                        <input type="text" data-action="editList" data-ipath="cost" value="{{this.cost}}" placeholder="{{localize 'POWER.POTENCY_COST'}}">
+                                </div>
+                                <div class="flex">
+                                        <input type="text" data-action="editList" data-ipath="initial" value="{{this.initial}}" placeholder="{{localize 'POWER.POTENCY_INITIAL'}}">
+                                </div>
+                                <div class="flex">
+                                        <input type="text" data-action="editList" data-ipath="property" value="{{this.property}}" placeholder="{{localize 'POWER.POTENCY_PROPERTY'}}">
+                                </div>
+                                <div class="flex">
+                                        <input type="text" data-action="editList" data-ipath="value" value="{{this.value}}" placeholder="{{localize 'POWER.POTENCY_VALUE'}}">
+                                </div>
+                                <div    class="small">
+                                        <input type="checkbox" data-action="editList" data-ipath="single" {{checked this.single}}>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="listDelete"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                            <div class="row-content">
+                                <div class="flex">
+                                        <input type="text" data-action="editList" data-ipath="description" value="{{this.description}}" placeholder="Description">
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                    <button type="button" data-action="listCreate" data-path="system.potency" class="add-potency"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+
+</section>

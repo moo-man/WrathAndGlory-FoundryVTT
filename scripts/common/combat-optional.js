@@ -15,7 +15,7 @@ export class WrathAndGloryOptionalCombat extends Combat
             if ( !combatant?.isOwner ) continue;
 
             const roll = new InitiativeRoll({
-                pool : {size : combatant.actor.attributes.initiative.total, bonus : 0},
+                pool : {size : combatant.actor.system.attributes.initiative.total, bonus : 0},
                 title : game.i18n.format("COMBAT.RollsInitiative", {name: combatant.name}),
                 speaker : combatant.actor.speakerData(),
                 rollClass : this.constructor.name

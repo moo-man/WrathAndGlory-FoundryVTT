@@ -37,7 +37,7 @@ export class WNGTest extends WarhammerTestBase {
         edit: { pool: 0, wrath: 0, icons: 0, damage: 0, ed: 0, ap: 0 },
       },
       context: {
-        title: data.options?.title,
+        title: data.context?.title,
         targets: data.targets || [],
         type: data.type,
         breakdown : data.context?.breakdown,
@@ -61,7 +61,7 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/common/common-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/common/common-roll.hbs"
   }
 
   static recreate(data) {
@@ -70,7 +70,7 @@ export class WNGTest extends WarhammerTestBase {
     }
 
     let test = new game.wng.rollClasses[data.context.rollClass]()
-    test.data = data;
+    test.data = data.toJSON();
     if (test.result.roll)
       test.roll = Roll.fromData(test.result.roll)
     if (test.testData.rerolls.length)
@@ -407,9 +407,9 @@ export class WNGTest extends WarhammerTestBase {
     if (this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies")) {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1, "glory").then(() => { game.counter.render(true) })
+        game.wng.RuinGloryCounter.changeCounter(1, "glory").then(() => { game.counter.render({force: true}) })
       else if (this.actor.type == "threat")
-        game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => { game.counter.render(true) })
+        game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => { game.counter.render({force: true}) })
     }
   }
 
@@ -439,7 +439,7 @@ export class WNGTest extends WarhammerTestBase {
     {
       let glorySubtract = -this.testData.shifted.glory.dice.length
       game.wng.RuinGloryCounter.changeCounter(glorySubtract, "glory").then(() => {
-        game.counter.render(true)
+        game.counter.render({force: true})
         if (glorySubtract)
           ui.notifications.notify(game.i18n.format("COUNTER.GLORY_CHANGED", { change: glorySubtract }))
       })
@@ -454,7 +454,7 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   // Is this test shiftable?
-  isShiftable() {
+  get  isShiftable() {
     return true
   }
 
@@ -633,10 +633,7 @@ export class PoolDie extends Die {
         roll.rerollable = true,
         roll.weight = 1
     }
-    if (game.modules.get("wng-core") && game.modules.get("wng-core").active)
-      roll.img = `modules/wng-core/assets/dice/die-pool-${roll.result}.webp`
-    else
-      roll.img = `systems/wrath-and-glory/asset/image/die-pool-${roll.result}.webp`
+    roll.img = game.wng.config.dicePath.concat("die-pool-" + roll.result + ".webp");
   }
 
 
@@ -704,10 +701,8 @@ export class WrathDie extends Die {
         roll.weight = -2
     };
     roll.isWrath = true;
-    if (game.modules.get("wng-core") && game.modules.get("wng-core").active)
-      roll.img = `modules/wng-core/assets/dice/die-wrath-${roll.result}.webp`
-    else
-      roll.img = `systems/wrath-and-glory/asset/image/die-wrath-${roll.result}.webp`
+    roll.img = game.wng.config.dicePath.concat("die-wrath-" + roll.result + ".webp");
+
   }
 
 

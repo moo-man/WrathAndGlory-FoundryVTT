@@ -1,42 +1,70 @@
-import { MobConfig } from "../../apps/mob-config.js";
-import { StandardActorSheet } from "./standard.js";
+import { MobConfig } from "../../apps/mob-config";
+import { StandardActorSheet } from "./standard";
 
 export class ThreatSheet extends StandardActorSheet {
+    static DEFAULT_OPTIONS = {
+        actions : {
+            configureMob : this._onConfigureMob
+        },
+        defaultTab : "stats"
+    }   
 
-    static get defaultOptions() {
-        let options = super.defaultOptions
-        options.classes.push("threat")
-        return options
-    }
+      static PARTS = {
+        header : {scrollable: [""], template : 'systems/wrath-and-glory/templates/actor/threat/threat-header.hbs', classes: ["sheet-header"] },
+        tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
+        stats: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-stats.hbs' },
+        combat: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-combat.hbs' },
+        abilities: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-abilities.hbs' },
+        gear: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-gear.hbs' },
+        effects: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/actor-effects.hbs' },
+        notes: { scrollable: [""], template: 'systems/wrath-and-glory/templates/actor/threat/threat-notes.hbs' },
+      }
 
-    async getData() {
-        const sheetData = await super.getData();
-        sheetData.autoCalc.wounds = false;
-        sheetData.autoCalc.shock = false;
-        sheetData.mobAbilities = this.document.system.mob.abilities.documents.filter(i => !i.system.isActiveMobAbility);
-        return sheetData;
-    }
+      static TABS = {
+        stats: {
+          id: "main",
+          group: "primary",
+          label: "TAB.STATS",
+        },
+        combat: {
+          id: "combat",
+          group: "primary",
+          label: "TAB.COMBAT",
+        },
+        abilities: {
+          id: "abilities",
+          group: "primary",
+          label: "TAB.ABILITIES",
+        },
+        effects: {
+          id: "effects",
+          group: "primary",
+          label: "TAB.EFFECTS",
+        },
+        gear: {
+          id: "gear",
+          group: "primary",
+          label: "TAB.GEAR",
+        },
+        notes: {
+          id: "notes",
+          group: "primary",
+          label: "TAB.NOTES",
+        }
+      }
 
-    activateListeners(html) {
-        super.activateListeners(html);
-        html.find(".item-cost").focusout(async (ev) => { await this._onItemCostFocusOut(ev); });
-        html.find(".configure-mob").click(this._onConfigureMob.bind(this));
-    }
 
+      async _prepareContext(options)
+      {
+        let context = await super._prepareContext(options);
+        context.mobAbilities = this.document.system.mob.abilities.documents.filter(i => !i.system.isActiveMobAbility);
+        return context;
+      }
 
-    async _onItemCostFocusOut(event) {
-        event.preventDefault();
-        const div = $(event.currentTarget).parents(".item");
-        let item  = this.actor.items.get(div.data("itemId"));
-        const value = parseInt($(event.currentTarget)[0].value, 10);
-        let data = { _id: item.id, "system.cost": value };
-        await this.actor.updateEmbeddedDocument("Item", data);
-
-        this._render(true);
-    }
-
-    _onConfigureMob(event) 
+    static _onConfigureMob() 
     {
         new MobConfig(this.document).render(true);
     }
+
+
 }

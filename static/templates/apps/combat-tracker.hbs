@@ -1,0 +1,40 @@
+<ol class="combat-tracker plain">
+
+        {{#if current.length}}
+            <h3>Current</h3>
+            {{#each current}}
+                {{> combatant combatant=this}}
+            {{/each}}
+        {{else if combat.round}}
+            {{#if complete.length}}
+            <h4>Advance the Round</h4> 
+            {{else}}
+            <h4>Select a Combatant</h4> 
+            {{/if}}
+        {{/if}}
+
+        {{#if pending.length}}
+            <h3>Pending</h3>
+            {{#each pending}}
+                {{> combatant combatant=this}}
+            {{/each}}
+        {{/if}}
+
+        {{#if complete.length}}
+            <h3>Complete</h3>
+            <div style="opacity: 0.5">
+                {{#each complete}}
+                    {{> combatant combatant=this}}
+                {{/each}}
+            </div>
+        {{/if}}
+
+        
+        {{#if defeated.length}}
+            <h3>Defeated</h3>
+            {{#each defeated}}
+                {{> combatant combatant=this}}
+            {{/each}}
+        {{/if}}
+
+</ol>

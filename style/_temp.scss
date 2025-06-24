@@ -1,0 +1,221 @@
+@use "./theme/mixins/button" as buttons; 
+
+#character-creation .character-creation{
+    height: calc(100% - 30px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #character-creation .background-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  
+    #character-creation form {
+      height: 100%
+    }
+  
+  .character-creation  h1{
+    margin: 0;
+    border-style: solid;
+    border-width: 0px 8px 8px 8px;
+    border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
+    color: var(--color-red);
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    padding: 0 30px;
+  }
+  
+  .character-creation  h1 input{
+    background: none;
+    border: none
+  }
+  
+  .character-creation  h1 input:focus{
+    box-shadow: none;
+  }
+  
+  .character-creation header{
+    flex: 0 0 40px;
+    margin: 10px;
+  }
+  
+  
+  .character-creation .sheet-body {
+    flex: 1;
+    display: flex;
+    height: calc(100% - 70px)
+  }
+  
+  .character-creation .sheet-body .column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: 100%;
+    padding: 10px;
+  }
+  
+  
+  .character-creation .sheet-body .column h3{
+      text-align: center;
+      font-weight: bold;
+      font-size:18px;
+  }
+  
+  
+  
+  #character-creation .window-content {
+    overflow: hidden
+  }
+  
+  .character-creation .sheet-body .column h4{
+    text-align: center;
+    font-size:16px;
+    margin: 0.5rem 0 0 0
+  }
+  
+  
+  #character-creation .wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+  }
+  
+  #character-creation .wrapper label {
+    text-align: center;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 5px;
+    font-family: var(--font-text);
+    font-size: 14px;
+    border: 1px solid var(--color-black);
+    cursor: pointer;
+    flex: 1
+  }
+  
+  #character-creation .wrapper.xp label {
+    flex: 2
+  }
+  
+  
+  #character-creation .wrapper select,
+    #character-creation .wrapper input {
+    background: var(--image-input) repeat;
+    border: 1px solid var(--color-black);
+    border-radius: 0;
+    border-left: 0;
+    box-shadow: inset 0 0 6px var(--color-dark-grey);
+    color: var(--color-black);
+    font-size: 14px;
+    font-family: var(--font-text);
+    text-align: center;
+    height: 31px;
+    flex: 1
+  }
+  
+  
+  #character-creation .ability {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  #character-creation a.keyword {
+    color: var(--color-imperium);
+    text-transform: uppercase;
+    font-weight: bold
+  }
+  
+  #character-creation a.keyword:hover {
+    text-shadow: none;
+  }
+  
+  #character-creation .ability-header {
+    display: flex;
+    text-align: center;
+    height: 60px;
+    align-items: center;
+  }
+  
+  #character-creation .ability-header img {
+    height: 50px;
+    width: 50px;
+  }
+  
+  #character-creation .ability-header label {
+    text-align: center;
+    font-weight: bold;
+    flex: 1
+  }
+  
+  #character-creation .wargear,
+    #character-creation .keywords {
+    padding: 10px;
+  }
+  
+  
+  
+  #character-creation .wargear .wargear-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  #character-creation .wargear .wargear-group.root {
+    flex-direction: column;
+  }
+  
+  #character-creation .wargear .wargear-group .connector {
+    margin: 0px 3px;
+  }
+  
+  #character-creation .wargear .wargear-group .wargear-selector {
+    margin: 0px 3px;
+  }
+  
+  #character-creation .wargear .wargear-group .wargear-item {
+    color: var(--color-imperium);
+    font-weight: bold;
+    cursor: pointer
+  }
+  
+  #character-creation .wargear .wargear-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #character-creation .wargear .wargear-selection > .wargear-item,
+    #character-creation .wargear .wargear-selection > .wargear-group{
+    border-bottom: 1px solid var(--color-imperium)
+  }
+  
+  #character-creation .background.active {
+    color: var(--color-imperium)
+  }
+  
+  #character-creation .customization button {
+    flex: 0 0 25px;
+    height: 80%;
+    @include buttons.wng-button;
+  }
+  
+  
+  #character-creation .wargear .disabled {
+    opacity: 0.5
+  }
+  
+  #character-creation .wrapper label > span {
+    opacity: 0.5;
+    flex: 0 0 40px;
+  }
+  
+  #character-creation .faction .wrapper label{
+    min-width: 110px;
+  }

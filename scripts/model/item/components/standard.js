@@ -7,7 +7,7 @@ export class StandardItemModel extends BaseItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.description = new fields.StringField();
+        schema.description = new fields.HTMLField();
         return schema;
     }
 

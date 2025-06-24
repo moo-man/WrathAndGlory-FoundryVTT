@@ -1,58 +1,52 @@
-import entryContextHooks from "../hooks/entryContext.js"
 import ready from "../hooks/ready.js"
 import init from "../hooks/init.js";
-import chat from "../hooks/chat.js";
 import combat from "../hooks/combat.js";
 import token from "../hooks/token.js";
-import WNGUtility from "./utility.js";
 import hotbar from "../hooks/hotbar.js";
 import setting from "../hooks/setting.js";
 import i18n from "../hooks/i18n.js";
+import chat from "../hooks/chat.js";
 
 export default function() {
-    entryContextHooks();
     ready();
     init();
-    chat();
     combat();
     token();
     hotbar();
     setting();
     i18n();
+    chat();
 
-    Hooks.on("renderSidebarTab", WarhammerBugReport.addSidebarButton)
+    // Hooks.on("renderSidebarTab", WarhammerBugReport.addSidebarButton)
 
-    Hooks.on("renderActorSheet", _addKeywordListeners)
-    Hooks.on("renderJournalTextPageSheet", _addKeywordListeners)
-    Hooks.on("renderItemSheet", _addKeywordListeners)
-
-    
-    function _keepID(document, data, options) {
-        if (data._id)
-            options.keepId = WNGUtility._keepID(data._id, document)
-    }
+    Hooks.on("renderActorSheetV2", _addKeywordListeners)
+    Hooks.on("renderJournalEntrySheet", _addKeywordListeners)
+    Hooks.on("renderItemSheetV2", _addKeywordListeners)
 
     function _addKeywordListeners(sheet, app)
     {
-        Array.from(app.find("a.keyword")).forEach(async a => {
+        Array.from(app.querySelectorAll("a.keyword")).forEach(async a => {
             a.draggable = true
+
             let item = game.items.find(i => i.name == a.textContent && i.type == "keyword")
 
             if (game.wng.config.keywordDescriptions &&  game.wng.config.keywordDescriptions[a.textContent])
                 a.dataset.tooltip = await TextEditor.enrichHTML(game.wng.config.keywordDescriptions[a.textContent], {async: true})
+
             else if (item)
             {
-                const markup = /<(.*?)>/gi;
-                a.dataset.tooltip = await TextEditor.enrichHTML(item.description, {async : true})
+                a.dataset.tooltip = await TextEditor.enrichHTML(item.system.description, {async : true})
             }
 
             a.addEventListener("click", (ev) => {
+                let item = game.items.find(i => i.name == a.textContent && i.type == "keyword")
                 if (item) item.sheet.render(true)
             })
 
             a.addEventListener("dragstart", (ev) => {
                 ev.stopPropagation()
-                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "keywordDrop", payload : ev.target.text}))
+                
+                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "Keyword", name : ev.target.text}))
             })
         })
     }

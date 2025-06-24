@@ -2,26 +2,21 @@ import { CommonDialog } from "./common-dialog.js";
 
 export class AttackDialog extends CommonDialog {
 
-  subTemplate=["systems/wrath-and-glory/template/dialog/attack-roll.hbs"]
-
   get tooltipConfig() {
     return foundry.utils.mergeObject({
       ed : {
           label : "ED",
           type : 1,
-          noCollect: true,
           path : "fields.ed.value",
       },
       ap : {
           label : "AP",
           type : 1,
-          noCollect: true,
           path : "fields.ap.value"
       },
       damage : {
           label : "Damage",
           type : 1,
-          noCollect: true,
           path : "fields.damage"
       },
       ones : {
@@ -68,14 +63,6 @@ export class AttackDialog extends CommonDialog {
       }
   }, super.tooltipConfig)
 }
-
-  static get defaultOptions() {
-    let options = super.defaultOptions
-    options.classes.push("wrath-and-glory")
-    options.resizable = true;
-    options.width = 700;
-    return options
-  }
 
   _getSubmissionData()
   {

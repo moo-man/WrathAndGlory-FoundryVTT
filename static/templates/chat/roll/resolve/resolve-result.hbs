@@ -1,0 +1,8 @@
+        {{> systems/wrath-and-glory/templates/chat/roll/common/common-result.hbs}}
+        {{#if result.isSuccess}}
+        
+        {{else}}
+            {{#if fear}}
+            <p><strong>{{localize "CHAT.FAIL_FEAR"}}</strong></p>
+            {{/if}}
+        {{/if}}

@@ -1,0 +1,25 @@
+<div class="wrath-and-glory chat roll">
+<div class="wrapper">
+    <h3>{{context.title}}</h3>
+</div>
+
+<div class="wrapper-input">
+    {{{result.enrichedDescription}}}
+</div>
+
+{{#if result.damage}}
+<div class="wrapper">
+    <button type="button" data-action="rollDamage">Roll Damage</button>
+</div>
+{{/if}}
+
+{{#if showTest}}
+<div class="wrapper">
+        <button type="button" data-action="rollTest">{{testDisplay}}</button>
+</div>
+{{/if}}
+
+<div class="wrapper">
+{{> effectButtons}}
+</div>
+</div>

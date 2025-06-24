@@ -9,7 +9,7 @@ export default class StealthRoll extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/stealth/stealth-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/stealth/stealth-roll.hbs"
   }
 
   _computeResult() {

@@ -18,7 +18,7 @@ export default class CharacterCreation extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "character-creation",
             title: "Character Creation",
-            template: "systems/wrath-and-glory/template/apps/character-creation.hbs",
+            template: "systems/wrath-and-glory/templates/apps/character-creation.hbs",
             width: 1400,
             closeOnSubmit: false,
             height: 800,
@@ -30,7 +30,7 @@ export default class CharacterCreation extends FormApplication {
 
     async initializeCharacter()
     {
-        this.character = await Actor.create({type: "agent", name : this.object.actor.name, system: foundry.utils.deepClone(game.release.generation == 12 ? game.system.template.Actor.agent : game.system.model.Actor.agent)}, {temporary : true}) // Temporary actor 
+        this.character = new Actor.implementation({type: "agent", name : this.object.actor.name, system: foundry.utils.deepClone(game.system.template.Actor.agent)})
 
         // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
         for (let attribute in this.character.attributes)

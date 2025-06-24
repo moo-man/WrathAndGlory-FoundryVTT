@@ -1,41 +1,65 @@
 
-export default class WrathANdGloryCombatTracker extends CombatTracker {
-    get template() {
-        return "systems/wrath-and-glory/template/apps/combat-tracker.hbs"
-    }
+export default class WrathAndGloryCombatTracker extends CombatTracker {
 
-    async getData() {
-        let data = await super.getData()
-        data.pending = data.turns.filter(t => data.combat.combatants.get(t.id).isPending)
-        data.complete = data.turns.filter(t => data.combat.combatants.get(t.id).isComplete)
-        data.current = data.turns.filter(t => data.combat.combatants.get(t.id).isCurrent)
-        data.defeated = data.turns.filter(t => data.combat.combatants.get(t.id).isDefeated)
-        data.defeated.forEach(c => {
+  static DEFAULT_OPTIONS = {
+    actions: {
+        toggleActive : this._onToggleActive
+    }
+  };
+
+  /** @override */
+  static PARTS = {
+    header: {
+      template: "templates/sidebar/tabs/combat/header.hbs"
+    },
+    tracker: {
+      template: "systems/wrath-and-glory/templates/apps/combat-tracker.hbs"
+    },
+    footer: {
+      template: "templates/sidebar/tabs/combat/footer.hbs"
+    }
+  };
+
+
+    async _prepareTrackerContext(context, options) {
+        await super._prepareTrackerContext(context, options)
+        if (!this.viewed) return
+        context.pending = context.turns.filter(t => context.combat.combatants.get(t.id).isPending)
+        context.complete = context.turns.filter(t => context.combat.combatants.get(t.id).isComplete)
+        context.current = context.turns.filter(t => context.combat.combatants.get(t.id).isCurrent)
+        context.defeated = context.turns.filter(t => context.combat.combatants.get(t.id).isDefeated)
+        context.defeated.forEach(c => {
             c.css = "defeated"
             c.defeated = true;
         })
-        data.turns.forEach(t => {
-            t.active = data.combat.combatants.get(t.id).isCurrent
+        context.turns.forEach(t => {
+            t.active = context.combat.combatants.get(t.id).isCurrent
         })
-        return data
     }
 
-    async _onCombatantControl(event) {
-        super._onCombatantControl(event)
-        const btn = event.currentTarget;
-        const li = btn.closest(".combatant");
+    async _onRender(options)
+    {
+        await super._onRender(options);
+        this.element.querySelector("[data-action='nextTurn']")?.remove();
+        this.element.querySelector("[data-action='previousTurn']")?.remove();
+    }
+
+    static _onToggleActive(ev, target)
+    {
+        const li = target.closest(".combatant");
         const combat = this.viewed;
         let c = combat.combatants.get(li.dataset.combatantId)
+
+        if (!combat.started)
+            return ui.notifications.notify("Begin the combat before activating combatants")
     
         // Switch control action
-        if (btn.dataset.control == "activate") {
-            if (!combat.started)
-                return ui.notifications.notify("Begin the combat before activating combatants")
+        if (!c.isCurrent) {
             combat.setTurn(li.dataset.combatantId)
         }
-        else if (btn.dataset.control == "deactivate") {            
+        else {
             combat.runEndTurnScripts(c);
             c.update(c.setComplete())
         }
-      }
+    }
 }

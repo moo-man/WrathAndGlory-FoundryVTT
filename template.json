@@ -726,7 +726,8 @@
     "types" : [
       "base",
       "test",
-      "damage"
+      "damage",
+      "item"
     ]
   }
 }

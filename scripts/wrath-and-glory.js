@@ -15,18 +15,13 @@ import StealthRoll from "./common/tests/stealth.js";
 import AbilityRoll from "./common/tests/ability-roll.js";
 import Migration from "./common/migration.js"
 import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./common/combat.js";
-import WrathANdGloryCombatTracker from "./apps/combat-tracker.js";
+import WrathAndGloryCombatTracker from "./apps/combat-tracker.js";
 import { WrathAndGloryOptionalCombat } from "./common/combat-optional.js";
 import settings from "./hooks/settings.js";
-import { Level4TextPageSheet } from "./apps/journal-sheet.js";
 import { AgentModel } from "./model/actor/agent.js"
 import { ThreatModel } from "./model/actor/threat.js";
 import { VehicleModel } from "./model/actor/vehicle.js";
 import { WrathAndGloryActor } from "./document/actor.js";
-import { AgentSheet } from "./sheet/actor/agent.js";
-import { ThreatSheet } from "./sheet/actor/threat.js";
-import { VehicleSheet } from "./sheet/actor/vehicle.js";
-import { WrathAndGloryItemSheet } from "./sheet/item-sheet.js";
 import { WrathAndGloryItem } from "./document/item.js";
 import WrathAndGloryEffect from "./document/effect.js";
 import { DataslatePageSheet } from "./apps/dataslate.js";
@@ -49,8 +44,31 @@ import { ArchetypeModel } from "./model/item/archetype.js";
 import { FactionModel } from "./model/item/faction.js";
 import { WrathAndGloryActiveEffectModel } from "./model/effect/effect.js";
 import WrathAndGloryActiveEffectConfig from "./apps/effect-config.js";
-import { WrathAndGloryDamageMessageModel, WrathAndGloryTestMessageModel } from "./model/message/message.js";
 import loadEffects from "./loadEffects.js";
+import { AgentSheet } from "./sheet/actor/agent.js";
+import { ThreatSheet } from "./sheet/actor/threat.js";
+import { VehicleSheet } from "./sheet/actor/vehicle.js";
+import AbilitySheet from "./sheet/item/types/ability.js";
+import AmmoSheet from "./sheet/item/types/ammo.js";
+import ArchetypeSheet from "./sheet/item/types/archetype.js";
+import ArmourSheet from "./sheet/item/types/armour.js";
+import AscensionSheet from "./sheet/item/types/ascension.js";
+import AugmeticSheet from "./sheet/item/types/augmetic.js";
+import GearSheet from "./sheet/item/types/gear.js";
+import KeywordSheet from "./sheet/item/types/keyword.js";
+import MemorableInjurySheet from "./sheet/item/types/memorableInjury.js";
+import TraumaticInjurySheet from "./sheet/item/types/traumaticInjury.js";
+import MutationSheet from "./sheet/item/types/mutation.js";
+import SpeciesSheet from "./sheet/item/types/species.js";
+import TalentSheet from "./sheet/item/types/talent.js";
+import WeaponUpgradeSheet from "./sheet/item/types/weaponUpgrade.js";
+import WeaponSheet from "./sheet/item/types/weapon.js";
+import FactionSheet from "./sheet/item/types/faction.js";
+import PsychicPowerSheet from "./sheet/item/types/power.js";
+import { WrathAndGloryTestMessageModel } from "./model/message/test.js";
+import { WrathAndGloryDamageMessageModel } from "./model/message/damage.js";
+import { WnGChatMessage } from "./document/message.js";
+import { PostedItemMessageModel } from "./model/message/item.js";
 
 Hooks.once("init", () => {
 
@@ -58,14 +76,13 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = WrathAndGloryActor;
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
-  //CONFIG.ChatMessage.documentClass = SystemChatMessage;
-  DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", Level4TextPageSheet, { types : ["text"], makeDefault: true, label : "W&G Journal Sheet" });
+  CONFIG.ChatMessage.documentClass = WnGChatMessage;
   DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", DataslatePageSheet, { types : ["text"], makeDefault: false, label : "Data Slate" });
 
-CONFIG.ActiveEffect.legacyTransferral = false;
 CONFIG.ActiveEffect.dataModels["base"] = WrathAndGloryActiveEffectModel
 CONFIG.ChatMessage.dataModels["test"] = WrathAndGloryTestMessageModel;
 CONFIG.ChatMessage.dataModels["damage"] = WrathAndGloryDamageMessageModel;
+CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
 
 DocumentSheetConfig.registerSheet(ActiveEffect, "system", WrathAndGloryActiveEffectConfig, {makeDefault : true});
 
@@ -73,8 +90,25 @@ Actors.unregisterSheet("core", ActorSheet);
 Actors.registerSheet("wrath-and-glory", AgentSheet, { types: ["agent"], makeDefault: true });
 Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
 Actors.registerSheet("wrath-and-glory", VehicleSheet, { types: ["vehicle"], makeDefault: true });
+
 Items.unregisterSheet("core", ItemSheet);
-Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : true});
+Items.registerSheet("wrath-and-glory", AbilitySheet, {types : ["ability"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", AmmoSheet, {types : ["ammo"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", ArchetypeSheet, {types : ["archetype"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", ArmourSheet, {types : ["armour"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", AscensionSheet, {types : ["ascension"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", AugmeticSheet, {types : ["augmentic"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", GearSheet, {types : ["gear"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", KeywordSheet, {types : ["keyword"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", MemorableInjurySheet, {types : ["memorableInjury"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", TraumaticInjurySheet, {types : ["traumaticInjury"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", MutationSheet, {types : ["mutation"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", SpeciesSheet, {types : ["species"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", TalentSheet, {types : ["talent"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", WeaponUpgradeSheet, {types : ["weaponUpgrade"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", WeaponSheet, {types : ["weapon"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", FactionSheet, {types : ["faction"], makeDefault : true});
+Items.registerSheet("wrath-and-glory", PsychicPowerSheet, {types : ["psychicPower"], makeDefault : true});
 
   
   if (game.settings.get("wrath-and-glory", "initiativeRollOption"))
@@ -84,7 +118,7 @@ Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : tr
   else 
   {
     CONFIG.Combat.documentClass = WrathAndGloryCombat;
-    CONFIG.ui.combat = WrathANdGloryCombatTracker
+    CONFIG.ui.combat = WrathAndGloryCombatTracker
     CONFIG.Combatant.documentClass = WrathAndGloryCombatant
   }
 
@@ -145,6 +179,8 @@ Items.registerSheet("wrath-and-glory", WrathAndGloryItemSheet, {makeDefault : tr
   CONFIG.fontDefinitions.Priori = {editor : true, fonts : []}
   CONFIG.defaultFontFamily = "Priori"
   CONFIG.canvasTextStyle._fontFamily = "Priori"
+
+  warhammer.utility.registerPremiumModuleInitialization()
 
 });
 

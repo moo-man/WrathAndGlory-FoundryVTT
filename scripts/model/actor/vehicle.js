@@ -13,7 +13,11 @@ export class VehicleModel extends BaseWarhammerActorModel {
         schema.value = new fields.NumberField();
         schema.traits = new fields.EmbeddedDataField(TraitsModel)
         schema.combat = new fields.EmbeddedDataField(VehicleCombatModel)
-        schema.notes = new fields.StringField()
+        schema.notes = new fields.HTMLField()
+
+        schema.settings = new foundry.data.fields.SchemaField({
+            hidePassengers : new foundry.data.fields.BooleanField(),
+        })
 
         return schema;
     }

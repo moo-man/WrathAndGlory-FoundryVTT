@@ -1,0 +1,30 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+
+        <div class="flexrow">
+                {{formGroup fields.cost value=system.cost}}
+                {{formGroup fields.speed value=system.speed}}
+                {{formGroup fields.size value=system.size choices=(config "size")}}
+        </div>
+
+        {{> nameList label="SPECIES.ABILITIES" list=system.abilities.list path="system.abilities"}}
+
+        <h2 class="sheet-divider">{{localize "SPECIES.ATTRIBUTE_MAX"}}</h2>
+        <div class="flexrow attributes">
+                {{#each system.attributeMax}}
+                        {{formGroup (lookup ../fields.attributeMax.fields @key) value=this classes="stacked" label=(configLookup "attributeAbbrev" @key)}}
+                {{/each}}
+        </div>
+        <h2 class="sheet-divider">{{localize "SPECIES.ATTRIBUTES"}}</h2>
+        <div class="flexrow attributes">
+                 {{#each system.attributes}}
+                        {{formGroup (lookup ../fields.attributes.fields @key) value=this classes="stacked" label=(configLookup "attributeAbbrev" @key)}}
+                {{/each}}
+        </div>
+
+        <h2 class="sheet-divider">{{localize "SPECIES.SKILLS"}}</h2>
+        <div class="skills">
+                {{#each system.skills}}
+                        {{formGroup (lookup ../fields.skills.fields @key) value=this label=(configLookup "skills" @key)}}
+                {{/each}}
+        </div>
+</section>

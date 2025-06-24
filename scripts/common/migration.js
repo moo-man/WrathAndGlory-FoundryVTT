@@ -2,7 +2,7 @@ import { StandardWNGActorModel } from "../model/actor/components/standard";
 
 export default class Migration {
     static stats = {};
-    static MIGRATION_VERSION = "6.0.0"
+    static MIGRATION_VERSION = "7.0.0"
 
     // #region High Level Migration Handling
     static async migrateWorld(update=false, updateVersion=false) {
@@ -600,12 +600,32 @@ Hooks.on("ready", () =>
 {
     if(game.wng.migration.shouldMigrate())
     {
-        ChatMessage.create({content : `
-        <h2>The Effect Refactor Arrives</h2>
-        <p>If (and only if) you are updating from <strong>Wrath & Glory</strong> version 5.1.7 (or earlier), effects have been vastly improved with the integration of th <strong>Warhammer Library</strong>. However, this means that your Actors/Items in the world are out of date and don't utilize these new features.</p>
-        <p>It is recommended that your important Actors (notably player characters) replace their Talents, Powers, Upgrades, etc. fresh from the Compendium. <strong>Note</strong>: Implementing these effects is an ongoing process, while a great many Items from the preimum modules have been updated, there may be some that have not received attention and haven't been updated.</p>
-        <p>If you have questions, please utilize the <a href="https://discord.gg/foundryvtt">Discord</a> channels where I or other community members will be happy to answer your questions. Thanks!</p>
-        `})
-        game.wng.migration.migrateWorld(true, true);
+
+        ChatMessage.create({
+            content: `
+            <h1>New Users - Read This!</h1>
+            <p>Welcome! Before you dive in, it may be best to browse the Wiki, below are some important topics:</p>
+            <ul>
+            <li><p><a href="https://moo-man.github.io/WrathAndGlory-FoundryVTT/pages/faq.html">FAQ</a></p></li>
+            <li><p><a href="https://moo-man.github.io/WrathAndGlory-FoundryVTT/pages/premium.html">Premium Content</a> (this will tell you how to use any official content you've purchased!</p></li>
+            <li><p><a href="https://moo-man.github.io/WrathAndGlory-FoundryVTT/pages/troubleshooting.html">Troubleshooting</a></p></li>
+            </ul>
+            <p><strong>Note</strong>: The Wiki is still heavily WIP, having just been created.</p>
+            <p><strong>Also Note</strong>: Character Creation has not been converted to AppV2 yet (see below), until then, it may have styling issues and bugs!</p>
+            <hr>
+            <h1>Wrath & Glory in Foundry V13</h1>
+            <p>As Foundry itself progresses in its adoption of its new application framework, so too has the IM system. All sheets and applications have been converted to use AppV2, my hope is that I have covered all existing functionality, but it is inevitable that more complex sheets (such as Actor sheets) may be missing some features here and there. Please be patient as I work through issues that arise!
+            <ul>
+                <li><p>Actor and Item Sheets in V2 have had their <em>right click</em> functionalities greatly expanded. You can right click any owned Item or Active Effect to see a context menu for various actions.</p></li>
+                <li><p>Module Initialization has been centralized in the System settings, check the wiki link above!</p></li>
+            </ul>`
+        })
+        game.settings.set("wrath-and-glory", "systemMigrationVersion", game.system.version)
+
+        //  If setting is before 6.0.0, migrate, otherwise no need
+        if (foundry.utils.isNewerVersion("6.0.0", game.settings.get("impmal", "systemMigrationVersion")))
+        {
+            game.wng.migration.migrateWorld(true, true);
+        }
     }
 });

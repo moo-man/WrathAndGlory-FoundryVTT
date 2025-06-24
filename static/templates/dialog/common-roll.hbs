@@ -1,0 +1,35 @@
+<div class="dialog-common">
+    {{#if data.targets.length}}
+        <div class="targets">
+            <a class="crosshair">
+                <i class="fas fa-crosshairs"></i>
+            </a>
+            {{#each data.targets as |target t|}}
+                <a class="target" data-token-id="{{target.id}}">{{target.name}}</a>
+            {{/each}}
+        </div>
+    {{/if}}
+
+        <div class="form-group" {{#if noDn }}style="display: none" {{/if}} data-tooltip="{{tooltips.difficulty}}"
+            data-tooltip-direction="LEFT">
+            <label>{{localize "DIALOG.DN"}}</label>
+            <div class="form-fields">
+                <input name="difficulty" type="number" value="{{fields.difficulty}}" />
+            </div>
+        </div>
+        <div class="form-group" data-tooltip="{{tooltips.pool}}" data-tooltip-direction="LEFT">
+            <label>{{localize "DIALOG.DICE_POOL"}}</label>
+            <div class="form-fields">
+                <input name="pool" type="number" value="{{fields.pool}}" />
+            </div>
+        </div>
+        {{#unless noWrath}}
+            <div class="form-group" data-tooltip="{{tooltips.wrath}}" data-tooltip-direction="LEFT">
+                <label>{{localize "DIALOG.WRATH"}}</label>
+                <div class="form-fields">
+                    <input name="wrath" class="base" type="number" value="{{fields.wrath}}" />
+                </div>
+            </div>
+        {{/unless}}
+
+</div>

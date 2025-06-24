@@ -6,6 +6,7 @@ let fields = foundry.data.fields;
 
 export class WeaponModel extends EquippedItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.weapon", "WH.Components.physical"];
 
     static defineSchema() 
     {
@@ -82,10 +83,6 @@ export class WeaponModel extends EquippedItemModel
 
     get upgradeItems() {
         return this.upgrades.map(i => new CONFIG.Item.documentClass(i))
-    }
-
-    get MultiTarget() {
-        return this.multiTarget ? game.i18n.localize("Yes") : game.i18n.localize("No")
     }
 
     computeBase()

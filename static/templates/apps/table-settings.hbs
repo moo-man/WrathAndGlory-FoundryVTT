@@ -1,0 +1,5 @@
+    <div>
+        {{#each schema.fields}}
+            {{formGroup this name=name value=(lookup ../settings @key) choices=../tables localize=true}}
+        {{/each}}
+    </div>

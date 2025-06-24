@@ -1,0 +1,263 @@
+@use "./mixins/form" as *;
+@use "./mixins/button" as buttons;
+@use "./mixins/editor" as editor;
+@use "./mixins/links" as links;
+
+body.wng-theme {
+    #counter {
+        width: 240px;
+        height: 85px;
+        --color-text-primary: #191813;
+        background-image: var(--image-input);
+        border: 8px solid transparent;
+        border-image: var(--image-border) 8 8 8 8 repeat repeat;
+        border-image-outset: 5px;
+        border-radius: 5px;
+
+
+        .counter-body {
+            padding: 0px 0.5rem;
+            border: none;
+            box-shadow: none;
+            background: none;
+        }
+
+        h3 {
+            font-family: var(--font-text);
+            font-weight: bold;
+            border: none
+        }
+
+        input {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 0px;
+            color: var(--color-text-dark-primary)
+        }
+
+        .input-controls a {
+            background: var(--color-red);
+            border: 1px outset grey;
+            color: var(--color-white);
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.clicked {
+                border: 1px inset grey;
+            }
+        }
+
+
+        .counter-controls {
+            position: absolute;
+            right: 0px;
+        }
+    }
+
+    .application.warhammer,
+    .sheet,
+    .dialog {
+        --font-h1: var(--font-header);
+        --font-h2: var(--font-header);
+        --font-h3: var(--font-header);
+        --font-h4: var(--font-header);
+        --color-scrollbar: var(--color-imperium);
+        --color-text-primary: var(--color-black);
+        --color-text-secondary: var(--color-dark-grey);
+        --color-text-subtle: var(--color-light-grey);
+        --color-form-label: var(--color-black);
+        --color-form-label-hover: var(--color-black);
+        --color-form-hint: var(--color-dark-grey);
+        --color-form-hint-hover: var(--color-dark-grey);
+
+        ::selection {
+            background-color: var(--color-imperium);
+        }
+
+        .window-header {
+            border-image: url(./assets/image/header.webp) repeat;
+            border-image-slice: 8 8 7 7 fill;
+            border-image-width: 0px 0px 2px 2px;
+            font-family: var(--font-text);
+        }
+
+
+        .window-content {
+            border: 8px solid transparent;
+            border-image: var(--image-border) 8 8 8 8 repeat repeat;
+
+            background: var(--image-background) 0 100% repeat;
+            /*, var(--image-background) 50px 100% repeat;*/
+            font-family: var(--font-text);
+
+
+            select,
+            input {
+                @include minimal-input
+            }
+
+
+            input[type=checkbox] {
+                --checkbox-background-color: var(--color-light-grey);
+                --checkbox-checked-color: var(--color-imperium);
+            }
+
+            .sheet-tabs {
+                border-color: var(--color-black);
+
+                a {
+                    color: var(--color-black);
+                    background: none;
+                    &.active {
+                        color: var(--color-imperium);
+                    }
+                }
+            }
+
+            .form-fields,
+            header,
+            footer {
+                button {
+                    @include buttons.wng-button;
+                }
+            }
+
+            .script-list .script {
+                background: var(--color-imperium);
+                color: var(--color-white);
+            }
+            .sheet-list {
+                .list-header {
+                    background-color: var(--color-black);
+                    color: var(--color-white); 
+                }
+                .list-row {
+                    background-color: var(--color-dark-grey);
+                    &:nth-child(even)
+                    {
+                         background-color: var(--color-light-grey);
+                    }
+                }
+    
+                .list-content {
+                    color: var(--color-white);
+                    .traits,
+                    .row-content {
+                        height: 1.5rem;
+                        line-height: 1.5rem;
+                        button,
+                        img {
+                            height: 1.5rem;
+                            width: 1.5rem;
+                            flex: 0 0 1.5rem;
+                        }
+                        > *  {
+                            height: 1.5rem;
+                            line-height: 1.5rem;
+                        }
+    
+                        .quantity{
+                            gap: 0.5rem;
+                        }
+    
+                        button {
+                            box-shadow: none;
+                            background: url(./assets/image/button.webp) repeat;
+                            border-radius: 0px;
+                            min-height: 1.5rem;
+                            border-left: 1px solid black;
+                            border-right: 1px solid black;
+                            line-height: 1.5rem;;
+                        }
+    
+         
+                        &:hover {
+                            background-color: var(--roll-bg);
+                        }
+    
+                        .list-control {
+                            color: var()
+                        }                    
+                    }
+                }
+    
+                input:not([type=checkbox]) {
+                    @include minimal-input;
+                    background: var(--color-white)
+                }
+    
+                select {
+                    border: 1px solid black;
+                    box-shadow: none;
+                    border: none;
+                    background: var(--color-red);
+                    color: var(--color-white);
+                }
+    
+    
+                &.potency {
+                    .list-row {
+                        background: none;
+                    }
+    
+                    .row-content {
+                        margin: 0px;
+                        gap: 0px;
+                    }
+                }
+    
+            }
+        }
+
+    }
+
+    .roll-table-sheet {
+
+        --table-background-color: transparent;
+        --table-header-bg-color: var(--color-imperium);
+        --table-header-border-color: var(--color-black);
+        --table-header-text-color: var(--color-white);
+        --table-row-color-even: rgba(0, 0, 0, 0.1);
+        --table-row-color-highlight: var(--color-imperium);
+
+        @include editor.editor-text;
+        @include links.links;
+
+        .inline-control {
+            --button-text-color: var(--color-black);
+        }
+
+        th .inline-control {
+            --button-text-color: var(--color-white);
+        }
+
+        .window-content {
+
+            header,
+            footer {
+                button {
+                    @include buttons.wng-button;
+
+                }
+            }
+        }
+
+    }
+
+    .mob-config {
+        input {
+            @include minimal-input;
+            background: var(--color-white)
+        }
+    }
+
+    .warhammer.application.choice-config {
+        .choice {
+            border-color: var(--color-imperium);
+        }
+    }
+}

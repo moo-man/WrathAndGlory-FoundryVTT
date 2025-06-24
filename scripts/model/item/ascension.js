@@ -4,6 +4,7 @@ let fields = foundry.data.fields;
 
 export class AscensionModel extends StandardItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.ascension"];
 
     static defineSchema() 
     {
@@ -12,7 +13,7 @@ export class AscensionModel extends StandardItemModel
         schema.requirements = new fields.StringField({});
         schema.keywords = new fields.StringField({});
         schema.influence = new fields.NumberField({});
-        schema.benefits = new fields.StringField({});
+        schema.benefits = new fields.HTMLField({});
         return schema;
     }
 

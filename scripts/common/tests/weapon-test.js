@@ -16,7 +16,7 @@ export default class WeaponTest extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/weapon/weapon-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/weapon/weapon-roll.hbs"
   }
 
   async runPreScripts()

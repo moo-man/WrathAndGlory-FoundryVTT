@@ -2,25 +2,46 @@ import { AttackDialog } from "./attack-dialog.js";
 
 export class WeaponDialog extends AttackDialog {
 
-
   get weapon() 
   {
     return this.data.weapon;
   }
 
-  static async setupData(weapon, actor, options={})
+  static PARTS = {
+    common : {
+        template : "systems/wrath-and-glory/templates/dialog/common-roll.hbs",
+        fields: true
+    },
+    attack : {
+      template : "systems/wrath-and-glory/templates/dialog/attack-roll.hbs",
+      fields: true
+    },
+    mode : {
+        template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+        fields: true
+    },
+    modifiers : {
+        template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+        modifiers: true
+    },
+    footer : {
+        template : "templates/generic/form-footer.hbs"
+    }
+};
+
+  static async setupData(weapon, actor, context={})
   {
       if (typeof weapon == "string")
       {
         weapon = actor.items.get(weapon) || await fromUuid(weapon)
       }
 
-      options.combi = weapon.system.combi.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
+      context.combi = weapon.system.combi.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
 
       let skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
       let attribute = weapon.getSkillFor(actor).attribute
 
-      let dialogData = await super.setupData({skill, attribute}, actor, options)
+      let dialogData = await super.setupData({skill, attribute}, actor, context)
 
       dialogData.data.item = weapon;
       dialogData.data.weapon = weapon;
@@ -39,7 +60,7 @@ export class WeaponDialog extends AttackDialog {
       }
 
 
-      options.title = `${weapon.name} Test`
+      context.title = `${weapon.name} Test`
 
       return dialogData;
   }
@@ -120,11 +141,11 @@ export class WeaponDialog extends AttackDialog {
 
             
             this.tooltips.start(this)
-            if (this.options.multi)
+            if (this.context.multi)
             {
-              this.fields.difficulty += (this.options.multi - 1) * 2;
+              this.fields.difficulty += (this.context.multi - 1) * 2;
             }
-            this.tooltips.finish(this, `Multi-Attack (${this.options.multi} Targets)`)
+            this.tooltips.finish(this, `Multi-Attack (${this.context.multi} Targets)`)
 
 
             this.tooltips.start(this)

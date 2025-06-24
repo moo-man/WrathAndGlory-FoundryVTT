@@ -1,0 +1,18 @@
+<div class="list-name">
+    <img src="{{effect.img}}">
+    {{#if effect.isCondition}}
+        <a class="label" data-action="toggleSummary">{{effect.name}}</a>
+    {{else}}
+        <a class="label" data-action="editEmbedded" data-uuid="{{effect.uuid}}">{{effect.name}}</a>
+    {{/if}}
+</div>
+
+
+<div class="list-controls">
+      <a data-action="toggleProperty" data-path="disabled" data-tooltip="{{localize 'SHEET.ToggleEffect'}}">{{#if effect.disabled}}<i class="far fa-circle"></i>{{else}}<i class="far fa-check-circle"></i>{{/if}}</a>
+      {{#if effect.item}}
+        <a class="inactive list-control" data-tooltip="{{localize 'IMPMAL.CannotDeleteItemEffect'}}"><i class="fas fa-xmark"></i></a>
+      {{else}}
+        <a class="list-control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
+      {{/if}}
+</div>

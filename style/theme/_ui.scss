@@ -1,0 +1,116 @@
+@use "./mixins/button" as buttons;
+body.wng-theme {
+
+
+  input {
+    --input-focus-outline-color: var(--color-imperium);
+  }
+
+  button {
+    --button-focus-outline-color: var(--color-imperium);
+    --button-hover-background-color: var(--color-imperium);
+  }
+
+  .ui-control {
+    --control-bg-color : var(--color-black);
+    --control-border-color : var(--color-imperium);
+    --control-active-bg-color: var(--color-imperium);
+    --control-active-border-color: var(--color-imperium);
+
+    &.active {
+
+      background: var(--color-imperium);
+    }
+  }
+
+  #context-menu,
+  .controls-dropdown {
+    --hover-entry-background: var(--color-imperium);
+    --text-color: var(--color-white);
+    --hover-text-color: var(--color-white);
+    button {
+      --button-background-color: none;
+      --button-text-color: var(--color-white);
+    }
+    background: url(./assets/image/dataslate.webp) repeat;
+    border: 3px double var(--color-imperium);
+    box-sizing: content-box;
+  }
+
+  #chat-message:focus {
+    outline-color: var(--color-imperium);
+  }
+
+  #players-inactive,
+    #players-active {
+
+    background: url(./assets/image/dataslate.webp) repeat;
+    border: 1px solid var(--color-imperium)
+  }
+
+  #hotbar #action-bar .slot {
+      background: url(./assets/image/dataslate.webp) repeat;
+
+      &:hover {
+        border: 2px solid var(--color-imperium)
+      }
+  }
+
+  
+  .directory .directory-item.entry:hover {
+
+    --sidebar-entry-hover-bg:  linear-gradient(90deg, #892e2988, transparent)
+  }
+
+
+
+  .sidebar-tab {
+    
+    --scrollbar-color: var(--color-imperium);
+
+    
+    --font-h1: var(--font-header);
+    --font-h2: var(--font-header);
+    --font-h3: var(--font-header);
+    --font-h4: var(--font-header);
+    
+    .window-content {
+      backdrop-filter:none;
+    }
+    &.directory {
+      font-family: var(--font-text);
+
+    }
+    
+    .compendium-name {
+      strong {font-family: var(--font-header);}
+    }
+    &#combat,
+    &#settings {
+
+      h3,
+      h4 {
+        font-family: var(--font-header);
+        // border-bottom: 1px solid var(--color-imperium);
+        border: 6px solid transparent;
+        border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
+        
+        &:after,
+        &:before {
+          border: none;
+        }
+      }
+    }
+    
+    .combat-controls,
+    &#settings,
+    .footer-actions,
+    .header-actions {
+      a.button,
+      button {
+
+        @include buttons.wng-button;
+      }
+    }
+  }
+}

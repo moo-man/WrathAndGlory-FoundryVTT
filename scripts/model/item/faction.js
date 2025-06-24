@@ -4,6 +4,7 @@ let fields = foundry.data.fields;
 
 export class FactionModel extends StandardItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.faction"];
 
     static defineSchema() 
     {

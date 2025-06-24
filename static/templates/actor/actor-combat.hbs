@@ -1,0 +1,372 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="combat-sections">
+        <div>
+            <h2 class="sheet-divider">{{localize "TITLE.GENERAL"}}</h2>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.DEFENCE"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number"
+                        name="system.combat.defence.total" value="{{system.combat.defence.total}}" {{#if
+                        autoCalc.defence}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.RESILIENCE"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number"
+                        name="system.combat.resilience.total" value="{{system.combat.resilience.total}}" {{#if
+                        autoCalc.resilience}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.SHOCK"}}</div>
+                <div class="field" style="grid-column: 9 / span 2"><input type="number" name="system.combat.shock.value"
+                        value="{{system.combat.shock.value}}" {{#if autoCalc.shock}}disabled{{/if}}></div>
+                <div class="field" style="grid-column: 11 / span 2"><input type="number" name="system.combat.shock.max"
+                        value="{{system.combat.shock.max}}" {{#if autoCalc.shock}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.PASSIVEAWARENESS"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number"
+                        name="system.combat.passiveAwareness.total" value="{{system.combat.passiveAwareness.total}}"
+                        {{#if autoCalc.passiveAwareness}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.STEALTH_SCORE"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number" name="system.combat.stealth"
+                        value="{{system.combat.stealth}}" {{#if autoCalc.stealth}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.SIZE"}}</div>
+                <div class="field" style="grid-column: 9 / span 4">
+                    <select name="system.combat.size">
+                        {{selectOptions (config "size") selected=source.system.combat.size}}
+                    </select>
+                </div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 4">{{localize "HEADER.SPEED"}}</div>
+                <div class="field" style="grid-column: 5 / span 2"><input type="number" name="system.combat.speed"
+                        value="{{system.combat.speed}}"></div>
+                <div class="label" style="grid-column: 7 / span 4">{{localize "HEADER.FLY"}}</div>
+                <div class="field" style="grid-column: 11 / span 2"><input type="number" name="system.combat.fly"
+                        value="{{system.combat.fly}}"></div>
+            </div>
+        </div>
+        <div>
+            <h2 class="sheet-divider">{{localize "TITLE.INJURIES"}}</h2>
+            <div class="attribute-box single">
+                <div class="label rollable" data-action="rollTest" data-type="determination"
+                    style="grid-column: 1 / span 8">{{localize "HEADER.DETERMINATION"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number"
+                        name="system.combat.determination.total" value="{{system.combat.determination.total}}" {{#if
+                        autoCalc.determination}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.WOUNDS"}}</div>
+                <div class="field" style="grid-column: 9 / span 2"><input type="number"
+                        name="system.combat.wounds.value" value="{{system.combat.wounds.value}}" {{#if
+                        autoCalc.wounds}}disabled{{/if}}></div>
+                <div class="field" style="grid-column: 11 / span 2"><input type="number" name="system.combat.wounds.max"
+                        value="{{system.combat.wounds.max}}" {{#if autoCalc.wounds}}disabled{{/if}}></div>
+            </div>
+
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "HEADER.TRAUMATIC"}}</div>
+                    <div class="list-controls">
+                        <a data-action="createItem" data-type="traumaticInjury" class="item-control">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each items.traumaticInjury}}
+                        <div class="list-row" data-uuid="{{this.uuid}}" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name">
+                                    <img src="{{this.img}}">
+                                    <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="deleteEmbedded"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "HEADER.MEMORABLE"}}</div>
+                    <div class="list-controls">
+                        <a data-action="createItem" data-type="memorableInjury" class="item-control">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each items.memorableInjury}}
+                        <div class="list-row" data-uuid="{{this.uuid}}" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name">
+                                    <img src="{{this.img}}">
+                                    <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="deleteEmbedded"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <h2 class="sheet-divider">{{localize "TITLE.MUTATIONS"}}</h2>
+            <div class="attribute-box single">
+                <div class="label rollable" data-action="rollTest" data-type="conviction"
+                    style="grid-column: 1 / span 8">{{localize "HEADER.CONVICTION"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number"
+                        name="system.combat.conviction.total" value="{{system.combat.conviction.total}}" {{#if
+                        autoCalc.conviction}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label rollable" data-action="rollTest" data-type="resolve" style="grid-column: 1 / span 8">
+                    {{localize "HEADER.RESOLVE"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number"
+                        name="system.combat.resolve.total" value="{{system.combat.resolve.total}}" {{#if
+                        autoCalc.resolve}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label rollable" data-action="rollTest" data-type="corruption"
+                    style="grid-column: 1 / span 8">{{localize "HEADER.CORRUPTION"}}</div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number" name="system.corruption.current"
+                        value="{{system.corruption.current}}" {{#if autoCalc.corruption}}disabled{{/if}}></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "RESOURCE.FAITH"}}</div>
+                <div class="field" style="grid-column: 9 / span 2"><input type="number"
+                        name="system.resources.faith.current" value="{{system.resources.faith.current}}"></div>
+                <div class="field" style="grid-column: 11 / span 2"><input type="number"
+                        name="system.resources.faith.total" value="{{system.resources.faith.total}}"></div>
+            </div>
+
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "HEADER.MUTATIONS"}}</div>
+                    <div class="list-controls">
+                        <a data-action="createItem" data-type="mutation" class="item-control">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each items.mutation}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}" data-action="rollTest" data-id="{{this.id}}" data-type="ability">
+                                    <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="deleteEmbedded"><i
+                                            class="fa-regular fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <h2 class="sheet-divider">{{localize "TITLE.WARGEAR"}}</h2>
+
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.WEAPON"}}</div>
+            <div class="small">{{localize "WEAPON.DMG"}}</div>
+            <div class="small">{{localize "WEAPON.ED"}}</div>
+            <div class="small">{{localize "WEAPON.AP"}}</div>
+            <div class="small">{{localize "WEAPON.RANGE"}}</div>
+            <div class="flex">{{localize "HEADER.AMMO"}}</div>
+        </div>
+        <div class="list-content">
+            {{#if items.equipped.weapon.length}}
+                {{#each items.equipped.weapon}}
+                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name rollable" data-action="rollTest" data-type="weapon">
+                                <img src="{{this.img}}">
+                                <a class="label">{{this.name}}</a>
+                            </div>
+                            <div class="small">{{this.system.damage.formatted}}</div>
+                            <div class="small">{{this.system.damage.ED}}</div>
+                            <div class="small">{{this.system.damage.AP}}</div>
+                            <div class="small" data-tooltip="{{this.system.Range}}" data-tooltip-direction="RIGHT">
+                                {{this.system.Range}}
+                            </div>
+                            <div class="flex">
+                                {{#if this.isRanged}}
+                                    <select data-action="editProperty" data-path="system.ammo.id"
+                                        data-tooltip="{{system.ammo.document.system.quantity}}">
+                                        {{selectOptions this.ammoList selected=system.ammo.id labelAttr="name"  valueAttr="_id" blank="-"}}
+                                    </select>
+                                {{/if}}
+                            </div>
+                        </div>
+                        {{#if this.system.traits.list.length}}
+                            <div class="traits">
+                                {{{array this.system.traits.formatted "trait" action="toggleTrait"}}}
+                            </div>
+                        {{/if}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="list-row">
+                    <div class="row-content">
+                        <div class="list-name">
+                            No Weapons Equipped
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+
+    {{#if items.equipped.ammo.length}}
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.AMMO"}}</div>
+                <div>{{localize "ITEM.QTY"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each items.equipped.ammo}}
+                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <div class="label">{{this.name}}</div>
+                            </div>
+                            <div class="quantity">
+                                <button type="button" data-action="stepProperty" data-path="system.quantity"
+                                    data-reversed="true" data-type="decrement">-</button>
+                                {{this.system.quantity}}
+                                <button type="button" data-action="stepProperty" data-path="system.quantity"
+                                    data-type="increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.ARMOUR"}}</div>
+            <div class="small">{{localize "ARMOUR.RATING"}}</div>
+            <div class="flex large">{{localize "ARMOUR.TRAITS"}}</div>
+        </div>
+        <div class="list-content">
+            {{#if items.equipped.armour.length}}
+                {{#each items.equipped.armour}}
+                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name rollable">
+                                <img src="{{this.img}}" data-action="rollTest" data-type="weapon">
+                                <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                            </div>
+                            <div class="small">{{this.rating}}</div>
+                            <div class="flex large">{{{array this.system.traits.formatted "item-trait"}}}</div>
+
+                        </div>
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="list-row">
+                    <div class="row-content">
+                        <div class="list-name">
+                            No Armour Equipped
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "HEADER.PSYCHIC_POWER"}}</div>
+            <div class="tiny">{{localize "PSYCHIC_POWER.DN"}}</div>
+            <div>{{localize "PSYCHIC_POWER.ACTIVATION"}}</div>
+            <div>{{localize "PSYCHIC_POWER.DURATION"}}</div>
+            <div class="small">{{localize "PSYCHIC_POWER.RANGE"}}</div>
+            <div>{{localize "PSYCHIC_POWER.MULTI_TARGET"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each items.psychicPower}}
+                <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="psychicPower">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div class="tiny">{{#if (gt this.system.dn 0)}} {{this.system.dn}} {{/if}}</div>
+                        <div>{{this.system.Activation}}</div>
+                        <div>{{this.system.duration}}</div>
+                        <div class="small">{{this.system.range}}</div>
+                        <div>{{this.system.MultiTarget}}</div>
+                    </div>
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    {{#if items.abilitiesAndTalents.length}}
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "HEADER.ABILITIES"}}</div>
+                <div class="flex large">{{localize "HEADER.DESCRIPTION"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each items.abilitiesAndTalents}}
+                    {{#if this.system.display}}
+                        <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}" data-action="rollTest" data-type="ability">
+                                    <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                                </div>
+                                <div class="inline-description" data-action="toggleSummary">
+                                    {{{this.system.description}}}
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control context-menu"><i
+                                            class="fa-regular fa-ellipsis-vertical"></i></a>
+                                </div>
+                            </div>
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
+
+</section>

@@ -1,0 +1,26 @@
+<div>
+
+  <h3 class="centered">ITEM TRAITS</h3>
+  <div>
+    {{#each traits as |trait t|}}
+      <div class="form-group">
+        <label>{{trait.display}}</label>
+
+        <div class="form-fields">
+          {{#if trait.hasRating}}
+          <input type="text" name="{{trait.key}}-rating" value="{{trait.existingTrait.rating}}">
+          {{/if}}
+          <input type="checkbox" name="{{trait.key}}" {{checked trait.existingTrait}}>
+        </div>
+      </div>
+
+    {{/each}}
+
+  </div>
+  <div class="form-group">
+    <label>Custom Traits <i class="far fa-question-circle" style="margin-left:3px;" title="FORMAT - Trait 1: Trait 1 Description | Trait 2: Trait 2 Description | etc."></i></label>
+    <div class="form-fields">
+      <input name="custom-traits" type="text" value="{{custom}}">
+    </div>
+  </div>
+</div>

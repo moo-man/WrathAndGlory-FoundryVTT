@@ -1,0 +1,13 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        {{formGroup fields.requirements value=system.requirements}}
+        <div class="flexrow">
+                {{formGroup fields.cost value=system.cost }}
+                {{formGroup fields.influence value=system.influence}}
+        </div>
+        {{formGroup fields.keywords value=system.keywords}}
+
+        <h2 class="sheet-divider">{{localize "ASCENSION.BENEFITS"}}</h2>
+        <div class="editor-section">
+            {{formInput fields.description value=source.system.description enriched=enriched.system.description toggled=true}}
+        </div>
+</section>

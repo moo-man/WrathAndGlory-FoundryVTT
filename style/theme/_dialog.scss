@@ -1,0 +1,70 @@
+@use "./mixins/form" as *;
+
+body.wng-theme {
+    .warhammer.roll-dialog-v2 {
+
+
+        .form-group {
+            gap: 0px;
+            label {
+                height: 2rem;
+                line-height: 2rem;
+            }
+            .form-fields {
+                select,
+                input:not([type=checkbox]) {
+                    border: 1px solid black;
+                }
+
+                input[type="checkbox"] {
+                    --checkbox-size: 2rem;
+                    margin: 0px;
+                    &::before {
+                        border-radius: 0px;
+                    }
+                    height: 2rem;
+                }
+            }
+
+            &:has(input[type=checkbox])
+            {
+                gap: 0.5rem;
+                label {
+                    flex: 2;
+                }
+
+                .form-fields{ 
+                    justify-content: flex-start;
+                }
+            }
+
+            &.labels {
+                margin-bottom: -1rem;
+                label {
+                    background: none;
+                    border: none;
+                }
+            }
+        }
+    }
+
+    .dialog-modifiers 
+    {
+        --modifier-bg : var(--color-imperium);
+
+        .modifier-list {
+            @include form-input;
+        }
+        label {
+            @include form-label;
+        }
+
+        .modifier {
+            text-align: left;
+        }
+
+        .modifier.active {
+            color: var(--color-white)
+        }
+    }
+}

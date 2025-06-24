@@ -4,6 +4,7 @@ let fields = foundry.data.fields;
 
 export class TraumaticInjuryModel extends StandardItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.traumaticInjury"];
 
     static defineSchema() 
     {

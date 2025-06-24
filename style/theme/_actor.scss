@@ -1,0 +1,58 @@
+@use "./mixins/form" as *;
+@use "./mixins/button" as buttons;
+
+body.wng-theme {
+    .application.sheet.actor.wrath-and-glory {
+        --roll-bg: var(--color-imperium);
+
+        .window-content {
+            border: 30px solid transparent;
+            border-top: 0px;
+            border-image: url(./assets/image/journal-border.webp) 0 80 60 repeat;
+            border-bottom: 20px solid transparent;
+        }
+
+
+        .attribute-group {
+
+            label {
+                @include form-label;
+            }
+            input {
+                @include form-input;
+            }
+        }
+
+
+        [data-tab=notes]
+        {
+            .attribute-box {
+                height: 2rem;
+                input,
+                > * 
+                {
+                    height: 2rem;
+                }
+            }
+        }
+
+        .ascensions,
+        .keywords {
+            button {
+                @include buttons.wng-button
+            }
+
+            .ascension,
+            .keyword {
+                background-color: var(--color-dark-grey);
+                color: var(--color-white);
+                border-radius: 0px;
+
+                &:hover {
+                    text-shadow: 0px;
+                    background-color: var(--roll-bg);
+                }
+            }
+        }
+    }
+}

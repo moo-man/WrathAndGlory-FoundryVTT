@@ -58,88 +58,114 @@ export class WrathAndGloryActor extends WarhammerActor {
     }
 
     //#region Rolling
-    async setupAttributeTest(attribute, options = {}) {
-        return this._setupTest(CommonDialog, WNGTest, {attribute}, options)
+    async setupAttributeTest(attribute, context = {}) {
+        return this._setupTest(CommonDialog, WNGTest, {attribute}, context)
     }
 
-    async setupSkillTest(skill, options = {}) {
-        return this._setupTest(CommonDialog, WNGTest, {skill}, options)
+    async setupSkillTest(skill, context = {}) {
+        return this._setupTest(CommonDialog, WNGTest, {skill}, context)
     }
 
-    async setupGenericTest(type, options = {}) {
-        options = foundry.utils.mergeObject(options, {fields : {}, [type] : true})
+    async setupGenericTest(type, context = {}) {
+        context = foundry.utils.mergeObject(context, {fields : {}, [type] : true})
         
         if (type == "conviction")
         {
-            type = await Dialog.wait({
-                title : game.i18n.localize(`ROLL.CONVICTION`), 
-                buttons : {
-                    corruption : {
-                        label : game.i18n.localize(`ROLL.CORRUPTION`)
+            type = await foundry.applications.api.Dialog.wait({
+                window : {title : game.i18n.localize(`ROLL.CONVICTION`)},
+                buttons : [
+                    {
+                        action : "corruption",
+                        label : `ROLL.CORRUPTION`
                     },
-                    mutation : {
-                        label : game.i18n.localize(`ROLL.MUTATION`)
+                    {
+                        action : "mutation",
+                        label : `ROLL.MUTATION`
                     }
-            }})
+                ]
+            });
+        }
+
+        if (type == "resolve")
+        {
+            type = await foundry.applications.api.Dialog.wait({
+                window : {title : game.i18n.localize(`ROLL.RESOLVE`)},
+                buttons : [
+                    {
+                        action : "fear",
+                        label : `ROLL.FEAR`,
+                        callback: () => {}
+                    },
+                    {
+                        action : "terror",
+                        label : `ROLL.TERROR`,
+                        callback: () => {}
+                    }
+                ]
+            });
         }
 
         switch (type) {
             case "stealth":
-                options.title = game.i18n.localize(`ROLL.STEALTH`);
-                options.noDn = true;
-                options.noWrath = true;
-                return this._setupTest(CommonDialog, StealthRoll, {skill: "stealth"}, options)
+                context.title = game.i18n.localize(`ROLL.STEALTH`);
+                context.noDn = true;
+                context.noWrath = true;
+                return this._setupTest(CommonDialog, StealthRoll, {skill: "stealth"}, context)
             case "determination":
-                options.title = game.i18n.localize(`ROLL.DETERMINATION`)
-                options.noDn = true;
-                options.noWrath = true;
-                return this._setupTest(RollDialog, DeterminationRoll, {pool : this.combat.determination.total,}, options)
+                context.title = game.i18n.localize(`ROLL.DETERMINATION`)
+                context.noDn = true;
+                context.noWrath = true;
+                return this._setupTest(CommonDialog, DeterminationRoll, {pool : this.combat.determination.total,}, context)
             case "corruption":
-                options.title = game.i18n.localize(`ROLL.CORRUPTION`)
-                options.conviction = true;
-                return this._setupTest(RollDialog, CorruptionTest, {pool : this.combat.conviction.total}, options)
+                context.title = game.i18n.localize(`ROLL.CORRUPTION`)
+                context.corruption = true;
+                context.conviction = true;
+                return this._setupTest(CommonDialog, CorruptionTest, {pool : this.combat.conviction.total}, context)
             case "mutation":
-                options.title = game.i18n.localize(`ROLL.MUTATION`)
-                options.conviction = true;
-                return this._setupTest(RollDialog, MutationTest, {pool : this.combat.conviction.total}, options)
+                context.title = game.i18n.localize(`ROLL.MUTATION`)
+                context.mutation = true;
+                context.conviction = true;
+                return this._setupTest(CommonDialog, MutationTest, {pool : this.combat.conviction.total}, context)
             case "fear":
-                options.title = game.i18n.localize(`ROLL.FEAR`)
-                options.resolve = true;
-                options.noWrath = true;
-                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
+                context.title = game.i18n.localize(`ROLL.FEAR`)
+                context.fear = true;
+                context.resolve = true;
+                context.noWrath = true;
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
             case "terror":
-                options.title = game.i18n.localize(`ROLL.TERROR`)
-                options.resolve = true;
-                options.noWrath = true;
-                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
+                context.title = game.i18n.localize(`ROLL.TERROR`)
+                context.terror = true;
+                context.resolve = true;
+                context.noWrath = true;
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
             case "influence":
-                options.fields.pool = this.resources.influence
-                options.title = game.i18n.localize(`ROLL.INFLUENCE`)
-                options.noWrath = true;
-                return this._setupTest(RollDialog, ResolveTest, {pool : this.combat.resolve.total}, options)
+                context.fields.pool = this.resources.influence
+                context.title = game.i18n.localize(`ROLL.INFLUENCE`)
+                context.noWrath = true;
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
             default:
                 throw new Error("Unknown roll type: " + type)
         }
     }
 
-    async setupWeaponTest(weapon, options={})
+    async setupWeaponTest(weapon, context={})
     {
         if (game.user.targets.size > 1)
         {
             return Promise.all(game.user.targets.map(i => {
-                let optionsCopy = foundry.utils.deepClone(options);
-                optionsCopy.targets = [i];
-                optionsCopy.multi = game.user.targets.size;
-                return this._setupTest(WeaponDialog, WeaponTest, weapon, optionsCopy);
+                let contextCopy = foundry.utils.deepClone(context);
+                contextCopy.targets = [i];
+                contextCopy.multi = game.user.targets.size;
+                return this._setupTest(WeaponDialog, WeaponTest, weapon, contextCopy);
             }))
         }
         else 
         {
-            return this._setupTest(WeaponDialog, WeaponTest, weapon, options);
+            return this._setupTest(WeaponDialog, WeaponTest, weapon, context);
         }
     }
 
-    async setupPowerTest(power, options = {}) 
+    async setupPowerTest(power, context = {}) 
     {
         if (typeof power == "string")
         {
@@ -149,23 +175,35 @@ export class WrathAndGloryActor extends WarhammerActor {
         if (game.user.targets.size > 1 && power.system.multiTarget)
         {
             return Promise.all(game.user.targets.map(i => {
-                let optionsCopy = foundry.utils.deepClone(options);
-                optionsCopy.targets = [i];
-                optionsCopy.multi = game.user.targets.size;
-                return this._setupTest(PowerDialog, PowerTest, power, optionsCopy);
+                let contextCopy = foundry.utils.deepClone(context);
+                contextCopy.targets = [i];
+                contextCopy.multi = game.user.targets.size;
+                return this._setupTest(PowerDialog, PowerTest, power, contextCopy);
             }))
         }
         else 
         {
-            return this._setupTest(PowerDialog, PowerTest, power, options);
+            return this._setupTest(PowerDialog, PowerTest, power, context);
         }
     }
 
-    async setupAbilityRoll(ability, options = {}) {
+    async setupAbilityRoll(ability, context = {}) {
+        if (typeof ability == "string")
+        {
+            ability = this.items.get(ability) || await fromUuid(ability);
+        }
+      
+        
+        
         let testData = {
             title: ability.name,
             speaker: this.speakerData(),
             item: ability,
+        }
+
+        if (ability.system.abilityType == "determination")
+        {
+            return this.setupGenericTest("determination")
         }
 
         if (ability.system.test.self)
@@ -200,7 +238,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         roll.sendToChat();
     }
 
-    async setupTestFromItem(item, options)
+    async setupTestFromItem(item, context)
     {
         if (typeof item == "string")
         {
@@ -209,33 +247,33 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (item)
         {
-            options.appendTitle = ` - ${item.name}`;
-            return this.setupTestFromData(item.system.test, options);
+            context.appendTitle = ` - ${item.name}`;
+            return this.setupTestFromData(item.system.test, context);
         }
     }
 
-    async setupTestFromData(data, options={})
+    async setupTestFromData(data, context={})
     {
         let dn = data.dn;
         let type = data.type;
         let specification = data.specification;
-        foundry.utils.setProperty(options, "fields.difficulty", dn);
+        foundry.utils.setProperty(context, "fields.difficulty", dn);
         
         if (type == "attribute")
         {
-            return this.setupAttributeTest(specification, options)
+            return this.setupAttributeTest(specification, context)
         }
         else if (type == "skill")
         {       
-            return this.setupSkillTest(specification, options)
+            return this.setupSkillTest(specification, context)
         }
         else if (type == "resolve")
         {
-            return this.setupGenericTest(specification, options)
+            return this.setupGenericTest(specification, context)
         }
         else if (type == "corruption")
         {
-            return this.setupGenericTest(specification, options)
+            return this.setupGenericTest(specification, context)
         }
     }
 
@@ -249,17 +287,20 @@ export class WrathAndGloryActor extends WarhammerActor {
         return test;
     }
 
-    characterCreation(archetype) {
-        new Dialog({
-            title: "Character Creation",
+    async characterCreation(archetype) {
+        if (await foundry.applications.api.Dialog.confirm({
+            window: {title: "Character Creation"},
             content: "<p>Begin Character Creation?</p>",
-            yes: () =>  new CharacterCreation({ actor: this, archetype }).render(true),
-            no: async () => {
-                let species = await warhammer.utility.findItemId(archetype.species.id, "species")
-                let faction = await warhammer.utility.findItemId(archetype.faction.id, "faction")
-                this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
-               }
-        }).render(true)
+        }))
+        {
+            new CharacterCreation({ actor: this, archetype }).render(true)
+        }
+        else 
+        {
+            let species = await warhammer.utility.findItemId(archetype.species.id, "species")
+            let faction = await warhammer.utility.findItemId(archetype.faction.id, "faction")
+            this.createEmbeddedDocuments("Item", [archetype.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
+        }
     }
 
     async applyArchetype(archetype, apply) {
@@ -312,7 +353,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             await this.update(actorData)
 
             // Add items separately so active effects get added seamlessly
-            this.createEmbeddedDocuments("Item", items)
+            this.createEmbeddedDocuments("Item", items, {appliedArchetype : true})
         }
     }
 

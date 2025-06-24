@@ -2,7 +2,7 @@ import { WNGTest } from "./test.js"
 
 export default class CorruptionTest  extends WNGTest {
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/corruption/corruption-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/corruption/corruption-roll.hbs"
   }
 
 
@@ -19,7 +19,7 @@ export default class CorruptionTest  extends WNGTest {
     if (!this.result.isSuccess && !this.context.pointsAdded) {
       this.context.pointsAdded = true;
       game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => {
-        game.counter.render(true)
+        game.counter.render({force: true})
       })
 
       let corruption = this.result.dn - this.result.success;
@@ -62,7 +62,7 @@ export default class CorruptionTest  extends WNGTest {
     this.actor.update({"system.corruption.current" : this.actor.corruption.current - this.context.corruptionAdded})
     ui.notifications.notify(game.i18n.localize("ROLL.CORRUPTION_REVERTED"))
     game.wng.RuinGloryCounter.changeCounter(-1,  "ruin").then(() => {
-      game.counter.render(true)
+      game.counter.render({force: true})
       ui.notifications.notify(game.i18n.format("COUNTER.RUIN_CHANGED", {change : -1}))
     })
 

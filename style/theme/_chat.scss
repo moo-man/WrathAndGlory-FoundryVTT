@@ -1,0 +1,100 @@
+@use "./mixins/button" as buttons;
+@use "./mixins/editor" as editor;
+@use "./mixins/links" as links;
+
+body.wng-theme {
+
+  .chat-scroll {
+    --color-scrollbar: var(--color-imperium);
+  }
+
+  .chat-message {
+    background: url(./assets/image/journal-sidebar.webp) repeat;
+    border: 8px solid transparent;
+    border-image: var(--image-border) 8 8 8 8 repeat repeat;
+    border-image-outset: 0px;
+
+    .message-content {
+      @include editor.editor-text;
+      @include links.links;
+
+      .wrapper-input {
+        background: url(./assets/image/input.webp) repeat;
+        padding: 10px;
+        border: 1px solid var(--color-black);
+        box-shadow: inset 0 0 6px var(--color-dark-grey);
+        position: relative;
+        .red {
+          color: var(--color-red)
+        }
+        
+      }
+
+      h3 {
+        color: var(--color-red);
+        font-family: var(--font-text);
+        font-size: var(--font-size-18);
+        font-weight: bold;
+        text-align: center;
+        border-style: solid;
+        text-transform: none;
+        border-width: 0px 8px 8px 8px;
+        border-image: var(--image-title-border) 8 8 8 8 repeat repeat;
+      }
+      
+      h4 {
+        color: var(--color-black);
+        font-family: var(--font-text);
+        font-size: var(--font-size-16);
+        text-transform: none;
+        font-weight: bold;
+        text-align: center;
+      }
+      
+    }
+
+    .roll  {
+
+      button {
+        margin-top: 0.5rem;
+        @include buttons.wng-button;
+      }
+
+      .potency-option {
+        button {
+          min-height: 1.5rem;
+          height: 1.5rem;
+          width: 1.5rem;
+        }
+      }
+
+      .die-icon {
+        background-color: white;
+        border: 2px solid var(--color-imperium);
+        color: var(--color-imperium);
+      }
+      
+
+    .seal {
+      border: none;
+      border-radius: 0;
+      position: absolute;
+      right: -12px;
+      top: -40px;
+      width: 100px;
+      height: 100px;
+      background-size: 100px;
+
+
+      &.approved {
+        background-image: url("./assets/image/approved.webp");
+      }
+
+      &.heresy {
+        background-image: url("./assets/image/heresy.webp");
+      }
+    }
+  }
+
+  }
+}

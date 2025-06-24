@@ -1,26 +1,24 @@
 {
-  "TYPES.Actor.agent" : "Agent",
-  "TYPES.Actor.threat" : "Threat",
-  "TYPES.Actor.vehicle" : "Vehicle",
-
-  "TYPES.Item.ability" : "Ability",
-  "TYPES.Item.ammo" : "Ammo",
-  "TYPES.Item.armour" : "Armour",
-  "TYPES.Item.ascension" : "Ascension",
-  "TYPES.Item.augmentic" : "Augmetic",
-  "TYPES.Item.gear" : "Gear",
-  "TYPES.Item.keyword" : "Keyword",
-  "TYPES.Item.memorableInjury" : "Memorable Injury",
-  "TYPES.Item.mutation" : "Mutation",
-  "TYPES.Item.psychicPower" : "Psychic Power",
-  "TYPES.Item.talent" : "Talent",
-  "TYPES.Item.traumaticInjury" : "Traumatic Injury",
-  "TYPES.Item.weapon" : "Weapon",
-  "TYPES.Item.weaponUpgrade" : "Weapon Upgrade",
-  "TYPES.Item.archetype" : "Archetype",
-  "TYPES.Item.species" : "Species",
-  "TYPES.Item.faction" : "Faction",
-
+  "TYPES.Actor.agent": "Agent",
+  "TYPES.Actor.threat": "Threat",
+  "TYPES.Actor.vehicle": "Vehicle",
+  "TYPES.Item.ability": "Ability",
+  "TYPES.Item.ammo": "Ammo",
+  "TYPES.Item.armour": "Armour",
+  "TYPES.Item.ascension": "Ascension",
+  "TYPES.Item.augmentic": "Augmetic",
+  "TYPES.Item.gear": "Gear",
+  "TYPES.Item.keyword": "Keyword",
+  "TYPES.Item.memorableInjury": "Memorable Injury",
+  "TYPES.Item.mutation": "Mutation",
+  "TYPES.Item.psychicPower": "Psychic Power",
+  "TYPES.Item.talent": "Talent",
+  "TYPES.Item.traumaticInjury": "Traumatic Injury",
+  "TYPES.Item.weapon": "Weapon",
+  "TYPES.Item.weaponUpgrade": "Weapon Upgrade",
+  "TYPES.Item.archetype": "Archetype",
+  "TYPES.Item.species": "Species",
+  "TYPES.Item.faction": "Faction",
   "ABILITY.NAME": "Name",
   "ABILITY.EFFECT": "Effect",
   "ABILITY.COST": "Cost",
@@ -29,26 +27,33 @@
   "ABILITY.DISPLAY": "Display",
   "ABILITY.TYPE": "Type",
   "ABILITY.DAMAGE": "Damage",
+  "ABILITY.ED": "ED",
+  "ABILITY.AP": "AP",
+  "ABILITY.OTHER": "Other",
+  "ABILITY.WOUNDS": "Wounds",
+  "ABILITY.SHOCK": "Shock",
+  "ABILITY.MORTAL": "Mortal",
+  "ABILITY.BASE" : "Base",
+  "ABILITY.BONUS" : "Bonus",
+  "ABILITY.RANK" : "Rank",
+  "ABILITY.DICE" : "Dice",
+  "ABILITY.S": "Other",
   "ABILITY.TEST_SELF": "Test Self",
-
-  "ABILITY_TYPE.BATTLECRY" : "Battlecry",
-  "ABILITY_TYPE.ACTION" : "Action",
-  "ABILITY_TYPE.RUIN" : "Ruin",
-  "ABILITY_TYPE.WRATH" : "Wrath",
-  "ABILITY_TYPE.COMPLICATION" : "Complication",
-  "ABILITY_TYPE.REACTION" : "Reaction",
-  "ABILITY_TYPE.DETERMINATION" : "Determination",
-  "ABILITY_TYPE.ANNIHILATION" : "Annihilation",
-
+  "ABILITY_TYPE.BATTLECRY": "Battlecry",
+  "ABILITY_TYPE.ACTION": "Action",
+  "ABILITY_TYPE.RUIN": "Ruin",
+  "ABILITY_TYPE.WRATH": "Wrath",
+  "ABILITY_TYPE.COMPLICATION": "Complication",
+  "ABILITY_TYPE.REACTION": "Reaction",
+  "ABILITY_TYPE.DETERMINATION": "Determination",
+  "ABILITY_TYPE.ANNIHILATION": "Annihilation",
   "ACTIVATION.FREE": "Free",
   "ACTIVATION.ACTION": "Action",
   "ACTIVATION.SIMPLE": "Simple",
   "ACTIVATION.FULL": "Full",
   "ACTIVATION.MOVEMENT": "Movement",
-
   "ADVANCE.TIER": "Tier",
   "ADVANCE.RANK": "Rank",
-
   "AMMO.NAME": "Name",
   "AMMO.DESCRIPTION": "Description",
   "AMMO.EFFECT": "Effect",
@@ -56,7 +61,6 @@
   "AMMO.VALUE": "Value",
   "AMMO.RARITY": "Rarity",
   "AMMO.KEYWORDS": "Keywords",
-
   "ARMOUR.NAME": "Name",
   "ARMOUR.DESCRIPTION": "Description",
   "ARMOUR.RATING": "Rating",
@@ -66,7 +70,6 @@
   "ARMOUR.KEYWORDS": "Keywords",
   "ARMOUR.INVULNERABLE": "Invulnerable",
   "ARMOUR.QUANTITY": "Quantity",
-
   "ASCENSION.NAME": "Name",
   "ASCENSION.COST": "Cost",
   "ASCENSION.DESCRIPTION": "Description",
@@ -74,7 +77,6 @@
   "ASCENSION.KEYWORDS": "Keywords",
   "ASCENSION.INFLUENCE": "Influence",
   "ASCENSION.BENEFITS": "Benefits",
-
   "AUGMETIC.NAME": "Name",
   "AUGMETIC.DESCRIPTION": "Description",
   "AUGMETIC.EFFECT": "Effect",
@@ -82,39 +84,36 @@
   "AUGMETIC.RARITY": "Rarity",
   "AUGMETIC.KEYWORDS": "Keywords",
   "AUGMETIC.REQUIREMENTS": "Requirements",
-
-  "ARCHETYPE.ATTRIBUTES" : "Attributes",
-  "ARCHETYPE.SKILLS" : "Skills",
-  "ARCHETYPE.NAME" : "Name",
-  "ARCHETYPE.TIER" : "Tier",
-  "ARCHETYPE.SPECIES" : "Species",
-  "ARCHETYPE.COST" : "XP Cost",
-  "ARCHETYPE.KEYWORDS" : "Keywords",
-  "ARCHETYPE.ABILITY" : "Archetype Ability",
-  "ARCHETYPE.WARGEAR" : "Wargear",
-  "ARCHETYPE.INFLUENCE" : "Influence",
-  "ARCHETYPE.SUGGESTED_ATTRIBUTES" : "Suggested Attributes",
-  "ARCHETYPE.SUGGESTED_SKILLS" : "Suggested Skills",
-  "ARCHETYPE.SUGGESTED_TALENTS" : "Suggested Talents",
-  "ARCHETYPE.FACTION" : "Faction",
-
-  "SPECIES.NAME" : "Name",
-  "SPECIES.COST" : "XP Cost",
-  "SPECIES.SPEED" : "Speed",
-  "SPECIES.SIZE" : "Size",
-  "SPECIES.ABILITIES" : "Abilities",
-  "SPECIES.ATTRIBUTE_MAX" : "Attribute Maximums",
-  "SPECIES.ATTRIBUTES" : "Attributes",
-  "SPECIES.SKILLS" : "Skills",
-
-  "FACTION.NAME" : "Name",
-  "FACTION.ORIGIN" : "Origin",
-  "FACTION.DESCRIPTION" : "Description",
-  "FACTION.EFFECT" : "Effect",
-  "FACTION.ACCOMPLISHMENT" : "Accomplishment",
-  "FACTION.GOAL" : "Goal",
-  "FACTION.OBJECTIVES" : "Objectives",
-
+  "ARCHETYPE.ATTRIBUTES": "Attributes",
+  "ARCHETYPE.SKILLS": "Skills",
+  "ARCHETYPE.NAME": "Name",
+  "ARCHETYPE.TIER": "Tier",
+  "ARCHETYPE.SPECIES": "Species",
+  "ARCHETYPE.COST": "XP Cost",
+  "ARCHETYPE.KEYWORDS": "Keywords",
+  "ARCHETYPE.ABILITY": "Archetype Ability",
+  "ARCHETYPE.WARGEAR": "Wargear",
+  "ARCHETYPE.INFLUENCE": "Influence",
+  "ARCHETYPE.SUGGESTED_ATTRIBUTES": "Suggested Attributes",
+  "ARCHETYPE.SUGGESTED_SKILLS": "Suggested Skills",
+  "ARCHETYPE.SUGGESTED_TALENTS": "Suggested Talents",
+  "ARCHETYPE.FACTION": "Faction",
+  "SPECIES.NAME": "Name",
+  "SPECIES.COST": "XP Cost",
+  "SPECIES.SPEED": "Speed",
+  "SPECIES.SIZE": "Size",
+  "SPECIES.ABILITIES": "Abilities",
+  "SPECIES.ATTRIBUTE_MAX": "Attribute Maximums",
+  "SPECIES.ATTRIBUTES": "Attributes",
+  "SPECIES.SKILLS": "Skills",
+  "FACTION.NAME": "Name",
+  "FACTION.ORIGIN": "Origin",
+  "FACTION.DESCRIPTION": "Description",
+  "FACTION.EFFECT": "Effect",
+  "FACTION.CHOSEN": "Chosen",
+  "FACTION.ACCOMPLISHMENT": "Accomplishment",
+  "FACTION.GOAL": "Goal",
+  "FACTION.OBJECTIVES": "Objectives",
   "ATTRIBUTE.STRENGTH": "Strength",
   "ATTRIBUTE.TOUGHNESS": "Toughness",
   "ATTRIBUTE.AGILITY": "Agility",
@@ -122,14 +121,16 @@
   "ATTRIBUTE.WILLPOWER": "Willpower",
   "ATTRIBUTE.INTELLECT": "Intellect",
   "ATTRIBUTE.FELLOWSHIP": "Fellowship",
-  "ATTRIBUTE.STRENGTH_ABREV" : "S",
-  "ATTRIBUTE.TOUGHNESS_ABREV" : "T",
-  "ATTRIBUTE.AGILITY_ABREV" : "A",
-  "ATTRIBUTE.INITIATIVE_ABREV" : "I",
-  "ATTRIBUTE.WILLPOWER_ABREV" : "Wil",
-  "ATTRIBUTE.INTELLECT_ABREV" : "Int",
-  "ATTRIBUTE.FELLOWSHIP_ABREV" : "Fel",
-
+  "ATTRIBUTE.STRENGTH_ABREV": "S",
+  "ATTRIBUTE.TOUGHNESS_ABREV": "T",
+  "ATTRIBUTE.AGILITY_ABREV": "A",
+  "ATTRIBUTE.INITIATIVE_ABREV": "I",
+  "ATTRIBUTE.WILLPOWER_ABREV": "Wil",
+  "ATTRIBUTE.INTELLECT_ABREV": "Int",
+  "ATTRIBUTE.FELLOWSHIP_ABREV": "Fel",
+  "ATTRIBUTE.BASE": "Base",
+  "ATTRIBUTE.ADVANCES": "Advances",
+  "ATTRIBUTE.TOTAL": "Total",
   "BIO.ARCHETYPE": "Archetype",
   "BIO.FACTION": "Faction",
   "BIO.QUOTE": "Quote",
@@ -139,12 +140,10 @@
   "BIO.EYE_COLOUR": "Eye Colour",
   "BIO.HAIR_COLOUR": "Hair Colour",
   "BIO.HEIGHT": "Height",
-
-  "BIO.ORIGIN" : "Origin",
-  "BIO.ACCOMPLISHMENT" : "Accomplishment",
-  "BIO.GOAL" : "Goal",
-  "BIO.OBJECTIVE" : "Objective",
-
+  "BIO.ORIGIN": "Origin",
+  "BIO.ACCOMPLISHMENT": "Accomplishment",
+  "BIO.GOAL": "Goal",
+  "BIO.OBJECTIVE": "Objective",
   "BUTTON.POST_ITEM": "Post Item",
   "BUTTON.ROLL": "Roll",
   "BUTTON.REROLL_FAILED": "Reroll Failed (-1 Wrath/Ruin)",
@@ -161,21 +160,17 @@
   "BUTTON.DAMAGE": "Damage",
   "BUTTON.CONFIGURE": "Configure",
   "BUTTON.JOURNAL": "Journal",
-
-  "SHIFT.DAMAGE" : "Damage",
-  "SHIFT.GLORY" : "Glory",
-  "SHIFT.OTHER" : "Other",
-  "SHIFT.POTENCY" : "Potency",
-
-  "BUTTON.ApplyDamage" : "Apply Damage",
-  "BUTTON.ApplyDamageInvuln" : "Apply Damage (Invulnerable armour)",
-  "BUTTON.ApplyDamageArmourAP" : "Apply Damage (AP only on Armour)",
-
+  "SHIFT.DAMAGE": "Damage",
+  "SHIFT.GLORY": "Glory",
+  "SHIFT.OTHER": "Other",
+  "SHIFT.POTENCY": "Potency",
+  "BUTTON.ApplyDamage": "Apply Damage",
+  "BUTTON.ApplyDamageInvuln": "Apply Damage (Invulnerable armour)",
+  "BUTTON.ApplyDamageArmourAP": "Apply Damage (AP only on Armour)",
   "CATEGORY.MELEE": "Melee",
   "CATEGORY.RANGED": "Ranged",
   "CATEGORY.GRENADE_MISSILE": "Grenade or Missile",
   "CATEGORY.LAUNCHER": "Launcher",
-
   "CHAT.SUCCESS": "Success",
   "CHAT.FAILURE": "Failure",
   "CHAT.DN": "DN",
@@ -192,16 +187,15 @@
   "CHAT.WRATH_COMPLICATION_PSY": "roll on the Perils of the Warp table!",
   "CHAT.WRATH_COMPLICATION_WEAPON": "something unexpected happened!",
   "CHAT.WRATH_COMPLICATION_CORRUPTION": "Double Corruption points!",
-  "CHAT.FAIL_CORRUPTION" : "Gain {corruption} Corruption, 1 Ruin added",
-  "CHAT.FAIL_FEAR" : "Gains the @JournalEntry[Fear] Condition, 1 Ruin added",
-  "CHAT.DETERMINATION_RESULT" : "Converted {shock} Wounds to Shock ({wounds} Wounds leftover)",
-  "CHAT.DETERMINATION_RESULT_IGNORE_SHOCK" : "Ignored {shock} Wounds ({wounds} Wounds leftover)",
-  "CHAT.STEALTH" : "Stealth",
-  "CHAT.STEALTH_RESULT" : "{stealth}",
+  "CHAT.FAIL_CORRUPTION": "Gain {corruption} Corruption, 1 Ruin added",
+  "CHAT.FAIL_FEAR": "Gains the @JournalEntry[Fear] Condition, 1 Ruin added",
+  "CHAT.DETERMINATION_RESULT": "Converted {shock} Wounds to Shock ({wounds} Wounds leftover)",
+  "CHAT.DETERMINATION_RESULT_IGNORE_SHOCK": "Ignored {shock} Wounds ({wounds} Wounds leftover)",
+  "CHAT.STEALTH": "Stealth",
+  "CHAT.STEALTH_RESULT": "{stealth}",
   "CHAT.WOUNDS": "Wounds",
   "CHAT.SHOCK": "Shock",
   "CHAT.MORTAL": "Mortal Wounds",
-
   "DIALOG.YES": "Yes",
   "DIALOG.NO": "No",
   "DIALOG.DN": "DN",
@@ -215,17 +209,16 @@
   "DIALOG.BASE": "Base",
   "DIALOG.WRATH": "Wrath",
   "DIALOG.WOUNDS": "Wounds",
-  "DIALOG.NO_DIFFICULTY" : "Please enter a Difficulty Number",
-  "DIALOG.TARGET_DEFENSE_WARNING" : "This Psychic Power may need you to target a token to set the DN. Please close this dialog and target a token before opening it again.",
-  "DIALOG.ITEM_DELETE" : "Item Delete",
-  "DIALOG.ITEM_DELETE_PROMPT" : "Are you sure you want to delete this item?",
-  "DIALOG.OUT_OF_RANGE" : "Out of Range!",
-  "DIALOG.ROLLMODE" : "Roll Mode",
-  "DIALOG.MODIFIER_BREAKDOWN" : "Modifier Breakdown",
-  "DIALOG.DICE_TOOLTIP" : "Number of D6s rolled to determine the value (e.g. 2 = 2D6)",
+  "DIALOG.NO_DIFFICULTY": "Please enter a Difficulty Number",
+  "DIALOG.TARGET_DEFENSE_WARNING": "This Psychic Power may need you to target a token to set the DN. Please close this dialog and target a token before opening it again.",
+  "DIALOG.ITEM_DELETE": "Item Delete",
+  "DIALOG.ITEM_DELETE_PROMPT": "Are you sure you want to delete this item?",
+  "DIALOG.OUT_OF_RANGE": "Out of Range!",
+  "DIALOG.ROLLMODE": "Roll Mode",
+  "DIALOG.MODIFIER_BREAKDOWN": "Modifier Breakdown",
+  "DIALOG.DICE_TOOLTIP": "Number of D6s rolled to determine the value (e.g. 2 = 2D6)",
   "DIALOG.POWER_LEVEL": "Power Level",
   "DIALOG.IGNORE_SHOCK": "Ignore Shock",
-
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",
   "GEAR.EFFECT": "Effect",
@@ -233,15 +226,18 @@
   "GEAR.RARITY": "Rarity",
   "GEAR.KEYWORDS": "Keywords",
   "GEAR.QUANTITY": "Quantity",
-
   "HEADER.TALENT": "Talent",
   "HEADER.ABILITY": "Ability",
+  "HEADER.ABILITIES": "Abilities",
   "HEADER.PSYCHIC_POWER": "Psychic Power",
   "HEADER.WEAPON": "Weapon",
   "HEADER.ARMOUR": "Armour",
   "HEADER.GEAR": "Gear",
   "HEADER.EFFECT": "Effect",
   "HEADER.EFFECTS": "Effects",
+  "HEADER.AMMO_EFFECTS": "Ammo Effects",
+  "HEADER.UPGRADE_EFFECTS": "Upgrade Effects",
+  "HEADER.ACTOR_EFFECTS": "EFfects from Actor",
   "HEADER.NAME": "Name",
   "HEADER.RATING": "Rating",
   "HEADER.COST": "Cost",
@@ -249,7 +245,9 @@
   "HEADER.SPENT": "Spent",
   "HEADER.TOTAL": "Total",
   "HEADER.DEFENCE": "Defence",
+  "HEADER.DEF": "Def.",
   "HEADER.RESILIENCE": "Resilience",
+  "HEADER.RES": "Res.",
   "HEADER.DETERMINATION": "Determination",
   "HEADER.SHOCK": "Shock",
   "HEADER.CONVICTION": "Conviction",
@@ -270,32 +268,29 @@
   "HEADER.AMMO": "Ammo",
   "HEADER.AUGMETIC": "Augmetic",
   "HEADER.SOURCE": "Source",
-  "HEADER.TEMPORARY_EFFECTS" : "Temporary Effects",
-  "HEADER.PASSIVE_EFFECTS" : "Passive Effects",
-  "HEADER.DISABLED_EFFECTS" : "Disabled Effects",
-  "HEADER.DESCRIPTION" : "Description",
-  "HEADER.UPGRADES" : "Upgrades",
-  "HEADER.COMPLEMENT" : "Pilot",
-  "HEADER.PILOT" : "Pilot",
-  "HEADER.CREW" : "Crew",
-  "HEADER.PASSENGER" : "Passenger",
-  "HEADER.PILOTS" : "Pilots",
-  "HEADER.PASSENGERS" : "Passengers",
-  "HEADER.UNASSIGNED" : "Unassigned",
-  "HEADER.MAN" : "Man.",
-  "HEADER.RARITY" : "Rarity",
-  "HEADER.VALUE" : "Value",
-
+  "HEADER.TEMPORARY_EFFECTS": "Temporary Effects",
+  "HEADER.PASSIVE_EFFECTS": "Passive Effects",
+  "HEADER.DISABLED_EFFECTS": "Disabled Effects",
+  "HEADER.DESCRIPTION": "Description",
+  "HEADER.UPGRADES": "Upgrades",
+  "HEADER.COMPLEMENT": "Pilot",
+  "HEADER.PILOT": "Pilot",
+  "HEADER.CREW": "Crew",
+  "HEADER.PASSENGER": "Passenger",
+  "HEADER.PILOTS": "Pilots",
+  "HEADER.PASSENGERS": "Passengers",
+  "HEADER.UNASSIGNED": "Unassigned",
+  "HEADER.MAN": "Man.",
+  "HEADER.RARITY": "Rarity",
+  "HEADER.VALUE": "Value",
+  "HEADER.MUTATIONS": "Mutations",
   "KEYWORD.NAME": "Name",
   "KEYWORD.DESCRIPTION": "Description",
-
   "MEMORABLE_INJURY.NAME": "Name",
   "MEMORABLE_INJURY.DESCRIPTION": "Description",
-
   "MUTATION.NAME": "Name",
   "MUTATION.DESCRIPTION": "Description",
   "MUTATION.EFFECT": "Effect",
-
   "PSYCHIC_POWER.NAME": "Name",
   "PSYCHIC_POWER.EFFECT": "Effect",
   "PSYCHIC_POWER.COST": "Cost",
@@ -316,33 +311,29 @@
   "PSYCHIC_POWER.WOUNDS": "Wounds",
   "PSYCHIC_POWER.SHOCK": "Shock",
   "PSYCHIC_POWER.MORTAL": "Mortal",
-  "PSYCHIC_POWER.BOUND" : "Bound",
-  "PSYCHIC_POWER.UNBOUND" : "Unbound",
-  "PSYCHIC_POWER.TRANSCENDENT" : "Transcendent",
-
-  "POWER.POTENCY_COST" : "Cost",
-  "POWER.POTENCY_INITIAL" : "Initial",
-  "POWER.POTENCY_PROPERTY" : "Property",
-  "POWER.POTENCY_VALUE" : "Value",
-  "POWER.POTENCY_SINGLE" : "Single",
-  "POWER.POTENCY_COST_HELP" : "How many shifts this Potency costs",
-  "POWER.POTENCY_INITIAL_HELP" : "Initial value before overcasting",
-  "POWER.POTENCY_PROPERTY_HELP" : "<p>Property being overcasted.</p> Examples: <ul><li><p><strong>Damage</strong>: <code>damage.base</code></p></li><li><p><strong>ED</strong>: <code>damage.ed.value</code></p></li><li><p><strong>AP</strong>: <code>damage.ap.value</code></p></li><li><p><strong>Shock</strong>: <code>damage.bonus.shock</code></p></li><li><p><strong>Mortal Wounds</strong>: <code>damage.bonus.mortal</code></p></li><li><p><strong>Range</strong>: <code>range</code></p></li><li><p><strong>Duration</strong>: <code>duration</code></p></li>",
-  "POWER.POTENCY_VALUE_HELP" : "How much to add per overcast",
-  "POWER.POTENCY_SINGLE_HELP" : "Can only be allocated once",
-
+  "PSYCHIC_POWER.BOUND": "Bound",
+  "PSYCHIC_POWER.UNBOUND": "Unbound",
+  "PSYCHIC_POWER.TRANSCENDENT": "Transcendent",
+  "POWER.POTENCY_COST": "Cost",
+  "POWER.POTENCY_INITIAL": "Initial",
+  "POWER.POTENCY_PROPERTY": "Property",
+  "POWER.POTENCY_VALUE": "Value",
+  "POWER.POTENCY_SINGLE": "Single",
+  "POWER.POTENCY_COST_HELP": "How many shifts this Potency costs",
+  "POWER.POTENCY_INITIAL_HELP": "Initial value before overcasting",
+  "POWER.POTENCY_PROPERTY_HELP": "<p>Property being overcasted.</p> Examples: <ul><li><p><strong>Damage</strong>: <code>damage.base</code></p></li><li><p><strong>ED</strong>: <code>damage.ed.value</code></p></li><li><p><strong>AP</strong>: <code>damage.ap.value</code></p></li><li><p><strong>Shock</strong>: <code>damage.bonus.shock</code></p></li><li><p><strong>Mortal Wounds</strong>: <code>damage.bonus.mortal</code></p></li><li><p><strong>Range</strong>: <code>range</code></p></li><li><p><strong>Duration</strong>: <code>duration</code></p></li>",
+  "POWER.POTENCY_VALUE_HELP": "How much to add per overcast",
+  "POWER.POTENCY_SINGLE_HELP": "Can only be allocated once",
   "RANK.NONE": "None",
   "RANK.SINGLE": "+Rank",
   "RANK.DOUBLE": "+Double Rank",
   "RANK.MINUS_SINGLE": "-Rank",
   "RANK.MINUS_DOUBLE": "-Double Rank",
-
   "RARITY.COMMON": "Common",
   "RARITY.UNCOMMON": "Uncommon",
   "RARITY.RARE": "Rare",
   "RARITY.VERY_RARE": "Very Rare",
   "RARITY.UNIQUE": "Unique",
-
   "RESOURCE.FAITH": "Faith",
   "RESOURCE.WRATH": "Wrath",
   "RESOURCE.INFLUENCE": "Influence",
@@ -350,36 +341,32 @@
   "RESOURCE.EXPERIENCE": "Experience",
   "RESOURCE.RUIN": "Ruin",
   "RESOURCE.GLORY": "Glory",
-
   "ROLL.DETERMINATION": "Determination",
   "ROLL.CONVICTION": "Conviction",
   "ROLL.RESOLVE": "Resolve",
   "ROLL.DAMAGE": "Damage",
   "ROLL.INFLUENCE": "Influence",
   "ROLL.CORRUPTION": "Corruption",
-  "ROLL.CORRUPTION_ADDED" : "{corruption} Corruption added to {name}",
-  "ROLL.CORRUPTION_REVERTED" : "Corruption Reverted",
-  "ROLL.NewCorruptionLevel" : "Corruption Level Increased - Roll a Mutation Test",
-  "ROLL.MUTATION" : "Mutation",
-  "ROLL.FEAR" : "Fear",
-  "ROLL.TERROR" : "Terror",
-  "ROLL.STEALTH" : "Stealth",
-
-  "EDIT.POOL_DICE" : "Pool Dice",
-  "EDIT.WRATH_DICE" : "Wrath Dice",
-  "EDIT.ICONS" : "Icons",
-  "EDIT.DAMAGE" : "Damage",
-  "EDIT.ED" : "ED",
-  "EDIT.AP" : "AP",
-  "EDIT.POTENCY" : "Potency",
-
+  "ROLL.CORRUPTION_ADDED": "{corruption} Corruption added to {name}",
+  "ROLL.CORRUPTION_REVERTED": "Corruption Reverted",
+  "ROLL.NewCorruptionLevel": "Corruption Level Increased - Roll a Mutation Test",
+  "ROLL.MUTATION": "Mutation",
+  "ROLL.FEAR": "Fear",
+  "ROLL.TERROR": "Terror",
+  "ROLL.STEALTH": "Stealth",
+  "EDIT.POOL_DICE": "Pool Dice",
+  "EDIT.WRATH_DICE": "Wrath Dice",
+  "EDIT.ICONS": "Icons",
+  "EDIT.DAMAGE": "Damage",
+  "EDIT.ED": "ED",
+  "EDIT.AP": "AP",
+  "EDIT.POTENCY": "Potency",
   "SIZE.TINY": "Tiny",
   "SIZE.SMALL": "Small",
   "SIZE.AVERAGE": "Average",
   "SIZE.LARGE": "Large",
   "SIZE.HUGE": "Huge",
   "SIZE.GARGANTUAN": "Gargantuan",
-
   "SKILL.DEFAULT": "Default",
   "SKILL.ATHLETICS": "Athletics",
   "SKILL.AWARENESS": "Awareness",
@@ -399,8 +386,8 @@
   "SKILL.SURVIVAL": "Survival",
   "SKILL.TECH": "Tech",
   "SKILL.WEAPON_SKILL": "Weapon Skill",
-
   "TAB.EFFECTS": "EFFECTS",
+  "TAB.ABILITIES": "ABILITIES",
   "TAB.COMBAT": "COMBAT",
   "TAB.GEAR": "GEAR",
   "TAB.NOTES": "NOTES",
@@ -410,7 +397,6 @@
   "TAB.DETAILS": "DETAILS",
   "TAB.BONUS": "BONUS",
   "TAB.MAIN": "MAIN",
-
   "TALENT.NAME": "Name",
   "TALENT.EFFECT": "Effect",
   "TALENT.COST": "XP Cost",
@@ -418,7 +404,6 @@
   "TALENT.REQUIREMENTS": "Requirements",
   "TALENT.DISPLAY": "Display",
   "TAB.SETTINGS": "SETTINGS",
-
   "TITLE.ATTRIBUTES": "ATTRIBUTES",
   "TITLE.KEYWORDS": "KEYWORDS",
   "TITLE.PSYCHIC_POWERS": "PSYCHIC POWERS",
@@ -439,15 +424,14 @@
   "TITLE.ADVANCES": "ADVANCES",
   "TITLE.DETAILS": "DETAILS",
   "TITLE.COMPLEMENT": "COMPLEMENT",
-  "TITLE.MOB_ABILITIES" : "MOB ABILITIES",
-  "TITLE.INACTIVE_MOB_ABILITIES" : "INACTIVE MOB ABILITIES",
-
+  "TITLE.MOB_ABILITIES": "MOB ABILITIES",
+  "TITLE.INACTIVE_MOB_ABILITIES": "INACTIVE MOB ABILITIES",
   "TRAUMATIC_INJURY.NAME": "Name",
   "TRAUMATIC_INJURY.DESCRIPTION": "Description",
-
   "WEAPON.NAME": "Name",
   "WEAPON.DESCRIPTION": "Description",
   "WEAPON.DAMAGE": "Damage",
+  "WEAPON.DMG": "Dmg.",
   "WEAPON.AP": "AP",
   "WEAPON.ED": "ED",
   "WEAPON.CATEGORY": "Category",
@@ -466,123 +450,110 @@
   "WEAPON.CHARGING": "Charging",
   "WEAPON.COMBIWEAPON": "Combi-Weapon",
   "WEAPON.TWINNED": "Twinned",
-  "WEAPON_UPGRADE.TRAITS_ADD" : "Traits Added",
-  "WEAPON_UPGRADE.TRAITS_REMOVE" : "Traits Removed",
-
-  "RANGE.SHORT"   : "Short",
-  "RANGE.MEDIUM"   : "Medium",
-  "RANGE.LONG" : "Long",
-
+  "WEAPON_UPGRADE.TRAITS_ADD": "Traits Added",
+  "WEAPON_UPGRADE.TRAITS_REMOVE": "Traits Removed",
+  "RANGE.SHORT": "Short",
+  "RANGE.MEDIUM": "Medium",
+  "RANGE.LONG": "Long",
   "ITEM.EQP": "Eqp.",
   "ITEM.QTY": "Qty.",
-
   "WEAPON_UPGRADE.NAME": "Name",
   "WEAPON_UPGRADE.DESCRIPTION": "Description",
   "WEAPON_UPGRADE.EFFECT": "Effect",
   "WEAPON_UPGRADE.VALUE": "Value",
   "WEAPON_UPGRADE.RARITY": "Rarity",
   "WEAPON_UPGRADE.KEYWORDS": "Keywords",
-
-  "CONTROLS.WNGCounterToggle" : "Glory and Ruin Counter",
-  "COUNTER.GLORY_CHANGED" : "Glory changed by {change}",
-  "COUNTER.RUIN_CHANGED" : "Ruin changed by {change}",
-
-  "WARN.NoActorsToApply" : "Tokens must be selected or a character must be assigned to apply an Effect.",
-  "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
-  "ERROR.NoMoreWrath" : "No more Wrath",
-  "NOTE.WrathSubtracted" : "Wrath Subtracted",
+  "CONTROLS.WNGCounterToggle": "Glory and Ruin Counter",
+  "COUNTER.GLORY_CHANGED": "Glory changed by {change}",
+  "COUNTER.RUIN_CHANGED": "Ruin changed by {change}",
+  "WARN.NoActorsToApply": "Tokens must be selected or a character must be assigned to apply an Effect.",
+  "WARN.NoActorsToTest": "Tokens must be selected or a character must be assigned to roll a Test.",
+  "ERROR.NoMoreWrath": "No more Wrath",
+  "NOTE.WrathSubtracted": "Wrath Subtracted",
   "ERROR.ID": "ID for {name} already exists in collection. This Document has been given a unique ID.",
-  "ERROR.NoMoreRuin" : "No more Ruin",
-  "NOTE.RuinSubtracted" : "Ruin Subtracted",
-  "NOTE.APPLY_DAMAGE_REDUCED" : "{damage} Damage reduced by {res} Resilience",
-  "NOTE.APPLY_DAMAGE_DETERMINATION" : "Determination converted {shock} Wounds to Shock",
-  "NOTE.APPLY_DAMAGE_RESIST" : "<strong>{name}</strong> resisted the Damage",
-  "NOTE.APPLY_DAMAGE_SHOCK" : "{name} sustained {shock} Shock",
-  "NOTE.APPLY_DAMAGE" : "{wounds} Wounds and {shock} Shock applied to <strong>{name}</strong>",
-  "NOTE.APPLY_DAMAGE_MORTAL" : "{mortal} Mortal Wounds converted to normal",
-  "ERROR.MacroItemMissing" : "Your controlled Actor does not have an item named",
-  "ROLL.CannotFindTable" : "Cannot find table. Either import it from the Compendium or create your own. It must have the name {name}",
-  "ERROR.NoAvailableActors" : "No available owned Actors to choose!",
-
-  "TABLE.COMBAT_COMPLICATIONS" : "Combat Complications",
-  "TABLE.PERILS_OF_THE_WARP" : "Perils of the Warp",
-  "TABLE.COMPLICATION_CONSEQUENCES" : "Complication Consequences",
-  "TABLE.CRITICAL_HIT_TABLE" : "Critical Hit Table",
-
-  "AUTOCALC.DEFENCE" : "Auto Calculate Defence",
-  "AUTOCALC.RESILIENCE" : "Auto Calculate Resilience",
-  "AUTOCALC.SHOCK" : "Auto Calculate Max Shock",
-  "AUTOCALC.AWARENESS" : "Auto Calculate Awareness",
-  "AUTOCALC.DETERMINATION" : "Auto Calculate Determination",
-  "AUTOCALC.RESOLVE" : "Auto Calculate Resolve",
-  "AUTOCALC.WOUNDS" : "Auto Calculate Max Wounds",
-  "AUTOCALC.CONVICTION" : "Auto Calculate Conviction",
-  "AUTOCALC.AUTO_WOUNDED" : "Automatic Wounded",
-  "AUTOCALC.AUTO_EXHAUSTED" : "Automatic Exhausted",
-  "CONFIGURE.GenerateMetaCurrencies" : "Generate Meta Currencies",
-  "CONFIGURE.HidePassengers" : "Hide Passengers",
-
-
-  "VEHICLE.TRAITS" : "Traits",
-  "VEHICLE.MAN" : "Man.",
-
-  "CONDITION.Bleeding" : "Bleeding",
-  "CONDITION.Blinded" : "Blinded",
-  "CONDITION.Exhausted" : "Exhausted",
-  "CONDITION.Fear" : "Fear",
-  "CONDITION.Frenzied" : "Frenzied",
-  "CONDITION.Hindered" : "Hindered",
-  "CONDITION.OnFire" : "On Fire",
-  "CONDITION.Pinned" : "Pinned",
-  "CONDITION.Poisoned" : "Poisoned",
-  "CONDITION.Prone" : "Prone",
-  "CONDITION.Restrained" : "Restrained",
-  "CONDITION.Staggered" : "Staggered",
-  "CONDITION.Terror" : "Terror",
-  "CONDITION.Vulnerable" : "Vulnerable",
-  "CONDITION.Dying" : "Dying",
-  "CONDITION.Dead" : "Dead",
-
-  "TRAIT.Agonising" : "Agonising",
-  "TRAIT.Arc" : "Arc",
-  "TRAIT.Assault" : "Assault",
-  "TRAIT.Blast" : "Blast",
-  "TRAIT.Brutal" : "Brutal",
-  "TRAIT.Force" : "Force",
-  "TRAIT.Flamer" : "Flamer",
-  "TRAIT.Heavy" : "Heavy",
-  "TRAIT.Inflict" : "Inflict",
-  "TRAIT.Kustom" : "Kustom",
-  "TRAIT.Melta" : "Melta",
-  "TRAIT.Parry" : "Parry",
-  "TRAIT.Pistol" : "Pistol",
-  "TRAIT.Rad" : "Rad",
-  "TRAIT.RapidFire" : "Rapid Fire",
-  "TRAIT.Reliable" : "Reliable",
-  "TRAIT.Rending" : "Rending",
-  "TRAIT.Silent" : "Silent",
-  "TRAIT.Sniper" : "Sniper",
-  "TRAIT.Spread" : "Spread",
-  "TRAIT.Supercharge" : "Supercharge",
-  "TRAIT.Unwieldy" : "Unwieldy",
-  "TRAIT.Waaagh" : "Waaagh!",
-  "TRAIT.WarpWeapon" : "Warp Weapon",
-  "TRAIT.Bulk" : "Bulk",
-  "TRAIT.Cumbersome" : "Cumbersome",
-  "TRAIT.EreWeGo" : "'Ere We Go!",
-  "TRAIT.PowerField" : "Power Field",
-  "TRAIT.Powered" : "Powered",
-  "TRAIT.Shield" : "Shield",
-
-  "EFFECT.Wounded" : "Wounded",
-  "EFFECT.FullDefence" : "Full Defence",
-  "EFFECT.AllOutAttack" : "All-Out Attack",
-  "EFFECT.HalfCover" : "Half Cover",
-  "EFFECT.FullCover" : "Full Cover",
-  "THREAT.MOB" : "Mob",
-  "THREAT.MobAbilities" : "Mob Abilities",
-  "THREAT.MobValue" : "Mob Value",
-
+  "ERROR.NoMoreRuin": "No more Ruin",
+  "NOTE.RuinSubtracted": "Ruin Subtracted",
+  "NOTE.APPLY_DAMAGE_REDUCED": "{damage} Damage reduced by {res} Resilience",
+  "NOTE.APPLY_DAMAGE_DETERMINATION": "Determination converted {shock} Wounds to Shock",
+  "NOTE.APPLY_DAMAGE_RESIST": "<strong>{name}</strong> resisted the Damage",
+  "NOTE.APPLY_DAMAGE_SHOCK": "{name} sustained {shock} Shock",
+  "NOTE.APPLY_DAMAGE": "{wounds} Wounds and {shock} Shock applied to <strong>{name}</strong>",
+  "NOTE.APPLY_DAMAGE_MORTAL": "{mortal} Mortal Wounds converted to normal",
+  "ERROR.MacroItemMissing": "Your controlled Actor does not have an item named",
+  "ROLL.CannotFindTable": "Cannot find table. Either import it from the Compendium or create your own. It must have the name {name}",
+  "ERROR.NoAvailableActors": "No available owned Actors to choose!",
+  "TABLE.COMBAT_COMPLICATIONS": "Combat Complications",
+  "TABLE.PERILS_OF_THE_WARP": "Perils of the Warp",
+  "TABLE.COMPLICATION_CONSEQUENCES": "Complication Consequences",
+  "TABLE.CRITICAL_HIT_TABLE": "Critical Hit Table",
+  "AUTOCALC.DEFENCE": "Auto Calculate Defence",
+  "AUTOCALC.RESILIENCE": "Auto Calculate Resilience",
+  "AUTOCALC.SHOCK": "Auto Calculate Max Shock",
+  "AUTOCALC.AWARENESS": "Auto Calculate Awareness",
+  "AUTOCALC.DETERMINATION": "Auto Calculate Determination",
+  "AUTOCALC.RESOLVE": "Auto Calculate Resolve",
+  "AUTOCALC.WOUNDS": "Auto Calculate Max Wounds",
+  "AUTOCALC.CONVICTION": "Auto Calculate Conviction",
+  "AUTOCALC.AUTO_WOUNDED": "Automatic Wounded",
+  "AUTOCALC.AUTO_EXHAUSTED": "Automatic Exhausted",
+  "CONFIGURE.GenerateMetaCurrencies": "Generate Meta Currencies",
+  "CONFIGURE.HidePassengers": "Hide Passengers",
+  "VEHICLE.TRAITS": "Traits",
+  "VEHICLE.MAN": "Man.",
+  "CONDITION.Bleeding": "Bleeding",
+  "CONDITION.Blinded": "Blinded",
+  "CONDITION.Exhausted": "Exhausted",
+  "CONDITION.Fear": "Fear",
+  "CONDITION.Frenzied": "Frenzied",
+  "CONDITION.Hindered": "Hindered",
+  "CONDITION.OnFire": "On Fire",
+  "CONDITION.Pinned": "Pinned",
+  "CONDITION.Poisoned": "Poisoned",
+  "CONDITION.Prone": "Prone",
+  "CONDITION.Restrained": "Restrained",
+  "CONDITION.Staggered": "Staggered",
+  "CONDITION.Terror": "Terror",
+  "CONDITION.Vulnerable": "Vulnerable",
+  "CONDITION.Dying": "Dying",
+  "CONDITION.Dead": "Dead",
+  "TRAIT.Agonising": "Agonising",
+  "TRAIT.Arc": "Arc",
+  "TRAIT.Assault": "Assault",
+  "TRAIT.Blast": "Blast",
+  "TRAIT.Brutal": "Brutal",
+  "TRAIT.Force": "Force",
+  "TRAIT.Flamer": "Flamer",
+  "TRAIT.Heavy": "Heavy",
+  "TRAIT.Inflict": "Inflict",
+  "TRAIT.Kustom": "Kustom",
+  "TRAIT.Melta": "Melta",
+  "TRAIT.Parry": "Parry",
+  "TRAIT.Pistol": "Pistol",
+  "TRAIT.Rad": "Rad",
+  "TRAIT.RapidFire": "Rapid Fire",
+  "TRAIT.Reliable": "Reliable",
+  "TRAIT.Rending": "Rending",
+  "TRAIT.Silent": "Silent",
+  "TRAIT.Sniper": "Sniper",
+  "TRAIT.Spread": "Spread",
+  "TRAIT.Supercharge": "Supercharge",
+  "TRAIT.Unwieldy": "Unwieldy",
+  "TRAIT.Waaagh": "Waaagh!",
+  "TRAIT.WarpWeapon": "Warp Weapon",
+  "TRAIT.Bulk": "Bulk",
+  "TRAIT.Cumbersome": "Cumbersome",
+  "TRAIT.EreWeGo": "'Ere We Go!",
+  "TRAIT.PowerField": "Power Field",
+  "TRAIT.Powered": "Powered",
+  "TRAIT.Shield": "Shield",
+  "EFFECT.Wounded": "Wounded",
+  "EFFECT.FullDefence": "Full Defence",
+  "EFFECT.AllOutAttack": "All-Out Attack",
+  "EFFECT.HalfCover": "Half Cover",
+  "EFFECT.FullCover": "Full Cover",
+  "THREAT.MOB": "Mob",
+  "THREAT.MobAbilities": "Mob Abilities",
+  "THREAT.MobValue": "Mob Value",
   "UpdaterTitle1": "Update",
   "UpdaterTitle2": "Content",
   "Updater1": "This process will import new documents and overwrite previously imported documents with their content from the Compendium.",
@@ -597,15 +568,12 @@
   "UPDATER.ExcludeHint": "Checking this will not update documents if their names have been changed",
   "UPDATER.Error": "You can only update if you've initialized this module at least once.",
   "UPDATER.Notification": "Created {created} and updated {updated} documents from {name} - {version}",
-  "UPDATER.DeleteModuleContent" : "Delete Module Content",
-  "UPDATER.DeleteModuleContentPrompt" : "<p><strong>WARNING</strong>: This will delete all content associated with the <strong>{id}</strong> module that has been imported in this world.</p><p>Are you sure you wish to proceed?</p>",
-
-  "UPDATER.ResolveDuplicates" : "Resolve Duplicates",
-  "UPDATER.ResolveDuplicatesNote" : "These Documents already exist in the world; would you like to apply the data from the initialized module instead?<br><br>Leaving a Document checked will apply the new data, otherwise no modifications will be made.",
-
-  "CC.XP_AVAILABLE" : "XP Available",
-  "CC.XP_SPENT" : "XP Spent",
-
+  "UPDATER.DeleteModuleContent": "Delete Module Content",
+  "UPDATER.DeleteModuleContentPrompt": "<p><strong>WARNING</strong>: This will delete all content associated with the <strong>{id}</strong> module that has been imported in this world.</p><p>Are you sure you wish to proceed?</p>",
+  "UPDATER.ResolveDuplicates": "Resolve Duplicates",
+  "UPDATER.ResolveDuplicatesNote": "These Documents already exist in the world; would you like to apply the data from the initialized module instead?<br><br>Leaving a Document checked will apply the new data, otherwise no modifications will be made.",
+  "CC.XP_AVAILABLE": "XP Available",
+  "CC.XP_SPENT": "XP Spent",
   "BUGREPORT.Contact": "Contact Info",
   "BUGREPORT.ContactPlaceholder": "Discord Tag or Email.",
   "BUGREPORT.DescriptionPlaceholder": "What happened, how to reproduce, etc.",
@@ -619,25 +587,226 @@
   "BugReport.ErrorForm": "Please fill out the form",
   "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
   "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
-  "BUTTON.PostBug" : "W&G Bug Report",
+  "BUTTON.PostBug": "W&G Bug Report",
 
-  "WH" : {
-    "Trigger" : {
-      "preTakeDamage" : "Pre-Take Damage",
-      "preApplyDamage" : "Pre-Apply Damage",
+  "SETTINGS.TableSettings" : "Table Settings",
+  "SETTINGS.TableConfigure" : "Configure Tables",
+  "SETTINGS.TableSettingsHint" : "Configure which tables the system uses.",
 
-      "computeDamage" : "Compute Damage",
-      "preComputeDamage" : "Pre-Compute Damage",
+  "TableSetting.critical" : "Critical Hit Table",
+  "TableSetting.perilsritarm" : "Perils of the Warp",
+  "TableSetting.combatComplications" : "Complication Consequences",
+  "TableSetting.complicationsConsequences" : "Combat Complications",
 
-      "takeDamage" : "Take Damage",
-      "applyDamage" : "Apply Damage",
-
-      "rollTest" : "Roll Test",
-      "preRollTest" : "Pre-Roll Test",
-      "preRollWeaponTest" : "Pre-Roll Weapon Test",
-      "rollWeaponTest" : "Roll Weapon Test",
-      "preRollPowerTest" : "Pre-Roll Power Test",
-      "rollPowerTest" : "Roll Power Test"
+  "WH": {
+    "Trigger": {
+      "preTakeDamage": "Pre-Take Damage",
+      "preApplyDamage": "Pre-Apply Damage",
+      "computeDamage": "Compute Damage",
+      "preComputeDamage": "Pre-Compute Damage",
+      "takeDamage": "Take Damage",
+      "applyDamage": "Apply Damage",
+      "rollTest": "Roll Test",
+      "preRollTest": "Pre-Roll Test",
+      "preRollWeaponTest": "Pre-Roll Weapon Test",
+      "rollWeaponTest": "Roll Weapon Test",
+      "preRollPowerTest": "Pre-Roll Power Test",
+      "rollPowerTest": "Roll Power Test"
+    },
+    "Models": {
+      "ability": {
+        "FIELDS": {
+          "cost": {
+            "label": "Cost"
+          },
+          "requirements": {
+            "label": "Requirements"
+          },
+          "display": {
+            "label": "Show in Combat",
+            "hint": "Show Item in the Actor's Combat Tab"
+          },
+          "abilityType": {
+            "label": "Type"
+          }
+        }
+      },
+      "archetype": {
+        "FIELDS": {
+          "tier": {
+            "label": "Tier"
+          },
+          "cost": {
+            "label": "XP"
+          },
+          "influence": {
+            "label": "Influence"
+          }
+        }
+      },
+      "armour": {
+        "FIELDS": {
+          "rating": {
+            "label": "Rating"
+          },
+          "invulnerable": {
+            "label": "Invulnerable"
+          }
+        }
+      },
+      "ascension": {
+        "FIELDS": {
+          "cost": {
+            "label": "Cost"
+          },
+          "requirements": {
+            "label": "Requirements"
+          },
+          "influence": {
+            "label": "Influence"
+          },
+          "keywords": {
+            "label": "Keywords"
+          }
+        }
+      },
+      "augmetic": {
+        "FIELDS": {
+          "requirements": {
+            "label": "Requirements"
+          },
+          "keywords": {
+            "label": "Keywords"
+          }
+        }
+      },
+      "gear": {
+        "FIELDS": {
+          "keywords": {
+            "label": "Keywords"
+          }
+        }
+      },
+      "species": {
+        "FIELDS": {
+          "cost": {
+            "label": "XP"
+          },
+          "speed": {
+            "label": "Speed"
+          },
+          "size": {
+            "label": "Size"
+          }
+        }
+      },
+      "talent": {
+        "FIELDS": {
+          "cost": {
+            "label": "Cost"
+          },
+          "requirements": {
+            "label": "Requirements"
+          },
+          "display": {
+            "label": "Show in Combat",
+            "hint": "Show Item in the Actor's Combat Tab"
+          }
+        }
+      },
+      "weapon" : {
+        "FIELDS" : {
+          "category" : {
+            "label" : "Category"
+          },
+          "salvo" : {
+            "label" : "Salvo"
+          },
+          "range" : {
+            "melee" : {
+              "label" : "Range"
+            },
+            "thrown" : {
+              "label" : "Thrown S ×"
+            }
+          },
+          "twinned" : {
+            "label" : "Twinned"
+          },
+          "combi" : {
+            "id" : {
+              "label" : "Combi"
+            }
+          }
+        }
+      },
+      "psychicPower" : {
+        "FIELDS" : {
+          "cost" : {
+            "label" : "XP"
+          },
+          "prerequisites" : {
+            "label" : "Prerequisites"
+          },
+          "activation" : {
+            "label" : "Activation"
+          },
+          "duration" : {
+            "label" : "Duration"
+          },
+          "dn" : {
+            "label" : "DN"
+          },
+          "range" : {
+            "label" : "Range"
+          },
+          "multiTarget" : {
+            "label" : "Multi-Target"
+          },
+          "keywords" : {
+            "label" : "Keywords"
+          }
+        }
+      }
+    },
+    "Components": {
+      "test": {
+        "FIELDS": {
+          "self": {
+            "label": "Self Test",
+            "hint": "This Test is intended to be rolled by the owner."
+          },
+          "dn": {
+            "label": "DN"
+          },
+          "type": {
+            "label": "Type"
+          }
+        }
+      },
+      "physical": {
+        "FIELDS": {
+          "quantity": {
+            "label": "Quantity"
+          },
+          "value": {
+            "label": "Value"
+          },
+          "keywords": {
+            "label": "Keywords"
+          },
+          "rarity": {
+            "label": "Rarity"
+          }
+        }
+      },
+      "damage": {
+        "FIELDS": {
+          "enabled": {
+            "label": "Enable Damage"
+          }
+        }
+      }
     }
   }
 }

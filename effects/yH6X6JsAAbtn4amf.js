@@ -1,0 +1,1 @@
+return !["deception", "persuasion"].includes(args.skill);

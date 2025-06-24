@@ -1,0 +1,90 @@
+.application.mob-config {
+    .window-content {
+        > div {
+            height: 100%;
+            .sheet-list {
+                height: 100%;
+            }
+            .list-content {
+                overflow: auto;
+                height: calc(100% - 3rem);
+            }
+        }
+    }
+}
+
+.application.actor-config {
+    .form-group {
+        label {
+            flex: 5
+        }
+    }
+}
+
+.application.item-traits {
+    .window-content  {
+        > div {
+            overflow: auto; 
+            height: calc(100% - 3rem);
+        }
+    }
+    .form-group {
+        .form-fields {
+            flex: 3rem;
+        }
+        margin-bottom: 0.5rem;
+    }
+}
+
+.application#counter {
+    .counter-body {
+        position: relative;
+    }
+
+    .handle {
+        &:hover {
+            cursor: move;
+            text-shadow: none;
+        }
+        
+    }
+
+    .window-header {
+        display: none;
+    }
+
+        .counter-body {
+        padding: 0.5rem;
+        font-size: var(--font-size-12);
+    }
+    .counters {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        .counter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            h3 {
+                margin: 0.5rem;
+                font-size: var(--font-size-20);
+            }
+            .input-controls {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                input {
+                    padding: 0px;
+                    height: 1.5rem;
+                    width: 1.5rem;
+                }
+            }
+        }
+    }
+    
+    .counter-controls {
+        position: absolute;
+        right: 6px;
+    }
+}

@@ -1,0 +1,45 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <h2 class="sheet-divider">{{localize "TITLE.ATTRIBUTES"}}</h2>
+    <div class="attributes">
+    {{#each system.attributes}}
+
+    <div class="attribute-group">
+        <label data-action="rollTest" data-type="attribute" data-key="{{@key}}">
+        {{configLookup "attributes" @key}}
+        </label>
+        <div class="components">
+            <div>
+                {{formInput (lookup (lookup ../fields.attributes.fields @key) "fields.base") value=this.base tooltip="ATTRIBUTE.BASE"}}
+                {{formInput (lookup (lookup ../fields.attributes.fields @key) "fields.rating") value=this.rating tooltip="ATTRIBUTE.ADVANCES"}}
+            </div>
+            <input class="total" type="number" disabled value="{{this.total}}" data-tooltip="ATTRIBUTE.TOTAL">
+        </div>
+    </div>
+    {{/each}}
+    </div>
+
+    <h2 class="sheet-divider">{{localize "TITLE.SKILLS"}}</h2>
+    <div class="skills">
+
+    {{#each system.skills}}
+    <div class="attribute-box single">
+            <div class="label rollable" data-action="rollTest" data-type="skill" data-key="{{@key}}" style="grid-column: 1 / span 9"><span class="skill-attribute"></span><label class="centered">{{configLookup "skills" @key}}</label> <span class="skill-attribute">({{configLookup "attributeAbbrev" this.attribute}})</span></div>
+            <div class="field" style="grid-column: 10 / span 1">{{formInput (lookup (lookup ../fields.skills.fields @key) "fields.base") value=this.base tooltip="ATTRIBUTE.BASE"}}</div>
+            <div class="field" style="grid-column: 11 / span 1">{{formInput (lookup (lookup ../fields.skills.fields @key) "fields.rating") value=this.rating tooltip="ATTRIBUTE.RATING"}}</div>
+            <div class="field" style="grid-column: 12 / span 1"><input class="total" type="number" disabled value="{{this.total}}" data-tooltip="ATTRIBUTE.TOTAL"></div>
+    </div>
+    {{/each}}
+    </div>
+    <h2 class="sheet-divider">{{localize "TITLE.KEYWORDS"}}</h2>
+    <div class="keywords">
+        <button data-action="createItem" data-type="keyword"><i class="fa-solid fa-plus"></i></button> 
+        {{#each items.keyword}}
+        <div class="keyword context-menu-alt" data-uuid="{{this.uuid}}">
+            <img src="{{this.img}}">
+            <a data-action="editEmbedded" >
+                {{this.name}}
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</section>

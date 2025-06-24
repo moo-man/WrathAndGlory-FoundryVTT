@@ -11,7 +11,7 @@ export default class ResolveTest  extends WNGTest {
   }
 
   get template() {
-    return "systems/wrath-and-glory/template/chat/roll/resolve/resolve-roll.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/resolve/resolve-roll.hbs"
   }
 
 
@@ -32,7 +32,7 @@ export default class ResolveTest  extends WNGTest {
     {
       this.context.pointsAdded = true;
       game.wng.RuinGloryCounter.changeCounter(1,  "ruin").then(() => {
-        game.counter.render(true)
+        game.counter.render({force: true})
       })
     }
 
@@ -55,7 +55,7 @@ export default class ResolveTest  extends WNGTest {
     {
       this.context.pointsAdded = true;
       game.wng.RuinGloryCounter.changeCounter(-1,  "ruin").then(() => {
-        game.counter.render(true)
+        game.counter.render({force: true})
       })
     }
   }
