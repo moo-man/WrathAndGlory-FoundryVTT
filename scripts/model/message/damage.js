@@ -15,7 +15,7 @@ export class WrathAndGloryDamageMessageModel extends WarhammerMessageModel
 
     get damage() 
     {
-        return new DamageRoll(this)
+        return new DamageRoll(this.toJSON())
     }
 
     onRender(html)

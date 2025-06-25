@@ -7,7 +7,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
         window : {
           controls : [
             {
-              icon : 'fa-solid fa-gear',
+              icon : 'fa-solid fa-wrench',
               label : "Actor Settings",
               action : "configureActor"
             }
