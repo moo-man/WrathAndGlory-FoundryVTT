@@ -39,6 +39,9 @@ export class DamageModel extends foundry.abstract.DataModel
         let damage = Roll.safeEval(this._dataWithRank("damage"));
         if (this.parent.isMelee && this.parent.parent.isOwned)
             damage += this.parent.parent.actor?.system.attributes?.strength?.total || 0
+
+        damage += (this.parent.parent.actor?.system.advances.rank || 0) * this.rank;
+
         return damage
     }
     get ED() {
@@ -55,12 +58,7 @@ export class DamageModel extends foundry.abstract.DataModel
         {
             damage = damage ? damage + ` + ${data.dice}` : data.dice
         }
-        let rank = "";
-        if (data.rank === 1) {
-            rank = " + R";
-        } else if (data.rank === 2) {
-            rank = " + DR";
-        }
-        return `${damage}${rank}`;
+
+        return `${damage}`;
     }
 }
