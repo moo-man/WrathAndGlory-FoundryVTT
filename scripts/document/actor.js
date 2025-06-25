@@ -115,34 +115,34 @@ export class WrathAndGloryActor extends WarhammerActor {
                 context.title = game.i18n.localize(`ROLL.DETERMINATION`)
                 context.noDn = true;
                 context.noWrath = true;
-                return this._setupTest(CommonDialog, DeterminationRoll, {pool : this.combat.determination.total,}, context)
+                return this._setupTest(CommonDialog, DeterminationRoll, {pool : this.system.combat.determination.total,}, context)
             case "corruption":
                 context.title = game.i18n.localize(`ROLL.CORRUPTION`)
                 context.corruption = true;
                 context.conviction = true;
-                return this._setupTest(CommonDialog, CorruptionTest, {pool : this.combat.conviction.total}, context)
+                return this._setupTest(CommonDialog, CorruptionTest, {pool : this.system.combat.conviction.total}, context)
             case "mutation":
                 context.title = game.i18n.localize(`ROLL.MUTATION`)
                 context.mutation = true;
                 context.conviction = true;
-                return this._setupTest(CommonDialog, MutationTest, {pool : this.combat.conviction.total}, context)
+                return this._setupTest(CommonDialog, MutationTest, {pool : this.system.combat.conviction.total}, context)
             case "fear":
                 context.title = game.i18n.localize(`ROLL.FEAR`)
                 context.fear = true;
                 context.resolve = true;
                 context.noWrath = true;
-                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.combat.resolve.total}, context)
             case "terror":
                 context.title = game.i18n.localize(`ROLL.TERROR`)
                 context.terror = true;
                 context.resolve = true;
                 context.noWrath = true;
-                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.combat.resolve.total}, context)
             case "influence":
                 context.fields.pool = this.resources.influence
                 context.title = game.i18n.localize(`ROLL.INFLUENCE`)
                 context.noWrath = true;
-                return this._setupTest(CommonDialog, ResolveTest, {pool : this.combat.resolve.total}, context)
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.combat.resolve.total}, context)
             default:
                 throw new Error("Unknown roll type: " + type)
         }
@@ -632,7 +632,7 @@ export class WrathAndGloryActor extends WarhammerActor {
     //#endregion
 
     get Size() {
-        switch (this.combat.size) {
+        switch (this.system.combat.size) {
             case "tiny":
                 return game.i18n.localize("SIZE.TINY");
             case "small":

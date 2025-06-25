@@ -33,7 +33,8 @@ export class WrathAndGloryDamageMessageModel extends WarhammerMessageModel
     static get actions() 
     { 
         return foundry.utils.mergeObject(super.actions, {
-            applyDamage : this._onApplyDamage
+            applyDamage : this._onApplyDamage,
+            toggleDie : this._onToggleDie
         });
     }
 
@@ -42,4 +43,10 @@ export class WrathAndGloryDamageMessageModel extends WarhammerMessageModel
         this.damage.applyToTargets();
     }
 
+    static _onToggleDie(ev, target)
+    {
+        let message = this.parent;
+        if (message.isAuthor || message.isOwner)
+          target.classList.toggle("selected")
+    }
 }

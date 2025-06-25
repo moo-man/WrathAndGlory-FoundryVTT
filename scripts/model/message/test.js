@@ -35,7 +35,7 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
       if (this.test.actor) {
           let token = this.test.actor.getActiveTokens()[0]?.document || this.test.actor.prototypeToken;
 
-          let path = token.hidden ? "modules/impmal-core/assets/tokens/unknown.webp" : token.texture.src;
+          let path = token.hidden ? "modules/wng-core/assets/tokens/generic.webp" : token.texture.src;
 
           if (foundry.helpers.media.VideoHelper.hasVideoExtension(path)) {
               path = await game.video.createThumbnail(path, { width: 50, height: 50 }).then(img => chatOptions.flags.img = img)
@@ -82,8 +82,6 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
     static async _onRollWrath(ev, target)
     {
         let test = this.test;
-
-        WnGTables.rollTable(target.dataset.table)
 
         if (test.result.isWrathCritical) {
           if (test.weapon) {

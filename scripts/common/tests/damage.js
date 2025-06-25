@@ -264,7 +264,7 @@ export class DamageRoll {
       _id : randomID(),
       type: "damage",
       rolls: [this.roll],
-      system: this.data,
+      system: this.data.toJSON(),
       user: game.user.id,
       rollMode: game.settings.get("core", "rollMode"),
       content: html,

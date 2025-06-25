@@ -16,4 +16,11 @@ export default class AscensionSheet extends WnGItemSheet {
     effects: { scrollable: [""], template: 'systems/wrath-and-glory/templates/item/item-effects.hbs' },
   }
 
+  async _handleEnrichment() 
+  {
+      return foundry.utils.mergeObject(await super._handleEnrichment(), foundry.utils.expandObject({
+          "system.benefits" : await TextEditor.enrichHTML(this.item.system.benefits, {async: true, secrets: this.item.isOwner, relativeTo: this.item})
+      }));
+  }
+
 }

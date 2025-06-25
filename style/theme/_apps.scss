@@ -260,4 +260,16 @@ body.wng-theme {
             border-color: var(--color-imperium);
         }
     }
+
+    .compendium-browser {
+        --items-section-background-color : transparent;
+        h3 {
+            color: var(--color-white);
+        }
+
+        .item:nth-child(even)
+        {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
 }

@@ -4,7 +4,7 @@
 
         <div class="dice-container">
             {{#each result.dice as |die index|}}
-                <a class="die {{die.name}} unshifted" data-index="{{index}}" data-tooltip="+{{die.value}}" data-tooltip-direction="UP"><img src="{{die.img}}" />
+                <a class="die {{die.name}} unshifted" data-action="toggleDie" data-index="{{index}}" data-tooltip="+{{die.value}}" data-tooltip-direction="UP"><img src="{{die.img}}" />
                     {{#if die.rerolled}}
                         <span class="reroll die-icon"><i class="fas fa-redo"></i></span>
                     {{/if}}

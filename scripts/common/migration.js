@@ -614,7 +614,7 @@ Hooks.on("ready", () =>
             <p><strong>Also Note</strong>: Character Creation has not been converted to AppV2 yet (see below), until then, it may have styling issues and bugs!</p>
             <hr>
             <h1>Wrath & Glory in Foundry V13</h1>
-            <p>As Foundry itself progresses in its adoption of its new application framework, so too has the IM system. All sheets and applications have been converted to use AppV2, my hope is that I have covered all existing functionality, but it is inevitable that more complex sheets (such as Actor sheets) may be missing some features here and there. Please be patient as I work through issues that arise!
+            <p>As Foundry itself progresses in its adoption of its new application framework, so too has the Wrath & Glory system. All sheets and applications have been converted to use AppV2, my hope is that I have covered all existing functionality, but it is inevitable that more complex sheets (such as Actor sheets) may be missing some features here and there. Please be patient as I work through issues that arise!
             <ul>
                 <li><p>Actor and Item Sheets in V2 have had their <em>right click</em> functionalities greatly expanded. You can right click any owned Item or Active Effect to see a context menu for various actions.</p></li>
                 <li><p>Module Initialization has been centralized in the System settings, check the wiki link above!</p></li>
@@ -623,7 +623,7 @@ Hooks.on("ready", () =>
         game.settings.set("wrath-and-glory", "systemMigrationVersion", game.system.version)
 
         //  If setting is before 6.0.0, migrate, otherwise no need
-        if (foundry.utils.isNewerVersion("6.0.0", game.settings.get("impmal", "systemMigrationVersion")))
+        if (foundry.utils.isNewerVersion("6.0.0", game.settings.get("wrath-and-glory", "systemMigrationVersion")))
         {
             game.wng.migration.migrateWorld(true, true);
         }

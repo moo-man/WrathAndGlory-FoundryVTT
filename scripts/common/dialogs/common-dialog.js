@@ -46,11 +46,12 @@ export class CommonDialog extends RollDialog {
       return this.context.title;
     }
 
-    static async setupData({attribute, skill}, actor, context={})
+    static async setupData({attribute, skill, pool, wrath, dn}, actor, context={})
     {
-        let dialogData = await super.setupData({}, actor, context)
+        let dialogData = await super.setupData({pool, wrath, dn}, actor, context)
         dialogData.data.attribute = attribute || game.wng.config.skillAttribute[skill];
         dialogData.data.skill = skill;
+
         dialogData.context.title = this._constructTitle(dialogData);
         dialogData.data.item = context.item;
         

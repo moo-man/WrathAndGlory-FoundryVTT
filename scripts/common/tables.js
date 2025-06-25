@@ -67,7 +67,7 @@ export default class WnGTables
 
             if (result && showResult)
             {
-                let document = await game.impmal.utility.findId(result.documentId);
+                let document = await warhammer.utility.findItemId(result.documentUuid || "");
                 if (document) // Assumed item
                 {
                     document.postItem(chatData);
@@ -79,23 +79,5 @@ export default class WnGTables
             }
             return result;
         }
-    }
-
-    static listeners(html)
-    {
-        html.querySelectorAll(".table-roll").forEach(e => {
-            e.addEventListener("click", ev => {
-                let key = ev.target.dataset.table;
-                let formula = ev.target.dataset.formula;
-                let modifier = ev.target.dataset.modifier;
-    
-                let messageId = ev.target.closest(".message").dataset.messageId
-                let test = game.messages.get(messageId)?.system.test;
-            
-    
-                // TODO: the test actor may not be the one we want to pass here
-                ImpMalTables.rollTable(key, formula, {modifier, actor : test?.actor});
-            });
-        })
     }
 }
