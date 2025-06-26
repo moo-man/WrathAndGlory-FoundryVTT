@@ -1,3 +1,4 @@
+import EditTestForm from "../apps/edit-test";
 
 export class WnGChatMessage extends WarhammerChatMessage 
 {

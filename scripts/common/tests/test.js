@@ -317,7 +317,7 @@ export class WNGTest extends WarhammerTestBase {
         poolDice, new OperatorTerm({operator : "+"}), wrathDice
       ].filter(d => d))
     }
-    else 
+    else if (poolDice || wrathDice)
     {
       added = Roll.fromTerms([poolDice || wrathDice]);
     }
@@ -361,7 +361,7 @@ export class WNGTest extends WarhammerTestBase {
     // Only add a connecting operator term if dice were added (don't want trailing "+")
     if (added) {
       await added.evaluate({ async: true });
-      connector = await new OperatorTerm({ operator: "+" }).evaluate({ async: true });
+      connector = await new OperatorTerm({ operator: "+" });
       if (game.dice3d)
         await game.dice3d.showForRoll(added)
     }

@@ -283,7 +283,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             return;
         }
-        let test = await this.setupGenericTest("determination", {message, fields: {wounds}, resolveClose: true});
+        let test = await this.setupGenericTest("determination", {message, fields: {wounds}}, {resolveClose: true});
         return test;
     }
 
