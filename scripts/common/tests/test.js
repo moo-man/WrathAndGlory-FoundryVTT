@@ -70,7 +70,7 @@ export class WNGTest extends WarhammerTestBase {
     }
 
     let test = new game.wng.rollClasses[data.context.rollClass]()
-    test.data = data.toJSON();
+    test.data = data.toJSON?.() || data;
     if (test.result.roll)
       test.roll = Roll.fromData(test.result.roll)
     if (test.testData.rerolls.length)

@@ -40,7 +40,7 @@ export class DamageModel extends foundry.abstract.DataModel
         if (this.parent.isMelee && this.parent.parent.isOwned)
             damage += this.parent.parent.actor?.system.attributes?.strength?.total || 0
 
-        damage += (this.parent.parent.actor?.system.advances.rank || 0) * this.rank;
+        damage += (this.parent.parent.actor?.system.advances?.rank || 0) * this.rank;
 
         return damage
     }
