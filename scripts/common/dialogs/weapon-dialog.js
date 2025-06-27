@@ -41,7 +41,7 @@ export class WeaponDialog extends AttackDialog {
       let skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
       let attribute = weapon.getSkillFor(actor).attribute
 
-      let dialogData = await super.setupData({skill, attribute}, actor, context)
+      let dialogData = await super.setupData({skill, attribute}, actor, context, options)
 
       dialogData.data.item = weapon;
       dialogData.data.weapon = weapon;

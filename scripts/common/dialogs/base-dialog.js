@@ -34,9 +34,9 @@ export class RollDialog extends WarhammerRollDialogV2 {
         return context;
     }
 
-    static async setupData({pool, wrath, dn}, actor, context={})
+    static async setupData({pool, wrath, dn}, actor, context={}, options={})
     {
-        let {data, fields} = this._baseDialogData(actor, context);
+        let {data, fields} = this._baseDialogData(actor, context, options);
 
         
         foundry.utils.mergeObject(fields, context.fields || {});
@@ -60,7 +60,7 @@ export class RollDialog extends WarhammerRollDialogV2 {
           context.useDn = false;
         }
 
-        return {data, fields, context};
+        return {data, fields, context, options};
     }
 
     _getSubmissionData()
