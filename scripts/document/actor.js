@@ -142,7 +142,7 @@ export class WrathAndGloryActor extends WarhammerActor {
                 context.fields.pool = this.resources.influence
                 context.title = game.i18n.localize(`ROLL.INFLUENCE`)
                 context.noWrath = true;
-                return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.combat.resolve.total}, context)
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.resources.influence}, context)
             default:
                 throw new Error("Unknown roll type: " + type)
         }
