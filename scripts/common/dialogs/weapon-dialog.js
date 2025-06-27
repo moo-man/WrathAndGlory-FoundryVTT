@@ -29,7 +29,18 @@ export class WeaponDialog extends AttackDialog {
     }
 };
 
-  static async setupData(weapon, actor, context={})
+async _prepareContext(options)
+{
+  let context = await super._prepareContext(options);
+  context.calledShotSizes = {
+    "tiny" : "SIZE.TINY",
+    "small" : "SIZE.SMALL",
+    "medium" : "SIZE.MEDIUM",
+  }
+  return context;
+}
+
+  static async setupData(weapon, actor, context={}, options)
   {
       if (typeof weapon == "string")
       {
@@ -86,6 +97,28 @@ export class WeaponDialog extends AttackDialog {
     {
       this.fields.pool++;
       this.tooltips.add("pool", 1, game.i18n.localize("WEAPON.AIM"))
+    }
+
+    // Called Shots
+    if (this.fields.calledShot.size)
+    {
+      this.tooltips.start(this)
+      let value = 0
+      switch(this.fields.calledShot.size)
+      {
+        case "tiny" :
+          value = 3;
+          break;
+        case "small" : 
+          value = 2;
+          break;
+        case "medium" : 
+          value = 1;
+          break;
+      }
+      this.fields.difficulty += value;
+      this.fields.ed.value += value;
+      this.tooltips.finish(this, game.i18n.localize("WEAPON.CALLED_SHOT"))
     }
 
     // Range
@@ -208,6 +241,10 @@ export class WeaponDialog extends AttackDialog {
           distance : null,
           range : null,
           aim : false,
+          calledShot : {
+            size : "",
+            label : ""
+          }
       }, super._defaultFields());
   }
 }

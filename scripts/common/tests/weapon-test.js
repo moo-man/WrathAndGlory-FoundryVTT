@@ -9,6 +9,7 @@ export default class WeaponTest extends WNGTest {
 
     this.data.testData.range = data.range
     this.data.testData.aim = data.aim
+    this.data.testData.calledShot = data.calledShot
 
     this.addDamageData(data);
 
@@ -45,6 +46,7 @@ export default class WeaponTest extends WNGTest {
 
     this.result.range = this.testData.range
     this.result.aim = this.testData.aim
+    this.result.calledShot = this.testData.calledShot
   }
 
   get weapon() {return fromUuidSync(this.testData.itemId)}
