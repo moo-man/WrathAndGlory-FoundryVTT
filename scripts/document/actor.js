@@ -360,6 +360,18 @@ export class WrathAndGloryActor extends WarhammerActor {
 
     async applyDamage(damage=0, {ap=0, shock=0, mortal=0}, {test, damageRoll, token, allowDetermination=true}={}) {
 
+        if (!this.statuses.has("full-defence") && test && test.weapon && (test.weapon.traitList.blast || test.weapon.traitList.flamer))
+        {
+            if (await foundry.applications.api.Dialog.confirm({
+                window: { title : "Full Defence"},
+                content : `<p>Dodge Area of Effect?</p>`
+            }))
+            {
+                await this.addCondition("full-defence", {}, {resilience : true})
+            }
+
+        }
+
         let resilience = foundry.utils.deepClone(this.system.combat.resilience)
         let res = resilience.total || 1
         ap = Math.abs(ap);
@@ -660,7 +672,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         return this.type == "threat" && this.mob > 1
     }
 
-    async addCondition(effect, flags = {}) {
+    async addCondition(effect, flags = {}, options={}) {
         if (typeof (effect) === "string")
             effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
         if (!effect)
@@ -681,7 +693,7 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (!existing) {
             effect.name = game.i18n.localize(effect.name)
-            return this.createEmbeddedDocuments("ActiveEffect", [effect], {condition: true})
+            return this.createEmbeddedDocuments("ActiveEffect", [effect], foundry.utils.mergeObject(options, {condition: true}))
         }
     }
 

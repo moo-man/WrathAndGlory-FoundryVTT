@@ -404,6 +404,13 @@ WNG.systemEffects = {
         changes : [
             {key: "system.combat.defence.bonus", mode : 2, value : 1},
         ],
+        system : {
+            scriptData : [{
+                trigger : "immediate",
+                script : `let path = "system.combat.defence.bonus";\nif (args.options.resilience)\n{\n  path = "system.combat.resilience.bonus"\n}\n\nlet test = await this.actor.setupAttributeTest('initiative', {appendTitle : ' - ' + this.effect.name}); \n\n\nthis.effect.updateSource({name : this.effect.setSpecifier(1 + test.result.success + (args.options.resilience ? " Resilience" : "")), changes : [{key: path, mode : 2, value : 1 + test.result.success}]})`,
+                label : "Roll Initiative",
+            }]
+        }
     },
     "all-out-attack" : {
         id : "all-out-attack",
@@ -593,7 +600,7 @@ WNG.traitEffects = {
                     documentType : "Item",
                 },
                 scriptData : [{
-                    label : "Entangle",
+                    label : "Heavy",
                     trigger : "dialog",
                     script : "args.fields.difficulty += 2;",
                     options : {
