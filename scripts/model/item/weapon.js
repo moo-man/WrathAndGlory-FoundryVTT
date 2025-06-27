@@ -123,8 +123,12 @@ export class WeaponModel extends EquippedItemModel
     }
 
     applyAmmo() {
-        this._applyEffects(this.Ammo.effects)
-        this.traits.add(this.Ammo.system.traits)
+        // Self-ammo items (grenades) don't add traits, they already have them
+        if (this.Ammo.id != this.parent.id)
+        {
+            this._applyEffects(this.Ammo.effects)
+            this.traits.add(this.Ammo.system.traits)
+        }
     }
 
     getOtherEffects()

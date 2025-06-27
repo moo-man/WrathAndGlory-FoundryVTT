@@ -7,6 +7,14 @@
     {{/if}}
 </div>
 
+<div>
+    {{#if effect.item}}
+        <a data-action="editEmbedded" data-uuid="{{effect.item.uuid}}"><i class="fas fa-suitcase"></i>{{effect.source}}</a>
+    {{else}}
+        {{effect.source}}
+    {{/if}}
+</div>
+
 
 <div class="list-controls">
       <a data-action="toggleProperty" data-path="disabled" data-tooltip="{{localize 'SHEET.ToggleEffect'}}">{{#if effect.disabled}}<i class="far fa-circle"></i>{{else}}<i class="far fa-check-circle"></i>{{/if}}</a>

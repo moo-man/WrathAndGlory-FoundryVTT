@@ -12,7 +12,7 @@ export class PhysicalItemModel extends StandardItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.quantity = new fields.NumberField({initial : 0, min : 0});
+        schema.quantity = new fields.NumberField({initial : 1, min : 0});
         schema.value = new fields.NumberField({min: 0});
         schema.keywords = new fields.StringField();
         schema.rarity = new fields.StringField({initial : "common"});

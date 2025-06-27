@@ -3,7 +3,7 @@ import { StandardActorSheet } from "./standard";
 export class AgentSheet extends StandardActorSheet {
     static DEFAULT_OPTIONS = {
         actions : {
-
+          rollObjective : this._onRollObjective
         },
         defaultTab: "stats"
       }   
@@ -69,6 +69,16 @@ export class AgentSheet extends StandardActorSheet {
         for (let skill of Object.values(context.system.skills)) {
             skill.tooltip = `Rating: ${skill.rating} | Advance Cost: ${game.wng.utility.getSkillCostIncrement(skill.rating + 1)} | Current XP: ${this.actor.experience.current}`
         }
+    }
+
+    static _onRollObjective(ev, target)
+    {
+      if (this.actor.system.faction.document)
+      {
+          let objectives = this.actor.system.faction.document.system.objectives;
+          let rolled = objectives[Math.floor(CONFIG.Dice.randomUniform() * objectives.length)];
+          this.actor.update({"system.bio.objective" : rolled});
+      }
     }
 
 
