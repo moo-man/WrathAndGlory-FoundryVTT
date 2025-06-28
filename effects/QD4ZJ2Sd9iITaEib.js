@@ -1,1 +1,1 @@
-return !args.fields.calledShot.size || !args.fields.aim
+return !args.weapon?.system.isRanged || !args.fields.calledShot.size || !args.fields.aim

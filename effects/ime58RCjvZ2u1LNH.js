@@ -1,4 +1,4 @@
-switch(this.fields.calledShot.size)
+switch(args.fields.calledShot.size)
       {
         case "tiny" :
           args.fields.ed.value += 3;
