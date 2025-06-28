@@ -2,7 +2,7 @@
   "id": "wrath-and-glory",
   "title": "Warhammer 40,000: Wrath & Glory",
   "description": "The official system for Warhammer 40,000 Roleplay: Wrath & Glory! Time is running out in the 41st Millennium. This accursed age needs heroes more than ever before. Will you answer the call?",
-  "version": "7.0.4",
+  "version": "7.1.0",
   "compatibility" : {
     "minimum" : 13,
     "verified" : 13,
@@ -48,10 +48,10 @@
     "requires": [{
       "id": "warhammer-lib",
       "type": "module",
-      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.1.3/module.json",
+      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.2.0/module.json",
       "compatibility": {
-        "minimum" : "2.1.3",
-        "verified": "2.1.3"
+        "minimum" : "2.2.0",
+        "verified": "2.2.0"
       }
     }]
   },
@@ -67,7 +67,7 @@
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/7.0.4/wrath-and-glory.zip",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/7.1.0/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 
