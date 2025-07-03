@@ -1,1 +1,1 @@
-return !args.options.multi
+return !args.context.multi

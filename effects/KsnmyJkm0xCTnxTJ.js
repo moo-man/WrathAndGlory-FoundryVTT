@@ -1,1 +1,1 @@
-return !args.attribute === 'willpower' && !args.options.conviction && !args.options.resolve;
+return !args.attribute === 'willpower' && !args.context.conviction && !args.context.resolve;

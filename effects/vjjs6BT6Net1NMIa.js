@@ -1,1 +1,1 @@
-return args.skill != "persuasion" && !args.options.influence
+return args.skill != "persuasion" && !args.context.influence

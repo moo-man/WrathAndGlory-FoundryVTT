@@ -1,1 +1,1 @@
-return args.options.conviction || args.options.resolve || args.weapon;
+return args.context.conviction || args.context.resolve || args.weapon;

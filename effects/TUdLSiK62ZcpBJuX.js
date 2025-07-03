@@ -1,1 +1,1 @@
-args.options.resist?.includes("psychicPower")
+args.context.resist?.includes("psychicPower")

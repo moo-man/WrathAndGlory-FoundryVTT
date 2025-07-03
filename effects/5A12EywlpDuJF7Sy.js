@@ -1,1 +1,1 @@
-return !args.options.corruption && !args.options.mutation
+return !args.context.corruption && !args.context.mutation

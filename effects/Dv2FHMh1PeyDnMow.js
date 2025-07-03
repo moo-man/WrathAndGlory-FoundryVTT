@@ -1,1 +1,1 @@
-return args.options.fear
+return args.context.fear

@@ -1,1 +1,1 @@
-return !args.options.resolve;
+return !args.context.resolve;

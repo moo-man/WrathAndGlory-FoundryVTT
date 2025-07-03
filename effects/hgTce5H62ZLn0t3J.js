@@ -1,1 +1,1 @@
-return !args.options.weapon.system.isRanged;
+return !args.context.weapon.system.isRanged;

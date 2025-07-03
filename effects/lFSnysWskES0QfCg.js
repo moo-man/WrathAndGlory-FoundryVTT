@@ -1,1 +1,1 @@
-return args.options.resist?.includes("psychicPower")
+return args.context.resist?.includes("psychicPower")

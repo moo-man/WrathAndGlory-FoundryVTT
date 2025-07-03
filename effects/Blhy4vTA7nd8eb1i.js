@@ -1,1 +1,1 @@
-return args.skill != "investigation" && !args.options.influence
+return args.skill != "investigation" && !args.context.influence

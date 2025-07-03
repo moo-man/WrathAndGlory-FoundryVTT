@@ -1,1 +1,1 @@
-return args.options.fear || args.options.corruption
+return args.context.fear || args.context.corruption

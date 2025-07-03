@@ -1,1 +1,1 @@
-return args.options.conviction || args.options.determination
+return args.context.conviction || args.context.determination

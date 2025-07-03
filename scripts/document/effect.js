@@ -139,8 +139,11 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
     get sourceTest() 
     {
         let testData = this.system.sourceData.test.data;
-        let message = game.messages.get(testData.context?.messageId);
-        return message? message.system.test : game.wng.rollClasses[testData.class].recreate(testData);  
+        if (testData)
+        {
+            let message = game.messages.get(testData.context?.messageId);
+            return message? message.system.test : game.wng.rollClasses[testData.class].recreate(testData);  
+        }
     }
 
 }

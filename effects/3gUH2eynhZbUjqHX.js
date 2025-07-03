@@ -1,1 +1,1 @@
-return !(args.weapon.name === "Paired Hekatarri Blades" && args.options.multi);
+return !(args.weapon.name === "Paired Hekatarri Blades" && args.context.multi);

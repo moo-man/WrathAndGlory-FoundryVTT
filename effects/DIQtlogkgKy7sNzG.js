@@ -1,4 +1,4 @@
-if(args.options.fear || args.options.resolve)
+if(args.context.fear || args.context.resolve)
 {
 	return false
 }

@@ -1,1 +1,1 @@
-return !args.options.determination
+return !args.context.determination

@@ -1,4 +1,4 @@
-if (args.options.conviction || args.options.resolve)
+if (args.context.conviction || args.context.resolve)
 {
 	args.abort = true;
 	this.script.notification("Automatically succeed Resolve or Conviction Tests")

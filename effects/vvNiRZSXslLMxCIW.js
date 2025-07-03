@@ -1,1 +1,1 @@
-return !args.options.resolve && !args.options.corruption
+return !args.context.resolve && !args.context.corruption

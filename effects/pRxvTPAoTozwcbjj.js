@@ -1,1 +1,1 @@
-return args.options.multi > 1;
+return args.context.multi > 1;

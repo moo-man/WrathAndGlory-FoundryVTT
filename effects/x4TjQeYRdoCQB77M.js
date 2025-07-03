@@ -1,1 +1,1 @@
-return args.options.influence;
+return args.context.influence;

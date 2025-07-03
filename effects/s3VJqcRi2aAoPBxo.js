@@ -1,1 +1,1 @@
-return !args.options.determination && args.skill != "tech"
+return !args.context.determination && args.skill != "tech"
