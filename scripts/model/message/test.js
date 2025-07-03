@@ -94,7 +94,7 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
           }
           else if (test.power) {
             let modifier = (test.result.allDice.filter(die => die.name == "wrath-complication").length - 1) * 10
-            WnGTables.rollTable("perils", {modifier})
+            WnGTables.rollTable("perils", null, {modifier})
           }
           else {
             WnGTables.rollTable("complicationConsequences")
