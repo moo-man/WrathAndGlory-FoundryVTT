@@ -112,18 +112,18 @@ WNG.armourTraits = {
 }
 
 WNG.vehicleTraits = {
-    "allTerrain": "All-Terrain",
-    "amphibious": "Amphibious",
-    "bike": "Bike",
-    "flyer": "Flyer",
-    "gunPorts": "Gun Ports",
-    "gyroStabilised": "Gyro-Stabilised",
-    "hover": "Hover",
-    "openTopped": "Open Topped",
-    "reliable": "Reliable",
-    "sealed": "Sealed",
-    "turboBoost": "Turbo Boost",
-    "walker": "Walker",
+    "allTerrain": "TRAIT.AllTerrain",
+    "amphibious": "TRAIT.Amphibious",
+    "bike": "TRAIT.Bike",
+    "flyer": "TRAIT.Flyer",
+    "gunPorts": "TRAIT.GunPorts",
+    "gyroStabilised": "TRAIT.GyroStabilised",
+    "hover": "TRAIT.Hover",
+    "openTopped": "TRAIT.OpenTopped",
+    "reliable": "TRAIT.Reliable",
+    "sealed": "TRAIT.Sealed",
+    "turboBoost": "TRAIT.TurboBoost",
+    "walker": "TRAIT.Walker",
 }
 
 
