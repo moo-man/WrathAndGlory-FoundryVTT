@@ -139,7 +139,7 @@ export class DamageRoll {
   }
 
     this.result.breakdown = {
-      damage : `<p>${this.damageData.damage} (Base) + ${result.rolledValue} (ED) ${getModifierBreakdown(modifiers.damage)}</p>`,
+      damage : `<p>${this.damageData.damage} (${game.i18n.localize("SKILL.BASE")}) + ${result.rolledValue} (${game.i18n.localize("WEAPON.ED")}) ${getModifierBreakdown(modifiers.damage)}</p>`,
       mortal : `<p>${this.damageData.other.mortal} (@DICE) ${getModifierBreakdown(modifiers.mortal)}`,
       wounds : `<p>${this.damageData.other.wounds} (@DICE) ${getModifierBreakdown(modifiers.wounds)}`,
       shock : `<p>${this.damageData.other.shock} (@DICE) ${getModifierBreakdown(modifiers.shock)}`,
@@ -164,12 +164,12 @@ export class DamageRoll {
     
     if (this.result.ap)
     {
-      this.result.breakdown.ap = `<p>${this.damageData.ap.value} (Base) ${getModifierBreakdown(modifiers.ap)}</p>`
+      this.result.breakdown.ap = `<p>${this.damageData.ap.value} (${game.i18n.localize("SKILL.BASE")}) ${getModifierBreakdown(modifiers.ap)}</p>`
     }
 
     if (this.result.ed)
     {
-      this.result.breakdown.ed = `<p><strong>ED</strong>: ${this.damageData.ed.value} (Base) ${getModifierBreakdown(modifiers.ed)}</p>`;
+      this.result.breakdown.ed = `<p><strong>${game.i18n.localize("WEAPON.ED")}</strong>: ${this.damageData.ed.value} (${game.i18n.localize("SKILL.BASE")}) ${getModifierBreakdown(modifiers.ed)}</p>`;
     }
     await this.sendToChat();
   }
