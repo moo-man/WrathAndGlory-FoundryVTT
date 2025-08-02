@@ -598,9 +598,9 @@
   "SETTINGS.TableSettingsHint" : "Configure which tables the system uses.",
 
   "TableSetting.critical" : "Critical Hit Table",
-  "TableSetting.perilsritarm" : "Perils of the Warp",
-  "TableSetting.combatComplications" : "Complication Consequences",
-  "TableSetting.complicationsConsequences" : "Combat Complications",
+  "TableSetting.perils" : "Perils of the Warp",
+  "TableSetting.combatComplications" : "Combat Complications",
+  "TableSetting.complicationConsequences" : "Complication Consequences",
 
   "WH": {
     "Trigger": {

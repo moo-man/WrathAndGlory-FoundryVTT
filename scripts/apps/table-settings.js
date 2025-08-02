@@ -35,9 +35,9 @@ export default class TableSettings extends HandlebarsApplicationMixin(Applicatio
 
     static #schema = new foundry.data.fields.SchemaField({
         critical : new foundry.data.fields.StringField({initial : "6p1cD3OiG8ksl7vv", label : "TableSetting.critical"}),
-        perils : new foundry.data.fields.StringField({initial : "7LR1oOovQa0iqcJu", label : "TableSetting.perilsritarm"}),
-        combatComplications : new foundry.data.fields.StringField({initial : "w6IdVsNjFwSDMKTs", label : "TableSetting.combatComplications"}),
-        complicationConsequences : new foundry.data.fields.StringField({initial : "OVTt0G2SZVr1RvHp", label : "TableSetting.complicationsConsequences"}),
+        perils : new foundry.data.fields.StringField({initial : "7LR1oOovQa0iqcJu", label : "TableSetting.perils"}),
+        complicationConsequences : new foundry.data.fields.StringField({initial : "w6IdVsNjFwSDMKTs", label : "TableSetting.complicationConsequences"}),
+        combatComplications : new foundry.data.fields.StringField({initial : "OVTt0G2SZVr1RvHp", label : "TableSetting.combatComplications"}),
     
     })
 
