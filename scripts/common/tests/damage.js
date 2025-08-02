@@ -140,9 +140,9 @@ export class DamageRoll {
 
     this.result.breakdown = {
       damage : `<p>${this.damageData.damage} (Base) + ${result.rolledValue} (ED) ${getModifierBreakdown(modifiers.damage)}</p>`,
-      mortal : `<p>${this.damageData.other.mortal} (@DICE) ${getModifierBreakdown(modifiers.mortal)}`,
-      wounds : `<p>${this.damageData.other.wounds} (@DICE) ${getModifierBreakdown(modifiers.wounds)}`,
-      shock : `<p>${this.damageData.other.shock} (@DICE) ${getModifierBreakdown(modifiers.shock)}`,
+      mortal : `<p>${this.damageData.other.mortal} (@DICE) ${getModifierBreakdown(modifiers.mortal)}${this.damageData.bonus.mortal ? " + " + this.damageData.bonus.mortal : ""}`,
+      wounds : `<p>${this.damageData.other.wounds} (@DICE) ${getModifierBreakdown(modifiers.wounds)}${this.damageData.bonus.wounds ? " + " + this.damageData.bonus.wounds : ""}`,
+      shock : `<p>${this.damageData.other.shock} (@DICE) ${getModifierBreakdown(modifiers.shock)}${this.damageData.bonus.shock ? " + " + this.damageData.bonus.shock : ""}`,
     }
 
     
