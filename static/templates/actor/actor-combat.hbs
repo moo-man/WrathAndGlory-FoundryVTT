@@ -28,7 +28,7 @@
                         {{#if autoCalc.passiveAwareness}}disabled{{/if}}></div>
             </div>
             <div class="attribute-box single">
-                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.STEALTH_SCORE"}}</div>
+                <div class="label rollable" data-action="rollTest" data-type="stealth" style="grid-column: 1 / span 8">{{localize "HEADER.STEALTH_SCORE"}}</div>
                 <div class="field" style="grid-column: 9 / span 4"><input type="number" name="system.combat.stealth"
                         value="{{system.combat.stealth}}" {{#if autoCalc.stealth}}disabled{{/if}}></div>
             </div>
