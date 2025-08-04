@@ -34,17 +34,17 @@ export default class WnGItemSheet extends WarhammerItemSheetV2
         description: {
           id: "description",
           group: "primary",
-          label: "Description",
+          label: "TAB.DESCRIPTION",
         },
         stats: {
           id: "stats",
           group: "primary",
-          label: "Stats",
+          label: "TAB.STATS",
         },
         effects: {
           id: "effects",
           group: "primary",
-          label: "Effects",
+          label: "TAB.EFFECTS",
         }
       }
 
