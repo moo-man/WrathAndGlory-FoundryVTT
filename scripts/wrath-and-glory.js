@@ -77,6 +77,7 @@ Hooks.once("init", () => {
   CONFIG.Item.documentClass = WrathAndGloryItem;
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
   CONFIG.ChatMessage.documentClass = WnGChatMessage;
+  CONFIG.RollTable.documentClass = WarhammerRollTable
   DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", DataslatePageSheet, { types : ["text"], makeDefault: false, label : "Data Slate" });
 
 CONFIG.ActiveEffect.dataModels["base"] = WrathAndGloryActiveEffectModel

@@ -8,7 +8,7 @@
         <p><strong>{{localize "WEAPON.AIMED"}}</strong></p>
         {{/if}}
 
-        {{#if result.calledShot}}
+        {{#if result.calledShot.size}}
                 <p><strong>{{localize "WEAPON.CALLED_SHOT"}}: </strong> 
                 {{#if result.calledShot.label}}
                 {{result.calledShot.label}} ({{configLookup "size" result.calledShot.size}})
@@ -17,7 +17,6 @@
                 {{/if}}
                 </p>
         {{/if}}
-
 
 
         {{#if result.isWrathCritical}}

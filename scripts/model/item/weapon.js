@@ -30,7 +30,6 @@ export class WeaponModel extends EquippedItemModel
             melee : new fields.NumberField({initial : 1}),
             thrown : new fields.NumberField({nullable : true}),
         })
-        schema.category = new fields.StringField({initial : "melee"});
         schema.ammo = new fields.EmbeddedDataField(DocumentReferenceModel);
         schema.salvo = new fields.NumberField({})
         schema.traits = new fields.EmbeddedDataField(TraitsModel);
@@ -209,6 +208,22 @@ export class WeaponModel extends EquippedItemModel
         {
             data.ammo = {id : data.ammo};
         }
+    }
+
+    async toEmbed(config, options)
+    {
+        let html = `
+        <h4>@UUID[${this.parent.uuid}]{${this.parent.name}}</h4>
+        ${this.description}
+        <p><strong>Value</strong>: ${this.value}</p>
+        <p><strong>Rarity</strong>: ${this.Rarity}</p>
+        <p><strong>Keywords</strong>: ${this.keywords.split(",").map(i => `<a class="keyword">${i.trim()}</a>`).join(", ")}</p>
+        `;
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
     }
 
 }

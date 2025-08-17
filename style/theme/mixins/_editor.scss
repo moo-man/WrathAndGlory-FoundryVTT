@@ -111,56 +111,122 @@
         }
     }
 
+
+    .table-container {
+        border-top: 8px solid transparent;
+        border-image: url(assets/image/table-border.webp) 8 8 8 8 repeat repeat;
+    }
+
+
     table {
+
+        &.embedded {
+            margin-top: -5px;
+        }
+
         background: none;
 
+        .title,
         .table-header {
 
             text-align: center;
             background-color: #752322;
             color: #ddd;
             font-size: 16px;
-            
-        text-transform: uppercase;
-        font-weight: bold;
+
+            text-transform: uppercase;
+            font-weight: bold;
 
 
             a.content-link {
                 color: #ddd;
-    
+
                 i {
                     color: #ddd;
                 }
-            } 
+            }
 
             &.aeldari {
-                    background-color: var(--color-aeldari);
-                }
+                background-color: var(--color-aeldari);
+            }
+
             &.ork {
-                    background-color: var(--color-ork);
-                }
+                background-color: var(--color-ork);
+            }
+
             &.chaos {
-                    background-color: var(--color-chaos);
-                }
+                background-color: var(--color-chaos);
+            }
+
             &.necron {
-                    background-color: black
-                }
+                background-color: black
+            }
+
             &.drukhari {
-                    background-color: #3a002c
-                }
+                background-color: #3a002c
+            }
         }
 
-        tr:nth-child(even)
-        {
+        tr:nth-child(even):not(.table-header, .table-col-header) {
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        
+        .subheader,
         tr.table-col-header {
             background-color: #484746;
             color: #ddd;
         }
     }
 
+    .wrath-and-glory-embed.archetype {
+        border-top: 8px solid transparent;
+        border-image: url(assets/image/table-border.webp) 8 8 8 8 repeat repeat;
+
+        table {
+
+            td {
+                padding: 0px 1rem;
+
+                &:not(.archetype-label, .archetype-header) {
+                    width: 10%;
+                    padding: 0px;
+                }
+                &[colspan="8"]
+                {
+                    padding-left: 0.5rem;
+                }
+            }
+
+            .archetype-header {
+
+                text-align: center;
+                background-color: #752322;
+                color: #ddd;
+                font-size: 16px;
+
+                text-transform: uppercase;
+                font-weight: bold;
+
+                a.content-link {
+                    color: #ddd;
+
+                    i {
+                        color: #ddd;
+                    }
+                }
+            }
+
+            .archetype-label {
+                background-color: #484746;
+                color: #ddd;
+            }
+
+            .archetype-value {
+                text-align: center;
+            }
+        }
+
+
+    }
 
 }

@@ -110,20 +110,156 @@ export class ArchetypeModel extends BaseItemModel
             })}
         }
     }
-}
 
 
-class ArchetypeWargearModel extends DeferredReferenceModel 
-{
-    static defineSchema()
+    async toEmbed(config, options)
     {
-        let schema = super.defineSchema();
-        schema.type = new fields.StringField();
-        schema.filters = new fields.ArrayField(new fields.SchemaField({
-            test : new fields.StringField(),
-            property : new fields.StringField(),
-            value : new fields.StringField(),
-        }))
-        return schema;
+        let ability = await this.ability.document;
+        let species = await this.species.document;
+        let talents = await this.suggested.talents.awaitDocuments();
+        let html = `
+        <table>
+        <tr class="archetype-header">
+            <td colspan="8">
+                <p>@UUID[${this.parent.uuid}]{${this.parent.name}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="archetype-label" colspan="2">
+                <p>TIER</p>
+            </td>
+            <td class="archetype-value">
+                <p>${this.tier}</p>
+            </td>
+            <td class="archetype-label" colspan="2">
+                <p>SPECIES</p>
+            </td>
+            <td class="archetype-value">
+                @UUID[${species.uuid}]{${species.name}}
+            </td>
+            <td class="archetype-label">
+                <p>XP Cost</p>
+            </td>
+            <td class="archetype-value">
+                <p>64</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <p><strong>KEYWORDS</strong>: ${this.keywords.map(i => `<a class="keyword">${i.trim()}</a>`).join(", ")}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8" style="background-color:rgba(0, 0, 0, 0.2)">
+                <p><strong>ATTRIBUTES</strong>: ${Object.keys(this.attributes).filter(a => this.attributes[a]).map(a => `${game.wng.config.attributes[a]} ${this.attributes[a]}`).join(", ") || "None"}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <p><strong>SKILLS</strong>: ${Object.keys(this.skills).filter(a => this.skills[a]).map(a => `${game.wng.config.skills[a]} ${this.skills[a]}`).join(", ") || "None"}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8" style="background-color:rgba(0, 0, 0, 0.2)">
+                <p><strong>ARCHETYPE ABILITY</strong>: @UUID[${ability?.uuid}]{${ability?.name}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <p><strong>WARGEAR</strong>: ${this.wargear.textDisplayWithLinks}
+        </tr>
+        <tr>
+            <td colspan="8" style="background-color:rgba(0, 0, 0, 0.2)">
+                <p><strong>INFLUENCE</strong>: ${this.influence}</p>
+            </td>
+        </tr>
+        <tr style="height:16px">
+            <td class="archetype-header" colspan="8">
+                <p><strong>SUGGESTED ATTRIBUTES</strong></p>
+            </td>
+        </tr>
+        <tr style="font-variant:small-caps; text-align: center">
+            <td class="archetype-label">
+                <p>ATTRITBUTE</p>
+            </td>
+            <td >
+                <p>S</p>
+            </td>
+            <td style="background-color:rgba(0, 0, 0, .2)">
+                <p>T</p>
+            </td>
+            <td >
+                <p>A</p>
+            </td>
+            <td style="background-color:rgba(0, 0, 0, .2)">
+                <p>I</p>
+            </td>
+            <td >
+                <p>Wil</p>
+            </td>
+            <td style="background-color:rgba(0, 0, 0, 0.2)">
+                <p>Int</p>
+            </td>
+            <td>
+                <p>Fel</p>
+            </td>
+        </tr>
+        <tr style="font-variant:small-caps; text-align: center">
+            <td class="archetype-label">
+                <p>RATING</p>
+            </td>
+            <td>
+                <p>${this.suggested.attributes.strength}</p>
+            </td>
+            <td style="background-color:rgba(0, 0, 0, .2)">
+                <p>${this.suggested.attributes.toughness}</p>
+            </td>
+            <td>
+                <p>${this.suggested.attributes.agility}</p>
+            </td>
+            <td style="background-color:rgba(0, 0, 0, .2)">
+                <p>${this.suggested.attributes.initiative}</p>
+            </td>
+            <td>
+                <p>${this.suggested.attributes.willpower}</p>
+            </td>
+            <td style="background-color:rgba(0, 0, 0, 0.2)">
+                <p>${this.suggested.attributes.intellect}</p>
+            </td>
+            <td>
+                <p>${this.suggested.attributes.fellowship}</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="archetype-header" colspan="8">
+                <p><strong>SUGGESTED SKILLS</strong></p>
+            </td>
+        </tr>   
+        <tr>
+            <td colspan="8">
+                <p>${Object.keys(this.suggested.skills).filter(a => this.suggested.skills[a]).map(a => `${game.wng.config.skills[a]} ${this.suggested.skills[a]}`).join(", ")}</p>
+            </td>
+        </tr>
+        `;
+
+
+        if (talents.length)
+        {
+            html += `<tr>
+            <td class="archetype-header" colspan="8">
+                <p><strong>SUGGESTED TALENTS</strong></p>
+            </td>
+            </tr>   
+            <tr>
+                <td colspan="8">
+                    <p>${talents.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ") }</p>
+                </td>
+            </tr>`
+        }
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
     }
 }

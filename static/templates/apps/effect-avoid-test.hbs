@@ -1,60 +1,60 @@
-<div class="form-group">
-  <label>{{localize "DIALOG.DN"}}</label>
-  <div class="form-fields">
-    <input name="system.transferData.avoidTest.dn" placeholder="DN" type="number"
-      value="{{system.transferData.avoidTest.dn}}" />
+<div>
+  <div class="form-group">
+    <label>{{localize "DIALOG.DN"}}</label>
+    <div class="form-fields">
+      <input name="system.transferData.avoidTest.dn" placeholder="DN" type="number" value="{{system.transferData.avoidTest.dn}}" />
+    </div>
   </div>
-</div>
-<div class="form-group">
-  <div class="form-fields">
-    <select name="system.transferData.avoidTest.type" class="type">
-      {{#select system.transferData.avoidTest.type}}
-        <option value="">-</option>
-        {{#each (config "testTypes") as |type k|}}
-          <option value="{{k}}">{{type}}</option>
-        {{/each}}
-      {{/select}}
-    </select>
-    {{#if (eq system.transferData.avoidTest.type "attribute")}}
-      <select name="system.transferData.avoidTest.specification" class="attribute">
-        {{#select system.transferData.avoidTest.specification}}
+  <div class="form-group">
+    <div class="form-fields">
+      <select name="system.transferData.avoidTest.type" class="type">
+        {{#select system.transferData.avoidTest.type}}
           <option value="">-</option>
-          {{#each (config "attributes") as |attribute k|}}
-            <option value="{{k}}">{{attribute}}</option>
+          {{#each (config "testTypes") as |type k|}}
+            <option value="{{k}}">{{type}}</option>
           {{/each}}
         {{/select}}
       </select>
-    {{/if}}
-    {{#if (eq system.transferData.avoidTest.type "skill")}}
-      <select name="system.transferData.avoidTest.specification" class="skill">
-        {{#select system.transferData.avoidTest.specification}}
-          <option value="">-</option>
-          {{#each (config "skills") as |skill k|}}
-            <option value="{{k}}">{{skill}}</option>
-          {{/each}}
-        {{/select}}
-      </select>
-    {{/if}}
-    {{#if (eq system.transferData.avoidTest.type "resolve")}}
-      <select name="system.transferData.avoidTest.specification" class="resolve">
-        {{#select system.transferData.avoidTest.specification}}
-          <option value="">-</option>
-          {{#each (config "resolveTests") as |test k|}}
-            <option value="{{k}}">{{test}}</option>
-          {{/each}}
-        {{/select}}
-      </select>
-    {{/if}}
-    {{#if (eq system.transferData.avoidTest.type "conviction")}}
-      <select name="system.transferData.avoidTest.specification" class="conviction">
-        {{#select system.transferData.avoidTest.specification}}
-          <option value="">-</option>
-          {{#each (config "convictionTests") as |test k|}}
-            <option value="{{k}}">{{test}}</option>
-          {{/each}}
-        {{/select}}
-      </select>
-    {{/if}}
+      {{#if (eq system.transferData.avoidTest.type "attribute")}}
+        <select name="system.transferData.avoidTest.specification" class="attribute">
+          {{#select system.transferData.avoidTest.specification}}
+            <option value="">-</option>
+            {{#each (config "attributes") as |attribute k|}}
+              <option value="{{k}}">{{attribute}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+      {{/if}}
+      {{#if (eq system.transferData.avoidTest.type "skill")}}
+        <select name="system.transferData.avoidTest.specification" class="skill">
+          {{#select system.transferData.avoidTest.specification}}
+            <option value="">-</option>
+            {{#each (config "skills") as |skill k|}}
+              <option value="{{k}}">{{skill}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+      {{/if}}
+      {{#if (eq system.transferData.avoidTest.type "resolve")}}
+        <select name="system.transferData.avoidTest.specification" class="resolve">
+          {{#select system.transferData.avoidTest.specification}}
+            <option value="">-</option>
+            {{#each (config "resolveTests") as |test k|}}
+              <option value="{{k}}">{{test}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+      {{/if}}
+      {{#if (eq system.transferData.avoidTest.type "conviction")}}
+        <select name="system.transferData.avoidTest.specification" class="conviction">
+          {{#select system.transferData.avoidTest.specification}}
+            <option value="">-</option>
+            {{#each (config "convictionTests") as |test k|}}
+              <option value="{{k}}">{{test}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+      {{/if}}
+    </div>
   </div>
-</div>
 </div>

@@ -4,6 +4,13 @@
         {{formGroup fields.requirements value=system.requirements classes="flex3"}}
         </div>
         {{formGroup fields.display value=system.display }}
-
+        
         {{> testDetails fields=fields.test.fields test=system.test}}
+
+        {{formGroup fields.damage.fields.enabled value=system.damage.enabled}}
+
+        {{#if system.damage.enabled}}
+        {{> damage fields=fields.damage.fields damage=source.system.damage}}
+        {{> traits}}
+        {{/if}}
 </section>
