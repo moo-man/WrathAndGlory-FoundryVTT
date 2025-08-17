@@ -47,7 +47,7 @@ async _prepareContext(options)
         weapon = actor.items.get(weapon) || await fromUuid(weapon)
       }
 
-      context.combi = weapon.system.combi.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
+      context.combi = weapon.system.combi?.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
 
       let skill = weapon.isMelee ? "weaponSkill" : "ballisticSkill"
       let attribute = weapon.getSkillFor(actor).attribute
@@ -81,7 +81,7 @@ async _prepareContext(options)
     let weapon = this.weapon;
 
     this.tooltips.start(this)
-    this.fields.pool += weapon.attack.base + weapon.attack.bonus
+    this.fields.pool += (weapon.attack?.base || 0)  + (weapon.attack?.bonus || 0)
     this.fields.damage += weapon.system.damage.base + weapon.system.damage.bonus + (weapon.system.damage.rank * this.actor.system.advances?.rank || 0)
     this.fields.ed.value += weapon.system.damage.ed.base + weapon.system.damage.ed.bonus + (weapon.system.damage.ed.rank * this.actor.system.advances?.rank || 0)
     this.fields.ap.value += weapon.system.damage.ap.base + weapon.system.damage.ap.bonus + (weapon.system.damage.ap.rank * this.actor.system.advances?.rank || 0)
@@ -196,6 +196,12 @@ async _prepareContext(options)
             }
             this.tooltips.finish(this, "Target Size") 
         }
+    }
+
+    if (this.weapon.system.traits.has("blast"))
+    {
+      this.fields.difficulty = 3
+      this.tooltips.set("difficulty", 3, "Blast", true)
     }
   }
 

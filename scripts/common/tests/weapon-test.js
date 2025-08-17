@@ -47,6 +47,15 @@ export default class WeaponTest extends WNGTest {
     this.result.range = this.testData.range
     this.result.aim = this.testData.aim
     this.result.calledShot = this.testData.calledShot
+    if (this.weapon.system.traits?.has("blast"))
+    {
+      this.result.blast = this.weapon.system.traits.has("blast").rating;
+      if (!this.result.isSuccess)
+      {
+        this.result.scatter = true;
+        this.computeDamage();
+      }
+    }
   }
 
   get weapon() {return fromUuidSync(this.testData.itemId)}

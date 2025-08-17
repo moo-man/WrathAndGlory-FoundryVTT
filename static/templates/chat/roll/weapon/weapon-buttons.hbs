@@ -1,11 +1,24 @@
 {{> systems/wrath-and-glory/templates/chat/roll/base/base-buttons.hbs}}
+
+{{#if result.blast}}
+        <div class="wrapper">
+                <button type="button" data-action="blast" data-blast="{{result.blast}}"><i class="fa-solid fa-ruler-combined"></i> Blast</button>
+        </div>
+{{/if}}
+
+{{#if result.scatter}}
+        <div class="wrapper">
+                <button type="button" data-action="scatter"><i class="fa-solid fa-arrows-up-down-left-right"></i> Scatter</button>
+        </div>
+{{/if}}
+
 {{#if result.isWrathComplication}}
-<div class="wrapper">
-        <button type="button" data-action="rollWrath">Roll Complication</button>
-</div>
+        <div class="wrapper">
+                <button type="button" data-action="rollWrath">Roll Complication</button>
+        </div>
 {{/if}}
 {{#if result.isWrathCritical}}
-<div class="wrapper">
-        <button type="button" data-action="rollWrath">Roll Critical Hit</button>
-</div>
+        <div class="wrapper">
+                <button type="button" data-action="rollWrath">Roll Critical Hit</button>
+        </div>
 {{/if}}

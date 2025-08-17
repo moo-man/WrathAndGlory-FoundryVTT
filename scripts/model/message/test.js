@@ -23,6 +23,8 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
             rollMutation : this._onRollMutation,
             addPotency : this._onAddPotency,
             resetPotency : this._onResetPotency,
+            scatter : this._onScatter,
+            blast : this._onBlast
         });
     }
 
@@ -149,5 +151,41 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
     {
         let test = this.test;
         test.resetAllocation()
+    }
+
+    static _onScatter(ev, target)
+    {
+      let scatterRoll = Math.ceil(CONFIG.Dice.randomUniform() * 6)
+      let distRoll = Math.ceil(CONFIG.Dice.randomUniform() * 6) * 2
+      let html = `
+      <table class="scatter-table" border="1">
+      <tr>
+            <td data-position='3'><div class="die-label">3</div></td>
+            <td data-position='4'><div class="die-label">4</div></td>
+            <td data-position='5'><div class="die-label">5</div></td>
+      </tr>
+      <tr>
+            <td data-position='2'><div class="die-label">2</div></td>
+            <td> <strong>Target</strong></td>
+            <td data-position="6"><div class="die-label">6</div></td>
+      </tr>
+      <tr>
+            <td></td>
+            <td data-position='1'><div class="die-label">1</div></td>
+            <td></td>
+      </tr>
+</table>
+<p style="text-align: center;"><i class="fa-solid fa-arrow-up"></i> Direction of Attack <i class="fa-solid fa-arrow-up"></i></p>
+      `
+
+      html = html.replace(`data-position='${scatterRoll}'>`, `data-position='${scatterRoll}' class="active">${distRoll}m<br>`)
+
+
+      ChatMessage.create({content:  html, speaker : {alias : "Scatter"}, flavor : this.test.context.title})
+    }
+
+    static _onBlast(ev, target)
+    {
+      AreaTemplate.fromString(target.dataset.blast, null, null, null, false).drawPreview(ev);
     }
 }

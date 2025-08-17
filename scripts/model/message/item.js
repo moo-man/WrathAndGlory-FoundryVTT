@@ -25,14 +25,6 @@ export class PostedItemMessageModel extends WarhammerMessageModel
         ChatMessage.create(chatData);
     }
 
-    static get actions() 
-    { 
-        return foundry.utils.mergeObject(super.actions, {
-            rollAvailability : this._onRollAvailability,
-            buyItem :  this._onBuyItem
-        });
-    }
-
     async onRender(html) {
 
         let post = html.querySelector(".item")
