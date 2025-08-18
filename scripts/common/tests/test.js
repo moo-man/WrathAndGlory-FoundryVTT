@@ -5,7 +5,7 @@ export class WNGTest extends WarhammerTestBase {
   static rollFunction = "rollTest";
 
   constructor(data = {}) {
-    super();
+    super(); 
     this.data = {
       testData: {
         difficulty: data.difficulty,
@@ -40,6 +40,7 @@ export class WNGTest extends WarhammerTestBase {
         title: data.context?.title,
         targets: data.targets || [],
         type: data.type,
+        flags : data.context?.flags || {},
         breakdown : data.context?.breakdown,
         speaker: data.speaker,
         rollClass: this.constructor.name,

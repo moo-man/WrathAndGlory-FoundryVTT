@@ -8,6 +8,12 @@ export class WnGChatMessage extends WarhammerChatMessage
             let msg = game.messages.get(li.dataset.messageId)
             return game.user.isGM && msg.type == "damage";
         }
+
+        let canApplyBasicDamage = (li) => {
+            let msg = game.messages.get(li.dataset.messageId)
+            return game.user.isGM && (msg.type == "base" && msg.rolls.length);
+        }
+
         let canRerollFailed = li => {
             let msg = game.messages.get(li.dataset.messageId)
             let test = msg.system.test
@@ -209,6 +215,59 @@ export class WnGChatMessage extends WarhammerChatMessage
                 callback: li => {
                     let damage = game.messages.get(li.dataset.messageId).system.damage;
                     damage.applyToTargets();
+                }
+            },
+            // Below is damage application from basic dice rolls
+            {
+                name: "BUTTON.ApplyDamage",
+                icon: '<i class="fas fa-user-times"></i>',
+                condition: canApplyBasicDamage,
+                callback: async li => {
+                    let roll = game.messages.get(li.dataset.messageId).rolls[0].total
+                    for(let actor of targetsWithFallback())
+                    {
+                        let report = await actor.applyDamage(roll);
+                        ChatMessage.create({content: `<p data-tooltip-direction="LEFT" data-tooltip="${report.breakdown}">${report.message}</p>`});
+                    }
+                }
+            },
+            {
+                name: "BUTTON.ApplyDamageShock",
+                icon: '<i class="fas fa-user-times"></i>',
+                condition: canApplyBasicDamage,
+                callback: async li => {
+                    let roll = game.messages.get(li.dataset.messageId).rolls[0].total
+                    for(let actor of targetsWithFallback())
+                    {
+                        let report = await actor.applyDamage(0, {shock: roll});
+                        ChatMessage.create({content: `<p data-tooltip-direction="LEFT" data-tooltip="${report.breakdown}">${report.message}</p>`});
+                    }
+                }
+            },
+            {
+                name: "BUTTON.ApplyDamageWounds",
+                icon: '<i class="fas fa-user-times"></i>',
+                condition: canApplyBasicDamage,
+                callback: async li => {
+                    let roll = game.messages.get(li.dataset.messageId).rolls[0].total
+                    for(let actor of targetsWithFallback())
+                    {
+                        let report = await actor.applyDamage(0, {wounds: roll});
+                        ChatMessage.create({content: `<p data-tooltip-direction="LEFT" data-tooltip="${report.breakdown}">${report.message}</p>`});
+                    }
+                }
+            },
+            {
+                name: "BUTTON.ApplyDamageMortalWounds",
+                icon: '<i class="fas fa-user-times"></i>',
+                condition: canApplyBasicDamage,
+                callback: async li => {
+                    let roll = game.messages.get(li.dataset.messageId).rolls[0].total
+                    for(let actor of targetsWithFallback())
+                    {
+                        let report = await actor.applyDamage(0, {mortal: roll});
+                        ChatMessage.create({content: `<p data-tooltip-direction="LEFT" data-tooltip="${report.breakdown}">${report.message}</p>`});
+                    }
                 }
             }
         )

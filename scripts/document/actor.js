@@ -358,7 +358,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
     }
 
-    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}, {test, damageRoll, token, allowDetermination=true}={}) {
+    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}={}, {test, damageRoll, token, allowDetermination=true}={}) {
 
         if (!this.statuses.has("full-defence") && test && test.weapon && (test.weapon.traitList.blast || test.weapon.traitList.flamer))
         {
@@ -430,6 +430,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         damage += modifiers.damage.reduce((acc, mod) => acc + mod.value, 0);
         ap += modifiers.ap.reduce((acc, mod) => acc + mod.value, 0);
         mortal += modifiers.mortal.reduce((acc, mod) => acc + mod.value, 0);
+        res += modifiers.resilience.reduce((acc, mod) => acc + mod.value, 0);
 
         if (invuln)
         {
@@ -493,6 +494,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             if (wounds && allowDetermination) 
             {
+                // damageRoll used by determination dialog scripts to see what made the attack
                 let determination = await this.rollDetermination(wounds, damageRoll?.message?.id)
                 if (determination) {
                     wounds = determination.result.wounds;

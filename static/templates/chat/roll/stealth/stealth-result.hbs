@@ -1,1 +1,5 @@
 <p><strong>{{localize "CHAT.STEALTH"}}: {{localize "CHAT.STEALTH_RESULT" stealth=result.stealth}}</strong></p>
+
+{{#each result.text}}
+    <p><strong>{{this.label}}</strong>: {{this.description}}</p>
+{{/each}}

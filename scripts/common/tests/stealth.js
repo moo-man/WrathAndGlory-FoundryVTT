@@ -15,11 +15,12 @@ export default class StealthRoll extends WNGTest {
   _computeResult() {
     super._computeResult();
     this.result.stealth = this.result.success;
-    this._setStealthScore(this.result.success);
   }
 
-  async _setStealthScore(stealthScore) {
-    await this.actor.update({"system.combat.stealth" : stealthScore})
+  async runPostScripts()
+  {
+      await super.runPostScripts();
+      await this.actor.update({"system.combat.stealth" : this.result.stealth})
   }
 
   get isShiftable() { return false }

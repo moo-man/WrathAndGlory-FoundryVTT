@@ -16,7 +16,7 @@
         {{/if}}
 
         {{#each result.text}}
-        <p><strong>{{this.label}}</strong>: {{this.description}}</p>
+        <p><strong>{{this.label}}</strong>{{#if this.description}}: {{this.description}} {{/if}}</p>
         {{/each}}
 
 </div>

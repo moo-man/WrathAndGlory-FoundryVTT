@@ -26,8 +26,6 @@ export default class DeterminationRoll extends WNGTest {
     this.result.wounds = this.testData.wounds >= this.result.success ? this.testData.wounds - this.result.success : 0
   }
 
-  get isShiftable() { return false }
-
   get determination() { return true}
 
 }

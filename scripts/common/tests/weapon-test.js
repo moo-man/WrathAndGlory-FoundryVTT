@@ -24,12 +24,14 @@ export default class WeaponTest extends WNGTest {
   {
       await super.runPreScripts();
       await Promise.all(this.actor.runScripts("preRollWeaponTest", this));
+      await Promise.all(this.item.runScripts("preRollWeaponTest", this));
   }
 
   async runPostScripts()
   {
       await super.runPostScripts();
       await Promise.all(this.actor.runScripts("rollWeaponTest", this));
+      await Promise.all(this.item.runScripts("rollWeaponTest", this));
   }
 
   async edit({pool=0, wrath=0, icons=0, damage=0, ed=0, ap=0}={})

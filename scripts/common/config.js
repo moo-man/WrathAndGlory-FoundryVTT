@@ -787,6 +787,32 @@ WNG.traitEffects = {
                 transferData : {
                     documentType : "Item",
                 },
+                scriptData : [
+                    {
+                        label: "Supercharge Mode",
+                        script: "args.fields.ed.value += 3;",
+                        trigger: "dialog",
+                        options: {
+                            submissionScript: "args.context.flags.supercharge = true;"
+                        }
+                    },
+                    {
+                        label: "Supercharge Damage",
+                        script : `
+                        if (args.context.flags.supercharge)
+                        {
+                            args.result.text.supercharge = {label : "Supercharge"};
+                            if(args.result.isWrathComplication)
+                            {
+                                let roll = await new Roll("1d6").roll();
+                                await this.actor.applyDamage(0, {mortal: roll.total});
+                                args.result.text.supercharge.description = "Received " + roll.total + " Mortal Wounds";
+                            }
+                        }
+                        `,
+                        trigger: "rollWeaponTest"
+                    }
+                ]
                 //TODO
             }
         },
