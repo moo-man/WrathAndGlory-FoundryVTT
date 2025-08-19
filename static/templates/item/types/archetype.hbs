@@ -6,12 +6,12 @@
                 {{formGroup fields.influence value=system.influence}}
         </div>
         <div class="flexrow">
-                {{> documentReference document=system.species.document path="system.species" label="ARCHETYPE.SPECIES"}}
-                {{> documentReference document=system.faction.document path="system.faction" label="ARCHETYPE.FACTION"}}
+                {{> documentReference document=system.species path="system.species" label="ARCHETYPE.SPECIES"}}
+                {{> documentReference document=system.faction path="system.faction" label="ARCHETYPE.FACTION"}}
         </div>
         {{> nameListInput label="ARCHETYPE.KEYWORDS" list=system.keywords path="system.keywords"}}
 
-        {{> documentReference document=system.ability.document path="system.ability" label="ARCHETYPE.ABILITY"}}
+        {{> nameList path="system.abilities" list=system.abilities.list label="ARCHETYPE.ABILITY"}}
 
         <h2 class="sheet-divider">{{localize "ARCHETYPE.ATTRIBUTES"}}</h2>
         <div class="flexrow attributes">

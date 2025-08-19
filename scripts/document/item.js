@@ -20,46 +20,6 @@ export class WrathAndGloryItem extends WarhammerItem {
         return { text: this.description }
     }
 
-    // TODO move this to model
-    handleArchetypeItem(item)
-    {
-        if (["weapon", "weaponUpgrade", "armour", "gear", "ammo", "augmentic"].includes(item.type))
-        {
-            ui.notification.error("Open the Choice Config window to add Wargear.")
-        }
-        if(item.type == "ability")
-        {
-            return this.update(this.system.ability.set(item));
-        }
-        if(item.type == "faction")
-        {
-            return this.update(this.system.faction.set(item));
-        }
-        if(item.type == "species")
-        {
-            return this.update(this.system.species.set(item));
-        }
-        if (item.type == "talent")
-        {
-            this.update(this.system.suggested.talents.add(item));
-        }
-        if (item.type == "keyword")
-        {
-            let keywords = duplicate(this.keywords)
-            keywords.push(item.name)
-            this.update({"system.keywords" : keywords})
-        }
-    }
-
-    // TODO move this to model
-    handleSpeciesItem(item)
-    {
-        if(item.type == "ability")
-        {
-            return this.update(this.system.abilities.add(item));
-        }
-    }
-
     async addCondition(effect) {
         if (typeof (effect) === "string")
             effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
@@ -145,7 +105,7 @@ export class WrathAndGloryItem extends WarhammerItem {
         let faction = await this.system.faction.document;
 
         let speciesAbilities = await species.system.abilities.awaitDocuments();
-        let archetypeAbility = await this.system.ability.document;
+        let archetypeAbilities = await this.system.abilities.documents;
         let keywords = this.keywords.map(WNGUtility.getKeywordItem)
 
 
@@ -156,7 +116,7 @@ export class WrathAndGloryItem extends WarhammerItem {
             [species],
             [this],
             [faction],
-            [archetypeAbility],
+            archetypeAbilities,
             speciesAbilities,
             keywords)))
             .filter(i => i)

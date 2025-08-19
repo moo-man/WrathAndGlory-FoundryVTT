@@ -8,7 +8,7 @@ export default class CharacterCreation extends FormApplication {
         this.archetype = object.archetype.clone();
         this.species = object.archetype.species.document;
         this.faction = object.archetype.faction.document;
-        this.archetypeAbility = object.archetype.ability.document;
+        this.archetypeAbilities = object.archetype.system.abilities.documents;
         this.speciesAbilities = []; // Must be awaited if species is a promise
         this.wargear = this.archetype.system.wargear.clone();
         this.addedTalents = [];
@@ -60,7 +60,7 @@ export default class CharacterCreation extends FormApplication {
         let data = super.getData();
         this.species = await this.species;
         this.faction = await this.faction;
-        this.archetypeAbility = await this.archetypeAbility
+        this.archetypeAbilities = await this.archetype.system.abilities.awaitDocuments();
         this.speciesAbilities = await this.species.system.abilities.awaitDocuments()
 
         await this.initializeCharacter()
@@ -70,7 +70,7 @@ export default class CharacterCreation extends FormApplication {
         data.archetype = this.archetype;
         data.species = this.species;
         data.faction = this.faction;
-        data.archetypeAbility = this.archetypeAbility
+        data.archetypeAbilities = this.archetypeAbilities
         data.speciesAbilities = this.speciesAbilities
         data.enrichment = await this._handleEnrichment(data)
         data.wargearHTML = this.constructWargearHTML();
@@ -81,9 +81,9 @@ export default class CharacterCreation extends FormApplication {
     {   
         let enrichment = {};
 
-        if (data.archetypeAbility)
+        for(let ability of this.archetypeAbilities)
         {
-            enrichment[data.archetypeAbility.id] = await TextEditor.enrichHTML(data.archetypeAbility.description);
+            enrichment[ability.id] = await TextEditor.enrichHTML(ability.system.description);
         }
         for(let ability of data.speciesAbilities)
         {
@@ -230,8 +230,8 @@ export default class CharacterCreation extends FormApplication {
         let items = [
             this.archetype?.toObject(), 
             this.species?.toObject(), 
-            faction,
-            this.archetypeAbility?.toObject()]
+            faction]
+            .concat(this.archetypeAbilities.map(i => i?.toObject()).filter(i => i))
             .concat(wargear.filter(i => i).map(e => e?.toObject()))
             .concat(this.speciesAbilities.map(a=> a?.toObject()))
             .concat(this.addedTalents)

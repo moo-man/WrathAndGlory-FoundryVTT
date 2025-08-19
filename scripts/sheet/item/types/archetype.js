@@ -29,7 +29,7 @@ export default class ArchetypeSheet extends WnGItemSheet {
 
     if (item.type == "ability")
     {
-      this.document.update(this.document.system.ability.set(item));
+      this.document.update(this.document.system.abilities.add(item));
     }
     else if (item.type == "species")
     {
@@ -41,7 +41,14 @@ export default class ArchetypeSheet extends WnGItemSheet {
     }
     else if (item.type == "talent")
     {
-      this.document.update(this.document.system.suggested.talents.add(item));
+      if (ev.target.closest("[data-path='system.abilities']"))
+      {
+        this.document.update(this.document.system.abilities.add(item));
+      }
+      else 
+      {
+        this.document.update(this.document.system.suggested.talents.add(item));
+      }
     }
     else if (item.type == "keyword")
     {

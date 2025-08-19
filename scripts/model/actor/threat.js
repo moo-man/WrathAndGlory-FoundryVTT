@@ -37,7 +37,7 @@ export class ThreatModel extends StandardWNGActorModel {
         super.migrateData(data);
         if (typeof data.mob == "number")
         {
-            data.mob = {value : data.mob, abilites : []}
+            data.mob = {value : data.mob, abilities : []}
         }
     }
 

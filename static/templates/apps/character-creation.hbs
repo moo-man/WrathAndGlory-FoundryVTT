@@ -96,15 +96,17 @@
                 </div>
 
                 <h4>Ability</h4>
+                {{#each archetypeAbilities}}
                 <div class="ability">
                     <div class="ability-header">
-                        <img src="{{archetypeAbility.img}}">
-                        <label>{{archetypeAbility.name}}</label>
+                        <img src="{{this.img}}">
+                        <label>{{this.name}}</label>
                     </div>
                     <div class="ability-description">
-                        {{{lookup enrichment archetypeAbility.id}}}
+                        {{{lookup ../enrichment this.id}}}
                     </div>
                 </div>
+                {{/each}}
 
                 <h4>Wargear</h4>
                 <div class="wargear">

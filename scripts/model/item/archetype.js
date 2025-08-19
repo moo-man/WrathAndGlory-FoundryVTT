@@ -18,7 +18,8 @@ export class ArchetypeModel extends BaseItemModel
         schema.keywords = new fields.ArrayField(new fields.StringField());
         schema.attributes = Attributes();
         schema.skills = Skills();
-        schema.ability = new fields.EmbeddedDataField(DeferredReferenceModel)
+        schema.ability = new fields.EmbeddedDataField(DeferredReferenceModel) // Deprecated in favor of abilities
+        schema.abilities = new fields.EmbeddedDataField(DeferredReferenceListModel)
         schema.wargear = new fields.EmbeddedDataField(ChoiceModel)
         schema.suggested = new fields.SchemaField({
             attributes : Attributes(),
@@ -34,6 +35,11 @@ export class ArchetypeModel extends BaseItemModel
         if (data.suggested.talents instanceof Array)
         {
             data.suggested.talents = {list : data.suggested.talents};
+        }
+
+        if (!data.abilities || data.abilities.length == 0 && (data.ability?.uuid || data.ability?.id))
+        {
+            data.abilities = {list: [{uuid : data.ability.uuid, id : data.ability.id, name : data.ability.name}]};
         }
 
 
@@ -114,7 +120,7 @@ export class ArchetypeModel extends BaseItemModel
 
     async toEmbed(config, options)
     {
-        let ability = await this.ability.document;
+        let abilities = await this.abilities.awaitDocuments();
         let species = await this.species.document;
         let talents = await this.suggested.talents.awaitDocuments();
         let html = `
@@ -161,7 +167,7 @@ export class ArchetypeModel extends BaseItemModel
         </tr>
         <tr>
             <td colspan="8" style="background-color:rgba(0, 0, 0, 0.2)">
-                <p><strong>ARCHETYPE ABILITY</strong>: @UUID[${ability?.uuid}]{${ability?.name}}</p>
+                <p><strong>ARCHETYPE ABILITY</strong>: ${abilities.map(i => `@UUID[${i?.uuid}]{${i?.name}}`).join(", ")}</p>
             </td>
         </tr>
         <tr>
