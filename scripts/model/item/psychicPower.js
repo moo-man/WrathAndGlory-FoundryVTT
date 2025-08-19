@@ -57,4 +57,35 @@ export class PsychicPowerModel extends StandardItemModel
         }
     }
 
+    async toEmbed(config, options)
+    {
+        let html = `
+        <h4>@UUID[${this.parent.uuid}]{${this.parent.name}}</h4>
+        <p><strong>XP Cost</strong>: ${this.cost}</p>
+        <p><strong>DN</strong>: ${this.dn}</p>
+        <p><strong>Activation</strong>: ${this.Activation}</p>
+        <p><strong>Duration</strong>: ${this.duration}</p>
+        <p><strong>Range</strong>: ${this.range}</p>
+        <p><strong>Multi-target</strong>: ${this.multiTarget ? "Yes" : "No"}</p>
+        <p><strong>Keywords</strong>: ${this.keywords.split(",").map(i => `<a class="keyword">${i.trim()}</a>`).join(", ")}</p>
+        <p><strong>Prerequisite</strong>: ${this.prerequisites}</p>
+        ${this.description.replace("<p>", "<p><strong>Effect</strong>: ")}</p>
+        `;
+
+        if (this.potency.list.length)
+        {
+            html += `
+            <p><strong>Potency:</strong></p>
+            <ul>
+            ${this.potency.list.map(p => `<li>[${p.cost}] ${p.description}</li>`).join("")}
+            </ul>
+            `
+        }
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
+
 }

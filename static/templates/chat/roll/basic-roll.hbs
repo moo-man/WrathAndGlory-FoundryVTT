@@ -1,0 +1,12 @@
+<div class="wrath-and-glory chat roll">
+    <div class="dice-container">
+        {{#each dice as |die|}}
+            <a class="die {{die.name}} unshifted"><img src="{{die.img}}" />
+            </a>
+        {{/each}}
+    </div>
+
+    <div class="wrapper-input">
+        <p class="centered"><strong>{{localize "CHAT.ICONS"}}: {{icons}}</strong></p>
+    </div>
+</div>
