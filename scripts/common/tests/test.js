@@ -185,7 +185,7 @@ export class WNGTest extends WarhammerTestBase {
     if (this.result.isSuccess)
       this.computeDamage() 
 
-    if (this.item?.hasTest && !this.item.system.test.self) this.result.test = duplicate(this.item.test);
+    if (this.item?.hasTest && !this.item.system.test.self) this.result.test = this.item.system.test.toObject(false);
 
   }
 

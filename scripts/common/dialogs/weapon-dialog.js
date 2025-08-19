@@ -87,7 +87,7 @@ async _prepareContext(options)
     this.fields.ap.value += weapon.system.damage.ap.base + weapon.system.damage.ap.bonus + (weapon.system.damage.ap.rank * this.actor.system.advances?.rank || 0)
 
     if (weapon.isMelee) {
-      this.fields.damage += this.actor.system.attributes.strength.total
+      this.fields.damage += this.actor.system.attributes[weapon.system.damage.attribute || "strength"].total
     }
     this.tooltips.finish(this, "Weapon")
 

@@ -42,7 +42,7 @@ export default class AbilityRoll extends WNGTest {
   _computeResult()
   {
     this.data.result = {}
-    if (this.item.hasTest) this.result.test = duplicate(this.item.test);
+    if (this.item.hasTest) this.result.test = this.item.system.test.toObject(false);
     this.result.isSuccess = true;
     if (this.testData.damage)
     {

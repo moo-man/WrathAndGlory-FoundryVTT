@@ -114,7 +114,6 @@ export class WrathAndGloryActor extends WarhammerActor {
             case "determination":
                 context.title = game.i18n.localize(`ROLL.DETERMINATION`)
                 context.noDn = true;
-                context.noWrath = true;
                 options.resolveClose = true;
                 return this._setupTest(CommonDialog, DeterminationRoll, {pool : this.system.combat.determination.total,}, context, options)
             case "corruption":
@@ -209,7 +208,7 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (ability.system.test.self)
         {
-            return this.setupTestFromItem(ability, {item : ability}, options);
+            return this.setupTestFromItem(ability, {item : ability}, options, ability);
         }
 
         if (this.type == "threat" && ability.type == "ability" && ability.system.cost)
@@ -249,11 +248,11 @@ export class WrathAndGloryActor extends WarhammerActor {
         if (item)
         {
             context.appendTitle = ` - ${item.name}`;
-            return this.setupTestFromData(item.system.test, context, options);
+            return this.setupTestFromData(item.system.test, context, options, item);
         }
     }
 
-    async setupTestFromData(data, context={}, options)
+    async setupTestFromData(data, context={}, options, item)
     {
         let dn = data.dn;
         let type = data.type;
@@ -266,7 +265,14 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
         else if (type == "skill")
         {       
-            return this.setupSkillTest(specification, context, options)
+            if (item?.system.damage?.enabled)
+            {
+                return this.setupWeaponTest(item, context, options);
+            }
+            else 
+            {
+                return this.setupSkillTest(specification, context, options)
+            }
         }
         else if (type == "resolve")
         {

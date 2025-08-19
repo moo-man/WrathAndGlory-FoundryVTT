@@ -356,6 +356,7 @@ WNG.premiumModules = {
     "wng-cos" : "Church of Steel",
     "wng-xenos" : "Threat Assessment: Xenos",
     "wng-starter-set" : "Starter Set",
+    "wng-records2" : "Redacted Records: Vol. II",
 }
 
 WNG.transferTypes = {
@@ -813,7 +814,6 @@ WNG.traitEffects = {
                         trigger: "rollWeaponTest"
                     }
                 ]
-                //TODO
             }
         },
         unwieldy: {

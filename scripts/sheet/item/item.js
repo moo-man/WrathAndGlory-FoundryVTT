@@ -146,7 +146,7 @@ export default class WnGItemSheet extends WarhammerItemSheetV2
     {
       if (this.item.type == "weaponUpgrade" || this.item.type == "ammo")
         {
-          let type = ev.currentTarget.classList.contains("add") ? "add" : "remove"
+          let type = target.dataset.type;
           new ItemTraits(this.item, {type}).render(true)
         }
         else 
