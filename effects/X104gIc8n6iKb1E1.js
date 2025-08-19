@@ -1,0 +1,1 @@
+this.effect.flags.used = false;

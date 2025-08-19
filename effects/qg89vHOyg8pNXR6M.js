@@ -1,0 +1,1 @@
+args.modifiers.ap.push({label : this.effect.name, value: -2 * this.effect.sourceActor.system.advances.rank})

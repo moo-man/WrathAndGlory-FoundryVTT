@@ -1,0 +1,1 @@
+this.actor.addCondition("vulnerable", {[game.system.id] : {value : 2 + (2 * (this.effect.sourceTest?.testData.shifted.vulnerable.dice.length || 0))}})

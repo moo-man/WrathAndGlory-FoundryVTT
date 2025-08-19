@@ -1,0 +1,1 @@
+this.actor.addCondition("hindered", {[game.system.id] : {value : 2 + (2 * (this.effect.sourceTest?.testData.shifted.hindered.dice.length || 0))}})

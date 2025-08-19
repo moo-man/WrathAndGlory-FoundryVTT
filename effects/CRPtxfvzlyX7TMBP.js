@@ -1,0 +1,1 @@
+return !["athletics", "insight", "investigation", "medicae", "survival", "tech"].includes(args.skill)

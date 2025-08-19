@@ -1,0 +1,1 @@
+this.actor.applyDamage(0, {shock: this.actor.system.advances.rank});

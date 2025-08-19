@@ -1,0 +1,1 @@
+return !["deception", "cunning", "insight", "intimidation", "leadership", "persuasion"].includes(args.skill)

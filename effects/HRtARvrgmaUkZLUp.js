@@ -1,0 +1,1 @@
+return !["tech"].includes(args.skill)

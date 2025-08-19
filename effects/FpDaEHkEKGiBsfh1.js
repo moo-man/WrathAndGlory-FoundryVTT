@@ -1,0 +1,1 @@
+args.addShiftOption("hindered", "Hindered", "H")

@@ -1,0 +1,1 @@
+return !["cunning", "stealth", "ballistic skill", "weapon skill", "tech"].includes(args.skill)

@@ -1,0 +1,1 @@
+return args.selectedScripts.map(i => args.data.scripts[i]).some(i => i.label == "Supercharge Mode");

@@ -1,0 +1,1 @@
+return !["cunning"].includes(args.skill)

@@ -1,0 +1,1 @@
+return !args.weapon || !args.weapon?.system.isRanged || !args.weapon?.system.traits.has("supercharge");
