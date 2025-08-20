@@ -37,9 +37,9 @@ export default class WrathAndGloryCombatTracker extends CombatTracker {
         })
     }
 
-    async _onRender(options)
+    async _onRender(context, options)
     {
-        await super._onRender(options);
+        await super._onRender(context, options);
         this.element.querySelector("[data-action='nextTurn']")?.remove();
         this.element.querySelector("[data-action='previousTurn']")?.remove();
     }
