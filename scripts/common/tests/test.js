@@ -478,7 +478,7 @@ export class WNGTest extends WarhammerTestBase {
       type: "test",
       rolls: [this.roll],
       system: this.data,
-      user: game.user.id,
+      user: this.message?.user || game.user.id,
       rollMode: this.context.rollMode,
       content: html,
       speaker: this.context.speaker
