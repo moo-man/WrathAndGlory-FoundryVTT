@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="flex">
                                         <select data-action="editList" data-ipath="effect.id">
-                                                {{!-- {{selectOptions item.effects}} --}}
+                                                {{selectOptions ../item.effects.contents selected=this.effect.id labelAttr="name" valueAttr="id" blank=""}}
                                         </select>
                                 </div>
 
@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="flex">
                                         <select data-action="editList" data-ipath="effect.id">
-                                                {{!-- {{selectOptions item.effects}} --}}
+                                                {{selectOptions ../item.effects.contents selected=this.effect.id labelAttr="name" valueAttr="id" blank=""}}
                                         </select>
                                 </div>
 

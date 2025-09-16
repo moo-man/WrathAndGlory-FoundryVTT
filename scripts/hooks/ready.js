@@ -3,7 +3,7 @@ import FoundryOverrides from "../common/overrides.js"
 
 export default function() {
     Hooks.once("ready", () => {
-        SocketHandler.register();
+        SocketHandlers.register();
         WnGThemeConfig.setTheme();
         game.counter.render({force: true})
 

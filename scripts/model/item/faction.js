@@ -42,21 +42,21 @@ export class FactionModel extends StandardItemModel
     static migrateData(data)
     {
         super.migrateData(data);
-        for(let bg of data.backgrounds.origin)
+        for(let bg of (data.backgrounds?.origin || []))
         {
             if (typeof bg.effect == "string")
             {
                 bg.effect = {id : bg.effect}
             }
         }
-        for(let bg of data.backgrounds.accomplishment)
+        for(let bg of (data.backgrounds?.accomplishment || []))
         {
             if (typeof bg.effect == "string")
             {
                 bg.effect = {id : bg.effect}
             }
         }
-        for(let bg of data.backgrounds.goal)
+        for(let bg of (data.backgrounds?.goal || []))
         {
             if (typeof bg.effect == "string")
             {
