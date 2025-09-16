@@ -1,1 +1,1 @@
-return !args.actor.statuses.has("blinded")
+return !args.actor.statuses.has("blinded") || args.skill != "weaponSkill";

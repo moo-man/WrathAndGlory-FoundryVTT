@@ -1,1 +1,1 @@
-return ['weaponSkill', 'ballisticSkill', 'psychicMastery'].includes(args.skill)
+return args.actor.statuses.has("blinded") && args.skill == "weaponSkill";
