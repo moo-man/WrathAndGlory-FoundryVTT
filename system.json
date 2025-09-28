@@ -17,9 +17,6 @@
     },
     {
       "name": "Thul"
-    },
-    {
-      "name" : "Perfectro"
     }
   ],
   "scripts": ["./wrath-and-glory.js"],
