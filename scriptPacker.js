@@ -22,3 +22,4 @@ let scriptLoader = `export default function()
 
 fs.writeFileSync("./scripts/loadEffects.js", scriptLoader)
 console.log(`Packed ${count} scripts`);
+// delete this comment
