@@ -110,7 +110,7 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
 
             if (change.value.includes("@test")) {
                 let path = change.value.replace("@test.", "");
-                change.value = getProperty(this.sourceTest, path)?.toString() || "0";
+                change.value = foundry.utils.getProperty(this.sourceTest, path)?.toString() || "0";
             }
             else {
 

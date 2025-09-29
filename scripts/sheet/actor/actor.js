@@ -29,14 +29,14 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
       async _handleEnrichment()
       {
           let enrichment = {}
-          enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+          enrichment["system.notes"] = await foundry.applications.ux.TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
   
           for(let item of this.actor.items.contents)
           {
-              enrichment[item.id] = await TextEditor.enrichHTML(item.description);
+              enrichment[item.id] = await foundry.applications.ux.TextEditor.enrichHTML(item.description);
           }
   
-          return expandObject(enrichment)
+          return foundry.utils.expandObject(enrichment)
       }
 
       async _prepareContext(options)
@@ -184,7 +184,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
       {
           ev.preventDefault();
           let document = this._getDocument(ev);
-          this._toggleDropdown(ev, await TextEditor.enrichHTML(document.system.description, {secrets: this.document.owner, relativeTo : this.document}));
+          this._toggleDropdown(ev, await foundry.applications.ux.TextEditor.enrichHTML(document.system.description, {secrets: this.document.owner, relativeTo : this.document}));
       }
   
       static async _onToggleTrait(ev)
@@ -194,7 +194,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
         let trait = item.system.traits.list[index];
         let description = trait.description || game.wng.config.traitDescriptions[trait.name];
 
-        this._toggleDropdown(ev, await TextEditor.enrichHTML(description, {async: true, relativeTo: this.document, secrets: this.document.isOwner}));
+        this._toggleDropdown(ev, await foundry.applications.ux.TextEditor.enrichHTML(description, {async: true, relativeTo: this.document, secrets: this.document.isOwner}));
       }
 
       static async _onRollTest(ev, target)

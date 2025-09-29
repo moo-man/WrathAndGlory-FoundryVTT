@@ -137,7 +137,7 @@ export default class WnGItemSheet extends WarhammerItemSheetV2
     async _handleEnrichment() 
     {
         return foundry.utils.expandObject({
-            "system.description" : await TextEditor.enrichHTML(this.item.system.description, {async: true, secrets: this.item.isOwner, relativeTo: this.item})
+            "system.description" : await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.description, {async: true, secrets: this.item.isOwner, relativeTo: this.item})
         });
     }
 

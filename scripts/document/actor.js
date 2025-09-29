@@ -692,7 +692,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         if (!effect.flags)
             effect.flags = flags
         else
-            mergeObject(effect.flags, flags);
+            foundry.utils.mergeObject(effect.flags, flags);
 
         let existing = this.hasCondition(effect.id)
 

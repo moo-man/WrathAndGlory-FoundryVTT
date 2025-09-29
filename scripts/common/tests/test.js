@@ -472,7 +472,7 @@ export class WNGTest extends WarhammerTestBase {
   }
 
   async sendToChat({ newMessage = null, chatDataMerge = {} } = {}) {
-    const html = await renderTemplate(this.template, this);
+    const html = await foundry.applications.handlebars.renderTemplate(this.template, this);
     let chatData = {
       _id : randomID(),
       type: "test",
@@ -600,13 +600,13 @@ export class WNGTest extends WarhammerTestBase {
 
 
 
-export class PoolDie extends Die {
+export class PoolDie extends foundry.dice.terms.Die {
   constructor(termData) {
     termData.faces = 6;
     if (!termData.options || !termData.options.values)
-      setProperty(termData, "options.values", { 1: 0, 2: 0, 3: 0, 4: 1, 5: 1, 6: 2 })
+      foundry.utils.setProperty(termData, "options.values", { 1: 0, 2: 0, 3: 0, 4: 1, 5: 1, 6: 2 })
     if (!termData.options || !termData.options.add)
-      setProperty(termData, "options.add", 0)
+      foundry.utils.setProperty(termData, "options.add", 0)
     super(termData);
   }
 
@@ -663,7 +663,7 @@ export class PoolDie extends Die {
 
 
 
-export class WrathDie extends Die {
+export class WrathDie extends foundry.dice.terms.Die {
   constructor(termData) {
     termData.faces = 6;
     super(termData);

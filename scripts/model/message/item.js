@@ -10,7 +10,7 @@ export class PostedItemMessageModel extends WarhammerMessageModel
 
     static async postItem(item, mergeData={})
     {
-        const html = await renderTemplate("systems/wrath-and-glory/templates/chat/item.hbs", { item, data: item.system });
+        const html = await foundry.applications.handlebars.renderTemplate("systems/wrath-and-glory/templates/chat/item.hbs", { item, data: item.system });
         const chatData = foundry.utils.mergeObject({
             user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),

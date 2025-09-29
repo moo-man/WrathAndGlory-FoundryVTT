@@ -1132,4 +1132,4 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         }
     }])
 
-export default mergeObject(defaultWarhammerConfig, WNG);
+export default foundry.utils.mergeObject(defaultWarhammerConfig, WNG);

@@ -83,11 +83,11 @@ export default class CharacterCreation extends FormApplication {
 
         for(let ability of this.archetypeAbilities)
         {
-            enrichment[ability.id] = await TextEditor.enrichHTML(ability.system.description);
+            enrichment[ability.id] = await foundry.applications.ux.TextEditor.enrichHTML(ability.system.description);
         }
         for(let ability of data.speciesAbilities)
         {
-            enrichment[ability.id] = await TextEditor.enrichHTML(ability.description);
+            enrichment[ability.id] = await foundry.applications.ux.TextEditor.enrichHTML(ability.system.description);
         }
         return enrichment
     }
@@ -186,7 +186,7 @@ export default class CharacterCreation extends FormApplication {
                 {
                     let key = effect.changes[0].key
                     // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect
-                    this.character.updateSource({[key] : getProperty(this.character, key) + 1})
+                    this.character.updateSource({[key] : foundry.utils.getProperty(this.character, key) + 1})
                 }
                 else 
                 {
@@ -425,7 +425,7 @@ export default class CharacterCreation extends FormApplication {
             else 
                 stat = parent.attr("data-skill")
             
-            let statObj = getProperty(this.character.toObject(false), `system.${target}.${stat}`)
+            let statObj = foundry.utils.getProperty(this.character.toObject(false), `system.${target}.${stat}`)
 
             if (ev.target.classList.contains("inc"))
             {
@@ -439,7 +439,7 @@ export default class CharacterCreation extends FormApplication {
             }
 
             // Can't go to 0 or base character, and can't go above species max
-            if (statObj.total <= 0 || statObj.total < getProperty(this.baseCharacter, `system.${target}.${stat}.total`) || (target == "attributes" && (statObj.total > getProperty(this.species, `attributeMax.${stat}`))))
+            if (statObj.total <= 0 || statObj.total < foundry.utils.getProperty(this.baseCharacter, `system.${target}.${stat}.total`) || (target == "attributes" && (statObj.total > foundry.utils.getProperty(this.species, `attributeMax.${stat}`))))
                 return;
 
             this.character.updateSource({[`system.${target}.${stat}.rating`] : statObj.rating})
@@ -525,7 +525,7 @@ export default class CharacterCreation extends FormApplication {
             <a class="talent-delete"><i class="fas fa-times"></i></a>
         </div>
         <div class="ability-description">
-            ${await TextEditor.enrichHTML(talent.description, {async: true})}
+            ${await foundry.applications.ux.TextEditor.enrichHTML(talent.description, {async: true})}
         </div>
         </div>`
 

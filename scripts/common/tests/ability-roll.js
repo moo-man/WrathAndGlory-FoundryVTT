@@ -36,7 +36,7 @@ export default class AbilityRoll extends WNGTest {
 
   async rollTest() {
     this._computeResult();
-    this.result.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
+    this.result.enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
   }
 
   _computeResult()
@@ -52,7 +52,7 @@ export default class AbilityRoll extends WNGTest {
   
   async sendToChat({ newMessage = null, chatDataMerge = {} } = {}) {
 
-    const html = await renderTemplate(this.template, this);
+    const html = await foundry.applications.handlebars.renderTemplate(this.template, this);
     let chatData = {
       _id : randomID(),
       type: "test",

@@ -84,21 +84,21 @@ export class WrathAndGloryCombatant extends Combatant {
     setCurrent() 
     {
         let data = this.toObject()
-        setProperty(data, "flags.wrath-and-glory.combatStatus", "current")
+        foundry.utils.setProperty(data, "flags.wrath-and-glory.combatStatus", "current")
         return data
     }
 
     setPending()
     {
         let data = this.toObject()
-        setProperty(data, "flags.wrath-and-glory.combatStatus", "pending")
+        foundry.utils.setProperty(data, "flags.wrath-and-glory.combatStatus", "pending")
         return data
     }
 
     setComplete()
     {
         let data = this.toObject()
-        setProperty(data, "flags.wrath-and-glory.combatStatus", "complete")
+        foundry.utils.setProperty(data, "flags.wrath-and-glory.combatStatus", "complete")
         data.active = false;
         return data
     }

@@ -110,7 +110,7 @@ export default class WNGUtility {
   static async tableToHTML(table, label, options=[]) 
   {
       let noCenter = options.includes("no-center");
-      return await TextEditor.enrichHTML(`<table class="wng-generated" border="1"> 
+      return await foundry.applications.ux.TextEditor.enrichHTML(`<table class="wng-generated" border="1"> 
       <thead>
       <tr class="table-header"><td colspan="2">@UUID[${table.uuid}]{${table.name}}</td></tr>
       <tr class="table-col-header">

@@ -56,7 +56,7 @@ export class VehicleSheet extends WnGActorSheet {
             unassigned: []
         }
         context.system.complement.list.forEach((i, index) => {
-            context.complement[i.type || "unassigned"].push(mergeObject(i, { index }));
+            context.complement[i.type || "unassigned"].push(foundry.utils.mergeObject(i, { index }));
         })
 
         context.complement.pilot = this._padComplementList(context.complement.pilot, context.system.complement.pilot)

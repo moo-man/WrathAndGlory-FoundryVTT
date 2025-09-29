@@ -56,11 +56,11 @@ export default class PowerTest extends WNGTest {
     this.result.potency.options.forEach(p => {
       // Set initial potency values (before potency allocation)
       if (p.property)
-        setProperty(this.result, p.property, hasProperty(this.result, p.property) ? getProperty(this.result, p.property) : p.initial) // If property already exists, use that as initial
+        foundry.utils.setProperty(this.result, p.property, foundry.utils.hasProperty(this.result, p.property) ? foundry.utils.getProperty(this.result, p.property) : p.initial) // If property already exists, use that as initial
 
       
       // Mainly for Range - try to accomodate for string range values (10 m) by replacing only numeric content
-      let propValue = getProperty(this.result, p.property)
+      let propValue = foundry.utils.getProperty(this.result, p.property)
       let addToValue = (p.allocation * p.value)
       let newValue
       if (!Number.isNumeric(propValue) && Number.isNumeric(parseInt(propValue))) // If property to add is not numeric
@@ -73,7 +73,7 @@ export default class PowerTest extends WNGTest {
 
 
       if (p.property)
-        setProperty(this.result, p.property, newValue) 
+        foundry.utils.setProperty(this.result, p.property, newValue) 
 
       this.result.potency.spent += p.cost * p.allocation
 

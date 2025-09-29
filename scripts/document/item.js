@@ -7,8 +7,8 @@ export class WrathAndGloryItem extends WarhammerItem {
 
     _preUpdate(updateData, options, user) {
         // TODO Move this to model
-        if (getProperty(updateData, "system.type") == "corruption")
-            setProperty(updateData, "system.specification", "corruption")
+        if (foundry.utils.getProperty(updateData, "system.type") == "corruption")
+            foundry.utils.setProperty(updateData, "system.specification", "corruption")
     }
 
     async postItem() {
@@ -180,7 +180,7 @@ export class WrathAndGloryItem extends WarhammerItem {
                 if (!e.changes.length)
                     return true
                 return e.changes.some(c => {
-                    return !hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item, and isn't a dialog effect
+                    return !foundry.utils.hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item, and isn't a dialog effect
                 })
             })
             return effects

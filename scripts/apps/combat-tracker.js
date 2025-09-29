@@ -1,5 +1,5 @@
 
-export default class WrathAndGloryCombatTracker extends CombatTracker {
+export default class WrathAndGloryCombatTracker extends foundry.applications.sidebar.tabs.CombatTracker {
 
   static DEFAULT_OPTIONS = {
     actions: {

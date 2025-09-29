@@ -22,14 +22,14 @@ export default function() {
   /**
    * @override Draw token bars in reverse
    */
-  Token.prototype._drawBar = function(number, bar, data) {
+  foundry.canvas.placeables.Token.prototype._drawBar = function(number, bar, data) {
     const val = Number(data.value);
-    const pct = 1 - Math.clamped(val, 0, data.max) / data.max;
+    const pct = 1 - Math.clamp(val, 0, data.max) / data.max;
 
     // Determine sizing
     let h = Math.max((canvas.dimensions.size / 12), 8);
     const w = this.w;
-    const bs = Math.clamped(h / 8, 1, 2);
+    const bs = Math.clamp(h / 8, 1, 2);
     if ( this.height >= 2 ) h *= 1.6;  // Enlarge the bar for large tokens
 
     // Determine the color to use
@@ -49,7 +49,7 @@ export default function() {
   }
 
 
-  Token.prototype.drawMobNumber = function() {
+  foundry.canvas.placeables.Token.prototype.drawMobNumber = function() {
     let actor = this.document?.actor
     if (actor && actor.type == "threat" && actor.isMob)
     {

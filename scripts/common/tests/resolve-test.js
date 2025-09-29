@@ -7,7 +7,8 @@ export default class ResolveTest  extends WNGTest {
     if (foundry.utils.isEmpty(data))  
       return
 
-      this.testData.type = data.type
+      this.context.fear = data.context.fear;
+      this.context.terror = data.context.terror;
   }
 
   get template() {
@@ -61,11 +62,11 @@ export default class ResolveTest  extends WNGTest {
   }
 
   get terror() {
-    return this.testData.type == "terror";
+    return this.context.terror;
   }
 
   get fear() {
-    return this.testData.type == "fear"
+    return this.context.fear;
   }
 
 

@@ -460,20 +460,20 @@ export default class Migration {
         {
             if (data.transfer == false && document.parent.type != "ammo")
             {
-                setProperty(data, "system.transferData.type", "target");
+                foundry.utils.setProperty(data, "system.transferData.type", "target");
             }
             if (document.parent.type == "ammo")
             {
-                setProperty(data, "system.transferData.type", "document");
-                setProperty(data, "system.transferData.documentType", "Item");
+                foundry.utils.setProperty(data, "system.transferData.type", "document");
+                foundry.utils.setProperty(data, "system.transferData.documentType", "Item");
 
             }
-            setProperty(data, "flags.wrath-and-glory.migrated", true);
+            foundry.utils.setProperty(data, "flags.wrath-and-glory.migrated", true);
         }
 
         if (document.parent.documentName == "Item" && document.parent.type == "psychicPower" && data.system?.transferData?.type == "document")
         {
-            setProperty(data, "system.transferData.type", "target");
+            foundry.utils.setProperty(data, "system.transferData.type", "target");
         }
     
         if (migrateScripts) 
@@ -531,7 +531,7 @@ export default class Migration {
 
 
             data.changes = data.changes.filter(i => i.mode < 6);
-            setProperty(data, "system.scriptData", scriptData)
+            foundry.utils.setProperty(data, "system.scriptData", scriptData)
         }
         return data;
     }

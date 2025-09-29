@@ -31,11 +31,11 @@ export default function() {
             let item = game.items.find(i => i.name == a.textContent && i.type == "keyword")
 
             if (game.wng.config.keywordDescriptions &&  game.wng.config.keywordDescriptions[a.textContent])
-                a.dataset.tooltip = await TextEditor.enrichHTML(game.wng.config.keywordDescriptions[a.textContent], {async: true})
+                a.dataset.tooltip = await foundry.applications.ux.TextEditor.enrichHTML(game.wng.config.keywordDescriptions[a.textContent], {async: true})
 
             else if (item)
             {
-                a.dataset.tooltip = await TextEditor.enrichHTML(item.system.description, {async : true})
+                a.dataset.tooltip = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, {async : true})
             }
 
             a.addEventListener("click", (ev) => {

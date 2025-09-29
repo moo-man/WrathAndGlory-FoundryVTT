@@ -172,22 +172,22 @@ export class WeaponModel extends EquippedItemModel
         {
             let key = change.key.replace("system.ed", "system.damage.ed").replace("system.ap", "system.damage.ap");
 
-            if (hasProperty(this.parent, key)) 
+            if (foundry.utils.hasProperty(this.parent, key)) 
             {
 
                 if (change.mode == CONST.ACTIVE_EFFECT_MODES.ADD) 
                 {
-                    setProperty(this.parent, key, getProperty(this.parent, key) + Number(change.value))
+                    foundry.utils.setProperty(this.parent, key, foundry.utils.getProperty(this.parent, key) + Number(change.value))
                 }
                 else if (change.mode == CONST.ACTIVE_EFFECT_MODES.OVERRIDE) 
                 {
-                    setProperty(this.parent, key, change.value)
+                    foundry.utils.setProperty(this.parent, key, change.value)
                 }
                 else if (change.mode == CONST.ACTIVE_EFFECT_MODES.UPGRADE) 
                 {
-                    if (change.value > getProperty(this.parent, key))
+                    if (change.value > foundry.utils.getProperty(this.parent, key))
                     {
-                        setProperty(this.parent, key, change.value)
+                        foundry.utils.setProperty(this.parent, key, change.value)
                     }
                 }
             }

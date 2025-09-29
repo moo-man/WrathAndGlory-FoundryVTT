@@ -30,7 +30,7 @@ export class BasicRoll {
 
   async getMessageContent()
   {
-    let html = await renderTemplate("systems/wrath-and-glory/templates/chat/roll/basic-roll.hbs", {dice : this.dice, icons : this.icons})
+    let html = await foundry.applications.handlebars.renderTemplate("systems/wrath-and-glory/templates/chat/roll/basic-roll.hbs", {dice : this.dice, icons : this.icons})
     return html;
   }
 

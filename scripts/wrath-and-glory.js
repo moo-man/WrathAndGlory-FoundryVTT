@@ -78,39 +78,38 @@ Hooks.once("init", () => {
   CONFIG.ActiveEffect.documentClass = WrathAndGloryEffect;
   CONFIG.ChatMessage.documentClass = WnGChatMessage;
   CONFIG.RollTable.documentClass = WarhammerRollTable
-  DocumentSheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", DataslatePageSheet, { types : ["text"], makeDefault: false, label : "Data Slate" });
 
-CONFIG.ActiveEffect.dataModels["base"] = WrathAndGloryActiveEffectModel
-CONFIG.ChatMessage.dataModels["test"] = WrathAndGloryTestMessageModel;
-CONFIG.ChatMessage.dataModels["damage"] = WrathAndGloryDamageMessageModel;
-CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
+  const sheetConfig = foundry.applications.apps.DocumentSheetConfig
+  sheetConfig.registerSheet(JournalEntryPage, "wrath-and-glory", DataslatePageSheet, { types : ["text"], makeDefault: false, label : "Data Slate" });
 
-DocumentSheetConfig.registerSheet(ActiveEffect, "system", WrathAndGloryActiveEffectConfig, {makeDefault : true});
+  CONFIG.ActiveEffect.dataModels["base"] = WrathAndGloryActiveEffectModel
+  CONFIG.ChatMessage.dataModels["test"] = WrathAndGloryTestMessageModel;
+  CONFIG.ChatMessage.dataModels["damage"] = WrathAndGloryDamageMessageModel;
+  CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
 
-Actors.unregisterSheet("core", ActorSheet);
-Actors.registerSheet("wrath-and-glory", AgentSheet, { types: ["agent"], makeDefault: true });
-Actors.registerSheet("wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
-Actors.registerSheet("wrath-and-glory", VehicleSheet, { types: ["vehicle"], makeDefault: true });
+  sheetConfig.registerSheet(ActiveEffect, "system", WrathAndGloryActiveEffectConfig, {makeDefault : true});
 
-Items.unregisterSheet("core", ItemSheet);
-Items.registerSheet("wrath-and-glory", AbilitySheet, {types : ["ability"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", AmmoSheet, {types : ["ammo"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", ArchetypeSheet, {types : ["archetype"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", ArmourSheet, {types : ["armour"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", AscensionSheet, {types : ["ascension"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", AugmeticSheet, {types : ["augmentic"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", GearSheet, {types : ["gear"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", KeywordSheet, {types : ["keyword"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", MemorableInjurySheet, {types : ["memorableInjury"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", TraumaticInjurySheet, {types : ["traumaticInjury"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", MutationSheet, {types : ["mutation"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", SpeciesSheet, {types : ["species"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", TalentSheet, {types : ["talent"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", WeaponUpgradeSheet, {types : ["weaponUpgrade"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", WeaponSheet, {types : ["weapon"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", FactionSheet, {types : ["faction"], makeDefault : true});
-Items.registerSheet("wrath-and-glory", PsychicPowerSheet, {types : ["psychicPower"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Actor.documentClass,"wrath-and-glory", AgentSheet, { types: ["agent"], makeDefault: true });
+  sheetConfig.registerSheet(CONFIG.Actor.documentClass,"wrath-and-glory", ThreatSheet, { types: ["threat"], makeDefault: true });
+  sheetConfig.registerSheet(CONFIG.Actor.documentClass,"wrath-and-glory", VehicleSheet, { types: ["vehicle"], makeDefault: true });
 
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", AbilitySheet, {types : ["ability"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", AmmoSheet, {types : ["ammo"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", ArchetypeSheet, {types : ["archetype"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", ArmourSheet, {types : ["armour"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", AscensionSheet, {types : ["ascension"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", AugmeticSheet, {types : ["augmentic"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", GearSheet, {types : ["gear"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", KeywordSheet, {types : ["keyword"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", MemorableInjurySheet, {types : ["memorableInjury"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", TraumaticInjurySheet, {types : ["traumaticInjury"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", MutationSheet, {types : ["mutation"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", SpeciesSheet, {types : ["species"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", TalentSheet, {types : ["talent"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", WeaponUpgradeSheet, {types : ["weaponUpgrade"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", WeaponSheet, {types : ["weapon"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", FactionSheet, {types : ["faction"], makeDefault : true});
+  sheetConfig.registerSheet(CONFIG.Item.documentClass, "wrath-and-glory", PsychicPowerSheet, {types : ["psychicPower"], makeDefault : true});
   
   if (game.settings.get("wrath-and-glory", "initiativeRollOption"))
   {

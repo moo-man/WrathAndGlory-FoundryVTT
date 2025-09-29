@@ -19,7 +19,7 @@ export default class AscensionSheet extends WnGItemSheet {
   async _handleEnrichment() 
   {
       return foundry.utils.mergeObject(await super._handleEnrichment(), foundry.utils.expandObject({
-          "system.benefits" : await TextEditor.enrichHTML(this.item.system.benefits, {async: true, secrets: this.item.isOwner, relativeTo: this.item})
+          "system.benefits" : await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.benefits, {async: true, secrets: this.item.isOwner, relativeTo: this.item})
       }));
   }
 

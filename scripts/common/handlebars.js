@@ -18,7 +18,7 @@ export const initializeHandlebars = () => {
     "systems/wrath-and-glory/templates/chat/roll/mutation/mutation-result.hbs",
     "systems/wrath-and-glory/templates/chat/roll/mutation/mutation-buttons.hbs",
   ];
-  loadTemplates({
+  foundry.applications.handlebars.loadTemplates({
     chatTargets : "systems/wrath-and-glory/templates/partials/chat-targets.hbs",
     listEffect : "systems/wrath-and-glory/templates/partials/list-effect.hbs",
     testDetails : "systems/wrath-and-glory/templates/item/partials/test.hbs",
@@ -28,5 +28,5 @@ export const initializeHandlebars = () => {
     damage : "systems/wrath-and-glory/templates/item/partials/damage.hbs",
     combatant : "systems/wrath-and-glory/templates/apps/combatant.hbs"
   })
-  return loadTemplates(templatePaths);
+  return foundry.applications.handlebars.loadTemplates(templatePaths);
 };
