@@ -238,7 +238,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         roll.sendToChat();
     }
 
-    async setupTestFromItem(item, context, options)
+    async setupTestFromItem(item, context={}, options={})
     {
         if (typeof item == "string")
         {
@@ -437,6 +437,8 @@ export class WrathAndGloryActor extends WarhammerActor {
         ap += modifiers.ap.reduce((acc, mod) => acc + mod.value, 0);
         mortal += modifiers.mortal.reduce((acc, mod) => acc + mod.value, 0);
         res += modifiers.resilience.reduce((acc, mod) => acc + mod.value, 0);
+        
+        addModifierBreakdown("resilience", "Resilience");
 
         if (invuln)
         {

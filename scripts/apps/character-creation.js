@@ -60,8 +60,18 @@ export default class CharacterCreation extends FormApplication {
         let data = super.getData();
         this.species = await this.species;
         this.faction = await this.faction;
-        this.archetypeAbilities = await this.archetype.system.abilities.awaitDocuments();
-        this.speciesAbilities = await this.species.system.abilities.awaitDocuments()
+        if (!this.species)
+        {
+            ui.notifications.error("Archetypes must assign a Species Item");
+            throw "Archetypes must assign a Species Item";
+        }
+        if (!this.faction)
+        {
+            ui.notifications.error("Archetypes must assign a Faction Item");
+            throw "Archetypes must assign a Faction Item";
+        }
+        this.archetypeAbilities = await this.archetype?.system.abilities.awaitDocuments() || [];
+        this.speciesAbilities = await this.species?.system.abilities.awaitDocuments() || []
 
         await this.initializeCharacter()
 

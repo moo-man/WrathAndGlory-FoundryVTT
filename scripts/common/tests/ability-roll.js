@@ -47,6 +47,7 @@ export default class AbilityRoll extends WNGTest {
     if (this.testData.damage)
     {
       this.computeDamage()
+      this.result.blast = this.item.system.traits.has("blast").rating;
     }
   }
   

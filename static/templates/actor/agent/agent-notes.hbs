@@ -103,7 +103,7 @@
     <h2 class="sheet-divider">{{localize "TITLE.ASCENSION"}}</h2>
 
     <div class="ascensions">
-        <button data-action="createItem" data-type="ascension"><i class="fa-solid fa-plus"></i></button>
+        <button type="button" data-action="createItem" data-type="ascension"><i class="fa-solid fa-plus"></i></button>
         {{#each items.ascension}}
             <div class="ascension context-menu-alt" data-uuid="{{this.uuid}}">
                 <img src="{{this.img}}">

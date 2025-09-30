@@ -357,6 +357,7 @@ WNG.premiumModules = {
     "wng-xenos" : "Threat Assessment: Xenos",
     "wng-starter-set" : "Starter Set",
     "wng-records2" : "Redacted Records: Vol. II",
+    "wng-darktide" : "DarkTide: Extraction",
 }
 
 WNG.transferTypes = {

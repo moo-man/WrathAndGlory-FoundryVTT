@@ -107,6 +107,7 @@ export default class WNGUtility {
     }
   }
 
+  // TODO remove this (church of steel, xenos), prefer @Embed
   static async tableToHTML(table, label, options=[]) 
   {
       let noCenter = options.includes("no-center");

@@ -139,7 +139,7 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
         let table = game.tables.getName("Mutation Severity")
         let roll = new Roll(table.formula)
         let result = await table.roll({ roll })
-        ChatMessage.create({ content: result.results[0].getChatText() + ` (${result.roll.total})`, roll : result.roll, type: CONST.CHAT_MESSAGE_TYPES.ROLL, flavor: `Mutation`, speaker : test.context.speaker })
+        ChatMessage.create({ content: await result.results[0].getHTML() + ` (${result.roll.total})`, roll : result.roll, type: CONST.CHAT_MESSAGE_TYPES.ROLL, flavor: `Mutation`, speaker : test.context.speaker })
     }
     static _onAddPotency(ev, target)
     {

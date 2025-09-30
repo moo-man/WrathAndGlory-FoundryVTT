@@ -79,9 +79,8 @@ body.wng-theme {
         }
 
         .window-header {
-            border-image: url(./assets/image/header.webp) repeat;
-            border-image-slice: 8 8 7 7 fill;
-            border-image-width: 0px 0px 2px 2px;
+            background: url(./assets/image/header.webp) repeat;
+            background-size: cover;
             font-family: var(--font-text);
         }
 

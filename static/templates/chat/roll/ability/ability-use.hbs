@@ -13,11 +13,19 @@
 </div>
 {{/if}}
 
+{{#if result.blast}}
+        <div class="wrapper">
+                <button type="button" data-action="blast" data-blast="{{result.blast}}"><i class="fa-solid fa-ruler-combined"></i> Blast</button>
+        </div>
+{{/if}}
+
+
 {{#if showTest}}
 <div class="wrapper">
         <button type="button" data-action="rollTest">{{testDisplay}}</button>
 </div>
 {{/if}}
+
 
 <div class="wrapper">
 {{> effectButtons}}

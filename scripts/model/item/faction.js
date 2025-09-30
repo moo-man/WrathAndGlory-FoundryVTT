@@ -21,6 +21,11 @@ export class FactionModel extends StandardItemModel
 
     shouldTransferEffect(effect)
     {
+        if (effect.getFlag(game.system.id, "forceTransfer"))
+        {
+            return true;
+        }
+
         for (let bg of this.backgrounds.origin.concat(this.backgrounds.accomplishment).concat(this.backgrounds.goal))
         {
             if (bg.chosen && bg.effect.id == effect.id && !effect.changes.some(c => c.mode == 0))
