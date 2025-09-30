@@ -1,0 +1,1 @@
+this.actor.addCondition("full-defence")

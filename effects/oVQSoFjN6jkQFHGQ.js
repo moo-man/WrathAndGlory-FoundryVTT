@@ -1,0 +1,1 @@
+return ['weaponSkill', 'ballisticSkill', 'psychicMastery'].includes(args.skill)

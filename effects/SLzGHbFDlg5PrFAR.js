@@ -1,0 +1,1 @@
+return !args.fields.calledShot?.size

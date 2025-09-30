@@ -1,0 +1,1 @@
+args.fields.ed.value += 4; args.fields.pool += 3; args.fields.wrath +=3;

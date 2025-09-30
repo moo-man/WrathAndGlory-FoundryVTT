@@ -1,0 +1,1 @@
+args.fields.ed.value += (this.effect.sourceActor.system.advances.rank * 2)

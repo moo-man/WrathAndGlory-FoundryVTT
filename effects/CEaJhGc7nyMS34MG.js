@@ -1,0 +1,1 @@
+return !args.weapon || !args.target.statuses.has("staggered");
