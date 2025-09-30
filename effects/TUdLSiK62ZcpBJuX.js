@@ -1,1 +1,0 @@
-args.context.resist?.includes("psychicPower")
