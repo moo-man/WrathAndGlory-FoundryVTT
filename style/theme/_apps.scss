@@ -182,11 +182,10 @@ body.wng-theme {
                             color: var()
                         }                    
                     }
-                }
-    
-                input:not([type=checkbox]) {
-                    @include minimal-input;
-                    background: var(--color-white)
+                    input:not([type=checkbox]) {
+                        @include minimal-input;
+                        background: var(--color-white)
+                    }
                 }
     
                 select {

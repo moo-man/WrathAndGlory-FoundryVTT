@@ -650,7 +650,7 @@ WNG.traitEffects = {
                     trigger : "dialog",
                     script : "args.fields.damageDice.values.threes += 1; args.fields.damageDice.values.fives += 1;",
                     options : {
-                        hideScript : "return args.target && args.target.type != 'vehicle'",
+                        hideScript : "return args.target && args.target.type == 'vehicle'",
                         activateScript : "return args.target?.type != 'vehicle'",
                     }
                 },
@@ -659,7 +659,7 @@ WNG.traitEffects = {
                     trigger : "dialog",
                     script : "args.fields.damageDice.values.ones += 1; args.fields.damageDice.values.twos += 1; args.fields.damageDice.values.threes += 1;   args.fields.damageDice.values.fours += 1; args.fields.damageDice.values.fives += 1;",
                     options : {
-                        hideScript : "return args.target && args.target.type == 'vehicle'",
+                        hideScript : "return args.target && args.target.type != 'vehicle'",
                         activateScript : "return args.target?.type == 'vehicle'",
                     }
                 }
