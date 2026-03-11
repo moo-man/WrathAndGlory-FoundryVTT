@@ -364,7 +364,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
     }
 
-    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}={}, {test, damageRoll, token, allowDetermination=true}={}) {
+    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}={}, {test, damageRoll, token, allowDetermination=true, ignoreResilience=false}={}) {
 
         if (!this.statuses.has("full-defence") && test && test.weapon && (test.weapon.traitList.blast || test.weapon.traitList.flamer))
         {
@@ -402,7 +402,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
         
         let mortalDetermination = false;
-        let args = {damage, ap, shock, mortal, test, damageRoll, modifiers, resilience, actor: this}
+        let args = {damage, ap, shock, mortal, test, damageRoll, modifiers, resilience, actor: this, ignoreResilience}
         this.runScripts("preTakeDamage", args)
         test?.actor?.runScripts("preApplyDamage", args)
         test?.item?.runScripts("preApplyDamage", args)
@@ -411,6 +411,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         shock = args.shock;
         mortal = args.mortal;
         mortalDetermination = args.mortalDetermination;
+        ignoreResilience = args.ignoreResilience;
         
         let invuln = resilience.invulnerable
         if (resilience.powerField)
@@ -438,14 +439,22 @@ export class WrathAndGloryActor extends WarhammerActor {
         mortal += modifiers.mortal.reduce((acc, mod) => acc + mod.value, 0);
         res += modifiers.resilience.reduce((acc, mod) => acc + mod.value, 0);
         
-        addModifierBreakdown("resilience", "Resilience");
+
+        if (ignoreResilience)
+        {
+            res = 0;
+        }
+        else 
+        {
+            addModifierBreakdown("resilience", "Resilience");
+        }
 
         if (invuln)
         {
             ap = 0;
         }
     
-        if (ap)
+        if (ap && !ignoreResilience)
         {
             let resilienceReduction = ap
             if (game.settings.get('wrath-and-glory', 'advancedArmour') && this.type != "vehicle")
@@ -461,25 +470,32 @@ export class WrathAndGloryActor extends WarhammerActor {
             report.breakdown.push(`<strong>Invulnerable</strong>: Ignore AP`);
         }
     
-        if (res <= 0)
+        if (res <= 0 && !ignoreResilience)
             res = 1
     
         if (damage)
         {
             addModifierBreakdown("damage", "Damage");
-            if (res > damage)
+
+            if (ignoreResilience)
+            {
+                wounds = damage;
+                report.breakdown.push(`<strong>Resilience</strong>: Ignored`)
+            }
+
+            else if (res > damage)
             {
                 report.message = game.i18n.format("NOTE.APPLY_DAMAGE_RESIST", {name : token?.name})
                 report.breakdown.push(`<strong>Resilience</strong>: Resisted ${damage} Damage`)
                 report.resisted = true;
             }
         
-            if (res == damage)
+            else if (res == damage)
             {
                 report.breakdown.push(`<strong>Resilience</strong>: Suffered 1 Shock (${res} vs. ${damage} Damage)`)
                 shock++
             }
-            if (res < damage)
+            else if (res < damage)
             {
                 wounds = damage - res
                 report.breakdown.push(`<strong>Resilience</strong>: ${damage} Damage reduced to ${wounds} Wounds (-${res})`)
