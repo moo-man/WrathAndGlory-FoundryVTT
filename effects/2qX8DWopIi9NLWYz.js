@@ -1,0 +1,1 @@
+return args.skill == "psychicMastery" && args.power?.name.toLowerCase() == "deny the witch";
