@@ -50,6 +50,11 @@ export class BaseItemModel extends BaseWarhammerItemModel
             }
         }
 
+        if (foundry.utils.getProperty(data, "system.type") == "corruption")
+        {
+            foundry.utils.setProperty(data, "system.specification", "corruption")
+        }
+
         let validDamage = (obj) => {
             if (!obj) return false
             

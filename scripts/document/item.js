@@ -5,12 +5,6 @@ export class WrathAndGloryItem extends WarhammerItem {
 
     static bracket = ["[", "]"];
 
-    _preUpdate(updateData, options, user) {
-        // TODO Move this to model
-        if (foundry.utils.getProperty(updateData, "system.type") == "corruption")
-            foundry.utils.setProperty(updateData, "system.specification", "corruption")
-    }
-
     async postItem() {
         PostedItemMessageModel.postItem(this)
     }
