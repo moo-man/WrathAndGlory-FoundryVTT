@@ -251,7 +251,7 @@ export default class CharacterCreation extends FormApplication {
         delete characterData.folder;
 
         await this.actor.update(characterData);
-        this.actor.createEmbeddedDocuments("Item", items) // Separately add items so effects are inherently added
+        this.actor.createEmbeddedDocuments("Item", items, {appliedArchetype: true}) // Separately add items so effects are inherently added
         this.close();
     }
 

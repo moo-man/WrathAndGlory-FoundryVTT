@@ -13,22 +13,6 @@ export class StandardActorSheet extends WnGActorSheet {
         return context;
     }
 
-
-    async _onDropItem(data, ev)
-    {
-        let item = await Item.implementation.fromDropData(data);
-
-        if (item?.type == "archetype")
-        {
-            this.actor.characterCreation(item);
-        }
-        else 
-        {
-            super._onDropItem(data, ev);
-        }
-    }
-
-
     constructItemLists(context) {
         context.items.abilitiesAndTalents = context.items.ability.concat(context.items.talent)
         context.items.equipped = {
