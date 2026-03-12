@@ -1121,8 +1121,8 @@ CONFIG.statusEffects = [
         img : "systems/wrath-and-glory/assets/icons/effects/dying.svg",
         system : {
             scriptData : [{
-                label : "Extra Wrath Die",
-                script : "args.fields.wrath++;",
+                label : "Extra Wrath Dice",
+                script : "args.fields.wrath += this.actor.itemTypes.traumaticInjury.length;",
                 trigger : "dialog",
                 options: {
                     activateScript : "return true;"

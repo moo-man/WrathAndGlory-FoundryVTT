@@ -78,6 +78,7 @@ async _prepareContext(options)
 
   computeFields()
   {
+    super.computeFields();
     let weapon = this.weapon;
 
     this.tooltips.start(this)

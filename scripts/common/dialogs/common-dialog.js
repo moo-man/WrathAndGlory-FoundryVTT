@@ -73,13 +73,6 @@ export class CommonDialog extends RollDialog {
       return title;
     }
 
-    computeFields()
-    {
-      super.computeFields();
-      this.fields.wrath += this.actor.itemTypes.traumaticInjury.length
-      this.tooltips.add("wrath", this.actor.itemTypes.traumaticInjury.length, "Traumatic Injuries")
-    }
-
     computeInitialFields()
     {
       super.computeInitialFields();
