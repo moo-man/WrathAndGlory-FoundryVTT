@@ -1,0 +1,1 @@
+return args.target?.hasKeyword("ROBOT") && args.skill == "tech";

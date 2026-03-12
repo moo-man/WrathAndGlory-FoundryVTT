@@ -1,0 +1,1 @@
+args.fields.difficulty = Math.ceil(args.fields.difficulty / 2);
