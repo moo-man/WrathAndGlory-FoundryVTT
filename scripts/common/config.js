@@ -1036,7 +1036,33 @@ CONFIG.statusEffects = [
         id : "prone",
         statuses : ["prone"],
         name : "CONDITION.Prone",
-        img : "systems/wrath-and-glory/assets/icons/conditions/prone.svg"
+        img : "systems/wrath-and-glory/assets/icons/conditions/prone.svg",
+        system : {
+            scriptData: [
+                {
+                  "script": "args.fields.difficulty -=2;",
+                  "label": "Prone - Target is within 5m",
+                  "trigger": "dialog",
+                  "options": {
+                    "targeter": true,
+                    "hideScript": "return args.fields.distance >= 6;",
+                    "activateScript": "return args.fields.distance <= 5;",
+                  },
+                  "async": false
+                },
+                {
+                  "script": "args.fields.difficulty += 1;",
+                  "label": "Prone - Target is beyond 6m",
+                  "trigger": "dialog",
+                  "options": {
+                    "targeter": true,
+                    "hideScript": "return args.fields.distance <= 5;",
+                    "activateScript": "return args.fields.distance >= 6;",
+                  },
+                  "async": false
+                }
+              ],
+        }
     },
     {
         id : "restrained",
