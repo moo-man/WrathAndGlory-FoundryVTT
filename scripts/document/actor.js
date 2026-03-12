@@ -278,7 +278,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             return this.setupGenericTest(specification, context, options)
         }
-        else if (type == "corruption")
+        else if (type == "conviction")
         {
             return this.setupGenericTest(specification, context, options)
         }
