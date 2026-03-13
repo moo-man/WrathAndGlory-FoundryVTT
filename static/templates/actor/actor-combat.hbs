@@ -197,7 +197,7 @@
         <div class="list-content">
             {{#if items.equipped.weapon.length}}
                 {{#each items.equipped.weapon}}
-                    <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                    <div class="list-row {{#if this.system.needsReload}}inactive{{/if}}" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
                         <div class="row-content">
                             <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                                 <img src="{{this.img}}">

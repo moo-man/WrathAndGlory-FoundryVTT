@@ -258,6 +258,12 @@ WNG.difficultyRankTypes = {
     "minus-double" :  "RANK.MINUS_DOUBLE"
 }
 
+WNG.salvoOptions = {
+    "fullAuto" : "DIALOG.FULL_AUTO",
+    "sprayShot" : "DIALOG.SPRAY_SHOT",
+    "sprayShotMob" : "DIALOG.SPRAY_SHOT_MOB",
+}
+
 WNG.corruptionLevels = {
     0 : {level : "Pure", range : [0, 5], dn : 0},
     1 : {level : "Tarnished", range : [6, 11], dn : 1},

@@ -37,6 +37,12 @@ async _prepareContext(options)
     "small" : "SIZE.SMALL",
     "medium" : "SIZE.MEDIUM",
   }
+
+  context.salvoOptions = {
+    "fullAuto" : "DIALOG.FULL_AUTO",
+    "sprayShot" : "DIALOG.SPRAY_SHOT",
+    "sprayShotMob" : "DIALOG.SPRAY_SHOT_MOB",
+  }
   return context;
 }
 
@@ -45,6 +51,20 @@ async _prepareContext(options)
       if (typeof weapon == "string")
       {
         weapon = actor.items.get(weapon) || await fromUuid(weapon)
+      }
+
+
+      if (weapon.ammo.document && weapon.ammo.document.system.quantity == 0)
+      {
+        ui.notifications.error("Out of ammo!");
+        throw Error("Out of ammo!");
+      }
+
+
+      // If they didn't reload, don't proceed with roll
+      if ((await weapon.system.promptReload()) == false)
+      {
+        return;
       }
 
       context.combi = weapon.system.combi?.document ? await Dialog.confirm({title : "Combi-Weapons", content : "Fire both Combi-Weapons?"}) : false
@@ -151,6 +171,45 @@ async _prepareContext(options)
     {
       this.fields.pool += Math.ceil(this.actor.mob / 2)
       this.tooltips.add("pool", Math.ceil(this.actor.mob / 2), "Mob")
+    }
+
+    // Salvo - Full Auto 
+    if (this.fields.salvo == "fullAuto")
+    {
+      this.tooltips.start(this)
+      this.fields.pool += this.weapon.system.salvo;
+      if (weapon.system.twinned && weapon.system.salvo >= 2)
+      {
+        this.fields.pool += this.weapon.system.salvo;
+      }
+      this.tooltips.finish(this, "Salvo - Full Auto")
+    }
+
+    else if (this.fields.salvo == "sprayShot" && this.context.multi > 0)
+    {
+      this.tooltips.start(this)
+
+      let multiPenalty = (this.context.multi - 1) * 2;
+      let salvo = this.weapon.system.salvo;
+      if (weapon.system.twinned && weapon.system.salvo >= 2)
+      {
+        salvo *= 2;
+      }
+      this.fields.difficulty -= Math.min((multiPenalty || 0), (salvo || 0));
+
+      this.tooltips.finish(this, "Salvo - Spray Shot")
+    }
+
+    // Twinned
+    if (weapon.system.twinned)
+    {
+      this.tooltips.start(this)
+
+      if (weapon.system.salvo <= 1)
+      {
+        this.fields.ed.value += weapon.system.damage.ed.base + weapon.system.damage.ed.bonus + (weapon.system.damage.ed.rank * this.actor.system.advances?.rank || 0);
+      }
+      this.tooltips.finish(this, "Twinned")
     }
   }
 

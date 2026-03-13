@@ -32,6 +32,7 @@ export class WeaponModel extends EquippedItemModel
         })
         schema.ammo = new fields.EmbeddedDataField(DocumentReferenceModel);
         schema.salvo = new fields.NumberField({})
+        schema.needsReload = new fields.BooleanField();
         schema.traits = new fields.EmbeddedDataField(TraitsModel);
         schema.upgrades = new fields.ArrayField(new fields.ObjectField());
         schema.combi = new fields.EmbeddedDataField(DocumentReferenceModel);
@@ -82,6 +83,42 @@ export class WeaponModel extends EquippedItemModel
 
     get upgradeItems() {
         return this.upgrades.map(i => new CONFIG.Item.documentClass(i))
+    }
+
+
+    async reload()
+    {
+        if (this.parent.isOwned)
+        {
+            let ammo = await this.ammo.document;
+            if (ammo)
+            {
+                if (ammo.quantity == 0)
+                {
+                    ui.notifications.error("Out of ammo!");
+                    throw Error("Out of ammo!");
+                }
+            }
+            ChatMessage.create({content: `<p>Reloaded <strong>${this.parent.name}</strong>!</p>`, speaker: ChatMessage.getSpeaker({actor: this.parent.actor}), flavor: "Reloading"})
+        }
+
+        return this.parent.update({"system.needsReload" : false})
+    }
+
+    async promptReload()
+    {
+        if (this.needsReload)
+        {
+            if (await foundry.applications.api.Dialog.confirm({window: {title: this.parent.name}, content: "<p><strong>Not Loaded</strong>: Spend a Simple Action to load?</p>"}))
+            {
+                await this.reload();
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
     }
 
     computeBase()

@@ -494,6 +494,13 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             // How many of the mob is hit
             let mobHit = 1 + Math.max(0, test.result.success - test.result.dn);
+            report.breakdown.push(`<strong>Mob</strong>: ${mobHit} Hits`);
+
+            if (test?.result.salvo == "sprayShotMob")
+            {
+                mobHit += test.item?.system.salvo || 0;
+                report.breakdown.push(`<strong>Salvo (Spray Shot)</strong>: +${test.item?.system.salvo || 0} Hits`);
+            }
 
             // How much to reduce the mob by
             let mobDamage = 0;
@@ -625,7 +632,7 @@ export class WrathAndGloryActor extends WarhammerActor {
     }
 
     get isMob() {
-        return this.type == "threat" && this.mob > 1
+        return this.type == "threat" && this.mob >= 1
     }
 
     async addCondition(effect, flags = {}, options={}) {

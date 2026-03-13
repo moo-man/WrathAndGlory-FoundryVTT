@@ -58,6 +58,16 @@
                 <input name="calledShot.label" type="text" value="{{fields.calledShot.label}}" placeholder="Label"/>
             </div>
         </div>
+        {{#if data.weapon.system.salvo}}
+        <div class="form-group">
+            <label>{{localize "WEAPON.SALVO"}}</label>
+            <div class="form-fields">
+                <select name="salvo">
+                    {{selectOptions (config "salvoOptions") selected=fields.salvo blank=""}}
+                </select>
+            </div>
+        </div>
+        {{/if}}
     {{else if data.weapon.isMelee}}
         <div class="form-group">
             <label>{{localize "WEAPON.CHARGING"}}</label>

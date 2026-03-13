@@ -105,30 +105,22 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             }
           },
           {
-            name: "Remove",
-            icon: '<i class="fas fa-times"></i>',
+            name: "Reload",
+            icon: '<i class="fa-solid fa-arrow-rotate-right"></i>',
             condition: li => {
               let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
               if (uuid)
               {
-                let parsed = foundry.utils.parseUuid(uuid);
-                if (parsed.type == "ActiveEffect")
-                {
-                  return parsed.primaryId == this.document.id; // If an effect's parent is not this document, don't show the delete option
-                }
-                else if (parsed.type)
-                {
-                  return true;
-                }
-                return false;
+                let item = this.actor.items.get(foundry.utils.parseUuid(uuid).id);
+                return !!item?.system.needsReload;
               }
               else return false;
             },
             callback: async li => 
             {
-              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-              const document = await fromUuid(uuid);
-              document.delete();
+                let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+                const document = await fromUuid(uuid);
+                document.system.reload();
             }
           },
           {
@@ -159,6 +151,33 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
                 let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
                 const document = await fromUuid(uuid);
                 document.postItem();
+              }
+            },
+            {
+              name: "Remove",
+              icon: '<i class="fas fa-times"></i>',
+              condition: li => {
+                let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
+                if (uuid)
+                {
+                  let parsed = foundry.utils.parseUuid(uuid);
+                  if (parsed.type == "ActiveEffect")
+                  {
+                    return parsed.primaryId == this.document.id; // If an effect's parent is not this document, don't show the delete option
+                  }
+                  else if (parsed.type)
+                  {
+                    return true;
+                  }
+                  return false;
+                }
+                else return false;
+              },
+              callback: async li => 
+              {
+                let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+                const document = await fromUuid(uuid);
+                document.delete();
               }
             },
         ];
