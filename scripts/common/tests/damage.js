@@ -89,7 +89,7 @@ export class DamageRoll {
     await Promise.all(this.actor.runScripts("preComputeDamage", {damage : this.data.result, roll : this, test : this.source?.system.test, modifiers}) || []);
     await Promise.all(this.item?.runScripts("preComputeDamage", {damage : this.data.result, roll : this, test : this.source?.system.test, modifiers}) || []);
 
-    this.result.ed += modifiers.ed.reduce((acc, mod) => acc + mod.value, 0);
+    result.ed += modifiers.ed.reduce((acc, mod) => acc + mod.value, 0);
 
     if (this.damageData.ed.dice)
     {
