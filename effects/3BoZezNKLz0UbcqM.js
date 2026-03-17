@@ -1,1 +1,1 @@
-args.fields.pool += (args.actor.system.advances.rank) * 3
+args.fields.pool += (args.actor.system.advances?.rank || 1) * 3
