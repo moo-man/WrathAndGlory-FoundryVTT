@@ -164,7 +164,7 @@ export default class WNGUtility {
         actor.setupAttributeTest(itemName)
         break;
       case "skill":
-        actor.setupSkill(itemName)
+        actor.setupSkillTest(itemName)
         break;
       case "weapon":
         actor.setupWeaponTest(item)

@@ -946,6 +946,27 @@ CONFIG.statusEffects = [
         statuses : ["bleeding"],
         name : "CONDITION.Bleeding",
         img : "systems/wrath-and-glory/assets/icons/conditions/bleeding.svg",
+        system : {
+            scriptData : [
+                {
+                    trigger : "endTurn",
+                    script : "let report = await this.actor.applyDamage(0, {mortal: 1}); this.script.message(`Received ${report.wounds} Mortal Wound`);",
+                    label : "End Turn Damage"
+                },
+                {
+                    trigger : "manual",
+                    script : `
+                    let test = await this.actor.setupAttributeTest("toughness", {fields: {difficulty: 4}, appendTitle: " - " + this.effect.name});
+                    if (test.result.isSuccess)
+                    {
+                        this.script.message("Removed <strong>Bleeding</strong>");
+                        this.effect.delete();
+                    }
+                    `,
+                    label : "Remove"
+                }
+            ]
+        }
     },
     {
         id : "blinded",
@@ -1018,7 +1039,42 @@ CONFIG.statusEffects = [
         id : "onfire",
         statuses : ["onfire"],
         name : "CONDITION.OnFire",
-        img : "systems/wrath-and-glory/assets/icons/conditions/onfire.svg"
+        img : "systems/wrath-and-glory/assets/icons/conditions/onfire.svg",
+        system : {
+            scriptData : [
+                {
+                    trigger : "startTurn",
+                    script : "let report = await this.actor.applyDamage(0, {mortal: Math.ceil(CONFIG.Dice.randomUniform() * 3)}); this.script.message(`Received ${report.wounds} Mortal Wound`);",
+                    label : "Start Turn Damage"
+                },
+                {
+                    trigger : "startTurn",
+                    script : `
+                    let prone = await foundry.applications.api.Dialog.confirm({window: {title : this.effect.name}, content: "<p>Use Action to go <em>Prone</em> and attempt to remove <em>On Fire</em>?</p>"})
+                    if (prone)
+                    {
+                        await this.actor.addCondition("prone");
+                        let test = await this.actor.setupSkillTest("athletics", {fields: {difficulty: 3}, appendTitle: " - " + this.effect.name})
+                        if (test.result.isSuccess)
+                        {
+                            this.script.message("Removed <strong>On Fire</strong>")
+                            this.effect.delete();
+                        }
+                    }
+                    else 
+                    {
+                        let test = await this.actor.setupAttributeTest("willpower", {fields: {difficulty: 3}, appendTitle: " - " + this.effect.name})
+                        if (!test.result.isSuccess)
+                        {
+                            this.script.message("Gained <strong>Hindered</strong>")
+                            this.actor.addCondition("hindered");
+                        }
+                    }
+                    `,
+                    label : "Start Turn Prompt"
+                }
+            ]
+        }
     },
     {
         id : "pinned",
