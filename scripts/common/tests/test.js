@@ -179,8 +179,6 @@ export class WNGTest extends WarhammerTestBase {
     this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0);
     this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;
-    if (this.result.isWrathCritical)
-      this.result.isWrathCritical = this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
 
     if (this.result.isSuccess)
       this.computeDamage() 
@@ -405,7 +403,8 @@ export class WNGTest extends WarhammerTestBase {
 
 
   handleCounters() {
-    if (this.result.isWrathCritical && !this.context.counterChanged && this.actor.getFlag("wrath-and-glory", "generateMetaCurrencies")) {
+    if (this.result.isWrathCritical && !this.context.counterChanged && this.actor.system.settings.generateMetaCurrencies) 
+    {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
         game.wng.RuinGloryCounter.changeCounter(1, "glory").then(() => { game.counter.render({force: true}) })

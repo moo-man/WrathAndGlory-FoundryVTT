@@ -71,6 +71,9 @@ export default class WeaponTest extends WNGTest {
   {
     super._computeResult()
 
+    if (this.result.isWrathCritical)
+      this.result.isWrathCritical = this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
+
     this.result.range = this.testData.range
     this.result.aim = this.testData.aim
     this.result.calledShot = this.testData.calledShot
