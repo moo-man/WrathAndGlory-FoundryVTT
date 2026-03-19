@@ -30,6 +30,7 @@ export class AgentModel extends StandardWNGActorModel {
             height  : new fields.StringField(),
             eye  : new fields.StringField(),
             hair  : new fields.StringField(),
+            age : new fields.NumberField(),
             origin : new fields.StringField(),
             accomplishment : new fields.StringField(),
             goal : new fields.StringField(),
