@@ -130,13 +130,11 @@ export class WrathAndGloryActor extends WarhammerActor {
                 context.title = game.i18n.localize(`ROLL.FEAR`)
                 context.fear = true;
                 context.resolve = true;
-                context.noWrath = true;
                 return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.combat.resolve.total}, context, options)
             case "terror":
                 context.title = game.i18n.localize(`ROLL.TERROR`)
                 context.terror = true;
                 context.resolve = true;
-                context.noWrath = true;
                 return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.combat.resolve.total}, context, options)
             case "influence":
                 context.fields.pool = this.resources.influence
