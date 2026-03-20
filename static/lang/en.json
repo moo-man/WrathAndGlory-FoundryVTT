@@ -350,6 +350,8 @@
   "RESOURCE.EXPERIENCE": "Experience",
   "RESOURCE.RUIN": "Ruin",
   "RESOURCE.GLORY": "Glory",
+  "RESOURCE.GLOBAL_RUIN" : "Global",
+  "RESOURCE.PERSONAL_RUIN" : "Personal",
   "ROLL.DETERMINATION": "Determination",
   "ROLL.CONVICTION": "Conviction",
   "ROLL.RESOLVE": "Resolve",

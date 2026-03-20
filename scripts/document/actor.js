@@ -288,6 +288,59 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             return;
         }
+
+        if (this.type == "threat")
+        {
+            if (game.counter.ruin || this.system.resources.ruin)
+            {
+                let buttons = []
+                if (game.counter.ruin)
+                {
+                    buttons.push({
+                        label: game.i18n.localize("RESOURCE.GLOBAL_RUIN") + ` (${game.counter.ruin})`,
+                        action: "global"
+                    })
+                }
+                if (this.system.resources.ruin)
+                {
+                    buttons.push({
+                        label: game.i18n.localize("RESOURCE.PERSONAL_RUIN") + ` (${this.system.resources.ruin})`,
+                        action: "personal"
+                    })
+                }
+
+                buttons.push({
+                    label: "Cancel",
+                    action: "cancel"
+                })
+
+                let ruin = await foundry.applications.api.Dialog.wait({
+                    window: {title: game.i18n.localize("ROLL.DETERMINATION")},
+                    content: `<p><strong>${this.name}</strong>: Spend Ruin to roll Determination?</p>`,
+                    buttons
+                })
+
+                if (ruin == "global")
+                {
+                    game.counter.change(-1, "ruin")
+                }
+
+                if (ruin == "personal")
+                {
+                    await this.update({"system.resources.ruin" : this.system.resources.ruin - 1});
+                }
+
+                if (ruin == "cancel")
+                {
+                    return null;
+                }
+            }
+            else 
+            {
+                return null;
+            }
+        }
+
         let test = await this.setupGenericTest("determination", {message, fields: {wounds}});
         return test;
     }
