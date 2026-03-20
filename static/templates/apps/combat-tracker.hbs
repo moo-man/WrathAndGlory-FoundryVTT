@@ -13,6 +13,13 @@
             {{/if}}
         {{/if}}
 
+        {{#if next}}  
+            <h3>Next</h3>
+            {{#with next}}
+            {{> combatant combatant=next}}
+            {{/with}}
+        {{/if}}
+
         {{#if pending.length}}
             <h3>Pending</h3>
             {{#each pending}}

@@ -3,7 +3,7 @@ export default class WrathAndGloryCombatTracker extends foundry.applications.sid
 
   static DEFAULT_OPTIONS = {
     actions: {
-        toggleActive : this._onToggleActive
+      activateCombatant : this._onActivateCombatant
     }
   };
 
@@ -24,10 +24,12 @@ export default class WrathAndGloryCombatTracker extends foundry.applications.sid
     async _prepareTrackerContext(context, options) {
         await super._prepareTrackerContext(context, options)
         if (!this.viewed) return
-        context.pending = context.turns.filter(t => context.combat.combatants.get(t.id).isPending)
+        context.pending = context.turns.filter(t => {let c = context.combat.combatants.get(t.id); return c.isPending && !c.isNext})
         context.complete = context.turns.filter(t => context.combat.combatants.get(t.id).isComplete)
         context.current = context.turns.filter(t => context.combat.combatants.get(t.id).isCurrent)
         context.defeated = context.turns.filter(t => context.combat.combatants.get(t.id).isDefeated)
+        context.next = context.turns.find(t => context.combat.combatants.get(t.id).isNext)
+
         context.defeated.forEach(c => {
             c.css = "defeated"
             c.defeated = true;
@@ -44,22 +46,30 @@ export default class WrathAndGloryCombatTracker extends foundry.applications.sid
         this.element.querySelector("[data-action='previousTurn']")?.remove();
     }
 
-    static _onToggleActive(ev, target)
+    static _onActivateCombatant(ev, target)
     {
         const li = target.closest(".combatant");
         const combat = this.viewed;
-        let c = combat.combatants.get(li.dataset.combatantId)
-
-        if (!combat.started)
-            return ui.notifications.notify("Begin the combat before activating combatants")
-    
-        // Switch control action
-        if (!c.isCurrent) {
-            combat.setTurn(li.dataset.combatantId)
-        }
-        else {
-            combat.runEndTurnScripts(c);
-            c.update(c.setComplete())
-        }
+        combat.activate(li.dataset.combatantId);
     }
+
+      /**
+   * Get context menu entries for Combatants in the tracker.
+   * @returns {ContextMenuEntry[]}
+   * @protected
+   */
+  _getEntryContextOptions() {
+    let options = super._getEntryContextOptions();
+    const getCombatant = li => this.viewed.combatants.get(li.dataset.combatantId);
+    return options.concat([
+      {
+        name: "COMBAT.SEIZE",
+        icon: '<i class="fa-solid fa-hand-back-fist"></i>',
+        condition: li => getCombatant(li)?.isOwner && getCombatant(li)?.isPending,
+        callback: li => {
+          this.viewed.seize(li.dataset.combatantId);
+        }
+      }
+    ])
+  }
 }

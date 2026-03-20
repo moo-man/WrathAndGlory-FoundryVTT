@@ -106,6 +106,17 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
       let newValue = await RuinGloryCounter.changeCounter(1 * multiplier, counter);
       input.value = newValue;
     }
+
+    async set(value, type)
+    {
+      return this.constructor.setCounter(value, type);
+    }
+
+    async change(diff, type)
+    {
+      return this.constructor.changeCounter(diff, type);
+    }
+  
   
     // ************************* STATIC FUNCTIONS ***************************
   

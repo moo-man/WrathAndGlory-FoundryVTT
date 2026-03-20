@@ -182,6 +182,19 @@ Hooks.once("init", () => {
 
   warhammer.utility.registerPremiumModuleInitialization()
 
+  CONFIG.queries.updateCombat = async (data) => {
+    let combat = game.combats.get(data.combat);
+    if (data.seize)
+    {
+      combat.seize(data.combatantId);
+    }
+    else 
+    {
+      combat.activate(data.combatantId);
+    }
+  }
+
+
 });
 
 

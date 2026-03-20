@@ -201,6 +201,7 @@
   "CHAT.WOUNDS": "Wounds",
   "CHAT.SHOCK": "Shock",
   "CHAT.MORTAL": "Mortal Wounds",
+  "COMBAT.SEIZE" : "Seize the Initiative",
   "DIALOG.YES": "Yes",
   "DIALOG.NO": "No",
   "DIALOG.DN": "DN",
