@@ -140,6 +140,16 @@ body.wng-theme {
                     {
                          background-color: var(--color-light-grey);
                     }
+
+                    &.sustained {
+                        background-color: var(--roll-bg);
+                        .list-name {
+                            .sustained-icon {
+                                flex: 0 0 1.5rem;
+                                text-align: center;
+                            }
+                        }
+                    }
                 }
     
                 .list-content {
@@ -173,7 +183,6 @@ body.wng-theme {
                             line-height: 1.5rem;;
                         }
     
-         
                         &:hover {
                             background-color: var(--roll-bg);
                         }

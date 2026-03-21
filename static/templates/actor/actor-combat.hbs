@@ -315,10 +315,14 @@
         </div>
         <div class="list-content">
             {{#each items.psychicPower}}
-                <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
+                <div class="list-row {{#if this.system.sustained}}sustained{{/if}}" data-id="{{this.id}}" data-uuid="{{this.uuid}}">
                     <div class="row-content">
                         <div class="list-name rollable">
+                            {{#if this.system.sustained}}
+                            <i class="fa-solid fa-head-side-gear sustained-icon" data-tooltip="Sustaining"></i>
+                            {{else}}
                             <img src="{{this.img}}" data-action="rollTest" data-type="psychicPower">
+                            {{/if}}
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
                         <div class="tiny">{{#if (gt this.system.dn 0)}} {{this.system.dn}} {{/if}}</div>

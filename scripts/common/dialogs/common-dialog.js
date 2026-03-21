@@ -91,8 +91,19 @@ export class CommonDialog extends RollDialog {
       if (this.context.corruption)
       {
         let level = game.wng.config.corruptionLevels[this.actor.corruptionLevel]
-        this.difficulty += level.dn;
+        this.fields.difficulty += level.dn;
         this.tooltips.add("difficulty", level.dn, "Corruption Level")
+      }
+    }
+
+    computeFields()
+    {
+      super.computeFields();
+      if (this.actor.system.sustaining?.list.length)
+      {
+        this.tooltips.start(this);
+        this.fields.difficulty += this.actor.system.sustaining.list.length * 2;
+        this.tooltips.finish(this, "Sustaining Powers")
       }
     }
 

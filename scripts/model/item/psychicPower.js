@@ -48,6 +48,12 @@ export class PsychicPowerModel extends StandardItemModel
         return this.multiTarget ? game.i18n.localize("Yes") : game.i18n.localize("No")
     }
 
+    computeOwned()
+    {
+        this.sustained = this.parent.actor.system.sustaining.has({id: this.parent.id});
+    }
+
+
     static migrateData(data)
     {
         super.migrateData(data);

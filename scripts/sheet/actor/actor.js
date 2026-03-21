@@ -95,6 +95,36 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
         let getParent = this._getParent.bind(this);
         return [
           {
+            name: "Toggle Sustaining",
+            icon: '<i class="fa-solid fa-head-side-gear"></i>',
+            condition: li => {
+              let item = this.actor.items.get(li.dataset.id);
+              if(item && item.type == "psychicPower" && item.system.duration.toLowerCase() == "sustained")
+              {
+                return true;
+              }
+              else 
+              {
+                return false;
+              }
+            },
+            callback: async li => {
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+              const document = this.actor.items.get(parseUuid(uuid).id);
+              if (document)
+              {
+                if (document.system.sustained)
+                {
+                  this.actor.update(this.actor.system.sustaining.removeId(document.id))
+                }
+                else 
+                {
+                  this.actor.update(this.actor.system.sustaining.add(document))
+                }
+              }
+            }
+          },
+          {
             name: "Edit",
             icon: '<i class="fas fa-edit"></i>',
             condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),

@@ -36,7 +36,17 @@ export default class PowerTest extends WNGTest {
       await Promise.all(this.item.runScripts("rollPowerTest", this));
   }
 
+  async rollTest() {
+    await super.rollTest();
 
+    if (this.result.isSuccess && this.item.system.duration.toLowerCase() == "sustained")
+    {
+      this.actor.update(this.actor.system.sustaining.add(this.item));
+    }
+
+    return this;
+
+  }
 
   _computeResult()
   {

@@ -26,6 +26,8 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
             skills : new foundry.data.fields.EmbeddedDataField(SkillsModel),
             combat : new foundry.data.fields.EmbeddedDataField(CombatModel),
 
+            sustaining: new foundry.data.fields.EmbeddedDataField(DocumentReferenceListModel),
+
             species : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
             faction : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
             archetype : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
@@ -79,6 +81,16 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
             else if (this.parent.hasCondition("wounded"))
             {
                 this.parent.removeCondition("wounded");
+            }
+        }
+
+        if (getActiveDocumentOwner(this.parent)?.id == game.user.id && (options.deltaWounds > 0 || options.deltaShock > 0) && this.sustaining.list.length)
+        {
+            let DN = (options.deltaWounds || 0) + (options.deltaShock);
+            let test = await this.parent.setupAttributeTest("willpower", {fields: {difficulty: DN}, appendTitle: ` - Sustaining Powers`, sustaining: true, initialTooltip: "Damage Taken"})
+            if (test && !test.result.isSuccess)
+            {
+                this.parent.update({"sustaining.list" : []});
             }
         }
     }
