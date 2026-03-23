@@ -43,6 +43,7 @@ export class ThreatModel extends StandardWNGActorModel {
 
     _addModelProperties()
     {
+        super._addModelProperties();
         this.mob.abilities.relative = this.parent.items;
     }
 

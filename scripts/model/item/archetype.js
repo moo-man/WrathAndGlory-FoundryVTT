@@ -61,7 +61,7 @@ export class ArchetypeModel extends BaseItemModel
         {
             let species = await warhammer.utility.findItemId(this.species.id, "species")
             let faction = await warhammer.utility.findItemId(this.faction.id, "faction")
-            actor.createEmbeddedDocuments("Item", [this.parent.toObject(), faction?.toObject(), species?.toObject()].filter(i => i))
+            actor.createEmbeddedDocuments("Item", [this.parent.toObject(), faction?.toObject(), species?.toObject()].filter(i => i), {appliedArchetype: true})
         }
     }
 

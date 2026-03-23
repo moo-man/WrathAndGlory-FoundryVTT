@@ -2,7 +2,13 @@
 
         <div class="flexrow">
                 {{formGroup fields.cost value=system.cost}}
-                {{formGroup fields.speed value=system.speed}}
+                <div class="form-group">
+                        <label>{{localize "SPECIES.SPEED"}}</label>
+                        <div class="form-fields">
+                                {{formInput fields.speed value=system.speed}}
+                                {{formInput fields.maxSpeed value=system.maxSpeed dataset=(createObject tooltip="SPECIES.MAX_SPEED" tooltipDirection="UP") }}
+                        </div>
+                </div>
                 {{formGroup fields.size value=system.size choices=(config "size")}}
         </div>
 

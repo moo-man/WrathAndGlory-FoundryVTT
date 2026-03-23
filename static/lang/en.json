@@ -101,6 +101,7 @@
   "SPECIES.NAME": "Name",
   "SPECIES.COST": "XP Cost",
   "SPECIES.SPEED": "Speed",
+  "SPECIES.MAX_SPEED": "Max Speed",
   "SPECIES.SIZE": "Size",
   "SPECIES.ABILITIES": "Abilities",
   "SPECIES.ATTRIBUTE_MAX": "Attribute Maximums",
@@ -720,6 +721,9 @@
           },
           "speed": {
             "label": "Speed"
+          },
+          "maxSpeed": {
+            "label": "Max Speed"
           },
           "size": {
             "label": "Size"

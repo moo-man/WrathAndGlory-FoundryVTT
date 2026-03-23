@@ -82,18 +82,19 @@ export default class ItemTraits extends WHFormApplication
 
     parseCustomTraits(string)
     {
-        let regex = /(.+?):(.+?)(\||$)/gm
+        let regex = /\s*(.+?)\s*(?:\||$)/gm
 
         let matches = string.matchAll(regex)
         let traits = []
 
         for (let match of matches)
         {
+            let content = match[1].split(":");
             traits.push({
-                name : match[1].trim().slugify(),
+                name : content[0].trim().slugify(),
                 custom : true,
-                display : match[1].trim(),
-                description : match[2].trim(),
+                display : content[0].trim(),
+                description : content[1]?.trim(),
                 type : this.options.type
             })
         }
@@ -107,9 +108,9 @@ export default class ItemTraits extends WHFormApplication
         let customTraits = traits.list.filter(i => i.custom)
 
         customTraits.forEach(t => {
-            customString += `${t.display} : ${t.description} |`
+            customString += `${t.display} ${t.description ? " : " + t.description : ""} |`
         })
-        return customString
+        return customString.substring(0, customString.length - 1).trim(); // Remove ending |
         
     }
 }

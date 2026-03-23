@@ -12,6 +12,7 @@ export class SpeciesModel extends StandardItemModel
         let schema = super.defineSchema();
         schema.cost = new fields.NumberField({min : 0, initial : 0});
         schema.speed = new fields.NumberField({min : 1, initial : 6})
+        schema.maxSpeed = new fields.NumberField({min : 1, initial : 8})
         schema.size = new fields.StringField({});
         schema.journal = new fields.StringField({});
         schema.abilities = new fields.EmbeddedDataField(DeferredReferenceListModel)
