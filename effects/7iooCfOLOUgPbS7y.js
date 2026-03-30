@@ -1,0 +1,1 @@
+return args.fields.skill != "leadership" && args.fields.skill != "intimidation";

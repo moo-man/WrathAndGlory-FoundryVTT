@@ -1,0 +1,1 @@
+args.fields.difficulty -= args.actor.itemTypes.augmentic.length

@@ -1,0 +1,1 @@
+return args.actor?.statuses.has("catechism-of-fire") && args.weapon.system.isRanged;

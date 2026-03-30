@@ -1,0 +1,1 @@
+return !["athletics", "intimidation"].includes(args.skill) && !["strength", "toughness", "agility",].includes(args.attribute);

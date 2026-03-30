@@ -1,0 +1,1 @@
+return args.weapon.system.isMelee || this.effect.sourceActor?.uuid == args.actor.uuid || args.fields.range != "long";

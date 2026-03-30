@@ -1,0 +1,1 @@
+return ["athletics"].includes(args.skill) || ["strength"].includes(args.attribute)

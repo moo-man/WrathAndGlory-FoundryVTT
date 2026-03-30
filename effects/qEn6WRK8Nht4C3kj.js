@@ -1,0 +1,1 @@
+return args.actor.system.resources?.wrath <= 0 || !args.weapon?.system.isMelee || !args.fields.charging;

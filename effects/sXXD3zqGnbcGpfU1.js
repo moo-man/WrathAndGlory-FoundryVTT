@@ -1,0 +1,1 @@
+return !args.actor?.statuses.has("catechism-of-fire") || !args.weapon.system.isRanged || this.effect.sourceActor?.uuid == args.actor.uuid;

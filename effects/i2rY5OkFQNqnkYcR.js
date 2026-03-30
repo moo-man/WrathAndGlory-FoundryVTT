@@ -1,0 +1,1 @@
+return this.effect.sourceActor?.uuid == args.actor.uuid || (!args.target?.statuses.has("halfCover") && !args.target?.statuses.has("fullCover"))

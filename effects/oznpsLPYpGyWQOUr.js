@@ -1,0 +1,1 @@
+this.actor.system.combat.fly = this.effect.sourceTest.result.fly * this.actor.system.combat.speed;

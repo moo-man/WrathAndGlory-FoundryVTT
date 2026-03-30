@@ -1,0 +1,1 @@
+args.modifiers.ed.push({value: (2 * args.test.testData.shifted.whirlwind?.dice?.length) || 0, label: this.effect.name})

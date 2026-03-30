@@ -1,0 +1,1 @@
+return !this.effect.sourceTest.result.bonus || !["awareness", "ballisticSkill"].includes(args.skill)

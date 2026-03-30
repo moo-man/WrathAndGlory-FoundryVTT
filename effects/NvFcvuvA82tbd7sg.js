@@ -1,0 +1,1 @@
+this.actor.combat.size = "large";

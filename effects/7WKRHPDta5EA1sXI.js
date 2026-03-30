@@ -1,0 +1,1 @@
+this.script.notification(`You may re-roll a number of dice equal to your Rank.`, "info");
