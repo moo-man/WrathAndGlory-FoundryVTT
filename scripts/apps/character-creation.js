@@ -237,6 +237,8 @@ export default class CharacterCreation extends FormApplication {
 
 
         let wargear = await Promise.all(this.retrieveChosenWargear());
+        wargear = await this.archetype.system.wargear.runScript(wargear, this.archetype);
+
         let items = [
             this.archetype?.toObject(), 
             this.species?.toObject(), 

@@ -264,6 +264,7 @@
   "HEADER.RESOLVE": "Resolve",
   "HEADER.SIZE": "Size",
   "HEADER.SPEED": "Speed",
+  "HEADER.SPEED_FLY": "Speed (Fly)",
   "HEADER.FLY": "Fly",
   "HEADER.WOUNDS": "Wounds",
   "HEADER.TRAUMATIC": "Traumatic",
@@ -795,6 +796,13 @@
           },
           "keywords" : {
             "label" : "Keywords"
+          }
+        }
+    },
+      "keyword": {
+        "FIELDS": {
+          "group": {
+            "label": "Keyword Group"
           }
         }
       }

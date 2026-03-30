@@ -90,7 +90,7 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
             let test = await this.parent.setupAttributeTest("willpower", {fields: {difficulty: DN}, appendTitle: ` - Sustaining Powers`, sustaining: true, initialTooltip: "Damage Taken"})
             if (test && !test.result.isSuccess)
             {
-                this.parent.update({"sustaining.list" : []});
+                this.parent.update({"system.sustaining.list" : []});
             }
         }
     }

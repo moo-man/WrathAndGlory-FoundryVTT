@@ -48,6 +48,18 @@ export class WeaponModel extends EquippedItemModel
         return this.category == "ranged" || this.category == "launcher" || this.category == "grenade-missile"
     }
 
+    get hasSalvo()
+    {
+        if (["", "-", "—", "–"].includes(this.salvo))
+        {
+            return false;
+        }
+        else 
+        {
+            return !isNaN(this.salvo);
+        }
+    }
+
     get Range() {
         if (this.isRanged) {
             if (this.category == "grenade-missile") 

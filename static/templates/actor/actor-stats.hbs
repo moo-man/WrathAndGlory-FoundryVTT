@@ -37,6 +37,9 @@
         <div class="keyword context-menu-alt" data-uuid="{{this.uuid}}">
             <img src="{{this.img}}">
             <a data-action="editEmbedded" >
+                {{#if (and this.system.isGroup (not this.system.isUnchosenGroup))}}
+                {{this.system.group}}:
+                {{/if}}
                 {{this.name}}
             </a>
         </div>

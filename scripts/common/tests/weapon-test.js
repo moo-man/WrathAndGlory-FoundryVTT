@@ -11,6 +11,8 @@ export default class WeaponTest extends WNGTest {
     this.data.testData.aim = data.aim
     this.data.testData.calledShot = data.calledShot
     this.data.testData.salvo = data.salvo;
+    this.data.testData.charging = data.charging;
+
 
     this.addDamageData(data);
 
@@ -45,7 +47,7 @@ export default class WeaponTest extends WNGTest {
   async handleSalvo()
   {
     // If salvo option used, or weapon has no salvo, mark loaded as false
-    if (this.weapon.isRanged && this.weapon.system.category != "grenade-missile" && (this.testData.salvo || !this.weapon.system.salvo))
+    if (this.weapon.isRanged && this.weapon.system.category != "grenade-missile" && (this.testData.salvo || !this.weapon.system.hasSalvo))
     {
       await this.weapon.update({"system.needsReload": true});
       if (this.weapon.system.ammo.document)
@@ -74,10 +76,11 @@ export default class WeaponTest extends WNGTest {
     if (this.result.isWrathCritical)
       this.result.isWrathCritical = this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
 
-    this.result.range = this.testData.range
-    this.result.aim = this.testData.aim
-    this.result.calledShot = this.testData.calledShot
-    this.result.salvo = this.testData.salvo
+    this.result.range = this.testData.range;
+    this.result.aim = this.testData.aim;
+    this.result.calledShot = this.testData.calledShot;
+    this.result.salvo = this.testData.salvo;
+    this.result.charging = this.testData.charging;
     if (this.weapon.system.traits?.has("blast"))
     {
       this.result.blast = this.weapon.system.traits.has("blast").rating;

@@ -3,3 +3,7 @@
 {{else}}
 <p><strong>{{localize "CHAT.DETERMINATION_RESULT" wounds=result.wounds shock=result.converted}}</strong></p>
 {{/if}}
+
+{{#each result.text}}
+<p><strong>{{this.label}}</strong>{{#if this.description}}: {{this.description}} {{/if}}</p>
+{{/each}}

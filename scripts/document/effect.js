@@ -85,6 +85,19 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
             return `DN ${avoidTestData.dn} Corruption Test`
     }
 
+
+    convertToApplied(test)
+    {
+        let effect = super.convertToApplied(test);
+
+        if ((effect.system.transferData.type == "aura" || effect.system.transferData.originalType == "area") && test)
+        {
+            effect.system.transferData.area.radius = test.result.radius || effect.system.transferData.area.radius ;
+        }
+
+        return effect;
+    }
+
     
     /** @override 
      * Adds support for referencing actor data

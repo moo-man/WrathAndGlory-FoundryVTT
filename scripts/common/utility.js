@@ -43,24 +43,27 @@ export default class WNGUtility {
     }
   }
 
-  static async getKeywordItem(name) {
+  /**
+   * 
+   * @param {string} name Name of the keyword to find
+   * @param {Object} system If not found, add system data to the blank item returned
+   * @returns 
+   */
+  static async getKeywordItem(name, system) {
 
-    let item = game.items.contents.find(i => i.type == "keyword" && i.name.toLowerCase() == name.toLowerCase())
-    if (!item) {
-      for (let pack of game.packs) {
-
-        let i = pack.index.contents.find(i => i.name == name && i.type == "keyword")
-        if (i) { // If item is in pack
-          item = await pack.getDocument(i._id)
-        }
-      }
+    name = name.toUpperCase();
+    let item = game.items.contents.find(i => i.type == "keyword" && i.name.toUpperCase() == name)
+    if (!item) 
+    {
+      let keywordIndex = await warhammer.utility.findAllItems("keyword", null, true)
+      item = await fromUuid(keywordIndex.find(i => i.name.toUpperCase() == name)?.uuid);
     }
 
 
     if (item)
       return item
     else
-      return new WrathAndGloryItem({ name, type: "keyword", img: "modules/wng-core/assets/ui/aquila-white.webp" })
+      return new WrathAndGloryItem({ name, type: "keyword", img: "modules/wng-core/assets/ui/aquila-white.webp", system })
   }
 
   static _getTargetDefence() {

@@ -125,6 +125,19 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             }
           },
           {
+            name: "Specify Keyword Group",
+            icon: '<i class="fa-solid fa-arrow-left-to-bracket"></i>',
+            condition: li => {
+              let item = this.actor.items.get(foundry.utils.parseUuid(li.dataset.uuid).id);
+              return item && item.type == "keyword" && item.system.isGroup;
+            },
+            callback: async li => {
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+              const document = this.actor.items.get(parseUuid(uuid).id);
+              document.update(await document.system.specifyGroup());
+            }
+          },
+          {
             name: "Edit",
             icon: '<i class="fas fa-edit"></i>',
             condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),

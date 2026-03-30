@@ -205,7 +205,7 @@ async _prepareContext(options)
     {
       this.tooltips.start(this)
 
-      if (weapon.system.salvo <= 1)
+      if (!isNaN(weapon.system.salvo) && weapon.system.salvo <= 1)
       {
         this.fields.ed.value += weapon.system.damage.ed.base + weapon.system.damage.ed.bonus + (weapon.system.damage.ed.rank * this.actor.system.advances?.rank || 0);
       }

@@ -17,4 +17,22 @@ export class AscensionModel extends StandardItemModel
         return schema;
     }
 
+    async toEmbed(config, options)
+    {
+        let html = `
+        <h4>@UUID[${this.parent.uuid}]{${this.parent.name}}</h4>
+        <p><strong>XP Cost</strong>: ${this.cost}</p>
+        <p><strong>Requirements</strong>: ${this.requirements}</p>
+        ${this.description.replace("<p>", "<p><strong>Effect</strong>: ")}</p>
+        ${this.benefits}
+        `;
+
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
+
+
 }

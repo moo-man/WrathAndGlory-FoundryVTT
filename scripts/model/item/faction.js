@@ -70,6 +70,113 @@ export class FactionModel extends StandardItemModel
         }
     }
 
+
+
+    async toEmbed(config, options)
+    {
+        let localization = {
+            "origin" : game.i18n.localize("FACTION.ORIGIN"),
+            "accomplishment" : game.i18n.localize("FACTION.ACCOMPLISHMENT"),
+            "goal" : game.i18n.localize("FACTION.GOAL"),
+        }
+
+        const listBackgrounds = (bg) => 
+        {
+
+            let bgList = this.backgrounds[bg];
+
+            if (!bgList.length)
+            {
+                return "";
+            }
+
+            let bgHTML = `
+            <tr class="table-col-header">
+                <td>
+                    <p>[[/r d${bgList.length}]]</p>
+                </td>
+                <td>
+                    <p>${localization[bg]}</p>
+                </td>
+                <td>
+                    <p>Gain +1</p>
+                </td>
+            </tr>`
+
+            for (let i = 0; i < bgList.length; i++)
+            {
+                let bgData = bgList[i];
+                bgHTML += `
+                <tr>
+                    <td>
+                        <p>${i + 1}</p>
+                    </td>
+                    <td>
+                        <p><strong>${bgData.name}</strong>: ${bgData.description}</p>
+                    </td>
+                    <td>
+                        <p>${bgData.effect.document.name}</p>
+                    </td>
+                </tr>`
+            }
+
+            return bgHTML;
+        }
+
+        let html = `
+        <table border="1" class="backgrounds">
+            <tbody>
+                <tr class="table-header ${config.species}">
+                    <td colspan="3">
+                        <p>@UUID[${this.parent.uuid}]{${this.parent.name}} BACKGROUNDS</p>
+                    </td>
+                </tr>
+                ${listBackgrounds("origin")}
+                ${listBackgrounds("accomplishment")}
+                ${listBackgrounds("goal")}
+            </tbody>
+        </table>
+        `;
+
+        html += 
+
+        `
+        <table border="1" class="objectives">
+            <tbody>
+                <tr class="table-header ${config.species}">
+                    <td colspan="2">
+                        <p>@UUID[${this.parent.uuid}]{${this.parent.name}} OBJECTIVES</p>
+                    </td>
+                </tr>
+                <tr class="table-col-header">
+                    <td>
+                        <p>[[/r d${this.objectives.length}]]</p>
+                    </td>
+                    <td>
+                        <p>Objective</p>
+                    </td>
+                </tr>
+                ${this.objectives.map((o, index) => {
+                    return `
+                    <tr>
+                        <td>
+                            <p>${index + 1}</p>
+                        </td>
+                        <td>
+                            <p>${o}</p>
+                        </td>
+                    </tr>`
+                }).join("")}
+            </tbody>
+        </table>
+        `
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
+
 }
 
 function backgroundData() 

@@ -103,6 +103,27 @@
         border-image: url(./assets/image/sidebar-journal-border.webp) 30 0 repeat;
         box-shadow: inset 0px 0px 5px black;
         padding: 10px;
+        position: relative;
+
+        
+        &.dark {
+            h1, h2, h3, h4 {
+                color: white;
+            }
+            color: white;
+            background: url(./assets/image/journal-sidebar-dark.webp) 0px 100% repeat;
+            border-image-outset: 5px 0px;
+            .sidebar-header-image {
+                width: 200px;
+                top: -65px;
+                left: calc(50% - 100px);
+            }
+        }
+
+
+        .sidebar-header-image {
+            position: absolute;
+        }
     }
 
     blockquote.sidebar {
@@ -227,6 +248,103 @@
         }
 
 
+    }
+
+    .wrath-and-glory-embed.threat {
+        border-top: 8px solid transparent;
+        border-image: url(assets/image/table-border.webp) 8 8 8 8 repeat repeat;
+
+        table {
+
+            td {
+                padding: 0px 1rem;
+
+                &:not(.threat-label, .threat-header) {
+                    width: 10%;
+                    padding: 0px;
+                }
+                &[colspan="7"]
+                {
+                    padding-left: 0.5rem;
+                }
+            }
+
+            .threat-header {
+
+                text-align: center;
+                background-color: #752322;
+                color: #ddd;
+                font-size: 16px;
+
+                text-transform: uppercase;
+                font-weight: bold;
+
+                a.content-link {
+                    color: #ddd;
+
+                    i {
+                        color: #ddd;
+                    }
+                }
+            }
+
+            .threat-label {
+                background-color: #484746;
+                color: #ddd;
+            }
+
+            .threat-value {
+                text-align: center;
+            }
+
+
+            .attributes {
+                td:nth-child(even)
+                {
+                        background: #CCC;
+                }
+            }
+
+            .attribute {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                span:first-of-type {
+                    font-weight: bold;
+                }
+                span {padding: 0.5rem 0px;}
+            }
+
+            .derived {
+                > * {
+                    width: 25%;
+                }
+            }
+        }
+
+
+    }
+
+    .wrath-and-glory-embed.faction {
+
+        &:not(.no-border)
+        {
+            border-top: 8px solid transparent;
+            border-image: url(assets/image/table-border.webp) 8 8 8 8 repeat repeat;
+        }
+
+        table {
+            .table-col-header {
+                .inline-roll,
+                .content-link {
+                    color: #CCC;
+                    > i {
+                        color: #CCC;
+                    }
+                }
+            }
+        }
     }
 
 }

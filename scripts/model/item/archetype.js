@@ -214,8 +214,14 @@ export class ArchetypeModel extends BaseItemModel
         let abilities = await this.abilities.awaitDocuments();
         let species = await this.species.document;
         let talents = await this.suggested.talents.awaitDocuments();
+
+        let noSuggested = Object.values(this.suggested.attributes).filter(i => i).length + 
+        Object.values(this.suggested.skills).filter(i => i).length + 
+        talents.length == 0
+
         let html = `
         <table>
+        <tbody>
         <tr class="archetype-header">
             <td colspan="8">
                 <p>@UUID[${this.parent.uuid}]{${this.parent.name}}</p>
@@ -270,7 +276,11 @@ export class ArchetypeModel extends BaseItemModel
                 <p><strong>INFLUENCE</strong>: ${this.influence}</p>
             </td>
         </tr>
-        <tr style="height:16px">
+        `
+
+        if (!noSuggested)
+        {
+            html += `<tr style="height:16px">
             <td class="archetype-header" colspan="8">
                 <p><strong>SUGGESTED ATTRIBUTES</strong></p>
             </td>
@@ -336,23 +346,28 @@ export class ArchetypeModel extends BaseItemModel
             <td colspan="8">
                 <p>${Object.keys(this.suggested.skills).filter(a => this.suggested.skills[a]).map(a => `${game.wng.config.skills[a]} ${this.suggested.skills[a]}`).join(", ")}</p>
             </td>
-        </tr>
-        `;
+        </tr>`
 
-
-        if (talents.length)
-        {
-            html += `<tr>
-            <td class="archetype-header" colspan="8">
-                <p><strong>SUGGESTED TALENTS</strong></p>
-            </td>
-            </tr>   
-            <tr>
-                <td colspan="8">
-                    <p>${talents.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ") }</p>
+            if (talents.length)
+            {
+                html += `<tr>
+                <td class="archetype-header" colspan="8">
+                    <p><strong>SUGGESTED TALENTS</strong></p>
                 </td>
-            </tr>`
+                </tr>   
+                <tr>
+                    <td colspan="8">
+                        <p>${talents.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ") }</p>
+                    </td>
+                </tr>`
+            }
         }
+
+        html += `</tbody></table>`
+        
+
+
+
 
         let div = document.createElement("div");
         div.style = config.style;

@@ -13,6 +13,7 @@ export class WNGTest extends WarhammerTestBase {
         attribute: data.attribute,
         skill: data.skill,
         wrath: data.wrath,
+        icons: data.icons || 0,
         shifted: data.shifted || { damage: {
           label : game.i18n.localize("SHIFT.DAMAGE"),
           dice : [],
@@ -175,7 +176,7 @@ export class WNGTest extends WarhammerTestBase {
 
     this.result.allDice = duplicate(this.result.dice);
     this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
-    this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0) + this.testData.edit.icons;
+    this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0) + this.testData.edit.icons + this.testData.icons;
     this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0);
     this.result.shiftsPossible = (this.isShiftable) ? this._countShifting() : 0;
     this.result.isSuccess = this.result.success >= this.result.dn;

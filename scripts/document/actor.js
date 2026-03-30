@@ -255,7 +255,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         let dn = data.dn;
         let type = data.type;
         let specification = data.specification;
-        foundry.utils.setProperty(context, "fields.difficulty", dn);
+        foundry.utils.setProperty(context, "fields.difficulty", Number(dn));
         
         if (type == "attribute")
         {
@@ -345,7 +345,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         return test;
     }
 
-    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}={}, {test, damageRoll, token, allowDetermination=true, ignoreResilience=false}={}) {
+    async applyDamage(damage=0, {ap=0, shock=0, mortal=0}={}, {test, damageRoll, token, allowDetermination=true, ignoreResilience=false, ignoreArmour=false}={}) {
 
         if (!this.statuses.has("full-defence") && test && test.weapon && (test.weapon.traitList.blast || test.weapon.traitList.flamer))
         {
@@ -375,6 +375,11 @@ export class WrathAndGloryActor extends WarhammerActor {
             wounds : [],
         };
 
+        if (ignoreArmour)
+        {
+            modifiers.resilience.push({value:  -resilience.armour, label: "Ignore Armour"});
+        }
+
         let addModifierBreakdown = (type, label) => {
             for(let mod of modifiers[type])
             {
@@ -383,16 +388,17 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
         
         let mortalDetermination = false;
-        let args = {damage, ap, shock, mortal, test, damageRoll, modifiers, resilience, actor: this, ignoreResilience}
-        this.runScripts("preTakeDamage", args)
-        test?.actor?.runScripts("preApplyDamage", args)
-        test?.item?.runScripts("preApplyDamage", args)
+        let args = {damage, ap, shock, mortal, test, damageRoll, modifiers, resilience, actor: this, ignoreResilience, allowDetermination}
+        await Promise.all(this.runScripts("preTakeDamage", args) || [])
+        await Promise.all(test?.actor?.runScripts("preApplyDamage", args) || [])
+        await Promise.all(test?.item?.runScripts("preApplyDamage", args) || [])
         damage = args.damage;
         ap = args.ap;
         shock = args.shock;
         mortal = args.mortal;
         mortalDetermination = args.mortalDetermination;
         ignoreResilience = args.ignoreResilience;
+        allowDetermination = args.allowDetermination
         
         let invuln = resilience.invulnerable
         if (resilience.powerField)
@@ -508,7 +514,7 @@ export class WrathAndGloryActor extends WarhammerActor {
                         report.breakdown.push(`<strong>Determination</strong>: Ignored ${determination.result.converted} Wounds`)
                     }
                     else {
-                        report.breakdown.push(`<strong>Determination</strong>: Converted ${determination.result.converted} Wounds to Shock`)
+                        report.breakdown.push(`<strong>Determination</strong>: Converted ${determination.result.converted} Wounds to ${determination.result.shock} Shock`)
                     }
                     report.determination = determination;
                 }
@@ -524,10 +530,15 @@ export class WrathAndGloryActor extends WarhammerActor {
 
 
         let updateObj = {}
-        args = {wounds, shock, mortal, report, updateObj, actor: this, test, damageRoll}
-        this.runScripts("takeDamage", args)
-        test?.actor?.runScripts("applyDamage", args)
-        test?.item?.runScripts("applyDamage", args)
+        args = {wounds, ap, shock, mortal, modifiers, report, updateObj, actor: this, test, damageRoll}
+        await Promise.all(this.runScripts("takeDamage", args) || [])
+        await Promise.all(test?.actor?.runScripts("applyDamage", args) || [])
+        await Promise.all(test?.item?.runScripts("applyDamage", args) || [])
+
+        wounds = args.wounds;
+        ap = args.ap;
+        shock = args.shock;
+        mortal = args.mortal;
 
         // If you want to modify wounds before determination, use damage modifier
         // modifier.wounds is for modifying wounds after determination
@@ -737,14 +748,48 @@ export class WrathAndGloryActor extends WarhammerActor {
     }
 
 
-    hasKeyword(keyword) 
+    hasKeyword(keyword, group) 
     {
+        if (group)
+        {
+            return this.hasKeywordGroup(keyword, group)
+        }
+
         if (typeof keyword == "string")
         {
             keyword = [keyword];
         }
 
         return keyword.some(k => this.keywords.has(k));
+    }
+
+    /**
+     * 
+     * @param {string} keyword Specific keyword e.g. "ABSOLVERS"
+     * @param {*} group Group of the keyword e.g. "CHAPTER"
+     * @returns 
+     */
+    hasKeywordGroup(keyword, group)
+    {
+        return this.getGroupKeyword(group).includes(keyword.toUpperCase());
+    }
+
+    /**
+     * 
+     * @param {string} group Keyword group, if CHAPTER is provided, return ABSOLVERS (if present)
+     */
+    getGroupKeyword(group, {item=false}={})
+    {
+        group = group.toUpperCase();
+
+        let keyword = this.itemTypes.keyword.filter(i => i.system.group == group);
+        return item ? keyword : keyword.map(i => i.name.toUpperCase())
+    }
+
+    sharesKeywordGroup(actor, group)
+    {
+        let groupKeywords = this.getGroupKeyword(group);
+        return groupKeywords.some(i => actor.hasKeywordGroup(i.name, group))
     }
 
 

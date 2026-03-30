@@ -19,7 +19,12 @@ export class RollDialog extends WarhammerRollDialogV2 {
             label : "Wrath",
             type : 1,
             path : "fields.wrath"
-        }
+        },
+        icons : {
+          label : "Icons",
+          type : 1,
+          path : "fields.icons"
+      }
     }
   }
   
@@ -91,6 +96,7 @@ export class RollDialog extends WarhammerRollDialogV2 {
             difficulty : 3,
             pool : 1,
             wrath : 1,
+            icons: 0,
         }, super._defaultFields());
 
         if (this.context.determination && game.user.isGM)
