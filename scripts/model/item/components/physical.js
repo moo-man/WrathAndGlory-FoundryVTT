@@ -19,6 +19,11 @@ export class PhysicalItemModel extends StandardItemModel
         return schema;
     }
 
+    get isPhysical() 
+    {
+        return true;
+    }
+
     get Rarity() {
         return game.wng.config.rarity[this.rarity] || "-";
     }

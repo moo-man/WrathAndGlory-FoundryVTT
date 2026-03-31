@@ -251,11 +251,15 @@
     }
 
     .wrath-and-glory-embed.threat {
-        border-top: 8px solid transparent;
-        border-image: url(assets/image/table-border.webp) 8 8 8 8 repeat repeat;
+
+
+        div.table-border
+        {
+            border-top: 8px solid transparent;
+            border-image: url(assets/image/table-border.webp) 8 8 8 8 repeat repeat;
+        }
 
         table {
-
             td {
                 padding: 0px 1rem;
 
@@ -288,9 +292,27 @@
                 }
             }
 
+            .separator,
             .threat-label {
                 background-color: #484746;
                 color: #ddd;
+            }
+
+            .separator {
+                text-align: center;
+                td {
+                    padding: 0.2rem;
+                    font-size: var(--font-size-16);
+                }
+            }
+
+            .talents,
+            .equipment,
+            .abilities
+            {
+                td {
+                    padding: 0.5rem;
+                }
             }
 
             .threat-value {
@@ -316,9 +338,10 @@
                 span {padding: 0.5rem 0px;}
             }
 
-            .derived {
-                > * {
-                    width: 25%;
+            .combat {
+                td {
+                    padding: 0.5rem;
+                    text-align: center;
                 }
             }
         }
