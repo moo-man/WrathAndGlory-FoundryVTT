@@ -86,7 +86,7 @@ async _prepareContext(options)
         let target = dialogData.data.targets[0];
         if (target && token)
         {
-          dialogData.fields.distance = canvas.grid.measureDistances([{ ray: new Ray({ x: token.x, y: token.y }, { x: target.x, y: target.y }) }], { gridSpaces: true })[0]
+          dialogData.fields.distance = canvas.grid.measurePath([{x: token.x, y: token.y }, { x: target.x, y: target.y }], { gridSpaces: true }).distance;
         }
       }
 
