@@ -159,4 +159,42 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
         }
     }
 
+    get changeKeys()
+    {
+        return {choices: Object.keys(game.wng.config.attributes).map(i => {
+            return {
+                value: `system.attributes.${i}.bonus`,
+                label: game.wng.config.attributes[i],
+                group: "Attributes"
+            }
+        }).concat(Object.keys(game.wng.config.skills).map(i => {
+            return {
+                value: `system.skills.${i}.bonus`,
+                label: game.wng.config.skills[i],
+                group: "Skills"
+            }
+        })).concat([
+            {value: "system.combat.defence.bonus", label: game.i18n.localize("HEADER.DEFENCE"), group: "Other"},
+            {value: "system.combat.resilience.bonus", label: game.i18n.localize("HEADER.RESILIENCE"), group: "Other"},
+            {value: "system.combat.wounds.bonus", label: game.i18n.localize("HEADER.WOUNDS"), group: "Other"},
+            {value: "system.combat.determination.bonus", label: game.i18n.localize("HEADER.DETERMINATION"), group: "Other"},
+            {value: "system.combat.shock.bonus", label: game.i18n.localize("HEADER.SHOCK"), group: "Other"},
+            {value: "system.combat.resolve.bonus", label: game.i18n.localize("HEADER.RESOLVE"), group: "Other"},
+            {value: "system.combat.conviction.bonus", label: game.i18n.localize("HEADER.CONVICTION"), group: "Other"},
+            {value: "system.combat.passiveAwareness.bonus", label: game.i18n.localize("HEADER.PASSIVEAWARENESS"), group: "Other"},
+            {value: "system.combat.resilience.bonus", label: game.i18n.localize("HEADER.RESILIENCE"), group: "Other"},
+            {value: "system.combat.speed", label: game.i18n.localize("HEADER.SPEED"), group: "Other"},
+            {value: "system.combat.fly", label: game.i18n.localize("HEADER.SPEED_FLY"), group: "Other"},
+            {value: "system.resources.faith.total", label: game.i18n.localize("RESOURCE.FAITH"), group: "Other"},
+            {value: "system.resources.influence", label: game.i18n.localize("RESOURCE.INFLUENCE"), group: "Other"},
+            {value: "system.resources.wealth", label: game.i18n.localize("RESOURCE.INFLUENCE"), group: "Other"},
+            {value: "system.combat.defence.bonus", label: game.i18n.localize("(Vehicle) Defence"), group: "Other"},
+            {value: "system.mnvr", label: game.i18n.localize("(Vehicle) Maneuverability"), group: "Other"},
+        ]), 
+        groups: ['Attributes',
+        'Skills',
+        'Other',
+        ].map(i => game.i18n.localize(i))};
+    }
+
 }

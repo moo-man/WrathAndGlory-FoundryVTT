@@ -61,7 +61,7 @@ export default class PowerTest extends WNGTest {
 
   computePotencies() {
 
-    this.result.potency = {spent : 0, options : duplicate(this.testData.potency), available : this.testData.shifted.potency.dice.length + this.testData.edit.potency}
+    this.result.potency = {spent : 0, options : foundry.utils.duplicate(this.testData.potency), available : this.testData.shifted.potency.dice.length + this.testData.edit.potency}
 
     this.result.potency.options.forEach(p => {
       // Set initial potency values (before potency allocation)

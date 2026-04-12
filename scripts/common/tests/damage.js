@@ -261,7 +261,7 @@ export class DamageRoll {
   async sendToChat({ newMessage = null} = {}) {
     const html = await foundry.applications.handlebars.renderTemplate(this.template, this);
     let chatData = {
-      _id : randomID(),
+      _id : foundry.utils.randomID(),
       type: "damage",
       rolls: [this.roll],
       system: this.data,

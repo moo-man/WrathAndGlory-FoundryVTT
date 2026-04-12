@@ -85,7 +85,7 @@ export class TraitsModel extends foundry.abstract.DataModel
 
             if (i.custom)
             {
-                traits[i.name] = duplicate(i)
+                traits[i.name] = foundry.utils.duplicate(i)
             }
             else
             {

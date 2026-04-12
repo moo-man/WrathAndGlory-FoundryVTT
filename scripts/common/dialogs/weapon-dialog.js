@@ -303,7 +303,7 @@ async _prepareContext(options)
 
   _defaultFields() 
   {
-      return mergeObject({
+      return foundry.utils.mergeObject({
           distance : null,
           range : null,
           aim : false,

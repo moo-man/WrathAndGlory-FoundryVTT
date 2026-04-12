@@ -148,7 +148,7 @@ export class WNGTest extends WarhammerTestBase {
 
     this.roll = Roll.fromTerms([
       new PoolDie({ number: this.result.poolSize, faces: 6 }),
-      new OperatorTerm({ operator: "+" }),
+      new foundry.dice.terms.OperatorTerm({ operator: "+" }),
       new WrathDie({ number: this.result.wrathSize, faces: 6 })
     ])
 
@@ -174,7 +174,7 @@ export class WNGTest extends WarhammerTestBase {
 
     this._handleWrath()
 
-    this.result.allDice = duplicate(this.result.dice);
+    this.result.allDice = foundry.utils.duplicate(this.result.dice);
     this.result.dice = this.result.dice.filter(die => !this.isShifted(die.index));
     this.result.success = this.result.dice.reduce((prev, current) => prev + current.value, 0) + this.testData.edit.icons + this.testData.icons;
     this.result.failure = this.result.dice.reduce((prev, current) => prev + (current.value === 0 ? 1 : 0), 0);
@@ -270,7 +270,7 @@ export class WNGTest extends WarhammerTestBase {
     this._computeResult();
 
     if (game.dice3d) {
-      let rerollShow = duplicate(this.rerolledTests[this.rerolledTests.length - 1])
+      let rerollShow = foundry.utils.duplicate(this.rerolledTests[this.rerolledTests.length - 1])
       rerollShow.terms = rerollShow.terms.map((term, t) => {
         if (term.results) {
           term.results = term.results.map((die, i) => {
@@ -314,7 +314,7 @@ export class WNGTest extends WarhammerTestBase {
     let added
     if (poolDice && wrathDice) {
       added = Roll.fromTerms([
-        poolDice, new OperatorTerm({operator : "+"}), wrathDice
+        poolDice, new foundry.dice.terms.OperatorTerm({operator : "+"}), wrathDice
       ].filter(d => d))
     }
     else if (poolDice || wrathDice)
@@ -330,7 +330,7 @@ export class WNGTest extends WarhammerTestBase {
     }
 
     // Dice removed previously still show up (Terms with no results) So remove terms that have no results
-    let oldTerms = foundry.utils.deepClone(this.roll.terms).filter(t => t instanceof OperatorTerm || t.results.length > 0);
+    let oldTerms = foundry.utils.deepClone(this.roll.terms).filter(t => t instanceof foundry.dice.terms.OperatorTerm || t.results.length > 0);
 
 
 
@@ -361,7 +361,7 @@ export class WNGTest extends WarhammerTestBase {
     // Only add a connecting operator term if dice were added (don't want trailing "+")
     if (added) {
       await added.evaluate({ async: true });
-      connector = await new OperatorTerm({ operator: "+" });
+      connector = await new foundry.dice.terms.OperatorTerm({ operator: "+" });
       if (game.dice3d)
         await game.dice3d.showForRoll(added)
     }
@@ -370,7 +370,7 @@ export class WNGTest extends WarhammerTestBase {
 
 
     // Foundry throws an error if the last term is an operator term
-    if (newRoll[newRoll.length - 1] instanceof OperatorTerm) {
+    if (newRoll[newRoll.length - 1] instanceof foundry.dice.terms.OperatorTerm) {
       newRoll.splice(newRoll.length - 1, 1);
     }
 
@@ -474,7 +474,7 @@ export class WNGTest extends WarhammerTestBase {
   async sendToChat({ newMessage = null, chatDataMerge = {} } = {}) {
     const html = await foundry.applications.handlebars.renderTemplate(this.template, this);
     let chatData = {
-      _id : randomID(),
+      _id : foundry.utils.randomID(),
       type: "test",
       rolls: [this.roll],
       system: this.data,

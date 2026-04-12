@@ -110,7 +110,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             },
             callback: async li => {
               let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-              const document = this.actor.items.get(parseUuid(uuid).id);
+              const document = this.actor.items.get(foundry.utils.parseUuid(uuid).id);
               if (document)
               {
                 if (document.system.sustained)
@@ -133,7 +133,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             },
             callback: async li => {
               let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-              const document = this.actor.items.get(parseUuid(uuid).id);
+              const document = this.actor.items.get(foundry.utils.parseUuid(uuid).id);
               document.update(await document.system.specifyGroup());
             }
           },

@@ -35,7 +35,10 @@ export class RollDialog extends WarhammerRollDialogV2 {
         context.title = this.context.title;
         context.noDn = this.context.noDn;
         context.noWrath = this.context.noWrath;
-        context.rollModes = CONFIG.Dice.rollModes;
+        if (game.release.generation == 13)
+        {
+          context.rollModes = CONFIG.Dice.rollModes;
+        }
         return context;
     }
 
@@ -92,7 +95,7 @@ export class RollDialog extends WarhammerRollDialogV2 {
   
     _defaultFields() 
     {
-        let fields = mergeObject({
+        let fields = foundry.utils.mergeObject({
             difficulty : 3,
             pool : 1,
             wrath : 1,

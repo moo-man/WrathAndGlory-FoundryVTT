@@ -15,7 +15,7 @@ export default class CharacterCreation extends FormApplication {
     }
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "character-creation",
             title: "Character Creation",
             template: "systems/wrath-and-glory/templates/apps/character-creation.hbs",

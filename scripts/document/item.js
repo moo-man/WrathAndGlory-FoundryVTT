@@ -16,7 +16,7 @@ export class WrathAndGloryItem extends WarhammerItem {
 
     async addCondition(effect) {
         if (typeof (effect) === "string")
-            effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+            effect = foundry.utils.duplicate(CONFIG.statusEffects.find(e => e.id == effect))
         if (!effect)
             return "No Effect Found"
 
@@ -36,7 +36,7 @@ export class WrathAndGloryItem extends WarhammerItem {
 
     async removeCondition(effect, value = 1) {
         if (typeof (effect) === "string")
-            effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+            effect = foundry.utils.duplicate(CONFIG.statusEffects.find(e => e.id == effect))
         if (!effect)
             return "No Effect Found"
 

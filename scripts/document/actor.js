@@ -699,7 +699,7 @@ export class WrathAndGloryActor extends WarhammerActor {
 
     async addCondition(effect, flags = {}, options={}) {
         if (typeof (effect) === "string")
-            effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
+            effect = foundry.utils.duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
         if (!effect)
             return "No Effect Found"
 
@@ -724,7 +724,7 @@ export class WrathAndGloryActor extends WarhammerActor {
 
     async removeCondition(effect, value = 1) {
         if (typeof (effect) === "string")
-            effect = duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
+            effect = foundry.utils.duplicate(CONFIG.statusEffects.concat(Object.values(game.wng.config.systemEffects)).find(e => e.id == effect))
         if (!effect)
             return "No Effect Found"
 

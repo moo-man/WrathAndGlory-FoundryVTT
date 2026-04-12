@@ -119,7 +119,7 @@ export class CommonDialog extends RollDialog {
   
     _defaultFields() 
     {
-        return mergeObject({
+        return foundry.utils.mergeObject({
           pool : 1,
           wrath : 1,
           difficulty : 3,

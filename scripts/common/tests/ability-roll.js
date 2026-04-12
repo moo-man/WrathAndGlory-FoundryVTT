@@ -55,7 +55,7 @@ export default class AbilityRoll extends WNGTest {
 
     const html = await foundry.applications.handlebars.renderTemplate(this.template, this);
     let chatData = {
-      _id : randomID(),
+      _id : foundry.utils.randomID(),
       type: "test",
       rolls: [],
       system: this.data,

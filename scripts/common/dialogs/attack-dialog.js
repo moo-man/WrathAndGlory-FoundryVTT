@@ -80,7 +80,7 @@ export class AttackDialog extends CommonDialog {
 
   _defaultFields() 
   {
-      return mergeObject({
+      return foundry.utils.mergeObject({
           damage : 0,
           ed : {
             value : 0,

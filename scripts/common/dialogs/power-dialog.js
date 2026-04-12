@@ -144,7 +144,7 @@ export class PowerDialog extends AttackDialog {
 
   _defaultFields() 
   {
-      return mergeObject({
+      return foundry.utils.mergeObject({
           level : "bound",
       }, super._defaultFields());
   }

@@ -16,7 +16,7 @@ export default class WeaponTest extends WNGTest {
 
     this.addDamageData(data);
 
-    //this.data.context.edit = mergeObject(this.data.context.edit, {damage : 0, ed : 0, ap : 0})
+    //this.data.context.edit = foundry.utils.mergeObject(this.data.context.edit, {damage : 0, ed : 0, ap : 0})
   }
 
   get template() {
