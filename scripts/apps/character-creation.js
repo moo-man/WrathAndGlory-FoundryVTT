@@ -30,7 +30,7 @@ export default class CharacterCreation extends FormApplication {
 
     async initializeCharacter()
     {
-        this.character = new Actor.implementation({type: "agent", name : this.object.actor.name, system: foundry.utils.deepClone(game.system.template.Actor.agent)})
+        this.character = new Actor.implementation({type: "agent", name : this.object.actor.name, system: foundry.utils.deepClone(game.model.Actor.agent)})
 
         // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
         for (let attribute in this.character.attributes)

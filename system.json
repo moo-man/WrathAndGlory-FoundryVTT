@@ -2,7 +2,7 @@
   "id": "wrath-and-glory",
   "title": "Warhammer 40,000: Wrath & Glory",
   "description": "Explore the setting of Warhammer 40,000: Darktide as Inquisitor Grendyl dispatches you to a lost region of Hive Tertium. Play Darktide? Bring your character to life by importing them directly into Foundry!",
-  "version": "7.5.1",
+  "version": "7.5.2",
   "compatibility" : {
     "minimum" : 13,
     "verified" : 14,
@@ -67,7 +67,7 @@
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/7.5.1/wrath-and-glory.zip",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/7.5.2/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 

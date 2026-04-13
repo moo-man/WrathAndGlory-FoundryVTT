@@ -49,7 +49,7 @@ export default class WNGUtility {
    * @param {Object} system If not found, add system data to the blank item returned
    * @returns 
    */
-  static async getKeywordItem(name, system) {
+  static async getKeywordItem(name, system, img) {
 
     name = name.toUpperCase();
     let item = game.items.contents.find(i => i.type == "keyword" && i.name.toUpperCase() == name)
@@ -63,7 +63,7 @@ export default class WNGUtility {
     if (item)
       return item
     else
-      return new WrathAndGloryItem({ name, type: "keyword", img: "modules/wng-core/assets/ui/aquila-white.webp", system })
+      return new WrathAndGloryItem({ name, type: "keyword", img: img || "modules/wng-core/assets/ui/aquila-white.webp", system })
   }
 
   static _getTargetDefence() {

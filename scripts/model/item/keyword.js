@@ -51,7 +51,7 @@ export class KeywordModel extends StandardItemModel
             let name = await ValueDialog.create({text: `Enter ${this.parent.name}`, title: this.parent.name})
             if (name)
             {
-                let keywordItem = await game.wng.utility.getKeywordItem(name, this);
+                let keywordItem = await game.wng.utility.getKeywordItem(name, this, this.parent.img);
                 if (keywordItem)
                 {
                     return keywordItem.toObject();
