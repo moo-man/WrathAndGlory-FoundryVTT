@@ -98,7 +98,8 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             name: "Toggle Sustaining",
             icon: '<i class="fa-solid fa-head-side-gear"></i>',
             condition: li => {
-              let item = this.actor.items.get(li.dataset.id);
+              let id = li.dataset.id || getParent(li, "[data-id]")?.dataset?.id;
+              let item = this.actor.items.get(id);
               if(item && item.type == "psychicPower" && item.system.duration.toLowerCase() == "sustained")
               {
                 return true;
@@ -128,7 +129,8 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             name: "Specify Keyword Group",
             icon: '<i class="fa-solid fa-arrow-left-to-bracket"></i>',
             condition: li => {
-              let item = this.actor.items.get(foundry.utils.parseUuid(li.dataset.uuid).id);
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]")?.dataset?.uuid;
+              let item = this.actor.items.get(foundry.utils.parseUuid(uuid).id);
               return item && item.type == "keyword" && item.system.isGroup;
             },
             callback: async li => {

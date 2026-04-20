@@ -309,9 +309,9 @@ export class WrathAndGloryActor extends WarhammerActor {
                     })
                 }
 
-                buttons.push({
-                    label: "Cancel",
-                    action: "cancel"
+                buttons = buttons.concat({
+                    label: "Free",
+                    action: "free"
                 })
 
                 let ruin = await foundry.applications.api.Dialog.wait({
@@ -330,7 +330,7 @@ export class WrathAndGloryActor extends WarhammerActor {
                     await this.update({"system.resources.ruin" : this.system.resources.ruin - 1});
                 }
 
-                if (ruin == "cancel")
+                if (!ruin)
                 {
                     return null;
                 }
