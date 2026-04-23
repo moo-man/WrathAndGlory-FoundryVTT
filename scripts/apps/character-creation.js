@@ -162,6 +162,7 @@ export default class CharacterCreation extends FormApplication {
             element.textContent = document.name
 
             option.type = "item";
+            option.idType = "id";
             option.name = document.name;
             option.documentId = document.id;
         }
@@ -247,7 +248,7 @@ export default class CharacterCreation extends FormApplication {
             .concat(wargear.filter(i => i).map(e => e?.toObject()))
             .concat(this.speciesAbilities.map(a=> a?.toObject()))
             .concat(this.addedTalents)
-            .concat((await Promise.all(this.archetype.keywords.map(WNGUtility.getKeywordItem))).map(i => i?.toObject())).filter(i => i)
+            .concat((await Promise.all(this.archetype.keywords.map(i => WNGUtility.getKeywordItem(i)))).map(i => i?.toObject())).filter(i => i)
 
         let characterData = this.character.toObject();
         delete characterData.folder;
