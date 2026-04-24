@@ -1,1 +1,1 @@
-args.fields.difficulty.base += (1)
+args.fields.difficulty += (1)
