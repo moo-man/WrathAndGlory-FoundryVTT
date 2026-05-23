@@ -12,7 +12,7 @@ export class ArchetypeModel extends BaseItemModel
         let schema = super.defineSchema();
         schema.tier = new fields.NumberField({min : 1, initial : 1})
         schema.journal = new fields.StringField({});
-        schema.species = new fields.EmbeddedDataField(DeferredReferenceModel);
+        schema.species = new fields.EmbeddedDataField(DeferredReferenceListModel);
         schema.faction = new fields.EmbeddedDataField(DeferredReferenceModel);
         schema.influence = new fields.NumberField({initial : 0});
         schema.cost = new fields.NumberField({min : 0, initial : 0});
@@ -131,6 +131,11 @@ export class ArchetypeModel extends BaseItemModel
         if (!data.abilities || data.abilities.length == 0 && (data.ability?.uuid || data.ability?.id))
         {
             data.abilities = {list: [{uuid : data.ability.uuid, id : data.ability.id, name : data.ability.name}]};
+        }
+
+        if (!data.species.list)
+        {
+            data.species = {list: [data.species]};
         }
 
 

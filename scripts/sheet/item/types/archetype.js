@@ -33,7 +33,7 @@ export default class ArchetypeSheet extends WnGItemSheet {
     }
     else if (item.type == "species")
     {
-      this.document.update(this.document.system.species.set(item));
+      this.document.update(this.document.system.species.add(item));
     }
     else if (item.type == "faction")
     {

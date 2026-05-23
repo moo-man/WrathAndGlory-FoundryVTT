@@ -6,7 +6,7 @@ export default class CharacterCreation extends FormApplication {
         super(object)
         this.actor = object.actor;
         this.archetype = object.archetype.clone();
-        this.species = object.archetype.species.document;
+        this.species = null;
         this.faction = object.archetype.faction.document;
         this.archetypeAbilities = object.archetype.system.abilities.documents;
         this.speciesAbilities = []; // Must be awaited if species is a promise
@@ -31,6 +31,22 @@ export default class CharacterCreation extends FormApplication {
     async initializeCharacter()
     {
         this.character = new Actor.implementation({type: "agent", name : this.object.actor.name, system: foundry.utils.deepClone(game.model.Actor.agent)})
+
+
+        if (this.archetype.system.species.list.length == 0)
+        {   
+            ui.notifications.error("No Species found on this Archetype");
+            throw new Error("No Species found on this Archetype");
+        }
+        if (this.archetype.system.species.list.length == 1)
+        {
+            this.species = await this.archetype.system.species.list[0].document;
+        }
+        else 
+        {
+            this.species = (await this.archetype.system.species.choose(1, {title : this.archetype.name, text: "Choose Species"}))[0];
+        }
+        
 
         // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
         for (let attribute in this.character.attributes)
@@ -58,22 +74,17 @@ export default class CharacterCreation extends FormApplication {
 
     async getData() {
         let data = super.getData();
-        this.species = await this.species;
         this.faction = await this.faction;
-        if (!this.species)
-        {
-            ui.notifications.error("Archetypes must assign a Species Item");
-            throw "Archetypes must assign a Species Item";
-        }
         if (!this.faction)
         {
             ui.notifications.error("Archetypes must assign a Faction Item");
             throw "Archetypes must assign a Faction Item";
         }
-        this.archetypeAbilities = await this.archetype?.system.abilities.awaitDocuments() || [];
-        this.speciesAbilities = await this.species?.system.abilities.awaitDocuments() || []
 
         await this.initializeCharacter()
+
+        this.archetypeAbilities = await this.archetype?.system.abilities.awaitDocuments() || [];
+        this.speciesAbilities = await this.species?.system.abilities.awaitDocuments() || []
 
         data.actor = this.actor;
         data.character = this.character
