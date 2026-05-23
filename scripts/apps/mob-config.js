@@ -52,8 +52,7 @@ export class MobConfig extends WarhammerSheetMixinV2(HandlebarsApplicationMixin(
         let item = await Item.implementation.fromDropData(data);
         if (item.parent.uuid == this.document.uuid && !item.system.isMobAbility)
         {
-            await this.document.update({"system.mob" : this.document.system.mob.abilities.add(item)});
-            // this.document.update(this.document.system.mob.abilities.add(item));
+            await this.document.update(this.document.system.mob.abilities.add(item));
             this.render(true);
         }
     }
@@ -63,7 +62,7 @@ export class MobConfig extends WarhammerSheetMixinV2(HandlebarsApplicationMixin(
         let index = this._getIndex(ev);
         let value = ev.target.value;
 
-        await this.document.update({"system.mob" : this.document.system.mob.abilities.edit(index, value, "requiredMob")});
+        await this.document.update(this.document.system.mob.abilities.edit(index, value, "requiredMob"));
         this.render(true);
     }
 

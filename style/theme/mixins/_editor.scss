@@ -120,6 +120,11 @@
             }
         }
 
+        &:has(.sidebar-header-image)
+        {
+            margin-top: 4rem;
+        }
+
 
         .sidebar-header-image {
             position: absolute;

@@ -92,7 +92,7 @@ export class TraitsModel extends foundry.abstract.DataModel
                 let effectData = systemConfig().traitEffects[i.name];
                 if (effectData)
                 {
-                    foundry.utils.setProperty(effectData, `flags.${game.system.id}.path`, `system.traitList.${i.name}.effect`);
+                    foundry.utils.setProperty(effectData, `flags.${game.system.id}.path`, `traitList.${i.name}.effect`);
                     effectData.name = game.i18n.localize(effectData.name);
                     effectData.img = this.parent.parent?.img;
                 }
