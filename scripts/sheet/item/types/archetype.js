@@ -50,6 +50,10 @@ export default class ArchetypeSheet extends WnGItemSheet {
         this.document.update(this.document.system.suggested.talents.add(item));
       }
     }
+    else if (item.type == "psychicPower")
+    {
+        this.document.update(this.document.system.suggested.powers.add(item));
+    }
     else if (item.type == "keyword")
     {
       this.document.update({"system.keywords" : this.document.system.keywords.concat(item.name)});

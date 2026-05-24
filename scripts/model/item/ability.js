@@ -36,4 +36,16 @@ export class AbilityModel extends StandardItemModel
         return super.getOtherEffects().concat(this.traits.effects);
     }
 
+    async toEmbed(config, options)
+    {
+        let html = `
+        <h4>@UUID[${this.parent.uuid}]{${this.parent.name}}</h4>
+        ${this.description}</p>
+        `;
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
 }

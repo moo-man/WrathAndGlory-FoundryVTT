@@ -23,6 +23,7 @@ export class AscensionModel extends StandardItemModel
         <h4>@UUID[${this.parent.uuid}]{${this.parent.name}}</h4>
         <p><strong>XP Cost</strong>: ${this.cost}</p>
         <p><strong>Requirements</strong>: ${this.requirements}</p>
+        ${this.influence ? `<p><strong>Influence Bonus</strong>: ${this.influence >= 0 ? "+" : ""}${this.influence}</p>` : ""}
         ${this.description.replace("<p>", "<p><strong>Effect</strong>: ")}</p>
         ${this.benefits}
         `;

@@ -25,7 +25,8 @@ export class ArchetypeModel extends BaseItemModel
         schema.suggested = new fields.SchemaField({
             attributes : Attributes(),
             skills: Skills(),
-            talents : new fields.EmbeddedDataField(DeferredReferenceListModel)
+            talents : new fields.EmbeddedDataField(DeferredReferenceListModel),
+            powers : new fields.EmbeddedDataField(DeferredReferenceListModel)
         })
         return schema;
     }
@@ -217,12 +218,13 @@ export class ArchetypeModel extends BaseItemModel
     async toEmbed(config, options)
     {
         let abilities = await this.abilities.awaitDocuments();
-        let species = await this.species.document;
+        let species = await this.species.awaitDocuments();
         let talents = await this.suggested.talents.awaitDocuments();
+        let powers = await this.suggested.powers.awaitDocuments();
 
         let noSuggested = Object.values(this.suggested.attributes).filter(i => i).length + 
         Object.values(this.suggested.skills).filter(i => i).length + 
-        talents.length == 0
+        talents.length == 0 + powers.length
 
         let html = `
         <table>
@@ -243,13 +245,13 @@ export class ArchetypeModel extends BaseItemModel
                 <p>SPECIES</p>
             </td>
             <td class="archetype-value">
-                @UUID[${species.uuid}]{${species.name}}
+            ${species.map(s => `@UUID[${s.uuid}]{${s.name}}`).join(", ")}
             </td>
             <td class="archetype-label">
                 <p>XP Cost</p>
             </td>
             <td class="archetype-value">
-                <p>64</p>
+                <p>${this.cost}</p>
             </td>
         </tr>
         <tr>
@@ -366,6 +368,21 @@ export class ArchetypeModel extends BaseItemModel
                     </td>
                 </tr>`
             }
+
+            
+            if (powers.length)
+                {
+                    html += `<tr>
+                    <td class="archetype-header" colspan="8">
+                        <p><strong>SUGGESTED POWERS</strong></p>
+                    </td>
+                    </tr>   
+                    <tr>
+                        <td colspan="8">
+                            <p>${powers.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ") }</p>
+                        </td>
+                    </tr>`
+                }
         }
 
         html += `</tbody></table>`
