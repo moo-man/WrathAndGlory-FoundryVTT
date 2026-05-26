@@ -239,7 +239,7 @@ export class WNGTest extends WarhammerTestBase {
     this.result.isWrathComplication = this.result.dice.some(r => r.isWrath && r.result === 1);
 
     if (this.actor.hasCondition("dying")) {
-      this.result.isWrathCritical = this.result.dice.every(r => r.isWrath && r.result === 6);
+      this.result.isWrathCritical = this.result.dice.filter(r => r.isWrath).every(r => r.result === 6);
       this.result.gainTraumaticInjury = this.result.isWrathComplication
       return;
     }
@@ -430,6 +430,8 @@ export class WNGTest extends WarhammerTestBase {
       type = await this.promptShiftType()
     }
 
+    await Promise.all(this.actor.runScripts("shiftDice", {type, dice: shift, test: this}));
+    await Promise.all(this.item?.runScripts("shiftDice", {type, dice: shift, test: this}) || []);
     this.testData.shifted[type].dice = this.testData.shifted[type].dice.concat(shift)
     this._computeResult()
     this.sendToChat()

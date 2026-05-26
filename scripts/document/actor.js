@@ -86,7 +86,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             });
         }
 
-        if (type == "resolve")
+        if (type == "resolve" && !context.noSpecification)
         {
             type = await foundry.applications.api.Dialog.wait({
                 window : {title : game.i18n.localize(`ROLL.RESOLVE`)},
@@ -134,6 +134,10 @@ export class WrathAndGloryActor extends WarhammerActor {
             case "terror":
                 context.title = game.i18n.localize(`ROLL.TERROR`)
                 context.terror = true;
+                context.resolve = true;
+                return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.combat.resolve.total}, context, options)
+            case "resolve":
+                context.title = game.i18n.localize(`ROLL.RESOLVE`)
                 context.resolve = true;
                 return this._setupTest(CommonDialog, ResolveTest, {pool : this.system.combat.resolve.total}, context, options)
             case "influence":
@@ -272,9 +276,14 @@ export class WrathAndGloryActor extends WarhammerActor {
                 return this.setupSkillTest(specification, context, options)
             }
         }
-        else if (type == "resolve")
+        else if (type == "resolve" && specification)
         {
             return this.setupGenericTest(specification, context, options)
+        }
+        else if (type == "resolve")
+        {
+            context.noSpecification = true;
+            return this.setupGenericTest(type, context, options)
         }
         else if (type == "conviction")
         {

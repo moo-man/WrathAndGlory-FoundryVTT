@@ -14,6 +14,7 @@ export class PsychicPowerModel extends StandardItemModel
         let schema = super.defineSchema();
         schema.test = new fields.EmbeddedDataField(TestDataModel)
         schema.damage = new fields.EmbeddedDataField(DamageModel)
+        schema.discipline = new fields.StringField({}),
         schema.effect = new fields.StringField({}),
         schema.cost = new fields.NumberField({min : 0}),
         schema.dn = new fields.StringField({}),

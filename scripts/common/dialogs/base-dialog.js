@@ -61,7 +61,7 @@ export class RollDialog extends WarhammerRollDialogV2 {
         
         if (dn && !context.noDn)
         {
-          fields.dn = dn;
+          fields.difficulty = dn;
         }
         else 
         {

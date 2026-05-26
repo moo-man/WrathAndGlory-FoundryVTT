@@ -97,11 +97,14 @@
     .sidebar {
         margin: 1rem;
         background: url(./assets/image/journal-sidebar.webp) 0px 100% repeat;
-        border: 10px solid transparent;
-        border-left: 0px;
-        border-right: 0px;
-        border-image: url(./assets/image/sidebar-journal-border.webp) 30 0 repeat;
-        box-shadow: inset 0px 0px 5px black;
+        &:not(.no-border) {
+
+            border: 10px solid transparent;
+            border-left: 0px;
+            border-right: 0px;
+            border-image: url(./assets/image/sidebar-journal-border.webp) 30 0 repeat;
+            box-shadow: inset 0px 0px 5px black;
+        }
         padding: 10px;
         position: relative;
 
@@ -113,11 +116,6 @@
             color: white;
             background: url(./assets/image/journal-sidebar-dark.webp) 0px 100% repeat;
             border-image-outset: 5px 0px;
-            .sidebar-header-image {
-                width: 200px;
-                top: -65px;
-                left: calc(50% - 100px);
-            }
         }
 
         &:has(.sidebar-header-image)
@@ -128,6 +126,9 @@
 
         .sidebar-header-image {
             position: absolute;
+            width: 200px;
+            top: -65px; 
+            left: calc(50% - 100px);
         }
     }
 

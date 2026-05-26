@@ -95,6 +95,15 @@ export default class WrathAndGloryEffect extends WarhammerActiveEffect {
             effect.system.transferData.area.radius = test.result.radius || effect.system.transferData.area.radius ;
         }
 
+        for(let change of effect.system.changes)
+        {
+            if (change.value.includes?.("@test"))
+            {
+                change.value = foundry.utils.getProperty(test, change.value.replace("@test.", ""));
+            }
+        }
+    
+
         return effect;
     }
 

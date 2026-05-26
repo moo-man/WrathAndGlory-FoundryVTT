@@ -21,7 +21,7 @@ export default class AbilityRoll extends WNGTest {
     
     let item = data.item;
 
-    if (item.system.test.self)
+    if (item.system.test?.self)
     {
       this.testSelf = true;
     }

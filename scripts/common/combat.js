@@ -146,7 +146,7 @@ export class WrathAndGloryCombat extends Combat {
 
         let current = this.combatant.id;
         // Manually set the current turn (setTurn would run endTurn scripts on the actor being seized from)
-        await this.update({combatants: [combatant.setCurrent()], turn: this.turns.findIndex(c => c.id == combatantId)}, {direction: 1});
+        await this.update({combatants: [combatant.setCurrent()], turn: this.turns.findIndex(c => c.id == combatantId)}, {direction: 1, seize: true});
         await this.setNext(current, {message: false});  // Set old combatant as next
     }
 

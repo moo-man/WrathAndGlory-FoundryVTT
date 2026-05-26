@@ -1,5 +1,8 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
         <div class="flexrow">
+        {{formGroup fields.discipline value=system.discipline }}
+        </div>
+        <div class="flexrow">
         {{formGroup fields.cost value=system.cost }}
         {{formGroup fields.prerequisites value=system.prerequisites classes="flex3"}}
         </div>
