@@ -100,12 +100,16 @@ body.wng-theme {
             }
 
 
+            input[type=radio],
             input[type=checkbox] {
                 --checkbox-background-color: var(--color-light-grey);
                 --checkbox-checked-color: var(--color-imperium);
-
-                
             }
+
+            input[type=radio]
+            {
+                border:none;
+            }   
 
             file-picker {
                 background: none;

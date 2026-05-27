@@ -185,4 +185,49 @@ export default class WNGUtility {
 
   }
 
+
+  static async disciplineDialog({text, title, number=1}={}) {
+    let disciplines = (await this.getAllDisciplines()).map(i => {
+      return {
+        id : i.slugify(),
+        name: i
+      }
+    })
+
+    return ItemDialog.create(disciplines, number, {text: text || "Select Discipline", title: title || "Discipline"});
+    
+  }
+
+  static async disciplinePowerDialog(discipline, {number, text, title}={}) 
+  {
+    if (!discipline)
+    {
+      discipline = (await disciplineDialog({number: 1}))[0]?.name;
+    }
+    if (!(discipline instanceof Array))
+    {
+      discipline = [discipline];
+    }
+    let powers = (await warhammer.utility.findAllItems("psychicPower", null, true, ["system.discipline"])).filter(i => discipline.includes(i.system.discipline));
+
+    return ItemDialog.create(powers, number || 1, {text : text || `Select Psychic Power`, title : title || discipline, indexed: true})
+  }
+
+  static async getAllDisciplines()
+  {
+    let allPowers = await warhammer.utility.findAllItems("psychicPower", null, true, ["system.discipline"]);
+
+    let disciplines = new Set();
+
+    for(let p of allPowers)
+    {
+      if (p.system.discipline)
+      {
+        disciplines.add(p.system.discipline);
+      }
+    }
+
+    return Array.from(disciplines);
+  }
+
 }
