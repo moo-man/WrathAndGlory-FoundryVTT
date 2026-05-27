@@ -313,6 +313,8 @@ WNG.scriptTriggers = {
 
     takeDamage : "WH.Trigger.takeDamage",
     applyDamage : "WH.Trigger.applyDamage",
+
+    shiftDice: "WH.Trigger.shiftDice"
     
 }
 

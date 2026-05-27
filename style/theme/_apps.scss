@@ -103,6 +103,32 @@ body.wng-theme {
             input[type=checkbox] {
                 --checkbox-background-color: var(--color-light-grey);
                 --checkbox-checked-color: var(--color-imperium);
+
+                
+            }
+
+            file-picker {
+                background: none;
+                gap: 0.3rem;
+
+                --input-focus-outline-color: var(--color-imperium);
+
+
+                button {
+                    --button-background-color: var(--color-imperium);
+                    --button-text-color: var(--color-white);
+
+                    --button-hover-text-color: var(--color-white);
+                    --button-hover-background-color: var(--color-imperium);
+                }
+            }
+
+            color-picker {
+                background: none;
+                gap: 0.3rem;
+                --input-focus-outline-color: var(--color-imperium);
+
+
             }
 
             .sheet-tabs {

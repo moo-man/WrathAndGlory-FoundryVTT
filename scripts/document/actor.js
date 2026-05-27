@@ -208,7 +208,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             return this.setupGenericTest("determination", context, options)
         }
 
-        if (ability.system.test.self)
+        if (ability.system.test?.self)
         {
             return this.setupTestFromItem(ability, {item : ability}, options, ability);
         }
