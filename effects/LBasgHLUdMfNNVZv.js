@@ -1,0 +1,1 @@
+this.actor.system.combat.determination.attribute = "agility";

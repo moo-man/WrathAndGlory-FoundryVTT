@@ -1,0 +1,1 @@
+return args.target?.type != 'vehicle'

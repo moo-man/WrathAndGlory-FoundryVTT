@@ -1,0 +1,1 @@
+args.addShiftOption("wardenOfSouls", "Warden of Souls", "W")

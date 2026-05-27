@@ -1,0 +1,1 @@
+return args.skill != "psychicMastery" || !this.effect.sourceTest.result.bonus;

@@ -1,0 +1,1 @@
+args.item.system.damage.ed.base += (args.item.actor.system.advances.rank * 2);

@@ -1,0 +1,1 @@
+return !this.effect.sourceTest || !this.effect.sourceTest.result.stealth || args.skill != "stealth";

@@ -1,0 +1,1 @@
+return args.skill != "cunning" || args.weapon || args.power;

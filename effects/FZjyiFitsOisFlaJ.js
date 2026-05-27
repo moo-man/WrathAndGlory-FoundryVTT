@@ -1,0 +1,1 @@
+return args.context.multi && args.actor.itemTypes.weapon.filter(i => i.system.isMelee &&  i.system.isEquipped).length >= 2;

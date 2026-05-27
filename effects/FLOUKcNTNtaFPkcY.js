@@ -1,0 +1,1 @@
+return !args.weapon || !args.weapon.system.isRanged || !args.weapon.system.salvo || args.weapon.system.salvo < 1;

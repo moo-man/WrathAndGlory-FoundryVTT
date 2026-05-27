@@ -1,0 +1,1 @@
+return !args.weapon || !args.weapon.traitList.melta || !["medium", "long"].includes(args.fields.range) || !args.target || args.target.type != 'vehicle';

@@ -1,0 +1,1 @@
+this.actor.addEffectItems("Compendium.wng-core.items.Item.SAoP1Kob0RvDi9Ye", this.effect, {name: "Chains (Whip)"});

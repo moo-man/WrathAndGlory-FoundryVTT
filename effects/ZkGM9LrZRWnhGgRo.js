@@ -1,0 +1,1 @@
+return !args.power || !args.actor.system.sustaining?.list.length

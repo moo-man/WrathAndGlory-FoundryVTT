@@ -1,0 +1,1 @@
+return !["willpower", "fellowship", "initiative", "intellect"].includes(args.attribute) || args.weapon || args.power;

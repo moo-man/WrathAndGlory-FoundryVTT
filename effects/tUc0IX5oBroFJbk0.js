@@ -1,0 +1,2 @@
+// Do not reduce difficulty below natural defence (or 3 if no target)
+args.fields.difficulty = Math.max(args.fields.difficulty - args.actor.system.advances.rank, (args.target ? (args.target.system.combat.defence.total - args.target.system.combat.defence.bonus) : 3));

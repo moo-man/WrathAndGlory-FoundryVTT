@@ -1,0 +1,1 @@
+return !args.power || args.power.name.toLowerCase() != "deny the witch";

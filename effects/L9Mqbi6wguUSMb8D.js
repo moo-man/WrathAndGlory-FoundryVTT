@@ -1,0 +1,1 @@
+args.fields.difficulty -= args.actor.system.sustaining.list.length

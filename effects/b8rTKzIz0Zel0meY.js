@@ -1,0 +1,1 @@
+return args.weapon.system.isMelee && (args.target?.statuses.has("halfCover") || args.target?.statuses.has("fullCover"))

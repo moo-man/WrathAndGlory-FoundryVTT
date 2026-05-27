@@ -1,0 +1,1 @@
+return args.weapon || args.power || args.context.conviction || args.context.determination || args.context.resolve;

@@ -1,0 +1,1 @@
+return !args.weapon || !args.weapon.name.includes("Witchblade")

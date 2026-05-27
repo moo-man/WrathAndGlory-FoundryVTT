@@ -1,0 +1,1 @@
+this.actor.setupGenericTest("corruption", {fields: {difficulty: this.actor.system.advances.tier + 1}})

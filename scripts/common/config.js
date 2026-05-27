@@ -365,7 +365,8 @@ WNG.premiumModules = {
     "wng-starter-set" : "Starter Set",
     "wng-records2" : "Redacted Records: Vol. II",
     "wng-darktide" : "Darktide: Extraction",
-    "wng-voa" : "Vow of Absolution"
+    "wng-voa" : "Vow of Absolution",
+    "wng-aeldari" : "Aeldari: Inheritance of Embers"
 }
 
 WNG.transferTypes = {

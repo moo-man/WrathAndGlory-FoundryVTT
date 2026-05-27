@@ -1,0 +1,1 @@
+return args.context.resolve || args.skill == "intimidation";

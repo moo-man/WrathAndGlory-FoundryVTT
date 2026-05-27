@@ -1,0 +1,1 @@
+return game.counter.glory == game.counter.ruin;
