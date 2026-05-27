@@ -35,10 +35,6 @@ export class RollDialog extends WarhammerRollDialogV2 {
         context.title = this.context.title;
         context.noDn = this.context.noDn;
         context.noWrath = this.context.noWrath;
-        if (game.release.generation == 13)
-        {
-          context.rollModes = CONFIG.Dice.rollModes;
-        }
         return context;
     }
 
