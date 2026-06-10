@@ -58,7 +58,7 @@ export default function() {
       this.mobNumber =  new PIXI.Container()
       let style = this._getTextStyle()
       style._fontSize = (this.h/this.w * this.h) * 0.25 
-      this.mobNumber.addChild(new PreciseText(actor.mob, style))
+      this.mobNumber.addChild(new foundry.canvas.containers.PreciseText(actor.mob, style))
       //this.mobNumber.zIndex = 10
       this.mobNumber.position.set(this.w-(this.w * 0.3), this.h-(this.h * 0.3))
       this.addChild(this.mobNumber)

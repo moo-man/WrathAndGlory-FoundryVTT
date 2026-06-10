@@ -204,7 +204,7 @@ export default class CharacterCreation extends FormApplication {
             if (formData["background-bonus"])
             {
                 let effect = faction.effects.find(i => i._id == effectId)
-                if (effect.changes[0].mode == 0)
+                if (effect.changes[0].type == "custom")
                 {
                     let key = effect.changes[0].key
                     // Some faction effects specify custom mode, specifically for wealth and influence, this should be a one time change instead of an effect

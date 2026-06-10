@@ -210,7 +210,7 @@ export class WeaponModel extends EquippedItemModel
             return changes.concat(e.changes.map(c => {
                 c = foundry.utils.duplicate(c);
                 c.effect = e;
-                c.priority = c.priority ?? (c.mode * 10);
+                c.priority = c.priority;
                 return c;
             }));
         }, []);
@@ -224,15 +224,15 @@ export class WeaponModel extends EquippedItemModel
             if (foundry.utils.hasProperty(this.parent, key)) 
             {
 
-                if (change.mode == CONST.ACTIVE_EFFECT_MODES.ADD) 
+                if (change.type == "add") 
                 {
                     foundry.utils.setProperty(this.parent, key, foundry.utils.getProperty(this.parent, key) + Number(change.value))
                 }
-                else if (change.mode == CONST.ACTIVE_EFFECT_MODES.OVERRIDE) 
+                else if (change.type == "override") 
                 {
                     foundry.utils.setProperty(this.parent, key, change.value)
                 }
-                else if (change.mode == CONST.ACTIVE_EFFECT_MODES.UPGRADE) 
+                else if (change.type == "upgrade") 
                 {
                     if (change.value > foundry.utils.getProperty(this.parent, key))
                     {
@@ -252,11 +252,12 @@ export class WeaponModel extends EquippedItemModel
 
     static migrateData(data)
     {
-        super.migrateData(data);
+        data = super.migrateData(data);
         if (typeof data.ammo == "string")
         {
             data.ammo = {id : data.ammo};
         }
+        return data;
     }
 
     async toEmbed(config, options)

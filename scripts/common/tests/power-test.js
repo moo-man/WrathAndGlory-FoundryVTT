@@ -51,10 +51,13 @@ export default class PowerTest extends WNGTest {
   _computeResult()
   {
     super._computeResult()
+    this.result.perilsModifier = 0;
+
     if (this.result.isSuccess)
     {
       this.result.range = this.item.range
       this.result.duration = this.item.duration
+      this.result.blast = this.item.system.traits.has("blast")?.rating;
       this.computePotencies()
     }
   }

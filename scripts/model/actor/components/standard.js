@@ -32,6 +32,11 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
             faction : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
             archetype : new foundry.data.fields.EmbeddedDataField(SingletonItemModel),
 
+                    
+            corruption : new foundry.data.fields.SchemaField({
+                current : new foundry.data.fields.NumberField({min : 0}),
+            }),
+
             settings : new foundry.data.fields.SchemaField({
                 generateMetaCurrencies : new foundry.data.fields.BooleanField({initial : true}),
                 autoCalc : new foundry.data.fields.SchemaField({

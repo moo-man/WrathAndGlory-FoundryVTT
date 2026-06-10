@@ -34,10 +34,18 @@ export class ThreatModel extends StandardWNGActorModel {
 
     static migrateData(data)
     {
-        super.migrateData(data);
+        data = super.migrateData(data);
         if (typeof data.mob == "number")
         {
             data.mob = {value : data.mob, abilities : []}
+        }
+        return data;
+    }
+
+    get advances()
+    {
+        return {
+            tier: game.settings.get(game.system.id, "tier")
         }
     }
 
@@ -50,7 +58,7 @@ export class ThreatModel extends StandardWNGActorModel {
     async toEmbed(config, options)
     {
 
-        let skillsText = Object.keys(this.skills).filter(i => this.skills[i].base).map(i => `${game.wng.config.skills[i]} ${this.skills[i].base}`).join(", ");
+        let skillsText = Object.keys(this.skills).filter(i => this.skills[i].rating + this.skills[i].base).map(i => `${game.wng.config.skills[i]} ${this.skills[i].total}`).join(", ");
 
         let description = this.notes;
 
@@ -77,7 +85,7 @@ export class ThreatModel extends StandardWNGActorModel {
                 <p>Threat</p>
             </td>
             <td class="threat-value" colspan="4">
-                <p>${this.bio.threat.first}|${this.bio.threat.second}|${this.bio.threat.third}|${this.bio.threat.fourth}|${this.bio.threat.fifth}</p>
+                <p>${this.bio.threat.first} | ${this.bio.threat.second} | ${this.bio.threat.third} | ${this.bio.threat.fourth} | ${this.bio.threat.fifth}</p>
             </td>
             <td class="threat-value" colspan="8">
                 ${this.parent.itemTypes.keyword.map(i => `<a class="keyword">${i.name}</a>`).join(", ")}
@@ -109,37 +117,34 @@ export class ThreatModel extends StandardWNGActorModel {
             <td colspan="14"><p><strong>SKILLS</strong>: ${skillsText}</p>
         </tr>
         <tr class="separator">
-            <td colspan="14">TALENTS</span>
+            <td colspan="14">TALENTS</td>
         </tr>
         <tr class="talents">
             <td colspan="14">${this.parent.itemTypes.talent.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ")}</span>
         </tr>
         <tr class="separator">
-            <td colspan="14">EQUIPMENT</span>
+            <td colspan="14">EQUIPMENT</td>
         </tr>
         <tr class="equipment">
             <td colspan="14">${this.parent.items.contents.filter(i => i.system.isPhysical).map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ")}</span>
         </tr>
         <tr class="separator">
-            <td colspan="14">ABILITIES</span>
+            <td colspan="14">ABILITIES</td>
         </tr>
         <tr class="abilties">
             <td colspan="14">${this.parent.itemTypes.ability.map(i => `<p>@UUID[${i.uuid}]{${i.name}}: ${i.system.description.replace("<p>", "")}`).join("")}</span>
         </tr>
-        <tr class="determination">
-            <td colspan="14"><p><strong>DETERMINATION</strong>: Spend 1 Ruin to roll ${this.combat.determination.total}d6</p>
-        </tr>
         <tr class="table-col-header combat">
-            <td class="threat-label" colspan="3">Conviction</span>
-            <td class="threat-label" colspan="3">Resolve</span>
-            <td class="threat-label" colspan="3">Speed</span>
-            <td class="threat-label" colspan="5">Size</span>
+            <td class="threat-label" colspan="3">Conviction</td>
+            <td class="threat-label" colspan="3">Resolve</td>
+            <td class="threat-label" colspan="3">Speed</td>
+            <td class="threat-label" colspan="5">Size</td>
         </tr>
         <tr class="combat">
-            <td colspan="3">${this.combat.conviction.total}</span>
-            <td colspan="3">${this.combat.resolve.total}</span>
-            <td colspan="3">${this.combat.speed}</span>
-            <td colspan="5">${game.wng.config.size[this.combat.size]}</span>
+            <td colspan="3">${this.combat.conviction.total}</td>
+            <td colspan="3">${this.combat.resolve.total}</td>
+            <td colspan="3">${this.combat.speed}</td>
+            <td colspan="5">${game.wng.config.size[this.combat.size]}</td>
         </tr>
        `
 

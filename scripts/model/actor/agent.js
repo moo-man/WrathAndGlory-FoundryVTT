@@ -46,12 +46,7 @@ export class AgentModel extends StandardWNGActorModel {
             wealth : new fields.NumberField({min : 0}),
             influence : new fields.NumberField({min : 0}),
         })
-
         
-        schema.corruption = new fields.SchemaField({
-            current : new fields.NumberField({min : 0}),
-        })
-
         schema.notes = new fields.HTMLField();
 
         return schema;
@@ -86,7 +81,7 @@ export class AgentModel extends StandardWNGActorModel {
 
     static migrateData(data)
     {
-        super.migrateData(data);
+        data = super.migrateData(data);
         if (typeof data.bio.origin == "object")
         {
             data.bio.origin = data.bio.origin.value;
@@ -99,5 +94,6 @@ export class AgentModel extends StandardWNGActorModel {
         {
             data.bio.goal = data.bio.goal.value;
         }
+        return data;
     }
 }

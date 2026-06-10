@@ -5,7 +5,7 @@ export default function() {
             let chatData = {
                 content : `<div class="wrath-and-glory chat"><h3>New Combat - Battlecries</h3>`
             }
-            //ChatMessage.applyRollMode(chatData, "gmroll")
+            //ChatMessage.applyMode(chatData, "gmroll")
             let postMessage = false
             for(let combatant of combat.combatants)
             {

@@ -230,6 +230,7 @@
   "DIALOG.FULL_AUTO": "Full Auto",
   "DIALOG.SPRAY_SHOT": "Spray Shot",
   "DIALOG.SPRAY_SHOT_MOB": "Spray Shot (Mob)",
+  "DIALOG.CHOOSE_ACTOR": "Choose Actor",
   "GEAR.NAME": "Name",
   "GEAR.DESCRIPTION": "Description",
   "GEAR.EFFECT": "Effect",
@@ -641,7 +642,8 @@
       "rollWeaponTest": "Roll Weapon Test",
       "preRollPowerTest": "Pre-Roll Power Test",
       "rollPowerTest": "Roll Power Test",
-      "ShiftDice" : "Shift Dice"
+      "ShiftDice" : "Shift Dice",
+      "Targeted" : "Targeted"
     },
     "Models": {
       "ability": {

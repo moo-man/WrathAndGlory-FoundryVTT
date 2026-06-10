@@ -6,7 +6,7 @@ nav_order: 2
 grand_parent: Active Effects
 ---
 
-Dialog scripts show up within the **Dialog Modifiers** section in roll dialog windows, and are able to be toggled on or off, causing some sort of behavior. They are probably the most powerful type of script, especially when used in conjunction with other scripts. They are unique in that they have their main script, which is generally used to modify the dialog fields (adding to modifier, SL bonus, etc.), but they also have 3 subscripts, described below. 
+Dialog scripts show up within the **Dialog Modifiers** section in roll dialog windows, and are able to be toggled on or off, causing some sort of behavior. They are probably the most powerful type of script, especially when used in conjunction with other scripts. They are unique in that they have their main script, which is generally used to modify the dialog fields (adding dice bonus, dificulty, etc.), but they also have 3 subscripts, described below. 
 
 - Hide Script: Returning true with this script hides the option from selection, taking precedent over Activate Script
 
@@ -53,7 +53,7 @@ The `args` parameter corresponds the dialog application itself. which has some u
 
 &emsp;`fields.level` - Psychic power manifestation level, "bound", "unbound" ,r "transcedent"
 
-&emsp;`fields.agm` - The Aim checkbox
+&emsp;`fields.aim` - The Aim checkbox
 
 &emsp;`fields.damageDice.ones/twos/threes/fours/fives/sixes` - Damage values for ED results
 
@@ -142,7 +142,7 @@ return args.skill != "psychicMastery"
 
 #### Activate
 ```js
-return !args.skill == "psychicMastery"
+return args.skill != "psychicMastery"
 ```
 
 #### Script
@@ -181,4 +181,4 @@ this.effect.update({disabled : true})
     args.fields.pool++;
 ```
 
-**Notes** This disables the effect when the user clicks on the modifier in the dialog, granting them advantage. The effect can then be re-enabled manually whenever it can be used again.
+**Notes** This disables the effect when the user clicks on the modifier in the dialog, granting them bonus dice. The effect can then be re-enabled manually whenever it can be used again.

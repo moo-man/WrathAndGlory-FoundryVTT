@@ -36,6 +36,8 @@ export class BaseItemModel extends BaseWarhammerItemModel
     
     static migrateData(data)
     {
+        data = super.migrateData(data);
+
         if (data.traits instanceof Array)
         {
             data.traits = {list : data.traits};
@@ -113,6 +115,8 @@ export class BaseItemModel extends BaseWarhammerItemModel
                 data.damage.ap.rank = this._convertRank(data.damage.ap.rank);
             }
         }
+        return data;
+
     }
 
     static _convertRank(str)

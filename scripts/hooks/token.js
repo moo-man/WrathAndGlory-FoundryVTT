@@ -1,5 +1,5 @@
 export default function() {
-    Hooks.on("refreshToken", (token) => token.drawMobNumber())
+    Hooks.on("refreshToken", (token) => canvas?.ready && token.drawMobNumber())
     
     Hooks.on("hoverToken", (token, hover) => {
         let actor = token.actor;

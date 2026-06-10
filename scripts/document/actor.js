@@ -5,13 +5,14 @@ import CorruptionTest from "../common/tests/corruption-test.js";
 import MutationTest from "../common/tests/mutation-test.js";
 import ResolveTest from "../common/tests/resolve-test.js";
 import DeterminationRoll from "../common/tests/determination.js";
-import AbilityRoll from "../common/tests/ability-roll.js";
+import AbilityUse from "../common/tests/ability-use.js";
 import StealthRoll from "../common/tests/stealth.js";
 import CharacterCreation from "../apps/character-creation.js";
 import { RollDialog } from "../common/dialogs/base-dialog.js";
 import { WeaponDialog } from "../common/dialogs/weapon-dialog.js";
 import { PowerDialog } from "../common/dialogs/power-dialog.js";
 import { CommonDialog } from "../common/dialogs/common-dialog.js";
+import { AbilityDialog } from "../common/dialogs/ability-dialog.js";
 
 export class WrathAndGloryActor extends WarhammerActor {
 
@@ -167,6 +168,10 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
     }
 
+    async setupAbilityTest(ability, context = {}, options = {}) {
+        return this._setupTest(AbilityDialog, WNGTest, ability, context, options)
+    }
+
     async setupPowerTest(power, context = {}, options) 
     {
         if (typeof power == "string")
@@ -194,8 +199,6 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             ability = this.items.get(ability) || await fromUuid(ability);
         }
-      
-        
         
         let testData = {
             title: ability.name,
@@ -210,7 +213,14 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (ability.system.test?.self)
         {
-            return this.setupTestFromItem(ability, {item : ability}, options, ability);
+            if (ability.system.damage.enabled)
+            {
+                return this.setupAbilityTest(ability, context, options);
+            }
+            else 
+            {
+                return this.setupTestFromItem(ability, {item : ability}, options, ability);
+            }
         }
 
         if (this.type == "threat" && ability.type == "ability" && ability.system.cost)
@@ -234,8 +244,8 @@ export class WrathAndGloryActor extends WarhammerActor {
             }
         }
         
-        ui.sidebar.activateTab("chat")
-        let roll = new AbilityRoll(testData)
+        // ui.sidebar.activateTab("chat")
+        let roll = new AbilityUse(testData)
         await roll.rollTest();
         roll.sendToChat();
     }
@@ -267,14 +277,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         }
         else if (type == "skill")
         {       
-            if (item?.system.damage?.enabled)
-            {
-                return this.setupWeaponTest(item, context, options);
-            }
-            else 
-            {
-                return this.setupSkillTest(specification, context, options)
-            }
+            return this.setupSkillTest(specification, context, options)
         }
         else if (type == "resolve" && specification)
         {
@@ -798,7 +801,7 @@ export class WrathAndGloryActor extends WarhammerActor {
     sharesKeywordGroup(actor, group)
     {
         let groupKeywords = this.getGroupKeyword(group);
-        return groupKeywords.some(i => actor.hasKeywordGroup(i.name, group))
+        return groupKeywords.some(i => actor.hasKeywordGroup(i, group))
     }
 
 

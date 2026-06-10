@@ -133,6 +133,8 @@ export class WrathAndGloryItem extends WarhammerItem {
         {
             if (this.type == "psychicPower")
                 return actor.system.skills.psychicMastery
+            else if (this.type == "ability" && this.system.test.type == "skill")
+                return actor.system.skills[this.system.test.specification]
             else if (this.isMelee)
                 return actor.system.skills.weaponSkill
             else
@@ -141,6 +143,8 @@ export class WrathAndGloryItem extends WarhammerItem {
         else {
             if (this.type == "psychicPower")
                 return "psychicMastery"
+            else if (this.type == "ability" && this.system.test.type == "skill")
+                return this.system.test.specification
             else if (this.isMelee)
                 return "weaponSkill"
             else
@@ -175,22 +179,6 @@ export class WrathAndGloryItem extends WarhammerItem {
                     return true
                 return e.changes.some(c => {
                     return !foundry.utils.hasProperty({ data: game.system.model.Item.weapon }, c.key) // Any effect that references a property that doesn't exist on the item, and isn't a dialog effect
-                })
-            })
-            return effects
-        }
-        else
-            return []
-    }
-
-    get ammoDialogEffects() {
-        if (this.type == "ammo") {
-            let effects = this.effects.filter(e => {
-                if (e.disabled) return false;
-                if (!e.changes.length)
-                    return false
-                return e.changes.some(c => {
-                    return c.mode == 6
                 })
             })
             return effects

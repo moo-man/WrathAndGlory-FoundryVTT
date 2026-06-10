@@ -4,21 +4,22 @@ let fields = foundry.data.fields
 /**
  * Base Skill schema
  */
-export class SkillModel extends foundry.abstract.DataModel {
-    static defineSchema() {
-        return {
+export class SkillField extends foundry.data.fields.SchemaField {
+    compute(attributes) {
+        this.total = attributes[this.attribute].total + this.rating + this.bonus + this.base
+    }
+
+    static createWithAttribute(attribute)
+    {
+        return new SkillField({
             label: new fields.StringField({ required: true, initial: "" }),
-            attribute: new fields.StringField(),
+            attribute: new fields.StringField({initial: attribute}),
             rating: new fields.NumberField({ required: true, initial: 0, min: 0 }),
             base: new fields.NumberField({ required: true, initial: 0 }),
             bonus: new fields.NumberField({ required: true, initial: 0 }),
             cost: new fields.NumberField({ required: true, initial: 0 }),
             total: new fields.NumberField({ required: true, initial: 0 }),
-        }
-    }
-
-    compute(attributes) {
-        this.total = attributes[this.attribute].total + this.rating + this.bonus + this.base
+        })
     }
 
 }
@@ -30,30 +31,33 @@ export class SkillModel extends foundry.abstract.DataModel {
 export class SkillsModel extends foundry.abstract.DataModel {
     static defineSchema() {
         return {
-            athletics: new fields.EmbeddedDataField(SkillModel),
-            awareness: new fields.EmbeddedDataField(SkillModel),
-            ballisticSkill: new fields.EmbeddedDataField(SkillModel),
-            cunning: new fields.EmbeddedDataField(SkillModel),
-            deception: new fields.EmbeddedDataField(SkillModel),
-            insight: new fields.EmbeddedDataField(SkillModel),
-            intimidation: new fields.EmbeddedDataField(SkillModel),
-            investigation: new fields.EmbeddedDataField(SkillModel),
-            leadership: new fields.EmbeddedDataField(SkillModel),
-            medicae: new fields.EmbeddedDataField(SkillModel),
-            persuasion: new fields.EmbeddedDataField(SkillModel),
-            pilot: new fields.EmbeddedDataField(SkillModel),
-            psychicMastery: new fields.EmbeddedDataField(SkillModel),
-            scholar: new fields.EmbeddedDataField(SkillModel),
-            stealth: new fields.EmbeddedDataField(SkillModel),
-            survival: new fields.EmbeddedDataField(SkillModel),
-            tech: new fields.EmbeddedDataField(SkillModel),
-            weaponSkill: new fields.EmbeddedDataField(SkillModel),
+            athletics: SkillField.createWithAttribute("strength"),
+            awareness: SkillField.createWithAttribute("intellect"),
+            ballisticSkill: SkillField.createWithAttribute("agility"),
+            cunning: SkillField.createWithAttribute("fellowship"),
+            deception: SkillField.createWithAttribute("fellowship"),
+            insight: SkillField.createWithAttribute("fellowship"),
+            intimidation: SkillField.createWithAttribute("willpower"),
+            investigation: SkillField.createWithAttribute("intellect"),
+            leadership: SkillField.createWithAttribute("willpower"),
+            medicae: SkillField.createWithAttribute("intellect"),
+            persuasion: SkillField.createWithAttribute("fellowship"),
+            pilot: SkillField.createWithAttribute("agility"),
+            psychicMastery: SkillField.createWithAttribute("willpower"),
+            scholar: SkillField.createWithAttribute("intellect"),
+            stealth: SkillField.createWithAttribute("agility"),
+            survival: SkillField.createWithAttribute("willpower"),
+            tech: SkillField.createWithAttribute("intellect"),
+            weaponSkill: SkillField.createWithAttribute("initiative")
         }
     }
 
     compute(attributes) {
-        for(let skill in this)
-            this[skill].compute(attributes);
+        for(let s in this)
+        {
+            let skill = this[s];
+            skill.total = attributes[skill.attribute].total + skill.rating + skill.bonus + skill.base
+        }
     }
 }
 

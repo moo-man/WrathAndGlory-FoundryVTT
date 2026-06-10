@@ -5,12 +5,12 @@ parent: The Basics
 nav_order: 0
 ---
 
-<img src="../../assets/basics/darktide.webp"/>
 
 
 ### Bring your Warhammer 40,000: Darktide character into Foundry!
+<img src="../../assets/basics/darktide.webp"/>
 
-In collaboration with [FatShark](https://www.fatshark.se/), we've developed an interface to bring your character into Wrath & Glory! See the steps below. 
+In collaboration with [FatShark](https://www.fatshark.se/), we've developed an interface to bring your <a href="https://www.playdarktide.com/">Warhammer 40,000: Darktide</a> character into Wrath & Glory! See the steps below. 
 
 {: .warning}
 Note that the [Darktide Extraction](https://foundryvtt.com/packages/wng-darktide) module is required.

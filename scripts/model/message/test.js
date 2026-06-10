@@ -95,7 +95,7 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
             WnGTables.rollTable("combatComplications")
           }
           else if (test.power) {
-            let modifier = (test.result.allDice.filter(die => die.name == "wrath-complication").length - 1) * 10
+            let modifier = (test.result.allDice.filter(die => die.name == "wrath-complication").length - 1) * 10 + test.result.perilsModifier;
             WnGTables.rollTable("perils", null, {modifier})
           }
           else {
@@ -155,33 +155,7 @@ export class WrathAndGloryTestMessageModel extends WarhammerTestMessageModel
 
     static _onScatter(ev, target)
     {
-      let scatterRoll = Math.ceil(CONFIG.Dice.randomUniform() * 6)
-      let distRoll = Math.ceil(CONFIG.Dice.randomUniform() * 6) * 2
-      let html = `
-      <table class="scatter-table" border="1">
-      <tr>
-            <td data-position='3'><div class="die-label">3</div></td>
-            <td data-position='4'><div class="die-label">4</div></td>
-            <td data-position='5'><div class="die-label">5</div></td>
-      </tr>
-      <tr>
-            <td data-position='2'><div class="die-label">2</div></td>
-            <td> <strong>Target</strong></td>
-            <td data-position="6"><div class="die-label">6</div></td>
-      </tr>
-      <tr>
-            <td></td>
-            <td data-position='1'><div class="die-label">1</div></td>
-            <td></td>
-      </tr>
-</table>
-<p style="text-align: center;"><i class="fa-solid fa-arrow-up"></i> Direction of Attack <i class="fa-solid fa-arrow-up"></i></p>
-      `
-
-      html = html.replace(`data-position='${scatterRoll}'>`, `data-position='${scatterRoll}' class="active">${distRoll}m<br>`)
-
-
-      ChatMessage.create({content:  html, speaker : {alias : "Scatter"}, flavor : this.test.context.title})
+      game.wng.utility.rollScatter({flavor: this.test.context.title})
     }
 
     static _onBlast(ev, target)

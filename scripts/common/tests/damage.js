@@ -233,7 +233,7 @@ export class DamageRoll {
     this.computeDamage();
 
     if (game.dice3d) {
-      let rerollShow = reroll.toJSON();
+      let rerollShow = foundry.utils.deepClone(reroll.toJSON()); // Very surprised toJSON doesn't make a copy, but cloning is needed for removing the rerolled flag below
       rerollShow.terms = rerollShow.terms.map((term, t) => {
         if (term.results) {
           term.results = term.results.map((die, i) => {
@@ -243,6 +243,8 @@ export class DamageRoll {
         }
         return term
       })
+      // rerolled flag makes DSN roll each sequentially instead of all together
+      rerollShow.terms.forEach(t => t.results?.forEach(r => delete r.rerolled));
       await game.dice3d.showForRoll(Roll.fromData(rerollShow))
     }
 
@@ -266,12 +268,12 @@ export class DamageRoll {
       rolls: [this.roll],
       system: this.data,
       user: game.user.id,
-      rollMode: game.settings.get("core", "rollMode"),
+      rollMode: game.settings.get("core", "messageMode"),
       content: html,
       speaker: this.context.speaker
     };
     chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.prototypeToken.name
-    ChatMessage.applyRollMode(chatData, chatData.rollMode);
+    ChatMessage.applyMode(chatData, chatData.rollMode);
 
     if (newMessage || !this.message) 
     {

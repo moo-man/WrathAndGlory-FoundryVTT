@@ -13,7 +13,7 @@ export class PostedItemMessageModel extends WarhammerMessageModel
         const html = await foundry.applications.handlebars.renderTemplate("systems/wrath-and-glory/templates/chat/item.hbs", { item, data: item.system });
         const chatData = foundry.utils.mergeObject({
             user: game.user.id,
-            rollMode: game.settings.get("core", "rollMode"),
+            rollMode: game.settings.get("core", "messageMode"),
             content: html,
             type : "item",
             system : {
@@ -21,7 +21,7 @@ export class PostedItemMessageModel extends WarhammerMessageModel
             }
         }, mergeData);
 
-        ChatMessage.applyRollMode(chatData, chatData.rollMode);
+        ChatMessage.applyMode(chatData, chatData.rollMode);
         ChatMessage.create(chatData);
     }
 

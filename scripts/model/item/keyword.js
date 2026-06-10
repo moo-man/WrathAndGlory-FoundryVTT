@@ -48,13 +48,19 @@ export class KeywordModel extends StandardItemModel
     {
         if (this.group)
         {
-            let name = await ValueDialog.create({text: `Enter ${this.parent.name}`, title: this.parent.name})
+            let name = await ValueDialog.create({text: `Enter ${this.group}`, title: this.parent.name})
             if (name)
             {
                 let keywordItem = await game.wng.utility.getKeywordItem(name, this, this.parent.img);
                 if (keywordItem)
                 {
-                    return keywordItem.toObject();
+                    let keywordData = keywordItem.toObject();
+                    // If for some reason the found keyword doesn't match the group, just set it as the group
+                    if (keywordData.system.group != this.group)
+                    {
+                        keywordData.system.group = this.group;
+                    }
+                    return keywordData;
                 }
                 else 
                 {

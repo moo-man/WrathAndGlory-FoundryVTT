@@ -49,7 +49,7 @@ export class VehicleComplement extends DocumentReferenceListModel {
             return list[0];    
         }
 
-        return (await ItemDialog.create(list, 1, {title : game.i18n.localize("DIALOG.ChooseActor")}))[0]
+        return (await ItemDialog.create(list, 1, {title : game.i18n.localize("DIALOG.CHOOSE_ACTOR")}))[0]
     }
 
     get activePilot() 

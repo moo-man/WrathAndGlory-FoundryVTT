@@ -22,7 +22,7 @@ The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT
 - [Wrath & Glory - Redacted Records II](https://foundryvtt.com/packages/wng-records2) - An invaluable resource suffused with scriptures of righteous destruction and technological liturgies to empower your games with an abundance of new ways to play.
 - [Wrath & Glory - Darktide: Extraction](https://foundryvtt.com/packages/wng-darktide) - Explore the setting of Warhammer 40,000: Darktide as Inquisitor Grendyl dispatches you to a lost region of Hive Tertium. Play Darktide? Bring your Darktide character to life by importing them directly into the game!
 - [Wrath & Glory - Vow of Absolution](https://foundryvtt.com/packages/wng-voa) - Provides a detailed look at The Absolvers and playing an Astartes warrior in Wrath & Glory, introducing new Tier 5 Astartes Archetypes, exciting previously unexplored locations and dives into the mysteries at the centre of the ancient secrets of the Chapter
-- [Wrath & Glory - Aeldari: Inheritance of Embers](https://foundryvtt.com/packages/wng-voa) - The ultimate Wrath & Glory module for Aeldari players and Gamemasters alike. This expansive supplement is the perfect starting point for an entirely Aeldari-focused adventure or to expand the enigmatic xenos’ role in an existing campaign.
+- [Wrath & Glory - Aeldari: Inheritance of Embers](https://foundryvtt.com/packages/wng-aeldari) - The ultimate Wrath & Glory module for Aeldari players and Gamemasters alike. This expansive supplement is the perfect starting point for an entirely Aeldari-focused adventure or to expand the enigmatic xenos’ role in an existing campaign.
 
 ## Special Thanks
 - Cubicle 7

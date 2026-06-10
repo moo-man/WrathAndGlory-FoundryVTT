@@ -35,6 +35,13 @@ export class RollDialog extends WarhammerRollDialogV2 {
         context.title = this.context.title;
         context.noDn = this.context.noDn;
         context.noWrath = this.context.noWrath;
+        // Remove after library converts to using message modes
+        context.rollModes = {
+            public : 'WH.Dialog.RollPublic',
+            blind : 'WH.Dialog.RollPrivate',
+            gm : 'WH.Dialog.RollBlind',
+            self : 'WH.Dialog.RollSelf'
+        }
         return context;
     }
 
@@ -100,7 +107,11 @@ export class RollDialog extends WarhammerRollDialogV2 {
 
         if (this.context.determination && game.user.isGM)
         {
-          fields.rollMode = "gmroll";
+          fields.rollMode = "gm";
+        }
+        else
+        {
+          fields.rollMode = "public"; // Remove after library uses message modes  
         }
         return fields
     }

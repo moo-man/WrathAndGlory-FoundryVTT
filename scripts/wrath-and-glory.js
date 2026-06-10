@@ -12,6 +12,7 @@ import MutationTest from "./common/tests/mutation-test.js";
 import ResolveTest from "./common/tests/resolve-test.js";
 import DeterminationRoll from "./common/tests/determination.js";
 import StealthRoll from "./common/tests/stealth.js";
+import AbilityUse from "./common/tests/ability-use.js";
 import AbilityRoll from "./common/tests/ability-roll.js";
 import Migration from "./common/migration.js"
 import { WrathAndGloryCombat, WrathAndGloryCombatant } from "./common/combat.js";
@@ -155,6 +156,7 @@ Hooks.once("init", () => {
       ResolveTest,
       DeterminationRoll,
       StealthRoll,
+      AbilityUse,
       AbilityRoll
     },
     dice : {

@@ -314,8 +314,8 @@ WNG.scriptTriggers = {
     takeDamage : "WH.Trigger.takeDamage",
     applyDamage : "WH.Trigger.applyDamage",
 
-    shiftDice: "WH.Trigger.shiftDice"
-    
+    shiftDice: "WH.Trigger.shiftDice",
+    targeted: "WH.Trigger.Targeted" 
 }
 
 WNG.filterValues = {
@@ -1110,7 +1110,25 @@ CONFIG.statusEffects = [
                 options : {
                     activateScript : "return true",
                 }
-            }]
+            },
+            {
+                trigger : "immediate",
+                script : "this.effect.updateSource({name : this.effect.setSpecifier(this.effect.getFlag(game.system.id, 'value') || 1)})",
+                label : "Value"
+            },
+            {
+                trigger : "manual",
+                script : `
+                let test = await this.actor.setupAttributeTest("toughness", {fields: {difficulty: Number(this.effect.specifier)}, appendTitle: " - " + this.effect.name});
+                if (test.result.isSuccess)
+                {
+                    this.script.message("Removed <strong>Poisoned</strong>");
+                    this.effect.delete();
+                }
+                `,
+                label : "Remove"
+            }
+        ]
         }
     },
     {

@@ -123,7 +123,7 @@ export class ArchetypeModel extends BaseItemModel
 
     static migrateData(data)
     {
-        super.migrateData(data);
+        data = super.migrateData(data);
         if (data.suggested.talents instanceof Array)
         {
             data.suggested.talents = {list : data.suggested.talents};
@@ -212,6 +212,7 @@ export class ArchetypeModel extends BaseItemModel
                     }
             })}
         }
+        return data;
     }
 
 

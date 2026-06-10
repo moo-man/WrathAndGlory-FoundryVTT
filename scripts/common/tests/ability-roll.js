@@ -1,83 +1,47 @@
 import { WNGTest } from "./test.js"
 
-// Used for items that don't roll tests, just roll damage or cause effects
 export default class AbilityRoll extends WNGTest {
   constructor(data = {})
   {
+    super(data)
     if (foundry.utils.isEmpty(data))
-    {
-      // Recreated test
-      super(data)
-      return;
-    }
-    else 
-    {
-      // New Test
-      data.targets = Array.from(game.user.targets).map(t => t.actor?.speakerData(t.document));
-      super(data)
-    }
+      return
 
-    this.testData.itemId = data.item?.uuid;
-    
-    let item = data.item;
-
-    if (item.system.test?.self)
-    {
-      this.testSelf = true;
-    }
-
-    this.data.context.title = data.title;
+    this.addDamageData(data);
   }
 
   get template() {
-    return "systems/wrath-and-glory/templates/chat/roll/ability/ability-use.hbs"
+    return "systems/wrath-and-glory/templates/chat/roll/ability/ability-roll.hbs"
   }
 
 
-  async rollTest() {
-    this._computeResult();
-    this.result.enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
+  async edit({pool=0, wrath=0, icons=0, damage=0, ed=0, ap=0}={})
+  {
+    this.data.testData.edit.damage += damage;
+    this.data.testData.edit.ed += ed;
+    this.data.testData.edit.ap += ap;
+    await super.edit({pool, wrath, icons})
   }
 
   _computeResult()
   {
-    this.data.result = {}
-    if (this.item.hasTest) this.result.test = this.item.system.test.toObject(false);
-    this.result.isSuccess = true;
-    if (this.testData.damage)
+    super._computeResult()
+
+    if (this.result.isWrathCritical)
+      this.result.isWrathCritical = this.result.isWrathCritical && this.result.isSuccess // Only critical if test is successful
+
+    if (this.ability.system.traits?.has("blast"))
     {
-      this.computeDamage()
-      this.result.blast = this.item.system.traits.has("blast").rating;
+      this.result.blast = this.ability.system.traits.has("blast").rating;
+      if (!this.result.isSuccess)
+      {
+        this.result.scatter = true;
+        this.computeDamage();
+      }
     }
   }
+
+  get ability() {return fromUuidSync(this.testData.itemId)}
   
-  async sendToChat({ newMessage = null, chatDataMerge = {} } = {}) {
-
-    const html = await foundry.applications.handlebars.renderTemplate(this.template, this);
-    let chatData = {
-      _id : foundry.utils.randomID(),
-      type: "test",
-      rolls: [],
-      system: this.data,
-      user: game.user.id,
-      rollMode: this.context.rollMode,
-      content: html,
-      speaker: this.context.speaker
-    };
-    chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.prototypeToken.name
-    ChatMessage.applyRollMode(chatData, chatData.rollMode);
-
-    if (newMessage || !this.message) 
-    {
-      this.context.messageId = chatData._id
-      await ChatMessage.create(chatData, {keepId : true});
-    }
-    else {
-      delete chatData.roll
-      return this.message.update(chatData)
-    }
-  }
-
-
-  get ability() {return true}  
 }
+

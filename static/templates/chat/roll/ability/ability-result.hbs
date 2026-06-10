@@ -1,0 +1,13 @@
+        {{> systems/wrath-and-glory/templates/chat/roll/base/base-result.hbs}}
+
+        {{#if result.isWrathCritical}}
+        <p><strong class="red">{{localize "CHAT.WRATH_CRITICAL_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_CRITICAL_WEAPON"}}</strong></p>
+        {{/if}}
+
+        {{#if result.isWrathComplication}}
+        <p><strong class="red">{{localize "CHAT.WRATH_COMPLICATION_TITLE"}}</strong><strong>:
+                {{localize "CHAT.WRATH_COMPLICATION_WEAPON"}}</strong></p>
+        {{/if}}
+
+        

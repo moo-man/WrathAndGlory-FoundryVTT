@@ -2,7 +2,7 @@
   "id": "wrath-and-glory",
   "title": "Warhammer 40,000: Wrath & Glory",
   "description": "Explore the setting of Warhammer 40,000: Darktide as Inquisitor Grendyl dispatches you to a lost region of Hive Tertium. Play Darktide? Bring your character to life by importing them directly into Foundry!",
-  "version": "8.0.0",
+  "version": "@VERSION",
   "compatibility" : {
     "minimum" : 14,
     "verified" : 14,
@@ -44,6 +44,37 @@
       "extensions": ["css", "hbs", "json"]
     }
   },
+  "documentTypes" : {
+    "Actor": {
+      "agent": {"htmlFields": ["notes"]},
+      "threat": {"htmlFields": ["notes"]},
+      "vehicle": {"htmlFields": ["notes"]}
+    },
+    "Item": {
+      "ability": {"htmlFields": ["description"]},
+      "ammo": {"htmlFields": ["description"]},
+      "armour": {"htmlFields": ["description"]},
+      "ascension": {"htmlFields": ["description"]},
+      "augmentic": {"htmlFields": ["description"]},
+      "gear": {"htmlFields": ["description"]},
+      "keyword": {"htmlFields": ["description"]},
+      "memorableInjury": {"htmlFields": ["description"]},
+      "mutation": {"htmlFields": ["description"]},
+      "psychicPower": {"htmlFields": ["description"]},
+      "talent": {"htmlFields": ["description"]},
+      "traumaticInjury": {"htmlFields": ["description"]},
+      "weapon": {"htmlFields": ["description"]},
+      "weaponUpgrade": {"htmlFields": ["description"]},
+      "archetype": {"htmlFields": ["description"]},
+      "species": {"htmlFields": ["description"]},
+      "faction": {"htmlFields": ["description"]}
+    },
+    "ChatMessage": {
+      "test": {},
+      "damage": {},
+      "item": {}
+    }
+  },
   "relationships": {
     "requires": [{
       "id": "warhammer-lib",
@@ -67,7 +98,7 @@
   "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/8.0.0/wrath-and-glory.zip",
+  "download": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/releases/download/@VERSION/wrath-and-glory.zip",
   "license": "LICENSE.txt"
 }
 

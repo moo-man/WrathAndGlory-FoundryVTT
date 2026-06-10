@@ -34,16 +34,16 @@ export default class WnGTables
         let rollMode;
         if (chatData.whisper)
         {
-            rollMode = "gmroll";
+            messageMode = "gm";
         }
         if (chatData.blind)
         {
-            rollMode = "blindroll"
+            messageMode = "blind"
         }
         if (!table)
         {
             ui.notifications.error("No table found for " + key);
-            return dice.toMessage(chatData, {rollMode});
+            return dice.toMessage(chatData, {messageMode});
         }
 
         await dice.roll();

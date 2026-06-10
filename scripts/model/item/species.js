@@ -24,10 +24,11 @@ export class SpeciesModel extends StandardItemModel
 
     static migrateData(data)
     {
-        super.migrateData(data);
+        data = super.migrateData(data);
         if (data.abilities instanceof Array)
         {
             data.abilities = {list: data.abilities};
         }
+        return data;
     }
 }

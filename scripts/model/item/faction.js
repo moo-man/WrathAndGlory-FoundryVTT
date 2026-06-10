@@ -28,7 +28,7 @@ export class FactionModel extends StandardItemModel
 
         for (let bg of this.backgrounds.origin.concat(this.backgrounds.accomplishment).concat(this.backgrounds.goal))
         {
-            if (bg.chosen && bg.effect.id == effect.id && !effect.changes.some(c => c.mode == 0))
+            if (bg.chosen && bg.effect.id == effect.id && !effect.changes.some(c => c.type == "custom"))
             {
                 return true;
             }
@@ -46,7 +46,7 @@ export class FactionModel extends StandardItemModel
 
     static migrateData(data)
     {
-        super.migrateData(data);
+        data = super.migrateData(data);
         for(let bg of (data.backgrounds?.origin || []))
         {
             if (typeof bg.effect == "string")
@@ -68,6 +68,7 @@ export class FactionModel extends StandardItemModel
                 bg.effect = {id : bg.effect}
             }
         }
+        return data;
     }
 
 

@@ -137,9 +137,9 @@ export class WNGTest extends WarhammerTestBase {
     await this._rollDice()
     this._computeResult();
 
-    this.handleCounters();
+    await this.handleCounters();
     await this.runPostScripts();
-
+    await this.handleTargets();
     return this
 
   }
@@ -266,11 +266,11 @@ export class WNGTest extends WarhammerTestBase {
     this.testData.rerolls.push(diceIndices)
     if (!this.rerolledTests)
       this.rerolledTests = []
-    this.rerolledTests.push(await this.roll.reroll({async: true}))
+    this.rerolledTests.push(await this.roll.reroll())
     this._computeResult();
 
     if (game.dice3d) {
-      let rerollShow = foundry.utils.duplicate(this.rerolledTests[this.rerolledTests.length - 1])
+      let rerollShow = foundry.utils.deepClone(this.rerolledTests[this.rerolledTests.length - 1].toJSON())
       rerollShow.terms = rerollShow.terms.map((term, t) => {
         if (term.results) {
           term.results = term.results.map((die, i) => {
@@ -280,7 +280,15 @@ export class WNGTest extends WarhammerTestBase {
         }
         return term
       })
-      await game.dice3d.showForRoll(Roll.fromData(rerollShow))
+      // rerolled flag makes DSN roll each sequentially instead of all together
+      rerollShow.terms.forEach(t => t.results?.forEach(r => delete r.rerolled));
+      await game.dice3d.showForRoll(Roll.fromData(rerollShow), 
+        this.message ? this.message.author : game.user, 
+        this.context.rollMode != "selfroll", 
+        this.message?.whisper.length > 0 ? this.message.whisper : null, 
+        false, 
+        null, 
+        this.message ? this.message.speaker : null);
     }
 
     this.sendToChat()
@@ -360,10 +368,16 @@ export class WNGTest extends WarhammerTestBase {
 
     // Only add a connecting operator term if dice were added (don't want trailing "+")
     if (added) {
-      await added.evaluate({ async: true });
+      await added.evaluate();
       connector = await new foundry.dice.terms.OperatorTerm({ operator: "+" });
       if (game.dice3d)
-        await game.dice3d.showForRoll(added)
+        await game.dice3d.showForRoll(added, 
+          this.message ? this.message.author : game.user, 
+          this.context.rollMode != "selfroll", 
+          this.message?.whisper.length > 0 ? this.message.whisper : null, 
+          false, 
+          null, 
+          this.message ? this.message.speaker : null);
     }
 
     let newRoll = oldTerms.concat(connector || []).concat(added?.terms || [])
@@ -403,15 +417,23 @@ export class WNGTest extends WarhammerTestBase {
   }
 
 
-  handleCounters() {
+  async handleCounters() {
     if (this.result.isWrathCritical && !this.context.counterChanged && this.actor.system.settings.generateMetaCurrencies) 
     {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1, "glory").then(() => { game.counter.render({force: true}) })
+        await game.counter.change(1, "glory");
       else if (this.actor.type == "threat")
-        game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => { game.counter.render({force: true}) })
+        await game.counter.change(1, "ruin");
     }
+  }
+
+  handleTargets()
+  {
+    let actors = this.targetTokens.map(i => i.actor);
+    actors.forEach(a => {
+      a?.runScripts("targeted", {test: this});
+    })
   }
 
   clearRerolls() {
@@ -486,7 +508,7 @@ export class WNGTest extends WarhammerTestBase {
       speaker: this.context.speaker
     };
     chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.prototypeToken.name
-    ChatMessage.applyRollMode(chatData, chatData.rollMode);
+    ChatMessage.applyMode(chatData, chatData.rollMode);
 
     if (newMessage || !this.message) 
     {
