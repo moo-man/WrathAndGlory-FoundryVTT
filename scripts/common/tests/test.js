@@ -369,7 +369,7 @@ export class WNGTest extends WarhammerTestBase {
       await added.evaluate();
       connector = await new foundry.dice.terms.OperatorTerm({ operator: "+" });
       if (game.dice3d)
-        await game.dice3d.showForRoll(Roll.fromData(rerollShow), 
+        await game.dice3d.showForRoll(added, 
           this.message ? this.message.author : game.user, 
           this.context.rollMode != "selfroll", 
           this.message?.whisper.length > 0 ? this.message.whisper : null, 
