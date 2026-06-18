@@ -133,6 +133,8 @@ export class WrathAndGloryItem extends WarhammerItem {
         {
             if (this.type == "psychicPower")
                 return actor.system.skills.psychicMastery
+            else if (this.type == "ability" && this.system.test.type == "skill")
+                return actor.system.skills[this.system.test.specification]
             else if (this.isMelee)
                 return actor.system.skills.weaponSkill
             else
@@ -141,6 +143,8 @@ export class WrathAndGloryItem extends WarhammerItem {
         else {
             if (this.type == "psychicPower")
                 return "psychicMastery"
+            else if (this.type == "ability" && this.system.test.type == "skill")
+                return this.system.test.specification
             else if (this.isMelee)
                 return "weaponSkill"
             else
