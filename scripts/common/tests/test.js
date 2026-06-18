@@ -266,7 +266,7 @@ export class WNGTest extends WarhammerTestBase {
     this.testData.rerolls.push(diceIndices)
     if (!this.rerolledTests)
       this.rerolledTests = []
-    this.rerolledTests.push(await this.roll.reroll({async: true}))
+    this.rerolledTests.push(await this.roll.reroll())
     this._computeResult();
 
     if (game.dice3d) {
@@ -280,7 +280,13 @@ export class WNGTest extends WarhammerTestBase {
         }
         return term
       })
-      await game.dice3d.showForRoll(Roll.fromData(rerollShow))
+      await game.dice3d.showForRoll(Roll.fromData(rerollShow), 
+        this.message ? this.message.author : game.user, 
+        this.context.rollMode != "selfroll", 
+        this.message?.whisper.length > 0 ? this.message.whisper : null, 
+        false, 
+        null, 
+        this.message ? this.message.speaker : null);
     }
 
     this.sendToChat()
@@ -360,10 +366,16 @@ export class WNGTest extends WarhammerTestBase {
 
     // Only add a connecting operator term if dice were added (don't want trailing "+")
     if (added) {
-      await added.evaluate({ async: true });
+      await added.evaluate();
       connector = await new foundry.dice.terms.OperatorTerm({ operator: "+" });
       if (game.dice3d)
-        await game.dice3d.showForRoll(added)
+        await game.dice3d.showForRoll(added, 
+          this.message ? this.message.author : game.user, 
+          this.context.rollMode != "selfroll", 
+          this.message?.whisper.length > 0 ? this.message.whisper : null, 
+          false, 
+          null, 
+          this.message ? this.message.speaker : null);
     }
 
     let newRoll = oldTerms.concat(connector || []).concat(added?.terms || [])
