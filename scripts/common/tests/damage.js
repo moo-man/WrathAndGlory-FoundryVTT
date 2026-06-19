@@ -233,7 +233,7 @@ export class DamageRoll {
     this.computeDamage();
 
     if (game.dice3d) {
-      let rerollShow = reroll.toJSON();
+      let rerollShow = foundry.utils.deepClone(reroll.toJSON()); // Very surprised toJSON doesn't make a copy, but cloning is needed for removing the rerolled flag below
       rerollShow.terms = rerollShow.terms.map((term, t) => {
         if (term.results) {
           term.results = term.results.map((die, i) => {
@@ -243,6 +243,8 @@ export class DamageRoll {
         }
         return term
       })
+      // rerolled flag makes DSN roll each sequentially instead of all together
+      rerollShow.terms.forEach(t => t.results?.forEach(r => delete r.rerolled));
       await game.dice3d.showForRoll(Roll.fromData(rerollShow))
     }
 

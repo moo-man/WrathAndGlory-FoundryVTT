@@ -270,7 +270,7 @@ export class WNGTest extends WarhammerTestBase {
     this._computeResult();
 
     if (game.dice3d) {
-      let rerollShow = foundry.utils.duplicate(this.rerolledTests[this.rerolledTests.length - 1])
+      let rerollShow = foundry.utils.deepClone(this.rerolledTests[this.rerolledTests.length - 1].toJSON())
       rerollShow.terms = rerollShow.terms.map((term, t) => {
         if (term.results) {
           term.results = term.results.map((die, i) => {
@@ -280,6 +280,8 @@ export class WNGTest extends WarhammerTestBase {
         }
         return term
       })
+      // rerolled flag makes DSN roll each sequentially instead of all together
+      rerollShow.terms.forEach(t => t.results?.forEach(r => delete r.rerolled));
       await game.dice3d.showForRoll(Roll.fromData(rerollShow), 
         this.message ? this.message.author : game.user, 
         this.context.rollMode != "selfroll", 
