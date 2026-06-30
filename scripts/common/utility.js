@@ -31,10 +31,10 @@ export default class WNGUtility {
 
   static getSpeaker(speaker) {
     try {
-      if (speaker.actor)
-        return game.actors.get(speaker.actor)
-      else if (speaker.token && speaker.scene)
+      if (speaker.token && speaker.scene)
         return game.scenes.get(speaker.scene).tokens.get(speaker.token).actor
+      else if (speaker.actor)
+        return game.actors.get(speaker.actor)
       else
         throw "Could not find speaker"
     }
@@ -185,6 +185,37 @@ export default class WNGUtility {
 
   }
 
+  static async rollScatter(chatData, distanceFormula="2d6")
+  {
+    let scatterRoll = Math.ceil(CONFIG.Dice.randomUniform() * 6)
+    let distRoll = await new Roll(distanceFormula).roll(); 
+    let html = `
+    <table class="scatter-table" border="1">
+    <tr>
+          <td data-position='3'><div class="die-label">3</div></td>
+          <td data-position='4'><div class="die-label">4</div></td>
+          <td data-position='5'><div class="die-label">5</div></td>
+    </tr>
+    <tr>
+          <td data-position='2'><div class="die-label">2</div></td>
+          <td> <strong>Target</strong></td>
+          <td data-position="6"><div class="die-label">6</div></td>
+    </tr>
+    <tr>
+          <td></td>
+          <td data-position='1'><div class="die-label">1</div></td>
+          <td></td>
+    </tr>
+</table>
+<p style="text-align: center;"><i class="fa-solid fa-arrow-up"></i> Direction of Attack <i class="fa-solid fa-arrow-up"></i></p>
+    `
+
+    html = html.replace(`data-position='${scatterRoll}'>`, `data-position='${scatterRoll}' class="active">${distRoll.total}m<br>`)
+
+    chatData.content = html;
+    chatData.speaker = chatData.speaker || {speaker: {alias: "Scatter"}};
+    ChatMessage.create(chatData);
+  }
 
   static async disciplineDialog({text, title, number=1}={}) {
     let disciplines = (await this.getAllDisciplines()).map(i => {
@@ -202,7 +233,7 @@ export default class WNGUtility {
   {
     if (!discipline)
     {
-      discipline = (await disciplineDialog({number: 1}))[0]?.name;
+      discipline = (await this.disciplineDialog({number: 1, text, title}))[0]?.name;
     }
     if (!(discipline instanceof Array))
     {

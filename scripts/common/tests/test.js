@@ -137,9 +137,9 @@ export class WNGTest extends WarhammerTestBase {
     await this._rollDice()
     this._computeResult();
 
-    this.handleCounters();
+    await this.handleCounters();
     await this.runPostScripts();
-
+    await this.handleTargets();
     return this
 
   }
@@ -417,15 +417,23 @@ export class WNGTest extends WarhammerTestBase {
   }
 
 
-  handleCounters() {
+  async handleCounters() {
     if (this.result.isWrathCritical && !this.context.counterChanged && this.actor.system.settings.generateMetaCurrencies) 
     {
       this.context.counterChanged = true
       if (this.actor.type == "agent")
-        game.wng.RuinGloryCounter.changeCounter(1, "glory").then(() => { game.counter.render({force: true}) })
+        await game.counter.change(1, "glory");
       else if (this.actor.type == "threat")
-        game.wng.RuinGloryCounter.changeCounter(1, "ruin").then(() => { game.counter.render({force: true}) })
+        await game.counter.change(1, "ruin");
     }
+  }
+
+  handleTargets()
+  {
+    let actors = this.targetTokens.map(i => i.actor);
+    actors.forEach(a => {
+      a?.runScripts("targeted", {test: this});
+    })
   }
 
   clearRerolls() {

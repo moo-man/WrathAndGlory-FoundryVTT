@@ -65,6 +65,15 @@ export default function () {
     type: Number,
   });
 
+  game.settings.register('wrath-and-glory', 'tier', {
+    name: 'Tier',
+    hint: "Current Game Tier",
+    scope: 'world',
+    config: true,
+    default: 1,
+    type: Number,
+  });
+
   game.settings.register('wrath-and-glory', 'counterPosition', {
     name: 'Counter Position',
     scope: 'client',

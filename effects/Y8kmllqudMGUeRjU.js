@@ -1,1 +1,1 @@
-return !["persuasion", "awareness"].includes(this.skill)
+return !["persuasion", "awareness"].includes(args.skill)

@@ -244,7 +244,7 @@ export class WrathAndGloryActor extends WarhammerActor {
             }
         }
         
-        ui.sidebar.activateTab("chat")
+        // ui.sidebar.activateTab("chat")
         let roll = new AbilityUse(testData)
         await roll.rollTest();
         roll.sendToChat();
@@ -801,7 +801,7 @@ export class WrathAndGloryActor extends WarhammerActor {
     sharesKeywordGroup(actor, group)
     {
         let groupKeywords = this.getGroupKeyword(group);
-        return groupKeywords.some(i => actor.hasKeywordGroup(i.name, group))
+        return groupKeywords.some(i => actor.hasKeywordGroup(i, group))
     }
 
 

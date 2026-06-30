@@ -46,6 +46,11 @@ export class CommonDialog extends RollDialog {
       return this.context.title;
     }
 
+    get tier()
+    {
+      return this.target ? this.target.system.advances.tier : this.actor.system.advances.tier;
+    }
+
     static async setupData({attribute, skill, pool, wrath, dn}, actor, context={}, options={})
     {
         let dialogData = await super.setupData({pool, wrath, dn}, actor, context, options)

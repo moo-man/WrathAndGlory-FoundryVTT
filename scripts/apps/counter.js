@@ -142,7 +142,7 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
       }
       else
       {
-        game.settings.set('wrath-and-glory', type, value);
+        await game.settings.set('wrath-and-glory', type, value);
       }
   
       return value
