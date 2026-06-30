@@ -95,12 +95,12 @@ export class WrathAndGloryItem extends WarhammerItem {
     async GetArchetypeItems() {
         let items = [];
 
-        let species = await this.system.species.document;
+        let species = await this.system.chooseSpecies();
         let faction = await this.system.faction.document;
 
         let speciesAbilities = await species.system.abilities.awaitDocuments();
         let archetypeAbilities = await this.system.abilities.documents;
-        let keywords = this.keywords.map(WNGUtility.getKeywordItem)
+        let keywords = this.keywords.map(i => WNGUtility.getKeywordItem(i))
 
 
         // Get all archetype talents/wargear, merge with diff

@@ -32,21 +32,7 @@ export default class CharacterCreation extends FormApplication {
     {
         this.character = new Actor.implementation({type: "agent", name : this.object.actor.name, system: foundry.utils.deepClone(game.model.Actor.agent)})
 
-
-        if (this.archetype.system.species.list.length == 0)
-        {   
-            ui.notifications.error("No Species found on this Archetype");
-            throw new Error("No Species found on this Archetype");
-        }
-        if (this.archetype.system.species.list.length == 1)
-        {
-            this.species = await this.archetype.system.species.list[0].document;
-        }
-        else 
-        {
-            this.species = (await this.archetype.system.species.choose(1, {title : this.archetype.name, text: "Choose Species"}))[0];
-        }
-        
+        this.species = await this.archetype.system.chooseSpecies();
 
         // Can't just merge object because actor attributes/skills are an object, archetype and species have just numbers
         for (let attribute in this.character.attributes)

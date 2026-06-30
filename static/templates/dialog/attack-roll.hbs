@@ -68,15 +68,17 @@
             </div>
         </div>
     {{/if}}
-        <div class="form-group">
-            <label>{{localize "WEAPON.CALLED_SHOT"}}</label>
-            <div class="form-fields">
-                <select name="calledShot.size">
-                    {{selectOptions calledShotSizes selected=fields.calledShot.size localize=true blank=""}}
-                </select>
-                <input name="calledShot.label" type="text" value="{{fields.calledShot.label}}" placeholder="Label"/>
-            </div>
+    {{#if data.weapon}}
+    <div class="form-group">
+        <label>{{localize "WEAPON.CALLED_SHOT"}}</label>
+        <div class="form-fields">
+            <select name="calledShot.size">
+                {{selectOptions calledShotSizes selected=fields.calledShot.size localize=true blank=""}}
+            </select>
+            <input name="calledShot.label" type="text" value="{{fields.calledShot.label}}" placeholder="Label"/>
         </div>
+    </div>
+    {{/if}}
     <hr>
     <div class="form-group labels">
         <label></label>

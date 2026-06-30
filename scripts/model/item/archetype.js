@@ -50,6 +50,26 @@ export class ArchetypeModel extends BaseItemModel
         }
     }
 
+    async chooseSpecies()
+    {
+        let species;
+        if (this.species.list.length == 0)
+        {   
+            ui.notifications.error("No Species found on this Archetype");
+            throw new Error("No Species found on this Archetype");
+        }
+        if (this.species.list.length == 1)
+        {
+            species = await this.species.list[0].document;
+        }
+        else 
+        {
+           species = (await this.species.choose(1, {title : this.parent.name, text: "Choose Species"}))[0];
+        }
+
+        return species;
+    }
+
     async promptArchetype(actor) {
         if (await foundry.applications.api.Dialog.confirm({
             window: {title: "Apply Archetype"},
