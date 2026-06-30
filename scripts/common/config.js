@@ -882,7 +882,7 @@ WNG.traitEffects = {
                 scriptData : [{
                     label : "Warp Weapon",
                     trigger : "dialog",
-                    script : "args.fields.damage = args.target.system.combat.resilience.total - 4;",
+                    script : "args.fields.damage = args.target.system.combat.resilience.total - 4 - this.item.system.damage.base;",
                     options : {
                         hideScript : "return !args.target;",
                         activateScript : "return this.item.system.damage.base < (args.target.system.combat.resilience.total - 4);",
