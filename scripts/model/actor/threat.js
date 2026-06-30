@@ -49,13 +49,6 @@ export class ThreatModel extends StandardWNGActorModel {
         }
     }
 
-    get advances()
-    {
-        return {
-            tier: game.settings.get(game.system.id, "tier")
-        }
-    }
-
     _addModelProperties()
     {
         super._addModelProperties();
