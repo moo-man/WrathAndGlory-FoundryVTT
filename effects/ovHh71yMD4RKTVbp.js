@@ -1,0 +1,1 @@
+args.fields.pool += args.actor.itemTypes.augmentic.filter(i => i.system.isEquipped).length

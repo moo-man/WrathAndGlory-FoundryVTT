@@ -1,0 +1,1 @@
+let test = await this.actor.setupAttributeTest("initiative", {appendTitle: ` - ${this.effect.sourceItem.name}`, skipTargets: true});

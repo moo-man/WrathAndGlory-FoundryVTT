@@ -1,0 +1,1 @@
+return (args.type == "skill" && (args.skill == "leadership" || args.skill == "stealth") || args.type == "stealth"

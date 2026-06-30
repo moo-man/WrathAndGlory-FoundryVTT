@@ -1,0 +1,1 @@
+return ["tech", "scholar"].includes(args.skill);

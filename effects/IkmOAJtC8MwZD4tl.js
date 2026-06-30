@@ -1,0 +1,1 @@
+return !args.weapon || args.weapon.system.isRanged || !this.actor.statuses.has("all-out-attack");

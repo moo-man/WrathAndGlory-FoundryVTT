@@ -366,7 +366,8 @@ WNG.premiumModules = {
     "wng-records2" : "Redacted Records: Vol. II",
     "wng-darktide" : "Darktide: Extraction",
     "wng-voa" : "Vow of Absolution",
-    "wng-aeldari" : "Aeldari: Inheritance of Embers"
+    "wng-aeldari" : "Aeldari: Inheritance of Embers",
+    "wng-daemons" : "Threat Assessment: Daemons & Heretics"
 }
 
 WNG.transferTypes = {

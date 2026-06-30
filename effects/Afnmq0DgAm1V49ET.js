@@ -1,0 +1,1 @@
+args.modifiers.mortal.push({value: 2, label: this.effect.name});

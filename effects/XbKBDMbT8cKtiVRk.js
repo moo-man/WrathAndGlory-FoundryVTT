@@ -1,0 +1,1 @@
+return ["leadership", "stealth"].includes(args.skill);

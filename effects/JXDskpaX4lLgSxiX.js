@@ -1,0 +1,1 @@
+args.fields.wrath += this.effect.sourceTest.result.wrathDie;

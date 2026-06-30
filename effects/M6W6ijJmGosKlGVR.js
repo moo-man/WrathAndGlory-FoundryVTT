@@ -1,0 +1,1 @@
+this.actor.applyHealing({wounds : 5}, {messageData : this.script.getChatData()});

@@ -1,0 +1,1 @@
+args.fields.icons += 1 + Math.floor(args.actor.system.mob.value / 10);

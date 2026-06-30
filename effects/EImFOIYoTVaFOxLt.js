@@ -1,0 +1,1 @@
+return arg.skill == "tech" || args.options.influence

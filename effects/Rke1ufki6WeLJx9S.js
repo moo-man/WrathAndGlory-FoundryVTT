@@ -1,0 +1,1 @@
+return !args.context.determination ||  !args.actor.hasKeyword("DAEMON");

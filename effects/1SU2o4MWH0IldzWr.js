@@ -1,0 +1,1 @@
+return args.type == "determination" && args.actor.combat.wounds.value

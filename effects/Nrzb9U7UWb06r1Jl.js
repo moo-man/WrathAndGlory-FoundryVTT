@@ -1,0 +1,1 @@
+args.fields.pool += parseInt(this.effect.specifier);

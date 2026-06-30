@@ -1,0 +1,1 @@
+return args.actor.system.skill[args.skill]?.total >= this.effect.sourceActor.system.skills.leadership.total

@@ -1,0 +1,1 @@
+this.item.setFlag(game.system.id, "frequency", this.item.getFlag(game.system.id, "frequency") == "variable" ? "single" : "variable");

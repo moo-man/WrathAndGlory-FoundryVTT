@@ -1,0 +1,1 @@
+return args.skill != "psychicMastery" || this.actor.uuid == this.effect.sourceActor.uuid;

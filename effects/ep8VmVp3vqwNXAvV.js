@@ -1,0 +1,1 @@
+return !["scholar", "investigation"].includes(args.skill);

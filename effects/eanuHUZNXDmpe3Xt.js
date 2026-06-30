@@ -9,7 +9,7 @@ let choice = await ItemDialog.create(effects, 1, {title : this.effect.name, text
 
 if (choice[0])
 {
-	let keyword = this.actor.itemTypes.keyword.find(i => i.system.group == "MARK OF CHAOS");
+	let keyword = this.actor.itemTypes.keyword.find(i => i.name == "[MARK OF CHAOS]");
 
 	if (keyword && choice[0].name != "Undedicated")
 	{

@@ -1,0 +1,1 @@
+args.fields.pool += (this.effect.sourceTest.result.bonusDie * args.actor.itemTypes.traumaticInjury.length);

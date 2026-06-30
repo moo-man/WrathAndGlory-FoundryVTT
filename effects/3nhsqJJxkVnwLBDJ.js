@@ -1,0 +1,1 @@
+args.fields.pool += (this.effect.sourceActor.system.skills.leadership.total - args.actor.system.skill[args.skill]?.total);

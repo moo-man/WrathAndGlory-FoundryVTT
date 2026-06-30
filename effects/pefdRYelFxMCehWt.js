@@ -1,0 +1,1 @@
+return args.multi >  1

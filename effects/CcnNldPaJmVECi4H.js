@@ -1,0 +1,1 @@
+return !args.target?.isMob || args.fields.range == 'short'

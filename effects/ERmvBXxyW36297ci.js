@@ -1,0 +1,1 @@
+return args.weapon || ["tech", "pilot"].includes(args.skill);

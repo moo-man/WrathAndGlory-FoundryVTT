@@ -1,0 +1,1 @@
+await this.actor.addCondition("poisoned", {[game.system.id] : {value : 5}});

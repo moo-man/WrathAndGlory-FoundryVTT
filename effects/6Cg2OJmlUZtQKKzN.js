@@ -1,0 +1,1 @@
+return args.power || this.effect.sourceActor?.uuid == args.actor.uuid;

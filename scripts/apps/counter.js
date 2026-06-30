@@ -112,9 +112,27 @@ export default class RuinGloryCounter extends HandlebarsApplicationMixin(Applica
       return this.constructor.setCounter(value, type);
     }
 
-    async change(diff, type)
+    async change(diff, type, actor)
     {
-      return this.constructor.changeCounter(diff, type);
+      if (diff < 0 && type == "ruin" && actor.type == "threat" && actor.system.resources.ruin > 0)
+      {
+        let newRuin = actor.system.resources.ruin + diff;
+
+        let counterChanged;
+        // If didn't have enough ruin, send it to the counter
+        if (newRuin < 0)
+        {
+          counterChanged = this.constructor.changeCounter(newRuin, type);
+          newRuin = 0;
+        }
+
+        actor.update({"system.resources.ruin" : newRuin});
+        return counterChanged;
+      }
+      else 
+      {
+        return this.constructor.changeCounter(diff, type);
+      }
     }
   
   

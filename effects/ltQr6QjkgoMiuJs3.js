@@ -1,0 +1,1 @@
+args.test.actor.addCondition("hindered", {[game.system.id] : {value : 2}});
