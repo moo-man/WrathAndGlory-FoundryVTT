@@ -12,14 +12,14 @@ export class AgentModel extends StandardWNGActorModel {
         schema.skills = new fields.EmbeddedDataField(AgentSkillsModel);
         schema.combat = new fields.EmbeddedDataField(AgentCombatModel)
         schema.experience = new fields.SchemaField({
-            current: new fields.NumberField(),
-            spent: new fields.NumberField(),
-            total: new fields.NumberField()
+            current: new fields.NumberField({initial: 0}),
+            spent: new fields.NumberField({initial: 0}),
+            total: new fields.NumberField({initial: 0})
         })
 
         schema.advances = new fields.SchemaField({
-            tier: new fields.NumberField(),
-            rank: new fields.NumberField()
+            tier: new fields.NumberField({initial: 0}),
+            rank: new fields.NumberField({initial: 0})
           });
 
         schema.bio = new fields.SchemaField({
@@ -30,7 +30,7 @@ export class AgentModel extends StandardWNGActorModel {
             height  : new fields.StringField(),
             eye  : new fields.StringField(),
             hair  : new fields.StringField(),
-            age : new fields.NumberField(),
+            age : new fields.NumberField({initial: 0}),
             origin : new fields.StringField(),
             accomplishment : new fields.StringField(),
             goal : new fields.StringField(),

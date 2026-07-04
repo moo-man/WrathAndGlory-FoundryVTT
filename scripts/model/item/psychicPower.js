@@ -26,7 +26,7 @@ export class PsychicPowerModel extends StandardItemModel
         schema.traits = new fields.EmbeddedDataField(TraitsModel);
         schema.prerequisites = new fields.StringField({}),
         schema.potency = ListModel.createListModel(new fields.SchemaField({
-            cost : new fields.NumberField(),
+            cost : new fields.NumberField({initial: 0}),
             description : new fields.StringField(),
             initial : new fields.StringField(),
             property : new fields.StringField(),

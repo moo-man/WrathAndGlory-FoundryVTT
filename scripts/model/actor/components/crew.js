@@ -18,9 +18,9 @@ export class VehicleComplement extends DocumentReferenceListModel {
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.pilot = new fields.NumberField()
-        schema.crew = new fields.NumberField()
-        schema.passenger = new fields.NumberField()
+        schema.pilot = new fields.NumberField({initial: 0})
+        schema.crew = new fields.NumberField({initial: 0})
+        schema.passenger = new fields.NumberField({initial: 0})
         schema.list = new fields.ArrayField(new fields.EmbeddedDataField(VehicleCrew));
         return schema;
     }

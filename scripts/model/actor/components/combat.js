@@ -3,44 +3,44 @@ export class CombatModel extends foundry.abstract.DataModel {
     static defineSchema() {
         return {
             defence: new foundry.data.fields.SchemaField({
-                bonus: new foundry.data.fields.NumberField(),
-                total: new foundry.data.fields.NumberField()
+                bonus: new foundry.data.fields.NumberField({initial: 0}),
+                total: new foundry.data.fields.NumberField({initial: 0})
             }),
             resilience: new foundry.data.fields.SchemaField({
-                bonus: new foundry.data.fields.NumberField(),
-                total: new foundry.data.fields.NumberField()
+                bonus: new foundry.data.fields.NumberField({initial: 0}),
+                total: new foundry.data.fields.NumberField({initial: 0})
             }),
             wounds: new foundry.data.fields.SchemaField({
                 value: new foundry.data.fields.NumberField({min : 0, initial : 0}),
-                bonus: new foundry.data.fields.NumberField(),
-                max: new foundry.data.fields.NumberField()
+                bonus: new foundry.data.fields.NumberField({initial: 0}),
+                max: new foundry.data.fields.NumberField({initial: 0})
             }),
             determination: new foundry.data.fields.SchemaField({
-                bonus: new foundry.data.fields.NumberField(),
+                bonus: new foundry.data.fields.NumberField({initial: 0}),
                 attribute: new foundry.data.fields.StringField({initial: "toughness"}),
-                total: new foundry.data.fields.NumberField()
+                total: new foundry.data.fields.NumberField({initial: 0})
             }),
             shock: new foundry.data.fields.SchemaField({
                 value: new foundry.data.fields.NumberField({initial : 0, min : 0}),
-                bonus: new foundry.data.fields.NumberField(),
+                bonus: new foundry.data.fields.NumberField({initial: 0}),
                 max: new foundry.data.fields.NumberField({nullable : true, initial : 0})
             }),
             resolve: new foundry.data.fields.SchemaField({
-                bonus: new foundry.data.fields.NumberField(),
-                total: new foundry.data.fields.NumberField()
+                bonus: new foundry.data.fields.NumberField({initial: 0}),
+                total: new foundry.data.fields.NumberField({initial: 0})
             }),
             conviction: new foundry.data.fields.SchemaField({
-                bonus: new foundry.data.fields.NumberField(),
-                total: new foundry.data.fields.NumberField()
+                bonus: new foundry.data.fields.NumberField({initial: 0}),
+                total: new foundry.data.fields.NumberField({initial: 0})
             }),
             size: new foundry.data.fields.StringField(),
-            speed: new foundry.data.fields.NumberField(),
-            fly: new foundry.data.fields.NumberField(),
+            speed: new foundry.data.fields.NumberField({initial: 0}),
+            fly: new foundry.data.fields.NumberField({initial: 0}),
             passiveAwareness: new foundry.data.fields.SchemaField({
-                bonus: new foundry.data.fields.NumberField(),
-                total: new foundry.data.fields.NumberField()
+                bonus: new foundry.data.fields.NumberField({initial: 0}),
+                total: new foundry.data.fields.NumberField({initial: 0})
             }),
-            stealth: new foundry.data.fields.NumberField()
+            stealth: new foundry.data.fields.NumberField({initial: 0})
         }
     }
 

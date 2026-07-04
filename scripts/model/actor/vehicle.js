@@ -8,9 +8,9 @@ export class VehicleModel extends BaseWarhammerActorModel {
     static defineSchema() {
         let schema = super.defineSchema();
         schema.complement = new fields.EmbeddedDataField(VehicleComplement);
-        schema.mnvr = new fields.NumberField();
+        schema.mnvr = new fields.NumberField({initial: 0});
         schema.rarity = new fields.StringField();
-        schema.value = new fields.NumberField();
+        schema.value = new fields.NumberField({initial: 0});
         schema.traits = new fields.EmbeddedDataField(TraitsModel)
         schema.combat = new fields.EmbeddedDataField(VehicleCombatModel)
         schema.notes = new fields.HTMLField()
