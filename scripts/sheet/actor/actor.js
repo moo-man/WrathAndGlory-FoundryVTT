@@ -169,6 +169,25 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
             }
           },
           {
+            name: "Post to Chat",
+            icon: '<i class="fas fa-comment"></i>',
+            condition: li => {
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+              if (uuid)
+              {
+                let parsed = foundry.utils.parseUuid(uuid);
+                return parsed.type == "Item"; // Can only post Items to chat
+              }
+              else return false;
+            },
+            callback: async li => 
+            {
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+              const document = await fromUuid(uuid);
+              document.postItem();
+            }
+          },
+          {
               name: "Duplicate",
               icon: '<i class="fa-solid fa-copy"></i>',
               condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
@@ -177,25 +196,6 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
                   let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
                   const document = await fromUuid(uuid);
                   this.actor.createEmbeddedDocuments(document.documentName, [document.toObject()]);
-              }
-            },
-            {
-              name: "Post to Chat",
-              icon: '<i class="fas fa-comment"></i>',
-              condition: li => {
-                let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-                if (uuid)
-                {
-                  let parsed = foundry.utils.parseUuid(uuid);
-                  return parsed.type == "Item"; // Can only post Items to chat
-                }
-                else return false;
-              },
-              callback: async li => 
-              {
-                let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-                const document = await fromUuid(uuid);
-                document.postItem();
               }
             },
             {
@@ -208,7 +208,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
                   let parsed = foundry.utils.parseUuid(uuid);
                   if (parsed.type == "ActiveEffect")
                   {
-                    return parsed.primaryId == this.document.id; // If an effect's parent is not this document, don't show the delete option
+                    return parsed.embedded.length < 4; // If an effect's parent is not this document, don't show the delete option
                   }
                   else if (parsed.type)
                   {
@@ -222,7 +222,7 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
               {
                 let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
                 const document = await fromUuid(uuid);
-                document.delete();
+                document.deleteDialog();
               }
             },
         ];

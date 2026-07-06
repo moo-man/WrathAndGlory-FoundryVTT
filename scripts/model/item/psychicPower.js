@@ -36,6 +36,24 @@ export class PsychicPowerModel extends StandardItemModel
         return schema;
     }
 
+    async _onDelete(options, user)
+    {
+        await super._onDelete(options, user);
+        if (game.user.id != user)
+        {
+            return;
+        }
+
+        if (this.parent.isOwned)
+        {
+            let actor = this.parent.actor;
+
+            if (actor.system.sustaining.has({id: this.parent.id}))
+            {
+                actor.update(actor.system.sustaining.removeId(this.parent.id));
+            }
+        }
+    }
 
     get traitsAvailable() {
         return game.wng.config.weaponTraits
