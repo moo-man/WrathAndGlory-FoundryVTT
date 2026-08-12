@@ -18,6 +18,7 @@
                 <div class="sheet-list">
                     <div class="list-header row-content">
                         <div class="list-name">{{localize "HEADER.EFFECTS"}}</div>
+                        <div class="flex">{{localize "Type"}}</div>
                         <div class="list-controls">
                             <a class="list-control" data-action="createEffect" data-type="effect"><i
                                     class="fa-solid fa-plus"></i></a>
@@ -31,6 +32,7 @@
                                     <img src="{{this.img}}">
                                     <a class="label" data-action="editEmbedded">{{this.name}}</a>
                                 </div>
+                                <div class="flex">{{this.system.typeDisplay}}</div>
                                 <div class="list-controls">
                                     {{#if this.disabled}}
                                         <a class="list-control" data-action="toggleProperty" data-path="disabled"><i
@@ -53,6 +55,8 @@
                     <div class="sheet-list">
                         <div class="list-header row-content">
                             <div class="list-name">{{localize "HEADER.AMMO_EFFECTS"}}</div>
+                            <div class="flex">{{localize "Type"}}</div>
+
                         </div>
                         <div class="list-content">
                             {{#each item.system.ammo.document.effects.contents}}
@@ -63,6 +67,7 @@
                                             <div>{{this.name}}</div>
                                         </div>
                                     </div>
+                                    <div class="flex">{{this.system.typeDisplay}}</div>
                                 </div>
                             {{/each}}
                         </div>
@@ -73,6 +78,7 @@
                     <div class="sheet-list">
                         <div class="list-header row-content">
                             <div class="list-name">{{localize "HEADER.UPGRADE_EFFECTS"}}</div>
+                            <div class="flex">{{localize "Type"}}</div>
                         </div>
                         <div class="list-content">
                             {{#each upgradeEffects}}
@@ -82,6 +88,8 @@
                                             <img src="{{this.img}}">
                                             <div>{{this.name}}</div>
                                         </div>
+                                        <div class="flex">{{this.system.typeDisplay}}</div>
+
                                     </div>
                                 </div>
                             {{/each}}
