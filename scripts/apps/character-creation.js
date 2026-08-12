@@ -30,7 +30,7 @@ export default class CharacterCreation extends FormApplication {
 
     async initializeCharacter()
     {
-        this.character = new Actor.implementation({type: "agent", name : this.object.actor.name, system: foundry.utils.deepClone(game.model.Actor.agent)})
+        this.character = new Actor.implementation({type: "agent", name : this.object.actor.name, system: this.object.actor.system.toObject()})
 
         this.species = await this.archetype.system.chooseSpecies();
 

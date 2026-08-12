@@ -27,7 +27,7 @@ export class ThreatModel extends StandardWNGActorModel {
         //     abilities : new fields.EmbeddedDataField(DocumentReferenceListModel),
         // });
         schema.resources = new fields.SchemaField({
-            ruin : new fields.NumberField({min : 0}),
+            ruin : new fields.NumberField({min : 0, initial: 0}),
         })
         return schema;
     }

@@ -16,7 +16,7 @@ export class PsychicPowerModel extends StandardItemModel
         schema.damage = new fields.EmbeddedDataField(DamageModel)
         schema.discipline = new fields.StringField({}),
         schema.effect = new fields.StringField({}),
-        schema.cost = new fields.NumberField({min : 0}),
+        schema.cost = new fields.NumberField({min : 0, initial: 0}),
         schema.dn = new fields.StringField({}),
         schema.activation = new fields.StringField({initial : "action"}),
         schema.duration = new fields.StringField({}),

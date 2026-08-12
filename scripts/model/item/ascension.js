@@ -9,7 +9,7 @@ export class AscensionModel extends StandardItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.cost = new fields.NumberField({min : 0});
+        schema.cost = new fields.NumberField({min : 0, initial: 0});
         schema.requirements = new fields.StringField({});
         schema.keywords = new fields.StringField({});
         schema.influence = new fields.NumberField({});

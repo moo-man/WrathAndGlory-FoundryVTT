@@ -34,7 +34,7 @@ export class StandardWNGActorModel extends BaseWarhammerActorModel {
 
                     
             corruption : new foundry.data.fields.SchemaField({
-                current : new foundry.data.fields.NumberField({min : 0}),
+                current : new foundry.data.fields.NumberField({min : 0, initial: 0}),
             }),
 
             settings : new foundry.data.fields.SchemaField({
