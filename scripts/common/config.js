@@ -644,7 +644,7 @@ WNG.traitEffects = {
                     documentType : "Item",
                 },
                 scriptData : [{
-                    label : "Select Trait",
+                    label : "Select Kustom Trait",
                     trigger : "manual",
                     script : "[Script.mo3XmOzgaROpB97i]"
                 }]
