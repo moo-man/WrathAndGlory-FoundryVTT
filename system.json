@@ -10,16 +10,13 @@
   },
   "authors" : [
     {
-      "name": "",
-      "email": "",
-      "discord": "",
-      "reddit": ""
+      "name": "RickdMort"
     },
     {
-      "name": "Thul"
+      "name": "Rexxer"
     },
     {
-      "name" : "Perfectro"
+      "name" : "ShadowMHP"
     }
   ],
   "scripts": ["./wrath-and-glory.js"],

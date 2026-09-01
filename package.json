@@ -1,7 +1,7 @@
 {
   "name": "wrathandglory-foundryvtt",
   "version": "1.0.0",
-  "description": "The **official** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.",
+  "description": "An **unofficial** system for playing Warhammer 40k: Wrath & Glory on [Foundry VTT](https://foundryvtt.com/). Created by RickdMort, Rexxer and ShadowMHP.",
   "main": "wrath-and-glory.js",
   "scripts": {
     "build": "node scriptPacker.js&& cross-env NODE_ENV=development rollup --config rollup.config.mjs --watch",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moo-man/WrathAndGlory-FoundryVTT.git"
+    "url": "git+https://github.com/ReaperXXVII/WrathAndGlory-FoundryVTT.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/moo-man/WrathAndGlory-FoundryVTT/issues"
+    "url": "https://github.com/ReaperXXVII/WrathAndGlory-FoundryVTT/issues"
   },
-  "homepage": "https://github.com/moo-man/WrathAndGlory-FoundryVTT#readme",
+  "homepage": "https://github.com/ReaperXXVII/WrathAndGlory-FoundryVTT#readme",
   "devDependencies": {
     "cross-env": "^7.0.3",
     "rollup": "^2.79.1",
