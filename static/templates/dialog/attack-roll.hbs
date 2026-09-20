@@ -3,13 +3,8 @@
         <label>{{localize "WEAPON.DAMAGE"}}</label>
         <div class="form-fields">
             <input data-tooltip-direction="LEFT" name="damage" type="number" value="{{fields.damage}}" />
-        </div>
-    </div>
-    <div class="form-group labels">
-        <label></label>
-        <div class="form-fields">
-            <div>Value</div>
-            <div>Dice</div>
+            <input data-tooltip-direction="LEFT" name="damage.bonus" type="number" value="{{fields.damage.bonus}}" />
+            <input data-tooltip-direction="LEFT" name="damage.total" type="number" value="{{fields.damage.total}}" />
         </div>
     </div>
     <div class="form-group">
@@ -20,6 +15,8 @@
                 value="{{fields.ed.value}}" />
             <input data-tooltip="{{tooltips.ed.dice}}" data-tooltip-direction="LEFT" name="ed.dice" type="text"
                 value="{{fields.ed.dice}}" />
+            <input data-tooltip="{{tooltips.ed.total}}" data-tooltip-direction="LEFT" name="ed.total" type="text"
+                value="{{fields.ed.total}}" />
         </div>
     </div>
     <div class="form-group">
@@ -30,6 +27,8 @@
                 value="{{fields.ap.value}}" />
             <input data-tooltip="{{tooltips.ap.dice}}" data-tooltip-direction="LEFT" name="ap.dice" type="text"
                 value="{{fields.ap.dice}}" />
+            <input data-tooltip="{{tooltips.ap.total}}" data-tooltip-direction="LEFT" name="ap.total" type="text"
+                value="{{fields.ap.total}}" />
         </div>
     </div>
     {{#if data.weapon.isRanged}}
