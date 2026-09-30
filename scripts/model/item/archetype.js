@@ -408,12 +408,12 @@ export class ArchetypeModel extends BaseItemModel
 
         html += `</tbody></table>`
         
-
-
-
-
         let div = document.createElement("div");
         div.style = config.style;
+        if (config.color)
+        {
+            div.style.setProperty('--color', config.color);
+        }
         div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
         return div;
     }
