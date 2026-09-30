@@ -363,7 +363,7 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             if (await foundry.applications.api.Dialog.confirm({
                 window: { title : "Full Defence"},
-                content : `<p>Dodge Area of Effect?</p>`
+                content : `<p><strong>${this.name}</strong>: Dodge Area of Effect?</p>`
             }))
             {
                 await this.addCondition("full-defence", {}, {resilience : true})
