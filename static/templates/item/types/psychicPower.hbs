@@ -22,7 +22,7 @@
         {{formGroup fields.damage.fields.enabled value=system.damage.enabled}}
 
         {{#if system.damage.enabled}}
-        {{> damage fields=fields.damage.fields damage=source.system.damage hideAP=true}}
+        {{> damage fields=fields.damage.fields damage=source.system.damage}}
         {{> traits}}
         {{/if}}
         {{formGroup fields.keywords value=system.keywords}}
