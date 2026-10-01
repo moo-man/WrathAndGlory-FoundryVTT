@@ -391,6 +391,14 @@ export class WrathAndGloryActor extends WarhammerActor {
         {
             modifiers.resilience.push({value:  -resilience.armour, label: "Ignore Armour"});
         }
+        else if (test?.result.calledShot?.bypass)
+        {
+            let bypassed = Math.min(test?.result.calledShot?.bypass, resilience.armour);
+            if (bypassed > 0)
+            {
+                modifiers.resilience.push({value: -bypassed, label: "Bypass Armour (Called Shot)"});
+            }
+        }
 
         let addModifierBreakdown = (type, label) => {
             for(let mod of modifiers[type])

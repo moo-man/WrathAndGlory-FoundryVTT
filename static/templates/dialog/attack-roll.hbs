@@ -78,6 +78,14 @@
             <input name="calledShot.label" type="text" value="{{fields.calledShot.label}}" placeholder="Label"/>
         </div>
     </div>
+        {{#if fields.calledShot.size}}
+            <div class="form-group">
+            <label style="flex: 6">{{localize "WEAPON.CALLED_SHOT_BYPASS"}}</label>
+            <div class="form-fields">
+                <input name="calledShot.bypass" type="number" value="{{fields.calledShot.bypass}}" min="0"/>
+            </div>
+        </div>
+        {{/if}}
     {{/if}}
     <hr>
     <div class="form-group labels">

@@ -309,7 +309,8 @@ async _prepareContext(options)
           aim : false,
           calledShot : {
             size : "",
-            label : ""
+            label : "",
+            bypass: 0,
           }
       }, super._defaultFields());
   }

@@ -464,6 +464,7 @@
   "WEAPON.ATTACK": "Attack",
   "WEAPON.QUANTITY": "Quantity",
   "WEAPON.CALLED_SHOT": "Called Shot",
+  "WEAPON.CALLED_SHOT_BYPASS": "Bypass Armour",
   "WEAPON.AIM": "Aim",
   "WEAPON.AIMED": "Aimed",
   "WEAPON.CHARGING": "Charging",
