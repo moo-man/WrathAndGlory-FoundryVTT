@@ -1,0 +1,1 @@
+args.modifiers.shock.push({label: this.effect.name, value : 1})

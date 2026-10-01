@@ -1,0 +1,1 @@
+this.actor.applyHealing({shock : this.effect.sourceActor.system.advances.rank}, {messageData: this.script.getChatData()});

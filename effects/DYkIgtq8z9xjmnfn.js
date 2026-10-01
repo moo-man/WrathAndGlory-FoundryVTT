@@ -1,0 +1,1 @@
+return args.target?.uuid == this.effect.sourceActor.uuid;

@@ -1,0 +1,1 @@
+return ["agility", "initiative"].includes(args.attribute);

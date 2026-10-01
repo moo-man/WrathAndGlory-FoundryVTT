@@ -367,7 +367,8 @@ WNG.premiumModules = {
     "wng-darktide" : "Darktide: Extraction",
     "wng-voa" : "Vow of Absolution",
     "wng-aeldari" : "Aeldari: Inheritance of Embers",
-    "wng-daemons" : "Threat Assessment: Daemons & Heretics"
+    "wng-daemons" : "Threat Assessment: Daemons & Heretics",
+    "wng-russ" : "Sons of Russ"
 }
 
 WNG.transferTypes = {

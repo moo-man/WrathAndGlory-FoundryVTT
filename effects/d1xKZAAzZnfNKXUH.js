@@ -1,0 +1,1 @@
+return game.messages.get(args.context.message)?.system?.damage?.item?.type == "psychicPower";

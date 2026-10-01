@@ -1,0 +1,1 @@
+await this.effect.delete();

@@ -1,0 +1,1 @@
+args.fields.damage += args.actor.system.advances.rank || 3;
