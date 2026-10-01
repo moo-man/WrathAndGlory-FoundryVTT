@@ -35,6 +35,13 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
           {
               enrichment[item.id] = await foundry.applications.ux.TextEditor.enrichHTML(item.description);
           }
+
+          enrichment.conditions = {}
+
+          for(let c in game.wng.config.conditionDescriptions)
+          {
+              enrichment.conditions[c] = await foundry.applications.ux.TextEditor.enrichHTML(game.wng.config.conditionDescriptions[c]);
+          }
   
           return foundry.utils.expandObject(enrichment)
       }
@@ -248,7 +255,8 @@ export default class WnGActorSheet extends WarhammerActorSheetV2
       {
           ev.preventDefault();
           let document = this._getDocument(ev);
-          this._toggleDropdown(ev, await foundry.applications.ux.TextEditor.enrichHTML(document.system.description, {secrets: this.document.owner, relativeTo : this.document}));
+          let description = document.documentName == "ActiveEffect" ? document.description : document.system.description;
+          this._toggleDropdown(ev, await foundry.applications.ux.TextEditor.enrichHTML(description, {secrets: this.document.owner, relativeTo : this.document}));
       }
   
       static async _onToggleTrait(ev)

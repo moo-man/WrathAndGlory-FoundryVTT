@@ -2,7 +2,7 @@
     <div class="flexrow" style="align-items: flex-start; gap: 0.5rem;">
         <div class="conditions">
             {{#each effects.conditions}}
-                <div class="condition" >
+                <div class="condition" data-tooltip="{{lookup ../enriched.conditions this.key}}" data-tooltip-direction="LEFT">
                     <label>{{this.name}}</label>
                     {{#if this.existing}}
                         <a data-action="toggleCondition" data-condition="{{this.key}}"><i

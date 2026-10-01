@@ -738,6 +738,7 @@ export class WrathAndGloryActor extends WarhammerActor {
 
         if (!existing) {
             effect.name = game.i18n.localize(effect.name)
+            effect.description = game.wng.config.conditionDescriptions?.[effect.id];
             return this.createEmbeddedDocuments("ActiveEffect", [effect], foundry.utils.mergeObject(options, {condition: true}))
         }
     }

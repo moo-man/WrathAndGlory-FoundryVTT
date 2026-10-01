@@ -28,6 +28,7 @@ export class WrathAndGloryItem extends WarhammerItem {
 
         if (!existing) {
             effect.name = game.i18n.localize(effect.name)
+            effect.description = game.wng.config.conditionDescriptions?.[effect.id];
             effect.statuses = [effect.id];
             delete effect.id
             return this.createEmbeddedDocuments("ActiveEffect", [effect],  {condition: true})

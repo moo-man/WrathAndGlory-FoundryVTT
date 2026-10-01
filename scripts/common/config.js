@@ -330,6 +330,8 @@ WNG.filterValues = {
 
 WNG.avoidTestTemplate = "systems/wrath-and-glory/templates/apps/effect-avoid-test.hbs",
 WNG.effectScripts = {},
+WNG.conditionDescriptions = {}
+
 
 WNG.logFormat = [`%cW & G` + `%c @MESSAGE`, "color: #DDD;background: #8a2e2a;font-weight:bold", "color: unset"],
 WNG.rollClasses = {},
