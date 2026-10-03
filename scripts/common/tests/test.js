@@ -197,19 +197,34 @@ export class WNGTest extends WarhammerTestBase {
         return i;
       })), []))
 
-    // Merge rerolls and roll - For each reroll set, take the corresponding reroll indices and keep the dice that the indices indicate
+    // Merge rerolls and roll - For each reroll set, replace the dice at the reroll indices with the rerolled dice
     for (let i = 0; i < this.result.rerolledDice.length; i++) {
       let rerollDice = this.result.rerolledDice[i];
-      let shouldRerollSet = this.testData.rerolls[i];
-      this.result.dice = this.result.dice.reduce((prev, current, i) => {
-        if (shouldRerollSet.includes(i)) {
-          prev.push(rerollDice[i]);
-        } else {
-          prev.push(current);
-        }
-        return prev;
-      }, [])
+      let shouldRerollSet = this.testData.rerolls[i].slice().sort((a, b) => a - b);
+      // Rerolls only contain the selected dice, in index order. Older rerolls contain the whole pool, so are matched by die index
+      let isWholePool = rerollDice.length != shouldRerollSet.length;
+      this.result.dice = this.result.dice.map((current, index) => {
+        let rerollIndex = shouldRerollSet.indexOf(index);
+        if (rerollIndex == -1)
+          return current;
+        return isWholePool ? rerollDice[index] : rerollDice[rerollIndex];
+      })
     }
+  }
+
+  // Create a roll of only the dice being rerolled, keeping each die's type and options,
+  // so interactive fulfillment (e.g. physical dice) only asks for the dice actually being rerolled
+  _createReroll(diceIndices) {
+    let terms = [];
+    let offset = 0;
+    for (let term of this.roll.dice) {
+      let number = term.results.filter((_, i) => diceIndices.includes(offset + i)).length;
+      offset += term.results.length;
+      if (terms.length)
+        terms.push(new foundry.dice.terms.OperatorTerm({ operator: "+" }));
+      terms.push(new term.constructor({ number, faces: term.faces, options: foundry.utils.deepClone(term.options) }));
+    }
+    return Roll.fromTerms(terms);
   }
 
     /**
@@ -263,23 +278,15 @@ export class WNGTest extends WarhammerTestBase {
 
   async reroll(diceIndices) {
 
+    diceIndices = diceIndices.slice().sort((a, b) => a - b);
     this.testData.rerolls.push(diceIndices)
     if (!this.rerolledTests)
       this.rerolledTests = []
-    this.rerolledTests.push(await this.roll.reroll())
+    this.rerolledTests.push(await this._createReroll(diceIndices).evaluate())
     this._computeResult();
 
     if (game.dice3d) {
       let rerollShow = foundry.utils.deepClone(this.rerolledTests[this.rerolledTests.length - 1].toJSON())
-      rerollShow.terms = rerollShow.terms.map((term, t) => {
-        if (term.results) {
-          term.results = term.results.map((die, i) => {
-            if (diceIndices.includes(this.roll.terms[t].results?.[i]?.index))
-              return die
-          }).filter(i => i)
-        }
-        return term
-      })
       // rerolled flag makes DSN roll each sequentially instead of all together
       rerollShow.terms.forEach(t => t.results?.forEach(r => delete r.rerolled));
       await game.dice3d.showForRoll(Roll.fromData(rerollShow), 
