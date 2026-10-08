@@ -87,6 +87,14 @@
         </div>
         {{/if}}
     {{/if}}
+    {{#if showSurprise}}
+            <div class="form-group">
+            <label>{{localize "WEAPON.SURPRISE"}}</label>
+            <div class="form-fields">
+                <input type="checkbox" name="surprise" {{checked fields.surprise}}>
+            </div>
+        </div>
+    {{/if}}
     <hr>
     <div class="form-group labels">
         <label></label>

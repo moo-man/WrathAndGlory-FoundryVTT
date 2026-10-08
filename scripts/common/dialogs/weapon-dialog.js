@@ -43,6 +43,8 @@ async _prepareContext(options)
     "sprayShot" : "DIALOG.SPRAY_SHOT",
     "sprayShotMob" : "DIALOG.SPRAY_SHOT_MOB",
   }
+
+  context.showSurprise = (this.actor.inCombat && game.combat.round == 1) || this.actor.system.combat.stealth;
   return context;
 }
 
@@ -118,6 +120,15 @@ async _prepareContext(options)
     {
       this.fields.pool++;
       this.tooltips.add("pool", 1, game.i18n.localize("WEAPON.AIM"))
+    }
+
+    // Surprise
+    if (this.fields.surprise)
+    {
+      this.tooltips.start(this);
+      this.fields.pool += 2;
+      this.fields.ed.value += 2;
+      this.tooltips.finish(this, "Surprise Attack")
     }
 
     // Called Shots
