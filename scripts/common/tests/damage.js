@@ -203,28 +203,30 @@ export class DamageRoll {
         return i;
       })), []))
 
-    // Merge rerolls and roll - For each reroll set, take the corresponding reroll indices and keep the dice that the indices indicate
+    // Merge rerolls and roll - For each reroll set, replace the dice at the reroll indices with the rerolled dice
     for (let i = 0; i < rerolledResults.length; i++) {
       let rerollResult = rerolledResults[i];
-      let shouldRerollSet = this.rerollData.indices[i];
-      this.result.dice = this.result.dice.reduce((prev, current, i) => {
-        if (shouldRerollSet.includes(i)) {
-          prev.push(rerollResult[i]);
-        } else {
-          prev.push(current);
-        }
-        return prev;
-      }, [])
+      let shouldRerollSet = this.rerollData.indices[i].slice().sort((a, b) => a - b);
+      // Rerolls only contain the selected dice, in index order. Older rerolls contain the whole pool, so are matched by die index
+      let isWholePool = rerollResult.length != shouldRerollSet.length;
+      this.result.dice = this.result.dice.map((current, index) => {
+        let rerollIndex = shouldRerollSet.indexOf(index);
+        if (rerollIndex == -1)
+          return current;
+        return isWholePool ? rerollResult[index] : rerollResult[rerollIndex];
+      })
     }
   }
 
   async reroll(diceIndices) {
 
+    diceIndices = diceIndices.slice().sort((a, b) => a - b);
     this.rerollData.indices.push(diceIndices)
 
     // the reroll function does not seem to preserve the term options, so reconstruct the roll
+    // Only roll the selected dice, so interactive fulfillment (e.g. physical dice) only asks for the dice actually being rerolled
     let reroll = Roll.fromTerms([
-      new PoolDie({ number: this.result.ed || 0, faces: 6, options: { values: this.damageData.damageDice.values, add : this.damageData.damageDice.addValue } }),
+      new PoolDie({ number: diceIndices.length, faces: 6, options: { values: this.damageData.damageDice.values, add : this.damageData.damageDice.addValue } }),
     ]);
     await reroll.evaluate();
     this.rerollData.rerolls.push(reroll.toJSON())
@@ -234,15 +236,6 @@ export class DamageRoll {
 
     if (game.dice3d) {
       let rerollShow = foundry.utils.deepClone(reroll.toJSON()); // Very surprised toJSON doesn't make a copy, but cloning is needed for removing the rerolled flag below
-      rerollShow.terms = rerollShow.terms.map((term, t) => {
-        if (term.results) {
-          term.results = term.results.map((die, i) => {
-            if (diceIndices.includes(this.roll.terms[t].results[i]?.index))
-              return die
-          }).filter(i => i)
-        }
-        return term
-      })
       // rerolled flag makes DSN roll each sequentially instead of all together
       rerollShow.terms.forEach(t => t.results?.forEach(r => delete r.rerolled));
       await game.dice3d.showForRoll(Roll.fromData(rerollShow))
